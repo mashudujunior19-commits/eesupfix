@@ -7,7 +7,7 @@ import 'package:eesup_ui_library/env/environment_type.dart';
 Future<void> main(List<String> args) async {
   return bootstrap(
     environment: AppEnvironment(
-      type: EnvironmentType.test,
+      type: EnvironmentType.development,
       app: AppType.eesup,
     ),
   );

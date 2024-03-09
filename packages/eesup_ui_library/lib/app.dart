@@ -43,7 +43,7 @@ class MainApp extends StatelessWidget {
               ///if the user is already authenticated and is on another screen
               ///We don't want to navigate to the shop overview screen again, hence the isStartUp check
               if (state.isStartUp) {
-                await Future.delayed(const Duration(seconds: 5));
+                //await Future.delayed(const Duration(seconds: 3));
                 _appRouter.push(const ShopOverviewRoute());
               }
             }

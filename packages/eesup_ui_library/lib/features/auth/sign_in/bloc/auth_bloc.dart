@@ -22,7 +22,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthBlocState> {
     });
 
     on<SignInPressed>((event, emit) async {
-     // emit(AuthLoading());
+      emit(AuthLoading());
       final results = await _authRepository.signIn(
         password: event.password,
         email: event.email,
