@@ -1,6 +1,25 @@
-name: my_project
+name: eesup_frontend
 
 packages:
   - apps/**
   - docs/**
   - packages/**
+
+
+scripts:
+  analyze:
+    exec: dart analyze
+  format:
+    description: Format code
+    exec: dart format --set-exit-if-changed .
+  pg:
+    exec: dart pub get
+    description: Gets pub dependencies
+  cl:
+    exec: flutter clean
+    description: Clean flutter project
+  br:
+    exec: dart pub run build_runner build --delete-conflicting-outputs
+  test:
+    exec: dart test
+    description: Run tests
