@@ -1,3 +1,4 @@
+import 'package:eesup_ui_library/env/app_type.dart';
 import 'package:eesup_ui_library/env/environment_type.dart';
 import 'package:eesup_data_source/auth/data_source/auth_supabase_data_source.dart';
 import 'package:eesup_repository/auth/auth_repository.dart';
@@ -10,13 +11,14 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 
 class AppConfig {
-  final EnvironmentType env;
+  final AppEnvironment environment;
 
-  AppConfig({required this.env});
+  AppConfig({required this.environment});
 
   ///Load the appropriate env file based on the app and env
   ///
   Future<void> loadEnv() async {
+    final env = environment.type;
     if (env == EnvironmentType.development || env == EnvironmentType.test) {
       await dotenv.load(fileName: ".dev.env");
     } else if (env == EnvironmentType.development) {
@@ -25,6 +27,7 @@ class AppConfig {
   }
 
   Future<void> intitializeServices() async {
+    final env = environment.type;
     await Firebase.initializeApp();
 
     // Initialize Supabase
@@ -55,11 +58,22 @@ class AppConfig {
     if (!getIt.isRegistered(instance: authRepo)) {
       getIt.registerSingleton<AuthRepository>(authRepo);
     }
+
+    if (!getIt.isRegistered(instance: AppEnvironment)) {
+      getIt.registerSingleton<AppEnvironment>(environment);
+    }
   }
 
   void setUpSentry(FlutterErrorDetails details) {
-    if (env != 'dev') {
+    final env = environment.type;
+    if (env != EnvironmentType.production) {
       Sentry.captureException(details.exception, stackTrace: details.stack);
     }
   }
+}
+
+class AppEnvironment {
+  final EnvironmentType type;
+  final AppType app;
+  AppEnvironment({required this.type, required this.app});
 }

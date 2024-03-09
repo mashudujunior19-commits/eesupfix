@@ -9,11 +9,34 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  eesup_ui_library:
+    path: C:/Users/misom/Documents/Work/eesup-frontend/packages/eesup_ui_library
+  google_fonts: ^6.2.1
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^3.0.0
+  build_runner: ^2.4.8
+  flutter_launcher_icons: ^0.13.1
+  integration_test:
+    sdk: flutter
+  flutter_driver:
+    sdk: flutter
+
+flutter_launcher_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/images/icon.png"
+  min_sdk_android: 21
+  remove_alpha_ios: true
 
 flutter:
   uses-material-design: true
+
+
+  assets:
+    - assets/images/
+    - assets/animations/
+    - .dev.env
+    - .prod.env

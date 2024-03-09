@@ -1,20 +1,14 @@
-import 'package:flutter/material.dart';
+import 'package:eesup_ui_library/boostrap.dart';
+import 'package:eesup_ui_library/config.dart';
+import 'package:eesup_ui_library/env/app_type.dart';
+import 'package:eesup_ui_library/env/environment_type.dart';
 
-void main() {
-  runApp(const MainApp());
-}
-
-class MainApp extends StatelessWidget {
-  const MainApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: Scaffold(
-        body: Center(
-          child: Text('Hello World!'),
-        ),
-      ),
-    );
-  }
+///Main function to bootstrap the app
+Future<void> main(List<String> args) async {
+  return bootstrap(
+    environment: AppEnvironment(
+      type: EnvironmentType.test,
+      app: AppType.mykasi,
+    ),
+  );
 }

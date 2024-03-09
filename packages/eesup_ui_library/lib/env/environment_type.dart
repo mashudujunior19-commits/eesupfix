@@ -3,7 +3,7 @@ enum EnvironmentType {
   development,
   production;
 
-  factory EnvironmentType.from(String env) {
+  factory EnvironmentType.fromString(String env) {
     switch (env) {
       case 'test':
         return EnvironmentType.test;

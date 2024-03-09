@@ -1,9 +1,9 @@
-import 'package:eesup/src/core/themes/text_theme.dart';
+import 'package:mykasi/themes/text_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-const _primaryGreen = Color.fromRGBO(48, 142, 88, 1);
-const _primaryBlue = Color(0xFF0D47A1);
+const _primaryGreen = Color.fromRGBO(252, 127, 3, 1);
+const _primaryBlue = Color.fromRGBO(116, 206, 90, 1);
 
 final lightTheme = ThemeData(
   colorScheme: ColorScheme.fromSeed(
