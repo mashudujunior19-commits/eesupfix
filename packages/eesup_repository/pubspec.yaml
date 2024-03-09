@@ -1,0 +1,27 @@
+name: eesup_repository
+description: "Repositories for EESUp and MyKasiShop"
+version: 0.0.1
+publish_to: 'none'
+
+environment:
+  sdk: '>=3.3.1 <4.0.0'
+  flutter: ">=1.17.0"
+
+dependencies:
+  dartz: ^0.10.1
+  eesup_data_source:
+    path: ../../packages/eesup_data_sources
+  email_validator: ^2.1.17
+  flutter:
+    sdk: flutter
+  onesignal_flutter: ^5.1.2
+  supabase_flutter: ^2.3.4
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^3.0.0
+
+
+flutter:
+
