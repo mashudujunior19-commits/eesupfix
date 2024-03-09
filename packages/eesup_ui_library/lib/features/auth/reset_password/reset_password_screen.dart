@@ -13,6 +13,7 @@ class ResetPasswordScreen extends StatelessWidget {
           leading: const BackButton(),
           title: const Text("Forgot Password?"),
         ),
+      
       ),
     );
   }
