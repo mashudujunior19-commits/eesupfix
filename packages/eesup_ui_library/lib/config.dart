@@ -1,7 +1,5 @@
 import 'package:eesup_ui_library/env/app_type.dart';
 import 'package:eesup_ui_library/env/environment_type.dart';
-import 'package:eesup_data_source/auth/data_source/auth_supabase_data_source.dart';
-import 'package:eesup_repository/auth/auth_repository.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -50,13 +48,6 @@ class AppConfig {
 
     if (!getIt.isRegistered(instance: SupabaseClient)) {
       getIt.registerSingleton<SupabaseClient>(supabaseClient);
-    }
-
-    final authRepo = AuthRepository(
-      supaSource: AuthSupabaseDataSource(client: supabaseClient),
-    );
-    if (!getIt.isRegistered(instance: authRepo)) {
-      getIt.registerSingleton<AuthRepository>(authRepo);
     }
 
     if (!getIt.isRegistered(instance: AppEnvironment)) {

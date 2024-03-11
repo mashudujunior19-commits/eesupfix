@@ -14,7 +14,7 @@ import 'package:eesup_ui_library/features/auth/reset_password/reset_password_scr
 import 'package:eesup_ui_library/features/auth/sign_in/sign_in_screen.dart'
     as _i3;
 import 'package:eesup_ui_library/features/auth/start_up_screen.dart' as _i4;
-import 'package:eesup_ui_library/features/shop/presentation/shop_overview_screen.dart'
+import 'package:eesup_ui_library/features/shop/overview/presentation/shop_overview_screen.dart'
     as _i2;
 
 abstract class $AppRouter extends _i5.RootStackRouter {
