@@ -1,9 +1,10 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:eesup_data_source/eesupools/models/eesupool_type.dart';
 import 'package:eesup_ui_library/core/extensions/bg_image_deco_ext.dart';
+import 'package:eesup_ui_library/features/eesupools/eesupool_type_view.dart';
 import 'package:eesup_ui_library/features/shop/overview/presentation/widgets/bottom_tab_bar.dart';
 import 'package:eesup_ui_library/features/shop/overview/presentation/widgets/overview_tab.dart';
 import 'package:flutter/material.dart';
-
 
 @RoutePage()
 class ShopOverviewScreen extends StatefulWidget {
@@ -40,9 +41,7 @@ class _ShopOverviewScreenState extends State<ShopOverviewScreen>
             controller: _tabController,
             children: const [
               OverviewTab(),
-              Center(
-                child: Text('MyKasi'),
-              ),
+              EESUpoolsTypeView(type: EESUpoolType.Kasi),
               Center(
                 child: Text('MyEconomy'),
               ),
