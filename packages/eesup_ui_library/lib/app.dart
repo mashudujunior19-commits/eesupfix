@@ -1,7 +1,10 @@
 import 'package:eesup_data_source/auth/data_source/auth_supabase_data_source.dart';
+import 'package:eesup_data_source/auth/data_source/profile_supabase_impl.dart';
 import 'package:eesup_data_source/shopping/data_sources/shopping_supabase_impl.dart';
+import 'package:eesup_repository/auth/profile_repository.dart';
 import 'package:eesup_repository/shop/shopping_repository.dart';
 import 'package:eesup_ui_library/core/themes/light_theme.dart';
+import 'package:eesup_ui_library/features/auth/profile/bloc/profile_bloc.dart';
 import 'package:eesup_ui_library/features/auth/sign_in/bloc/auth_bloc.dart';
 import 'package:eesup_ui_library/navigation/app_route.dart';
 import 'package:eesup_ui_library/navigation/app_route.gr.dart';
@@ -45,6 +48,14 @@ class MainApp extends StatelessWidget {
               ..add(
                 AppStarted(),
               ),
+          ),
+          BlocProvider(
+            create: (context) => ProfileBloc(ProfileRepository(
+              context.read<AuthRepository>(),
+              ProfileSupabaseImpl(
+                GetIt.I.get<SupabaseClient>(),
+              ),
+            )),
           ),
         ],
 

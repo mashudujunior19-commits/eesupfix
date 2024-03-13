@@ -44,6 +44,7 @@ dependencies:
   cached_network_image: ^3.3.1
   instapay_flutter:
     path: ../../packages/instapay_flutter
+  tab_indicator_styler: ^2.0.0
 
 dev_dependencies:
   flutter_test:
