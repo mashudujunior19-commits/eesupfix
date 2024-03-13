@@ -5,7 +5,7 @@ import 'package:eesup_ui_library/core/extensions/sizedbox_ext.dart';
 import 'package:eesup_ui_library/core/extensions/slide_in_animation_ext.dart';
 import 'package:eesup_ui_library/core/widgets/eesup_form_field.dart';
 import 'package:eesup_ui_library/features/auth/sign_in/bloc/auth_bloc.dart';
-import 'package:eesup_repository/core/localize_south_african_phone.dart';
+import 'package:eesup_repository/utils/localize_south_african_phone.dart';
 import 'package:eesup_ui_library/navigation/app_route.gr.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';

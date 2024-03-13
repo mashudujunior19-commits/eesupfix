@@ -1,6 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:eesup_data_source/auth/data_source/abstract_auth_data_source.dart';
-import 'package:eesup_repository/core/eesup_exception.dart';
+import 'package:eesup_repository/utils/eesup_exception.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';

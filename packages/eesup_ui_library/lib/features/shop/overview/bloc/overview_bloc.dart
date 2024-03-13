@@ -3,7 +3,7 @@ import 'package:eesup_data_source/auth/models/user_role.dart';
 import 'package:eesup_data_source/shopping/models/ad_banner.dart';
 import 'package:eesup_data_source/shopping/models/category.dart';
 import 'package:eesup_data_source/shopping/models/product.dart';
-import 'package:eesup_repository/core/eesup_exception.dart';
+import 'package:eesup_repository/utils/eesup_exception.dart';
 import 'package:eesup_repository/shop/shopping_repository.dart';
 import 'package:meta/meta.dart';
 

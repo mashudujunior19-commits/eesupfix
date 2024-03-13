@@ -1,3 +1,4 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:eesup_data_source/auth/models/user_role.dart';
 import 'package:eesup_repository/shop/shopping_repository.dart';
 import 'package:eesup_ui_library/core/extensions/context_theme_ext.dart';
@@ -8,11 +9,12 @@ import 'package:eesup_ui_library/features/shop/overview/presentation/widgets/hor
 import 'package:eesup_ui_library/features/shop/overview/presentation/widgets/mock_search_button.dart';
 import 'package:eesup_ui_library/features/shop/overview/presentation/widgets/overview_banner_carousel.dart';
 import 'package:eesup_ui_library/features/shop/overview/presentation/widgets/overview_categories.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:eesup_ui_library/navigation/app_route.gr.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:instapay_flutter/data/merchant_transaction.dart';
 import 'package:shimmer/shimmer.dart';
 
 class OverviewTab extends StatelessWidget {
@@ -29,12 +31,12 @@ class OverviewTab extends StatelessWidget {
         builder: (context, state) {
           return CustomScrollView(
             slivers: [
-              const SliverAppBar(
+              SliverAppBar(
                 expandedHeight: 120,
                 centerTitle: true,
                 automaticallyImplyLeading: false,
                 // leading: NotificationButton(),
-                title: SizedBox(
+                title: const SizedBox(
                   width: 80,
                   child: Image(
                     image: AssetImage(
@@ -43,6 +45,43 @@ class OverviewTab extends StatelessWidget {
                   ),
                 ),
                 actions: [
+                  IconButton(
+                      onPressed: () {
+                        context.router.push(
+                          InstapayRoute(
+                            transaction: MerchantTransaction(
+                              mUuid: dotenv.env['INSTA_PAY_MERCHANT_ID']!,
+                              mAccountUuid: dotenv.env['INSTA_PAY_ACCOUNT_ID']!,
+                              mTxOrderNr: 'EES12345678967432134',
+                              mTxId: '9370832a-ce36-43d6-83f3-e14d611bc2de',
+                              mTxCurrency: 'ZAR',
+                              mCategory1: '1234455',
+                              mCategory2: 'Order',
+                              mCategory3: true.toString(),
+                              mTxAmount: 150.toStringAsFixed(2),
+                              mTxItemName: 'Basket Items',
+                              mTxItemDescription: 'The item(s) being ordered',
+                              secret: dotenv.env['INSTA_PAY_SECRET']!,
+                              mEftAllowed: true,
+                              mCardAllowed: true,
+                              mPassAllowed: false,
+                              mChipsAllowed: false,
+                              mPayatAllowed: false,
+                              mTridentAllowed: false,
+                              bSurname: 'Menze',
+                              bEmail: 'misomenze6@gmail.com',
+                              bMobile: '+2719582572',
+                              mReturnUrl:
+                                  'https://zngp5d89-8080.inc1.devtunnels.ms/v1/payments/insta_pay',
+                              mNotifyUrl:
+                                  'https://zngp5d89-8080.inc1.devtunnels.ms/v1/payments/insta_pay',
+                              mCancelUrl:
+                                  'https://zngp5d89-8080.inc1.devtunnels.ms/v1/payments/insta_pay',
+                            ),
+                          ),
+                        );
+                      },
+                      icon: const Icon(Icons.payment))
                   //CartButton(margin: EdgeInsets.only(right: 16, bottom: 5)),
                 ],
                 flexibleSpace: MockSearchButton(),

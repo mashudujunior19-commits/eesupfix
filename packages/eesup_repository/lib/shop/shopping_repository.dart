@@ -6,7 +6,7 @@ import 'package:eesup_data_source/shopping/models/category.dart';
 import 'package:eesup_data_source/shopping/models/product.dart';
 import 'package:eesup_data_source/shopping/models/product_request.dart';
 import 'package:eesup_repository/auth/auth_repository.dart';
-import 'package:eesup_repository/core/eesup_exception.dart';
+import 'package:eesup_repository/utils/eesup_exception.dart';
 
 class ShoppingRepository {
   final ShoppingDataSource shoppingDataSrc;

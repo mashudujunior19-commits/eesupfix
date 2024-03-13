@@ -1,8 +1,8 @@
 import 'package:dartz/dartz.dart';
 import 'package:eesup_data_source/auth/data_source/profile_data_source.dart';
 import 'package:eesup_data_source/auth/models/profile.dart';
-import 'package:eesup_repository/core/eesup_exception.dart';
-import 'package:eesup_repository/core/validate_id_number.dart';
+import 'package:eesup_repository/utils/eesup_exception.dart';
+import 'package:eesup_repository/utils/validate_id_number.dart';
 import 'auth_repository.dart';
 import 'package:flutter/foundation.dart';
 

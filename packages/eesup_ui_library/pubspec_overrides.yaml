@@ -1,0 +1,6 @@
+# melos_managed_dependency_overrides: eesup_data_source,eesup_repository
+dependency_overrides:
+  eesup_data_source:
+    path: ..\\eesup_data_sources
+  eesup_repository:
+    path: ..\\eesup_repository

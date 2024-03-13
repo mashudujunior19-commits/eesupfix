@@ -42,6 +42,8 @@ dependencies:
   shimmer: ^3.0.0
   flutter_carousel_widget: ^2.2.0
   cached_network_image: ^3.3.1
+  instapay_flutter:
+    path: ../../packages/instapay_flutter
 
 dev_dependencies:
   flutter_test:

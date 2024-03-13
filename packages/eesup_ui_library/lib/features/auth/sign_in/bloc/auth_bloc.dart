@@ -1,6 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:eesup_repository/auth/auth_repository.dart';
-import 'package:eesup_repository/core/eesup_exception.dart';
+import 'package:eesup_repository/utils/eesup_exception.dart';
 import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
 
