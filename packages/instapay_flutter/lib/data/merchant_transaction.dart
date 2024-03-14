@@ -23,7 +23,7 @@ class MerchantTransaction with _$MerchantTransaction {
     @JsonKey(name: 'm_site_name') String? mSiteName,
     @JsonKey(name: 'm_site_reference') String? mSiteReference,
     @JsonKey(name: 'm_card_allowed') bool? mCardAllowed,
-    @JsonKey(name: 'm_eft_allowed') bool? mEftAllowed,
+    @JsonKey(name: 'm_ieft_allowed') bool? mEftAllowed,
     @JsonKey(name: 'm_pass_allowed') bool? mPassAllowed,
     @JsonKey(name: 'm_chips_allowed') bool? mChipsAllowed,
     @JsonKey(name: 'm_trident_allowed') bool? mTridentAllowed,

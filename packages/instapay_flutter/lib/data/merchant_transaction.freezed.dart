@@ -50,7 +50,7 @@ mixin _$MerchantTransaction {
   String? get mSiteReference => throw _privateConstructorUsedError;
   @JsonKey(name: 'm_card_allowed')
   bool? get mCardAllowed => throw _privateConstructorUsedError;
-  @JsonKey(name: 'm_eft_allowed')
+  @JsonKey(name: 'm_ieft_allowed')
   bool? get mEftAllowed => throw _privateConstructorUsedError;
   @JsonKey(name: 'm_pass_allowed')
   bool? get mPassAllowed => throw _privateConstructorUsedError;
@@ -118,7 +118,7 @@ abstract class $MerchantTransactionCopyWith<$Res> {
       @JsonKey(name: 'm_site_name') String? mSiteName,
       @JsonKey(name: 'm_site_reference') String? mSiteReference,
       @JsonKey(name: 'm_card_allowed') bool? mCardAllowed,
-      @JsonKey(name: 'm_eft_allowed') bool? mEftAllowed,
+      @JsonKey(name: 'm_ieft_allowed') bool? mEftAllowed,
       @JsonKey(name: 'm_pass_allowed') bool? mPassAllowed,
       @JsonKey(name: 'm_chips_allowed') bool? mChipsAllowed,
       @JsonKey(name: 'm_trident_allowed') bool? mTridentAllowed,
@@ -358,7 +358,7 @@ abstract class _$$MerchantTransactionImplCopyWith<$Res>
       @JsonKey(name: 'm_site_name') String? mSiteName,
       @JsonKey(name: 'm_site_reference') String? mSiteReference,
       @JsonKey(name: 'm_card_allowed') bool? mCardAllowed,
-      @JsonKey(name: 'm_eft_allowed') bool? mEftAllowed,
+      @JsonKey(name: 'm_ieft_allowed') bool? mEftAllowed,
       @JsonKey(name: 'm_pass_allowed') bool? mPassAllowed,
       @JsonKey(name: 'm_chips_allowed') bool? mChipsAllowed,
       @JsonKey(name: 'm_trident_allowed') bool? mTridentAllowed,
@@ -591,7 +591,7 @@ class _$MerchantTransactionImpl implements _MerchantTransaction {
       @JsonKey(name: 'm_site_name') this.mSiteName,
       @JsonKey(name: 'm_site_reference') this.mSiteReference,
       @JsonKey(name: 'm_card_allowed') this.mCardAllowed,
-      @JsonKey(name: 'm_eft_allowed') this.mEftAllowed,
+      @JsonKey(name: 'm_ieft_allowed') this.mEftAllowed,
       @JsonKey(name: 'm_pass_allowed') this.mPassAllowed,
       @JsonKey(name: 'm_chips_allowed') this.mChipsAllowed,
       @JsonKey(name: 'm_trident_allowed') this.mTridentAllowed,
@@ -661,7 +661,7 @@ class _$MerchantTransactionImpl implements _MerchantTransaction {
   @JsonKey(name: 'm_card_allowed')
   final bool? mCardAllowed;
   @override
-  @JsonKey(name: 'm_eft_allowed')
+  @JsonKey(name: 'm_ieft_allowed')
   final bool? mEftAllowed;
   @override
   @JsonKey(name: 'm_pass_allowed')
@@ -870,7 +870,7 @@ abstract class _MerchantTransaction implements MerchantTransaction {
       @JsonKey(name: 'm_site_name') final String? mSiteName,
       @JsonKey(name: 'm_site_reference') final String? mSiteReference,
       @JsonKey(name: 'm_card_allowed') final bool? mCardAllowed,
-      @JsonKey(name: 'm_eft_allowed') final bool? mEftAllowed,
+      @JsonKey(name: 'm_ieft_allowed') final bool? mEftAllowed,
       @JsonKey(name: 'm_pass_allowed') final bool? mPassAllowed,
       @JsonKey(name: 'm_chips_allowed') final bool? mChipsAllowed,
       @JsonKey(name: 'm_trident_allowed') final bool? mTridentAllowed,
@@ -940,7 +940,7 @@ abstract class _MerchantTransaction implements MerchantTransaction {
   @JsonKey(name: 'm_card_allowed')
   bool? get mCardAllowed;
   @override
-  @JsonKey(name: 'm_eft_allowed')
+  @JsonKey(name: 'm_ieft_allowed')
   bool? get mEftAllowed;
   @override
   @JsonKey(name: 'm_pass_allowed')
