@@ -64,7 +64,7 @@ class OverviewTab extends StatelessWidget {
                             mCategory2: 'Order',
                             mCategory3:
                                 'eesup_iyxjp1tlR2rClGJZUK6B0ZqBs8CR9hjqrJM3PrABKQEqKz3MbBrLWTo2v8XmCmB9xfYa436PkZI9MpDBmkOXTEDLmLuLfxXKbyQQblUugiidzVWrWuZaMi3nXu7a',
-                            mTxAmount: 250.toStringAsFixed(2),
+                            mTxAmount: 560.toStringAsFixed(2),
                             mTxItemName: 'Basket Items',
                             mTxItemDescription: 'The item(s) being ordered',
                             secret: dotenv.env['INSTA_PAY_SECRET']!,
@@ -85,7 +85,6 @@ class OverviewTab extends StatelessWidget {
                                 'https://zngp5d89-8080.inc1.devtunnels.ms/v1/payments/insta_pay',
                             mNotifyUrl:
                                 'https://zngp5d89-8080.inc1.devtunnels.ms/v1/payments/insta_pay',
-                                
                           ),
                         ),
                       );
