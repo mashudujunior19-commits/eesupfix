@@ -4,6 +4,7 @@ packages:
   - apps/**
   - docs/**
   - packages/**
+  - backend/eesup-dart
 
 
 scripts:
