@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:data_sources/auth/models/user_role.dart';
 import 'package:features/core/env/app_type.dart';
+import 'package:features/core/extensions/context_alerts_ext.dart';
 import 'package:features/core/extensions/context_environment_ext.dart';
 import 'package:repository/shop/shopping_repository.dart';
 import 'package:features/core/errors/large_error_widget.dart';
@@ -52,7 +53,8 @@ class OverviewTab extends StatelessWidget {
                       var now = DateTime.now();
                       var formatter = DateFormat('yyyy-MM-dd');
                       String formattedDate = formatter.format(now);
-                      context.router.push(
+                      context.router
+                          .push(
                         InstapayRoute(
                           transaction: MerchantTransaction(
                             mUuid: dotenv.env['INSTA_PAY_MERCHANT_ID']!,
@@ -63,17 +65,17 @@ class OverviewTab extends StatelessWidget {
                             mCategory1: '1234455',
                             mCategory2: 'Order',
                             mCategory3:
-                                'eesup_iyxjp1tlR2rClGJZUK6B0ZqBs8CR9hjqrJM3PrABKQEqKz3MbBrLWTo2v8XmCmB9xfYa436PkZI9MpDBmkOXTEDLmLuLfxXKbyQQblUugiidzVWrWuZaMi3nXu7a',
+                                'eesup_iyxjp1tlR2rClGJZUK6B0ZqBs8CR9hjqrJM3PrABKQEq',
                             mTxAmount: 560.toStringAsFixed(2),
                             mTxItemName: 'Basket Items',
                             mTxItemDescription: 'The item(s) being ordered',
                             secret: dotenv.env['INSTA_PAY_SECRET']!,
                             mEftAllowed: true,
                             mCardAllowed: true,
-                            mPassAllowed: true,
-                            mChipsAllowed: true,
-                            mPayatAllowed: true,
-                            mTridentAllowed: true,
+                            mPassAllowed: false,
+                            mChipsAllowed: false,
+                            mPayatAllowed: false,
+                            mTridentAllowed: false,
                             mTxDueDate: formattedDate,
                             mMessage: 'This is a test message',
                             mSiteName: 'EESUp',
@@ -82,13 +84,19 @@ class OverviewTab extends StatelessWidget {
                             bEmail: 'misomenze6@gmail.com',
                             bMobile: '+2719582572',
                             mReturnUrl:
-                                'https://zngp5d89-8080.inc1.devtunnels.ms/v1/payments/insta_pay',
+                                'https://eesup.com/wp-content/payment_success.php',
+                            mBack2shopUrl:
+                                'https://eesup.com/wp-content/payment_failed.php',
                             mNotifyUrl:
                                 'https://zngp5d89-8080.inc1.devtunnels.ms/v1/payments/insta_pay',
                           ),
                         ),
-                      );
+                      )
+                          .then((value) {
+                        context.snackBarSuccess(value.toString());
+                      });
                     },
+                    // eesup_iyxjp1tlR2rClGJZUK6B0ZqBs8CR9hjqrJM3PrABKQEq
                     icon: const Icon(Icons.payment),
                   )
 

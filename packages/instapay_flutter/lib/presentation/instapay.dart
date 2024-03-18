@@ -5,8 +5,10 @@ import 'package:instapay_flutter/data/merchant_transaction.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 class InstapayFlutter extends StatefulWidget {
-  const InstapayFlutter({super.key, required this.transaction});
+  const InstapayFlutter(
+      {super.key, required this.transaction, required this.onUrlChange});
   final MerchantTransaction transaction;
+  final void Function(String? url) onUrlChange;
 
   @override
   State<InstapayFlutter> createState() => _InstapayFlutterState();
@@ -28,19 +30,21 @@ class _InstapayFlutterState extends State<InstapayFlutter> {
       ..setBackgroundColor(const Color(0x00000000))
       ..setNavigationDelegate(
         NavigationDelegate(
-          onProgress: (int progress) {
-            // Update loading bar.
-          },
-          onPageStarted: (String url) {},
-          onPageFinished: (String url) {},
-          onWebResourceError: (WebResourceError error) {},
-          onNavigationRequest: (NavigationRequest request) {
-            return NavigationDecision.navigate;
-          },
-        ),
+            onProgress: (int progress) {
+              // Update loading bar.
+            },
+            onPageStarted: (String url) {},
+            onPageFinished: (String url) {},
+            onWebResourceError: (WebResourceError error) {},
+            onNavigationRequest: (NavigationRequest request) {
+              return NavigationDecision.navigate;
+            },
+            onUrlChange: (UrlChange change) {
+              widget.onUrlChange(change.url);
+            }),
       )
       ..loadRequest(
-        Uri.parse('https://zngp5d89-3000.inc1.devtunnels.ms/lib/insta_pay.php'),
+        Uri.parse('https://eesup.com/wp-content/instapay.php'),
         method: LoadRequestMethod.post,
         body: jsonToUint8List(
           jsonEncode(

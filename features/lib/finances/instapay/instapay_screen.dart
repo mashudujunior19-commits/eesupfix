@@ -12,10 +12,24 @@ class InstapayScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: const BackButton(),
+        leading: BackButton(
+          onPressed: () {
+            Navigator.of(context).pop(false);
+          },
+        ),
       ),
       body: InstapayFlutter(
-        transaction:transaction,
+        transaction: transaction,
+        onUrlChange: (String? url) {
+          // print("33333333333333355555555555555555555555555555555: $url");
+          if (url != null) {
+            if (url.contains('payment_success')) {
+              Navigator.of(context).pop(true);
+            } else if (url.contains('payment_failed')) {
+              Navigator.of(context).pop(false);
+            }
+          }
+        },
       ),
     );
   }
