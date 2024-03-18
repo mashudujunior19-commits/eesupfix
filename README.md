@@ -2,7 +2,7 @@
 
 **Introduction**
 
-This document outlines the prerequisites, setup instructions, and project directory structure to get started with our project.
+This document outlines the prerequisites, setup instructions, and project directory structure to get started with the project.
 
 **Prerequisites**
 
