@@ -4,5 +4,5 @@ import 'package:get_it/get_it.dart';
 
 extension ContextEnvironmentExt on BuildContext {
   /// Returns the environment of the app
-  AppEnvironment get environment => GetIt.I<AppEnvironment>();
+  Flavor get environment => GetIt.I<Flavor>();
 }

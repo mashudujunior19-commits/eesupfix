@@ -9,7 +9,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 
 class AppConfig {
-  final AppEnvironment environment;
+  final Flavor environment;
 
   AppConfig({required this.environment});
 
@@ -50,8 +50,8 @@ class AppConfig {
       getIt.registerSingleton<SupabaseClient>(supabaseClient);
     }
 
-    if (!getIt.isRegistered(instance: AppEnvironment)) {
-      getIt.registerSingleton<AppEnvironment>(environment);
+    if (!getIt.isRegistered(instance: Flavor)) {
+      getIt.registerSingleton<Flavor>(environment);
     }
   }
 
@@ -63,8 +63,8 @@ class AppConfig {
   }
 }
 
-class AppEnvironment {
+class Flavor {
   final FlavorType type;
   final AppType app;
-  AppEnvironment({required this.type, required this.app});
+  Flavor({required this.type, required this.app});
 }

@@ -8,7 +8,7 @@ import 'package:features/core/env/flavor_type.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
-Future<void> bootstrap({required AppEnvironment environment}) async {
+Future<void> bootstrap({required Flavor environment}) async {
   final config = AppConfig(environment: environment);
   await config.loadEnv();
   await config.intitializeServices();
