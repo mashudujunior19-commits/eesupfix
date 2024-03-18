@@ -272,6 +272,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "5.4.1"
+  easy_stepper:
+    dependency: transitive
+    description:
+      name: easy_stepper
+      sha256: d25a7823b6f473b33b012c47d12e54a0a6538f10441da578269d0381cba5def2
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.8.3"
   email_validator:
     dependency: transitive
     description:
@@ -709,6 +717,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.2.0"
+  lottie:
+    dependency: transitive
+    description:
+      name: lottie
+      sha256: a93542cc2d60a7057255405f62252533f8e8956e7e06754955669fd32fb4b216
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.7.0"
   matcher:
     dependency: transitive
     description:
@@ -725,6 +741,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.8.0"
+  material_design_icons_flutter:
+    dependency: transitive
+    description:
+      name: material_design_icons_flutter
+      sha256: "6f986b7a51f3ad4c00e33c5c84e8de1bdd140489bbcdc8b66fc1283dad4dea5a"
+      url: "https://pub.dev"
+    source: hosted
+    version: "7.0.7296"
   meta:
     dependency: transitive
     description:

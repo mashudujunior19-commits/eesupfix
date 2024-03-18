@@ -46,6 +46,8 @@ dependencies:
     path: ../packages/repository
   data_sources:
     path: ../packages/data_sources
+  material_design_icons_flutter: ^7.0.7296
+  easy_stepper: ^0.8.3
   
 dev_dependencies:
   flutter_test:
