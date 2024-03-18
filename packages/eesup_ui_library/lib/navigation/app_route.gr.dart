@@ -14,7 +14,7 @@ import 'package:eesup_ui_library/features/auth/reset_password/reset_password_scr
 import 'package:eesup_ui_library/features/auth/sign_in/sign_in_screen.dart'
     as _i6;
 import 'package:eesup_ui_library/features/auth/start_up_screen.dart' as _i7;
-import 'package:eesup_ui_library/features/eesupools/eesupool_view/eesupool_view_screen.dart'
+import 'package:eesup_ui_library/features/eesupools/eesupool_view/presentation/eesupool_view_screen.dart'
     as _i1;
 import 'package:eesup_ui_library/features/finances/instapay/instapay_screen.dart'
     as _i2;

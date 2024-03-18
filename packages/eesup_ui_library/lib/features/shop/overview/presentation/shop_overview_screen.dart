@@ -1,7 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:eesup_data_source/eesupools/models/eesupool_type.dart';
 import 'package:eesup_ui_library/core/extensions/bg_image_deco_ext.dart';
-import 'package:eesup_ui_library/features/eesupools/widgets/eesupool_type_view.dart';
+import 'package:eesup_ui_library/features/eesupools/list_view/presentation/eesupool_type_view.dart';
 import 'package:eesup_ui_library/features/shop/overview/presentation/my_economy_tab.dart';
 import 'package:eesup_ui_library/features/shop/overview/presentation/widgets/bottom_tab_bar.dart';
 import 'package:eesup_ui_library/features/shop/overview/presentation/widgets/overview_tab.dart';

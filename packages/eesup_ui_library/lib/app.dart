@@ -1,7 +1,9 @@
 import 'package:eesup_data_source/auth/data_source/auth_supabase_data_source.dart';
 import 'package:eesup_data_source/auth/data_source/profile_supabase_impl.dart';
+import 'package:eesup_data_source/eesupools/data_source/eesupool_supabase_impl.dart';
 import 'package:eesup_data_source/shopping/data_sources/shopping_supabase_impl.dart';
 import 'package:eesup_repository/auth/profile_repository.dart';
+import 'package:eesup_repository/eesupools/eesupool_repo.dart';
 import 'package:eesup_repository/shop/shopping_repository.dart';
 import 'package:eesup_ui_library/core/themes/light_theme.dart';
 import 'package:eesup_ui_library/features/auth/profile/bloc/profile_bloc.dart';
@@ -37,10 +39,19 @@ class MainApp extends StatelessWidget {
     ),
   );
 
+  final _eesupoolRepo = RepositoryProvider(
+    create: (context) => EESUpoolRepository(
+      authRepository: context.read<AuthRepository>(),
+      dataSource: EESUpoolSupabaseImp(
+        client: GetIt.I.get<SupabaseClient>(),
+      ),
+    ),
+  );
+
   @override
   Widget build(BuildContext context) {
     return MultiRepositoryProvider(
-      providers: [_authRepo, _shoppingRepo],
+      providers: [_authRepo, _shoppingRepo,_eesupoolRepo],
       child: MultiBlocProvider(
         providers: [
           BlocProvider(
