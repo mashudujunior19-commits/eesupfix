@@ -1,17 +1,46 @@
-# EESUp - Code Base Architecture
-### Brief Decsription of the Project
-###### Structure of a typical  Api Call to fetch data with riverpod
+**Project Setup and Structure Guide**
 
-![](code-base-architecture.drawio.png)
-##### Simple enough😜
+**Introduction**
 
-#### Contribution Guidelines 👨🏾‍💻👩🏽‍💻
+This document outlines the prerequisites, setup instructions, and project directory structure to get started with our project.
 
-- Clone the repository 🦁🦁💪🏻
-- Create a new branch
-- Make your changes
-- Write & Run the tests ✅
-- Commit your changes
-- Push to the branch
-- Create a pull request
-- Wait for review
+**Prerequisites**
+
+* **Flutter:** Download and install Flutter following the instructions at https://flutter.dev/docs/get-started/install
+* **Melos:** Install globally using `pub global activate melos`  (https://pub.dev/packages/melos)
+* **Dart:** Install Dart following instructions at  https://dart.dev/get-dart
+* **Dart-Frog:** Install globally using `pub global activate dart_frog` (https://pub.dev/packages/dart_frog)
+
+**Melos Usage**
+
+We use Melos to streamline the management of our monorepo project. Here are key benefits and commands:
+
+* **Efficient Management:** Melos links sub-packages, enabling seamless cross-package development.
+* **Hot Reload:**  Changes to sub-packages automatically trigger updates, eliminating the need for manual `pub get` calls.
+* **Simplified Commands:** The `melos.yaml` file defines aliases for common tasks:
+    * `melos cl`: Equivalent to `flutter clean`
+    * `melos pg`: Equivalent to `flutter pub get`
+
+**Folder Structure**
+
+1. **apps**: Contains individual Flutter applications:
+     * **EESUp:** 
+          * **android**
+          * **ios**
+          * **lib/main.dart** (Application entry point)
+     * **MyKasiShop:** 
+          * **android**
+          * **ios**
+          * **lib/main.dart** (Application entry point)
+
+2. **packages**: Houses reusable code packages shared across applications:
+    * **Data Sources:** Data access and communication logic
+    * **Models:** Data representations 
+
+3. **docs**: Project documentation.
+
+4. **features**: Application-specific features used by `main.dart` within the apps
+
+5. **backend**: 
+    * **supabase**: Database schema and migrations
+    * **dart-frog**: Backend API powered by Dart Frog
