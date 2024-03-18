@@ -39,4 +39,4 @@ flutter:
     - assets/images/
     - assets/animations/
     - .dev.env
-    - .prod.env
+    - .env
