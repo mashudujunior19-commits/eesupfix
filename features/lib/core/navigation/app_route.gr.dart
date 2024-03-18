@@ -9,17 +9,17 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:auto_route/auto_route.dart' as _i8;
-import 'package:features/features/auth/reset_password/reset_password_screen.dart'
+import 'package:features/auth/reset_password/reset_password_screen.dart'
     as _i4;
-import 'package:features/features/auth/sign_in/sign_in_screen.dart' as _i6;
-import 'package:features/features/auth/start_up_screen.dart' as _i7;
-import 'package:features/features/eesupools/eesupool_view/presentation/eesupool_view_screen.dart'
+import 'package:features/auth/sign_in/sign_in_screen.dart' as _i6;
+import 'package:features/auth/start_up_screen.dart' as _i7;
+import 'package:features/eesupools/eesupool_view/presentation/eesupool_view_screen.dart'
     as _i1;
-import 'package:features/features/finances/instapay/instapay_screen.dart'
+import 'package:features/finances/instapay/instapay_screen.dart'
     as _i2;
-import 'package:features/features/referrals/presentation/referrals_screen.dart'
+import 'package:features/referrals/presentation/referrals_screen.dart'
     as _i3;
-import 'package:features/features/shop/overview/presentation/shop_overview_screen.dart'
+import 'package:features/shop/overview/presentation/shop_overview_screen.dart'
     as _i5;
 import 'package:flutter/material.dart' as _i9;
 import 'package:instapay_flutter/data/merchant_transaction.dart' as _i10;

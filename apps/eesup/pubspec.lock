@@ -260,8 +260,8 @@ packages:
   data_sources:
     dependency: transitive
     description:
-      path: "C:\\Users\\miso\\OneDrive\\Desktop\\eesup-frontend\\packages\\data_sources"
-      relative: false
+      path: "../../packages/data_sources"
+      relative: true
     source: path
     version: "0.0.1"
   dio:
@@ -299,8 +299,8 @@ packages:
   features:
     dependency: "direct main"
     description:
-      path: "C:\\Users\\miso\\OneDrive\\Desktop\\eesup-frontend\\features"
-      relative: false
+      path: "../../features"
+      relative: true
     source: path
     version: "0.0.1"
   ffi:
@@ -936,8 +936,8 @@ packages:
   repository:
     dependency: transitive
     description:
-      path: "C:\\Users\\miso\\OneDrive\\Desktop\\eesup-frontend\\packages\\repository"
-      relative: false
+      path: "../../packages/repository"
+      relative: true
     source: path
     version: "0.0.1"
   retry:

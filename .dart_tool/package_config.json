@@ -105,7 +105,7 @@
     },
     {
       "name": "melos",
-      "rootUri": "file:///C:/Users/miso/AppData/Local/Pub/Cache/hosted/pub.dev/melos-4.1.0",
+      "rootUri": "file:///C:/Users/miso/AppData/Local/Pub/Cache/hosted/pub.dev/melos-5.1.0",
       "packageUri": "lib/",
       "languageVersion": "3.0"
     },
@@ -248,7 +248,7 @@
       "languageVersion": "3.0"
     }
   ],
-  "generated": "2024-03-18T09:47:54.670761Z",
+  "generated": "2024-03-18T12:50:29.050566Z",
   "generator": "pub",
-  "generatorVersion": "3.3.0"
+  "generatorVersion": "3.3.1"
 }

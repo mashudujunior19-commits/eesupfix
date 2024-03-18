@@ -1,16 +1,16 @@
-enum EnvironmentType {
+enum FlavorType {
   test,
   development,
   production;
 
-  factory EnvironmentType.fromString(String env) {
+  factory FlavorType.fromString(String env) {
     switch (env) {
       case 'test':
-        return EnvironmentType.test;
+        return FlavorType.test;
       case 'development':
-        return EnvironmentType.development;
+        return FlavorType.development;
       case 'production':
-        return EnvironmentType.production;
+        return FlavorType.production;
       default:
         throw Exception('Invalid environment type');
     }

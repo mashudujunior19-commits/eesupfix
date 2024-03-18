@@ -1,5 +1,5 @@
-import 'package:features/env/app_type.dart';
-import 'package:features/env/environment_type.dart';
+import 'package:features/core/env/app_type.dart';
+import 'package:features/core/env/flavor_type.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -17,9 +17,9 @@ class AppConfig {
   ///
   Future<void> loadEnv() async {
     final env = environment.type;
-    if (env == EnvironmentType.development || env == EnvironmentType.test) {
+    if (env == FlavorType.development || env == FlavorType.test) {
       await dotenv.load(fileName: ".dev.env");
-    } else if (env == EnvironmentType.development) {
+    } else if (env == FlavorType.development) {
       await dotenv.load(fileName: ".eesup.env");
     }
   }
@@ -34,7 +34,7 @@ class AppConfig {
       anonKey: dotenv.env['SUPABASE_ANON_KEY'] ?? '',
       authOptions: FlutterAuthClientOptions(
         localStorage:
-            env == EnvironmentType.test ? const EmptyLocalStorage() : null,
+            env == FlavorType.test ? const EmptyLocalStorage() : null,
       ),
     );
 
@@ -57,14 +57,14 @@ class AppConfig {
 
   void setUpSentry(FlutterErrorDetails details) {
     final env = environment.type;
-    if (env != EnvironmentType.production) {
+    if (env != FlavorType.production) {
       Sentry.captureException(details.exception, stackTrace: details.stack);
     }
   }
 }
 
 class AppEnvironment {
-  final EnvironmentType type;
+  final FlavorType type;
   final AppType app;
   AppEnvironment({required this.type, required this.app});
 }

@@ -1,6 +1,6 @@
 import 'package:data_sources/eesupools/models/eesupool_type.dart';
 import 'package:features/core/extensions/context_theme_ext.dart';
-import 'package:features/features/eesupools/list_view/presentation/eesupool_type_view.dart';
+import 'package:features/eesupools/list_view/presentation/eesupool_type_view.dart';
 import 'package:flutter/material.dart';
 import 'package:tab_indicator_styler/tab_indicator_styler.dart';
 
