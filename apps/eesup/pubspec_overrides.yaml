@@ -1,8 +1,0 @@
-# melos_managed_dependency_overrides: eesup_data_source,eesup_repository,eesup_ui_library
-dependency_overrides:
-  eesup_data_source:
-    path: ..\\..\\packages\\eesup_data_sources
-  eesup_repository:
-    path: ..\\..\\packages\\eesup_repository
-  eesup_ui_library:
-    path: ..\\..\\packages\\eesup_ui_library

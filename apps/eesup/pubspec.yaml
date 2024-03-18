@@ -7,12 +7,12 @@ environment:
   sdk: '>=3.3.0 <4.0.0'
 
 dependencies:
+  features:
+    path: C:\Users\miso\OneDrive\Desktop\eesup-frontend\features
   flutter:
     sdk: flutter
-  eesup_ui_library:
-    path: C:/Users/misom/Documents/Work/eesup-frontend/packages/eesup_ui_library
   google_fonts: ^6.2.1
-
+  
 dev_dependencies:
   flutter_test:
     sdk: flutter

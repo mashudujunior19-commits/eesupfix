@@ -1,0 +1,33 @@
+name: repository
+description: "Repositories for EESUp and MyKasiShop"
+version: 0.0.1
+publish_to: 'none'
+
+environment:
+  sdk: '>=3.3.1 <4.0.0'
+  flutter: ">=1.17.0"
+
+dependencies:
+  dartz: ^0.10.1
+  data_sources:
+    path: C:\Users\miso\OneDrive\Desktop\eesup-frontend\packages\data_sources
+  email_validator: ^2.1.17
+  flutter:
+    sdk: flutter
+  geocoding: ^2.2.2
+  onesignal_flutter: ^5.1.2
+  supabase_flutter: ^2.3.4
+  
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^3.0.0
+  mockito: ^5.4.3
+  build_runner: ^2.4.8
+  freezed: ^2.4.5
+  json_serializable: ^6.7.1
+  flutter_launcher_icons: ^0.13.1
+
+flutter:
+

@@ -2,9 +2,9 @@ name: eesup_frontend
 
 packages:
   - apps/**
+  - features/**
   - docs/**
   - packages/**
-  - backend/eesup-dart
 
 
 scripts:

@@ -1,0 +1,89 @@
+import 'package:data_sources/shopping/models/category.dart';
+import 'package:features/core/extensions/context_theme_ext.dart';
+import 'package:flutter/material.dart';
+import 'package:shimmer/shimmer.dart';
+
+class OverviewCategories extends StatelessWidget {
+  const OverviewCategories({super.key, required this.categories});
+  final List<Category> categories;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      color: Colors.white,
+      padding: const EdgeInsets.only(right: 15, left: 15, bottom: 20),
+      child: SingleChildScrollView(
+        scrollDirection: Axis.horizontal,
+        child: Row(
+          children: [
+            ...categories.map(
+              (e) => InkWell(
+                onTap: () {
+                  // context.push(CategoryProductsView.route, extra: e);
+                },
+                child: Container(
+                  margin: const EdgeInsets.only(top: 10, right: 10),
+                  padding: const EdgeInsets.only(
+                    left: 7,
+                    right: 7,
+                    top: 5,
+                    bottom: 5,
+                  ),
+                  decoration: BoxDecoration(
+                    color: context.colorScheme.primary.withOpacity(.95),
+                    borderRadius: BorderRadius.circular(6.5),
+                    border: Border.all(
+                      color: Colors.grey.shade200,
+                      width: 1,
+                    ),
+                  ),
+                  child: Text(
+                    e.name,
+                    style: context.textTheme.bodySmall?.copyWith(
+                      color: Colors.white,
+                      fontSize: 13,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _LoadingShimmer extends StatelessWidget {
+  const _LoadingShimmer();
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(left: 15, right: 15),
+      child: Shimmer.fromColors(
+        baseColor: Colors.grey.shade300.withOpacity(.5),
+        highlightColor: Colors.white,
+        child: SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: List.generate(
+              5,
+              (index) => Container(
+                width: 100,
+                height: 20,
+                margin: const EdgeInsets.only(right: 10),
+                decoration: BoxDecoration(
+                  color: Colors.grey[300],
+                  borderRadius: BorderRadius.circular(10),
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
