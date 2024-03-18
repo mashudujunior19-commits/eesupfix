@@ -1,5 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:data_sources/auth/models/user_role.dart';
+import 'package:features/core/env/app_type.dart';
+import 'package:features/core/extensions/context_environment_ext.dart';
 import 'package:repository/shop/shopping_repository.dart';
 import 'package:features/core/errors/large_error_widget.dart';
 import 'package:features/core/extensions/context_theme_ext.dart';
@@ -38,12 +40,10 @@ class OverviewTab extends StatelessWidget {
                 centerTitle: true,
                 automaticallyImplyLeading: false,
                 // leading: NotificationButton(),
-                title: const SizedBox(
-                  width: 80,
-                  child: Image(
-                    image: AssetImage(
-                      'assets/images/logo.png',
-                    ),
+                title: Image(
+                  width: context.environment.app == AppType.eesup ? 80 : 45,
+                  image: const AssetImage(
+                    'assets/images/logo.png',
                   ),
                 ),
                 actions: [

@@ -1,15 +1,15 @@
-import 'package:my_kasi_shop/themes/text_theme.dart';
+import 'package:features/core/themes/text_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-const _primaryOrange = Color.fromRGBO(252, 127, 3, 1);
 const _primaryGreen = Color.fromRGBO(48, 142, 88, 1);
+const _primaryBlue = Color(0xFF0D47A1);
 
-final lightTheme = ThemeData(
+final EESUpLightTheme = ThemeData(
   colorScheme: ColorScheme.fromSeed(
-    seedColor: _primaryOrange,
-    primary: _primaryOrange,
-    secondary: _primaryGreen,
+    seedColor: _primaryGreen,
+    primary: _primaryGreen,
+    secondary: _primaryBlue,
     tertiary: Colors.grey.shade200,
   ),
   scaffoldBackgroundColor: Colors.white,

@@ -2,6 +2,10 @@ import 'package:data_sources/auth/data_source/auth_supabase_data_source.dart';
 import 'package:data_sources/auth/data_source/profile_supabase_impl.dart';
 import 'package:data_sources/eesupools/data_source/eesupool_supabase_impl.dart';
 import 'package:data_sources/shopping/data_source/shopping_supabase_impl.dart';
+import 'package:features/core/env/app_type.dart';
+import 'package:features/core/extensions/context_environment_ext.dart';
+import 'package:features/core/themes/eesup_light_theme.dart';
+import 'package:features/core/themes/my_kasi_light_theme.dart';
 import 'package:repository/auth/profile_repository.dart';
 import 'package:repository/eesupools/eesupool_repo.dart';
 import 'package:repository/shop/shopping_repository.dart';
@@ -18,8 +22,7 @@ import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class MainApp extends StatelessWidget {
-  MainApp({super.key, required this.theme});
-  final ThemeData theme;
+  MainApp({super.key});
   final _appRouter = AppRouter();
 
   final _authRepo = RepositoryProvider(
@@ -50,6 +53,11 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    ///get the correct theme based on the app type (eesup or my kasi)
+    final theme = context.environment.app == AppType.eesup
+        ? EESUpLightTheme
+        : MyKasiLightTheme;
+
     return MultiRepositoryProvider(
       providers: [_authRepo, _shoppingRepo, _eesupoolRepo],
       child: MultiBlocProvider(

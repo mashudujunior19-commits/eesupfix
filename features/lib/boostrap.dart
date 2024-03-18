@@ -8,16 +8,16 @@ import 'package:features/core/env/flavor_type.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
-Future<void> bootstrap({required Flavor environment,required ThemeData theme}) async {
+Future<void> bootstrap({required Flavor environment}) async {
   final config = AppConfig(environment: environment);
   await config.loadEnv();
   await config.intitializeServices();
-  config.registerInstances();
+  config.registerInstances(); 
 
   final env = environment.type;
 
   if (env == FlavorType.development || env == FlavorType.test) {
-    runApp(MainApp(theme:  theme));
+    runApp(MainApp());
   } else {
     FlutterError.onError = (details) {
       if (kDebugMode) {
@@ -29,7 +29,7 @@ Future<void> bootstrap({required Flavor environment,required ThemeData theme}) a
     runZonedGuarded(() async {
       WidgetsFlutterBinding.ensureInitialized();
 
-      runApp(MainApp(theme: theme,));
+      runApp(MainApp());
     }, (error, stackTrace) {
       if (kDebugMode) {
         print('Error #########################: $error ');

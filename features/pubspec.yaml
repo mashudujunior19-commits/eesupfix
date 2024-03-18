@@ -22,7 +22,6 @@ dependencies:
   flutter_bloc: ^8.1.4
   flutter_dotenv: ^5.1.0
   get_it: ^7.6.7
-  google_fonts: ^6.2.0
   onesignal_flutter: ^5.1.2
   sentry_flutter: ^7.17.0
   supabase_flutter: ^2.3.4
@@ -48,6 +47,7 @@ dependencies:
     path: ../packages/data_sources
   material_design_icons_flutter: ^7.0.7296
   easy_stepper: ^0.8.3
+  google_fonts: ^6.2.1
   
 dev_dependencies:
   flutter_test:

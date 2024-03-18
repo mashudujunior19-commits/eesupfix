@@ -1,0 +1,82 @@
+{
+  "project_info": {
+    "project_number": "542148914795",
+    "project_id": "eesup-2ff69",
+    "storage_bucket": "eesup-2ff69.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:542148914795:android:1f62b4a2775726d5254b2e",
+        "android_client_info": {
+          "package_name": "com.eesup.mobile"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "542148914795-8id03aqcjmg01hdkgq0442kp3eslg9cs.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBOweNiOWmqoswtPfqcIQhpQ-gkGU3O4JU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "542148914795-7on8amdnj5nprk0veavrkp7rv24c70vp.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "542148914795-kebghi8b7va9kucrbek181pkdo3vl6dr.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.mobile.eesup"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:542148914795:android:9b813a609ca9d0c6254b2e",
+        "android_client_info": {
+          "package_name": "com.eesup.mykasishop"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "542148914795-8id03aqcjmg01hdkgq0442kp3eslg9cs.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBOweNiOWmqoswtPfqcIQhpQ-gkGU3O4JU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "542148914795-7on8amdnj5nprk0veavrkp7rv24c70vp.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "542148914795-kebghi8b7va9kucrbek181pkdo3vl6dr.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.mobile.eesup"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
