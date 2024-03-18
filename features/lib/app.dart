@@ -5,7 +5,6 @@ import 'package:data_sources/shopping/data_source/shopping_supabase_impl.dart';
 import 'package:repository/auth/profile_repository.dart';
 import 'package:repository/eesupools/eesupool_repo.dart';
 import 'package:repository/shop/shopping_repository.dart';
-import 'package:features/core/themes/light_theme.dart';
 import 'package:features/auth/profile/bloc/profile_bloc.dart';
 import 'package:features/auth/sign_in/bloc/auth_bloc.dart';
 import 'package:features/core/navigation/app_route.dart';
@@ -19,7 +18,8 @@ import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class MainApp extends StatelessWidget {
-  MainApp({super.key});
+  MainApp({super.key, required this.theme});
+  final ThemeData theme;
   final _appRouter = AppRouter();
 
   final _authRepo = RepositoryProvider(
@@ -96,7 +96,7 @@ class MainApp extends StatelessWidget {
             },
             child: MaterialApp.router(
               debugShowCheckedModeBanner: false,
-              theme: lightTheme,
+              theme: theme,
               routerConfig: _appRouter.config(),
             ),
           ),

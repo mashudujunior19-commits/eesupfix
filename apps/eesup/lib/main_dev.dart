@@ -1,9 +1,8 @@
+import 'package:eesup/themes/light_theme.dart';
 import 'package:features/boostrap.dart';
 import 'package:features/config.dart';
 import 'package:features/core/env/app_type.dart';
 import 'package:features/core/env/flavor_type.dart';
-
-
 
 ///Main function to bootstrap the app
 Future<void> main() async {
@@ -12,5 +11,6 @@ Future<void> main() async {
       type: FlavorType.development,
       app: AppType.eesup,
     ),
+    theme: lightTheme,
   );
 }

@@ -20,7 +20,7 @@ class AppConfig {
     if (env == FlavorType.development || env == FlavorType.test) {
       await dotenv.load(fileName: ".dev.env");
     } else if (env == FlavorType.development) {
-      await dotenv.load(fileName: ".eesup.env");
+      await dotenv.load(fileName: ".env");
     }
   }
 

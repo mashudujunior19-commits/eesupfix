@@ -1,4 +1,5 @@
 import 'package:auto_route/annotations.dart';
+import 'package:auto_route/auto_route.dart';
 import 'package:features/core/widgets/loading_state.dart';
 import 'package:flutter/material.dart';
 
@@ -8,6 +9,7 @@ class StartUpScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+  
     return const SafeArea(
       child: Scaffold(
         key: Key('start_up_screen'),
