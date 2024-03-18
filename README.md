@@ -39,7 +39,12 @@ We use Melos to streamline the management of our monorepo project. Here are key 
 
 3. **docs**: Project documentation.
 
-4. **features**: Application-specific features used by `main.dart` within the apps
+4. **features**: This folder contains the core user interface (UI) components and business logic for the applications. Here's what makes it important:
+
+   * **UI Building Blocks:**  Houses the reusable UI elements that form the visual structure of the apps.  
+   * **Logic Hub:**  Implements the functionality and decision-making processes behind user interactions.
+   * **Package Integration:**  This is where code from the shared packages (in the "packages" folder) comes together to create a cohesive user experience.
+   * **Main Entry Point:** The `main.dart` files within the apps directly interact with the code in the "features" folder to bring everything to life.
 
 5. **backend**: 
     * **supabase**: Database schema and migrations
