@@ -12,7 +12,7 @@
             "type": "dart",
             "request": "launch",
             "cwd": "apps\\eesup",
-            "program": "lib\\main_prod.dart"
+            "program": "lib\\main.dart"
         },
         {
             "name": "EESUp(TEST)",
@@ -33,7 +33,7 @@
             "type": "dart",
             "request": "launch",
             "cwd": "apps\\my_kasi_shop",
-            "program": "lib\\main_prod.dart"
+            "program": "lib\\main.dart"
         },
         {
             "name": "MyKasi(TEST)",
