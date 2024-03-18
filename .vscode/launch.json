@@ -1,0 +1,46 @@
+{
+    "configurations": [
+        {
+            "name": "EESUp(DEV)",
+            "type": "dart",
+            "request": "launch",
+            "cwd": "apps\\eesup",
+            "program": "lib\\main_dev.dart"
+        },
+        {
+            "name": "EESUp(PROD)",
+            "type": "dart",
+            "request": "launch",
+            "cwd": "apps\\eesup",
+            "program": "lib\\main_prod.dart"
+        },
+        {
+            "name": "EESUp(TEST)",
+            "type": "dart",
+            "request": "launch",
+            "cwd": "apps\\eesup",
+            "program": "lib\\main_test.dart"
+        },
+        {
+            "name": "MyKasi(DEV)",
+            "type": "dart",
+            "request": "launch",
+            "cwd": "apps\\my_kasi_shop",
+            "program": "lib\\main_dev.dart"
+        },
+        {
+            "name": "MyKasi(PROD)",
+            "type": "dart",
+            "request": "launch",
+            "cwd": "apps\\my_kasi_shop",
+            "program": "lib\\main_prod.dart"
+        },
+        {
+            "name": "MyKasi(TEST)",
+            "type": "dart",
+            "request": "launch",
+            "cwd": "apps\\my_kasi_shop",
+            "program": "lib\\main_test.dart"
+        }
+    ]
+}
