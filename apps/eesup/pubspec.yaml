@@ -8,7 +8,7 @@ environment:
 
 dependencies:
   features:
-    path: C:\Users\miso\OneDrive\Desktop\eesup-frontend\features
+    path: ../../../eesup-frontend/features
   flutter:
     sdk: flutter
   google_fonts: ^6.2.1

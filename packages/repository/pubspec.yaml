@@ -10,7 +10,7 @@ environment:
 dependencies:
   dartz: ^0.10.1
   data_sources:
-    path: C:\Users\miso\OneDrive\Desktop\eesup-frontend\packages\data_sources
+    path: ../../packages/data_sources
   email_validator: ^2.1.17
   flutter:
     sdk: flutter
