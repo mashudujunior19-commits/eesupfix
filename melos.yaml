@@ -13,9 +13,12 @@ scripts:
   format:
     description: Format code
     exec: dart format --set-exit-if-changed .
+  fresh:
+    exec: flutter clean && dart pub get
+    description: Cleans and gets dependencies
   pg:
     exec: dart pub get
-    description: Gets pub dependencies
+    description: Gets dependencies
   cl:
     exec: flutter clean
     description: Clean flutter project

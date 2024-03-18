@@ -5,7 +5,7 @@ import 'package:features/core/env/flavor_type.dart';
 
 
 ///Main function to bootstrap the app
-Future<void> main(List<String> args) async {
+Future<void> main() async {
   return bootstrap(
    environment: Flavor(
       type: FlavorType.development,
