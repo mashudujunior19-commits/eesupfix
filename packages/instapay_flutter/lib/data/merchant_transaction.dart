@@ -42,7 +42,9 @@ class MerchantTransaction with _$MerchantTransaction {
     @JsonKey(name: 'm_back2shop_url') String? mBack2shopUrl,
     @JsonKey(name: 'm_email_address') String? mEmailAddress,
     @JsonKey(name: 'future_use') String? futureUse,
+    @JsonKey(name: 'sendbox_url')required String sendboxUrl,
     required  String secret,
+
   }) = _MerchantTransaction;
 
   factory MerchantTransaction.fromJson(Map<String, dynamic> json) =>

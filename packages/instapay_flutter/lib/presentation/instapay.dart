@@ -61,10 +61,8 @@ class _InstapayFlutterState extends State<InstapayFlutter> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        body: WebViewWidget(controller: controller),
-      ),
+    return Scaffold(
+      body: WebViewWidget(controller: controller),
     );
   }
 }

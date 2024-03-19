@@ -88,6 +88,8 @@ mixin _$MerchantTransaction {
   String? get mEmailAddress => throw _privateConstructorUsedError;
   @JsonKey(name: 'future_use')
   String? get futureUse => throw _privateConstructorUsedError;
+  @JsonKey(name: 'sendbox_url')
+  String get sendboxUrl => throw _privateConstructorUsedError;
   String get secret => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -137,6 +139,7 @@ abstract class $MerchantTransactionCopyWith<$Res> {
       @JsonKey(name: 'm_back2shop_url') String? mBack2shopUrl,
       @JsonKey(name: 'm_email_address') String? mEmailAddress,
       @JsonKey(name: 'future_use') String? futureUse,
+      @JsonKey(name: 'sendbox_url') String sendboxUrl,
       String secret});
 }
 
@@ -187,6 +190,7 @@ class _$MerchantTransactionCopyWithImpl<$Res, $Val extends MerchantTransaction>
     Object? mBack2shopUrl = freezed,
     Object? mEmailAddress = freezed,
     Object? futureUse = freezed,
+    Object? sendboxUrl = null,
     Object? secret = null,
   }) {
     return _then(_value.copyWith(
@@ -326,6 +330,10 @@ class _$MerchantTransactionCopyWithImpl<$Res, $Val extends MerchantTransaction>
           ? _value.futureUse
           : futureUse // ignore: cast_nullable_to_non_nullable
               as String?,
+      sendboxUrl: null == sendboxUrl
+          ? _value.sendboxUrl
+          : sendboxUrl // ignore: cast_nullable_to_non_nullable
+              as String,
       secret: null == secret
           ? _value.secret
           : secret // ignore: cast_nullable_to_non_nullable
@@ -377,6 +385,7 @@ abstract class _$$MerchantTransactionImplCopyWith<$Res>
       @JsonKey(name: 'm_back2shop_url') String? mBack2shopUrl,
       @JsonKey(name: 'm_email_address') String? mEmailAddress,
       @JsonKey(name: 'future_use') String? futureUse,
+      @JsonKey(name: 'sendbox_url') String sendboxUrl,
       String secret});
 }
 
@@ -425,6 +434,7 @@ class __$$MerchantTransactionImplCopyWithImpl<$Res>
     Object? mBack2shopUrl = freezed,
     Object? mEmailAddress = freezed,
     Object? futureUse = freezed,
+    Object? sendboxUrl = null,
     Object? secret = null,
   }) {
     return _then(_$MerchantTransactionImpl(
@@ -564,6 +574,10 @@ class __$$MerchantTransactionImplCopyWithImpl<$Res>
           ? _value.futureUse
           : futureUse // ignore: cast_nullable_to_non_nullable
               as String?,
+      sendboxUrl: null == sendboxUrl
+          ? _value.sendboxUrl
+          : sendboxUrl // ignore: cast_nullable_to_non_nullable
+              as String,
       secret: null == secret
           ? _value.secret
           : secret // ignore: cast_nullable_to_non_nullable
@@ -610,6 +624,7 @@ class _$MerchantTransactionImpl implements _MerchantTransaction {
       @JsonKey(name: 'm_back2shop_url') this.mBack2shopUrl,
       @JsonKey(name: 'm_email_address') this.mEmailAddress,
       @JsonKey(name: 'future_use') this.futureUse,
+      @JsonKey(name: 'sendbox_url') required this.sendboxUrl,
       required this.secret});
 
   factory _$MerchantTransactionImpl.fromJson(Map<String, dynamic> json) =>
@@ -718,11 +733,14 @@ class _$MerchantTransactionImpl implements _MerchantTransaction {
   @JsonKey(name: 'future_use')
   final String? futureUse;
   @override
+  @JsonKey(name: 'sendbox_url')
+  final String sendboxUrl;
+  @override
   final String secret;
 
   @override
   String toString() {
-    return 'MerchantTransaction(mUuid: $mUuid, mAccountUuid: $mAccountUuid, mTxOrderNr: $mTxOrderNr, mTxId: $mTxId, mTxCurrency: $mTxCurrency, mTxAmount: $mTxAmount, mTxItemName: $mTxItemName, mTxItemDescription: $mTxItemDescription, mMessage: $mMessage, mCategory1: $mCategory1, mCategory2: $mCategory2, mCategory3: $mCategory3, mSiteName: $mSiteName, mSiteReference: $mSiteReference, mCardAllowed: $mCardAllowed, mEftAllowed: $mEftAllowed, mPassAllowed: $mPassAllowed, mChipsAllowed: $mChipsAllowed, mTridentAllowed: $mTridentAllowed, mPayatAllowed: $mPayatAllowed, bName: $bName, bSurname: $bSurname, bEmail: $bEmail, bMobile: $bMobile, mTxInvoiceNr: $mTxInvoiceNr, mTxDocumentRef: $mTxDocumentRef, mTxDueDate: $mTxDueDate, mReturnUrl: $mReturnUrl, mCancelUrl: $mCancelUrl, mPendingUrl: $mPendingUrl, mNotifyUrl: $mNotifyUrl, mBack2shopUrl: $mBack2shopUrl, mEmailAddress: $mEmailAddress, futureUse: $futureUse, secret: $secret)';
+    return 'MerchantTransaction(mUuid: $mUuid, mAccountUuid: $mAccountUuid, mTxOrderNr: $mTxOrderNr, mTxId: $mTxId, mTxCurrency: $mTxCurrency, mTxAmount: $mTxAmount, mTxItemName: $mTxItemName, mTxItemDescription: $mTxItemDescription, mMessage: $mMessage, mCategory1: $mCategory1, mCategory2: $mCategory2, mCategory3: $mCategory3, mSiteName: $mSiteName, mSiteReference: $mSiteReference, mCardAllowed: $mCardAllowed, mEftAllowed: $mEftAllowed, mPassAllowed: $mPassAllowed, mChipsAllowed: $mChipsAllowed, mTridentAllowed: $mTridentAllowed, mPayatAllowed: $mPayatAllowed, bName: $bName, bSurname: $bSurname, bEmail: $bEmail, bMobile: $bMobile, mTxInvoiceNr: $mTxInvoiceNr, mTxDocumentRef: $mTxDocumentRef, mTxDueDate: $mTxDueDate, mReturnUrl: $mReturnUrl, mCancelUrl: $mCancelUrl, mPendingUrl: $mPendingUrl, mNotifyUrl: $mNotifyUrl, mBack2shopUrl: $mBack2shopUrl, mEmailAddress: $mEmailAddress, futureUse: $futureUse, sendboxUrl: $sendboxUrl, secret: $secret)';
   }
 
   @override
@@ -793,6 +811,8 @@ class _$MerchantTransactionImpl implements _MerchantTransaction {
                 other.mEmailAddress == mEmailAddress) &&
             (identical(other.futureUse, futureUse) ||
                 other.futureUse == futureUse) &&
+            (identical(other.sendboxUrl, sendboxUrl) ||
+                other.sendboxUrl == sendboxUrl) &&
             (identical(other.secret, secret) || other.secret == secret));
   }
 
@@ -834,6 +854,7 @@ class _$MerchantTransactionImpl implements _MerchantTransaction {
         mBack2shopUrl,
         mEmailAddress,
         futureUse,
+        sendboxUrl,
         secret
       ]);
 
@@ -889,6 +910,7 @@ abstract class _MerchantTransaction implements MerchantTransaction {
       @JsonKey(name: 'm_back2shop_url') final String? mBack2shopUrl,
       @JsonKey(name: 'm_email_address') final String? mEmailAddress,
       @JsonKey(name: 'future_use') final String? futureUse,
+      @JsonKey(name: 'sendbox_url') required final String sendboxUrl,
       required final String secret}) = _$MerchantTransactionImpl;
 
   factory _MerchantTransaction.fromJson(Map<String, dynamic> json) =
@@ -996,6 +1018,9 @@ abstract class _MerchantTransaction implements MerchantTransaction {
   @override
   @JsonKey(name: 'future_use')
   String? get futureUse;
+  @override
+  @JsonKey(name: 'sendbox_url')
+  String get sendboxUrl;
   @override
   String get secret;
   @override

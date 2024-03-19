@@ -43,6 +43,7 @@ _$MerchantTransactionImpl _$$MerchantTransactionImplFromJson(
       mBack2shopUrl: json['m_back2shop_url'] as String?,
       mEmailAddress: json['m_email_address'] as String?,
       futureUse: json['future_use'] as String?,
+      sendboxUrl: json['sendbox_url'] as String,
       secret: json['secret'] as String,
     );
 
@@ -83,5 +84,6 @@ Map<String, dynamic> _$$MerchantTransactionImplToJson(
       'm_back2shop_url': instance.mBack2shopUrl,
       'm_email_address': instance.mEmailAddress,
       'future_use': instance.futureUse,
+      'sendbox_url': instance.sendboxUrl,
       'secret': instance.secret,
     };

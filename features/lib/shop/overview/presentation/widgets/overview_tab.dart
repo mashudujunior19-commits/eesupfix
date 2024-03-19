@@ -53,23 +53,45 @@ class OverviewTab extends StatelessWidget {
                       var now = DateTime.now();
                       var formatter = DateFormat('yyyy-MM-dd');
                       String formattedDate = formatter.format(now);
+                      final merchantId = dotenv.env['INSTA_PAY_MERCHANT_ID'];
+                      final accountUUid = dotenv.env['INSTA_PAY_ACCOUNT_ID'];
+                      final sendbox = dotenv.env['INSTAPAY_SENDBOX'];
+                      final authKey = dotenv.env['INSTAPAY_AUTH_KEY'];
+                      final secret = dotenv.env['INSTA_PAY_SECRET'];
+                      final successUrl = dotenv.env['INSAPAY_SUCCESS_URL'];
+                      final failedUrl = dotenv.env['INSAPAY_FAILED_URL'];
+                      final notifyUrl = dotenv.env['INSAPAY_NOTIFY_URL'];
+
+                      if (sendbox == null ||
+                          merchantId == null ||
+                          accountUUid == null ||
+                          authKey == null ||
+                          secret == null ||
+                          successUrl == null ||
+                          failedUrl == null ||
+                          notifyUrl == null) {
+                        context.snackBarError(
+                          'Failed to initiat the payment, if the problem persists, please contact support.',
+                        );
+                        return;
+                      }
+
                       context.router
                           .push(
                         InstapayRoute(
                           transaction: MerchantTransaction(
-                            mUuid: dotenv.env['INSTA_PAY_MERCHANT_ID']!,
-                            mAccountUuid: dotenv.env['INSTA_PAY_ACCOUNT_ID']!,
+                            mUuid: merchantId,
+                            mAccountUuid: accountUUid,
                             mTxOrderNr: 'EES12345678967432134',
                             mTxId: '9370832a-ce36-43d6-83f3-e14d611bc2de',
                             mTxCurrency: 'ZAR',
                             mCategory1: '1234455',
                             mCategory2: 'Order',
-                            mCategory3:
-                                'eesup_iyxjp1tlR2rClGJZUK6B0ZqBs8CR9hjqrJM3PrABKQEq',
+                            mCategory3: authKey,
                             mTxAmount: 560.toStringAsFixed(2),
                             mTxItemName: 'Basket Items',
                             mTxItemDescription: 'The item(s) being ordered',
-                            secret: dotenv.env['INSTA_PAY_SECRET']!,
+                            secret: secret,
                             mEftAllowed: true,
                             mCardAllowed: true,
                             mPassAllowed: false,
@@ -83,12 +105,10 @@ class OverviewTab extends StatelessWidget {
                             bSurname: 'Soap',
                             bEmail: 'misomenze6@gmail.com',
                             bMobile: '+2719582572',
-                            mReturnUrl:
-                                'https://eesup.com/wp-content/payment_success.php',
-                            mBack2shopUrl:
-                                'https://eesup.com/wp-content/payment_failed.php',
-                            mNotifyUrl:
-                                'https://zngp5d89-8080.inc1.devtunnels.ms/v1/payments/insta_pay',
+                            mReturnUrl: successUrl,
+                            mBack2shopUrl: failedUrl,
+                            mNotifyUrl: notifyUrl,
+                            sendboxUrl: sendbox,
                           ),
                         ),
                       )
@@ -96,7 +116,7 @@ class OverviewTab extends StatelessWidget {
                         context.snackBarSuccess(value.toString());
                       });
                     },
-                    // eesup_iyxjp1tlR2rClGJZUK6B0ZqBs8CR9hjqrJM3PrABKQEq
+                  
                     icon: const Icon(Icons.payment),
                   )
 

@@ -106,7 +106,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     );
   $checksum = md5(implode('_', $checksum_string));
 ?>
-    <form action="https://webpay-sandbox.omnea.co.za" method="POST">
+    <form action="" method="POST">
         <input type="hidden" name="m_uuid" value="<?= $mUUID?>">
         <input type="hidden" name="m_account_uuid" value="<?= $mAccountUUID?>">
         <input type="hidden" name="b_email" value="<?= $bEmail?>">
