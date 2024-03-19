@@ -46,6 +46,7 @@ class EESUpoolsTypeView extends StatelessWidget {
                       ),
                     Expanded(
                       child: ListView.builder(
+                        padding: const EdgeInsets.only(bottom: 300),
                         itemCount: state.eesupools.length,
                         itemBuilder: (context, index) {
                           final pool = state.eesupools[index];

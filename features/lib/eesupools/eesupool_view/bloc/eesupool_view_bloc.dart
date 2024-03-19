@@ -8,6 +8,13 @@ part 'eesupool_view_state.dart';
 
 class EESUpoolViewBloc extends Bloc<EESUpoolViewEvent, EESUpoolViewState> {
   EESUpoolViewBloc() : super(EESUpoolViewLoading()) {
-    on<EESUpoolViewLoaded>((event, emit) {});
+    on<EESUpoolViewLoaded>((event, emit) {
+      emit(EESUpoolViewLoading());
+      if (event.eesupool != null) {
+        emit(CurrentEESUpoolView(event.eesupool!));
+      } else {
+        //TODO: fetch pool by id
+      }
+    });
   }
 }

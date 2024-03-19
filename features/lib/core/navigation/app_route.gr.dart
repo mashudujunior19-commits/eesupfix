@@ -9,20 +9,18 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:auto_route/auto_route.dart' as _i8;
-import 'package:features/auth/reset_password/reset_password_screen.dart'
-    as _i4;
+import 'package:data_sources/eesupools/models/eesupool.dart' as _i10;
+import 'package:features/auth/reset_password/reset_password_screen.dart' as _i4;
 import 'package:features/auth/sign_in/sign_in_screen.dart' as _i6;
 import 'package:features/auth/start_up_screen.dart' as _i7;
 import 'package:features/eesupools/eesupool_view/presentation/eesupool_view_screen.dart'
     as _i1;
-import 'package:features/finances/instapay/instapay_screen.dart'
-    as _i2;
-import 'package:features/referrals/presentation/referrals_screen.dart'
-    as _i3;
+import 'package:features/finances/instapay/instapay_screen.dart' as _i2;
+import 'package:features/referrals/presentation/referrals_screen.dart' as _i3;
 import 'package:features/shop/overview/presentation/shop_overview_screen.dart'
     as _i5;
 import 'package:flutter/material.dart' as _i9;
-import 'package:instapay_flutter/data/merchant_transaction.dart' as _i10;
+import 'package:instapay_flutter/data/merchant_transaction.dart' as _i11;
 
 abstract class $AppRouter extends _i8.RootStackRouter {
   $AppRouter({super.navigatorKey});
@@ -30,9 +28,15 @@ abstract class $AppRouter extends _i8.RootStackRouter {
   @override
   final Map<String, _i8.PageFactory> pagesMap = {
     EESUpoolViewRoute.name: (routeData) {
+      final args = routeData.argsAs<EESUpoolViewRouteArgs>(
+          orElse: () => const EESUpoolViewRouteArgs());
       return _i8.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const _i1.EESUpoolViewScreen(),
+        child: _i1.EESUpoolViewScreen(
+          key: args.key,
+          poolId: args.poolId,
+          pool: args.pool,
+        ),
       );
     },
     InstapayRoute.name: (routeData) {
@@ -80,16 +84,45 @@ abstract class $AppRouter extends _i8.RootStackRouter {
 
 /// generated route for
 /// [_i1.EESUpoolViewScreen]
-class EESUpoolViewRoute extends _i8.PageRouteInfo<void> {
-  const EESUpoolViewRoute({List<_i8.PageRouteInfo>? children})
-      : super(
+class EESUpoolViewRoute extends _i8.PageRouteInfo<EESUpoolViewRouteArgs> {
+  EESUpoolViewRoute({
+    _i9.Key? key,
+    int? poolId,
+    _i10.EESUpool? pool,
+    List<_i8.PageRouteInfo>? children,
+  }) : super(
           EESUpoolViewRoute.name,
+          args: EESUpoolViewRouteArgs(
+            key: key,
+            poolId: poolId,
+            pool: pool,
+          ),
           initialChildren: children,
         );
 
   static const String name = 'EESUpoolViewRoute';
 
-  static const _i8.PageInfo<void> page = _i8.PageInfo<void>(name);
+  static const _i8.PageInfo<EESUpoolViewRouteArgs> page =
+      _i8.PageInfo<EESUpoolViewRouteArgs>(name);
+}
+
+class EESUpoolViewRouteArgs {
+  const EESUpoolViewRouteArgs({
+    this.key,
+    this.poolId,
+    this.pool,
+  });
+
+  final _i9.Key? key;
+
+  final int? poolId;
+
+  final _i10.EESUpool? pool;
+
+  @override
+  String toString() {
+    return 'EESUpoolViewRouteArgs{key: $key, poolId: $poolId, pool: $pool}';
+  }
 }
 
 /// generated route for
@@ -97,7 +130,7 @@ class EESUpoolViewRoute extends _i8.PageRouteInfo<void> {
 class InstapayRoute extends _i8.PageRouteInfo<InstapayRouteArgs> {
   InstapayRoute({
     _i9.Key? key,
-    required _i10.MerchantTransaction transaction,
+    required _i11.MerchantTransaction transaction,
     List<_i8.PageRouteInfo>? children,
   }) : super(
           InstapayRoute.name,
@@ -122,7 +155,7 @@ class InstapayRouteArgs {
 
   final _i9.Key? key;
 
-  final _i10.MerchantTransaction transaction;
+  final _i11.MerchantTransaction transaction;
 
   @override
   String toString() {

@@ -76,7 +76,7 @@ class EESUpoolSupabaseImp implements EESUpoolDataSource {
       'get_user_eesupools_v2',
       params: {
         'id': sessionId,
-        'limit_to': 500,
+        'limit_to': 100,
         'pool_type': type.toString(),
       },
     );

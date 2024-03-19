@@ -1,16 +1,150 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:data_sources/eesupools/models/eesupool.dart';
+import 'package:data_sources/eesupools/models/eesupool_level.dart';
+import 'package:data_sources/eesupools/models/eesupool_member.dart';
+import 'package:data_sources/eesupools/models/eesupool_type.dart';
+import 'package:features/core/extensions/bg_image_deco_ext.dart';
+import 'package:features/core/extensions/context_theme_ext.dart';
+import 'package:features/eesupools/eesupool_view/bloc/eesupool_view_bloc.dart';
+import 'package:features/eesupools/eesupool_view/presentation/tabs/chats/presentation/chat_tab.dart';
 import 'package:flutter/material.dart';
-
-
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:loader_overlay/loader_overlay.dart';
+import 'widgets/eesupool_view_tab_bar.dart';
 
 @RoutePage()
 class EESUpoolViewScreen extends StatelessWidget {
-  const EESUpoolViewScreen({super.key});
+  //we take both the poolId and the pool object
+  //if we get the id, we can fetch the pool object from the repository
+  //if we get the pool object, we can use it directly
+  const EESUpoolViewScreen({super.key, this.poolId, this.pool});
+  final int? poolId;
+  final EESUpool? pool;
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(),
+    return BlocProvider(
+      create: (context) => EESUpoolViewBloc()
+        ..add(EESUpoolViewLoaded(id: poolId, eesupool: pool)),
+      child: BlocConsumer<EESUpoolViewBloc, EESUpoolViewState>(
+        listener: (context, state) {
+          if (state is EESUpoolViewLoading) {
+            context.loaderOverlay.show();
+          } else {
+            context.loaderOverlay.hide();
+          }
+        },
+        builder: (context, state) {
+          return SafeArea(
+            child: Scaffold(
+              body: Container(
+                width: context.width,
+                height: context.height,
+                decoration: context.bgImage,
+                child: () {
+                  if (state is CurrentEESUpoolView) {
+                    final pool = state.eesupool;
+                    final tabs = _getCorrectTabs(pool);
+                    return DefaultTabController(
+                      length: tabs.length,
+                      child: Column(
+                        children: [
+                          Container(
+                            color: Colors.white,
+                            child: Row(
+                              children: [
+                                const BackButton(),
+                                EESUpoolViewTabBar(
+                                  tabs: tabs,
+                                  key: const Key('pool_getCorrectTabs'),
+                                ),
+                              ],
+                            ),
+                          ),
+                          Expanded(
+                            child: TabBarView(
+                              children: [
+                                ..._getTabBarViews(pool),
+                              ],
+                            ),
+                          )
+                        ],
+                      ),
+                    );
+                  }
+                }(),
+              ),
+            ),
+          );
+        },
+      ),
     );
+  }
+}
+
+List<Widget> _getTabBarViews(EESUpool pool) {
+  final isAdmin = pool.role == EESUpoolMemberRole.admin;
+  final type = pool.type;
+  final level = pool.level;
+  return [
+    ChatsTab(pool: pool),
+    ChatsTab(pool: pool),
+    ChatsTab(pool: pool),
+    ChatsTab(pool: pool),
+    ChatsTab(pool: pool),
+  ];
+  // if (isAdmin) {
+  //   return [
+  //     const ChatsTab(), const ChatsTab(), const ChatsTab(), const ChatsTab(),
+  //     // const ChatsTab(),
+  //     // if (type == EESUpoolType.trade) const EESUpoolOrdersTab(),
+  //     // const EventsViewTab(),
+  //     // if (type == EESUpoolType.Kasi && level != EESUpoolLevel.Street)
+  //     //   const DescendantsTab(),
+  //     // const MembersTab(),
+  //     // const SettingsTab(),
+  //   ];
+  // } else if (!isAdmin && type == EESUpoolType.interestGroup) {
+  //   return [
+  //     // const ChatsTab(),
+  //     // const EventsViewTab(),
+  //     // const MembersTab(),
+  //   ];
+  // } else {
+  //   return [
+  //     const ChatsTab(),
+  //     // const EESUpoolOrdersTab(),
+  //     // const MembersTab(),
+  //   ];
+  // }
+}
+
+List<Tab> _getCorrectTabs(EESUpool pool) {
+  final isAdmin = pool.role == EESUpoolMemberRole.admin;
+  final type = pool.type;
+  final level = pool.level;
+
+  if (isAdmin) {
+    return [
+      const Tab(text: 'Chats'),
+      if (type == EESUpoolType.trade) const Tab(text: 'Orders'),
+      const Tab(text: 'Events'),
+      if (type == EESUpoolType.Kasi && level != EESUpoolLevel.Street)
+        const Tab(text: 'MyKasi Tree'),
+      const Tab(text: 'Members'),
+      const Tab(text: 'Settings'),
+    ];
+  } else if (!isAdmin && type == EESUpoolType.interestGroup) {
+    return [
+      const Tab(text: 'Chats'),
+      const Tab(text: 'Events'),
+      const Tab(text: 'Members'),
+    ];
+  } else {
+    return [
+      const Tab(text: 'Chats'),
+      const Tab(text: 'Orders'),
+      const Tab(text: 'Members'),
+    ];
   }
 }
