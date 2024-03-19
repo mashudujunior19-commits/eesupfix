@@ -41,19 +41,36 @@ class InstapayServices {
       });
     }
 
-    return Response.json(statusCode: HttpStatus.ok, body: {
-      'status': 'success',
-      'message': 'Checksum valid',
-    });
+    // return Response.json(statusCode: HttpStatus.ok, body: {
+    //   'status': 'success',
+    //   'message': 'Checksum valid',
+    // });
+    final reference = int.tryParse(json['payeeCategory1']);
+
+    if (reference == null) {
+      return Response.json(statusCode: HttpStatus.badRequest, body: {
+        'status': 'error',
+        'message': 'Invalid reference id',
+      });
+    }
+
+    final type = json['payeeCategory2'];
+
+    if (type == null) {
+      return Response.json(statusCode: HttpStatus.badRequest, body: {
+        'status': 'error',
+        'message': 'Invalid type',
+      });
+    }
 
     //confirm payment
-    // final response = await _updatePayment(
-    //   json['payeeCategory1'],
-    //   json['payeeCategory2'],
-    //   InstapayStatus.fromString(json['requestStatus']),
-    // );
+    final response = await _updatePayment(
+      reference,
+      type,
+      InstapayStatus.fromString(json['requestStatus']),
+    );
 
-    // return response;
+    return response;
   }
 
   Future<Response> _updatePayment(
