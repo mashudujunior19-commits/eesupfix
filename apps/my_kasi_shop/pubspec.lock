@@ -170,7 +170,7 @@ packages:
     source: hosted
     version: "0.10.1"
   data_sources:
-    dependency: transitive
+    dependency: "direct overridden"
     description:
       path: "../../packages/data_sources"
       relative: true
@@ -471,7 +471,7 @@ packages:
     source: hosted
     version: "4.1.7"
   instapay_flutter:
-    dependency: transitive
+    dependency: "direct overridden"
     description:
       path: "../../packages/instapay_flutter"
       relative: true
@@ -767,7 +767,7 @@ packages:
     source: hosted
     version: "2.0.1"
   repository:
-    dependency: transitive
+    dependency: "direct overridden"
     description:
       path: "../../packages/repository"
       relative: true

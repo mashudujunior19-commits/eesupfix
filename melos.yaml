@@ -1,10 +1,9 @@
 name: eesup_frontend
 
 packages:
-  - apps/**
-  - features/**
-  - docs/**
-  - packages/**
+   - apps/**
+   - features
+   - packages/**
 
 
 scripts:

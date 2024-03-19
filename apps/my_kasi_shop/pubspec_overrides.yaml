@@ -1,0 +1,10 @@
+# melos_managed_dependency_overrides: data_sources,features,instapay_flutter,repository
+dependency_overrides:
+  data_sources:
+    path: ..\\..\\packages\\data_sources
+  features:
+    path: ..\\..\\features
+  instapay_flutter:
+    path: ..\\..\\packages\\instapay_flutter
+  repository:
+    path: ..\\..\\packages\\repository
