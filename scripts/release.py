@@ -40,11 +40,11 @@ def check_flavors(app_path, flavor_regex="FlavorType.production"):
 
     return is_valid
 
-def build_app_bundles():
+def build_app_bundles(path, pl, release_type):
     """Builds app bundles using shorebird."""
 
     print("Checking environment...")  # Add print statements for debugging
-    is_valid = check_flavors(eesup_root_path + "lib/")
+    is_valid = check_flavors(path + "lib/")
 
     if is_valid:
         print("Environment is valid. Starting build...")
@@ -53,7 +53,8 @@ def build_app_bundles():
         try:
             #Change the folder to the correct app and then build and app bundle
             #If the tests and the above futhur verifications pass
-            subprocess.run(f"cd {eesup_root_path} && flutter build appbundle", shell=True)
+            subprocess.run(f"cd {path} && flutter build appbundle", shell=True)
+
             print("Build successful!")
         except OSError as e:
             print(f"Error during build: {e}")
@@ -61,11 +62,33 @@ def build_app_bundles():
         print("Environment is not valid for production build.")
 
 def main():
-    args = sys.argv
-    app = args[1]
-    platform = args[2]
-    print(app)
-    print(platform)
+
+    is_new_version = input("\nIs this a new version? (y/n) ")
+
+    if is_new_version == "y":
+        args = sys.argv
+
+        if args.__len__ < 4:
+            print("Usage: python release.py --app=APP_NAME --os=OS_NAME --release_type=APP_TYPE")
+            return
+
+        app = args[1]
+        platform = args[2]
+        release_type = args[3]
+
+
+        currentPath = ''
+
+        if app == "--app=eesup":
+            currentPath = eesup_root_path
+        elif app == "--app=my_kasi_shop":
+            currentPath = mykasi_app_path
+        else:
+            print("Invalid app name.")
+            return
+
+
+        build_app_bundles(currentPath,platform, release_type)
 
     #build_app_bundles()
 #   python release.py --app=eesup --os=ios
