@@ -8,9 +8,8 @@ import 'package:features/core/env/flavor_type.dart';
 Future<void> main() async {
   return bootstrap(
     environment: Flavor(
-      type: FlavorType.development,
+      type: FlavorType.test,
       app: AppType.eesup,
     ),
-
   );
 }
