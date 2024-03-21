@@ -78,6 +78,8 @@ class PaymentSupabaseImpl implements PaymentApi {
         });
         return true;
       } else if (type == 'Voucher') {
+        // ignore: avoid_print
+        print('Confirming voucher EFT...');
         await _supabase.schema('finances').rpc('confirm_voucher_eft', params: {
           'reference': orderId,
           'is_confirmed': status == InstapayStatus.completed,
@@ -86,6 +88,8 @@ class PaymentSupabaseImpl implements PaymentApi {
       }
       return false;
     } catch (e) {
+      // ignore: avoid_print
+      print('Error confirming voucher EFT: $e');
       return false;
     }
   }

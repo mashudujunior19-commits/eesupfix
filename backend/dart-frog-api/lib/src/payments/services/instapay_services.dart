@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'dart:convert';
 import 'dart:io';
 
@@ -41,11 +43,15 @@ class InstapayServices {
       });
     }
 
+    print("Checksum passed\n Processing payment...");
+
     // return Response.json(statusCode: HttpStatus.ok, body: {
     //   'status': 'success',
     //   'message': 'Checksum valid',
     // });
     final reference = int.tryParse(json['payeeCategory1']);
+
+    print("Retrieved reference id\n Processing payment...");
 
     if (reference == null) {
       return Response.json(statusCode: HttpStatus.badRequest, body: {
@@ -56,6 +62,8 @@ class InstapayServices {
 
     final type = json['payeeCategory2'];
 
+    print("Retrieved type\n Processing payment...");
+
     if (type == null) {
       return Response.json(statusCode: HttpStatus.badRequest, body: {
         'status': 'error',
@@ -63,12 +71,10 @@ class InstapayServices {
       });
     }
 
+    final status = InstapayStatus.fromString(json['requestStatus']);
+    print("Retrieved $status\n Processing payment...");
     //confirm payment
-    final response = await _updatePayment(
-      reference,
-      type,
-      InstapayStatus.fromString(json['requestStatus']),
-    );
+    final response = await _updatePayment(reference, type, status);
 
     return response;
   }

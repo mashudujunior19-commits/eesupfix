@@ -94,6 +94,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $mMessage = $data['m_message'] ?? null;
     $mSiteName = $data['m_site_name'] ?? null;
     $mBack2shopUrl = $data['m_back2shop_url'] ?? null;
+    $sendboxUrl = $data['sendbox_url'] ?? null;
 
 
     $checksum_string = array(
@@ -106,7 +107,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     );
   $checksum = md5(implode('_', $checksum_string));
 ?>
-    <form action="" method="POST">
+    <form action="<?= $sendboxUrl?>" method="POST">
         <input type="hidden" name="m_uuid" value="<?= $mUUID?>">
         <input type="hidden" name="m_account_uuid" value="<?= $mAccountUUID?>">
         <input type="hidden" name="b_email" value="<?= $bEmail?>">

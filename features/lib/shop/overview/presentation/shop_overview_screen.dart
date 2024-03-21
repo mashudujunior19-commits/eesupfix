@@ -4,7 +4,7 @@ import 'package:features/core/extensions/bg_image_deco_ext.dart';
 import 'package:features/eesupools/list_view/presentation/eesupool_type_view.dart';
 import 'package:features/shop/overview/presentation/my_economy_tab.dart';
 import 'package:features/shop/overview/presentation/widgets/bottom_tab_bar.dart';
-import 'package:features/shop/overview/presentation/widgets/overview_tab.dart';
+import 'package:features/shop/overview/presentation/overview_tab.dart';
 import 'package:flutter/material.dart';
 
 @RoutePage()
