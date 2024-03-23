@@ -23,38 +23,50 @@ class ChatTextFieldBloc extends Bloc<ChatTextFieldEvent, ChatTextFieldState> {
           ChatTextFieldCurrentState(const <File>[], null),
         ) {
     on<ChatAttachmentsPicked>((event, emit) {
-      final current = (state as ChatTextFieldCurrentState);
-      List<File> currentFiles = [...current.files];
-      currentFiles.addAll(event.files);
-      final replyTo = current.replyTo;
-
-      emit(ChatTextFieldCurrentState(currentFiles, replyTo));
+      if (state is ChatTextFieldCurrentState) {
+        final current = (state as ChatTextFieldCurrentState);
+        List<File> currentFiles = [...current.files];
+        currentFiles.addAll(event.files);
+        final replyTo = current.replyTo;
+        emit(ChatTextFieldCurrentState(currentFiles, replyTo));
+      }
     });
 
     on<ChatMessageReplyToAdded>((event, emit) {
-      final current = (state as ChatTextFieldCurrentState);
-      final files = current.files;
+      if (state is ChatTextFieldCurrentState) {
+        final current = (state as ChatTextFieldCurrentState);
+        final files = current.files;
+        emit(ChatTextFieldCurrentState(files, event.message));
+      }
+    });
 
-      emit(ChatTextFieldCurrentState(files, event.message));
+    on<ChatMessageReplyToRemoved>((event, emit) {
+      if (state is ChatTextFieldCurrentState) {
+        final current = (state as ChatTextFieldCurrentState);
+        final files = current.files;
+        emit(ChatTextFieldCurrentState(files, null));
+      }
     });
 
     on<ChatMessageSent>((event, emit) async {
-      if (state is ChatTextFieldCurrentState) {
-        emit(ChatLoading());
-        final message = (state as ChatTextFieldCurrentState);
-        final results = await _sendMessage(
-          event.pool.memberId!,
-          event.pool.eesupoolId!,
-          event.text,
-          event.pool.chatTagsSuggestions ?? [],
-          event.pool.isCensored ?? false,
-          event.broadcastTo ?? [],
-          message.files,
-          message.replyTo,
-        );
-
-        results.fold((l) {}, (r) {});
-      }
+      final message = (state as ChatTextFieldCurrentState);
+      emit(ChatLoading());
+      final results = await _sendMessage(
+        event.pool.memberId!,
+        event.pool.eesupoolId!,
+        event.text,
+        event.pool.chatTagsSuggestions ?? [],
+        event.pool.isCensored ?? true,
+        event.broadcastTo ?? [],
+        message.files,
+        message.replyTo,
+      );
+      print(results);
+      results.fold((l) {
+        emit(ChatTextFieldError(l));
+      }, (r) {
+        emit(ChatTextFieldCurrentState(const [], null));
+      });
     });
   }
 

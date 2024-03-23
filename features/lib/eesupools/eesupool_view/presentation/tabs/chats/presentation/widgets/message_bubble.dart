@@ -1,19 +1,28 @@
 import 'package:bootstrap_icons/bootstrap_icons.dart';
 import 'package:data_sources/eesupools/models/chat_message.dart';
+import 'package:data_sources/eesupools/models/eesupool.dart';
 import 'package:features/core/extensions/context_theme_ext.dart';
 import 'package:features/core/extensions/sizedbox_ext.dart';
+import 'package:features/eesupools/eesupool_view/presentation/tabs/chats/presentation/chat_text_field/bloc/chat_textfield_bloc.dart';
 import 'package:features/eesupools/eesupool_view/presentation/tabs/chats/presentation/widgets/message_rich_text.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 
 class MessageBubble extends StatelessWidget {
-  const MessageBubble({super.key, required this.message});
+  const MessageBubble({
+    super.key,
+    required this.message,
+    required this.pool,
+  });
+  final EESUpool pool;
   final ChatMessage message;
 
   @override
   Widget build(BuildContext context) {
-    bool isReply = 'bd49fb6c-817c-4073-982c-dca823b00f4a' == message.authorId;
+    bool isReply = pool.memberId != message.authorId;
+
     return Padding(
       padding: const EdgeInsets.only(top: 20),
       child: Row(
@@ -27,13 +36,13 @@ class MessageBubble extends StatelessWidget {
             ),
             decoration: BoxDecoration(
               color:
-                  isReply ? Colors.blue.shade50 : Colors.white.withOpacity(.6),
+                  !isReply ? Colors.blue.shade50 : Colors.white.withOpacity(.6),
               border: Border.all(color: Colors.grey.shade300),
               borderRadius: isReply ? _replyRadius() : _radius(),
             ),
             child: Column(
               crossAxisAlignment:
-                  isReply ? CrossAxisAlignment.start : CrossAxisAlignment.end,
+                  !isReply ? CrossAxisAlignment.start : CrossAxisAlignment.end,
               mainAxisSize: MainAxisSize.min,
               children: [
                 10.sH,
@@ -52,7 +61,9 @@ class MessageBubble extends StatelessWidget {
                               'Reply',
                               BootstrapIcons.reply_all,
                               () {
-                                context.read();
+                                context.read<ChatTextFieldBloc>().add(
+                                      ChatMessageReplyToAdded(message),
+                                    );
                               },
                             ),
                             _bubblPopUpOption(
@@ -83,7 +94,7 @@ class MessageBubble extends StatelessWidget {
           ),
         ],
       ),
-    );
+    ).animate().fadeIn(delay: (100).ms);
   }
 
   PopupMenuItem<String> _bubblPopUpOption(

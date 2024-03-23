@@ -1,19 +1,21 @@
 import 'dart:io';
-
 import 'package:bootstrap_icons/bootstrap_icons.dart';
 import 'package:data_sources/eesupools/models/chat_message.dart';
 import 'package:data_sources/eesupools/models/eesupool.dart';
+import 'package:features/core/extensions/context_alerts_ext.dart';
 import 'package:features/core/extensions/context_theme_ext.dart';
 import 'package:features/core/extensions/sizedbox_ext.dart';
+import 'package:features/core/extensions/slide_in_animation_ext.dart';
 import 'package:features/eesupools/eesupool_view/presentation/tabs/chats/presentation/chat_text_field/bloc/chat_textfield_bloc.dart';
 import 'package:features/eesupools/eesupool_view/presentation/tabs/chats/presentation/chat_text_field/local_files.dart';
 import 'package:features/eesupools/eesupool_view/presentation/tabs/chats/presentation/chat_text_field/topic_suggestions.dart';
 import 'package:features/eesupools/eesupool_view/presentation/tabs/chats/presentation/widgets/message_rich_text.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:file_picker/file_picker.dart';
-import 'package:repository/eesupools/eesupool_repo.dart';
+import 'package:loader_overlay/loader_overlay.dart';
 
 class ChatTextField extends StatefulWidget {
   const ChatTextField({super.key, required this.pool});
@@ -60,7 +62,17 @@ class _ChatTextFieldState extends State<ChatTextField> {
     if (poolId == null || memberId == null) return 0.sW;
 
     return BlocConsumer<ChatTextFieldBloc, ChatTextFieldState>(
-      listener: (context, state) {},
+      listener: (context, state) {
+        if (state is ChatLoading) {
+          context.loaderOverlay.show();
+        } else {
+          context.loaderOverlay.hide();
+        }
+
+        if (state is ChatTextFieldError) {
+          context.snackBarError(state.exception.message);
+        }
+      },
       builder: (context, state) {
         List<File> files = [];
         ChatMessage? replyTo;
@@ -150,7 +162,16 @@ class _ChatTextFieldState extends State<ChatTextField> {
                     ),
                   ),
                   IconButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      FocusScope.of(context).unfocus();
+                      context.read<ChatTextFieldBloc>().add(
+                            ChatMessageSent(
+                              widget.pool,
+                              controller.text,
+                              const [],
+                            ),
+                          );
+                    },
                     icon: const Padding(
                       padding: EdgeInsets.only(bottom: 20),
                       child: Icon(
@@ -170,7 +191,7 @@ class _ChatTextFieldState extends State<ChatTextField> {
           ],
         );
       },
-    );
+    ).animate().slideIn(0);
   }
 
   PopupMenuItem<dynamic> _optionPopUpOption(
@@ -213,7 +234,7 @@ class _TextField extends StatelessWidget {
         decoration: BoxDecoration(
           border: Border.all(
             color: Colors.grey.shade200,
-            width: 1,
+            width: .6,
             style: BorderStyle.solid,
           ),
           borderRadius: BorderRadiusDirectional.circular(10),
@@ -249,12 +270,59 @@ class _ReplyPreview extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        const Text('Replying'),
-        MessageRichText(message: reply.content, tags: reply.hashTags ?? [])
-      ],
-    );
+    return Container(
+      width: context.width,
+      padding: const EdgeInsets.only(left: 5),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        border: Border(
+          left: BorderSide(
+            color: context.colorScheme.primary,
+            width: 4,
+          ),
+        ),
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Transform.flip(
+                    flipY: true,
+                    flipX: true,
+                    child: const Icon(
+                      BootstrapIcons.reply_all,
+                    ),
+                  ),
+                  5.sW,
+                  const Text('Replying'),
+                ],
+              ),
+              MessageRichText(
+                margin: const EdgeInsets.only(left: 30, bottom: 10),
+                message: reply.content,
+                tags: reply.hashTags ?? [],
+              )
+            ],
+          ),
+          IconButton(
+            onPressed: () {
+              context.read<ChatTextFieldBloc>().add(
+                    ChatMessageReplyToRemoved(),
+                  );
+            },
+            icon: const Icon(
+              Icons.close_outlined,
+              color: Colors.redAccent,
+            ),
+          )
+        ],
+      ),
+    ).animate().slideIn(0);
   }
 }

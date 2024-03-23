@@ -8,6 +8,7 @@ import 'package:features/core/extensions/context_theme_ext.dart';
 import 'package:features/eesupools/eesupool_view/bloc/eesupool_view_bloc.dart';
 import 'package:features/eesupools/eesupool_view/presentation/tabs/chats/presentation/chat_tab.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:loader_overlay/loader_overlay.dart';
 import 'widgets/eesupool_view_tab_bar.dart';
@@ -60,7 +61,12 @@ class EESUpoolViewScreen extends StatelessWidget {
                                 ),
                               ],
                             ),
-                          ),
+                          ).animate().fadeIn(delay: (50).ms).slide(
+                                begin: const Offset(0, -1),
+                                end: const Offset(0, 0),
+                                duration: 600.ms,
+                                curve: Curves.easeInOutCubic,
+                              ),
                           Expanded(
                             child: TabBarView(
                               children: [

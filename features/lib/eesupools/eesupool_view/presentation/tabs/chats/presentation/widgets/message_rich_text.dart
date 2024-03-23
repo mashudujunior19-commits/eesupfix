@@ -8,9 +8,11 @@ class MessageRichText extends StatelessWidget {
     super.key,
     required this.message,
     required this.tags,
+    this.margin,
   });
   final String? message;
   final List<String> tags;
+  final EdgeInsets? margin;
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +20,7 @@ class MessageRichText extends StatelessWidget {
     final theme = Theme.of(context);
     final textTheme = theme.textTheme.bodySmall;
     return Padding(
-      padding: const EdgeInsets.only(left: 10, right: 10, top: 5),
+      padding: margin ?? const EdgeInsets.only(left: 10, right: 10, top: 5),
       child: RichText(
         text: TextSpan(
           children: [
@@ -73,7 +75,7 @@ class MessageRichText extends StatelessWidget {
             ..onTap = () async {
               //If the link is a hashtag, view the hashtag messages
               if (linkText.startsWith('#')) {
-               // context.push(ChatHashTagView.route, extra: linkText);
+                // context.push(ChatHashTagView.route, extra: linkText);
 
                 //else if the link is a url, launch the url
               } else {

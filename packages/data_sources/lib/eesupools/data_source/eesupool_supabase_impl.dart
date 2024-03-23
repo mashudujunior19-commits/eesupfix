@@ -96,6 +96,7 @@ class EESUpoolSupabaseImp implements EESUpoolDataSource {
       'limit_to': limit,
       'approved': approved,
     });
+
     List<ChatMessage> list =
         (res as List).map((e) => ChatMessage.fromJson(e)).toList();
     return list;

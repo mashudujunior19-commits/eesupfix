@@ -52,7 +52,7 @@ class ChatsTab extends StatelessWidget {
                               bottom: 40, left: 15, right: 15),
                           itemBuilder: (context, index) {
                             final chat = chats[index];
-                            return MessageBubble(message: chat);
+                            return MessageBubble(message: chat, pool: pool);
                           },
                         ),
                       );
