@@ -1,5 +1,7 @@
 // ignore_for_file: invalid_annotation_target
 
+import 'dart:io';
+
 import 'package:data_sources/eesupools/models/chat_message_reaction.dart';
 import 'package:data_sources/eesupools/models/eesupool_level.dart';
 import 'package:data_sources/eesupools/models/media_file.dart';
@@ -20,6 +22,7 @@ class ChatMessage with _$ChatMessage {
     @JsonKey(name: 'content') String? content,
     @JsonKey(name: 'reply_on_id') int? replyOnId,
     @JsonKey(name: 'attachments') @MediaFileConverter() List<MediaFile>? media,
+    @JsonKey(includeFromJson: false,includeToJson: false) @Default([]) List<File> localFiles,
     @ChatMessageConverter()
     @JsonKey(name: 'reply_message', includeToJson: false)
     ChatMessage? reply,
@@ -35,6 +38,7 @@ class ChatMessage with _$ChatMessage {
     @JsonKey(name: 'message_seens', includeToJson: false)
     @Default([])
     List<String> messageSeens,
+
   }) = _ChatMessage;
 
   factory ChatMessage.fromJson(Map<String, dynamic> json) =>

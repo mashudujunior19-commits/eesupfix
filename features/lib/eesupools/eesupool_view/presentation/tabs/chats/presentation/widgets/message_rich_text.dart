@@ -1,11 +1,10 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 ///Displays a given text with clickable links and tags
 ///
-class ChatBubbleRichText extends StatelessWidget {
-  const ChatBubbleRichText({
+class MessageRichText extends StatelessWidget {
+  const MessageRichText({
     super.key,
     required this.message,
     required this.tags,
@@ -72,35 +71,35 @@ class ChatBubbleRichText extends StatelessWidget {
           style: linkStyle,
           recognizer: TapGestureRecognizer()
             ..onTap = () async {
-              // //If the link is a hashtag, view the hashtag messages
-              // if (linkText.startsWith('#')) {
-              //   //context.push(ChatHashTagView.route, extra: linkText);
+              //If the link is a hashtag, view the hashtag messages
+              if (linkText.startsWith('#')) {
+               // context.push(ChatHashTagView.route, extra: linkText);
 
-              //   //else if the link is a url, launch the url
-              // } else {
-              //   final uri = Uri.parse(linkText);
-              //   final canLanuch = await EESUpException.guardFuture(
-              //       action: () => canLaunchUrl(uri));
+                //else if the link is a url, launch the url
+              } else {
+                // final uri = Uri.parse(linkText);
+                // final canLanuch = await EESUpException.guardFuture(
+                //     action: () => canLaunchUrl(uri));
 
-              //   canLanuch.fold((l) {
-              //     showSnackBar(context: context, message: l.message);
-              //   }, (can) async {
-              //     if (can) {
-              //       if (canLanuch.isRight()) {
-              //         final result = await EESUpException.guardFuture(
-              //             action: () => launchUrl(uri));
-              //         result.fold((l) {
-              //           showSnackBar(context: context, message: l.message);
-              //         }, (r) {});
-              //       }
-              //     } else {
-              //       showSnackBar(
-              //         context: context,
-              //         message: 'Unable to visit this url.',
-              //       );
-              //     }
-               // });
-             // }
+                // canLanuch.fold((l) {
+                //   showSnackBar(context: context, message: l.message);
+                // }, (can) async {
+                //   if (can) {
+                //     if (canLanuch.isRight()) {
+                //       final result = await EESUpException.guardFuture(
+                //           action: () => launchUrl(uri));
+                //       result.fold((l) {
+                //         showSnackBar(context: context, message: l.message);
+                //       }, (r) {});
+                //     }
+                //   } else {
+                //     showSnackBar(
+                //       context: context,
+                //       message: 'Unable to visit this url.',
+                //     );
+                //   }
+                // });
+              }
             },
         ),
       );

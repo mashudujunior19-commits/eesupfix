@@ -2,7 +2,9 @@ import 'package:data_sources/eesupools/models/eesupool.dart';
 import 'package:features/core/extensions/context_theme_ext.dart';
 import 'package:features/core/extensions/sizedbox_ext.dart';
 import 'package:features/eesupools/eesupool_view/presentation/tabs/chats/bloc/chat_bloc.dart';
-import 'package:features/eesupools/eesupool_view/presentation/tabs/chats/presentation/widgets/chat_message_bubble.dart';
+import 'package:features/eesupools/eesupool_view/presentation/tabs/chats/presentation/chat_text_field/bloc/chat_textfield_bloc.dart';
+import 'package:features/eesupools/eesupool_view/presentation/tabs/chats/presentation/chat_text_field/chat_textfield.dart';
+import 'package:features/eesupools/eesupool_view/presentation/tabs/chats/presentation/widgets/message_bubble.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
@@ -14,9 +16,18 @@ class ChatsTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => ChatBloc(context.read<EESUpoolRepository>())
-        ..add(ChatStreamStarted(pool.eesupoolId!)),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => ChatBloc(context.read<EESUpoolRepository>())
+            ..add(ChatStreamStarted(pool.eesupoolId!)),
+        ),
+        BlocProvider(
+          create: (context) => ChatTextFieldBloc(
+            context.read<EESUpoolRepository>(),
+          ),
+        ),
+      ],
       child: BlocConsumer<ChatBloc, ChatState>(
         listener: (context, state) {
           // TODO: implement listener
@@ -37,14 +48,11 @@ class ChatsTab extends StatelessWidget {
                         child: ListView.builder(
                           reverse: true,
                           itemCount: chats.length,
-                          padding: const EdgeInsets.only(bottom: 100),
+                          padding: const EdgeInsets.only(
+                              bottom: 40, left: 15, right: 15),
                           itemBuilder: (context, index) {
                             final chat = chats[index];
-                            return ChatMessageBubble(
-                              message: chat,
-                              tags: [],
-                              isAdmin: false,
-                            );
+                            return MessageBubble(message: chat);
                           },
                         ),
                       );
@@ -55,6 +63,7 @@ class ChatsTab extends StatelessWidget {
                 ],
               ),
             ),
+            bottomNavigationBar: ChatTextField(pool: pool),
           );
         },
       ),

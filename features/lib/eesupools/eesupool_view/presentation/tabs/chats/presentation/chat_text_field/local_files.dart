@@ -1,14 +1,13 @@
-import 'package:eesup_mobile/src/features/eesupools/presentation/providers/chat_text_field_notifier.dart';
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class TextFieldMedia extends ConsumerWidget {
-  const TextFieldMedia({super.key});
+class ChatTextFieldLocalFiles extends StatelessWidget {
+  const ChatTextFieldLocalFiles({super.key, required this.files});
+  final List<File> files;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final files = ref.watch(chatTextFieldProvider).files;
+  Widget build(BuildContext context) {
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
       child: Row(
@@ -17,13 +16,11 @@ class TextFieldMedia extends ConsumerWidget {
           (index) => Dismissible(
             key: UniqueKey(),
             direction: DismissDirection.up,
-            onDismissed: (direction) {
-              ref.read(chatTextFieldProvider.notifier).removeFile(index);
-            },
+            onDismissed: (direction) {},
             child: Container(
               height: 250,
               margin: const EdgeInsets.only(
-                left: 13,
+                left: 15,
                 right: 15,
                 bottom: 10,
               ),

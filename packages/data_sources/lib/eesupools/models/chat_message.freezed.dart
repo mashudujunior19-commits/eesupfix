@@ -37,6 +37,8 @@ mixin _$ChatMessage {
   @JsonKey(name: 'attachments')
   @MediaFileConverter()
   List<MediaFile>? get media => throw _privateConstructorUsedError;
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  List<File> get localFiles => throw _privateConstructorUsedError;
   @ChatMessageConverter()
   @JsonKey(name: 'reply_message', includeToJson: false)
   ChatMessage? get reply => throw _privateConstructorUsedError;
@@ -80,6 +82,8 @@ abstract class $ChatMessageCopyWith<$Res> {
       @JsonKey(name: 'attachments')
       @MediaFileConverter()
       List<MediaFile>? media,
+      @JsonKey(includeFromJson: false, includeToJson: false)
+      List<File> localFiles,
       @ChatMessageConverter()
       @JsonKey(name: 'reply_message', includeToJson: false)
       ChatMessage? reply,
@@ -119,6 +123,7 @@ class _$ChatMessageCopyWithImpl<$Res, $Val extends ChatMessage>
     Object? content = freezed,
     Object? replyOnId = freezed,
     Object? media = freezed,
+    Object? localFiles = null,
     Object? reply = freezed,
     Object? reactions = freezed,
     Object? hashTags = freezed,
@@ -160,6 +165,10 @@ class _$ChatMessageCopyWithImpl<$Res, $Val extends ChatMessage>
           ? _value.media
           : media // ignore: cast_nullable_to_non_nullable
               as List<MediaFile>?,
+      localFiles: null == localFiles
+          ? _value.localFiles
+          : localFiles // ignore: cast_nullable_to_non_nullable
+              as List<File>,
       reply: freezed == reply
           ? _value.reply
           : reply // ignore: cast_nullable_to_non_nullable
@@ -224,6 +233,8 @@ abstract class _$$ChatMessageImplCopyWith<$Res>
       @JsonKey(name: 'attachments')
       @MediaFileConverter()
       List<MediaFile>? media,
+      @JsonKey(includeFromJson: false, includeToJson: false)
+      List<File> localFiles,
       @ChatMessageConverter()
       @JsonKey(name: 'reply_message', includeToJson: false)
       ChatMessage? reply,
@@ -262,6 +273,7 @@ class __$$ChatMessageImplCopyWithImpl<$Res>
     Object? content = freezed,
     Object? replyOnId = freezed,
     Object? media = freezed,
+    Object? localFiles = null,
     Object? reply = freezed,
     Object? reactions = freezed,
     Object? hashTags = freezed,
@@ -303,6 +315,10 @@ class __$$ChatMessageImplCopyWithImpl<$Res>
           ? _value._media
           : media // ignore: cast_nullable_to_non_nullable
               as List<MediaFile>?,
+      localFiles: null == localFiles
+          ? _value._localFiles
+          : localFiles // ignore: cast_nullable_to_non_nullable
+              as List<File>,
       reply: freezed == reply
           ? _value.reply
           : reply // ignore: cast_nullable_to_non_nullable
@@ -349,6 +365,8 @@ class _$ChatMessageImpl implements _ChatMessage {
       @JsonKey(name: 'attachments')
       @MediaFileConverter()
       final List<MediaFile>? media,
+      @JsonKey(includeFromJson: false, includeToJson: false)
+      final List<File> localFiles = const [],
       @ChatMessageConverter()
       @JsonKey(name: 'reply_message', includeToJson: false)
       this.reply,
@@ -365,6 +383,7 @@ class _$ChatMessageImpl implements _ChatMessage {
       @JsonKey(name: 'message_seens', includeToJson: false)
       final List<String> messageSeens = const []})
       : _media = media,
+        _localFiles = localFiles,
         _reactions = reactions,
         _hashTags = hashTags,
         _broadcastTo = broadcastTo,
@@ -404,6 +423,15 @@ class _$ChatMessageImpl implements _ChatMessage {
     if (_media is EqualUnmodifiableListView) return _media;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(value);
+  }
+
+  final List<File> _localFiles;
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  List<File> get localFiles {
+    if (_localFiles is EqualUnmodifiableListView) return _localFiles;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_localFiles);
   }
 
   @override
@@ -462,7 +490,7 @@ class _$ChatMessageImpl implements _ChatMessage {
 
   @override
   String toString() {
-    return 'ChatMessage(id: $id, eesupoolId: $eesupoolId, authorId: $authorId, createdAt: $createdAt, authorName: $authorName, content: $content, replyOnId: $replyOnId, media: $media, reply: $reply, reactions: $reactions, hashTags: $hashTags, isApproved: $isApproved, isDeleted: $isDeleted, broadcastTo: $broadcastTo, messageSeens: $messageSeens)';
+    return 'ChatMessage(id: $id, eesupoolId: $eesupoolId, authorId: $authorId, createdAt: $createdAt, authorName: $authorName, content: $content, replyOnId: $replyOnId, media: $media, localFiles: $localFiles, reply: $reply, reactions: $reactions, hashTags: $hashTags, isApproved: $isApproved, isDeleted: $isDeleted, broadcastTo: $broadcastTo, messageSeens: $messageSeens)';
   }
 
   @override
@@ -483,6 +511,8 @@ class _$ChatMessageImpl implements _ChatMessage {
             (identical(other.replyOnId, replyOnId) ||
                 other.replyOnId == replyOnId) &&
             const DeepCollectionEquality().equals(other._media, _media) &&
+            const DeepCollectionEquality()
+                .equals(other._localFiles, _localFiles) &&
             (identical(other.reply, reply) || other.reply == reply) &&
             const DeepCollectionEquality()
                 .equals(other._reactions, _reactions) &&
@@ -509,6 +539,7 @@ class _$ChatMessageImpl implements _ChatMessage {
       content,
       replyOnId,
       const DeepCollectionEquality().hash(_media),
+      const DeepCollectionEquality().hash(_localFiles),
       reply,
       const DeepCollectionEquality().hash(_reactions),
       const DeepCollectionEquality().hash(_hashTags),
@@ -545,6 +576,8 @@ abstract class _ChatMessage implements ChatMessage {
       @JsonKey(name: 'attachments')
       @MediaFileConverter()
       final List<MediaFile>? media,
+      @JsonKey(includeFromJson: false, includeToJson: false)
+      final List<File> localFiles,
       @ChatMessageConverter()
       @JsonKey(name: 'reply_message', includeToJson: false)
       final ChatMessage? reply,
@@ -589,6 +622,9 @@ abstract class _ChatMessage implements ChatMessage {
   @JsonKey(name: 'attachments')
   @MediaFileConverter()
   List<MediaFile>? get media;
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  List<File> get localFiles;
   @override
   @ChatMessageConverter()
   @JsonKey(name: 'reply_message', includeToJson: false)
