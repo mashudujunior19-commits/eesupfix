@@ -6,9 +6,9 @@ This document outlines the prerequisites, setup instructions, and project direct
 
 **Prerequisites**
 
+* **Dart:** Install Dart following instructions at  https://dart.dev/get-dart
 * **Flutter:** Download and install Flutter following the instructions at https://flutter.dev/docs/get-started/install
 * **Melos:** Install globally using `pub global activate melos`  (https://pub.dev/packages/melos)
-* **Dart:** Install Dart following instructions at  https://dart.dev/get-dart
 * **Dart-Frog:** Install globally using `pub global activate dart_frog` (https://pub.dev/packages/dart_frog)
 
 **Melos Usage**
