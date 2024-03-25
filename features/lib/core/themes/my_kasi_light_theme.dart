@@ -5,12 +5,14 @@ import 'package:google_fonts/google_fonts.dart';
 const _primaryOrange = Color.fromRGBO(252, 127, 3, 1);
 const _primaryGreen = Color.fromRGBO(48, 142, 88, 1);
 
+// ignore: non_constant_identifier_names
 final MyKasiLightTheme = ThemeData(
   colorScheme: ColorScheme.fromSeed(
     seedColor: _primaryOrange,
     primary: _primaryOrange,
     secondary: _primaryGreen,
     tertiary: Colors.grey.shade200,
+    surface: Colors.white,
   ),
   scaffoldBackgroundColor: Colors.white,
   checkboxTheme: CheckboxThemeData(

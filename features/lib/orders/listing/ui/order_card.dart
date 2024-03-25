@@ -1,19 +1,22 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:data_sources/orders/models/order.dart';
 import 'package:features/core/extensions/context_theme_ext.dart';
 import 'package:features/core/extensions/sizedbox_ext.dart';
+import 'package:features/core/navigation/app_route.gr.dart';
 import 'package:features/core/utils/date_formatter.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class OrderCard extends StatelessWidget {
   const OrderCard({
     super.key,
     required this.order,
     this.onTap,
-    required this.previllage,
+    required this.privilege,
     this.bottomChildren = const [],
   });
   final Order order;
-  final OrderEditPrivilage previllage;
+  final OrderEditPrivilage privilege;
   final void Function()? onTap;
   final List<Widget> bottomChildren;
 
@@ -48,7 +51,12 @@ class OrderCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: onTap ?? () {},
+      onTap: onTap ??
+          () {
+            context.router.push(
+              OrderTrackingRoute(order: order, privilage: privilege),
+            );
+          },
       splashColor: Colors.transparent,
       child: Container(
         margin: const EdgeInsets.only(left: 20, right: 20, top: 15),

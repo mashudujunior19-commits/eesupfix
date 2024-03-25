@@ -36,9 +36,7 @@ class MyEconomyTab extends StatelessWidget {
 }
 
 class _TabBar extends StatelessWidget {
-  const _TabBar({
-    super.key,
-  });
+  const _TabBar();
 
   @override
   Widget build(BuildContext context) {
@@ -53,7 +51,7 @@ class _TabBar extends StatelessWidget {
         isScrollable: true,
         tabAlignment: TabAlignment.start,
         labelColor: Colors.white,
-        labelStyle: context.textTheme.displayMedium?.copyWith(
+        labelStyle: context.textTheme.labelMedium?.copyWith(
           color: Colors.white,
           fontWeight: FontWeight.w700,
           fontSize: 12,

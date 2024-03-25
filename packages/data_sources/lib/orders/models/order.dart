@@ -125,6 +125,7 @@ enum OrderStatus {
   collected,
   cancelled;
 
+
   factory OrderStatus.fromJson(String status) {
     switch (status) {
       case 'Pending':
