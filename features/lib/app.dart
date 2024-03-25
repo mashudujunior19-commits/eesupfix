@@ -1,6 +1,7 @@
 import 'package:data_sources/auth/data_source/auth_supabase_data_source.dart';
 import 'package:data_sources/auth/data_source/profile_supabase_impl.dart';
 import 'package:data_sources/eesupools/data_source/eesupool_supabase_impl.dart';
+import 'package:data_sources/orders/data_source/orders_supabase_impl.dart';
 import 'package:data_sources/shopping/data_source/shopping_supabase_impl.dart';
 import 'package:features/core/env/app_type.dart';
 import 'package:features/core/extensions/context_environment_ext.dart';
@@ -8,6 +9,7 @@ import 'package:features/core/themes/eesup_light_theme.dart';
 import 'package:features/core/themes/my_kasi_light_theme.dart';
 import 'package:repository/auth/profile_repository.dart';
 import 'package:repository/eesupools/eesupool_repo.dart';
+import 'package:repository/orders/order_repository.dart';
 import 'package:repository/shop/shopping_repository.dart';
 import 'package:features/auth/profile/bloc/profile_bloc.dart';
 import 'package:features/auth/sign_in/bloc/auth_bloc.dart';
@@ -51,6 +53,12 @@ class MainApp extends StatelessWidget {
     ),
   );
 
+  final _ordersRepo = RepositoryProvider(
+    create: (context) => OrderRepository(
+      OrdersSupabaseImpl(GetIt.I.get<SupabaseClient>()),
+      context.read<AuthRepository>(),
+    ),
+  );
   @override
   Widget build(BuildContext context) {
     ///get the correct theme based on the app type (eesup or my kasi)
@@ -59,7 +67,7 @@ class MainApp extends StatelessWidget {
         : MyKasiLightTheme;
 
     return MultiRepositoryProvider(
-      providers: [_authRepo, _shoppingRepo, _eesupoolRepo],
+      providers: [_authRepo, _shoppingRepo, _eesupoolRepo, _ordersRepo],
       child: MultiBlocProvider(
         providers: [
           BlocProvider(
@@ -97,8 +105,10 @@ class MainApp extends StatelessWidget {
                 ///if the user is already authenticated and is on another screen
                 ///We don't want to navigate to the shop overview screen again, hence the isStartUp check
                 if (state.isStartUp) {
-                  //await Future.delayed(const Duration(seconds: 3));
+                  //  if (_appRouter.stack.isNotEmpty) {
+
                   _appRouter.push(const ShopOverviewRoute());
+                  // }
                 }
               }
             },

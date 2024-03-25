@@ -13,8 +13,10 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
 
   ChatBloc(this._poolRepo) : super(ChatInitial()) {
     on<ChatStreamStarted>((event, emit) async {
+      final stream =
+          _poolRepo.fetchEESUpoolsChatMessages(event.eesupoolId, 200);
       await emit.forEach(
-        _poolRepo.fetchEESUpoolsChatMessages(event.eesupoolId, 200),
+        stream,
         onData: ((message) {
           return message.fold(
             (l) => ChatsError(l),

@@ -67,7 +67,7 @@ class OrdersSupabaseImpl implements OrdersDataSource {
       '_eesupool_ord_id': poolOrderId,
       '_limit': limit,
       '_status': statuses.map((e) => e.toString()).toList(),
-    }).order('created_at', ascending: false);
+    }).order('id', ascending: false);
 
     final orders = (response as List).map((e) => Order.fromJson(e)).toList();
     return orders;

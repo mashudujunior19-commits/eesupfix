@@ -1,6 +1,7 @@
 import 'package:data_sources/eesupools/models/eesupool_type.dart';
 import 'package:features/core/extensions/context_theme_ext.dart';
-import 'package:features/eesupools/list_view/presentation/eesupool_type_view.dart';
+import 'package:features/eesupools/listing/ui/eesupool_type_view.dart';
+import 'package:features/orders/listing/ui/orders_tab.dart';
 import 'package:flutter/material.dart';
 import 'package:tab_indicator_styler/tab_indicator_styler.dart';
 
@@ -9,7 +10,7 @@ class MyEconomyTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return const Scaffold(
       backgroundColor: Colors.transparent,
       body: DefaultTabController(
           length: 6,
@@ -20,11 +21,11 @@ class MyEconomyTab extends StatelessWidget {
                 child: TabBarView(
                   children: [
                     EESUpoolsTypeView(type: EESUpoolType.trade),
-                    const Center(child: Text('Orders')),
-                    const Center(child: Text('EESUprener')),
-                    const Center(child: Text('Wallets')),
-                    const Center(child: Text('Crowdfund Wallet & Vouchers')),
-                    const Center(child: Text('Referrals')),
+                    OrdersTab(),
+                    Center(child: Text('Kasipreneur')),
+                    Center(child: Text('Wallets')),
+                    Center(child: Text('Crowdfund Wallet & Vouchers')),
+                    Center(child: Text('Referrals')),
                   ],
                 ),
               )
@@ -66,13 +67,13 @@ class _TabBar extends StatelessWidget {
           topRightRadius: 8,
           color: context.colorScheme.primary,
         ),
-        tabs: [
-          const Tab(text: 'EESUpools'),
-          const Tab(text: 'Orders'),
-          const Tab(text: 'EESUprener'),
-          const Tab(text: 'Wallets'),
-          const Tab(text: 'Crowdfund Wallet & Vouchers'),
-          const Tab(text: 'Referrals'),
+        tabs: const [
+          Tab(text: 'EESUpools'),
+          Tab(text: 'Orders'),
+          Tab(text: 'Kasipreneur'),
+          Tab(text: 'Wallets'),
+          Tab(text: 'Crowdfund Wallet & Vouchers'),
+          Tab(text: 'Referrals'),
         ],
       ),
     );

@@ -1,10 +1,10 @@
 import 'package:data_sources/eesupools/models/eesupool.dart';
 import 'package:features/core/extensions/context_theme_ext.dart';
 import 'package:features/core/extensions/sizedbox_ext.dart';
-import 'package:features/eesupools/eesupool_view/presentation/tabs/chats/bloc/chat_bloc.dart';
-import 'package:features/eesupools/eesupool_view/presentation/tabs/chats/presentation/chat_text_field/bloc/chat_textfield_bloc.dart';
-import 'package:features/eesupools/eesupool_view/presentation/tabs/chats/presentation/chat_text_field/chat_textfield.dart';
-import 'package:features/eesupools/eesupool_view/presentation/tabs/chats/presentation/widgets/message_bubble.dart';
+import 'package:features/eesupools/viewing/ui/tabs/chats/bloc/chat_bloc.dart';
+import 'package:features/eesupools/viewing/ui/tabs/chats/ui/chat_text_field/bloc/chat_textfield_bloc.dart';
+import 'package:features/eesupools/viewing/ui/tabs/chats/ui/chat_text_field/chat_textfield.dart';
+import 'package:features/eesupools/viewing/ui/tabs/chats/ui/widgets/message_bubble.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
