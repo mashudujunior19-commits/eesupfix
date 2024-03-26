@@ -1,5 +1,6 @@
 // ignore_for_file: invalid_annotation_target
 
+
 import 'package:data_sources/finance/models/voucher_cycle.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
@@ -20,6 +21,7 @@ class Voucher with _$Voucher {
     required VoucherCycle cycle,
     required int period,
     @JsonKey(name: 'end_date') required DateTime endDate,
+    @JsonKey(name: 'confirmed_at')  DateTime? confirmedAt,
   }) = _Voucher;
 
   factory Voucher.fromJson(Map<String, dynamic> json) =>

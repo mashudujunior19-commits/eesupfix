@@ -9,7 +9,12 @@ class ReferalCodeTile extends StatelessWidget {
     return Container(
       width: double.infinity,
       height: 60,
-      margin: const EdgeInsets.only(left: 15, right: 15, top: 20),
+      margin: const EdgeInsets.only(
+        left: 15,
+        right: 15,
+        top: 30,
+        bottom: 10,
+      ),
       padding: const EdgeInsets.only(left: 10, right: 5),
       decoration: BoxDecoration(
         color: Colors.white,
@@ -22,7 +27,7 @@ class ReferalCodeTile extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            const SelectableText('Code ${10002}'),
+            const SelectableText('Code ${10000}'),
             Container(
               // width: 100,
               height: 45,
@@ -37,7 +42,7 @@ class ReferalCodeTile extends StatelessWidget {
                       onPressed: () {
                         Clipboard.setData(
                           ClipboardData(
-                            text: 10000.toString(),
+                            text: 21000.toString(),
                           ),
                         );
                         ScaffoldMessenger.of(context).showSnackBar(

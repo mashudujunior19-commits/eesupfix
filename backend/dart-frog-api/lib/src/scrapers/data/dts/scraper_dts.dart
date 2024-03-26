@@ -15,16 +15,18 @@ class ScraperDtsImpl implements ScraperDataSource {
   @override
   Future<bool> submitProduct(String table, ScraperProduct product) async {
     try {
-      //add to the specific table
+      // add to the specific table
       await supabase.schema('scraper').from(table).insert(product.toMap());
 
       //insert to the scaper table
       await supabase
           .schema('scraper')
-          .from('scaper_product')
+          .from('scraper_product')
           .insert(product.toMap());
+
       return true;
     } catch (e) {
+      print(e);
       return false;
     }
   }

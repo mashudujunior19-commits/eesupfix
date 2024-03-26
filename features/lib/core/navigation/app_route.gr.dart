@@ -18,7 +18,6 @@ import 'package:features/core/widgets/media_file_uploader.dart' as _i3;
 import 'package:features/eesupools/viewing/ui/eesupool_view_screen.dart' as _i1;
 import 'package:features/finances/instapay/instapay_screen.dart' as _i2;
 import 'package:features/orders/tracking/ui/order_tracking_screen.dart' as _i4;
-import 'package:features/referrals/ui/referrals_screen.dart' as _i5;
 import 'package:features/shop/overview/ui/shop_overview_screen.dart' as _i7;
 import 'package:flutter/material.dart' as _i11;
 import 'package:instapay_flutter/data/merchant_transaction.dart' as _i13;
@@ -67,12 +66,7 @@ abstract class $AppRouter extends _i10.RootStackRouter {
         ),
       );
     },
-    ReferralsRoute.name: (routeData) {
-      return _i10.AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: const _i5.ReferralsScreen(),
-      );
-    },
+
     ResetPasswordRoute.name: (routeData) {
       return _i10.AutoRoutePage<dynamic>(
         routeData: routeData,

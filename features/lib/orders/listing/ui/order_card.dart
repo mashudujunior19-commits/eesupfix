@@ -5,7 +5,6 @@ import 'package:features/core/extensions/sizedbox_ext.dart';
 import 'package:features/core/navigation/app_route.gr.dart';
 import 'package:features/core/utils/date_formatter.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 class OrderCard extends StatelessWidget {
   const OrderCard({

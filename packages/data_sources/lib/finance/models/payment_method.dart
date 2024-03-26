@@ -2,8 +2,10 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 
 enum PaymentMethod {
   ozow,
+  instapay,
   retailWallet,
-  splitOzowRetailWalletPayment;
+  splitOzowRetailWalletPayment,
+  splitInstapayRetailWalletPayment;
 
   @override
   String toString() {
@@ -14,6 +16,9 @@ enum PaymentMethod {
         return 'Retail wallet';
       case PaymentMethod.splitOzowRetailWalletPayment:
         return 'Split-Ozow & Retail wallet';
+      case PaymentMethod.splitInstapayRetailWalletPayment:
+        return 'Split-Instapay & Retail wallet';
+
       default:
         return 'Retail wallet';
     }
@@ -27,6 +32,8 @@ enum PaymentMethod {
         return PaymentMethod.retailWallet;
       case 'Split-Ozow & Retail wallet':
         return PaymentMethod.splitOzowRetailWalletPayment;
+      case 'Split-Instapay & Retail wallet':
+        return PaymentMethod.splitInstapayRetailWalletPayment;
       default:
         return PaymentMethod.retailWallet;
     }

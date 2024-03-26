@@ -38,6 +38,8 @@ mixin _$Voucher {
   int get period => throw _privateConstructorUsedError;
   @JsonKey(name: 'end_date')
   DateTime get endDate => throw _privateConstructorUsedError;
+  @JsonKey(name: 'confirmed_at')
+  DateTime? get confirmedAt => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -58,7 +60,8 @@ abstract class $VoucherCopyWith<$Res> {
       @JsonKey(name: 'id') int? id,
       @VoucherCycleConverter() @JsonKey(name: 'cycle') VoucherCycle cycle,
       int period,
-      @JsonKey(name: 'end_date') DateTime endDate});
+      @JsonKey(name: 'end_date') DateTime endDate,
+      @JsonKey(name: 'confirmed_at') DateTime? confirmedAt});
 }
 
 /// @nodoc
@@ -83,6 +86,7 @@ class _$VoucherCopyWithImpl<$Res, $Val extends Voucher>
     Object? cycle = null,
     Object? period = null,
     Object? endDate = null,
+    Object? confirmedAt = freezed,
   }) {
     return _then(_value.copyWith(
       userId: freezed == userId
@@ -121,6 +125,10 @@ class _$VoucherCopyWithImpl<$Res, $Val extends Voucher>
           ? _value.endDate
           : endDate // ignore: cast_nullable_to_non_nullable
               as DateTime,
+      confirmedAt: freezed == confirmedAt
+          ? _value.confirmedAt
+          : confirmedAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
     ) as $Val);
   }
 }
@@ -141,7 +149,8 @@ abstract class _$$VoucherImplCopyWith<$Res> implements $VoucherCopyWith<$Res> {
       @JsonKey(name: 'id') int? id,
       @VoucherCycleConverter() @JsonKey(name: 'cycle') VoucherCycle cycle,
       int period,
-      @JsonKey(name: 'end_date') DateTime endDate});
+      @JsonKey(name: 'end_date') DateTime endDate,
+      @JsonKey(name: 'confirmed_at') DateTime? confirmedAt});
 }
 
 /// @nodoc
@@ -164,6 +173,7 @@ class __$$VoucherImplCopyWithImpl<$Res>
     Object? cycle = null,
     Object? period = null,
     Object? endDate = null,
+    Object? confirmedAt = freezed,
   }) {
     return _then(_$VoucherImpl(
       userId: freezed == userId
@@ -202,6 +212,10 @@ class __$$VoucherImplCopyWithImpl<$Res>
           ? _value.endDate
           : endDate // ignore: cast_nullable_to_non_nullable
               as DateTime,
+      confirmedAt: freezed == confirmedAt
+          ? _value.confirmedAt
+          : confirmedAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
     ));
   }
 }
@@ -218,7 +232,8 @@ class _$VoucherImpl implements _Voucher {
       @JsonKey(name: 'id') this.id,
       @VoucherCycleConverter() @JsonKey(name: 'cycle') required this.cycle,
       required this.period,
-      @JsonKey(name: 'end_date') required this.endDate});
+      @JsonKey(name: 'end_date') required this.endDate,
+      @JsonKey(name: 'confirmed_at') this.confirmedAt});
 
   factory _$VoucherImpl.fromJson(Map<String, dynamic> json) =>
       _$$VoucherImplFromJson(json);
@@ -250,10 +265,13 @@ class _$VoucherImpl implements _Voucher {
   @override
   @JsonKey(name: 'end_date')
   final DateTime endDate;
+  @override
+  @JsonKey(name: 'confirmed_at')
+  final DateTime? confirmedAt;
 
   @override
   String toString() {
-    return 'Voucher(userId: $userId, parameterId: $parameterId, createdAt: $createdAt, balance: $balance, value: $value, id: $id, cycle: $cycle, period: $period, endDate: $endDate)';
+    return 'Voucher(userId: $userId, parameterId: $parameterId, createdAt: $createdAt, balance: $balance, value: $value, id: $id, cycle: $cycle, period: $period, endDate: $endDate, confirmedAt: $confirmedAt)';
   }
 
   @override
@@ -271,13 +289,15 @@ class _$VoucherImpl implements _Voucher {
             (identical(other.id, id) || other.id == id) &&
             (identical(other.cycle, cycle) || other.cycle == cycle) &&
             (identical(other.period, period) || other.period == period) &&
-            (identical(other.endDate, endDate) || other.endDate == endDate));
+            (identical(other.endDate, endDate) || other.endDate == endDate) &&
+            (identical(other.confirmedAt, confirmedAt) ||
+                other.confirmedAt == confirmedAt));
   }
 
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(runtimeType, userId, parameterId, createdAt,
-      balance, value, id, cycle, period, endDate);
+      balance, value, id, cycle, period, endDate, confirmedAt);
 
   @JsonKey(ignore: true)
   @override
@@ -305,7 +325,8 @@ abstract class _Voucher implements Voucher {
           @JsonKey(name: 'cycle')
           required final VoucherCycle cycle,
           required final int period,
-          @JsonKey(name: 'end_date') required final DateTime endDate}) =
+          @JsonKey(name: 'end_date') required final DateTime endDate,
+          @JsonKey(name: 'confirmed_at') final DateTime? confirmedAt}) =
       _$VoucherImpl;
 
   factory _Voucher.fromJson(Map<String, dynamic> json) = _$VoucherImpl.fromJson;
@@ -337,6 +358,9 @@ abstract class _Voucher implements Voucher {
   @override
   @JsonKey(name: 'end_date')
   DateTime get endDate;
+  @override
+  @JsonKey(name: 'confirmed_at')
+  DateTime? get confirmedAt;
   @override
   @JsonKey(ignore: true)
   _$$VoucherImplCopyWith<_$VoucherImpl> get copyWith =>

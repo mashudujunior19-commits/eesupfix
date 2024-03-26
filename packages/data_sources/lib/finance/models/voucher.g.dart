@@ -17,6 +17,9 @@ _$VoucherImpl _$$VoucherImplFromJson(Map<String, dynamic> json) =>
       cycle: const VoucherCycleConverter().fromJson(json['cycle'] as String),
       period: json['period'] as int,
       endDate: DateTime.parse(json['end_date'] as String),
+      confirmedAt: json['confirmed_at'] == null
+          ? null
+          : DateTime.parse(json['confirmed_at'] as String),
     );
 
 Map<String, dynamic> _$$VoucherImplToJson(_$VoucherImpl instance) =>
@@ -30,4 +33,5 @@ Map<String, dynamic> _$$VoucherImplToJson(_$VoucherImpl instance) =>
       'cycle': const VoucherCycleConverter().toJson(instance.cycle),
       'period': instance.period,
       'end_date': instance.endDate.toIso8601String(),
+      'confirmed_at': instance.confirmedAt?.toIso8601String(),
     };
