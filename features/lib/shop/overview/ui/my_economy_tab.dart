@@ -1,6 +1,6 @@
 import 'package:data_sources/eesupools/models/eesupool_type.dart';
 import 'package:features/core/extensions/context_theme_ext.dart';
-import 'package:features/eesupools/listing/ui/eesupool_type_view.dart';
+import 'package:features/eesupools/ui/eesupool_type_view.dart';
 import 'package:features/orders/listing/ui/orders_tab.dart';
 import 'package:flutter/material.dart';
 import 'package:tab_indicator_styler/tab_indicator_styler.dart';
@@ -13,24 +13,25 @@ class MyEconomyTab extends StatelessWidget {
     return const Scaffold(
       backgroundColor: Colors.transparent,
       body: DefaultTabController(
-          length: 6,
-          child: Column(
-            children: [
-              _TabBar(),
-              Expanded(
-                child: TabBarView(
-                  children: [
-                    EESUpoolsTypeView(type: EESUpoolType.trade),
-                    OrdersTab(),
-                    Center(child: Text('Kasipreneur')),
-                    Center(child: Text('Wallets')),
-                    Center(child: Text('Crowdfund Wallet & Vouchers')),
-                    Center(child: Text('Referrals')),
-                  ],
-                ),
-              )
-            ],
-          )),
+        length: 6,
+        child: Column(
+          children: [
+            _TabBar(),
+            Expanded(
+              child: TabBarView(
+                children: [
+                  EESUpoolsTypeView(type: EESUpoolType.trade),
+                  OrdersTab(),
+                  Center(child: Text('Kasipreneur')),
+                  Center(child: Text('Wallets')),
+                  Center(child: Text('Crowdfund Wallet & Vouchers')),
+                  Center(child: Text('Referrals')),
+                ],
+              ),
+            )
+          ],
+        ),
+      ),
     );
   }
 }

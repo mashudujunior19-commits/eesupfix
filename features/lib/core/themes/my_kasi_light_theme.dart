@@ -37,7 +37,7 @@ final MyKasiLightTheme = ThemeData(
   ),
   elevatedButtonTheme: ElevatedButtonThemeData(
     style: ElevatedButton.styleFrom(
-      backgroundColor: _primaryGreen,
+      backgroundColor: _primaryOrange,
       foregroundColor: Colors.white,
       padding: const EdgeInsets.symmetric(vertical: 10),
       minimumSize: const Size(double.infinity, 50),

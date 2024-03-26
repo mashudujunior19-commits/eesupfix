@@ -1,9 +1,8 @@
-import 'package:auto_route/auto_route.dart';
 import 'package:data_sources/auth/models/user_role.dart';
 import 'package:features/core/env/app_type.dart';
-import 'package:features/core/extensions/context_alerts_ext.dart';
 import 'package:features/core/extensions/context_environment_ext.dart';
 import 'package:features/referrals/ui/widgets/referral_code_tile.dart';
+import 'package:features/shop/cart/ui/cart_button.dart';
 import 'package:repository/shop/shopping_repository.dart';
 import 'package:features/core/errors/large_error_widget.dart';
 import 'package:features/core/extensions/context_theme_ext.dart';
@@ -13,13 +12,9 @@ import 'package:features/shop/overview/ui/widgets/hori_products_slider.dart';
 import 'package:features/shop/overview/ui/widgets/mock_search_button.dart';
 import 'package:features/shop/overview/ui/widgets/overview_banner_carousel.dart';
 import 'package:features/shop/overview/ui/widgets/overview_categories.dart';
-import 'package:features/core/navigation/app_route.gr.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:instapay_flutter/data/merchant_transaction.dart';
-import 'package:intl/intl.dart';
 import 'package:shimmer/shimmer.dart';
 
 class OverviewTab extends StatelessWidget {
@@ -47,82 +42,83 @@ class OverviewTab extends StatelessWidget {
                     'assets/images/logo.png',
                   ),
                 ),
-                actions: [
-                  IconButton(
-                    onPressed: () {
-                      var now = DateTime.now();
-                      var formatter = DateFormat('yyyy-MM-dd');
-                      String formattedDate = formatter.format(now);
-                      final merchantId = dotenv.env['INSTA_PAY_MERCHANT_ID'];
-                      final accountUUid = dotenv.env['INSTA_PAY_ACCOUNT_ID'];
-                      final sendbox = dotenv.env['INSTAPAY_SENDBOX'];
-                      final authKey = dotenv.env['INSTAPAY_AUTH_KEY'];
-                      final secret = dotenv.env['INSTA_PAY_SECRET'];
-                      final successUrl = dotenv.env['INSAPAY_SUCCESS_URL'];
-                      final failedUrl = dotenv.env['INSAPAY_FAILED_URL'];
-                      final notifyUrl = dotenv.env['INSAPAY_NOTIFY_URL'];
+                actions: const [
+                  CartButton(),
+                  // IconButton(
+                  //   onPressed: () {
+                  //     var now = DateTime.now();
+                  //     var formatter = DateFormat('yyyy-MM-dd');
+                  //     String formattedDate = formatter.format(now);
+                  //     final merchantId = dotenv.env['INSTA_PAY_MERCHANT_ID'];
+                  //     final accountUUid = dotenv.env['INSTA_PAY_ACCOUNT_ID'];
+                  //     final sendbox = dotenv.env['INSTAPAY_SENDBOX'];
+                  //     final authKey = dotenv.env['INSTAPAY_AUTH_KEY'];
+                  //     final secret = dotenv.env['INSTA_PAY_SECRET'];
+                  //     final successUrl = dotenv.env['INSAPAY_SUCCESS_URL'];
+                  //     final failedUrl = dotenv.env['INSAPAY_FAILED_URL'];
+                  //     final notifyUrl = dotenv.env['INSAPAY_NOTIFY_URL'];
 
-                      if (sendbox == null ||
-                          merchantId == null ||
-                          accountUUid == null ||
-                          authKey == null ||
-                          secret == null ||
-                          successUrl == null ||
-                          failedUrl == null ||
-                          notifyUrl == null) {
-                        context.snackBarError(
-                          'Failed to initiat the payment, if the problem persists, please contact support.',
-                        );
-                        return;
-                      }
+                  //     if (sendbox == null ||
+                  //         merchantId == null ||
+                  //         accountUUid == null ||
+                  //         authKey == null ||
+                  //         secret == null ||
+                  //         successUrl == null ||
+                  //         failedUrl == null ||
+                  //         notifyUrl == null) {
+                  //       context.snackBarError(
+                  //         'Failed to initiat the payment, if the problem persists, please contact support.',
+                  //       );
+                  //       return;
+                  //     }
 
-                      context.router
-                          .push(
-                        InstapayRoute(
-                          transaction: MerchantTransaction(
-                            mUuid: merchantId,
-                            mAccountUuid: accountUUid,
-                            mTxOrderNr: 'EES12345678967432134',
-                            mTxId: '9370832a-ce36-43d6-83f3-e14d611bc2de',
-                            mTxCurrency: 'ZAR',
-                            mCategory1: '1234455',
-                            mCategory2: 'Order',
-                            mCategory3: authKey,
-                            mTxAmount: 560.toStringAsFixed(2),
-                            mTxItemName: 'Basket Items',
-                            mTxItemDescription: 'The item(s) being ordered',
-                            secret: secret,
-                            mEftAllowed: true,
-                            mCardAllowed: true,
-                            mPassAllowed: false,
-                            mChipsAllowed: false,
-                            mPayatAllowed: false,
-                            mTridentAllowed: false,
-                            mTxDueDate: formattedDate,
-                            mMessage: 'This is a test message',
-                            mSiteName: 'EESUp',
-                            bName: 'Joe',
-                            bSurname: 'Soap',
-                            bEmail: 'misomenze6@gmail.com',
-                            bMobile: '+2719582572',
-                            mReturnUrl: successUrl,
-                            mBack2shopUrl: failedUrl,
-                            mNotifyUrl: notifyUrl,
-                            sendboxUrl: sendbox,
-                          ),
-                        ),
-                      )
-                          .then((value) {
-                        context.snackBarSuccess(value.toString());
-                      });
-                    },
-                  
-                    icon: const Icon(Icons.payment),
-                  )
+                  //     context.router
+                  //         .push(
+                  //       InstapayRoute(
+                  //         transaction: MerchantTransaction(
+                  //           mUuid: merchantId,
+                  //           mAccountUuid: accountUUid,
+                  //           mTxOrderNr: 'EES12345678967432134',
+                  //           mTxId: '9370832a-ce36-43d6-83f3-e14d611bc2de',
+                  //           mTxCurrency: 'ZAR',
+                  //           mCategory1: '1234455',
+                  //           mCategory2: 'Order',
+                  //           mCategory3: authKey,
+                  //           mTxAmount: 560.toStringAsFixed(2),
+                  //           mTxItemName: 'Basket Items',
+                  //           mTxItemDescription: 'The item(s) being ordered',
+                  //           secret: secret,
+                  //           mEftAllowed: true,
+                  //           mCardAllowed: true,
+                  //           mPassAllowed: false,
+                  //           mChipsAllowed: false,
+                  //           mPayatAllowed: false,
+                  //           mTridentAllowed: false,
+                  //           mTxDueDate: formattedDate,
+                  //           mMessage: 'This is a test message',
+                  //           mSiteName: 'EESUp',
+                  //           bName: 'Joe',
+                  //           bSurname: 'Soap',
+                  //           bEmail: 'misomenze6@gmail.com',
+                  //           bMobile: '+2719582572',
+                  //           mReturnUrl: successUrl,
+                  //           mBack2shopUrl: failedUrl,
+                  //           mNotifyUrl: notifyUrl,
+                  //           sendboxUrl: sendbox,
+                  //         ),
+                  //       ),
+                  //     )
+                  //         .then((value) {
+                  //       context.snackBarSuccess(value.toString());
+                  //     });
+                  //   },
+
+                  //   icon: const Icon(Icons.payment),
+                  // )
 
                   //CartButton(margin: EdgeInsets.only(right: 16, bottom: 5)),
                 ],
-                flexibleSpace: MockSearchButton(),
+                flexibleSpace: const MockSearchButton(),
               ),
               if (state is OverviewLoading)
                 const _OverviewShimmer(key: Key('overview_shimmer'))

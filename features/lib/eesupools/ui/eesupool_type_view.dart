@@ -1,12 +1,12 @@
 import 'package:data_sources/eesupools/models/eesupool_type.dart';
+import 'package:features/eesupools/bloc/eesupool_type_bloc.dart';
 import 'package:repository/eesupools/eesupool_repo.dart';
 import 'package:features/core/errors/large_error_widget.dart';
 import 'package:features/core/extensions/context_theme_ext.dart';
 import 'package:features/core/extensions/sizedbox_ext.dart';
 import 'package:features/core/extensions/slide_in_animation_ext.dart';
 import 'package:features/core/widgets/large_loading_shimmer.dart';
-import 'package:features/eesupools/listing/bloc/eesupool_type_bloc.dart';
-import 'package:features/eesupools/listing/ui/widgets/eesupool_card.dart';
+import 'package:features/eesupools/ui/widgets/eesupool_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -93,7 +93,7 @@ class _TypeHeader extends StatelessWidget {
                   label: 'Create',
                   onPressed: () {}),
               20.sW,
-              _EESUpoolTypeViewActionBtn(label: 'Search', onPressed: () {}),
+              _EESUpoolTypeViewActionBtn(label: 'Search 🔍', onPressed: () {}),
             ],
           ),
         ],
@@ -122,9 +122,9 @@ class _EESUpoolTypeViewActionBtn extends StatelessWidget {
           child: Container(
             margin: const EdgeInsets.only(top: 10),
             padding: const EdgeInsets.only(left: 15, right: 15),
-            height: 35,
+            height: 40,
             decoration: BoxDecoration(
-              border: Border.all(color: Colors.grey, width: .5),
+              border: Border.all(color: Colors.grey.shade400, width: 1),
               borderRadius: BorderRadius.circular(8),
             ),
             child: Center(

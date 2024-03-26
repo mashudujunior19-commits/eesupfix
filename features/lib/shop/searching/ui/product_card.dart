@@ -1,7 +1,12 @@
 import 'package:bootstrap_icons/bootstrap_icons.dart';
+import 'package:data_sources/orders/models/order_product.dart';
 import 'package:data_sources/shopping/models/product.dart';
 import 'package:features/core/extensions/sizedbox_ext.dart';
+import 'package:features/shop/cart/bloc/cart_bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_iconly/flutter_iconly.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 class ProductCard extends StatelessWidget {
   const ProductCard({super.key, required this.product, this.isBundle = false});
@@ -38,7 +43,7 @@ class ProductCard extends StatelessWidget {
               children: [
                 InkWell(
                   onTap: () {
-                    // addProductToBasketDialog(context, product);
+                   //addProductToBasketDialog(context, product);
                   },
                   child: const Icon(
                     BootstrapIcons.basket,
@@ -46,7 +51,7 @@ class ProductCard extends StatelessWidget {
                     color: Colors.black,
                   ),
                 ),
-                //  CartButtons(product: product),
+                _CartButtons(product: product),
               ],
             ),
             Row(
@@ -124,96 +129,97 @@ class ProductCard extends StatelessWidget {
   }
 }
 
-// class CartButtons extends ConsumerWidget with CartProviderMixin {
-//   const CartButtons({super.key, required this.product});
-//   final Product product;
+class _CartButtons extends StatelessWidget {
+  const _CartButtons({required this.product});
+  final Product product;
 
-//   @override
-//   Widget build(BuildContext context, WidgetRef ref) {
-//     int qty = productQty(ref, product.id);
-//     if (!product.sellable) return 0.sH;
-//     return Row(
-//       mainAxisAlignment: MainAxisAlignment.end,
-//       children: [
-//         Container(
-//           decoration: BoxDecoration(
-//             border: Border.all(
-//               color: Colors.blueGrey.shade100,
-//             ),
-//             borderRadius: BorderRadius.circular(10),
-//           ),
-//           child: Row(
-//             mainAxisSize: MainAxisSize.min,
-//             children: [
-//               if (qty > 0)
-//                 GestureDetector(
-//                   onTap: () {
-//                     decrementQuantity(ref, product.id);
-//                   },
-//                   child: Container(
-//                     height: 30,
-//                     width: 30,
-//                     decoration: BoxDecoration(
-//                       color: Colors.transparent,
-//                       borderRadius: BorderRadius.circular(
-//                         10,
-//                       ),
-//                       border: Border.all(
-//                         color: Colors.blueGrey.shade100,
-//                       ),
-//                     ),
-//                     child: Icon(
-//                       MdiIcons.minus,
-//                       color: Colors.red,
-//                       size: 16,
-//                     ),
-//                   ),
-//                 ),
-//               if (qty > 0)
-//                 Padding(
-//                   padding: const EdgeInsets.only(left: 10, right: 10),
-//                   child: Text(qty.toString()),
-//                 ),
-//               GestureDetector(
-//                 onTap: () {
-//                   if (!product.sellable) {
-//                     context.snackBarError(
-//                       'This Item is currently not available for sale.',
-//                     );
-//                     return;
-//                   }
-//                   addToCart(
-//                     ref,
-//                     OrderProduct(
-//                       productId: product.id,
-//                       quantity: 1,
-//                       productClass: product.productClass,
-//                       price: product.salePrice,
-//                       name: product.name,
-//                       imageUrl: product.imageUrl,
-//                       category: product.categoryName,
-//                       size: product.size,
-//                     ),
-//                   );
-//                 },
-//                 child: Container(
-//                   height: 30,
-//                   width: 30,
-//                   decoration: BoxDecoration(
-//                     color: Theme.of(context).primaryColor,
-//                     borderRadius: BorderRadius.circular(10),
-//                   ),
-//                   child: Icon(
-//                     qty == 0 ? IconlyLight.buy : MdiIcons.plus,
-//                     color: Colors.white,
-//                     size: 19,
-//                   ),
-//                 ),
-//               )
-//             ],
-//           ),
-//         ),
-//       ],
-//     );
-//   }
-// }
+  @override
+  Widget build(BuildContext context) {
+    if (!product.sellable) return 0.sH;
+    return BlocBuilder<CartBloc, CartState>(
+      builder: (context, state) {
+        final qty = (state as CurrentCart).totalProductQty(product.id);
+        return Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            Container(
+              decoration: BoxDecoration(
+                border: Border.all(
+                  color: Colors.blueGrey.shade100,
+                ),
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  if (qty > 0)
+                    GestureDetector(
+                      onTap: () {
+                        context.read<CartBloc>().add(
+                              ProductRemovedFromCart(product.id),
+                            );
+                      },
+                      child: Container(
+                        height: 30,
+                        width: 30,
+                        decoration: BoxDecoration(
+                          color: Colors.transparent,
+                          borderRadius: BorderRadius.circular(
+                            10,
+                          ),
+                          border: Border.all(
+                            color: Colors.blueGrey.shade100,
+                          ),
+                        ),
+                        child: Icon(
+                          MdiIcons.minus,
+                          color: Colors.red,
+                          size: 16,
+                        ),
+                      ),
+                    ),
+                  if (qty > 0)
+                    Padding(
+                      padding: const EdgeInsets.only(left: 10, right: 10),
+                      child: Text(qty.toString()),
+                    ),
+                  GestureDetector(
+                    onTap: () {
+                      context.read<CartBloc>().add(
+                            ProductAddedToCart(
+                              OrderProduct(
+                                productId: product.id,
+                                quantity: 1,
+                                productClass: product.productClass,
+                                price: product.salePrice,
+                                name: product.name,
+                                imageUrl: product.imageUrl,
+                                category: product.categoryName,
+                                size: product.size,
+                              ),
+                            ),
+                          );
+                    },
+                    child: Container(
+                      height: 30,
+                      width: 30,
+                      decoration: BoxDecoration(
+                        color: Theme.of(context).primaryColor,
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: Icon(
+                        qty == 0 ? IconlyLight.buy : MdiIcons.plus,
+                        color: Colors.white,
+                        size: 19,
+                      ),
+                    ),
+                  )
+                ],
+              ),
+            ),
+          ],
+        );
+      },
+    );
+  }
+}

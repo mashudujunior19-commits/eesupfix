@@ -9,8 +9,8 @@ final class ProductAddedToCart extends CartEvent {
 }
 
 final class ProductRemovedFromCart extends CartEvent {
-  final OrderProduct product;
-  ProductRemovedFromCart(this.product);
+  final int id;
+  ProductRemovedFromCart(this.id);
 }
 
 final class CartCleared extends CartEvent {

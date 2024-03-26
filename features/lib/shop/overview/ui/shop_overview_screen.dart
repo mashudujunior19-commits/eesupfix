@@ -1,7 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:data_sources/eesupools/models/eesupool_type.dart';
 import 'package:features/core/extensions/bg_image_deco_ext.dart';
-import 'package:features/eesupools/listing/ui/eesupool_type_view.dart';
+import 'package:features/eesupools/ui/eesupool_type_view.dart';
 import 'package:features/menu/menu_tab.dart';
 import 'package:features/shop/overview/ui/my_economy_tab.dart';
 import 'package:features/shop/overview/ui/widgets/bottom_tab_bar.dart';

@@ -5,8 +5,7 @@ import 'package:data_sources/eesupools/models/eesupool_member.dart';
 import 'package:data_sources/eesupools/models/eesupool_type.dart';
 import 'package:features/core/extensions/bg_image_deco_ext.dart';
 import 'package:features/core/extensions/context_theme_ext.dart';
-import 'package:features/eesupools/viewing/bloc/eesupool_view_bloc.dart';
-import 'package:features/eesupools/viewing/ui/tabs/chats/ui/chat_tab.dart';
+import 'package:features/eesupools/bloc/eesupool_view_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -67,13 +66,13 @@ class EESUpoolViewScreen extends StatelessWidget {
                                 duration: 600.ms,
                                 curve: Curves.easeInOutCubic,
                               ),
-                          Expanded(
-                            child: TabBarView(
-                              children: [
-                                ..._getTabBarViews(pool),
-                              ],
-                            ),
-                          )
+                          // Expanded(
+                          //   child: TabBarView(
+                          //     children: [
+                          //       ..._getTabBarViews(pool),
+                          //     ],
+                          //   ),
+                          // )
                         ],
                       ),
                     );
@@ -88,42 +87,42 @@ class EESUpoolViewScreen extends StatelessWidget {
   }
 }
 
-List<Widget> _getTabBarViews(EESUpool pool) {
-  final isAdmin = pool.role == EESUpoolMemberRole.admin;
-  final type = pool.type;
-  final level = pool.level;
-  return [
-    ChatsTab(pool: pool),
-    ChatsTab(pool: pool),
-    ChatsTab(pool: pool),
-    ChatsTab(pool: pool),
-    ChatsTab(pool: pool),
-  ];
-  // if (isAdmin) {
-  //   return [
-  //     const ChatsTab(), const ChatsTab(), const ChatsTab(), const ChatsTab(),
-  //     // const ChatsTab(),
-  //     // if (type == EESUpoolType.trade) const EESUpoolOrdersTab(),
-  //     // const EventsViewTab(),
-  //     // if (type == EESUpoolType.Kasi && level != EESUpoolLevel.Street)
-  //     //   const DescendantsTab(),
-  //     // const MembersTab(),
-  //     // const SettingsTab(),
-  //   ];
-  // } else if (!isAdmin && type == EESUpoolType.interestGroup) {
-  //   return [
-  //     // const ChatsTab(),
-  //     // const EventsViewTab(),
-  //     // const MembersTab(),
-  //   ];
-  // } else {
-  //   return [
-  //     const ChatsTab(),
-  //     // const EESUpoolOrdersTab(),
-  //     // const MembersTab(),
-  //   ];
-  // }
-}
+// List<Widget> _getTabBarViews(EESUpool pool) {
+//   final isAdmin = pool.role == EESUpoolMemberRole.admin;
+//   final type = pool.type;
+//   final level = pool.level;
+//   return [
+//     ChatsTab(pool: pool),
+//     ChatsTab(pool: pool),
+//     ChatsTab(pool: pool),
+//     ChatsTab(pool: pool),
+//     ChatsTab(pool: pool),
+//   ];
+//   // if (isAdmin) {
+//   //   return [
+//   //     const ChatsTab(), const ChatsTab(), const ChatsTab(), const ChatsTab(),
+//   //     // const ChatsTab(),
+//   //     // if (type == EESUpoolType.trade) const EESUpoolOrdersTab(),
+//   //     // const EventsViewTab(),
+//   //     // if (type == EESUpoolType.Kasi && level != EESUpoolLevel.Street)
+//   //     //   const DescendantsTab(),
+//   //     // const MembersTab(),
+//   //     // const SettingsTab(),
+//   //   ];
+//   // } else if (!isAdmin && type == EESUpoolType.interestGroup) {
+//   //   return [
+//   //     // const ChatsTab(),
+//   //     // const EventsViewTab(),
+//   //     // const MembersTab(),
+//   //   ];
+//   // } else {
+//   //   return [
+//   //     const ChatsTab(),
+//   //     // const EESUpoolOrdersTab(),
+//   //     // const MembersTab(),
+//   //   ];
+//   // }
+// }
 
 List<Tab> _getCorrectTabs(EESUpool pool) {
   final isAdmin = pool.role == EESUpoolMemberRole.admin;

@@ -34,9 +34,9 @@ class CartBloc extends Bloc<CartEvent, CartState> {
 
     on<ProductRemovedFromCart>((event, emit) {
       var currentCart = [...(state as CurrentCart).products];
-      var product = event.product;
+      
       var index = currentCart
-          .indexWhere((element) => element.productId == product.productId);
+          .indexWhere((element) => element.productId == event.id);
       if (index != -1) {
         if (currentCart[index].quantity > 1) {
           currentCart[index] = currentCart[index]

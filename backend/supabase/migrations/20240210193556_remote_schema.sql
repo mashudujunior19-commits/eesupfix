@@ -2322,8 +2322,6 @@ DECLARE
     _target_wallet_id integer;
 
     _assignments_privilage sales.order_edit_privilage;
-
-
 BEGIN
 
     IF EXISTS (

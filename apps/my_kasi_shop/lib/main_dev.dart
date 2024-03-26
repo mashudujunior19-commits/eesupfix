@@ -3,7 +3,6 @@ import 'package:features/config.dart';
 import 'package:features/core/env/app_type.dart';
 import 'package:features/core/env/flavor_type.dart';
 
-
 ///Main function to bootstrap the app
 Future<void> main() async {
   return bootstrap(
@@ -11,6 +10,5 @@ Future<void> main() async {
       type: FlavorType.development,
       app: AppType.mykasi,
     ),
-
   );
 }
