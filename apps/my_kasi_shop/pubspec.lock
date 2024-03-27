@@ -476,6 +476,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.3.7"
+  flutter_google_place_search:
+    dependency: transitive
+    description:
+      name: flutter_google_place_search
+      sha256: d28438d2acb728ad69b6845d366c871d23062e9c09111b6b2fe0d40fdaa14a68
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.0.1"
   flutter_iconly:
     dependency: transitive
     description:

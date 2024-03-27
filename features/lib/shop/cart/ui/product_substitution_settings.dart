@@ -10,7 +10,11 @@ class ProductSubstitutionSettings extends StatelessWidget {
     required this.substituteBrands,
     required this.onVariantChanged,
     required this.onBrandChanged,
+    this.isExpanded = false,
+    this.onTap,
   });
+  final VoidCallback? onTap;
+  final bool isExpanded;
   final bool substituteVariants;
   final bool substituteBrands;
   final void Function(bool? value) onVariantChanged;
@@ -19,6 +23,7 @@ class ProductSubstitutionSettings extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ExpandedTile(
+      onTap: onTap,
       theme: const ExpandedTileThemeData(
         headerColor: Colors.transparent,
         headerRadius: 0,
@@ -28,9 +33,19 @@ class ProductSubstitutionSettings extends StatelessWidget {
         contentPadding: EdgeInsets.only(left: 13, right: 0),
         contentRadius: 0,
       ),
-      controller: ExpandedTileController(isExpanded: false),
-      title: const Text("Substitute settings"),
-      trailing: const Icon(IconlyLight.arrowRight2, size: 18),
+      controller: ExpandedTileController(isExpanded: isExpanded),
+      title: Text(
+        "Substitute settings",
+        style: context.textTheme.labelMedium?.copyWith(
+          decoration: TextDecoration.underline,
+          fontSize: 16,
+        ),
+      ),
+      trailing: const Icon(
+        IconlyLight.arrowRight2,
+        size: 20,
+        color: Colors.black,
+      ),
       content: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

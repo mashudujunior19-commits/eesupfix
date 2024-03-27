@@ -31,6 +31,9 @@ class OrderProduct with _$OrderProduct {
     @JsonKey(name: 'damaged_qty') @Default(0) int damagedQty,
     @JsonKey(name: 'substitute_brand') @Default(false) bool substituteBrand,
     @JsonKey(name: 'substitute_variant') @Default(false) bool substituteVariant,
+    @JsonKey(includeFromJson: false, includeToJson: false)
+    @Default(false)
+    bool isExpanded,
   }) = _OrderProduct;
 
   factory OrderProduct.fromJson(Map<String, dynamic> json) =>

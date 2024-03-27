@@ -8,60 +8,86 @@
 // coverage:ignore-file
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:auto_route/auto_route.dart' as _i18;
-import 'package:data_sources/eesupools/models/eesupool.dart' as _i20;
-import 'package:data_sources/finance/models/wallet.dart' as _i24;
-import 'package:data_sources/orders/models/order.dart' as _i22;
-import 'package:data_sources/partners/models/partner.dart' as _i23;
+import 'package:auto_route/auto_route.dart' as _i20;
+import 'package:data_sources/eesupools/models/eesupool.dart' as _i24;
+import 'package:data_sources/finance/models/wallet.dart' as _i28;
+import 'package:data_sources/orders/models/order.dart' as _i26;
+import 'package:data_sources/orders/models/order_product.dart' as _i23;
+import 'package:data_sources/partners/models/partner.dart' as _i27;
+import 'package:data_sources/shopping/models/basket.dart' as _i22;
 import 'package:features/auth/reset_password/reset_password_screen.dart'
-    as _i11;
-import 'package:features/auth/sign_in/sign_in_screen.dart' as _i13;
-import 'package:features/auth/start_up_screen.dart' as _i14;
-import 'package:features/core/widgets/media_file_uploader.dart' as _i7;
-import 'package:features/eesupools/ui/eesupool_view_screen.dart' as _i3;
+    as _i13;
+import 'package:features/auth/sign_in/sign_in_screen.dart' as _i15;
+import 'package:features/auth/start_up_screen.dart' as _i16;
+import 'package:features/core/widgets/media_file_uploader.dart' as _i9;
+import 'package:features/eesupools/ui/eesupool_view_screen.dart' as _i5;
 import 'package:features/finances/crowdvouchers/ui/voucher_view_screen.dart'
-    as _i16;
-import 'package:features/finances/instapay/instapay_screen.dart' as _i4;
+    as _i18;
+import 'package:features/finances/instapay/instapay_screen.dart' as _i6;
 import 'package:features/finances/wallets/ui/screens/transfer_screen.dart'
-    as _i15;
-import 'package:features/finances/wallets/ui/screens/wallet_view_screen.dart'
     as _i17;
+import 'package:features/finances/wallets/ui/screens/wallet_view_screen.dart'
+    as _i19;
 import 'package:features/geolocation/ui/screens/addrese_book_screen.dart'
     as _i1;
-import 'package:features/kasipreneur/viewing/ui/eesupreneur_screen.dart' as _i5;
+import 'package:features/kasipreneur/viewing/ui/eesupreneur_screen.dart' as _i7;
 import 'package:features/kasipreneur/viewing/ui/eesupreneur_view_screen.dart'
-    as _i6;
-import 'package:features/orders/tracking/ui/order_tracking_screen.dart' as _i8;
-import 'package:features/partners/ui/partner_apps_screen.dart' as _i9;
-import 'package:features/referrals/ui/screens/referrals_screen.dart' as _i10;
-import 'package:features/shop/cart/ui/cart_screen.dart' as _i2;
-import 'package:features/shop/overview/ui/shop_overview_screen.dart' as _i12;
-import 'package:flutter/material.dart' as _i19;
-import 'package:instapay_flutter/data/merchant_transaction.dart' as _i21;
+    as _i8;
+import 'package:features/orders/tracking/ui/order_tracking_screen.dart' as _i10;
+import 'package:features/partners/ui/partner_apps_screen.dart' as _i11;
+import 'package:features/referrals/ui/screens/referrals_screen.dart' as _i12;
+import 'package:features/shop/baskets/viewing/ui/basket_view_screen.dart'
+    as _i2;
+import 'package:features/shop/cart/ui/cart_screen.dart' as _i3;
+import 'package:features/shop/checkout/ui/checkout_screen.dart' as _i4;
+import 'package:features/shop/overview/ui/shop_overview_screen.dart' as _i14;
+import 'package:flutter/material.dart' as _i21;
+import 'package:instapay_flutter/data/merchant_transaction.dart' as _i25;
 
-abstract class $AppRouter extends _i18.RootStackRouter {
+abstract class $AppRouter extends _i20.RootStackRouter {
   $AppRouter({super.navigatorKey});
 
   @override
-  final Map<String, _i18.PageFactory> pagesMap = {
+  final Map<String, _i20.PageFactory> pagesMap = {
     AddressBookRoute.name: (routeData) {
-      return _i18.AutoRoutePage<dynamic>(
+      return _i20.AutoRoutePage<dynamic>(
         routeData: routeData,
         child: const _i1.AddressBookScreen(),
       );
     },
-    CartRoute.name: (routeData) {
-      return _i18.AutoRoutePage<dynamic>(
+    BasketViewRoute.name: (routeData) {
+      final args = routeData.argsAs<BasketViewRouteArgs>();
+      return _i20.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const _i2.CartScreen(),
+        child: _i2.BasketViewScreen(
+          key: args.key,
+          basket: args.basket,
+        ),
+      );
+    },
+    CartRoute.name: (routeData) {
+      return _i20.AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const _i3.CartScreen(),
+      );
+    },
+    CheckoutRoute.name: (routeData) {
+      final args = routeData.argsAs<CheckoutRouteArgs>();
+      return _i20.AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: _i4.CheckoutScreen(
+          key: args.key,
+          products: args.products,
+          total: args.total,
+        ),
       );
     },
     EESUpoolViewRoute.name: (routeData) {
       final args = routeData.argsAs<EESUpoolViewRouteArgs>(
           orElse: () => const EESUpoolViewRouteArgs());
-      return _i18.AutoRoutePage<dynamic>(
+      return _i20.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: _i3.EESUpoolViewScreen(
+        child: _i5.EESUpoolViewScreen(
           key: args.key,
           poolId: args.poolId,
           pool: args.pool,
@@ -70,37 +96,37 @@ abstract class $AppRouter extends _i18.RootStackRouter {
     },
     InstapayRoute.name: (routeData) {
       final args = routeData.argsAs<InstapayRouteArgs>();
-      return _i18.AutoRoutePage<dynamic>(
+      return _i20.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: _i4.InstapayScreen(
+        child: _i6.InstapayScreen(
           key: args.key,
           transaction: args.transaction,
         ),
       );
     },
     KasipreneurRoute.name: (routeData) {
-      return _i18.AutoRoutePage<dynamic>(
+      return _i20.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const _i5.KasipreneurScreen(),
+        child: const _i7.KasipreneurScreen(),
       );
     },
     KasipreneurViewRoute.name: (routeData) {
-      return _i18.AutoRoutePage<dynamic>(
+      return _i20.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const _i6.KasipreneurViewScreen(),
+        child: const _i8.KasipreneurViewScreen(),
       );
     },
     MediaFilePreviewUploaderRoute.name: (routeData) {
-      return _i18.AutoRoutePage<dynamic>(
+      return _i20.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const _i7.MediaFilePreviewUploaderScreen(),
+        child: const _i9.MediaFilePreviewUploaderScreen(),
       );
     },
     OrderTrackingRoute.name: (routeData) {
       final args = routeData.argsAs<OrderTrackingRouteArgs>();
-      return _i18.AutoRoutePage<dynamic>(
+      return _i20.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: _i8.OrderTrackingScreen(
+        child: _i10.OrderTrackingScreen(
           key: args.key,
           order: args.order,
           privilage: args.privilage,
@@ -109,49 +135,49 @@ abstract class $AppRouter extends _i18.RootStackRouter {
     },
     PartnerAppRoute.name: (routeData) {
       final args = routeData.argsAs<PartnerAppRouteArgs>();
-      return _i18.AutoRoutePage<dynamic>(
+      return _i20.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: _i9.PartnerAppScreen(
+        child: _i11.PartnerAppScreen(
           key: args.key,
           partner: args.partner,
         ),
       );
     },
     ReferralsView.name: (routeData) {
-      return _i18.AutoRoutePage<dynamic>(
+      return _i20.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const _i10.ReferralsView(),
+        child: const _i12.ReferralsView(),
       );
     },
     ResetPasswordRoute.name: (routeData) {
-      return _i18.AutoRoutePage<dynamic>(
+      return _i20.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const _i11.ResetPasswordScreen(),
+        child: const _i13.ResetPasswordScreen(),
       );
     },
     ShopOverviewRoute.name: (routeData) {
-      return _i18.AutoRoutePage<dynamic>(
+      return _i20.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const _i12.ShopOverviewScreen(),
+        child: const _i14.ShopOverviewScreen(),
       );
     },
     SignInRoute.name: (routeData) {
-      return _i18.AutoRoutePage<dynamic>(
+      return _i20.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const _i13.SignInScreen(),
+        child: const _i15.SignInScreen(),
       );
     },
     StartUpRoute.name: (routeData) {
-      return _i18.AutoRoutePage<dynamic>(
+      return _i20.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const _i14.StartUpScreen(),
+        child: const _i16.StartUpScreen(),
       );
     },
     TransferRoute.name: (routeData) {
       final args = routeData.argsAs<TransferRouteArgs>();
-      return _i18.AutoRoutePage<dynamic>(
+      return _i20.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: _i15.TransferScreen(
+        child: _i17.TransferScreen(
           key: args.key,
           wallet: args.wallet,
         ),
@@ -159,9 +185,9 @@ abstract class $AppRouter extends _i18.RootStackRouter {
     },
     VoucherViewRoute.name: (routeData) {
       final args = routeData.argsAs<VoucherViewRouteArgs>();
-      return _i18.AutoRoutePage<dynamic>(
+      return _i20.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: _i16.VoucherViewScreen(
+        child: _i18.VoucherViewScreen(
           key: args.key,
           voucherId: args.voucherId,
         ),
@@ -169,9 +195,9 @@ abstract class $AppRouter extends _i18.RootStackRouter {
     },
     WalletViewRoute.name: (routeData) {
       final args = routeData.argsAs<WalletViewRouteArgs>();
-      return _i18.AutoRoutePage<dynamic>(
+      return _i20.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: _i17.WalletViewScreen(
+        child: _i19.WalletViewScreen(
           key: args.key,
           wallet: args.wallet,
         ),
@@ -182,8 +208,8 @@ abstract class $AppRouter extends _i18.RootStackRouter {
 
 /// generated route for
 /// [_i1.AddressBookScreen]
-class AddressBookRoute extends _i18.PageRouteInfo<void> {
-  const AddressBookRoute({List<_i18.PageRouteInfo>? children})
+class AddressBookRoute extends _i20.PageRouteInfo<void> {
+  const AddressBookRoute({List<_i20.PageRouteInfo>? children})
       : super(
           AddressBookRoute.name,
           initialChildren: children,
@@ -191,13 +217,51 @@ class AddressBookRoute extends _i18.PageRouteInfo<void> {
 
   static const String name = 'AddressBookRoute';
 
-  static const _i18.PageInfo<void> page = _i18.PageInfo<void>(name);
+  static const _i20.PageInfo<void> page = _i20.PageInfo<void>(name);
 }
 
 /// generated route for
-/// [_i2.CartScreen]
-class CartRoute extends _i18.PageRouteInfo<void> {
-  const CartRoute({List<_i18.PageRouteInfo>? children})
+/// [_i2.BasketViewScreen]
+class BasketViewRoute extends _i20.PageRouteInfo<BasketViewRouteArgs> {
+  BasketViewRoute({
+    _i21.Key? key,
+    required _i22.Basket basket,
+    List<_i20.PageRouteInfo>? children,
+  }) : super(
+          BasketViewRoute.name,
+          args: BasketViewRouteArgs(
+            key: key,
+            basket: basket,
+          ),
+          initialChildren: children,
+        );
+
+  static const String name = 'BasketViewRoute';
+
+  static const _i20.PageInfo<BasketViewRouteArgs> page =
+      _i20.PageInfo<BasketViewRouteArgs>(name);
+}
+
+class BasketViewRouteArgs {
+  const BasketViewRouteArgs({
+    this.key,
+    required this.basket,
+  });
+
+  final _i21.Key? key;
+
+  final _i22.Basket basket;
+
+  @override
+  String toString() {
+    return 'BasketViewRouteArgs{key: $key, basket: $basket}';
+  }
+}
+
+/// generated route for
+/// [_i3.CartScreen]
+class CartRoute extends _i20.PageRouteInfo<void> {
+  const CartRoute({List<_i20.PageRouteInfo>? children})
       : super(
           CartRoute.name,
           initialChildren: children,
@@ -205,17 +269,60 @@ class CartRoute extends _i18.PageRouteInfo<void> {
 
   static const String name = 'CartRoute';
 
-  static const _i18.PageInfo<void> page = _i18.PageInfo<void>(name);
+  static const _i20.PageInfo<void> page = _i20.PageInfo<void>(name);
 }
 
 /// generated route for
-/// [_i3.EESUpoolViewScreen]
-class EESUpoolViewRoute extends _i18.PageRouteInfo<EESUpoolViewRouteArgs> {
+/// [_i4.CheckoutScreen]
+class CheckoutRoute extends _i20.PageRouteInfo<CheckoutRouteArgs> {
+  CheckoutRoute({
+    _i21.Key? key,
+    required List<_i23.OrderProduct> products,
+    required double total,
+    List<_i20.PageRouteInfo>? children,
+  }) : super(
+          CheckoutRoute.name,
+          args: CheckoutRouteArgs(
+            key: key,
+            products: products,
+            total: total,
+          ),
+          initialChildren: children,
+        );
+
+  static const String name = 'CheckoutRoute';
+
+  static const _i20.PageInfo<CheckoutRouteArgs> page =
+      _i20.PageInfo<CheckoutRouteArgs>(name);
+}
+
+class CheckoutRouteArgs {
+  const CheckoutRouteArgs({
+    this.key,
+    required this.products,
+    required this.total,
+  });
+
+  final _i21.Key? key;
+
+  final List<_i23.OrderProduct> products;
+
+  final double total;
+
+  @override
+  String toString() {
+    return 'CheckoutRouteArgs{key: $key, products: $products, total: $total}';
+  }
+}
+
+/// generated route for
+/// [_i5.EESUpoolViewScreen]
+class EESUpoolViewRoute extends _i20.PageRouteInfo<EESUpoolViewRouteArgs> {
   EESUpoolViewRoute({
-    _i19.Key? key,
+    _i21.Key? key,
     int? poolId,
-    _i20.EESUpool? pool,
-    List<_i18.PageRouteInfo>? children,
+    _i24.EESUpool? pool,
+    List<_i20.PageRouteInfo>? children,
   }) : super(
           EESUpoolViewRoute.name,
           args: EESUpoolViewRouteArgs(
@@ -228,8 +335,8 @@ class EESUpoolViewRoute extends _i18.PageRouteInfo<EESUpoolViewRouteArgs> {
 
   static const String name = 'EESUpoolViewRoute';
 
-  static const _i18.PageInfo<EESUpoolViewRouteArgs> page =
-      _i18.PageInfo<EESUpoolViewRouteArgs>(name);
+  static const _i20.PageInfo<EESUpoolViewRouteArgs> page =
+      _i20.PageInfo<EESUpoolViewRouteArgs>(name);
 }
 
 class EESUpoolViewRouteArgs {
@@ -239,11 +346,11 @@ class EESUpoolViewRouteArgs {
     this.pool,
   });
 
-  final _i19.Key? key;
+  final _i21.Key? key;
 
   final int? poolId;
 
-  final _i20.EESUpool? pool;
+  final _i24.EESUpool? pool;
 
   @override
   String toString() {
@@ -252,12 +359,12 @@ class EESUpoolViewRouteArgs {
 }
 
 /// generated route for
-/// [_i4.InstapayScreen]
-class InstapayRoute extends _i18.PageRouteInfo<InstapayRouteArgs> {
+/// [_i6.InstapayScreen]
+class InstapayRoute extends _i20.PageRouteInfo<InstapayRouteArgs> {
   InstapayRoute({
-    _i19.Key? key,
-    required _i21.MerchantTransaction transaction,
-    List<_i18.PageRouteInfo>? children,
+    _i21.Key? key,
+    required _i25.MerchantTransaction transaction,
+    List<_i20.PageRouteInfo>? children,
   }) : super(
           InstapayRoute.name,
           args: InstapayRouteArgs(
@@ -269,8 +376,8 @@ class InstapayRoute extends _i18.PageRouteInfo<InstapayRouteArgs> {
 
   static const String name = 'InstapayRoute';
 
-  static const _i18.PageInfo<InstapayRouteArgs> page =
-      _i18.PageInfo<InstapayRouteArgs>(name);
+  static const _i20.PageInfo<InstapayRouteArgs> page =
+      _i20.PageInfo<InstapayRouteArgs>(name);
 }
 
 class InstapayRouteArgs {
@@ -279,9 +386,9 @@ class InstapayRouteArgs {
     required this.transaction,
   });
 
-  final _i19.Key? key;
+  final _i21.Key? key;
 
-  final _i21.MerchantTransaction transaction;
+  final _i25.MerchantTransaction transaction;
 
   @override
   String toString() {
@@ -290,9 +397,9 @@ class InstapayRouteArgs {
 }
 
 /// generated route for
-/// [_i5.KasipreneurScreen]
-class KasipreneurRoute extends _i18.PageRouteInfo<void> {
-  const KasipreneurRoute({List<_i18.PageRouteInfo>? children})
+/// [_i7.KasipreneurScreen]
+class KasipreneurRoute extends _i20.PageRouteInfo<void> {
+  const KasipreneurRoute({List<_i20.PageRouteInfo>? children})
       : super(
           KasipreneurRoute.name,
           initialChildren: children,
@@ -300,13 +407,13 @@ class KasipreneurRoute extends _i18.PageRouteInfo<void> {
 
   static const String name = 'KasipreneurRoute';
 
-  static const _i18.PageInfo<void> page = _i18.PageInfo<void>(name);
+  static const _i20.PageInfo<void> page = _i20.PageInfo<void>(name);
 }
 
 /// generated route for
-/// [_i6.KasipreneurViewScreen]
-class KasipreneurViewRoute extends _i18.PageRouteInfo<void> {
-  const KasipreneurViewRoute({List<_i18.PageRouteInfo>? children})
+/// [_i8.KasipreneurViewScreen]
+class KasipreneurViewRoute extends _i20.PageRouteInfo<void> {
+  const KasipreneurViewRoute({List<_i20.PageRouteInfo>? children})
       : super(
           KasipreneurViewRoute.name,
           initialChildren: children,
@@ -314,13 +421,13 @@ class KasipreneurViewRoute extends _i18.PageRouteInfo<void> {
 
   static const String name = 'KasipreneurViewRoute';
 
-  static const _i18.PageInfo<void> page = _i18.PageInfo<void>(name);
+  static const _i20.PageInfo<void> page = _i20.PageInfo<void>(name);
 }
 
 /// generated route for
-/// [_i7.MediaFilePreviewUploaderScreen]
-class MediaFilePreviewUploaderRoute extends _i18.PageRouteInfo<void> {
-  const MediaFilePreviewUploaderRoute({List<_i18.PageRouteInfo>? children})
+/// [_i9.MediaFilePreviewUploaderScreen]
+class MediaFilePreviewUploaderRoute extends _i20.PageRouteInfo<void> {
+  const MediaFilePreviewUploaderRoute({List<_i20.PageRouteInfo>? children})
       : super(
           MediaFilePreviewUploaderRoute.name,
           initialChildren: children,
@@ -328,17 +435,17 @@ class MediaFilePreviewUploaderRoute extends _i18.PageRouteInfo<void> {
 
   static const String name = 'MediaFilePreviewUploaderRoute';
 
-  static const _i18.PageInfo<void> page = _i18.PageInfo<void>(name);
+  static const _i20.PageInfo<void> page = _i20.PageInfo<void>(name);
 }
 
 /// generated route for
-/// [_i8.OrderTrackingScreen]
-class OrderTrackingRoute extends _i18.PageRouteInfo<OrderTrackingRouteArgs> {
+/// [_i10.OrderTrackingScreen]
+class OrderTrackingRoute extends _i20.PageRouteInfo<OrderTrackingRouteArgs> {
   OrderTrackingRoute({
-    _i19.Key? key,
-    required _i22.Order order,
-    required _i22.OrderEditPrivilage privilage,
-    List<_i18.PageRouteInfo>? children,
+    _i21.Key? key,
+    required _i26.Order order,
+    required _i26.OrderEditPrivilage privilage,
+    List<_i20.PageRouteInfo>? children,
   }) : super(
           OrderTrackingRoute.name,
           args: OrderTrackingRouteArgs(
@@ -351,8 +458,8 @@ class OrderTrackingRoute extends _i18.PageRouteInfo<OrderTrackingRouteArgs> {
 
   static const String name = 'OrderTrackingRoute';
 
-  static const _i18.PageInfo<OrderTrackingRouteArgs> page =
-      _i18.PageInfo<OrderTrackingRouteArgs>(name);
+  static const _i20.PageInfo<OrderTrackingRouteArgs> page =
+      _i20.PageInfo<OrderTrackingRouteArgs>(name);
 }
 
 class OrderTrackingRouteArgs {
@@ -362,11 +469,11 @@ class OrderTrackingRouteArgs {
     required this.privilage,
   });
 
-  final _i19.Key? key;
+  final _i21.Key? key;
 
-  final _i22.Order order;
+  final _i26.Order order;
 
-  final _i22.OrderEditPrivilage privilage;
+  final _i26.OrderEditPrivilage privilage;
 
   @override
   String toString() {
@@ -375,12 +482,12 @@ class OrderTrackingRouteArgs {
 }
 
 /// generated route for
-/// [_i9.PartnerAppScreen]
-class PartnerAppRoute extends _i18.PageRouteInfo<PartnerAppRouteArgs> {
+/// [_i11.PartnerAppScreen]
+class PartnerAppRoute extends _i20.PageRouteInfo<PartnerAppRouteArgs> {
   PartnerAppRoute({
-    _i19.Key? key,
-    required _i23.Partner partner,
-    List<_i18.PageRouteInfo>? children,
+    _i21.Key? key,
+    required _i27.Partner partner,
+    List<_i20.PageRouteInfo>? children,
   }) : super(
           PartnerAppRoute.name,
           args: PartnerAppRouteArgs(
@@ -392,8 +499,8 @@ class PartnerAppRoute extends _i18.PageRouteInfo<PartnerAppRouteArgs> {
 
   static const String name = 'PartnerAppRoute';
 
-  static const _i18.PageInfo<PartnerAppRouteArgs> page =
-      _i18.PageInfo<PartnerAppRouteArgs>(name);
+  static const _i20.PageInfo<PartnerAppRouteArgs> page =
+      _i20.PageInfo<PartnerAppRouteArgs>(name);
 }
 
 class PartnerAppRouteArgs {
@@ -402,9 +509,9 @@ class PartnerAppRouteArgs {
     required this.partner,
   });
 
-  final _i19.Key? key;
+  final _i21.Key? key;
 
-  final _i23.Partner partner;
+  final _i27.Partner partner;
 
   @override
   String toString() {
@@ -413,9 +520,9 @@ class PartnerAppRouteArgs {
 }
 
 /// generated route for
-/// [_i10.ReferralsView]
-class ReferralsView extends _i18.PageRouteInfo<void> {
-  const ReferralsView({List<_i18.PageRouteInfo>? children})
+/// [_i12.ReferralsView]
+class ReferralsView extends _i20.PageRouteInfo<void> {
+  const ReferralsView({List<_i20.PageRouteInfo>? children})
       : super(
           ReferralsView.name,
           initialChildren: children,
@@ -423,13 +530,13 @@ class ReferralsView extends _i18.PageRouteInfo<void> {
 
   static const String name = 'ReferralsView';
 
-  static const _i18.PageInfo<void> page = _i18.PageInfo<void>(name);
+  static const _i20.PageInfo<void> page = _i20.PageInfo<void>(name);
 }
 
 /// generated route for
-/// [_i11.ResetPasswordScreen]
-class ResetPasswordRoute extends _i18.PageRouteInfo<void> {
-  const ResetPasswordRoute({List<_i18.PageRouteInfo>? children})
+/// [_i13.ResetPasswordScreen]
+class ResetPasswordRoute extends _i20.PageRouteInfo<void> {
+  const ResetPasswordRoute({List<_i20.PageRouteInfo>? children})
       : super(
           ResetPasswordRoute.name,
           initialChildren: children,
@@ -437,13 +544,13 @@ class ResetPasswordRoute extends _i18.PageRouteInfo<void> {
 
   static const String name = 'ResetPasswordRoute';
 
-  static const _i18.PageInfo<void> page = _i18.PageInfo<void>(name);
+  static const _i20.PageInfo<void> page = _i20.PageInfo<void>(name);
 }
 
 /// generated route for
-/// [_i12.ShopOverviewScreen]
-class ShopOverviewRoute extends _i18.PageRouteInfo<void> {
-  const ShopOverviewRoute({List<_i18.PageRouteInfo>? children})
+/// [_i14.ShopOverviewScreen]
+class ShopOverviewRoute extends _i20.PageRouteInfo<void> {
+  const ShopOverviewRoute({List<_i20.PageRouteInfo>? children})
       : super(
           ShopOverviewRoute.name,
           initialChildren: children,
@@ -451,13 +558,13 @@ class ShopOverviewRoute extends _i18.PageRouteInfo<void> {
 
   static const String name = 'ShopOverviewRoute';
 
-  static const _i18.PageInfo<void> page = _i18.PageInfo<void>(name);
+  static const _i20.PageInfo<void> page = _i20.PageInfo<void>(name);
 }
 
 /// generated route for
-/// [_i13.SignInScreen]
-class SignInRoute extends _i18.PageRouteInfo<void> {
-  const SignInRoute({List<_i18.PageRouteInfo>? children})
+/// [_i15.SignInScreen]
+class SignInRoute extends _i20.PageRouteInfo<void> {
+  const SignInRoute({List<_i20.PageRouteInfo>? children})
       : super(
           SignInRoute.name,
           initialChildren: children,
@@ -465,13 +572,13 @@ class SignInRoute extends _i18.PageRouteInfo<void> {
 
   static const String name = 'SignInRoute';
 
-  static const _i18.PageInfo<void> page = _i18.PageInfo<void>(name);
+  static const _i20.PageInfo<void> page = _i20.PageInfo<void>(name);
 }
 
 /// generated route for
-/// [_i14.StartUpScreen]
-class StartUpRoute extends _i18.PageRouteInfo<void> {
-  const StartUpRoute({List<_i18.PageRouteInfo>? children})
+/// [_i16.StartUpScreen]
+class StartUpRoute extends _i20.PageRouteInfo<void> {
+  const StartUpRoute({List<_i20.PageRouteInfo>? children})
       : super(
           StartUpRoute.name,
           initialChildren: children,
@@ -479,16 +586,16 @@ class StartUpRoute extends _i18.PageRouteInfo<void> {
 
   static const String name = 'StartUpRoute';
 
-  static const _i18.PageInfo<void> page = _i18.PageInfo<void>(name);
+  static const _i20.PageInfo<void> page = _i20.PageInfo<void>(name);
 }
 
 /// generated route for
-/// [_i15.TransferScreen]
-class TransferRoute extends _i18.PageRouteInfo<TransferRouteArgs> {
+/// [_i17.TransferScreen]
+class TransferRoute extends _i20.PageRouteInfo<TransferRouteArgs> {
   TransferRoute({
-    _i19.Key? key,
-    required _i24.Wallet wallet,
-    List<_i18.PageRouteInfo>? children,
+    _i21.Key? key,
+    required _i28.Wallet wallet,
+    List<_i20.PageRouteInfo>? children,
   }) : super(
           TransferRoute.name,
           args: TransferRouteArgs(
@@ -500,8 +607,8 @@ class TransferRoute extends _i18.PageRouteInfo<TransferRouteArgs> {
 
   static const String name = 'TransferRoute';
 
-  static const _i18.PageInfo<TransferRouteArgs> page =
-      _i18.PageInfo<TransferRouteArgs>(name);
+  static const _i20.PageInfo<TransferRouteArgs> page =
+      _i20.PageInfo<TransferRouteArgs>(name);
 }
 
 class TransferRouteArgs {
@@ -510,9 +617,9 @@ class TransferRouteArgs {
     required this.wallet,
   });
 
-  final _i19.Key? key;
+  final _i21.Key? key;
 
-  final _i24.Wallet wallet;
+  final _i28.Wallet wallet;
 
   @override
   String toString() {
@@ -521,12 +628,12 @@ class TransferRouteArgs {
 }
 
 /// generated route for
-/// [_i16.VoucherViewScreen]
-class VoucherViewRoute extends _i18.PageRouteInfo<VoucherViewRouteArgs> {
+/// [_i18.VoucherViewScreen]
+class VoucherViewRoute extends _i20.PageRouteInfo<VoucherViewRouteArgs> {
   VoucherViewRoute({
-    _i19.Key? key,
+    _i21.Key? key,
     required int voucherId,
-    List<_i18.PageRouteInfo>? children,
+    List<_i20.PageRouteInfo>? children,
   }) : super(
           VoucherViewRoute.name,
           args: VoucherViewRouteArgs(
@@ -538,8 +645,8 @@ class VoucherViewRoute extends _i18.PageRouteInfo<VoucherViewRouteArgs> {
 
   static const String name = 'VoucherViewRoute';
 
-  static const _i18.PageInfo<VoucherViewRouteArgs> page =
-      _i18.PageInfo<VoucherViewRouteArgs>(name);
+  static const _i20.PageInfo<VoucherViewRouteArgs> page =
+      _i20.PageInfo<VoucherViewRouteArgs>(name);
 }
 
 class VoucherViewRouteArgs {
@@ -548,7 +655,7 @@ class VoucherViewRouteArgs {
     required this.voucherId,
   });
 
-  final _i19.Key? key;
+  final _i21.Key? key;
 
   final int voucherId;
 
@@ -559,12 +666,12 @@ class VoucherViewRouteArgs {
 }
 
 /// generated route for
-/// [_i17.WalletViewScreen]
-class WalletViewRoute extends _i18.PageRouteInfo<WalletViewRouteArgs> {
+/// [_i19.WalletViewScreen]
+class WalletViewRoute extends _i20.PageRouteInfo<WalletViewRouteArgs> {
   WalletViewRoute({
-    _i19.Key? key,
-    required _i24.Wallet wallet,
-    List<_i18.PageRouteInfo>? children,
+    _i21.Key? key,
+    required _i28.Wallet wallet,
+    List<_i20.PageRouteInfo>? children,
   }) : super(
           WalletViewRoute.name,
           args: WalletViewRouteArgs(
@@ -576,8 +683,8 @@ class WalletViewRoute extends _i18.PageRouteInfo<WalletViewRouteArgs> {
 
   static const String name = 'WalletViewRoute';
 
-  static const _i18.PageInfo<WalletViewRouteArgs> page =
-      _i18.PageInfo<WalletViewRouteArgs>(name);
+  static const _i20.PageInfo<WalletViewRouteArgs> page =
+      _i20.PageInfo<WalletViewRouteArgs>(name);
 }
 
 class WalletViewRouteArgs {
@@ -586,9 +693,9 @@ class WalletViewRouteArgs {
     required this.wallet,
   });
 
-  final _i19.Key? key;
+  final _i21.Key? key;
 
-  final _i24.Wallet wallet;
+  final _i28.Wallet wallet;
 
   @override
   String toString() {

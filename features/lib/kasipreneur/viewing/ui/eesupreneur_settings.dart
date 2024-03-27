@@ -2,8 +2,6 @@ import 'package:bootstrap_icons/bootstrap_icons.dart';
 import 'package:features/core/extensions/context_theme_ext.dart';
 import 'package:features/core/extensions/sizedbox_ext.dart';
 import 'package:features/core/widgets/eesup_form_field.dart';
-
-import 'package:features/geolocation/ui/widgets/edit_address_dialog.dart';
 import 'package:flutter/material.dart';
 
 class KasipreneurSettings extends StatelessWidget {
@@ -108,20 +106,20 @@ class KasipreneurSettings extends StatelessWidget {
                       ),
                       InkWell(
                         onTap: () {
-                          editAddressDialog(context, isPersonal: false)
-                              .then((value) {
-                            // if (value != null) {
-                            //   final ep = subjectRead(ref);
-                            //   if (ep != null) {
-                            //     setEESUpreneur(
-                            //       ref,
-                            //       ep.copyWith(
-                            //         address: value as Address?,
-                            //       ),
-                            //     );
-                            //   }
-                            // }
-                          });
+                          // editAddressDialog(context, isPersonal: false)
+                          //     .then((value) {
+                          //   // if (value != null) {
+                          //   //   final ep = subjectRead(ref);
+                          //   //   if (ep != null) {
+                          //   //     setEESUpreneur(
+                          //   //       ref,
+                          //   //       ep.copyWith(
+                          //   //         address: value as Address?,
+                          //   //       ),
+                          //   //     );
+                          //   //   }
+                          //   // }
+                          // });
                         },
                         child: const Padding(
                           padding: EdgeInsets.only(right: 5),

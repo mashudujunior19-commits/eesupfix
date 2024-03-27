@@ -19,7 +19,12 @@ class CartButton extends StatelessWidget {
           },
           icon: Badge(
             backgroundColor: context.colorScheme.primary,
-            label: Text((state as CurrentCart).totalQty().toString()),
+            label: Text(
+              (state as CurrentCart).totalQty().toString(),
+              style: context.textTheme.labelMedium?.copyWith(
+                color: Colors.white,
+              ),
+            ),
             child: const Icon(IconlyLight.buy),
           ),
         );

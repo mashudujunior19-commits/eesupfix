@@ -50,9 +50,9 @@ class EESUpoolsTypeView extends StatelessWidget {
                         itemCount: state.eesupools.length,
                         itemBuilder: (context, index) {
                           final pool = state.eesupools[index];
-                          return EESUpoolCard(eesupool: pool).animate().slideIn(
-                                (index + 1) * 50,
-                              );
+                          return EESUpoolCard(eesupool: pool)
+                              .animate()
+                              .slideIn((index + 1) * 50);
                         },
                       ),
                     ),
@@ -93,7 +93,7 @@ class _TypeHeader extends StatelessWidget {
                   label: 'Create',
                   onPressed: () {}),
               20.sW,
-              _EESUpoolTypeViewActionBtn(label: 'Search 🔍', onPressed: () {}),
+              _EESUpoolTypeViewActionBtn(label: 'Search', onPressed: () {}),
             ],
           ),
         ],

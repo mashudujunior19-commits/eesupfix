@@ -1,12 +1,17 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:data_sources/geolocation/models/address.dart';
+import 'package:features/core/errors/large_error_widget.dart';
 import 'package:features/core/extensions/bg_image_deco_ext.dart';
 import 'package:features/core/extensions/context_theme_ext.dart';
 import 'package:features/core/extensions/sizedbox_ext.dart';
+import 'package:features/core/extensions/slide_in_animation_ext.dart';
+import 'package:features/core/widgets/large_loading_shimmer.dart';
+import 'package:features/geolocation/bloc/addresses_bloc.dart';
 import 'package:features/geolocation/ui/widgets/address_card.dart';
-import 'package:features/geolocation/ui/widgets/edit_address_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:loader_overlay/loader_overlay.dart';
+import 'package:repository/geolocation/geo_repository.dart';
 
 @RoutePage()
 class AddressBookScreen extends StatelessWidget {
@@ -14,48 +19,63 @@ class AddressBookScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    List<Address> addresses = [];
     return SafeArea(
-      child: Scaffold(
-        appBar: AppBar(
-          leading: const BackButton(),
-          title: const Text('Addresses'),
-          actions: [
-            IconButton(
-              onPressed: () {
-                editAddressDialog(context).then(
-                  (value) {
-                    if (value != null) {
-                      //  ref.invalidate(addressesProvider);
-                    }
-                  },
-                );
-              },
-              icon: const Icon(Icons.add),
-            ),
-            10.sW,
-          ],
-        ),
-        body: Container(
-          width: context.width,
-          height: context.height,
-          decoration: context.bgImage,
-          child: ListView.builder(
-            itemCount: addresses.length,
-            itemBuilder: (context, index) {
-              final address = addresses[index];
-              return AddressCard(address: address)
-                  .animate()
-                  .fadeIn(delay: (200 + index * 50).ms)
-                  .slide(
-                    delay: (100 * index).ms,
-                    begin: const Offset(0, 1),
-                    end: const Offset(0, 0),
-                    duration: 600.ms,
-                    curve: Curves.easeInOutCubic,
-                  );
-            },
-          ),
+      child: BlocProvider(
+        create: (context) => AddressesBloc(context.read<GeoRepository>())
+          ..add(AddressesFetched()),
+        child: BlocConsumer<AddressesBloc, AddressesState>(
+          listener: (context, state) {
+            if (state is AddressesLoading) {
+              context.loaderOverlay.show();
+            } else {
+              context.loaderOverlay.hide();
+            }
+          },
+          builder: (context, state) {
+            return Scaffold(
+              appBar: AppBar(
+                leading: const BackButton(),
+                title: const Text('Addresses'),
+                actions: [
+                  IconButton(
+                    onPressed: () {
+                      // editAddressDialog(context).then(
+                      //   (value) {
+                      //     if (value != null) {
+                      //       //  ref.invalidate(addressesProvider);
+                      //     }
+                      //   },
+                      // );
+                    },
+                    icon: const Icon(Icons.add),
+                  ),
+                  10.sW,
+                ],
+              ),
+              body: Container(
+                width: context.width,
+                height: context.height,
+                decoration: context.bgImage,
+                child: () {
+                  if (state is AddressesLoaded) {
+                    return ListView.builder(
+                      itemCount: state.addresses.length,
+                      itemBuilder: (context, index) {
+                        final address = state.addresses[index];
+                        return AddressCard(address: address)
+                            .animate()
+                            .slideIn(index * 50);
+                      },
+                    );
+                  } else if (state is AddressesError) {
+                    return LargeErrorWidget(exception: state.ex);
+                  } else {
+                    return const LargeLoadingShimmer();
+                  }
+                }(),
+              ),
+            );
+          },
         ),
       ),
     );

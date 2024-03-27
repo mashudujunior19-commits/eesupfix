@@ -1,50 +1,29 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:data_sources/geolocation/models/address.dart';
 import 'package:features/core/extensions/context_alerts_ext.dart';
+import 'package:features/core/extensions/context_theme_ext.dart';
 import 'package:features/core/extensions/sizedbox_ext.dart';
 import 'package:features/core/widgets/eesup_form_field.dart';
+import 'package:features/geolocation/bloc/auto_completion_bloc.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_animate/flutter_animate.dart';
-import 'package:flutter_animated_dialog/flutter_animated_dialog.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
-import 'package:get_it/get_it.dart';
 import 'package:loader_overlay/loader_overlay.dart';
 import 'package:repository/utils/localize_south_african_phone.dart';
 
-Future<Object?> editAddressDialog(BuildContext context,
-    {Address? address, bool isPersonal = true}) {
-  return showAnimatedDialog(
-    context: context,
-    barrierDismissible: false,
-    builder: (BuildContext context) {
-      return _EditAddressScreen(address: address, isPersonal: isPersonal);
-    },
-    animationType: DialogTransitionType.slideFromBottomFade,
-    curve: Curves.easeIn,
-    duration: 400.ms,
-  );
-}
 
-// final _predictionsProvider =
-//     FutureProvider.family.autoDispose<List<GooglePlace>, String>((
-//   ref,
-//   query,
-// ) async {
-//   final key = GetIt.I.get<EnvService>().googleApiKey;
-//   final googlePlace = FlutterGooglePlace(key: key, region: 'za');
-//   final predictions = await googlePlace.getPredictions(query);
-//   return predictions;
-// });
-
-class _EditAddressScreen extends StatefulWidget {
-  const _EditAddressScreen({super.key, this.address, this.isPersonal = true});
+@RoutePage()
+class EditAddressScreen extends StatefulWidget {
+  const EditAddressScreen({super.key,required this.address, this.isPersonal = true});
   final Address? address;
   final bool isPersonal;
 
   @override
-  State<_EditAddressScreen> createState() => __EditAddressScreenState();
+  State<EditAddressScreen> createState() => _EditAddressScreenState();
 }
 
-class __EditAddressScreenState extends State<_EditAddressScreen> {
+class _EditAddressScreenState extends State<EditAddressScreen> {
   String type = 'Residential';
   String province = 'Province';
   bool isPrimary = false;
@@ -90,185 +69,177 @@ class __EditAddressScreenState extends State<_EditAddressScreen> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: Container(
-        margin: EdgeInsets.only(top: MediaQuery.sizeOf(context).height * .07),
-        padding: const EdgeInsets.all(6),
-        decoration: const BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(15),
-            topRight: Radius.circular(15),
+      child: Scaffold(
+        appBar: AppBar(
+          leading: const BackButton(),
+          title: Text(
+            widget.address != null ? 'Edit Address' : 'Add Address',
           ),
-        ),
-        child: Scaffold(
-          appBar: AppBar(
-            leading: const BackButton(),
-            title: Text(
-              widget.address != null ? 'Edit Address' : 'Add Address',
-            ),
-            actions: [
-              Padding(
-                padding: const EdgeInsets.only(top: 0),
-                child: TextButton(
-                  onPressed: () async {
-                    if (_streetController.text.isEmpty) {
-                      context.snackBarError('Street address is required');
-                      return;
-                    }
-
-                    final phone = localizeSAPhoneNumber(_phoneController.text);
-
-                    if (phone == null) {
-                      context.snackBarError(
-                        'Please provide a valid South African phone number',
-                      );
-                      return;
-                    }
-
-                    if (_recipientController.text.isEmpty) {
-                      context.snackBarError('Recipient name is required');
-                      return;
-                    }
-
-                    if (province == 'Province') {
-                      context.snackBarError('Select a province');
-                      return;
-                    }
-
-                    final address = Address(
-                      id: widget.address?.id,
-                      userId: widget.address?.userId,
-                      areaId: widget.address?.areaId,
-                      streetAddress: _streetController.text,
-                      buildingName: _buildingController.text,
-                      recipientPhone: phone,
-                      recipientName: _recipientController.text,
-                      latitude: latitude,
-                      longitude: longitude,
-                      type: type,
-                      province: province,
-                      isPrimary: isPrimary,
-                      createdAt: DateTime.now(),
+          actions: [
+            Padding(
+              padding: const EdgeInsets.only(top: 0),
+              child: TextButton(
+                onPressed: () async {
+                  if (_streetController.text.isEmpty) {
+                    context.snackBarError('Street address is required');
+                    return;
+                  }
+      
+                  final phone = localizeSAPhoneNumber(_phoneController.text);
+      
+                  if (phone == null) {
+                    context.snackBarError(
+                      'Please provide a valid South African phone number',
                     );
-
-                    context.loaderOverlay.show();
-
-                    // final saveResults = await ref
-                    //     .read(geoRepoProvider)
-                    //     .saveAddress(address, widget.isPersonal);
-
-                    // if (context.mounted) {
-                    //   context.loaderOverlay.hide();
-                    // }
-
-                    // saveResults.fold((l) {
-                    //   context.snackBarError(l.message);
-                    // }, (r) {
-                    //   context.snackBarSuccess('Address saved successfully');
-                    //   Navigator.pop(context, r);
-                    // });
-                  },
-                  child: const Text(
-                    'Save',
-                    style: TextStyle(fontSize: 16),
-                  ),
-                ),
-              ),
-              18.sW,
-            ],
-          ),
-          body: ListView(
-            padding: const EdgeInsets.only(left: 22, right: 22, bottom: 400),
-            children: [
-              EESUpTextFormField(
-                label: 'Street Address',
-                isRequired: true,
-                prefixIcon: const Icon(IconlyLight.search, size: 20),
-                hintText: '99 Street, City, Country',
-                controller: _streetController,
-                maxLines: 3,
-                onChanged: (p0) {
-                  // setState(() {
-                  //   if (p0.isNotEmpty) {
-                  //     isSearching = true;
-                  //     ref.invalidate(_predictionsProvider(p0));
-                  //   } else {
-                  //     isSearching = false;
-                  //   }
+                    return;
+                  }
+      
+                  if (_recipientController.text.isEmpty) {
+                    context.snackBarError('Recipient name is required');
+                    return;
+                  }
+      
+                  if (province == 'Province') {
+                    context.snackBarError('Select a province');
+                    return;
+                  }
+      
+                  final address = Address(
+                    id: widget.address?.id,
+                    userId: widget.address?.userId,
+                    areaId: widget.address?.areaId,
+                    streetAddress: _streetController.text,
+                    buildingName: _buildingController.text,
+                    recipientPhone: phone,
+                    recipientName: _recipientController.text,
+                    latitude: latitude,
+                    longitude: longitude,
+                    type: type,
+                    province: province,
+                    isPrimary: isPrimary,
+                    createdAt: DateTime.now(),
+                  );
+      
+                  context.loaderOverlay.show();
+      
+                  // final saveResults = await ref
+                  //     .read(geoRepoProvider)
+                  //     .saveAddress(address, widget.isPersonal);
+      
+                  // if (context.mounted) {
+                  //   context.loaderOverlay.hide();
+                  // }
+      
+                  // saveResults.fold((l) {
+                  //   context.snackBarError(l.message);
+                  // }, (r) {
+                  //   context.snackBarSuccess('Address saved successfully');
+                  //   Navigator.pop(context, r);
                   // });
                 },
+                child: const Text(
+                  'Save',
+                  style: TextStyle(fontSize: 16),
+                ),
               ),
-              // if (isSearching)
-              //   ref.watch(_predictionsProvider(_streetController.text)).when(
-              //     data: (predictions) {
-              //       if (predictions.isEmpty) return const SizedBox.shrink();
-              //       return Column(
-              //         crossAxisAlignment: CrossAxisAlignment.start,
-              //         children: [
-              //           Text(
-              //             'Predictions',
-              //             style: theme.textTheme.labelMedium?.copyWith(
-              //               fontSize: 13,
-              //               fontWeight: FontWeight.w500,
-              //               color: theme.colorScheme.primary,
-              //             ),
-              //           ),
-              //           for (final prediction in predictions)
-              //             ListTile(
-              //               contentPadding: const EdgeInsets.only(),
-              //               onTap: () {
-              //                 _streetController.text = prediction.address;
-              //                 latitude = prediction.lat;
-              //                 longitude = prediction.lng;
-              //                 setState(() {
-              //                   isSearching = false;
-              //                 });
-              //               },
-              //               leading: const Icon(IconlyLight.location),
-              //               title: Text(
-              //                 prediction.address,
-              //                 style: theme.textTheme.bodySmall?.copyWith(
-              //                   fontSize: 13,
-              //                   fontWeight: FontWeight.w600,
-              //                 ),
-              //               ),
-              //             )
-              //         ],
-              //       );
-              //     },
-              //     loading: () {
-              //       return const SizedBox.shrink();
-              //     },
-              //     error: (error, stackTrace) {
-              //       return const SizedBox.shrink();
-              //     },
-              //   ),
-              EESUpTextFormField(
-                label: 'Building',
-                hintText: 'Building Name, Number, Floor',
-                controller: _buildingController,
-              ),
-              10.sH,
-              _province(context),
-              EESUpTextFormField(
-                label: 'Phone',
-                isRequired: true,
-                hintText: '0712345678',
-                type: TextInputType.phone,
-                controller: _phoneController,
-              ),
-              EESUpTextFormField(
-                label: 'Recipient',
-                isRequired: true,
-                hintText: 'John Doe',
-                controller: _recipientController,
-              ),
-              10.sH,
-              _type(context),
-              10.sH,
-              _isPrimary(context),
-            ],
-          ),
+            ),
+            18.sW,
+          ],
+        ),
+        body: ListView(
+          padding: const EdgeInsets.only(left: 22, right: 22, bottom: 400),
+          children: [
+            EESUpTextFormField(
+              label: 'Street Address',
+              isRequired: true,
+              prefixIcon: const Icon(IconlyLight.search, size: 20),
+              hintText: '99 Street, City, Country',
+              controller: _streetController,
+              maxLines: 3,
+              onChanged: (p0) {
+                final chars = p0.split(',');
+      
+                print(p0);
+      
+                //if(chars.length > 2){}
+                if (p0.isNotEmpty) {
+                  try {
+                    final key = dotenv.get('GOOGLE_API_KEY');
+                    context.read<AutoCompletionBloc>().add(
+                          AutoCompletionRequested(key, p0),
+                        );
+                  } catch (e) {
+                    print(e);
+                  }
+                }
+              },
+            ),
+            BlocBuilder<AutoCompletionBloc, AutoCompletionState>(
+              builder: (context, state) {
+                if (state is AutoCompletionsLoaded) {
+                  return Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Suggestions',
+                        style: context.textTheme.labelMedium?.copyWith(
+                          fontSize: 13,
+                          fontWeight: FontWeight.w500,
+                          color: context.colorScheme.primary,
+                        ),
+                      ),
+                      for (final prediction in state.suggestions)
+                        ListTile(
+                          contentPadding: const EdgeInsets.only(),
+                          onTap: () {
+                            _streetController.text = prediction.address;
+                            latitude = prediction.lat;
+                            longitude = prediction.lng;
+                            setState(() {
+                              isSearching = false;
+                            });
+                          },
+                          leading: const Icon(IconlyLight.location),
+                          title: Text(
+                            prediction.address,
+                            style: context.textTheme.bodySmall?.copyWith(
+                              fontSize: 13,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        )
+                    ],
+                  );
+                } else {
+                  return 0.sW;
+                }
+              },
+            ),
+            EESUpTextFormField(
+              label: 'Building',
+              hintText: 'Building Name, Number, Floor',
+              controller: _buildingController,
+            ),
+            10.sH,
+            _province(context),
+            EESUpTextFormField(
+              label: 'Phone',
+              isRequired: true,
+              hintText: '0712345678',
+              type: TextInputType.phone,
+              controller: _phoneController,
+            ),
+            EESUpTextFormField(
+              label: 'Recipient',
+              isRequired: true,
+              hintText: 'John Doe',
+              controller: _recipientController,
+            ),
+            10.sH,
+            _type(context),
+            10.sH,
+            _isPrimary(context),
+          ],
         ),
       ),
     );

@@ -43,7 +43,7 @@ class ProductCard extends StatelessWidget {
               children: [
                 InkWell(
                   onTap: () {
-                   //addProductToBasketDialog(context, product);
+                    //addProductToBasketDialog(context, product);
                   },
                   child: const Icon(
                     BootstrapIcons.basket,
@@ -156,7 +156,7 @@ class _CartButtons extends StatelessWidget {
                     GestureDetector(
                       onTap: () {
                         context.read<CartBloc>().add(
-                              ProductRemovedFromCart(product.id),
+                              ProductDecrementedFromCart(product.id),
                             );
                       },
                       child: Container(

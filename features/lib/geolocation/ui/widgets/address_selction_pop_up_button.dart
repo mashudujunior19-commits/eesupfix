@@ -1,6 +1,5 @@
 import 'package:data_sources/geolocation/models/address.dart';
 import 'package:features/core/extensions/context_theme_ext.dart';
-import 'package:features/geolocation/ui/widgets/edit_address_dialog.dart';
 import 'package:flutter/material.dart';
 
 class AddressSelctionPopUpButton extends StatelessWidget {
@@ -33,11 +32,11 @@ class AddressSelctionPopUpButton extends StatelessWidget {
           ),
           PopupMenuItem(
             onTap: () {
-              editAddressDialog(context, isPersonal: false).then((value) {
-                if (value != null) {
-                  onAddressSelected(value as Address?);
-                }
-              });
+              // editAddressDialog(context, isPersonal: false).then((value) {
+              //   if (value != null) {
+              //     onAddressSelected(value as Address?);
+              //   }
+              // });
             },
             child: Text(
               'Add new address',

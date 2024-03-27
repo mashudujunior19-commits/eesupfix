@@ -49,6 +49,8 @@ mixin _$OrderProduct {
   bool get substituteBrand => throw _privateConstructorUsedError;
   @JsonKey(name: 'substitute_variant')
   bool get substituteVariant => throw _privateConstructorUsedError;
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  bool get isExpanded => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -82,7 +84,8 @@ abstract class $OrderProductCopyWith<$Res> {
       @JsonKey(name: 'eesupreneur_accepted_qty') int eesupreneurAcceptedQty,
       @JsonKey(name: 'damaged_qty') int damagedQty,
       @JsonKey(name: 'substitute_brand') bool substituteBrand,
-      @JsonKey(name: 'substitute_variant') bool substituteVariant});
+      @JsonKey(name: 'substitute_variant') bool substituteVariant,
+      @JsonKey(includeFromJson: false, includeToJson: false) bool isExpanded});
 }
 
 /// @nodoc
@@ -112,6 +115,7 @@ class _$OrderProductCopyWithImpl<$Res, $Val extends OrderProduct>
     Object? damagedQty = null,
     Object? substituteBrand = null,
     Object? substituteVariant = null,
+    Object? isExpanded = null,
   }) {
     return _then(_value.copyWith(
       productId: null == productId
@@ -170,6 +174,10 @@ class _$OrderProductCopyWithImpl<$Res, $Val extends OrderProduct>
           ? _value.substituteVariant
           : substituteVariant // ignore: cast_nullable_to_non_nullable
               as bool,
+      isExpanded: null == isExpanded
+          ? _value.isExpanded
+          : isExpanded // ignore: cast_nullable_to_non_nullable
+              as bool,
     ) as $Val);
   }
 }
@@ -202,7 +210,8 @@ abstract class _$$OrderProductImplCopyWith<$Res>
       @JsonKey(name: 'eesupreneur_accepted_qty') int eesupreneurAcceptedQty,
       @JsonKey(name: 'damaged_qty') int damagedQty,
       @JsonKey(name: 'substitute_brand') bool substituteBrand,
-      @JsonKey(name: 'substitute_variant') bool substituteVariant});
+      @JsonKey(name: 'substitute_variant') bool substituteVariant,
+      @JsonKey(includeFromJson: false, includeToJson: false) bool isExpanded});
 }
 
 /// @nodoc
@@ -230,6 +239,7 @@ class __$$OrderProductImplCopyWithImpl<$Res>
     Object? damagedQty = null,
     Object? substituteBrand = null,
     Object? substituteVariant = null,
+    Object? isExpanded = null,
   }) {
     return _then(_$OrderProductImpl(
       productId: null == productId
@@ -288,6 +298,10 @@ class __$$OrderProductImplCopyWithImpl<$Res>
           ? _value.substituteVariant
           : substituteVariant // ignore: cast_nullable_to_non_nullable
               as bool,
+      isExpanded: null == isExpanded
+          ? _value.isExpanded
+          : isExpanded // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -316,7 +330,9 @@ class _$OrderProductImpl implements _OrderProduct {
       this.eesupreneurAcceptedQty = 0,
       @JsonKey(name: 'damaged_qty') this.damagedQty = 0,
       @JsonKey(name: 'substitute_brand') this.substituteBrand = false,
-      @JsonKey(name: 'substitute_variant') this.substituteVariant = false});
+      @JsonKey(name: 'substitute_variant') this.substituteVariant = false,
+      @JsonKey(includeFromJson: false, includeToJson: false)
+      this.isExpanded = false});
 
   factory _$OrderProductImpl.fromJson(Map<String, dynamic> json) =>
       _$$OrderProductImplFromJson(json);
@@ -364,10 +380,13 @@ class _$OrderProductImpl implements _OrderProduct {
   @override
   @JsonKey(name: 'substitute_variant')
   final bool substituteVariant;
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  final bool isExpanded;
 
   @override
   String toString() {
-    return 'OrderProduct(productId: $productId, orderId: $orderId, category: $category, imageUrl: $imageUrl, size: $size, productClass: $productClass, price: $price, name: $name, quantity: $quantity, customerAcceptedQty: $customerAcceptedQty, eesupreneurAcceptedQty: $eesupreneurAcceptedQty, damagedQty: $damagedQty, substituteBrand: $substituteBrand, substituteVariant: $substituteVariant)';
+    return 'OrderProduct(productId: $productId, orderId: $orderId, category: $category, imageUrl: $imageUrl, size: $size, productClass: $productClass, price: $price, name: $name, quantity: $quantity, customerAcceptedQty: $customerAcceptedQty, eesupreneurAcceptedQty: $eesupreneurAcceptedQty, damagedQty: $damagedQty, substituteBrand: $substituteBrand, substituteVariant: $substituteVariant, isExpanded: $isExpanded)';
   }
 
   @override
@@ -398,7 +417,9 @@ class _$OrderProductImpl implements _OrderProduct {
             (identical(other.substituteBrand, substituteBrand) ||
                 other.substituteBrand == substituteBrand) &&
             (identical(other.substituteVariant, substituteVariant) ||
-                other.substituteVariant == substituteVariant));
+                other.substituteVariant == substituteVariant) &&
+            (identical(other.isExpanded, isExpanded) ||
+                other.isExpanded == isExpanded));
   }
 
   @JsonKey(ignore: true)
@@ -418,7 +439,8 @@ class _$OrderProductImpl implements _OrderProduct {
       eesupreneurAcceptedQty,
       damagedQty,
       substituteBrand,
-      substituteVariant);
+      substituteVariant,
+      isExpanded);
 
   @JsonKey(ignore: true)
   @override
@@ -456,8 +478,9 @@ abstract class _OrderProduct implements OrderProduct {
       final int eesupreneurAcceptedQty,
       @JsonKey(name: 'damaged_qty') final int damagedQty,
       @JsonKey(name: 'substitute_brand') final bool substituteBrand,
-      @JsonKey(name: 'substitute_variant')
-      final bool substituteVariant}) = _$OrderProductImpl;
+      @JsonKey(name: 'substitute_variant') final bool substituteVariant,
+      @JsonKey(includeFromJson: false, includeToJson: false)
+      final bool isExpanded}) = _$OrderProductImpl;
 
   factory _OrderProduct.fromJson(Map<String, dynamic> json) =
       _$OrderProductImpl.fromJson;
@@ -505,6 +528,9 @@ abstract class _OrderProduct implements OrderProduct {
   @override
   @JsonKey(name: 'substitute_variant')
   bool get substituteVariant;
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  bool get isExpanded;
   @override
   @JsonKey(ignore: true)
   _$$OrderProductImplCopyWith<_$OrderProductImpl> get copyWith =>

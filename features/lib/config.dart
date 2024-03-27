@@ -33,6 +33,8 @@ class AppConfig {
       url: dotenv.env['SUPABASE_URL'] ?? '',
       anonKey: dotenv.env['SUPABASE_ANON_KEY'] ?? '',
       debug: false,
+      realtimeClientOptions: const RealtimeClientOptions(logLevel: RealtimeLogLevel.debug)
+
       // authOptions: FlutterAuthClientOptions(
       //   localStorage:
       //       env == FlavorType.test ? const EmptyLocalStorage() : null,

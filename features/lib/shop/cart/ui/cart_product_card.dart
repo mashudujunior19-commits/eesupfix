@@ -1,7 +1,9 @@
 import 'package:data_sources/orders/models/order_product.dart';
+import 'package:features/shop/cart/bloc/cart_bloc.dart';
 import 'package:features/shop/cart/ui/product_substitution_settings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 
 class CartProductCard extends StatelessWidget {
@@ -15,7 +17,9 @@ class CartProductCard extends StatelessWidget {
     return Dismissible(
       key: UniqueKey(),
       direction: DismissDirection.endToStart,
-      onDismissed: (direction) {},
+      onDismissed: (direction) {
+        context.read<CartBloc>().add(ProductRemovedFromCart(product.productId));
+      },
       background: Row(
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
@@ -89,7 +93,11 @@ class CartProductCard extends StatelessWidget {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       IconButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          context.read<CartBloc>().add(
+                                ProductDecrementedFromCart(product.productId),
+                              );
+                        },
                         icon: ClipRRect(
                           borderRadius: BorderRadius.circular(8),
                           child: Image.asset(
@@ -102,7 +110,22 @@ class CartProductCard extends StatelessWidget {
                       Text('${product.quantity}',
                           style: theme.textTheme.labelMedium),
                       IconButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          context.read<CartBloc>().add(
+                                ProductAddedToCart(
+                                  OrderProduct(
+                                    productId: product.productId,
+                                    quantity: 1,
+                                    productClass: product.productClass,
+                                    price: product.price,
+                                    name: product.name,
+                                    imageUrl: product.imageUrl,
+                                    category: product.category,
+                                    size: product.size,
+                                  ),
+                                ),
+                              );
+                        },
                         icon: const Icon(IconlyLight.plus),
                       )
                     ],
@@ -115,10 +138,35 @@ class CartProductCard extends StatelessWidget {
               child: Divider(thickness: .35),
             ),
             ProductSubstitutionSettings(
+              isExpanded: product.isExpanded,
               substituteVariants: product.substituteVariant,
               substituteBrands: product.substituteBrand,
-              onVariantChanged: (v) {},
-              onBrandChanged: (v) {},
+              onTap: () {
+                context.read<CartBloc>().add(
+                      ProductSettingsExpanded(
+                        product.productId,
+                        !product.isExpanded,
+                      ),
+                    );
+              },
+              onVariantChanged: (v) {
+                context.read<CartBloc>().add(
+                      ProductSubsitutesUpdated(
+                        id: product.productId,
+                        substituteVariant: v ?? false,
+                        substituteBrand: product.substituteBrand,
+                      ),
+                    );
+              },
+              onBrandChanged: (v) {
+                context.read<CartBloc>().add(
+                      ProductSubsitutesUpdated(
+                        id: product.productId,
+                        substituteVariant: product.substituteVariant,
+                        substituteBrand: v ?? false,
+                      ),
+                    );
+              },
             )
           ],
         ),

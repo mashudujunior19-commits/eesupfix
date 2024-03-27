@@ -2,7 +2,6 @@ import 'package:data_sources/geolocation/models/address.dart';
 import 'package:features/core/extensions/sizedbox_ext.dart';
 import 'package:features/core/extensions/slide_in_animation_ext.dart';
 import 'package:features/geolocation/ui/widgets/address_card.dart';
-import 'package:features/geolocation/ui/widgets/edit_address_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_animated_dialog/flutter_animated_dialog.dart';
@@ -44,13 +43,13 @@ class _SelectFromMyAddresses extends StatelessWidget {
           actions: [
             IconButton(
               onPressed: () {
-                editAddressDialog(context, isPersonal: true).then(
-                  (value) {
-                    // if (value != null) {
-                    //   ref.invalidate(addressesProvider);
-                    // }
-                  },
-                );
+                // editAddressDialog(context, isPersonal: true).then(
+                //   (value) {
+                //     // if (value != null) {
+                //     //   ref.invalidate(addressesProvider);
+                //     // }
+                //   },
+                // );
               },
               icon: const Icon(Icons.add),
             ),

@@ -23,20 +23,24 @@ class CartBloc extends Bloc<CartEvent, CartState> {
         currentCart.add(
           OrderProduct(
             productId: product.productId,
-            name: product.name,
-            price: product.price,
             quantity: 1,
+            productClass: product.productClass,
+            price: product.price,
+            name: product.name,
+            imageUrl: product.imageUrl,
+            category: product.category,
+            size: product.size,
           ),
         );
       }
       emit(CurrentCart(currentCart));
     });
 
-    on<ProductRemovedFromCart>((event, emit) {
+    on<ProductDecrementedFromCart>((event, emit) {
       var currentCart = [...(state as CurrentCart).products];
-      
-      var index = currentCart
-          .indexWhere((element) => element.productId == event.id);
+
+      var index =
+          currentCart.indexWhere((element) => element.productId == event.id);
       if (index != -1) {
         if (currentCart[index].quantity > 1) {
           currentCart[index] = currentCart[index]
@@ -47,7 +51,47 @@ class CartBloc extends Bloc<CartEvent, CartState> {
       }
       emit(CurrentCart(currentCart));
     });
-  
+
+    on<ProductRemovedFromCart>((event, emit) {
+      var currentCart = [...(state as CurrentCart).products];
+
+      var index =
+          currentCart.indexWhere((element) => element.productId == event.id);
+      if (index != -1) {
+        currentCart.removeAt(index);
+      }
+      emit(CurrentCart(currentCart));
+    });
+
+    on<ProductSubsitutesUpdated>((event, emit) {
+      var currentCart = [...(state as CurrentCart).products];
+
+      var index = currentCart.indexWhere(
+        (element) => element.productId == event.id,
+      );
+      if (index != -1) {
+        currentCart[index] = currentCart[index].copyWith(
+          substituteBrand: event.substituteBrand,
+          substituteVariant: event.substituteVariant,
+        );
+      }
+      emit(CurrentCart(currentCart));
+    });
+
+    on<ProductSettingsExpanded>((event, emit) {
+      var currentCart = [...(state as CurrentCart).products];
+
+      var index = currentCart.indexWhere(
+        (element) => element.productId == event.id,
+      );
+      if (index != -1) {
+        currentCart[index] = currentCart[index].copyWith(
+          isExpanded: event.isExpanded,
+        );
+      }
+      emit(CurrentCart(currentCart));
+    });
+
     on<CartCleared>((event, emit) {
       emit(CurrentCart(const []));
     });

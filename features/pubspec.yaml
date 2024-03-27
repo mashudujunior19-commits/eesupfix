@@ -61,6 +61,7 @@ dependencies:
   syncfusion_flutter_sliders: ^25.1.35
   flutter_rating_bar: ^4.0.1
   record: ^5.0.5
+  flutter_google_place_search: ^0.0.1
   
 dev_dependencies:
   flutter_test:

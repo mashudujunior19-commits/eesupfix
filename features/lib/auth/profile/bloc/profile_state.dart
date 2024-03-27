@@ -3,8 +3,10 @@ part of 'profile_bloc.dart';
 @immutable
 sealed class ProfileState {}
 
-final class ProfileInitial extends ProfileState {}
-
+final class ProfileError extends ProfileState {
+  final EESUpException ex;
+  ProfileError(this.ex);
+}
 
 final class ProfileLoading extends ProfileState {}
 
