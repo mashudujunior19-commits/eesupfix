@@ -6,5 +6,9 @@ sealed class AutoCompletionEvent {}
 final class AutoCompletionRequested extends AutoCompletionEvent {
   final String key;
   final String input;
-  AutoCompletionRequested(this.key,this.input);
+  AutoCompletionRequested(this.key, this.input);
+}
+
+final class AutoCompletionReseted extends AutoCompletionEvent {
+  AutoCompletionReseted();
 }

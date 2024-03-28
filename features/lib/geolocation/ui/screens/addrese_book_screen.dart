@@ -1,16 +1,16 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:features/core/errors/large_error_widget.dart';
 import 'package:features/core/extensions/bg_image_deco_ext.dart';
+import 'package:features/core/extensions/context_alerts_ext.dart';
 import 'package:features/core/extensions/context_theme_ext.dart';
 import 'package:features/core/extensions/sizedbox_ext.dart';
 import 'package:features/core/extensions/slide_in_animation_ext.dart';
+import 'package:features/core/navigation/app_route.gr.dart';
 import 'package:features/core/widgets/large_loading_shimmer.dart';
 import 'package:features/geolocation/bloc/addresses_bloc.dart';
 import 'package:features/geolocation/ui/widgets/address_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:loader_overlay/loader_overlay.dart';
 import 'package:repository/geolocation/geo_repository.dart';
 
 @RoutePage()
@@ -25,10 +25,8 @@ class AddressBookScreen extends StatelessWidget {
           ..add(AddressesFetched()),
         child: BlocConsumer<AddressesBloc, AddressesState>(
           listener: (context, state) {
-            if (state is AddressesLoading) {
-              context.loaderOverlay.show();
-            } else {
-              context.loaderOverlay.hide();
+            if (state is AddressesError) {
+              context.snackBarError(state.ex.message);
             }
           },
           builder: (context, state) {
@@ -39,13 +37,14 @@ class AddressBookScreen extends StatelessWidget {
                 actions: [
                   IconButton(
                     onPressed: () {
-                      // editAddressDialog(context).then(
-                      //   (value) {
-                      //     if (value != null) {
-                      //       //  ref.invalidate(addressesProvider);
-                      //     }
-                      //   },
-                      // );
+                      context.router
+                          .push(
+                              EditAddressRoute(address: null, isPersonal: true))
+                          .then((value) {
+                        if (value != null) {
+                          context.read<AddressesBloc>().add(AddressesFetched());
+                        }
+                      });
                     },
                     icon: const Icon(Icons.add),
                   ),
@@ -67,9 +66,7 @@ class AddressBookScreen extends StatelessWidget {
                             .slideIn(index * 50);
                       },
                     );
-                  } else if (state is AddressesError) {
-                    return LargeErrorWidget(exception: state.ex);
-                  } else {
+                  } else if (state is AddressesLoading) {
                     return const LargeLoadingShimmer();
                   }
                 }(),

@@ -12,10 +12,13 @@ class EESUpreneurRepository {
   EESUpreneurRepository(this.dataSource, this.authRepo);
 
   Future<Either<EESUpException, List<EESUpreneur>>> getClosestEESUpreneurs(
-    double lat,
-    double lng,
+    double? lat,
+    double? lng,
     int limit,
   ) async {
+    if (lat == null || lng == null) {
+      return const Right( []);
+    }
     final result = await authRepo.executeFutureWithAuth((_) {
       return dataSource.getClosestEESUpreneurs(lat, lng, limit);
     });

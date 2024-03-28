@@ -1,6 +1,10 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:data_sources/geolocation/models/address.dart';
 import 'package:features/core/extensions/sizedbox_ext.dart';
+import 'package:features/core/navigation/app_route.gr.dart';
+import 'package:features/geolocation/bloc/addresses_bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 
 class AddressCard extends StatelessWidget {
@@ -25,14 +29,13 @@ class AddressCard extends StatelessWidget {
       splashColor: Colors.transparent,
       onTap: onTap ??
           () {
-            // editAddressDialog(context, address: address, isPersonal: true)
-            //     .then(
-            //   (value) {
-            //     if (value != null) {
-            //       ref.invalidate(addressesProvider);
-            //     }
-            //   },
-            // );
+            context.router
+                .push(EditAddressRoute(address: address, isPersonal: true))
+                .then((value) {
+              if (value != null) {
+                context.read<AddressesBloc>().add(AddressesFetched());
+              }
+            });
           },
       child: Container(
         margin: margin ?? const EdgeInsets.only(right: 17, left: 17, top: 15),
@@ -161,12 +164,13 @@ class AddressCard extends StatelessWidget {
                   if (allowDelete)
                     InkWell(
                       onTap: () {
-                        // ref
-                        //     .read(geoRepoProvider)
-                        //     .deleteAddress(address.id!)
-                        //     .whenComplete(() {
-                        //   ref.invalidate(addressesProvider);
-                        // });
+                        final id = address.id;
+
+                        if (id == null) return;
+
+                        context.read<AddressesBloc>().add(
+                              AddressDeleted(id),
+                            );
                       },
                       child: const Icon(
                         IconlyBold.delete,

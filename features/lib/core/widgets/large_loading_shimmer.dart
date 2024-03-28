@@ -3,14 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
 
 class LargeLoadingShimmer extends StatelessWidget {
-  const LargeLoadingShimmer({
-    super.key,
-  });
-
+  const LargeLoadingShimmer({super.key, this.margin});
+  final EdgeInsets? margin;
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(left: 15, right: 15, top: 15),
+      padding:margin?? const EdgeInsets.only(left: 15, right: 15, top: 15),
       child: Shimmer.fromColors(
         baseColor: Colors.grey.shade200,
         highlightColor: Colors.grey.shade50,

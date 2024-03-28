@@ -19,5 +19,22 @@ class AddressesBloc extends Bloc<AddressesEvent, AddressesState> {
         emit(AddressesLoaded(r));
       });
     });
+
+    on<AddressDeleted>((event, emit) async {
+      //Get the current state so we can set it back to it, in case of an error
+      final currentAddresses = (state as AddressesLoaded).addresses;
+
+      emit(AddressesLoading());
+      final results = await _geoRepo.deleteAddress(event.id);
+
+      results.fold((l) {
+        emit(AddressesError(l));
+        //For error we emit with the current list
+        emit(AddressesLoaded(currentAddresses));
+      }, (r) {
+        //Otherwise refresh the list
+        add(AddressesFetched());
+      });
+    });
   }
 }

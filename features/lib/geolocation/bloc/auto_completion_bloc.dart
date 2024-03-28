@@ -25,5 +25,8 @@ class AutoCompletionBloc
         emit(AutoCompletionsLoaded(const []));
       }
     });
+    on<AutoCompletionReseted>((event, emit) {
+      emit(AutoCompletionInitial());
+    });
   }
 }

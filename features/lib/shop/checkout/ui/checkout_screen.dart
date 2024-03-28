@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:data_sources/orders/models/order_product.dart';
 import 'package:features/core/extensions/bg_image_deco_ext.dart';
 import 'package:features/core/extensions/context_theme_ext.dart';
+import 'package:features/shop/checkout/bloc/checkout_bloc.dart';
 import 'package:features/shop/checkout/ui/steps/address_selection_step.dart';
 import 'package:features/shop/checkout/ui/steps/collection_step.dart';
 import 'package:features/shop/checkout/ui/steps/payment_method_step.dart';
@@ -9,6 +10,8 @@ import 'package:features/shop/checkout/ui/steps/results_step.dart';
 import 'package:features/shop/checkout/ui/steps/summery_step.dart';
 import 'package:features/shop/checkout/ui/widgets/steps_indicator.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:loader_overlay/loader_overlay.dart';
 
 @RoutePage()
 class CheckoutScreen extends StatefulWidget {
@@ -43,32 +46,53 @@ class _CheckoutScreenState extends State<CheckoutScreen>
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        appBar: AppBar(
-          leading: const BackButton(),
-          title: const Text('Checkout'),
-        ),
-        body: Container(
-          height: context.height,
-          width: context.width,
-          decoration: context.bgImage,
-          child: Column(
-            children: [
-              StepIndicator(activeStep: index),
-              Expanded(
-                child: TabBarView(
-                  controller: _tabController,
-                  children: [
-                    AddressSelectionStep(controller: _tabController),
-                    CollectionStep(controller: _tabController),
-                    PaymentMethodStep(controller: _tabController),
-                    SummeryStep(controller: _tabController),
-                    ResultStep(controller: _tabController),
-                  ],
-                ),
-              )
-            ],
+    return BlocProvider(
+      create: (context) =>
+          CheckoutBloc()..add(CheckoutStarted(widget.total, widget.products)),
+      child: BlocListener<CheckoutBloc, CheckoutState>(
+        listener: (context, state) {
+          if (state is CheckoutLoading) {
+            context.loaderOverlay.show();
+          } else {
+            context.loaderOverlay.hide();
+          }
+        },
+        child: SafeArea(
+          child: Scaffold(
+            appBar: AppBar(
+              leading: BackButton(
+                onPressed: () {
+                  if (index > 0) {
+                    _tabController.animateTo(index - 1);
+                  } else {
+                    Navigator.pop(context);
+                  }
+                },
+              ),
+              title: const Text('Checkout'),
+            ),
+            body: Container(
+              height: context.height,
+              width: context.width,
+              decoration: context.bgImage,
+              child: Column(
+                children: [
+                  StepIndicator(activeStep: index),
+                  Expanded(
+                    child: TabBarView(
+                      controller: _tabController,
+                      children: [
+                        AddressSelectionStep(tabController: _tabController),
+                        CollectionStep(tabController: _tabController),
+                        PaymentMethodStep(tabController: _tabController),
+                        SummeryStep(tabController: _tabController),
+                        ResultStep(tabController: _tabController),
+                      ],
+                    ),
+                  )
+                ],
+              ),
+            ),
           ),
         ),
       ),
