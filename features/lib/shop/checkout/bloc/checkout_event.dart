@@ -13,3 +13,9 @@ final class AddresseUpdated extends CheckoutEvent {
   final Address address;
   AddresseUpdated(this.address);
 }
+
+final class CollectionPointUpdated extends CheckoutEvent {
+  final String? shopId;
+  final int? orderId;
+  CollectionPointUpdated(this.shopId,this.orderId);
+}

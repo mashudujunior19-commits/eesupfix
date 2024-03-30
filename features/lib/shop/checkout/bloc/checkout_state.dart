@@ -7,5 +7,6 @@ final class CheckoutLoading extends CheckoutState {}
 
 final class CurrentCheckout extends CheckoutState {
   final Order newOrder;
-  CurrentCheckout(this.newOrder);
+  final Address? selectedAddress;
+  CurrentCheckout(this.newOrder,this.selectedAddress);
 }

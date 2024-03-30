@@ -24,7 +24,7 @@ class CollectionPointsBloc
       final lng = event.address?.longitude;
 
       final shopsRes =
-          await _eesuPreneurRepo.getClosestEESUpreneurs(lat!, lng!, 50);
+          await _eesuPreneurRepo.getClosestEESUpreneurs(lat, lng, 50);
       final ordesRes = await _eesuPoolRepo.fetchOpenEESUpoolOrders();
 
       shopsRes.fold((l) => null, (r) {

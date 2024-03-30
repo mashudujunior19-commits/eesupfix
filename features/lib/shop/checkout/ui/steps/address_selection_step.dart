@@ -5,6 +5,7 @@ import 'package:features/core/navigation/app_route.gr.dart';
 import 'package:features/core/widgets/large_loading_shimmer.dart';
 import 'package:features/geolocation/bloc/addresses_bloc.dart';
 import 'package:features/geolocation/ui/widgets/address_card.dart';
+import 'package:features/shop/checkout/bloc/checkout_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -62,6 +63,9 @@ class AddressSelectionStep extends StatelessWidget {
                       address: address,
                       margin: const EdgeInsets.only(top: 15),
                       onTap: () {
+                        context
+                            .read<CheckoutBloc>()
+                            .add(AddresseUpdated(address));
                         tabController.animateTo(tabController.index + 1);
                       },
                     ).animate().slideIn(index * 50);

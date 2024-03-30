@@ -20,8 +20,37 @@ class CheckoutBloc extends Bloc<CheckoutEvent, CheckoutState> {
             secretPin: 0000,
             status: OrderStatus.pending,
           ),
+          null,
         ),
       );
+    });
+
+    on<AddresseUpdated>((event, emit) {
+      if (state is CurrentCheckout) {
+        final currentOrder = (state as CurrentCheckout).newOrder;
+        emit(
+          CurrentCheckout(
+            currentOrder.copyWith(deliveryAddressId: event.address.id),
+            event.address,
+          ),
+        );
+      }
+    });
+
+    on<CollectionPointUpdated>((event, emit) {
+      if (state is CurrentCheckout) {
+        final currentOrderr = (state as CurrentCheckout).newOrder;
+        final currentAddress = (state as CurrentCheckout).selectedAddress;
+        emit(
+          CurrentCheckout(
+            currentOrderr.copyWith(
+              eesupreneurId: event.shopId,
+              eesupoolOrderId: event.orderId,
+            ),
+            currentAddress,
+          ),
+        );
+      }
     });
   }
 }
