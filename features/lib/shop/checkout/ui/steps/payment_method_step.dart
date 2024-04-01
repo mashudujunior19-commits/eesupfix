@@ -21,7 +21,9 @@ class PaymentMethodStep extends StatelessWidget {
           subtitle: 'Visa, Mastercard, American Express, EFT.',
           onTap: () {
             context.read<CheckoutBloc>().add(
-                  PaymentMethodUpdated(PaymentMethod.instapay),
+                  PaymentMethodUpdated(
+                    PaymentMethod.instapay,
+                  ),
                 );
             tabController.animateTo(tabController.index + 1);
           },
@@ -43,7 +45,9 @@ class PaymentMethodStep extends StatelessWidget {
           subtitle: 'Available balance:',
           onTap: () {
             context.read<CheckoutBloc>().add(
-                  PaymentMethodUpdated(PaymentMethod.retailWallet),
+                  PaymentMethodUpdated(
+                    PaymentMethod.retailWallet,
+                  ),
                 );
             tabController.animateTo(tabController.index + 1);
           },
@@ -68,7 +72,8 @@ class PaymentMethodStep extends StatelessWidget {
           onTap: () {
             context.read<CheckoutBloc>().add(
                   PaymentMethodUpdated(
-                      PaymentMethod.splitInstapayRetailWalletPayment),
+                    PaymentMethod.splitInstapayRetailWalletPayment,
+                  ),
                 );
             tabController.animateTo(tabController.index + 1);
           },
@@ -81,7 +86,8 @@ class PaymentMethodStep extends StatelessWidget {
           onTap: () {
             context.read<CheckoutBloc>().add(
                   PaymentMethodUpdated(
-                      PaymentMethod.splitOzowRetailWalletPayment),
+                    PaymentMethod.splitOzowRetailWalletPayment,
+                  ),
                 );
             tabController.animateTo(tabController.index + 1);
           },

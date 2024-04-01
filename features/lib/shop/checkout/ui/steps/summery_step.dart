@@ -1,6 +1,9 @@
+import 'package:data_sources/orders/models/order.dart';
 import 'package:features/core/extensions/context_theme_ext.dart';
 import 'package:features/core/extensions/sizedbox_ext.dart';
+import 'package:features/shop/checkout/bloc/checkout_bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class SummeryStep extends StatelessWidget {
   const SummeryStep({super.key, required this.tabController});
@@ -8,41 +11,66 @@ class SummeryStep extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView(
-      padding: const EdgeInsets.only(left: 25, right: 25, top: 30),
-      children: [
-        Container(
-          padding: const EdgeInsets.all(10),
-          decoration: const BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(10),
-              topRight: Radius.circular(10),
+    return BlocBuilder<CheckoutBloc, CheckoutState>(
+      builder: (context, state) {
+        Order? newOrder;
+        double? total;
+        if (state is CurrentCheckout) {
+          newOrder = state.newOrder;
+          total = state.totalToPay();
+        }
+        return ListView(
+          padding: const EdgeInsets.only(left: 25, right: 25, top: 30),
+          children: [
+            Container(
+              padding: const EdgeInsets.all(10),
+              decoration: const BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(10),
+                  topRight: Radius.circular(10),
+                ),
+              ),
+              child: Column(
+                children: [
+                  const Text('Order Summery'),
+                  20.sH,
+                  _LineTile(
+                    label: 'Payment method',
+                    value: newOrder?.paymentMethod.toString() ?? "No selected",
+                  ),
+                  _LineTile(
+                    label: 'Subtotal',
+                    value: 'R${newOrder?.value.toStringAsFixed(2) ?? '0.00'}',
+                  ),
+                  _LineTile(
+                    label: 'Card fee',
+                    isVisible: newOrder?.paymentMethod.fee() != null,
+                    value:
+                        'R${newOrder?.paymentMethod.fee()?.toStringAsFixed(2) ?? '0.00'}',
+                  ),
+                  _LineTile(
+                    label: 'Delivery fee',
+                    value:
+                        "R${newOrder?.deliveryFee?.toStringAsFixed(2) ?? 0.00}",
+                  ),
+                  _LineTile(
+                    label: 'Total',
+                    value: "R${total?.toStringAsFixed(2) ?? 0.00}",
+                    isBold: true,
+                  ),
+                ],
+              ),
             ),
-          ),
-          child: Column(
-            children: [
-              const Text('Order Summery'),
-              20.sH,
-              const _LineTile(label: 'Payment method', value: 'Ozow'),
-              const Divider(height: 30, thickness: .35),
-              const _LineTile(label: 'Subtotal', value: 'Ozow'),
-              const Divider(height: 30, thickness: .35),
-              const _LineTile(label: 'Card fee', value: 'Ozow'),
-              const Divider(height: 30, thickness: .35),
-              const _LineTile(label: 'Delivery fee', value: 'Ozow'),
-              const Divider(height: 30, thickness: .35),
-              const _LineTile(label: 'Total', value: 'Ozow', isBold: true),
-            ],
-          ),
-        ),
-        Image.asset("assets/images/receipt_bottom.png"),
-        30.sH,
-        ElevatedButton(
-          onPressed: () {},
-          child: const Text("Place order"),
-        )
-      ],
+            Image.asset("assets/images/receipt_bottom.png"),
+            30.sH,
+            ElevatedButton(
+              onPressed: () {},
+              child: const Text("Place order"),
+            )
+          ],
+        );
+      },
     );
   }
 }
@@ -53,30 +81,39 @@ class _LineTile extends StatelessWidget {
     required this.label,
     required this.value,
     this.isBold = false,
+    this.isVisible = true,
   });
   final String label;
   final String value;
   final bool isBold;
+  final bool isVisible;
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    if (!isVisible) return 0.sW;
+    return Column(
+      mainAxisSize: MainAxisSize.min,
       children: [
-        Text(
-          label,
-          style: context.textTheme.labelSmall?.copyWith(
-            fontSize: 13,
-            fontWeight: isBold ? FontWeight.bold : null,
-          ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              label,
+              style: context.textTheme.labelSmall?.copyWith(
+                fontSize: 13,
+                fontWeight: isBold ? FontWeight.bold : null,
+              ),
+            ),
+            Text(
+              value,
+              style: context.textTheme.labelSmall?.copyWith(
+                fontSize: 13,
+                fontWeight: isBold ? FontWeight.bold : null,
+              ),
+            ),
+          ],
         ),
-        Text(
-          value,
-          style: context.textTheme.labelSmall?.copyWith(
-            fontSize: 13,
-            fontWeight: isBold ? FontWeight.bold : null,
-          ),
-        ),
+        const Divider(height: 30, thickness: .35),
       ],
     );
   }

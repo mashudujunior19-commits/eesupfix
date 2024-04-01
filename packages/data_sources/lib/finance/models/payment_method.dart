@@ -12,6 +12,8 @@ enum PaymentMethod {
     switch (this) {
       case PaymentMethod.ozow:
         return 'Ozow';
+      case PaymentMethod.instapay:
+        return 'Instapay';
       case PaymentMethod.retailWallet:
         return 'Retail wallet';
       case PaymentMethod.splitOzowRetailWalletPayment:
@@ -36,6 +38,23 @@ enum PaymentMethod {
         return PaymentMethod.splitInstapayRetailWalletPayment;
       default:
         return PaymentMethod.retailWallet;
+    }
+  }
+
+  double? fee() {
+    switch (this) {
+      case PaymentMethod.ozow:
+        return null;
+      case PaymentMethod.retailWallet:
+        return null;
+      case PaymentMethod.splitOzowRetailWalletPayment:
+        return null;
+      case PaymentMethod.splitInstapayRetailWalletPayment:
+        return 2.00;
+      case PaymentMethod.instapay:
+        return 2.00;
+      default:
+        return null;
     }
   }
 }
