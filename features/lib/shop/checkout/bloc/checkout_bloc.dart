@@ -52,5 +52,18 @@ class CheckoutBloc extends Bloc<CheckoutEvent, CheckoutState> {
         );
       }
     });
+
+    on<PaymentMethodUpdated>((event, emit) {
+      if (state is CurrentCheckout) {
+        final currentOrderr = (state as CurrentCheckout).newOrder;
+        final currentAddress = (state as CurrentCheckout).selectedAddress;
+        emit(
+          CurrentCheckout(
+            currentOrderr.copyWith(paymentMethod: event.method),
+            currentAddress,
+          ),
+        );
+      }
+    });
   }
 }
