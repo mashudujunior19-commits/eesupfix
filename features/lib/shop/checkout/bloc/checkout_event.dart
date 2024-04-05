@@ -24,3 +24,11 @@ final class PaymentMethodUpdated extends CheckoutEvent {
   final PaymentMethod method;
   PaymentMethodUpdated(this.method);
 }
+
+final class OrderPlaced extends CheckoutEvent{}
+
+
+final class WalletIdUpdated extends CheckoutEvent {
+  final int walletId;
+  WalletIdUpdated(this.walletId);
+}

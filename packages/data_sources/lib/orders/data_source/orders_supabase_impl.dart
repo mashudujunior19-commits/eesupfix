@@ -12,24 +12,17 @@ class OrdersSupabaseImpl implements OrdersDataSource {
 
   OrdersSupabaseImpl(this._client);
   @override
-  Future<OrderResponse> createOrder(
-    Order order,
-  ) async {
-    double totalAmount = order.deliveryFee ?? 0.0;
-
-    for (final product in order.products) {
-      totalAmount += product.price * product.quantity;
-    }
-
+  Future<OrderResponse> createOrder(Order order, double amount) async {
     final params = {
       '_customer_id': order.customerId,
       '_eesupreneur_id': order.eesupreneurId,
       '_eesupool_order_id': order.eesupoolOrderId,
       '_wallet_id': order.walletId,
-      '_total_amount': totalAmount,
+      '_total_amount': amount,
       '_payment_method': order.paymentMethod.toString(),
       '_address_id': order.deliveryAddressId,
       '_delivery_fee': order.deliveryFee,
+      '_card_fee': order.cardFee,
       '_products': order.products
           .map((e) => {
                 'product_id': e.productId,
@@ -48,8 +41,15 @@ class OrdersSupabaseImpl implements OrdersDataSource {
 
     final orderId = int.tryParse(result['f1'].toString());
     final outstandingAmount = double.parse(result['f2'].toString());
+    final paymentId = result['f3']?.toString();
+    final secondaryId = result['f4']?.toString();
 
-    return (orderId: orderId, outstandingAmount: outstandingAmount);
+    return (
+      orderId: orderId,
+      outstandingAmount: outstandingAmount,
+      paymentId: paymentId,
+      secondaryId: secondaryId
+    );
   }
 
   @override

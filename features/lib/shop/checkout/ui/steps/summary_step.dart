@@ -5,8 +5,8 @@ import 'package:features/shop/checkout/bloc/checkout_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class SummeryStep extends StatelessWidget {
-  const SummeryStep({super.key, required this.tabController});
+class SummaryStep extends StatelessWidget {
+  const SummaryStep({super.key, required this.tabController});
   final TabController tabController;
 
   @override
@@ -33,7 +33,7 @@ class SummeryStep extends StatelessWidget {
               ),
               child: Column(
                 children: [
-                  const Text('Order Summery'),
+                  const Text('Order Summary'),
                   20.sH,
                   _LineTile(
                     label: 'Payment method',
@@ -45,9 +45,9 @@ class SummeryStep extends StatelessWidget {
                   ),
                   _LineTile(
                     label: 'Card fee',
-                    isVisible: newOrder?.paymentMethod.fee() != null,
+                    isVisible: newOrder?.cardFee != null,
                     value:
-                        'R${newOrder?.paymentMethod.fee()?.toStringAsFixed(2) ?? '0.00'}',
+                        'R${newOrder?.cardFee?.toStringAsFixed(2) ?? '0.00'}',
                   ),
                   _LineTile(
                     label: 'Delivery fee',
@@ -65,7 +65,9 @@ class SummeryStep extends StatelessWidget {
             Image.asset("assets/images/receipt_bottom.png"),
             30.sH,
             ElevatedButton(
-              onPressed: () {},
+              onPressed: () {
+                context.read<CheckoutBloc>().add(OrderPlaced());
+              },
               child: const Text("Place order"),
             )
           ],
@@ -77,7 +79,6 @@ class SummeryStep extends StatelessWidget {
 
 class _LineTile extends StatelessWidget {
   const _LineTile({
-    super.key,
     required this.label,
     required this.value,
     this.isBold = false,

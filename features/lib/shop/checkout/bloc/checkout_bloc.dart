@@ -4,12 +4,15 @@ import 'package:data_sources/geolocation/models/address.dart';
 import 'package:data_sources/orders/models/order.dart';
 import 'package:data_sources/orders/models/order_product.dart';
 import 'package:meta/meta.dart';
+import 'package:repository/orders/order_repository.dart';
+import 'package:repository/utils/eesup_exception.dart';
 
 part 'checkout_event.dart';
 part 'checkout_state.dart';
 
 class CheckoutBloc extends Bloc<CheckoutEvent, CheckoutState> {
-  CheckoutBloc() : super(CheckoutLoading()) {
+  final OrderRepository _orderRepo;
+  CheckoutBloc(this._orderRepo) : super(CheckoutLoading()) {
     on<CheckoutStarted>((event, emit) {
       emit(
         CurrentCheckout(
@@ -20,7 +23,6 @@ class CheckoutBloc extends Bloc<CheckoutEvent, CheckoutState> {
             secretPin: 0000,
             status: OrderStatus.pending,
           ),
-          null,
         ),
       );
     });
@@ -30,8 +32,10 @@ class CheckoutBloc extends Bloc<CheckoutEvent, CheckoutState> {
         final currentOrder = (state as CurrentCheckout).newOrder;
         emit(
           CurrentCheckout(
-            currentOrder.copyWith(deliveryAddressId: event.address.id),
-            event.address,
+            currentOrder.copyWith(
+              deliveryAddressId: event.address.id,
+              address: event.address,
+            ),
           ),
         );
       }
@@ -39,15 +43,13 @@ class CheckoutBloc extends Bloc<CheckoutEvent, CheckoutState> {
 
     on<CollectionPointUpdated>((event, emit) {
       if (state is CurrentCheckout) {
-        final currentOrderr = (state as CurrentCheckout).newOrder;
-        final currentAddress = (state as CurrentCheckout).selectedAddress;
+        final currentOrder = (state as CurrentCheckout).newOrder;
         emit(
           CurrentCheckout(
-            currentOrderr.copyWith(
+            currentOrder.copyWith(
               eesupreneurId: event.shopId,
               eesupoolOrderId: event.orderId,
             ),
-            currentAddress,
           ),
         );
       }
@@ -55,14 +57,41 @@ class CheckoutBloc extends Bloc<CheckoutEvent, CheckoutState> {
 
     on<PaymentMethodUpdated>((event, emit) {
       if (state is CurrentCheckout) {
-        final currentOrderr = (state as CurrentCheckout).newOrder;
-        final currentAddress = (state as CurrentCheckout).selectedAddress;
+        final currentOrder = (state as CurrentCheckout).newOrder;
         emit(
-          CurrentCheckout(
-            currentOrderr.copyWith(paymentMethod: event.method),
-            currentAddress,
-          ),
+          CurrentCheckout(currentOrder.copyWith(
+            paymentMethod: event.method,
+            cardFee: event.method.fee(),
+          )),
         );
+      }
+    });
+
+    on<WalletIdUpdated>((event, emit) {
+      if (state is CurrentCheckout) {
+        final currentOrder = (state as CurrentCheckout).newOrder;
+        emit(CurrentCheckout(currentOrder.copyWith(walletId: event.walletId)));
+      }
+    });
+
+    on<OrderPlaced>((event, emit) async {
+      if (state is CurrentCheckout) {
+        final order = (state as CurrentCheckout).newOrder;
+        final amount = (state as CurrentCheckout).totalToPay();
+        emit(CheckoutLoading());
+        final results = await _orderRepo.createOrder(order, amount);
+
+        results.fold((l) {
+          emit(CheckoutError(l));
+        }, (outcome) {
+          if (outcome.outstandingAmount > 0) {
+            emit(
+              OutstandingPayment(outcome,order.paymentMethod),
+            );
+          } else {
+            emit(CurrentCheckout(order));
+          }
+        });
       }
     });
   }

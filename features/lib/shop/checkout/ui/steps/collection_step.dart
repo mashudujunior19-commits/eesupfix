@@ -39,7 +39,7 @@ class CollectionStep extends StatelessWidget {
             return 0.sW;
           }
 
-          final selectedAddress = state.selectedAddress;
+          final selectedAddress = state.newOrder.address;
 
           return BlocProvider(
             create: (context) => CollectionPointsBloc(

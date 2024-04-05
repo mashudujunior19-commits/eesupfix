@@ -31,6 +31,7 @@ class Order with _$Order {
     @JsonKey(name: 'secret_pin') required int secretPin,
     @JsonKey(name: 'delivery_address_id') int? deliveryAddressId,
     @JsonKey(name: 'delivery_fee') double? deliveryFee,
+    @JsonKey(name: 'card_fee') double? cardFee,
     @JsonKey(name: 'full_name') String? fullName,
     @JsonKey(name: 'corp_name') String? corpName,
     @MemberOrderAssignmentConverter()
@@ -125,7 +126,6 @@ enum OrderStatus {
   collected,
   cancelled;
 
-
   factory OrderStatus.fromJson(String status) {
     switch (status) {
       case 'Pending':
@@ -166,4 +166,9 @@ enum OrderStatus {
   }
 }
 
-typedef OrderResponse = ({int? orderId, double outstandingAmount});
+typedef OrderResponse = ({
+  int? orderId,
+  double outstandingAmount,
+  String? paymentId,
+  String? secondaryId
+});
