@@ -22,6 +22,7 @@ class CheckoutBloc extends Bloc<CheckoutEvent, CheckoutState> {
             paymentMethod: PaymentMethod.instapay,
             secretPin: 0000,
             status: OrderStatus.pending,
+            products: event.products,
           ),
         ),
       );
@@ -82,11 +83,11 @@ class CheckoutBloc extends Bloc<CheckoutEvent, CheckoutState> {
         final results = await _orderRepo.createOrder(order, amount);
 
         results.fold((l) {
-          emit(CheckoutError(l));
+          emit(CheckoutError(l, order));
         }, (outcome) {
           if (outcome.outstandingAmount > 0) {
             emit(
-              OutstandingPayment(outcome,order.paymentMethod),
+              OutstandingPayment(outcome, order.paymentMethod),
             );
           } else {
             emit(CurrentCheckout(order));

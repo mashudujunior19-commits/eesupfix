@@ -26,5 +26,6 @@ final class OrderPlacedSuccess extends CheckoutState {}
 
 final class CheckoutError extends CheckoutState {
   final EESUpException exception;
-  CheckoutError(this.exception);
+  final Order order;
+  CheckoutError(this.exception,this.order);
 }

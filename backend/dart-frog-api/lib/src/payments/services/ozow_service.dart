@@ -47,10 +47,9 @@ class OzowService {
   ) async {
     switch (transaction.status) {
       case OzowStatus.Complete:
-        final success = await api.confirmOzowEft(
-          orderId: ref,
-          status: OzowStatus.Complete,
-          type: type,
+        final success = await api.confirmOnlinePayment(
+          reference: ref,
+          isConfirmed: true,
         );
 
         if (!success) {
@@ -66,10 +65,9 @@ class OzowService {
         }
 
       case OzowStatus.Cancelled:
-        final success = await api.confirmOzowEft(
-          orderId: ref,
-          status: OzowStatus.Cancelled,
-          type: type,
+        final success = await api.confirmOnlinePayment(
+          reference: ref,
+          isConfirmed: false,
         );
 
         if (!success) {
@@ -84,6 +82,7 @@ class OzowService {
           });
         }
       case OzowStatus.Abandoned:
+        api.confirmOnlinePayment(reference: ref, isConfirmed: false);
         return Response.json(statusCode: HttpStatus.badRequest, body: {
           'status': OzowStatus.Abandoned.name,
           'message': 'Transaction abandoned',
@@ -99,6 +98,7 @@ class OzowService {
           'message': 'Transaction pending',
         });
       case OzowStatus.Error:
+        api.confirmOnlinePayment(reference: ref, isConfirmed: false);
         return Response.json(statusCode: HttpStatus.badRequest, body: {
           'status': OzowStatus.Error.name,
           'message': 'Transaction error',

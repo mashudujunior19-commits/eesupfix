@@ -1,8 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:eesup_dart_frog/core/env/env.dart';
 import 'package:eesup_dart_frog/src/payments/data/data_source/payment_api.dart';
-import 'package:eesup_dart_frog/src/payments/data/models/instapay_status.dart';
-import 'package:eesup_dart_frog/src/payments/data/models/ozow_status.dart';
 import 'package:eesup_dart_frog/src/payments/data/models/ozow_transaction.dart';
 import 'package:supabase/supabase.dart';
 
@@ -39,57 +37,15 @@ class PaymentSupabaseImpl implements PaymentApi {
   }
 
   @override
-  Future<bool> confirmOzowEft({
-    required int orderId,
-    required OzowStatus status,
-    required String type,
-  }) async {
+  Future<bool> confirmOnlinePayment(
+      {required int reference, required bool isConfirmed}) async {
     try {
-      if (type == 'Order') {
-        await _supabase.schema('sales').rpc('place_confirmed_order', params: {
-          '_order_id': orderId,
-          '_is_confirmed': status == OzowStatus.Complete,
-        });
-        return true;
-      } else if (type == 'Voucher') {
-        await _supabase.schema('finances').rpc('confirm_voucher_eft', params: {
-          'reference': orderId,
-          'is_confirmed': status == OzowStatus.Complete,
-        });
-        return true;
-      }
-      return false;
+      await _supabase.schema('finances').from('online_payment').update({
+        'confirmed_at': DateTime.now().toIso8601String(),
+        'status': isConfirmed ? 'Complete' : 'Cancelled'
+      });
+      return true;
     } catch (e) {
-      return false;
-    }
-  }
-
-  @override
-  Future<bool> confirmInstapayEft({
-    required int orderId,
-    required InstapayStatus status,
-    required String type,
-  }) async {
-    try {
-      if (type == 'Order') {
-        await _supabase.schema('sales').rpc('place_confirmed_order', params: {
-          '_order_id': orderId,
-          '_is_confirmed': status == InstapayStatus.completed,
-        });
-        return true;
-      } else if (type == 'Voucher') {
-        // ignore: avoid_print
-        print('Confirming voucher EFT...');
-        await _supabase.schema('finances').rpc('confirm_voucher_eft', params: {
-          'reference': orderId,
-          'is_confirmed': status == InstapayStatus.completed,
-        });
-        return true;
-      }
-      return false;
-    } catch (e) {
-      // ignore: avoid_print
-      print('Error confirming voucher EFT: $e');
       return false;
     }
   }

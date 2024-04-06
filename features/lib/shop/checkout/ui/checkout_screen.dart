@@ -13,11 +13,11 @@ import 'package:features/shop/checkout/ui/steps/payment_method_step.dart';
 import 'package:features/shop/checkout/ui/steps/results_step.dart';
 import 'package:features/shop/checkout/ui/steps/summary_step.dart';
 import 'package:features/shop/checkout/ui/widgets/steps_indicator.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:instapay_flutter/data/merchant_transaction.dart';
-import 'package:intl/intl.dart';
 import 'package:loader_overlay/loader_overlay.dart';
 import 'package:repository/orders/order_repository.dart';
 
@@ -87,13 +87,14 @@ class _CheckoutScreenState extends State<CheckoutScreen>
                 );
               case PaymentMethod.instapay ||
                     PaymentMethod.splitInstapayRetailWalletPayment:
-                context.router.push(
-                  InstapayRoute(
-                    transaction: _getInstapayTransaction(
-                      state.response,
-                    ),
-                  ),
-                );
+                final transaction = _getInstapayTransaction(state.response);
+                if (transaction == null) {
+                  if (kDebugMode) {
+                    print('Insta pay transactions is : $transaction');
+                  }
+                  return;
+                }
+                context.router.push(InstapayRoute(transaction: transaction));
               //Ignored
               case PaymentMethod.retailWallet:
             }
@@ -141,8 +142,29 @@ class _CheckoutScreenState extends State<CheckoutScreen>
     );
   }
 
-  MerchantTransaction _getInstapayTransaction(OrderResponse response) {
-    var formatter = DateFormat('yyyy-MM-dd');
+  MerchantTransaction? _getInstapayTransaction(OrderResponse response) {
+    // var formatter = DateFormat('yyyy-MM-dd');
+    final merchantId = dotenv.env['INSTA_PAY_MERCHANT_ID'];
+    final accountUUid = dotenv.env['INSTA_PAY_ACCOUNT_ID'];
+    final authKey = dotenv.env['INSTAPAY_AUTH_KEY'];
+
+    final secret = dotenv.env['INSTA_PAY_SECRET'];
+    final sendbox = dotenv.env['INSTAPAY_SENDBOX'];
+    final successUrl = dotenv.env['INSAPAY_SUCCESS_URL'];
+    final failedUrl = dotenv.env['INSAPAY_FAILED_URL'];
+    final notifyUrl = dotenv.env['INSAPAY_NOTIFY_URL'];
+
+    if (merchantId == null ||
+        accountUUid == null ||
+        authKey == null ||
+        secret == null ||
+        sendbox == null ||
+        successUrl == null ||
+        failedUrl == null ||
+        notifyUrl == null) {
+      return null;
+    }
+
     return MerchantTransaction(
       mUuid: merchantId,
       mAccountUuid: accountUUid,
@@ -150,11 +172,11 @@ class _CheckoutScreenState extends State<CheckoutScreen>
       mTxId: response.paymentId!,
       mTxCurrency: 'ZAR',
       mCategory1: response.orderId.toString(),
-      mCategory2: 'Voucher',
+      mCategory2: 'Order',
       mCategory3: authKey,
-      mTxAmount: amount.toStringAsFixed(2),
-      mTxItemName: 'Crowdfund Voucher Payment',
-      mTxItemDescription: 'Crowdfund Voucher Payment',
+      mTxAmount: response.outstandingAmount.toStringAsFixed(2),
+      mTxItemName: 'Order ${response.orderId}',
+      mTxItemDescription: 'Order ${response.orderId}',
       secret: secret,
       mEftAllowed: true,
       mCardAllowed: true,
@@ -162,13 +184,9 @@ class _CheckoutScreenState extends State<CheckoutScreen>
       mChipsAllowed: false,
       mPayatAllowed: false,
       mTridentAllowed: false,
-      mTxDueDate: formattedDate,
-      mMessage: 'Payment for Crowdfund Voucher Payment',
+      mTxDueDate: secret,
+      mMessage: 'Payment for order ${response.orderId}',
       mSiteName: 'EESUp',
-      bName: 'Joe',
-      bSurname: 'Soap',
-      bEmail: 'misomenze6@gmail.com',
-      bMobile: '+2719582572',
       mReturnUrl: successUrl,
       mBack2shopUrl: failedUrl,
       mNotifyUrl: notifyUrl,

@@ -41,10 +41,11 @@ extension CustomAnimatedDialogExt on BuildContext {
     required Widget child,
     BorderRadius? radius,
     EdgeInsets? margin,
+    bool isDismissable = true,
   }) {
     return showAnimatedDialog(
       context: this,
-      barrierDismissible: true,
+      barrierDismissible: isDismissable,
       builder: (BuildContext context) {
         return SafeArea(
           child: Container(

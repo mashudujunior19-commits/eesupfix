@@ -11,68 +11,82 @@ class SummaryStep extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<CheckoutBloc, CheckoutState>(
-      builder: (context, state) {
-        Order? newOrder;
-        double? total;
-        if (state is CurrentCheckout) {
-          newOrder = state.newOrder;
-          total = state.totalToPay();
+    return BlocListener<CheckoutBloc, CheckoutState>(
+      listener: (context, state) {
+        if (state is CheckoutError) {
+          context.read<CheckoutBloc>().add(
+                CheckoutStarted(
+                  state.order.value,
+                  state.order.products,
+                ),
+              );
+          tabController.animateTo(0);
         }
-        return ListView(
-          padding: const EdgeInsets.only(left: 25, right: 25, top: 30),
-          children: [
-            Container(
-              padding: const EdgeInsets.all(10),
-              decoration: const BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(10),
-                  topRight: Radius.circular(10),
+      },
+      child: BlocBuilder<CheckoutBloc, CheckoutState>(
+        builder: (context, state) {
+          Order? newOrder;
+          double? total;
+          if (state is CurrentCheckout) {
+            newOrder = state.newOrder;
+            total = state.totalToPay();
+          }
+          return ListView(
+            padding: const EdgeInsets.only(left: 25, right: 25, top: 30),
+            children: [
+              Container(
+                padding: const EdgeInsets.all(10),
+                decoration: const BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(10),
+                    topRight: Radius.circular(10),
+                  ),
+                ),
+                child: Column(
+                  children: [
+                    const Text('Order Summary'),
+                    20.sH,
+                    _LineTile(
+                      label: 'Payment method',
+                      value:
+                          newOrder?.paymentMethod.toString() ?? "No selected",
+                    ),
+                    _LineTile(
+                      label: 'Subtotal',
+                      value: 'R${newOrder?.value.toStringAsFixed(2) ?? '0.00'}',
+                    ),
+                    _LineTile(
+                      label: 'Card fee',
+                      isVisible: newOrder?.cardFee != null,
+                      value:
+                          'R${newOrder?.cardFee?.toStringAsFixed(2) ?? '0.00'}',
+                    ),
+                    _LineTile(
+                      label: 'Delivery fee',
+                      value:
+                          "R${newOrder?.deliveryFee?.toStringAsFixed(2) ?? 0.00}",
+                    ),
+                    _LineTile(
+                      label: 'Total',
+                      value: "R${total?.toStringAsFixed(2) ?? 0.00}",
+                      isBold: true,
+                    ),
+                  ],
                 ),
               ),
-              child: Column(
-                children: [
-                  const Text('Order Summary'),
-                  20.sH,
-                  _LineTile(
-                    label: 'Payment method',
-                    value: newOrder?.paymentMethod.toString() ?? "No selected",
-                  ),
-                  _LineTile(
-                    label: 'Subtotal',
-                    value: 'R${newOrder?.value.toStringAsFixed(2) ?? '0.00'}',
-                  ),
-                  _LineTile(
-                    label: 'Card fee',
-                    isVisible: newOrder?.cardFee != null,
-                    value:
-                        'R${newOrder?.cardFee?.toStringAsFixed(2) ?? '0.00'}',
-                  ),
-                  _LineTile(
-                    label: 'Delivery fee',
-                    value:
-                        "R${newOrder?.deliveryFee?.toStringAsFixed(2) ?? 0.00}",
-                  ),
-                  _LineTile(
-                    label: 'Total',
-                    value: "R${total?.toStringAsFixed(2) ?? 0.00}",
-                    isBold: true,
-                  ),
-                ],
-              ),
-            ),
-            Image.asset("assets/images/receipt_bottom.png"),
-            30.sH,
-            ElevatedButton(
-              onPressed: () {
-                context.read<CheckoutBloc>().add(OrderPlaced());
-              },
-              child: const Text("Place order"),
-            )
-          ],
-        );
-      },
+              Image.asset("assets/images/receipt_bottom.png"),
+              30.sH,
+              ElevatedButton(
+                onPressed: () {
+                  context.read<CheckoutBloc>().add(OrderPlaced());
+                },
+                child: const Text("Place order"),
+              )
+            ],
+          );
+        },
+      ),
     );
   }
 }

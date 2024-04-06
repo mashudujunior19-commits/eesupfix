@@ -44,7 +44,9 @@ class _InstapayFlutterState extends State<InstapayFlutter> {
             }),
       )
       ..loadRequest(
-        Uri.parse('https://eesup.com/wp-content/instapay.php'),
+        // Uri.parse('https://eesup.com/wp-content/instapay.php'),
+        Uri.parse(
+            'https://zngp5d89-3000.inc1.devtunnels.ms/packages/instapay_flutter/lib/presentation/instapay.php'),
         method: LoadRequestMethod.post,
         body: jsonToUint8List(
           jsonEncode(
@@ -58,6 +60,11 @@ class _InstapayFlutterState extends State<InstapayFlutter> {
     List<int> bytes = utf8.encode(jsonString);
     return Uint8List.fromList(bytes);
   }
+
+  // Future<T?> invoke<T>(String method, [dynamic arguments]) async {
+  //   window.dispatchEvent(CustomEvent("method", detail: [method, arguments]));
+  //   return null;
+  // }
 
   @override
   Widget build(BuildContext context) {

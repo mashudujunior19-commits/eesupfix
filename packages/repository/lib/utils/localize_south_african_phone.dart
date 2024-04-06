@@ -1,9 +1,14 @@
-String? localizeSAPhoneNumber(String phoneNumber) {
-  if(phoneNumber.isEmpty) {
+String? localizeSAPhoneNumber(String? phoneNumber) {
+  if (phoneNumber == null) {
+    return null;
+  }
+
+  if (phoneNumber.isEmpty) {
     return null;
   }
   // Remove any leading + sign
-  String normalizedNumber = phoneNumber.replaceAll(RegExp(r'^\+'), ''); // Remove + if present
+  String normalizedNumber =
+      phoneNumber.replaceAll(RegExp(r'^\+'), ''); // Remove + if present
 
   // Replace leading 0 with 27 if the number doesn't already start with 27
   if (!normalizedNumber.startsWith('27')) {

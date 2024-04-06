@@ -1,5 +1,4 @@
 import 'package:data_sources/finance/models/payment_method.dart';
-import 'package:data_sources/finance/models/wallet.dart';
 import 'package:features/core/errors/large_error_widget.dart';
 import 'package:features/core/extensions/context_alerts_ext.dart';
 import 'package:features/core/extensions/sizedbox_ext.dart';

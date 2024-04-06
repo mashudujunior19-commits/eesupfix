@@ -83,10 +83,9 @@ class InstapayServices {
       int reference, String type, InstapayStatus status) async {
     switch (status) {
       case InstapayStatus.completed:
-        final success = await api.confirmInstapayEft(
-          orderId: reference,
-          status: InstapayStatus.completed,
-          type: type,
+        final success = await api.confirmOnlinePayment(
+          reference: reference,
+          isConfirmed: true,
         );
         if (success) {
           return Response.json(statusCode: HttpStatus.ok, body: {
@@ -100,6 +99,7 @@ class InstapayServices {
           });
         }
       case InstapayStatus.expired:
+        api.confirmOnlinePayment(reference: reference, isConfirmed: false);
         return Response.json(statusCode: HttpStatus.badRequest, body: {
           'status': 'error',
           'message': 'Transaction expired',
@@ -110,6 +110,7 @@ class InstapayServices {
           'message': 'Transaction pending',
         });
       case InstapayStatus.concelled:
+        api.confirmOnlinePayment(reference: reference, isConfirmed: false);
         return Response.json(statusCode: HttpStatus.badRequest, body: {
           'status': 'error',
           'message': 'Transaction cancelled',
