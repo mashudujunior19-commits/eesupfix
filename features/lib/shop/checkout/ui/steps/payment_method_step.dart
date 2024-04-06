@@ -60,30 +60,6 @@ class PaymentMethodStep extends StatelessWidget {
                   return ListView(
                     children: [
                       PaymentMethodTile(
-                        title: 'Ozow',
-                        imagePath: 'assets/images/ozow.png',
-                        subtitle: 'EFT with FNB, ABSA, Nedbank, etc.',
-                        onTap: () {
-                          context.read<CheckoutBloc>().add(
-                                PaymentMethodUpdated(PaymentMethod.ozow),
-                              );
-                          tabController.animateTo(tabController.index + 1);
-                        },
-                      ).animate().slideIn(0),
-                      PaymentMethodTile(
-                        title: 'Instapay',
-                        imagePath: 'assets/images/instapay.png',
-                        subtitle: 'Visa, Mastercard, American Express, EFT.',
-                        onTap: () {
-                          context.read<CheckoutBloc>().add(
-                                PaymentMethodUpdated(
-                                  PaymentMethod.instapay,
-                                ),
-                              );
-                          tabController.animateTo(tabController.index + 1);
-                        },
-                      ).animate().slideIn(50),
-                      PaymentMethodTile(
                         title: 'Retail wallet',
                         imagePath: 'assets/images/wallet.png',
                         subtitle: 'Available balance:'
@@ -105,7 +81,44 @@ class PaymentMethodStep extends StatelessWidget {
                               );
                           tabController.animateTo(tabController.index + 1);
                         },
+                      ).animate().slideIn(0),
+                      PaymentMethodTile(
+                        title: 'Yoco',
+                        imagePath: 'assets/images/yoco.png',
+                        subtitle: 'Visa, Mastercard, American Express, EFT.',
+                        onTap: () {
+                          context.read<CheckoutBloc>().add(
+                                PaymentMethodUpdated(
+                                  PaymentMethod.instapay,
+                                ),
+                              );
+                          tabController.animateTo(tabController.index + 1);
+                        },
+                      ).animate().slideIn(50),
+                      PaymentMethodTile(
+                        title: 'Ozow',
+                        imagePath: 'assets/images/ozow.png',
+                        subtitle: 'EFT with FNB, ABSA, Nedbank, etc.',
+                        onTap: () {
+                          context.read<CheckoutBloc>().add(
+                                PaymentMethodUpdated(PaymentMethod.ozow),
+                              );
+                          tabController.animateTo(tabController.index + 1);
+                        },
                       ).animate().slideIn(100),
+                      PaymentMethodTile(
+                        title: 'Instapay',
+                        imagePath: 'assets/images/instapay.png',
+                        subtitle: 'Visa, Mastercard, American Express, EFT.',
+                        onTap: () {
+                          context.read<CheckoutBloc>().add(
+                                PaymentMethodUpdated(
+                                  PaymentMethod.instapay,
+                                ),
+                              );
+                          tabController.animateTo(tabController.index + 1);
+                        },
+                      ).animate().slideIn(150),
                       Padding(
                         padding:
                             const EdgeInsets.only(left: 25, right: 25, top: 15),
@@ -120,7 +133,7 @@ class PaymentMethodStep extends StatelessWidget {
                                 child: Divider(color: Colors.grey.shade300)),
                           ],
                         ),
-                      ).animate().slideIn(150),
+                      ).animate().slideIn(200),
                       PaymentMethodTile(
                         title: 'Split payment with Instapay',
                         imagePath: 'assets/images/bill_2.png',
@@ -142,7 +155,7 @@ class PaymentMethodStep extends StatelessWidget {
                               );
                           tabController.animateTo(tabController.index + 1);
                         },
-                      ).animate().slideIn(200),
+                      ).animate().slideIn(220),
                       PaymentMethodTile(
                         title: 'Split payment with Ozow',
                         imagePath: 'assets/images/bill.png',
@@ -163,7 +176,7 @@ class PaymentMethodStep extends StatelessWidget {
                               );
                           tabController.animateTo(tabController.index + 1);
                         },
-                      ).animate().slideIn(250),
+                      ).animate().slideIn(300),
                     ],
                   );
                 } else {
