@@ -22,11 +22,11 @@ final class CollectionPointUpdated extends CheckoutEvent {
 
 final class PaymentMethodUpdated extends CheckoutEvent {
   final PaymentMethod method;
-  PaymentMethodUpdated(this.method);
+  final PaymentGateway? gateway;
+  PaymentMethodUpdated(this.method, this.gateway);
 }
 
-final class OrderPlaced extends CheckoutEvent{}
-
+final class OrderPlaced extends CheckoutEvent {}
 
 final class WalletIdUpdated extends CheckoutEvent {
   final int walletId;

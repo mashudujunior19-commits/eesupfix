@@ -62,6 +62,7 @@ dependencies:
   flutter_rating_bar: ^4.0.1
   record: ^5.0.5
   flutter_google_place_search: ^0.0.1
+  flutter_yoco: ^1.0.0
   
 dev_dependencies:
   flutter_test:

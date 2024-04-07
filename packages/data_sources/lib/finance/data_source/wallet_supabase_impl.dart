@@ -1,5 +1,5 @@
-
 import 'package:data_sources/finance/data_source/wallet_data_source.dart';
+import 'package:data_sources/finance/models/payment_gateway.dart';
 import 'package:data_sources/finance/models/transaction.dart';
 import 'package:data_sources/finance/models/wallet.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -68,5 +68,15 @@ class WalletSupabaseImpl implements WalletDataSource {
         .eq('type_id', 'crowdfund')
         .single();
     return Wallet.fromJson(results);
+  }
+
+  @override
+  Future<List<PaymentGateway>> fetchPaymentGateways() async {
+    final results = await _client
+        .schema('finances')
+        .from('payment_gateway')
+        .select()
+        .eq('is_active', true);
+    return results.map((e) => PaymentGateway.fromJson(e)).toList();
   }
 }

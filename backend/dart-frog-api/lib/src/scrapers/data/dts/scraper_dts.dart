@@ -26,6 +26,7 @@ class ScraperDtsImpl implements ScraperDataSource {
 
       return true;
     } catch (e) {
+      // ignore: avoid_print
       print(e);
       return false;
     }

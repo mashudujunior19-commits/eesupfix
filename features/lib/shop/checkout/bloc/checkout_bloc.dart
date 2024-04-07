@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import 'package:data_sources/finance/models/payment_gateway.dart';
 import 'package:data_sources/finance/models/payment_method.dart';
 import 'package:data_sources/geolocation/models/address.dart';
 import 'package:data_sources/orders/models/order.dart';
@@ -59,11 +60,15 @@ class CheckoutBloc extends Bloc<CheckoutEvent, CheckoutState> {
     on<PaymentMethodUpdated>((event, emit) {
       if (state is CurrentCheckout) {
         final currentOrder = (state as CurrentCheckout).newOrder;
+        final fee = (state as CurrentCheckout).totalToPay() *
+            ((event.gateway?.fee ?? 0.00) / 100);
         emit(
-          CurrentCheckout(currentOrder.copyWith(
-            paymentMethod: event.method,
-            cardFee: event.method.fee(),
-          )),
+          CurrentCheckout(
+            currentOrder.copyWith(
+              paymentMethod: event.method,
+              cardFee: fee,
+            ),
+          ),
         );
       }
     });

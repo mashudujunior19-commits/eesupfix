@@ -46,8 +46,8 @@ class ScraperProduct {
 
   Map<String, dynamic> toMap() {
     return {
-      'bar_code': barCode != null ? barCode!.trim() : null,
-      'kit_kat_ref': kitKatRef != null ? kitKatRef!.trim() : null,
+      'bar_code': barCode?.trim(),
+      'kit_kat_ref': kitKatRef?.trim(),
       'source': source,
       'scrape_date': scrapeDate.toIso8601String(),
       'price_category': priceCategory,

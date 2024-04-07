@@ -3,6 +3,7 @@ import 'package:features/core/extensions/context_theme_ext.dart';
 import 'package:features/core/extensions/sizedbox_ext.dart';
 import 'package:features/shop/checkout/bloc/checkout_bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class SummaryStep extends StatelessWidget {
@@ -35,7 +36,6 @@ class SummaryStep extends StatelessWidget {
             padding: const EdgeInsets.only(left: 25, right: 25, top: 30),
             children: [
               Container(
-                padding: const EdgeInsets.all(10),
                 decoration: const BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.only(
@@ -56,12 +56,55 @@ class SummaryStep extends StatelessWidget {
                       label: 'Subtotal',
                       value: 'R${newOrder?.value.toStringAsFixed(2) ?? '0.00'}',
                     ),
-                    _LineTile(
-                      label: 'Card fee',
-                      isVisible: newOrder?.cardFee != null,
-                      value:
-                          'R${newOrder?.cardFee?.toStringAsFixed(2) ?? '0.00'}',
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        _LineTile(
+                          label: 'Card fee',
+                          isVisible: newOrder?.cardFee != null,
+                          value:
+                              'R${newOrder?.cardFee?.toStringAsFixed(2) ?? '0.00'}',
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 10),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Expanded(
+                                child: Text(
+                                  '** Tick to Pay the fee with you Retail wallet',
+                                  style: context.textTheme.labelSmall?.copyWith(
+                                    fontSize: 13,
+                                  ),
+                                ),
+                              ),
+                              Checkbox(
+                                value: false,
+                                onChanged: (value) {},
+                                visualDensity: VisualDensity.compact,
+                              ),
+                            ],
+                          ),
+                        ),
+                        15.sH,
+                      ],
                     ),
+                  ],
+                ),
+              ),
+              Container(
+                margin: const EdgeInsets.only(top: 25),
+                padding: const EdgeInsets.all(10),
+                decoration: const BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(10),
+                    topRight: Radius.circular(10),
+                  ),
+                ),
+                child: Column(
+                  children: [
                     _LineTile(
                       label: 'Delivery fee',
                       value:
@@ -106,30 +149,33 @@ class _LineTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (!isVisible) return 0.sW;
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(
-              label,
-              style: context.textTheme.labelSmall?.copyWith(
-                fontSize: 13,
-                fontWeight: isBold ? FontWeight.bold : null,
+    return Padding(
+      padding: const EdgeInsets.only(left: 10, right: 10),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                label,
+                style: context.textTheme.labelSmall?.copyWith(
+                  fontSize: 13,
+                  fontWeight: isBold ? FontWeight.bold : null,
+                ),
               ),
-            ),
-            Text(
-              value,
-              style: context.textTheme.labelSmall?.copyWith(
-                fontSize: 13,
-                fontWeight: isBold ? FontWeight.bold : null,
+              Text(
+                value,
+                style: context.textTheme.labelSmall?.copyWith(
+                  fontSize: 13,
+                  fontWeight: isBold ? FontWeight.bold : null,
+                ),
               ),
-            ),
-          ],
-        ),
-        const Divider(height: 30, thickness: .35),
-      ],
+            ],
+          ),
+          const Divider(height: 30, thickness: .35),
+        ],
+      ),
     );
   }
 }

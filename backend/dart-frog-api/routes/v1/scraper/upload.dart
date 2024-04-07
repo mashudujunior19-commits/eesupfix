@@ -5,6 +5,7 @@ import 'package:eesup_dart_frog/src/scrapers/scraper_repository.dart';
 
 Future<Response> onRequest(RequestContext context) async {
   try {
+    // ignore: avoid_print
     print("Received a post");
     //extract the request from the context
     final request = context.request;

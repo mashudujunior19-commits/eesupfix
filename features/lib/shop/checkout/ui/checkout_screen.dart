@@ -6,6 +6,7 @@ import 'package:features/core/extensions/bg_image_deco_ext.dart';
 import 'package:features/core/extensions/context_alerts_ext.dart';
 import 'package:features/core/extensions/context_theme_ext.dart';
 import 'package:features/core/navigation/app_route.gr.dart';
+import 'package:features/finances/payments/yoco/yoco_payment_screen.dart';
 import 'package:features/shop/checkout/bloc/checkout_bloc.dart';
 import 'package:features/shop/checkout/ui/steps/address_selection_step.dart';
 import 'package:features/shop/checkout/ui/steps/collection_step.dart';
@@ -75,8 +76,7 @@ class _CheckoutScreenState extends State<CheckoutScreen>
             final method = state.paymentMethod;
 
             switch (method) {
-              case PaymentMethod.ozow ||
-                    PaymentMethod.splitOzowRetailWalletPayment:
+              case PaymentMethod.ozow || PaymentMethod.splitOzow:
                 context.router.push(
                   OzowRoute(
                     reference: state.response.orderId!,
@@ -85,8 +85,8 @@ class _CheckoutScreenState extends State<CheckoutScreen>
                     bankRef: "${state.response.orderId} EESUp",
                   ),
                 );
-              case PaymentMethod.instapay ||
-                    PaymentMethod.splitInstapayRetailWalletPayment:
+
+              case PaymentMethod.instapay || PaymentMethod.splitInstapay:
                 final transaction = _getInstapayTransaction(state.response);
                 if (transaction == null) {
                   if (kDebugMode) {
@@ -95,6 +95,13 @@ class _CheckoutScreenState extends State<CheckoutScreen>
                   return;
                 }
                 context.router.push(InstapayRoute(transaction: transaction));
+              case PaymentMethod.yoco || PaymentMethod.splitYoco:
+                context.router.push(
+                  YocoPaymentRoute(
+                    reference: state.response.orderId!,
+                    amount: state.response.outstandingAmount,
+                  ),
+                );
               //Ignored
               case PaymentMethod.retailWallet:
             }

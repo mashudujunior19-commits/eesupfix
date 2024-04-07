@@ -3,9 +3,11 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 enum PaymentMethod {
   ozow,
   instapay,
+  yoco,
   retailWallet,
-  splitOzowRetailWalletPayment,
-  splitInstapayRetailWalletPayment;
+  splitOzow,
+  splitInstapay,
+  splitYoco;
 
   @override
   String toString() {
@@ -14,13 +16,16 @@ enum PaymentMethod {
         return 'Ozow';
       case PaymentMethod.instapay:
         return 'Instapay';
+      case PaymentMethod.yoco:
+        return 'Yoco';
       case PaymentMethod.retailWallet:
         return 'Retail wallet';
-      case PaymentMethod.splitOzowRetailWalletPayment:
-        return 'Split-Ozow & Retail wallet';
-      case PaymentMethod.splitInstapayRetailWalletPayment:
-        return 'Split-Instapay & Retail wallet';
-
+      case PaymentMethod.splitOzow:
+        return 'Split-Ozow';
+      case PaymentMethod.splitInstapay:
+        return 'Split-Instapay';
+      case PaymentMethod.splitYoco:
+        return 'Split-Yoco';
       default:
         return 'Retail wallet';
     }
@@ -30,31 +35,39 @@ enum PaymentMethod {
     switch (key) {
       case 'Ozow':
         return PaymentMethod.ozow;
+      case 'Yoco':
+        return PaymentMethod.yoco;
+      case 'Instapay':
+        return PaymentMethod.instapay;
       case 'Retail wallet':
         return PaymentMethod.retailWallet;
-      case 'Split-Ozow & Retail wallet':
-        return PaymentMethod.splitOzowRetailWalletPayment;
-      case 'Split-Instapay & Retail wallet':
-        return PaymentMethod.splitInstapayRetailWalletPayment;
+      case 'Split-Ozow':
+        return PaymentMethod.splitOzow;
+      case 'Split-Instapay':
+        return PaymentMethod.splitInstapay;
+      case 'Split-Yoco':
+        return PaymentMethod.splitInstapay;
       default:
         return PaymentMethod.retailWallet;
     }
   }
 
-  double? fee() {
+  PaymentMethod? feeId() {
     switch (this) {
       case PaymentMethod.ozow:
-        return null;
+        return PaymentMethod.ozow;
       case PaymentMethod.retailWallet:
         return null;
-      case PaymentMethod.splitOzowRetailWalletPayment:
-        return null;
-      case PaymentMethod.splitInstapayRetailWalletPayment:
-        return 2.00;
+      case PaymentMethod.splitOzow:
+        return PaymentMethod.ozow;
+      case PaymentMethod.splitInstapay:
+        return PaymentMethod.instapay;
       case PaymentMethod.instapay:
-        return 2.00;
-      default:
-        return null;
+        return PaymentMethod.instapay;
+      case PaymentMethod.yoco:
+        return PaymentMethod.yoco;
+      case PaymentMethod.splitYoco:
+        return PaymentMethod.yoco;
     }
   }
 }

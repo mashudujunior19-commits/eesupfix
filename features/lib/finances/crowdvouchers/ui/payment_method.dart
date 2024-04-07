@@ -1,3 +1,4 @@
+import 'package:data_sources/finance/models/payment_gateway.dart';
 import 'package:features/core/extensions/context_theme_ext.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
@@ -9,11 +10,21 @@ class PaymentMethodTile extends StatelessWidget {
     required this.title,
     required this.subtitle,
     required this.imagePath,
+    required this.amount,
+    this.gateway,
   });
-  final void Function() onTap;
+  final double amount;
+  final PaymentGateway? gateway;
+  final void Function(PaymentGateway?) onTap;
   final String title;
   final String subtitle;
   final String imagePath;
+
+  double? fee() {
+    if (gateway == null) return null;
+    final fee = amount * (gateway!.fee / 100);
+    return fee;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +40,7 @@ class PaymentMethodTile extends StatelessWidget {
       ),
       child: ListTile(
         contentPadding: const EdgeInsets.only(left: 10, right: 10),
-        onTap: onTap,
+        onTap: () => onTap(gateway),
         leading: Image.asset(imagePath, width: 40),
         title: Text(
           title,
@@ -39,9 +50,20 @@ class PaymentMethodTile extends StatelessWidget {
             color: Colors.black,
           ),
         ),
-        subtitle: Text(
-          subtitle,
-          style: context.textTheme.labelSmall?.copyWith(fontSize: 11),
+        subtitle: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            if (fee() != null)
+              Text(
+                'Additional fee R${fee()?.toStringAsFixed(2) ?? 0.00} (${gateway?.fee.toStringAsFixed(2) ?? 0.00}%)',
+                style: context.textTheme.labelMedium?.copyWith(fontSize: 11),
+              ),
+            Text(
+              subtitle,
+              style: context.textTheme.labelSmall?.copyWith(fontSize: 11),
+            ),
+          ],
         ),
         trailing: const Icon(IconlyLight.arrowRight2, size: 20),
       ),

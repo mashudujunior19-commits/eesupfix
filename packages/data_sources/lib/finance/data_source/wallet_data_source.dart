@@ -1,3 +1,4 @@
+import 'package:data_sources/finance/models/payment_gateway.dart';
 import 'package:data_sources/finance/models/transaction.dart';
 import 'package:data_sources/finance/models/wallet.dart';
 
@@ -6,7 +7,6 @@ abstract class WalletDataSource {
   Future<Wallet> fetchCrowdfundWallet(String id);
   Future<List<Transaction>> fetchWalletTransactions(int id, int limit);
   Future<List<dynamic>> searchTransferBeneficiary(String query);
-
   Future<int?> transferFundsWalletToWallet({
     required int fromWalletId,
     required int toWalletId,
@@ -14,4 +14,5 @@ abstract class WalletDataSource {
     required String toRef,
     required String fromRef,
   });
+  Future<List<PaymentGateway>> fetchPaymentGateways();
 }

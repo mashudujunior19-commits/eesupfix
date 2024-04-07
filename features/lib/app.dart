@@ -12,6 +12,7 @@ import 'package:features/core/themes/my_kasi_light_theme.dart';
 import 'package:features/shop/cart/bloc/cart_bloc.dart';
 import 'package:repository/auth/profile_repository.dart';
 import 'package:repository/eesupools/eesupool_repo.dart';
+import 'package:repository/finances/payment_gateway_repository.dart';
 import 'package:repository/finances/wallets_repository.dart';
 import 'package:repository/geolocation/geo_repository.dart';
 import 'package:repository/orders/order_repository.dart';
@@ -79,11 +80,17 @@ class MainApp extends StatelessWidget {
     ),
   );
 
-
   final _walletsRepo = RepositoryProvider(
     create: (context) => WalletsRepository(
       WalletSupabaseImpl(GetIt.I.get<SupabaseClient>()),
       context.read<AuthRepository>(),
+    ),
+  );
+
+  final _paymentGatewayRepo = RepositoryProvider(
+    create: (context) => PaymentGatewayRepo(
+      context.read<AuthRepository>(),
+      WalletSupabaseImpl(GetIt.I.get<SupabaseClient>()),
     ),
   );
 
@@ -101,7 +108,9 @@ class MainApp extends StatelessWidget {
         _shoppingRepo,
         _eesupoolRepo,
         _ordersRepo,
-        _geoRepo,_walletsRepo
+        _geoRepo,
+        _walletsRepo,
+        _paymentGatewayRepo
       ],
       child: MultiBlocProvider(
         providers: [
