@@ -8,7 +8,7 @@ abstract class OrdersDataSource {
   ///if any
   ///Outstanding amount is used to pay with eft while the other amount is settled
   ///with the retail wallet
-  Future<OrderResponse> createOrder(Order order, double amount);
+  Future<OrderResponse> createOrder(Order order);
 
   Stream<List<Order>> streamCustomerOrders({
     required String userId,

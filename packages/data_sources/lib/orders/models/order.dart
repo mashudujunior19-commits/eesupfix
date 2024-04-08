@@ -32,6 +32,7 @@ class Order with _$Order {
     @JsonKey(name: 'delivery_address_id') int? deliveryAddressId,
     @JsonKey(name: 'delivery_fee') double? deliveryFee,
     @JsonKey(name: 'card_fee') double? cardFee,
+    @JsonKey(name: 'pay_fees_with_retail_wallet') @Default(false) payFeesWithRetailWallet,
     @JsonKey(name: 'full_name') String? fullName,
     @JsonKey(name: 'corp_name') String? corpName,
     @MemberOrderAssignmentConverter()

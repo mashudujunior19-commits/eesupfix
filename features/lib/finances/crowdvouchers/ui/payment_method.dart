@@ -1,5 +1,6 @@
 import 'package:data_sources/finance/models/payment_gateway.dart';
 import 'package:features/core/extensions/context_theme_ext.dart';
+import 'package:features/core/extensions/sizedbox_ext.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 
@@ -11,8 +12,10 @@ class PaymentMethodTile extends StatelessWidget {
     required this.subtitle,
     required this.imagePath,
     required this.amount,
+     this.isVisible=true,
     this.gateway,
   });
+  final bool isVisible;
   final double amount;
   final PaymentGateway? gateway;
   final void Function(PaymentGateway?) onTap;
@@ -28,6 +31,7 @@ class PaymentMethodTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (!isVisible) return 0.sH;
     return Container(
       margin: const EdgeInsets.only(top: 15, right: 20, left: 20),
       decoration: BoxDecoration(

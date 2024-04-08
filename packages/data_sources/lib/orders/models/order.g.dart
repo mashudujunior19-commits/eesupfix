@@ -36,6 +36,7 @@ _$OrderImpl _$$OrderImplFromJson(Map<String, dynamic> json) => _$OrderImpl(
       deliveryAddressId: json['delivery_address_id'] as int?,
       deliveryFee: (json['delivery_fee'] as num?)?.toDouble(),
       cardFee: (json['card_fee'] as num?)?.toDouble(),
+      payFeesWithRetailWallet: json['pay_fees_with_retail_wallet'] ?? false,
       fullName: json['full_name'] as String?,
       corpName: json['corp_name'] as String?,
       assignments: (json['assignments'] as List<dynamic>?)
@@ -69,6 +70,7 @@ Map<String, dynamic> _$$OrderImplToJson(_$OrderImpl instance) =>
       'delivery_address_id': instance.deliveryAddressId,
       'delivery_fee': instance.deliveryFee,
       'card_fee': instance.cardFee,
+      'pay_fees_with_retail_wallet': instance.payFeesWithRetailWallet,
       'full_name': instance.fullName,
       'corp_name': instance.corpName,
       'assignments': instance.assignments

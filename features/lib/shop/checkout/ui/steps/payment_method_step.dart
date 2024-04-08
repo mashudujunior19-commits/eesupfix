@@ -79,6 +79,7 @@ class PaymentMethodStep extends StatelessWidget {
                           children: [
                             PaymentMethodTile(
                               gateway: null,
+                              isVisible: true,
                               amount: total ?? 0,
                               title: 'Retail wallet',
                               imagePath: 'assets/images/wallet.png',
@@ -108,6 +109,10 @@ class PaymentMethodStep extends StatelessWidget {
                               amount: total ?? 0,
                               gateway: gatewayState.gateway(PaymentMethod.yoco),
                               title: 'Yoco',
+                              isVisible: gatewayState
+                                      .gateway(PaymentMethod.yoco)
+                                      ?.isActive ??
+                                  false,
                               imagePath: 'assets/images/yoco.png',
                               subtitle:
                                   'Visa, Mastercard, American Express, EFT.',
@@ -126,6 +131,10 @@ class PaymentMethodStep extends StatelessWidget {
                               gateway: gatewayState.gateway(PaymentMethod.ozow),
                               title: 'Ozow',
                               amount: total ?? 0,
+                              isVisible: gatewayState
+                                      .gateway(PaymentMethod.ozow)
+                                      ?.isActive ??
+                                  false,
                               imagePath: 'assets/images/ozow.png',
                               subtitle: 'EFT with FNB, ABSA, Nedbank, etc.',
                               onTap: (gateway) {
@@ -148,6 +157,10 @@ class PaymentMethodStep extends StatelessWidget {
                               imagePath: 'assets/images/instapay.png',
                               subtitle:
                                   'Visa, Mastercard, American Express, EFT.',
+                              isVisible: gatewayState
+                                      .gateway(PaymentMethod.instapay)
+                                      ?.isActive ??
+                                  false,
                               onTap: (gateway) {
                                 context.read<CheckoutBloc>().add(
                                       PaymentMethodUpdated(
@@ -231,6 +244,10 @@ class PaymentMethodStep extends StatelessWidget {
                                       amount: total ?? 0,
                                       gateway: gatewayState
                                           .gateway(PaymentMethod.yoco),
+                                      isVisible: gatewayState
+                                              .gateway(PaymentMethod.yoco)
+                                              ?.isActive ??
+                                          false,
                                       title: 'Split payment with Yoco',
                                       imagePath: 'assets/images/yoco.png',
                                       subtitle:
@@ -258,6 +275,10 @@ class PaymentMethodStep extends StatelessWidget {
                                       amount: total ?? 0,
                                       gateway: gatewayState
                                           .gateway(PaymentMethod.instapay),
+                                      isVisible: gatewayState
+                                              .gateway(PaymentMethod.instapay)
+                                              ?.isActive ??
+                                          false,
                                       title: 'Split payment with Instapay',
                                       imagePath: 'assets/images/instapay.png',
                                       subtitle:
@@ -285,6 +306,10 @@ class PaymentMethodStep extends StatelessWidget {
                                       amount: total ?? 0,
                                       gateway: gatewayState
                                           .gateway(PaymentMethod.ozow),
+                                      isVisible: gatewayState
+                                              .gateway(PaymentMethod.ozow)
+                                              ?.isActive ??
+                                          false,
                                       title: 'Split payment with Ozow',
                                       imagePath: 'assets/images/ozow.png',
                                       subtitle:

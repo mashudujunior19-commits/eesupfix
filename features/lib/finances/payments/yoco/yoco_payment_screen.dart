@@ -17,18 +17,28 @@ class YocoPaymentScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        appBar: AppBar(),
+        appBar: AppBar(
+          leading: BackButton(
+            onPressed: () {
+              Navigator.of(context).pop(false);
+            },
+          ),
+        ),
         body: () {
           final secretKey = dotenv.env['YOCO_SECRET_KEY'];
 
-          FlutterYoco(
+          return FlutterYoco(
             secretKey: secretKey!,
             amount: 100,
             transactionId: 'id',
-            successUrl: 'eecom.com/succes',
-            cancelUrl: 'eecom.com/succes',
-            failureUrl: 'eecom.com/succes',
-            onComplete: (transaction) {},
+            successUrl: 'https://eesup.com/success/',
+            cancelUrl: 'https://eesup.com/failed/',
+            failureUrl: 'https://eesup.com/canceled/',
+            onComplete: (transaction) {
+              Navigator.of(context).pop(
+                transaction.status == YocoTransactionStatus.success,
+              );
+            },
           );
         }(),
       ),

@@ -19,7 +19,7 @@ class CheckoutBloc extends Bloc<CheckoutEvent, CheckoutState> {
         CurrentCheckout(
           Order(
             customerId: '',
-            value: event.totalAmount,
+            value: event.subTotal(),
             paymentMethod: PaymentMethod.instapay,
             secretPin: 0000,
             status: OrderStatus.pending,
@@ -51,6 +51,7 @@ class CheckoutBloc extends Bloc<CheckoutEvent, CheckoutState> {
             currentOrder.copyWith(
               eesupreneurId: event.shopId,
               eesupoolOrderId: event.orderId,
+              deliveryFee: event.deliveryFee,
             ),
           ),
         );
@@ -60,7 +61,7 @@ class CheckoutBloc extends Bloc<CheckoutEvent, CheckoutState> {
     on<PaymentMethodUpdated>((event, emit) {
       if (state is CurrentCheckout) {
         final currentOrder = (state as CurrentCheckout).newOrder;
-        final fee = (state as CurrentCheckout).totalToPay() *
+        final fee = (state as CurrentCheckout).subTotalToPay() *
             ((event.gateway?.fee ?? 0.00) / 100);
         emit(
           CurrentCheckout(
@@ -80,19 +81,31 @@ class CheckoutBloc extends Bloc<CheckoutEvent, CheckoutState> {
       }
     });
 
+    on<PayFeesWithWalletUpdated>((event, emit) {
+      if (state is CurrentCheckout) {
+        final currentOrder = (state as CurrentCheckout).newOrder;
+        emit(
+          CurrentCheckout(
+            currentOrder.copyWith(payFeesWithRetailWallet: event.value),
+          ),
+        );
+      }
+    });
+
     on<OrderPlaced>((event, emit) async {
       if (state is CurrentCheckout) {
         final order = (state as CurrentCheckout).newOrder;
-        final amount = (state as CurrentCheckout).totalToPay();
+
         emit(CheckoutLoading());
-        final results = await _orderRepo.createOrder(order, amount);
+
+        final results = await _orderRepo.createOrder(order);
 
         results.fold((l) {
           emit(CheckoutError(l, order));
         }, (outcome) {
           if (outcome.outstandingAmount > 0) {
             emit(
-              OutstandingPayment(outcome, order.paymentMethod),
+              OutstandingPayment(outcome, order.paymentMethod,order),
             );
           } else {
             emit(CurrentCheckout(order));

@@ -1,6 +1,7 @@
 import 'package:data_sources/eesupools/models/eesupool_order.dart';
 import 'package:data_sources/eesupreneur/data_source/eesupreneur_supabase_data_soruce.dart';
 import 'package:data_sources/eesupreneur/models/eesupreneur.dart';
+import 'package:features/core/extensions/context_alerts_ext.dart';
 import 'package:features/core/extensions/context_theme_ext.dart';
 import 'package:features/core/extensions/sizedbox_ext.dart';
 import 'package:features/core/extensions/slide_in_animation_ext.dart';
@@ -176,13 +177,35 @@ class _KasipreneurCard extends StatelessWidget {
     return InkWell(
       splashColor: Colors.transparent,
       onTap: () {
-        context.read<CheckoutBloc>().add(
-              CollectionPointUpdated(
-                eesupreneur.id,
-                null,
-              ),
-            );
-        tabController.animateTo(tabController.index + 1);
+        final deliveryFee = eesupreneur.deliveryFee ?? 0.00;
+        if (deliveryFee > 0) {
+          context
+              .showAlertDialog(
+                  'Delivery',
+                  '${eesupreneur.name} Offers'
+                      ' delivery for a R${deliveryFee.toStringAsFixed(2)} fee'
+                      ' do you wish to have your Order delivered',
+                  positiveText: 'Yes',
+                  negativeText: 'No, I will collect my order')
+              .then((value) {
+            if (value == true) {
+              context.read<CheckoutBloc>().add(
+                    CollectionPointUpdated(eesupreneur.id, null, deliveryFee),
+                  );
+              tabController.animateTo(tabController.index + 1);
+            } else {
+              context.read<CheckoutBloc>().add(
+                    CollectionPointUpdated(eesupreneur.id, null, null),
+                  );
+              tabController.animateTo(tabController.index + 1);
+            }
+          });
+        } else {
+          context.read<CheckoutBloc>().add(
+                CollectionPointUpdated(eesupreneur.id, null, null),
+              );
+          tabController.animateTo(tabController.index + 1);
+        }
       },
       child: Container(
         margin: const EdgeInsets.only(top: 15),

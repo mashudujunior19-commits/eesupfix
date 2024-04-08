@@ -12,17 +12,18 @@ class OrdersSupabaseImpl implements OrdersDataSource {
 
   OrdersSupabaseImpl(this._client);
   @override
-  Future<OrderResponse> createOrder(Order order, double amount) async {
+  Future<OrderResponse> createOrder(Order order) async {
     final params = {
       '_customer_id': order.customerId,
       '_eesupreneur_id': order.eesupreneurId,
       '_eesupool_order_id': order.eesupoolOrderId,
       '_wallet_id': order.walletId,
-      '_total_amount': amount,
+      '_total_amount': order.value,
       '_payment_method': order.paymentMethod.toString(),
       '_address_id': order.deliveryAddressId,
       '_delivery_fee': order.deliveryFee,
       '_card_fee': order.cardFee,
+      '_pay_fees_with_retail': order.payFeesWithRetailWallet,
       '_products': order.products
           .map((e) => {
                 'product_id': e.productId,

@@ -53,6 +53,8 @@ mixin _$Order {
   double? get deliveryFee => throw _privateConstructorUsedError;
   @JsonKey(name: 'card_fee')
   double? get cardFee => throw _privateConstructorUsedError;
+  @JsonKey(name: 'pay_fees_with_retail_wallet')
+  dynamic get payFeesWithRetailWallet => throw _privateConstructorUsedError;
   @JsonKey(name: 'full_name')
   String? get fullName => throw _privateConstructorUsedError;
   @JsonKey(name: 'corp_name')
@@ -103,6 +105,8 @@ abstract class $OrderCopyWith<$Res> {
       @JsonKey(name: 'delivery_address_id') int? deliveryAddressId,
       @JsonKey(name: 'delivery_fee') double? deliveryFee,
       @JsonKey(name: 'card_fee') double? cardFee,
+      @JsonKey(name: 'pay_fees_with_retail_wallet')
+      dynamic payFeesWithRetailWallet,
       @JsonKey(name: 'full_name') String? fullName,
       @JsonKey(name: 'corp_name') String? corpName,
       @MemberOrderAssignmentConverter() List<MemberOrderAssignment> assignments,
@@ -143,6 +147,7 @@ class _$OrderCopyWithImpl<$Res, $Val extends Order>
     Object? deliveryAddressId = freezed,
     Object? deliveryFee = freezed,
     Object? cardFee = freezed,
+    Object? payFeesWithRetailWallet = freezed,
     Object? fullName = freezed,
     Object? corpName = freezed,
     Object? assignments = null,
@@ -219,6 +224,10 @@ class _$OrderCopyWithImpl<$Res, $Val extends Order>
           ? _value.cardFee
           : cardFee // ignore: cast_nullable_to_non_nullable
               as double?,
+      payFeesWithRetailWallet: freezed == payFeesWithRetailWallet
+          ? _value.payFeesWithRetailWallet
+          : payFeesWithRetailWallet // ignore: cast_nullable_to_non_nullable
+              as dynamic,
       fullName: freezed == fullName
           ? _value.fullName
           : fullName // ignore: cast_nullable_to_non_nullable
@@ -287,6 +296,8 @@ abstract class _$$OrderImplCopyWith<$Res> implements $OrderCopyWith<$Res> {
       @JsonKey(name: 'delivery_address_id') int? deliveryAddressId,
       @JsonKey(name: 'delivery_fee') double? deliveryFee,
       @JsonKey(name: 'card_fee') double? cardFee,
+      @JsonKey(name: 'pay_fees_with_retail_wallet')
+      dynamic payFeesWithRetailWallet,
       @JsonKey(name: 'full_name') String? fullName,
       @JsonKey(name: 'corp_name') String? corpName,
       @MemberOrderAssignmentConverter() List<MemberOrderAssignment> assignments,
@@ -326,6 +337,7 @@ class __$$OrderImplCopyWithImpl<$Res>
     Object? deliveryAddressId = freezed,
     Object? deliveryFee = freezed,
     Object? cardFee = freezed,
+    Object? payFeesWithRetailWallet = freezed,
     Object? fullName = freezed,
     Object? corpName = freezed,
     Object? assignments = null,
@@ -402,6 +414,9 @@ class __$$OrderImplCopyWithImpl<$Res>
           ? _value.cardFee
           : cardFee // ignore: cast_nullable_to_non_nullable
               as double?,
+      payFeesWithRetailWallet: freezed == payFeesWithRetailWallet
+          ? _value.payFeesWithRetailWallet!
+          : payFeesWithRetailWallet,
       fullName: freezed == fullName
           ? _value.fullName
           : fullName // ignore: cast_nullable_to_non_nullable
@@ -454,6 +469,8 @@ class _$OrderImpl implements _Order {
       @JsonKey(name: 'delivery_address_id') this.deliveryAddressId,
       @JsonKey(name: 'delivery_fee') this.deliveryFee,
       @JsonKey(name: 'card_fee') this.cardFee,
+      @JsonKey(name: 'pay_fees_with_retail_wallet')
+      this.payFeesWithRetailWallet = false,
       @JsonKey(name: 'full_name') this.fullName,
       @JsonKey(name: 'corp_name') this.corpName,
       @MemberOrderAssignmentConverter()
@@ -520,6 +537,9 @@ class _$OrderImpl implements _Order {
   @JsonKey(name: 'card_fee')
   final double? cardFee;
   @override
+  @JsonKey(name: 'pay_fees_with_retail_wallet')
+  final dynamic payFeesWithRetailWallet;
+  @override
   @JsonKey(name: 'full_name')
   final String? fullName;
   @override
@@ -562,7 +582,7 @@ class _$OrderImpl implements _Order {
 
   @override
   String toString() {
-    return 'Order(id: $id, customerId: $customerId, eesupreneurId: $eesupreneurId, eesupoolOrderId: $eesupoolOrderId, walletId: $walletId, createdAt: $createdAt, placedAt: $placedAt, packagedAt: $packagedAt, readyAt: $readyAt, collectedAt: $collectedAt, cancelledAt: $cancelledAt, value: $value, paymentMethod: $paymentMethod, secretPin: $secretPin, deliveryAddressId: $deliveryAddressId, deliveryFee: $deliveryFee, cardFee: $cardFee, fullName: $fullName, corpName: $corpName, assignments: $assignments, status: $status, products: $products, address: $address)';
+    return 'Order(id: $id, customerId: $customerId, eesupreneurId: $eesupreneurId, eesupoolOrderId: $eesupoolOrderId, walletId: $walletId, createdAt: $createdAt, placedAt: $placedAt, packagedAt: $packagedAt, readyAt: $readyAt, collectedAt: $collectedAt, cancelledAt: $cancelledAt, value: $value, paymentMethod: $paymentMethod, secretPin: $secretPin, deliveryAddressId: $deliveryAddressId, deliveryFee: $deliveryFee, cardFee: $cardFee, payFeesWithRetailWallet: $payFeesWithRetailWallet, fullName: $fullName, corpName: $corpName, assignments: $assignments, status: $status, products: $products, address: $address)';
   }
 
   @override
@@ -600,6 +620,8 @@ class _$OrderImpl implements _Order {
             (identical(other.deliveryFee, deliveryFee) ||
                 other.deliveryFee == deliveryFee) &&
             (identical(other.cardFee, cardFee) || other.cardFee == cardFee) &&
+            const DeepCollectionEquality().equals(
+                other.payFeesWithRetailWallet, payFeesWithRetailWallet) &&
             (identical(other.fullName, fullName) ||
                 other.fullName == fullName) &&
             (identical(other.corpName, corpName) ||
@@ -632,6 +654,7 @@ class _$OrderImpl implements _Order {
         deliveryAddressId,
         deliveryFee,
         cardFee,
+        const DeepCollectionEquality().hash(payFeesWithRetailWallet),
         fullName,
         corpName,
         const DeepCollectionEquality().hash(_assignments),
@@ -677,6 +700,8 @@ abstract class _Order implements Order {
       @JsonKey(name: 'delivery_address_id') final int? deliveryAddressId,
       @JsonKey(name: 'delivery_fee') final double? deliveryFee,
       @JsonKey(name: 'card_fee') final double? cardFee,
+      @JsonKey(name: 'pay_fees_with_retail_wallet')
+      final dynamic payFeesWithRetailWallet,
       @JsonKey(name: 'full_name') final String? fullName,
       @JsonKey(name: 'corp_name') final String? corpName,
       @MemberOrderAssignmentConverter()
@@ -741,6 +766,9 @@ abstract class _Order implements Order {
   @override
   @JsonKey(name: 'card_fee')
   double? get cardFee;
+  @override
+  @JsonKey(name: 'pay_fees_with_retail_wallet')
+  dynamic get payFeesWithRetailWallet;
   @override
   @JsonKey(name: 'full_name')
   String? get fullName;

@@ -553,10 +553,9 @@ packages:
   flutter_yoco:
     dependency: transitive
     description:
-      name: flutter_yoco
-      sha256: "5682fbf309cc086aac87657414a38dc576ee01f881a5a25b5949accd8857fe24"
-      url: "https://pub.dev"
-    source: hosted
+      path: "C:/Users/misom/Documents/Work/flutter_yoco"
+      relative: false
+    source: path
     version: "1.0.0"
   freezed_annotation:
     dependency: transitive

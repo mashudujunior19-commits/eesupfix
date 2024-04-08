@@ -45,7 +45,7 @@ class _OzowScreenState extends State<OzowScreen> {
           leading: status == null
               ? BackButton(
                   onPressed: () {
-                    Navigator.pop(context, status);
+                    Navigator.pop(context, status == OzowStatus.complete);
                   },
                 )
               : null,
@@ -102,7 +102,7 @@ class _OzowScreenState extends State<OzowScreen> {
                 child: Builder(builder: (context) {
                   return ElevatedButton(
                     onPressed: () {
-                      Navigator.pop(context, status);
+                      Navigator.pop(context, status == OzowStatus.complete);
                     },
                     child: const Text('Finish'),
                   );

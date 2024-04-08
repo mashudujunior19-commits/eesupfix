@@ -41,7 +41,6 @@ class InstapayScreen extends StatelessWidget {
               child: UserDetailsDialog(prfile: profile),
             )
                 .then((value) {
-              print('Value is :${value.toString}');
               if (value != null) {
                 context.read<ProfileBloc>().add(ProfileFetched());
               }

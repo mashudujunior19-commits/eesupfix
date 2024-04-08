@@ -13,10 +13,10 @@ class OrderRepository {
   OrderRepository(this._ordersDataSource, this._authRepository);
 
   Future<dartz.Either<EESUpException, OrderResponse>> createOrder(
-      Order order, double totalAmount) async {
+      Order order) async {
     final result = await _authRepository.executeFutureWithAuth((id) async {
       final response = await _ordersDataSource.createOrder(
-          order.copyWith(customerId: id), totalAmount);
+          order.copyWith(customerId: id));
       return response;
     });
     return result;
