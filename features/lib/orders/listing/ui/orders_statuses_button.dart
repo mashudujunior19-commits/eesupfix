@@ -21,7 +21,7 @@ class OrdersStatusesButton extends StatelessWidget {
           child: InkWell(
             onTap: () {
               context
-                  .showCustomDialog(
+                  .showBottomSheetDialog(
                 radius: BorderRadius.circular(15),
                 margin: EdgeInsets.only(
                   bottom: context.width * .55,

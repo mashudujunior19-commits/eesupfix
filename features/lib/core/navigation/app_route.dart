@@ -71,5 +71,10 @@ class AppRouter extends $AppRouter {
           transitionsBuilder: TransitionsBuilders.slideLeftWithFade,
           durationInMilliseconds: 300,
         ),
+        CustomRoute(
+          page: InstapayConfirmDetailsRoute.page,
+          transitionsBuilder: TransitionsBuilders.slideLeftWithFade,
+          durationInMilliseconds: 300,
+        ),
       ];
 }

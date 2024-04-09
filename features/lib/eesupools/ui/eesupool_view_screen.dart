@@ -6,6 +6,12 @@ import 'package:data_sources/eesupools/models/eesupool_type.dart';
 import 'package:features/core/extensions/bg_image_deco_ext.dart';
 import 'package:features/core/extensions/context_theme_ext.dart';
 import 'package:features/eesupools/bloc/eesupool_view_bloc.dart';
+import 'package:features/eesupools/ui/tabs/chats/ui/chat_tab.dart';
+import 'package:features/eesupools/ui/tabs/events/events_tab.dart';
+import 'package:features/eesupools/ui/tabs/members/presentation/members_tab.dart';
+import 'package:features/eesupools/ui/tabs/my_kasi_tree/mykasi_tree.dart';
+import 'package:features/eesupools/ui/tabs/orders/presentation/orders_tab.dart';
+import 'package:features/eesupools/ui/tabs/settings/settings_tab.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -66,13 +72,13 @@ class EESUpoolViewScreen extends StatelessWidget {
                                 duration: 600.ms,
                                 curve: Curves.easeInOutCubic,
                               ),
-                          // Expanded(
-                          //   child: TabBarView(
-                          //     children: [
-                          //       ..._getTabBarViews(pool),
-                          //     ],
-                          //   ),
-                          // )
+                          Expanded(
+                            child: TabBarView(
+                              children: [
+                                ..._getTabBarViews(pool),
+                              ],
+                            ),
+                          )
                         ],
                       ),
                     );
@@ -87,42 +93,35 @@ class EESUpoolViewScreen extends StatelessWidget {
   }
 }
 
-// List<Widget> _getTabBarViews(EESUpool pool) {
-//   final isAdmin = pool.role == EESUpoolMemberRole.admin;
-//   final type = pool.type;
-//   final level = pool.level;
-//   return [
-//     ChatsTab(pool: pool),
-//     ChatsTab(pool: pool),
-//     ChatsTab(pool: pool),
-//     ChatsTab(pool: pool),
-//     ChatsTab(pool: pool),
-//   ];
-//   // if (isAdmin) {
-//   //   return [
-//   //     const ChatsTab(), const ChatsTab(), const ChatsTab(), const ChatsTab(),
-//   //     // const ChatsTab(),
-//   //     // if (type == EESUpoolType.trade) const EESUpoolOrdersTab(),
-//   //     // const EventsViewTab(),
-//   //     // if (type == EESUpoolType.Kasi && level != EESUpoolLevel.Street)
-//   //     //   const DescendantsTab(),
-//   //     // const MembersTab(),
-//   //     // const SettingsTab(),
-//   //   ];
-//   // } else if (!isAdmin && type == EESUpoolType.interestGroup) {
-//   //   return [
-//   //     // const ChatsTab(),
-//   //     // const EventsViewTab(),
-//   //     // const MembersTab(),
-//   //   ];
-//   // } else {
-//   //   return [
-//   //     const ChatsTab(),
-//   //     // const EESUpoolOrdersTab(),
-//   //     // const MembersTab(),
-//   //   ];
-//   // }
-// }
+List<Widget> _getTabBarViews(EESUpool pool) {
+  final isAdmin = pool.role == EESUpoolMemberRole.admin;
+  final type = pool.type;
+  final level = pool.level;
+
+  if (isAdmin) {
+    return [
+      ChatsTab(pool: pool),
+      if (type == EESUpoolType.trade) const OrdersPoolTab(),
+      const EventsTab(),
+      if (type == EESUpoolType.Kasi && level != EESUpoolLevel.Street)
+        const MyKasiTreeTab(),
+      const MembersTab(),
+       SettingsTab(pool: pool),
+    ];
+  } else if (!isAdmin && type == EESUpoolType.interestGroup) {
+    return [
+      ChatsTab(pool: pool),
+      const EventsTab(),
+      const MembersTab(),
+    ];
+  } else {
+    return [
+      ChatsTab(pool: pool),
+      const OrdersPoolTab(),
+      const MembersTab(),
+    ];
+  }
+}
 
 List<Tab> _getCorrectTabs(EESUpool pool) {
   final isAdmin = pool.role == EESUpoolMemberRole.admin;

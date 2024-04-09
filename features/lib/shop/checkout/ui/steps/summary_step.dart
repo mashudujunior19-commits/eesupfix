@@ -57,7 +57,7 @@ class SummaryStep extends StatelessWidget {
                 return;
               }
               context.router
-                  .push(InstapayRoute(transaction: transaction))
+                  .push(InstapayConfirmDetailsRoute(transaction: transaction))
                   .then((value) {
                 if (value == false) {
                   _restartCheckout(state.order, context);

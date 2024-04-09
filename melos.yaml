@@ -26,4 +26,4 @@ scripts:
     exec: dart test
     description: Run tests
   eesup_dev:
-    exec: flutter run -t apps/eesup/lib/main_dev.dart
+    exec: flutter run -t apps/eesup/lib/main_dev.dart -d phone_1

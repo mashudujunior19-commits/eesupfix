@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class MembersTab extends StatelessWidget {
-  const MembersTab({super.key});
+class MyKasiTreeTab extends StatelessWidget {
+  const MyKasiTreeTab({super.key});
 
   @override
   Widget build(BuildContext context) {

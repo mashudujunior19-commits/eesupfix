@@ -28,8 +28,6 @@ Future<Response> onRequest(RequestContext context) async {
   queryParams = queryStringToMap(await request.body());
   //}
 
-  print(queryParams);
-
   final authKey = queryParams['payeeCategory3'];
 
   if (authKey == null) {
@@ -47,8 +45,6 @@ Future<Response> onRequest(RequestContext context) async {
   final auth = AuthServices(AuthSupabaseImpl(supabase));
   final authrized = await auth.authorized(key: authKey);
 
-  print('Authorized: $authrized');
-
   if (!authrized) {
     return Response.json(
       statusCode: HttpStatus.unauthorized,
@@ -63,8 +59,6 @@ Future<Response> onRequest(RequestContext context) async {
   final api = PaymentSupabaseImpl(supabase);
   final service = InstapayServices(api);
   final result = await service.confirmInstaPayment(queryParams);
-
-  print(result);
 
   return result;
 }

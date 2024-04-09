@@ -54,27 +54,6 @@ body {
 <div class="price-display" id="price-display">
   Click the button below to start the payment process.
 </div>
-<div class="button-container">
-<script>
-
-  function onLoaded(){
-    window.alert(  autoClickStartPayment());
-    // setTimeout(() => {
-    //   autoClickStartPayment();
-    // }, 2000);
-  }
-
-
-  
-  function autoClickStartPayment() {
-    const startPaymentButton = document.getElementById("submit-button");
-
-    if (startPaymentButton) {  
-      startPaymentButton.click();
-    } 
-  }
-
-</script>
 
 <?php
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -160,9 +139,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <input type="hidden" name="m_back2shop_url" value="<?= $mBack2shopUrl?>">
         
         
-        <input type="submit" class="btn" id="submit-button" onLoaded="onLoaded()" value="Start Payment">
+        <input type="submit" class="btn" id="submit-button" value="Start Payment">
     </form>
 <?php } ?>
-</div>
 </body>
 </html>

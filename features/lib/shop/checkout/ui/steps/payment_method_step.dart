@@ -40,7 +40,7 @@ class PaymentMethodStep extends StatelessWidget {
         builder: (context, checkoutState) {
           double? total;
           if (checkoutState is CurrentCheckout) {
-            total = checkoutState.totalToPay();
+            total = checkoutState.subTotalToPay();
           }
 
           return BlocListener<WalletsBloc, WalletsState>(

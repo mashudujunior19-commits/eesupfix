@@ -37,7 +37,7 @@ extension BottomSheetExt on BuildContext {
 }
 
 extension CustomAnimatedDialogExt on BuildContext {
-  Future<Object?> showCustomDialog({
+  Future<Object?> showBottomSheetDialog({
     required Widget child,
     BorderRadius? radius,
     EdgeInsets? margin,

@@ -38,13 +38,13 @@ class MenuButton extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              10.sH,
+              5.sH,
               Icon(icon, size: 32),
               5.sH,
               Expanded(
                 child: Text(
                   label,
-                  style: textTheme.labelMedium?.copyWith(fontSize: 12),
+                  style: textTheme.labelMedium?.copyWith(fontSize: 11.5),
                   textAlign: TextAlign.center,
                 ),
               )
