@@ -2,8 +2,8 @@ import 'package:features/core/extensions/context_theme_ext.dart';
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
 
-class LargeLoadingShimmer extends StatelessWidget {
-  const LargeLoadingShimmer({super.key, this.margin});
+class FullScreenLoadingShimmer extends StatelessWidget {
+  const FullScreenLoadingShimmer({super.key, this.margin});
   final EdgeInsets? margin;
   @override
   Widget build(BuildContext context) {

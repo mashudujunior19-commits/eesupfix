@@ -6,7 +6,7 @@ import 'package:features/core/extensions/context_alerts_ext.dart';
 import 'package:features/core/extensions/sizedbox_ext.dart';
 import 'package:features/core/navigation/app_route.gr.dart';
 import 'package:features/core/widgets/eesup_form_field.dart';
-import 'package:features/core/widgets/large_loading_shimmer.dart';
+import 'package:features/core/widgets/fullscreen_loading_shimmer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:instapay_flutter/data/merchant_transaction.dart';
@@ -48,7 +48,7 @@ class InstapayConfirmDetailsScreen extends StatelessWidget {
               ..add(ProfileFetched()),
             builder: (context, state) {
               if (state is ProfileLoading) {
-                return const LargeLoadingShimmer();
+                return const FullScreenLoadingShimmer();
               } else if (state is ProfileLoaded) {
                 final profile = state.profile;
                 fNameController.text = profile.firstName ?? "";

@@ -60,7 +60,7 @@ class UserVouchersView extends StatelessWidget {
               body: () {
                 if (state is UserVouchersLoadedState) {
                   // if (state.vouchers.isEmpty) {
-                  //   return LargeErrorWidget(
+                  //   return FullScreenError(
                   //     error: EESUpException(
                   //       message: 'You don\'t have any vouchers yet, Tap the +'
                   //           ' button to create a new voucher',

@@ -3,7 +3,7 @@ import 'package:features/core/extensions/context_alerts_ext.dart';
 import 'package:features/core/extensions/sizedbox_ext.dart';
 import 'package:features/core/extensions/slide_in_animation_ext.dart';
 import 'package:features/core/navigation/app_route.gr.dart';
-import 'package:features/core/widgets/large_loading_shimmer.dart';
+import 'package:features/core/widgets/fullscreen_loading_shimmer.dart';
 import 'package:features/geolocation/bloc/addresses_bloc.dart';
 import 'package:features/geolocation/ui/widgets/address_card.dart';
 import 'package:flutter/material.dart';
@@ -17,7 +17,10 @@ class SelectFromMyAddressesDialogBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => AddressesBloc(context.read<GeoRepository>()),
+      create: (context) => AddressesBloc(context.read<GeoRepository>())
+        ..add(
+          AddressesFetched(),
+        ),
       child: BlocConsumer<AddressesBloc, AddressesState>(
         listener: (context, state) {
           if (state is AddressesError) {
@@ -33,13 +36,10 @@ class SelectFromMyAddressesDialogBody extends StatelessWidget {
                 IconButton(
                   onPressed: () {
                     context.router
-                        .push(EditAddressRoute(
-                            address: null, isPersonal: true))
+                        .push(EditAddressRoute(address: null, isPersonal: true))
                         .then((value) {
                       if (value != null) {
-                        context
-                            .read<AddressesBloc>()
-                            .add(AddressesFetched());
+                        context.read<AddressesBloc>().add(AddressesFetched());
                       }
                     });
                   },
@@ -63,7 +63,7 @@ class SelectFromMyAddressesDialogBody extends StatelessWidget {
                   },
                 );
               } else if (state is AddressesLoading) {
-                return const LargeLoadingShimmer();
+                return const FullScreenLoadingShimmer();
               }
             }(),
           );

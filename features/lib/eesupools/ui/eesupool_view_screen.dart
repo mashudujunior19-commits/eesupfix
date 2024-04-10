@@ -8,7 +8,7 @@ import 'package:features/core/extensions/context_theme_ext.dart';
 import 'package:features/eesupools/bloc/eesupool_view_bloc.dart';
 import 'package:features/eesupools/ui/tabs/chats/ui/chat_tab.dart';
 import 'package:features/eesupools/ui/tabs/events/events_tab.dart';
-import 'package:features/eesupools/ui/tabs/members/presentation/members_tab.dart';
+import 'package:features/eesupools/ui/tabs/members/ui/members_tab.dart';
 import 'package:features/eesupools/ui/tabs/my_kasi_tree/mykasi_tree.dart';
 import 'package:features/eesupools/ui/tabs/orders/presentation/orders_tab.dart';
 import 'package:features/eesupools/ui/tabs/settings/settings_tab.dart';
@@ -16,6 +16,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:loader_overlay/loader_overlay.dart';
+import 'package:repository/eesupools/eesupool_repo.dart';
 import 'widgets/eesupool_view_tab_bar.dart';
 
 @RoutePage()
@@ -30,7 +31,7 @@ class EESUpoolViewScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => EESUpoolViewBloc()
+      create: (context) => EESUpoolViewBloc(context.read<EESUpoolRepository>())
         ..add(EESUpoolViewLoaded(id: poolId, eesupool: pool)),
       child: BlocConsumer<EESUpoolViewBloc, EESUpoolViewState>(
         listener: (context, state) {
@@ -105,20 +106,20 @@ List<Widget> _getTabBarViews(EESUpool pool) {
       const EventsTab(),
       if (type == EESUpoolType.Kasi && level != EESUpoolLevel.Street)
         const MyKasiTreeTab(),
-      const MembersTab(),
-       SettingsTab(pool: pool),
+      MembersTab(pool: pool),
+      SettingsTab(pool: pool),
     ];
   } else if (!isAdmin && type == EESUpoolType.interestGroup) {
     return [
       ChatsTab(pool: pool),
       const EventsTab(),
-      const MembersTab(),
+      MembersTab(pool: pool),
     ];
   } else {
     return [
       ChatsTab(pool: pool),
       const OrdersPoolTab(),
-      const MembersTab(),
+      MembersTab(pool: pool),
     ];
   }
 }

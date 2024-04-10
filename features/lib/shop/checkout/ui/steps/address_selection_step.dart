@@ -2,7 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:features/core/extensions/context_alerts_ext.dart';
 import 'package:features/core/extensions/slide_in_animation_ext.dart';
 import 'package:features/core/navigation/app_route.gr.dart';
-import 'package:features/core/widgets/large_loading_shimmer.dart';
+import 'package:features/core/widgets/fullscreen_loading_shimmer.dart';
 import 'package:features/geolocation/bloc/addresses_bloc.dart';
 import 'package:features/geolocation/ui/widgets/address_card.dart';
 import 'package:features/shop/checkout/bloc/checkout_bloc.dart';
@@ -72,7 +72,7 @@ class AddressSelectionStep extends StatelessWidget {
                   },
                 )
               else if (state is AddressesLoading)
-                const LargeLoadingShimmer(
+                const FullScreenLoadingShimmer(
                   margin: EdgeInsets.only(top: 15),
                 ),
             ],

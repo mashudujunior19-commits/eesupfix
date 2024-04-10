@@ -1,8 +1,8 @@
 import 'package:data_sources/orders/models/order.dart';
-import 'package:features/core/errors/large_error_widget.dart';
+import 'package:features/core/widgets/fullscreen_error_widget.dart';
 import 'package:features/core/extensions/context_theme_ext.dart';
 import 'package:features/core/extensions/slide_in_animation_ext.dart';
-import 'package:features/core/widgets/large_loading_shimmer.dart';
+import 'package:features/core/widgets/fullscreen_loading_shimmer.dart';
 import 'package:features/orders/listing/bloc/orders_bloc.dart';
 import 'package:features/orders/listing/bloc/orders_filter_bloc.dart';
 import 'package:features/orders/listing/ui/order_card.dart';
@@ -59,7 +59,7 @@ class OrdersTab extends StatelessWidget {
                 BlocBuilder<OrdersBloc, OrdersState>(
                   builder: (context, state) {
                     if (state is OrdersLoading) {
-                      return const LargeLoadingShimmer();
+                      return const FullScreenLoadingShimmer();
                     } else if (state is OrdersLoaded) {
                       final orders = state.orders;
                       return Expanded(
@@ -75,7 +75,7 @@ class OrdersTab extends StatelessWidget {
                         ),
                       );
                     } else {
-                      return LargeErrorWidget(
+                      return FullScreenError(
                         exception: EESUpException(
                           message: 'Something went wrong while '
                               'we were trying to fetch your orders.',

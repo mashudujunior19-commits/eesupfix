@@ -4,7 +4,7 @@ import 'package:features/core/extensions/context_environment_ext.dart';
 import 'package:features/referrals/ui/widgets/referral_code_tile.dart';
 import 'package:features/shop/cart/ui/cart_button.dart';
 import 'package:repository/shop/shopping_repository.dart';
-import 'package:features/core/errors/large_error_widget.dart';
+import 'package:features/core/widgets/fullscreen_error_widget.dart';
 import 'package:features/core/extensions/context_theme_ext.dart';
 import 'package:features/core/extensions/sizedbox_ext.dart';
 import 'package:features/shop/overview/bloc/overview_bloc.dart';
@@ -126,7 +126,7 @@ class OverviewTab extends StatelessWidget {
                 _OverviewItems(key: const Key('overview_items'), state: state)
               else if (state is OverviewError)
                 SliverFillRemaining(
-                  child: LargeErrorWidget(exception: state.exception),
+                  child: FullScreenError(exception: state.exception),
                 ),
             ],
           );

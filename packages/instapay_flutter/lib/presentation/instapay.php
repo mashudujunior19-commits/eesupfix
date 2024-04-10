@@ -55,6 +55,7 @@ body {
   Click the button below to start the payment process.
 </div>
 
+<div class ="button-container">
 <?php
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Get raw POST data
@@ -142,5 +143,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <input type="submit" class="btn" id="submit-button" value="Start Payment">
     </form>
 <?php } ?>
+</div>
 </body>
 </html>

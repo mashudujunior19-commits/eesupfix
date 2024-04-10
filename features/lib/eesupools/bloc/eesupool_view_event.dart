@@ -8,3 +8,9 @@ final class EESUpoolViewLoaded extends EESUpoolViewEvent {
   final EESUpool? eesupool;
   EESUpoolViewLoaded({this.id, this.eesupool});
 }
+
+final class EESUpoolSettingsUpdated extends EESUpoolViewEvent {
+  final EESUpool pool;
+  final bool canSave;
+  EESUpoolSettingsUpdated(this.pool,this.canSave);
+}

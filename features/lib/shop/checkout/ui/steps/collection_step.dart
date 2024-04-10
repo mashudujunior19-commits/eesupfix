@@ -5,7 +5,7 @@ import 'package:features/core/extensions/context_alerts_ext.dart';
 import 'package:features/core/extensions/context_theme_ext.dart';
 import 'package:features/core/extensions/sizedbox_ext.dart';
 import 'package:features/core/extensions/slide_in_animation_ext.dart';
-import 'package:features/core/widgets/large_loading_shimmer.dart';
+import 'package:features/core/widgets/fullscreen_loading_shimmer.dart';
 import 'package:features/shop/checkout/bloc/checkout_bloc.dart';
 import 'package:features/shop/checkout/bloc/collection_points_bloc.dart';
 import 'package:flutter/material.dart';
@@ -80,7 +80,7 @@ class CollectionStep extends StatelessWidget {
                     ),
                   );
                 } else if (state is CollectionPointsLoading) {
-                  return const LargeLoadingShimmer();
+                  return const FullScreenLoadingShimmer();
                 } else {
                   return 0.sW;
                 }

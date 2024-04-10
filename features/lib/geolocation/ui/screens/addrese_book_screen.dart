@@ -5,7 +5,7 @@ import 'package:features/core/extensions/context_theme_ext.dart';
 import 'package:features/core/extensions/sizedbox_ext.dart';
 import 'package:features/core/extensions/slide_in_animation_ext.dart';
 import 'package:features/core/navigation/app_route.gr.dart';
-import 'package:features/core/widgets/large_loading_shimmer.dart';
+import 'package:features/core/widgets/fullscreen_loading_shimmer.dart';
 import 'package:features/geolocation/bloc/addresses_bloc.dart';
 import 'package:features/geolocation/ui/widgets/address_card.dart';
 import 'package:flutter/material.dart';
@@ -67,7 +67,7 @@ class AddressBookScreen extends StatelessWidget {
                       },
                     );
                   } else if (state is AddressesLoading) {
-                    return const LargeLoadingShimmer();
+                    return const FullScreenLoadingShimmer();
                   }
                 }(),
               ),

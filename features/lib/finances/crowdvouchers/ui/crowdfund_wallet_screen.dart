@@ -1,4 +1,4 @@
-import 'package:features/core/errors/large_error_widget.dart';
+import 'package:features/core/widgets/fullscreen_error_widget.dart';
 import 'package:features/core/extensions/context_theme_ext.dart';
 import 'package:features/core/extensions/sizedbox_ext.dart';
 import 'package:features/core/extensions/slide_in_animation_ext.dart';
@@ -126,7 +126,7 @@ class CrowdfundWalletScreen extends StatelessWidget {
                 ),
               );
             } else if (state is CrowdfundVoucherErrorState) {
-              return LargeErrorWidget(exception: state.error);
+              return FullScreenError(exception: state.error);
             }
             return 0.sW;
           },

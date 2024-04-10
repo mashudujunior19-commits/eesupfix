@@ -2,7 +2,6 @@ import 'package:features/core/extensions/context_alerts_ext.dart';
 import 'package:features/core/extensions/context_theme_ext.dart';
 import 'package:flutter/material.dart';
 
-
 ///Displays the current question in a survey.
 ///as well as the navigation and submit buttons.
 class ResponseScreen extends StatelessWidget {
@@ -11,7 +10,7 @@ class ResponseScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-   // final question = currentQuestion(ref);
+    // final question = currentQuestion(ref);
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
@@ -40,7 +39,7 @@ class ResponseScreen extends StatelessWidget {
         ),
         // body: question != null
         //     ? CurrentQuestionView(question: question)
-        //     : LargeErrorWidget(
+        //     : FullScreenError(
         //         error: EESUpException(message: 'No question found.'),
         //       ),
         // floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,

@@ -1,6 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:features/core/env/flavor_type.dart';
-import 'package:features/core/errors/large_error_widget.dart';
+import 'package:features/core/widgets/fullscreen_error_widget.dart';
 import 'package:features/core/extensions/context_environment_ext.dart';
 import 'package:features/core/extensions/slide_in_animation_ext.dart';
 import 'package:flutter/material.dart';
@@ -63,7 +63,7 @@ class _OzowScreenState extends State<OzowScreen> {
               siteCode == null ||
               eesupKey == null ||
               eesupApiUrl == null) {
-            return LargeErrorWidget(
+            return FullScreenError(
               exception: EESUpException(
                 message: 'There was an internal'
                     ' error while initiating your payment',

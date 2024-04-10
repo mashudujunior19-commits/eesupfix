@@ -1,6 +1,6 @@
 import 'package:data_sources/finance/data_source/voucher_supabase_dt.dart';
 import 'package:data_sources/finance/models/voucher.dart';
-import 'package:features/core/errors/large_error_widget.dart';
+import 'package:features/core/widgets/fullscreen_error_widget.dart';
 import 'package:features/core/extensions/bg_image_deco_ext.dart';
 import 'package:features/core/extensions/context_alerts_ext.dart';
 import 'package:features/core/extensions/context_theme_ext.dart';
@@ -18,7 +18,6 @@ import 'package:loader_overlay/loader_overlay.dart';
 import 'package:repository/auth/auth_repository.dart';
 import 'package:repository/finances/vourcher_repository.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-
 
 Future<Object?> confirmVoucherParameterDialog(
   BuildContext context,
@@ -148,7 +147,7 @@ class _ConfirmVoucherParameter extends StatelessWidget {
                 //         bEmail: 'misomenze6@gmail.com',
                 //         bMobile: '+2719582572',
                 //         mReturnUrl: successUrl,
-                        
+
                 //         mBack2shopUrl: failedUrl,
                 //         mNotifyUrl: notifyUrl,
                 //         sendboxUrl: sendbox,
@@ -197,7 +196,7 @@ class _ConfirmVoucherParameter extends StatelessWidget {
           child: BlocBuilder<ParameterBloc, ParameterState>(
               builder: (context, state) {
             if (state is ParameterError) {
-              return LargeErrorWidget(exception: state.exception);
+              return FullScreenError(exception: state.exception);
             }
 
             if (state is ParametersState) {

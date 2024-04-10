@@ -1,11 +1,11 @@
 import 'package:data_sources/eesupools/models/eesupool_type.dart';
 import 'package:features/eesupools/bloc/eesupool_type_bloc.dart';
 import 'package:repository/eesupools/eesupool_repo.dart';
-import 'package:features/core/errors/large_error_widget.dart';
+import 'package:features/core/widgets/fullscreen_error_widget.dart';
 import 'package:features/core/extensions/context_theme_ext.dart';
 import 'package:features/core/extensions/sizedbox_ext.dart';
 import 'package:features/core/extensions/slide_in_animation_ext.dart';
-import 'package:features/core/widgets/large_loading_shimmer.dart';
+import 'package:features/core/widgets/fullscreen_loading_shimmer.dart';
 import 'package:features/eesupools/ui/widgets/eesupool_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
@@ -33,7 +33,7 @@ class EESUpoolsTypeView extends StatelessWidget {
             backgroundColor: Colors.transparent,
             body: () {
               if (state is EESUpoolTypeViewLoading) {
-                return const LargeLoadingShimmer();
+                return const FullScreenLoadingShimmer();
               }
               if (state is EESUpoolsTypeViewLoaded) {
                 return Column(
@@ -61,7 +61,7 @@ class EESUpoolsTypeView extends StatelessWidget {
               }
 
               if (state is EESUpoolTypeViewError) {
-                return LargeErrorWidget(exception: state.exception);
+                return FullScreenError(exception: state.exception);
               }
             }(),
           );
