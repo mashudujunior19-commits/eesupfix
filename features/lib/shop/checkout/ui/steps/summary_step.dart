@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:instapay_flutter/data/merchant_transaction.dart';
+import 'package:intl/intl.dart';
 import 'package:loader_overlay/loader_overlay.dart';
 
 class SummaryStep extends StatelessWidget {
@@ -219,7 +220,7 @@ class SummaryStep extends StatelessWidget {
   }
 
   MerchantTransaction? _getInstapayTransaction(OrderResponse response) {
-    // var formatter = DateFormat('yyyy-MM-dd');
+    var formatter = DateFormat('yyyy-MM-dd');
     final merchantId = dotenv.env['INSTA_PAY_MERCHANT_ID'];
     final accountUUid = dotenv.env['INSTA_PAY_ACCOUNT_ID'];
     final authKey = dotenv.env['INSTAPAY_AUTH_KEY'];
@@ -260,7 +261,7 @@ class SummaryStep extends StatelessWidget {
       mChipsAllowed: false,
       mPayatAllowed: false,
       mTridentAllowed: false,
-      mTxDueDate: secret,
+      mTxDueDate: formatter.format(DateTime.now()),
       mMessage: 'Payment for order ${response.orderId}',
       mSiteName: 'EESUp',
       mReturnUrl: successUrl,

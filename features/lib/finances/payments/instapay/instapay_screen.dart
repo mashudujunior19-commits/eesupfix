@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:instapay_flutter/data/merchant_transaction.dart';
@@ -12,6 +14,7 @@ class InstapayScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    debugPrint(jsonEncode(transaction.toJson()), wrapWidth: 1);
     return Scaffold(
       appBar: _appBar(context),
       body: InstapayFlutter(
