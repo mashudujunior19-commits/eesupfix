@@ -167,7 +167,7 @@ class ScraperRepository {
   Future<Response> _upload(String table, ScraperProduct product) async {
     final dt = ScraperDtsImpl();
     final success = await dt.submitProduct(table, product);
-    print('Uploaded product :$success');
+
     if (success) {
       return Response.json(
         body: {'message': 'Product uploaded and verified'},

@@ -134,12 +134,15 @@ class _RegisterButton extends StatelessWidget {
         children: [
           TextSpan(
             text: 'Register',
-            style: context.textTheme.displayMedium!.copyWith(
+            style: context.textTheme.displayMedium?.copyWith(
               color: context.colorScheme.primary,
               fontSize: 14,
               fontWeight: FontWeight.w500,
             ),
-            recognizer: TapGestureRecognizer()..onTap = () {},
+            recognizer: TapGestureRecognizer()
+              ..onTap = () {
+                context.router.push(const RegisterRoute());
+              },
           ),
         ],
       ),
