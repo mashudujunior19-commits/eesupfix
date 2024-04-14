@@ -47,17 +47,7 @@ class _RegisterScreenState extends State<RegisterScreen>
                 decoration: context.bgImage,
                 child: Container(
                   margin: const EdgeInsets.only(left: 15, right: 15),
-                  decoration: BoxDecoration(
-                    color: Colors.white.withOpacity(.67),
-                    borderRadius: BorderRadius.circular(15),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.blueGrey.withOpacity(.2),
-                        blurRadius: 30,
-                        offset: const Offset(0, 5),
-                      ),
-                    ],
-                  ),
+                  decoration: _bg(),
                   child: Scaffold(
                     backgroundColor: Colors.transparent,
                     appBar: AppBar(
@@ -78,20 +68,26 @@ class _RegisterScreenState extends State<RegisterScreen>
                           ? const Text('Sign up')
                           : null,
                     ),
-                    body: TabBarView(
-                      // physics: const NeverScrollableScrollPhysics(),
-                      controller: _tabController,
-                      children: [
-                        SelectUserRole(tabController: _tabController),
-                        if (1 == 1)
-                          CorporateForm(tabController: _tabController)
-                        else
-                          IndividualForm(tabController: _tabController),
-                        CredentialsForm(tabController: _tabController),
-                        ReferralCodeForm(tabController: _tabController),
-                        const WelcomeScreen(),
-                      ],
-                    ),
+                    body: () {
+                      if (state is RegisterFormState) {
+                        return TabBarView(
+                          // physics: const NeverScrollableScrollPhysics(),
+                          controller: _tabController,
+                          children: [
+                            SelectUserRole(tabController: _tabController),
+                            if (state.isCorp)
+                              CorporateForm(tabController: _tabController)
+                            else
+                              IndividualForm(tabController: _tabController),
+                            CredentialsForm(tabController: _tabController),
+                            ReferralCodeForm(tabController: _tabController),
+                            const WelcomeScreen(),
+                          ],
+                        );
+                      } else {
+                        return Container();
+                      }
+                    }(),
                   ),
                 ),
               ),
@@ -99,6 +95,20 @@ class _RegisterScreenState extends State<RegisterScreen>
           );
         },
       ),
+    );
+  }
+
+  BoxDecoration _bg() {
+    return BoxDecoration(
+      color: Colors.white.withOpacity(.67),
+      borderRadius: BorderRadius.circular(15),
+      boxShadow: [
+        BoxShadow(
+          color: Colors.blueGrey.withOpacity(.2),
+          blurRadius: 30,
+          offset: const Offset(0, 5),
+        ),
+      ],
     );
   }
 }

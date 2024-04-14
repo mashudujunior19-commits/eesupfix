@@ -1,10 +1,12 @@
 // ignore_for_file: use_build_context_synchronously
+import 'package:features/auth/register/bloc/register_bloc.dart';
 import 'package:features/core/extensions/sizedbox_ext.dart';
 import 'package:features/core/extensions/slide_in_animation_ext.dart';
 import 'package:features/core/utils/date_formatter.dart';
 import 'package:features/core/widgets/eesup_form_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:intl/intl.dart';
 import 'package:omni_datetime_picker/omni_datetime_picker.dart';
@@ -12,70 +14,90 @@ import 'package:omni_datetime_picker/omni_datetime_picker.dart';
 class IndividualForm extends StatelessWidget {
   IndividualForm({super.key, required this.tabController});
   final TabController tabController;
-  final _nameController = TextEditingController();
-  final _lastNameController = TextEditingController();
-  final _idController = TextEditingController();
+  // final _nameController = TextEditingController();
+  // final _lastNameController = TextEditingController();
+  // final _idController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final textTheme = theme.textTheme;
+    return BlocBuilder<RegisterBloc, RegisterState>(
+      builder: (context, state) {
+        if (state is RegisterFormState) {
+          return ListView(
+            padding: const EdgeInsets.only(
+                left: 20, right: 20, top: 10, bottom: 400),
+            children: [
+              EESUpTextFormField(
+                label: 'First Name',
+                onChanged: (value) {
+                  final v = value.isEmpty ? null : value;
 
-    return ListView(
-      padding: const EdgeInsets.only(left: 20, right: 20, top: 10, bottom: 400),
-      children: [
-        EESUpTextFormField(
-          label: 'First Name',
-          controller: _nameController,
-        ).animate().slideIn(0),
-        EESUpTextFormField(
-          label: 'Last Name',
-          controller: _lastNameController,
-        ).animate().slideIn(50),
-        _idForm(textTheme).animate().slideIn(150),
-        EESUpTextFormField(
-          visible: 1 == 1,
-          label: 'Identity Number',
-          controller: _idController,
-        ).animate().slideIn(200),
-        if (1 == 1)
-          EESUpTextFormField(
-            label: 'Date of Birth',
-            readOnly: true,
-            controller: TextEditingController(
-              text: DateFormatter.formatDate(
-                DateTime.now(),
-              ),
-            ),
-            onTap: () async {
-              final DateTime? dob = await showOmniDateTimePicker(
-                context: context,
-                type: OmniDateTimePickerType.date,
-                firstDate: DateTime(1910, 01, 01),
-                initialDate: DateTime.now().subtract(
-                  const Duration(days: 18 * 365),
-                ),
-                lastDate: DateTime.now().subtract(
-                  const Duration(days: 18 * 365),
-                ),
-              );
-              if (dob == null) return;
+                  context.read<RegisterBloc>().add(
+                        RegisterFormUpdated(state.copyWith(firstName: v)),
+                      );
+                },
+              ).animate().slideIn(0),
+              EESUpTextFormField(
+                label: 'Last Name',
+                onChanged: (value) {
+                  final v = value.isEmpty ? null : value;
 
-              // updateDob(ref, dob);
-            },
-          ).animate().slideIn(100),
-        30.sH,
-        ElevatedButton(
-          onPressed: () async {
-            // updateUserInfo(ref);
-            // if (!validateNames(ref, context)) return;
-            // if (!validateCitizenshipAndID(ref, context)) return;
-            // if (!validateDOB(ref, context)) return;
-            // await validateAndNavigate(ref, context);
-          },
-          child: const Text('Next'),
-        )
-      ],
+                  context.read<RegisterBloc>().add(
+                        RegisterFormUpdated(state.copyWith(lastName: v)),
+                      );
+                },
+              ).animate().slideIn(50),
+              // _idForm(textTheme).animate().slideIn(150),
+              EESUpTextFormField(
+                visible: 1 == 1,
+                label: 'Identity Number',
+                type: TextInputType.number,
+                onChanged: (value) {
+                  final v = value.isEmpty ? null : value;
+                  context.read<RegisterBloc>().add(
+                        RegisterFormUpdated(state.copyWith(idNumber: v)),
+                      );
+                },
+              ).animate().slideIn(200),
+              if (1 == 1)
+                EESUpTextFormField(
+                  label: 'Date of Birth',
+                  readOnly: true,
+                  controller: TextEditingController(
+                    text: DateFormatter.formatDate(
+                      DateTime.now(),
+                    ),
+                  ),
+                  onTap: () async {
+                    final DateTime? dob = await showOmniDateTimePicker(
+                      context: context,
+                      type: OmniDateTimePickerType.date,
+                      firstDate: DateTime(1910, 01, 01),
+                      initialDate: DateTime.now().subtract(
+                        const Duration(days: 18 * 365),
+                      ),
+                      lastDate: DateTime.now().subtract(
+                        const Duration(days: 18 * 365),
+                      ),
+                    );
+                    if (dob == null) return;
+
+                    context.read<RegisterBloc>().add(
+                          RegisterFormUpdated(state.copyWith(dob: dob)),
+                        );
+                  },
+                ).animate().slideIn(100),
+              30.sH,
+              ElevatedButton(
+                onPressed: () async {},
+                child: const Text('Next'),
+              )
+            ],
+          );
+        } else {
+          return Container();
+        }
+      },
     );
   }
 
