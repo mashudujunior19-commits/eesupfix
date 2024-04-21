@@ -1,5 +1,5 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:features/auth/register/bloc/register_bloc.dart';
+import 'package:features/auth/register/bloc/registration_bloc.dart';
 import 'package:features/auth/register/ui/corporate_form.dart';
 import 'package:features/auth/register/ui/credentials_form.dart';
 import 'package:features/auth/register/ui/individual_form.dart';
@@ -35,8 +35,8 @@ class _RegisterScreenState extends State<RegisterScreen>
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => RegisterBloc(),
-      child: BlocConsumer<RegisterBloc, RegisterState>(
+      create: (context) => RegistrationBloc(),
+      child: BlocConsumer<RegistrationBloc, RegistrationFormState>(
         listener: (context, state) {
           // TODO: implement listener
         },
@@ -69,17 +69,26 @@ class _RegisterScreenState extends State<RegisterScreen>
                           : null,
                     ),
                     body: () {
-                      if (state is RegisterFormState) {
+                      if (state is SignUpForm) {
                         return TabBarView(
                           // physics: const NeverScrollableScrollPhysics(),
                           controller: _tabController,
                           children: [
                             SelectUserRole(tabController: _tabController),
                             if (state.isCorp)
-                              CorporateForm(tabController: _tabController)
+                              CorporateForm(
+                                tabController: _tabController,
+                                form: state,
+                              )
                             else
-                              IndividualForm(tabController: _tabController),
-                            CredentialsForm(tabController: _tabController),
+                              IndividualForm(
+                                tabController: _tabController,
+                                form: state,
+                              ),
+                            CredentialsForm(
+                              form: state,
+                              tabController: _tabController,
+                            ),
                             ReferralCodeForm(tabController: _tabController),
                             const WelcomeScreen(),
                           ],

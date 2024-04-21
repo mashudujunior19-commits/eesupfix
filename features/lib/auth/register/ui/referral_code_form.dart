@@ -1,3 +1,4 @@
+import 'package:features/core/extensions/context_theme_ext.dart';
 import 'package:features/core/extensions/sizedbox_ext.dart';
 import 'package:features/core/widgets/eesup_form_field.dart';
 import 'package:flutter/gestures.dart';
@@ -10,9 +11,6 @@ class ReferralCodeForm extends StatelessWidget {
   final _codeController = TextEditingController();
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final textTheme = theme.textTheme;
-
     return ListView(
       padding: const EdgeInsets.only(left: 20, right: 20, top: 15),
       children: [
@@ -40,7 +38,7 @@ class ReferralCodeForm extends StatelessWidget {
                   child: RichText(
                     text: TextSpan(
                       text: 'I agree to the EESUp\'s ',
-                      style: textTheme.displayMedium!.copyWith(
+                      style: context.textTheme.displayMedium!.copyWith(
                         color: Colors.grey.shade800,
                         fontSize: 15,
                         fontWeight: FontWeight.w500,
@@ -48,8 +46,8 @@ class ReferralCodeForm extends StatelessWidget {
                       children: [
                         TextSpan(
                           text: 'Terms of Service',
-                          style: textTheme.displayMedium!.copyWith(
-                            color: theme.colorScheme.primary,
+                          style: context.textTheme.displayMedium!.copyWith(
+                            color: context.colorScheme.primary,
                             fontSize: 15,
                             fontWeight: FontWeight.w500,
                           ),
@@ -70,9 +68,7 @@ class ReferralCodeForm extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 TextButton(
-                  onPressed: () {
-                  
-                  },
+                  onPressed: () {},
                   child: const Text("No one, Sign up"),
                 ),
                 20.sW,

@@ -1,47 +1,56 @@
+import 'package:features/auth/register/bloc/registration_bloc.dart';
+import 'package:features/core/extensions/context_theme_ext.dart';
 import 'package:features/core/extensions/sizedbox_ext.dart';
 import 'package:features/core/extensions/slide_in_animation_ext.dart';
 import 'package:features/core/widgets/eesup_form_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
-
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class CorporateForm extends StatelessWidget {
-   CorporateForm({super.key, required this.tabController});
+  const CorporateForm({
+    super.key,
+    required this.tabController,
+    required this.form,
+  });
+  final SignUpForm form;
   final TabController tabController;
-  final _corpNameController = TextEditingController();
-  final _corpRegController = TextEditingController();
-  final _npcRegController = TextEditingController();
+  // final _corpNameController = TextEditingController();
+  // final _corpRegController = TextEditingController();
+  // final _npcRegController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final textTheme = theme.textTheme;
     return ListView(
       padding: const EdgeInsets.only(left: 25, right: 25, top: 10, bottom: 100),
       children: [
         25.sH,
         Text(
           'Corporate account details',
-          style: textTheme.labelMedium?.copyWith(fontSize: 18),
+          style: context.textTheme.labelMedium?.copyWith(fontSize: 18),
           textAlign: TextAlign.left,
         ),
         25.sH,
         EESUpTextFormField(
           label: 'Company Name',
           isRequired: true,
-          controller: _corpNameController,
           hintText: 'EESUp',
+          onChanged: (value) {
+            final v = value.isEmpty ? null : value;
+
+            context.read<RegistrationBloc>().add(
+                  SignUpFormUpdated(form.copyWith(lastName: v)),
+                );
+          },
         ).animate().slideIn(0),
-        if (1==1)
+        if (1 == 1)
           EESUpTextFormField(
             label: 'NPC Registration Number',
-            controller: _npcRegController,
             hintText: 'Optional',
           ).animate().slideIn(100)
         else
           EESUpTextFormField(
             label: 'Company Registration',
-            controller: _corpRegController,
             hintText: 'Optional',
           ).animate().slideIn(100),
         25.sH,

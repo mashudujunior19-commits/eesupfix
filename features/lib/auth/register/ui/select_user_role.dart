@@ -1,4 +1,4 @@
-import 'package:features/auth/register/bloc/register_bloc.dart';
+import 'package:features/auth/register/bloc/registration_bloc.dart';
 import 'package:features/core/extensions/context_theme_ext.dart';
 import 'package:features/core/extensions/sizedbox_ext.dart';
 import 'package:features/core/extensions/slide_in_animation_ext.dart';
@@ -12,9 +12,9 @@ class SelectUserRole extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<RegisterBloc, RegisterState>(
+    return BlocBuilder<RegistrationBloc, RegistrationFormState>(
       builder: (context, state) {
-        if (state is RegisterFormState) {
+        if (state is SignUpForm) {
           return Center(
             child: ListView(
               padding: const EdgeInsets.only(left: 15, right: 15, top: 10),
@@ -35,8 +35,8 @@ class SelectUserRole extends StatelessWidget {
                       image: 'assets/images/man.png',
                       comment: 'This is a normal company',
                       onTap: () {
-                        context.read<RegisterBloc>().add(
-                              RegisterFormUpdated(
+                        context.read<RegistrationBloc>().add(
+                              SignUpFormUpdated(
                                   state.copyWith(isCorp: false)),
                             );
                         tabController.animateTo(tabController.index + 1);
@@ -49,8 +49,8 @@ class SelectUserRole extends StatelessWidget {
                       image: 'assets/images/enterprise.png',
                       comment: 'This is a normal company',
                       onTap: () {
-                        context.read<RegisterBloc>().add(
-                              RegisterFormUpdated(
+                        context.read<RegistrationBloc>().add(
+                              SignUpFormUpdated(
                                 state.copyWith(isCorp: true),
                               ),
                             );
