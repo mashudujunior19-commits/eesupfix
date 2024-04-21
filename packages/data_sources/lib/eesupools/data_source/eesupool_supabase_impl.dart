@@ -551,13 +551,12 @@ class EESUpoolSupabaseImp implements EESUpoolDataSource {
   }
 
   @override
-  Future<bool> addMessageSeens(String memberId, List<int> messageIds) async {
+  Future<bool> addMessageSeens(String memberId, int messageId) async {
     try {
-      await client.schema('communities').from('message_seen').insert(
-            messageIds
-                .map((e) => {'message_id': e, 'member_id': memberId})
-                .toList(),
-          );
+      await client
+          .schema('communities')
+          .from('message_seen')
+          .insert({'message_id': messageId, 'member_id': memberId});
       return true;
     } catch (e) {
       if (kDebugMode) {

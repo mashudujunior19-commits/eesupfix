@@ -1,22 +1,21 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:data_sources/eesupools/models/eesupool_type.dart';
 import 'package:features/core/extensions/bg_image_deco_ext.dart';
-import 'package:features/eesupools/ui/eesupool_type_view.dart';
+import 'package:features/eesupools/ui/mykasi_tab.dart';
 import 'package:features/menu/menu_tab.dart';
-import 'package:features/shop/overview/ui/my_economy_tab.dart';
-import 'package:features/shop/overview/ui/widgets/bottom_tab_bar.dart';
-import 'package:features/shop/overview/ui/overview_tab.dart';
+import 'package:features/overview/ui/my_economy_tab.dart';
+import 'package:features/overview/ui/widgets/bottom_tab_bar.dart';
+import 'package:features/overview/ui/overview_tab.dart';
 import 'package:flutter/material.dart';
 
 @RoutePage()
-class ShopOverviewScreen extends StatefulWidget {
-  const ShopOverviewScreen({super.key});
+class OverviewScreen extends StatefulWidget {
+  const OverviewScreen({super.key});
 
   @override
-  State<ShopOverviewScreen> createState() => _ShopOverviewScreenState();
+  State<OverviewScreen> createState() => _OverviewScreenState();
 }
 
-class _ShopOverviewScreenState extends State<ShopOverviewScreen>
+class _OverviewScreenState extends State<OverviewScreen>
     with SingleTickerProviderStateMixin {
   late final TabController _tabController;
 
@@ -43,7 +42,7 @@ class _ShopOverviewScreenState extends State<ShopOverviewScreen>
             controller: _tabController,
             children: const [
               OverviewTab(),
-              EESUpoolsTypeView(type: EESUpoolType.Kasi),
+              MyKasiTab(),
               MyEconomyTab(),
               MenuTab(),
             ],

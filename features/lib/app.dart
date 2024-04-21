@@ -158,7 +158,7 @@ class MainApp extends StatelessWidget {
                   if (state.isStartUp) {
                     //  if (_appRouter.stack.isNotEmpty) {
 
-                    _appRouter.push(const ShopOverviewRoute());
+                    _appRouter.push(const OverviewRoute());
                     // }
                   }
                 }

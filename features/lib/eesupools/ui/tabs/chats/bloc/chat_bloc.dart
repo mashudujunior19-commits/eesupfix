@@ -13,8 +13,10 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
 
   ChatBloc(this._poolRepo) : super(ChatInitial()) {
     on<ChatStreamStarted>((event, emit) async {
-      final stream =
-          _poolRepo.fetchEESUpoolsChatMessages(event.eesupoolId, 200);
+      final stream = _poolRepo.fetchEESUpoolsChatMessages(
+        event.eesupoolId,
+        200,
+      );
       await emit.forEach(
         stream,
         onData: ((message) {
@@ -24,6 +26,19 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
           );
         }),
       );
+    });
+
+    on<MessageSeenUpdated>((event, emit) {
+      _poolRepo.addMessageSeens(event.messageId, event.authorId);
+    });
+
+    on<MessageReactionAdded>((event, emit) {
+      _poolRepo.addMessageReaction(
+          event.authorId, event.messageId, event.liked);
+
+      if (state is ChatMessagesLoaded) {
+        List<ChatMessage> messages = [...(state as ChatMessagesLoaded).chats];
+      }
     });
   }
 }

@@ -8,6 +8,19 @@ final class ChatStreamStarted extends ChatEvent {
   ChatStreamStarted(this.eesupoolId);
 }
 
+final class MessageSeenUpdated extends ChatEvent {
+  final int messageId;
+  final String authorId;
+  MessageSeenUpdated(this.messageId, this.authorId);
+}
+
+final class MessageReactionAdded extends ChatEvent {
+  final int messageId;
+  final String authorId;
+  final bool liked;
+  MessageReactionAdded(this.messageId, this.authorId,this.liked);
+}
+
 final class ChatStreamStopped extends ChatEvent {
   ChatStreamStopped();
 }

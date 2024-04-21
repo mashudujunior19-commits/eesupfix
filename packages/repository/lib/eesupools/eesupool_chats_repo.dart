@@ -151,11 +151,9 @@ extension EESUpoolChatsRepo on EESUpoolRepository {
   }
 
   Future<Either<EESUpException, void>> addMessageSeens(
-    List<int> messages,
-    String memberId,
-  ) async {
+      int messageId, String memberId) async {
     final result = await authRepository.executeFutureWithAuth(
-      (_) => dataSource.addMessageSeens(memberId, messages),
+      (_) => dataSource.addMessageSeens(memberId, messageId),
     );
     return result;
   }

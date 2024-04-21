@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
+import 'package:visibility_detector/visibility_detector.dart';
 
 class MessageBubble extends StatelessWidget {
   const MessageBubble({
@@ -23,78 +24,93 @@ class MessageBubble extends StatelessWidget {
   Widget build(BuildContext context) {
     bool isReply = pool.memberId != message.authorId;
 
-    return Padding(
-      padding: const EdgeInsets.only(top: 20),
-      child: Row(
-        mainAxisAlignment:
-            isReply ? MainAxisAlignment.start : MainAxisAlignment.end,
-        children: [
-          Container(
-            constraints: BoxConstraints(
-              minWidth: MediaQuery.of(context).size.width * 0.2,
-              maxWidth: MediaQuery.of(context).size.width * 0.68,
-            ),
-            decoration: BoxDecoration(
-              color:
-                  !isReply ? Colors.blue.shade50 : Colors.white.withOpacity(.6),
-              border: Border.all(color: Colors.grey.shade300),
-              borderRadius: isReply ? _replyRadius() : _radius(),
-            ),
-            child: Column(
-              crossAxisAlignment:
-                  !isReply ? CrossAxisAlignment.start : CrossAxisAlignment.end,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                10.sH,
-                Padding(
-                  padding: const EdgeInsets.only(left: 10, right: 10),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(message.authorName ?? ''),
-                      PopupMenuButton(
-                        child: const Icon(Icons.more_horiz_outlined),
-                        itemBuilder: (context) {
-                          return [
-                            _bubblPopUpOption(
-                              context,
-                              'Reply',
-                              BootstrapIcons.reply_all,
-                              () {
-                                context.read<ChatTextFieldBloc>().add(
-                                      ChatMessageReplyToAdded(message),
-                                    );
-                              },
-                            ),
-                            _bubblPopUpOption(
-                              context,
-                              'Report',
-                              BootstrapIcons.flag,
-                              () {},
-                            ),
-                            _bubblPopUpOption(
-                              context,
-                              'Delete',
-                              IconlyLight.delete,
-                              () {},
-                            ),
-                          ];
-                        },
-                      )
-                    ],
+    return VisibilityDetector(
+      //The visibility detector is used to update the seen of
+      //a message
+      onVisibilityChanged: (visibilityInfo) {
+        final visibleP = visibilityInfo.visibleFraction * 100;
+        if (visibleP >= 100.00) {
+          if(message.messageSeens.contains(pool.memberId)==false){
+            
+          }
+        }
+      },
+      key: Key(message.id.toString()),
+      child: Padding(
+        padding: const EdgeInsets.only(top: 20),
+        child: Row(
+          mainAxisAlignment:
+              isReply ? MainAxisAlignment.start : MainAxisAlignment.end,
+          children: [
+            Container(
+              constraints: BoxConstraints(
+                minWidth: MediaQuery.of(context).size.width * 0.2,
+                maxWidth: MediaQuery.of(context).size.width * 0.68,
+              ),
+              decoration: BoxDecoration(
+                color: !isReply
+                    ? Colors.blue.shade50
+                    : Colors.white.withOpacity(.6),
+                border: Border.all(color: Colors.grey.shade300),
+                borderRadius: isReply ? _replyRadius() : _radius(),
+              ),
+              child: Column(
+                crossAxisAlignment: !isReply
+                    ? CrossAxisAlignment.start
+                    : CrossAxisAlignment.end,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  10.sH,
+                  Padding(
+                    padding: const EdgeInsets.only(left: 10, right: 10),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(message.authorName ?? ''),
+                        PopupMenuButton(
+                          child: const Icon(Icons.more_horiz_outlined),
+                          itemBuilder: (context) {
+                            return [
+                              _bubblPopUpOption(
+                                context,
+                                'Reply',
+                                BootstrapIcons.reply_all,
+                                () {
+                                  context.read<ChatTextFieldBloc>().add(
+                                        ChatMessageReplyToAdded(message),
+                                      );
+                                },
+                              ),
+                              _bubblPopUpOption(
+                                context,
+                                'Report',
+                                BootstrapIcons.flag,
+                                () {},
+                              ),
+                              _bubblPopUpOption(
+                                context,
+                                'Delete',
+                                IconlyLight.delete,
+                                () {},
+                              ),
+                            ];
+                          },
+                        )
+                      ],
+                    ),
                   ),
-                ),
-                MessageRichText(
-                  message: message.content,
-                  tags: const ["#cycling"],
-                ),
-                10.sH,
-              ],
+                  MessageRichText(
+                    message: message.content,
+                    tags: const ["#cycling"],
+                  ),
+                  10.sH,
+                ],
+              ),
             ),
-          ),
-        ],
-      ),
-    ).animate().fadeIn(delay: (100).ms);
+          ],
+        ),
+      ).animate().fadeIn(delay: (100).ms),
+    );
   }
 
   PopupMenuItem<String> _bubblPopUpOption(

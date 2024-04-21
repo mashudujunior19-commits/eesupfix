@@ -17,7 +17,7 @@ class AppRouter extends $AppRouter {
           durationInMilliseconds: 300,
         ),
         CustomRoute(
-          page: ShopOverviewRoute.page,
+          page: OverviewRoute.page,
           transitionsBuilder: TransitionsBuilders.slideLeftWithFade,
           durationInMilliseconds: 300,
         ),

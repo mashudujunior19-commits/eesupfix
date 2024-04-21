@@ -169,7 +169,7 @@ abstract class EESUpoolDataSource {
     required EESUpoolMemberRole role,
   });
 
-  Future<bool> addMessageSeens(String memberId, List<int> messageIds);
+  Future<bool> addMessageSeens(String memberId, int messageId);
 
   Future<int> countEESUpoolByType(String userId, EESUpoolType type);
 

@@ -1,6 +1,5 @@
 import 'package:features/auth/register/bloc/registration_bloc.dart';
 import 'package:features/auth/register/ui/password_strength.dart';
-import 'package:features/core/extensions/context_alerts_ext.dart';
 import 'package:features/core/extensions/context_theme_ext.dart';
 import 'package:features/core/extensions/sizedbox_ext.dart';
 import 'package:features/core/extensions/slide_in_animation_ext.dart';

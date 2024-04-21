@@ -6,9 +6,9 @@ extension SlideInAnimationExt on Animate {
     final validDelay = delay > 700 ? 300 : delay;
     return fadeIn(delay: (validDelay + 100).ms).slide(
       delay: validDelay.ms,
-      begin: const Offset(0, 1),
+      begin: const Offset(.5, .5),
       end: const Offset(0, 0),
-      duration: 600.ms,
+      duration: 300.ms,
       curve: Curves.easeInOutCubic,
     );
   }

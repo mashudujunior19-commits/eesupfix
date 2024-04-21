@@ -9,7 +9,6 @@ Future<void> main() async {
     environment: Flavor(
       type: FlavorType.development,
       app: AppType.eesup,
-    ),
-   
+    ),   
   );
 }
