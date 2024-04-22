@@ -1,10 +1,9 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:data_sources/shopping/models/category.dart';
-import 'package:features/core/extensions/bg_image_deco_ext.dart';
 import 'package:features/core/extensions/context_theme_ext.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_infinit_scrolling/flutter_infinit_scrolling.dart';
-import 'package:flutter_infinit_scrolling/infinity_scroll_controller.dart';
+import 'package:flutter_infinit_scrolling/infinite_scroll_controller.dart';
 import 'package:tab_indicator_styler/tab_indicator_styler.dart';
 
 @RoutePage()
@@ -41,8 +40,8 @@ class CategoryScreen extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(),
         body: InfinitListView(
-          infinitController: InfinityScrollController(
-            List.generate(
+          infiniteController: InfiniteScrollController(
+            initChildren: List.generate(
               50,
               (index) => Container(
                 key: Key(index.toString()),
@@ -51,7 +50,17 @@ class CategoryScreen extends StatelessWidget {
                 color: Colors.red,
               ),
             ).toList(),
-            loadMoreNotifier: () {},
+            onLoad: (controller) {
+              print('adding item');
+              controller.add([
+                Container(
+                  key: Key('value'),
+                  height: 50,
+                  width: MediaQuery.sizeOf(context).width,
+                  color: Colors.blue,
+                )
+              ]);
+            },
           ),
         ),
       ),

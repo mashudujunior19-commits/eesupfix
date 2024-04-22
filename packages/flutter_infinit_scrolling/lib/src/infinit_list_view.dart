@@ -1,21 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_infinit_scrolling/infinity_scroll_controller.dart';
+import 'package:flutter_infinit_scrolling/infinite_scroll_controller.dart';
+
 
 class InfinitListView extends ListView {
   InfinitListView({
     super.key,
-    required this.loadMoreNotifier,
-    required this.infinitController,
+    required this.infiniteController,
   });
-
-  final void Function() loadMoreNotifier;
-  final InfinityScrollController infinitController;
+  
+  final InfiniteScrollController infiniteController;
 
   @override
   Widget build(BuildContext context) {
     return ListView(
-      controller: infinitController.scrollController,
-      children: [...infinitController.children],
+      controller: infiniteController.scrollController,
+      children: [...infiniteController.children],
     );
   }
 }
