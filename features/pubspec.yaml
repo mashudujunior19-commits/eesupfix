@@ -43,6 +43,8 @@ dependencies:
   intl: ^0.19.0
   repository:
     path: ../packages/repository
+  flutter_infinit_scrolling:
+    path: ../packages/flutter_infinit_scrolling
   data_sources:
     path: ../packages/data_sources
   material_design_icons_flutter: ^7.0.7296

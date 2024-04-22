@@ -497,6 +497,13 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.2"
+  flutter_infinit_scrolling:
+    dependency: transitive
+    description:
+      path: "../../packages/flutter_infinit_scrolling"
+      relative: true
+    source: path
+    version: "0.0.1"
   flutter_launcher_icons:
     dependency: "direct dev"
     description:

@@ -33,7 +33,7 @@ class ProductGrid extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // final products = orderedProducts(filter);
+    final sortedProducts = orderedProducts(filter);
     return GridView.count(
       shrinkWrap: true,
       crossAxisCount: 2,
@@ -43,10 +43,10 @@ class ProductGrid extends StatelessWidget {
       addAutomaticKeepAlives: true,
       padding: const EdgeInsets.only(left: 15, right: 15, top: 10, bottom: 200),
       children: List.generate(
-        products.length,
+        sortedProducts.length,
         (index) {
           return ProductCard(
-            product: products[index],
+            product: sortedProducts[index],
           )
               .animate()
               .fadeIn(delay: (200 + index * 50).ms)

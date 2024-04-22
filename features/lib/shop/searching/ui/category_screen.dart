@@ -3,6 +3,8 @@ import 'package:data_sources/shopping/models/category.dart';
 import 'package:features/core/extensions/bg_image_deco_ext.dart';
 import 'package:features/core/extensions/context_theme_ext.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_infinit_scrolling/flutter_infinit_scrolling.dart';
+import 'package:flutter_infinit_scrolling/infinity_scroll_controller.dart';
 import 'package:tab_indicator_styler/tab_indicator_styler.dart';
 
 @RoutePage()
@@ -12,24 +14,44 @@ class CategoryScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // return SafeArea(
+    //   child: Scaffold(
+    //     appBar: AppBar(
+    //       leading: const BackButton(),
+    //       title: Text(category.name),
+    //       actions: const [
+    //         // ShoppingFiltersButton(),
+    //         // CartButton(margin: EdgeInsets.only(right: 15)),
+    //       ],
+    //     ),
+    //     body: Container(
+    //       decoration: context.bgImage,
+    //       height: context.height,
+    //       width: context.width,
+    //       child: Column(
+    //         children: [
+    //           //   _CategoriesTabBar(category: category),
+    //         ],
+    //       ),
+    //     ),
+    //   ),
+    // );
+
     return SafeArea(
       child: Scaffold(
-        appBar: AppBar(
-          leading: const BackButton(),
-          title: Text(category.name),
-          actions: const [
-            // ShoppingFiltersButton(),
-            // CartButton(margin: EdgeInsets.only(right: 15)),
-          ],
-        ),
-        body: Container(
-          decoration: context.bgImage,
-          height: context.height,
-          width: context.width,
-          child: Column(
-            children: [
-              //   _CategorieTabBar(category: category),
-            ],
+        appBar: AppBar(),
+        body: InfinitListView(
+          infinitController: InfinityScrollController(
+            List.generate(
+              50,
+              (index) => Container(
+                key: Key(index.toString()),
+                height: 50,
+                width: MediaQuery.sizeOf(context).width,
+                color: Colors.red,
+              ),
+            ).toList(),
+            loadMoreNotifier: () {},
           ),
         ),
       ),
@@ -37,8 +59,8 @@ class CategoryScreen extends StatelessWidget {
   }
 }
 
-class _CategorieTabBar extends StatelessWidget {
-  const _CategorieTabBar({required this.category, required this.categories});
+class _CategoriesTabBar extends StatelessWidget {
+  const _CategoriesTabBar({required this.category, required this.categories});
   final Category category;
   final List<Category> categories;
 
