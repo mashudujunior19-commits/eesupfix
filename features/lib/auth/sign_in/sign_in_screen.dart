@@ -5,9 +5,9 @@ import 'package:features/core/extensions/sizedbox_ext.dart';
 import 'package:features/core/extensions/slide_in_animation_ext.dart';
 import 'package:features/core/widgets/eesup_form_field.dart';
 import 'package:features/auth/sign_in/bloc/auth_bloc.dart';
+import 'package:flutter_highlighted_text/flutter_highlighted_text.dart';
 import 'package:repository/utils/localize_south_african_phone.dart';
 import 'package:features/core/navigation/app_route.gr.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -79,12 +79,31 @@ class SignInScreen extends StatelessWidget {
                           context.read<AuthBloc>().add(
                                 SignInPressed(_email, _phone, _password),
                               );
+
+                      
                         },
                       ).animate().slideIn(200),
                       20.sH,
-                      const _RegisterButton(key: Key('register_button'))
-                          .animate()
-                          .slideIn(250)
+                      HighlightedText(
+                        'Don\'t  have an account?  Register',
+                        patterns: const ['Register'],
+                        style: context.textTheme.displayMedium!.copyWith(
+                          color: Colors.grey.shade800,
+                          fontSize: 14,
+                          fontWeight: FontWeight.w500,
+                        ),
+                        dotAll: true,
+                        highLightStyle:
+                            context.textTheme.displayMedium!.copyWith(
+                          color: context.colorScheme.primary,
+                          fontSize: 14,
+                          fontWeight: FontWeight.w500,
+                        ),
+                        textAlign: TextAlign.center,
+                        onTap: (p) {
+                          context.router.push(const RegisterRoute());
+                        },
+                      ).animate().slideIn(250)
                     ],
                   ),
                 ),
@@ -113,40 +132,6 @@ class _ForgotPasswordButton extends StatelessWidget {
           child: const Text('Forgot Password?'),
         ),
       ],
-    );
-  }
-}
-
-class _RegisterButton extends StatelessWidget {
-  const _RegisterButton({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return RichText(
-      key: key,
-      text: TextSpan(
-        text: 'Don\'t have an account? ',
-        style: context.textTheme.displayMedium!.copyWith(
-          color: Colors.grey.shade800,
-          fontSize: 14,
-          fontWeight: FontWeight.w500,
-        ),
-        children: [
-          TextSpan(
-            text: 'Register',
-            style: context.textTheme.displayMedium?.copyWith(
-              color: context.colorScheme.primary,
-              fontSize: 14,
-              fontWeight: FontWeight.w500,
-            ),
-            recognizer: TapGestureRecognizer()
-              ..onTap = () {
-                context.router.push(const RegisterRoute());
-              },
-          ),
-        ],
-      ),
-      textAlign: TextAlign.center,
     );
   }
 }

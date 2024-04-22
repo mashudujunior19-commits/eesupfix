@@ -1,16 +1,20 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:features/core/extensions/context_theme_ext.dart';
+import 'package:features/core/navigation/app_route.gr.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 
-class MockSearchButton extends StatelessWidget {
-  const MockSearchButton({
+class SearchProductsButton extends StatelessWidget {
+  const SearchProductsButton({
     super.key,
   });
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {},
+      onTap: () {
+        context.router.push(SearchProductsRoute());
+      },
       child: Container(
         width: MediaQuery.sizeOf(context).width,
         height: 45,

@@ -8,10 +8,10 @@ part 'auth_event.dart';
 part 'auth_state.dart';
 
 class AuthBloc extends Bloc<AuthEvent, AuthBlocState> {
-  final AuthRepository _authRepository;
-  AuthBloc(this._authRepository) : super(UnAuthenticated()) {
+  final AuthRepository authRepository;
+  AuthBloc(this.authRepository) : super(UnAuthenticated()) {
     on<AppStarted>((event, emit) async {
-      await emit.forEach(_authRepository.authStateChanges, onData: (event) {
+      await emit.forEach(authRepository.authStateChanges, onData: (event) {
         final session = event.session;
         if (session == null) {
           return UnAuthenticated();
@@ -23,7 +23,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthBlocState> {
 
     on<SignInPressed>((event, emit) async {
       emit(AuthLoading());
-      final results = await _authRepository.signIn(
+      final results = await authRepository.signIn(
         password: event.password,
         email: event.email,
         phone: event.phone,
@@ -37,7 +37,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthBlocState> {
 
     on<SignOutPressed>((event, emit) async {
       emit(AuthLoading());
-      final results = await _authRepository.signOut();
+      final results = await authRepository.signOut();
       results.fold((error) {
         emit(AuthError(error));
       }, (signedOut) {

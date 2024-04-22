@@ -81,5 +81,15 @@ class AppRouter extends $AppRouter {
           transitionsBuilder: TransitionsBuilders.slideLeftWithFade,
           durationInMilliseconds: 300,
         ),
+        CustomRoute(
+          page: SearchProductsRoute.page,
+          transitionsBuilder: TransitionsBuilders.slideLeftWithFade,
+          durationInMilliseconds: 300,
+        ),
+        CustomRoute(
+          page: CategoryRoute.page,
+          transitionsBuilder: TransitionsBuilders.slideLeftWithFade,
+          durationInMilliseconds: 300,
+        ),
       ];
 }

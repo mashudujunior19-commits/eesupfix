@@ -63,11 +63,8 @@ dependencies:
   record: ^5.0.5
   flutter_google_place_search: ^0.0.1
   flutter_yoco:
-    path: C:/Users/misom/Documents/Work/flutter_yoco
-  flutter_highlighted_text:
-    git:
-      url: https://github.com/Miso-0/flutter_highlighted_text.git
-      ref: main
+    path: C:/Users/misom/Documents/Work/007-Flutter/packages/flutter_yoco
+  flutter_highlighted_text: ^0.0.1
   visibility_detector: ^0.4.0+2
   
 dev_dependencies:

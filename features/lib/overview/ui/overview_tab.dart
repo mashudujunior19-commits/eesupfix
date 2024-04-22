@@ -9,7 +9,7 @@ import 'package:features/core/extensions/context_theme_ext.dart';
 import 'package:features/core/extensions/sizedbox_ext.dart';
 import 'package:features/overview/bloc/overview_bloc.dart';
 import 'package:features/overview/ui/widgets/hori_products_slider.dart';
-import 'package:features/overview/ui/widgets/mock_search_button.dart';
+import 'package:features/overview/ui/widgets/search_products_button.dart';
 import 'package:features/overview/ui/widgets/overview_banner_carousel.dart';
 import 'package:features/overview/ui/widgets/overview_categories.dart';
 import 'package:flutter/material.dart';
@@ -43,7 +43,7 @@ class OverviewTab extends StatelessWidget {
                   ),
                 ),
                 actions: const [CartButton()],
-                flexibleSpace: const MockSearchButton(),
+                flexibleSpace: const SearchProductsButton(),
               ),
               if (state is OverviewLoading)
                 const _OverviewShimmer(key: Key('overview_shimmer'))

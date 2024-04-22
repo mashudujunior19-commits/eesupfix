@@ -1,5 +1,7 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:data_sources/shopping/models/category.dart';
 import 'package:features/core/extensions/context_theme_ext.dart';
+import 'package:features/core/navigation/app_route.gr.dart';
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
 
@@ -19,7 +21,7 @@ class OverviewCategories extends StatelessWidget {
             ...categories.map(
               (e) => InkWell(
                 onTap: () {
-                  // context.push(CategoryProductsView.route, extra: e);
+                  context.router.push(CategoryRoute(category: e));
                 },
                 child: Container(
                   margin: const EdgeInsets.only(top: 10, right: 10),

@@ -95,6 +95,13 @@ class AuthRepository {
     );
   }
 
+  Future<Either<EESUpException, bool>> signInAnon() async {
+    final results = await EESUpException.guardFuture(
+      action: () => supaSource.signInAnon(),
+    );
+    return results;
+  }
+
   Future<Either<EESUpException, bool>> signUp({
     String? email,
     String? phone,

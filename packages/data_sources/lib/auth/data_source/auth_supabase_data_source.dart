@@ -187,4 +187,14 @@ class AuthSupabaseDataSource implements IAuthDataSource {
 
   @override
   Stream<AuthState> get authStateChanges => _client.auth.onAuthStateChange;
+
+  @override
+  Future<bool> signInAnon() async {
+    try {
+      final result = await _client.auth.signInAnonymously();
+      return result.session != null;
+    } catch (e) {
+      rethrow;
+    }
+  }
 }

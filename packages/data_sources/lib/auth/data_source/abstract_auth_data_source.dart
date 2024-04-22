@@ -12,6 +12,8 @@ abstract class IAuthDataSource {
     required String password,
   });
 
+  Future<bool> signInAnon();
+
   Stream<AuthState> get authStateChanges;
 
   Future<bool> isActive(String id);
@@ -85,6 +87,4 @@ abstract class IAuthDataSource {
   Future<bool> resetPasswordWithEmail(String email);
 
   Future<bool> resetPasswordWithPhone(String phone);
-
-
 }
