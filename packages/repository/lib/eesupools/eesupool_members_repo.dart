@@ -1,4 +1,4 @@
-import 'package:dartz/dartz.dart';
+import 'package:either_dart/either.dart';
 import 'package:data_sources/eesupools/models/eesupool_member.dart';
 import 'package:data_sources/eesupools/models/eesupool_request.dart';
 import 'package:data_sources/eesupools/models/eesupool_type.dart';

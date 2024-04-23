@@ -144,7 +144,7 @@ class SummaryStep extends StatelessWidget {
                                 child: Text(
                                   '**Tap to Pay the fee with you Retail wallet',
                                   style: context.textTheme.labelSmall?.copyWith(
-                                    fontSize: 14.5,
+                                    fontSize: 13,
                                     fontStyle: FontStyle.italic,
                                     color: Colors.grey.shade700,
                                   ),

@@ -64,6 +64,7 @@ class OrdersTab extends StatelessWidget {
                       final orders = state.orders;
                       return Expanded(
                         child: ListView.builder(
+                          padding: const EdgeInsets.only(bottom: 300),
                           itemCount: orders.length,
                           itemBuilder: (context, index) {
                             final order = orders[index];

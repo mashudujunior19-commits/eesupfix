@@ -1,4 +1,4 @@
-import 'package:dartz/dartz.dart';
+import 'package:either_dart/either.dart';
 import 'package:data_sources/auth/data_source/abstract_auth_data_source.dart';
 import 'package:repository/utils/eesup_exception.dart';
 import 'package:email_validator/email_validator.dart';

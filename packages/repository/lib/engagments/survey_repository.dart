@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:dartz/dartz.dart';
+import 'package:either_dart/either.dart';
 import 'package:data_sources/eesupools/models/media_file.dart';
 import 'package:data_sources/surveys/data_source/survey_data_source.dart';
 import 'package:data_sources/surveys/models/survey.dart';

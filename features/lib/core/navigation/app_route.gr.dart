@@ -284,7 +284,7 @@ abstract class $AppRouter extends _i29.RootStackRouter {
         routeData: routeData,
         child: _i27.WalletViewScreen(
           key: args.key,
-          wallet: args.wallet,
+          id: args.id,
         ),
       );
     },
@@ -995,13 +995,13 @@ class VoucherViewRouteArgs {
 class WalletViewRoute extends _i29.PageRouteInfo<WalletViewRouteArgs> {
   WalletViewRoute({
     _i30.Key? key,
-    required _i39.Wallet wallet,
+    required int id,
     List<_i29.PageRouteInfo>? children,
   }) : super(
           WalletViewRoute.name,
           args: WalletViewRouteArgs(
             key: key,
-            wallet: wallet,
+            id: id,
           ),
           initialChildren: children,
         );
@@ -1015,16 +1015,16 @@ class WalletViewRoute extends _i29.PageRouteInfo<WalletViewRouteArgs> {
 class WalletViewRouteArgs {
   const WalletViewRouteArgs({
     this.key,
-    required this.wallet,
+    required this.id,
   });
 
   final _i30.Key? key;
 
-  final _i39.Wallet wallet;
+  final int id;
 
   @override
   String toString() {
-    return 'WalletViewRouteArgs{key: $key, wallet: $wallet}';
+    return 'WalletViewRouteArgs{key: $key, id: $id}';
   }
 }
 

@@ -17,20 +17,15 @@ class TransactionCard extends StatelessWidget {
     return GestureDetector(
       onTap: () {},
       child: Container(
-        // height: 60,
-        //  color: Colors.red,
-        margin: const EdgeInsets.only(left: 25, right: 25, top: 10),
+        margin: const EdgeInsets.only(left: 20, right: 20, top: 10),
         padding: const EdgeInsets.only(bottom: 5, left: 3, right: 5, top: 3),
         decoration: BoxDecoration(
-          color: Colors.blueGrey.shade50.withOpacity(0.5),
+          color: Colors.white.withOpacity(0.5),
+          borderRadius: BorderRadius.circular(10),
           border: Border(
             left: BorderSide(
               color: transaction.vested ? colorScheme.primary : Colors.red,
-              width: 2.4,
-            ),
-            bottom: BorderSide(
-              color: Colors.grey.shade300,
-              width: 0.6,
+              width: 2,
             ),
           ),
         ),

@@ -4,7 +4,7 @@ import 'package:features/core/extensions/sizedbox_ext.dart';
 import 'package:features/core/extensions/slide_in_animation_ext.dart';
 import 'package:features/finances/crowdvouchers/bloc/crowdfund_voucher_bloc.dart';
 import 'package:features/finances/crowdvouchers/ui/crowdfund_wallet_view.dart';
-import 'package:features/finances/crowdvouchers/ui/user_vouchers_view.dart';
+import 'package:features/finances/crowdvouchers/ui/vouchers_tab.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -17,17 +17,15 @@ import 'package:tab_indicator_styler/tab_indicator_styler.dart';
 import 'package:data_sources/finance/data_source/wallet_supabase_impl.dart';
 
 class CrowdfundWalletScreen extends StatelessWidget {
-  CrowdfundWalletScreen({super.key});
-
-  final getIt = GetIt.I;
+  const CrowdfundWalletScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => CrowdfundVoucherBloc(
         WalletsRepository(
-          WalletSupabaseImpl(getIt<SupabaseClient>()),
-          getIt<AuthRepository>(),
+          WalletSupabaseImpl(GetIt.I.get<SupabaseClient>()),
+          context.read<AuthRepository>(),
         ),
       )..add(CrowdfundVoucherLoadEvent()),
       child: BlocListener<CrowdfundVoucherBloc, CrowdfundVoucherState>(
@@ -116,7 +114,7 @@ class CrowdfundWalletScreen extends StatelessWidget {
                       Expanded(
                         child: TabBarView(
                           children: [
-                            UserVouchersView(walletId: state.wallet.id),
+                            VouchersTab(walletId: state.wallet.id),
                             CrowdfundWalletView(wallet: state.wallet),
                           ],
                         ),

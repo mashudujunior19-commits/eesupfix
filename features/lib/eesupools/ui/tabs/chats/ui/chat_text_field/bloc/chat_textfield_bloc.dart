@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:bloc/bloc.dart';
-import 'package:dartz/dartz.dart';
+import 'package:either_dart/either.dart';
 import 'package:data_sources/eesupools/models/chat_message.dart';
 import 'package:data_sources/eesupools/models/eesupool.dart';
 import 'package:data_sources/eesupools/models/eesupool_level.dart';

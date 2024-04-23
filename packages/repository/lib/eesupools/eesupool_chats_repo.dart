@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:dartz/dartz.dart';
+import 'package:either_dart/either.dart';
 import 'package:data_sources/eesupools/models/chat_message.dart';
 import 'package:data_sources/eesupools/models/chat_message_reaction.dart';
 import 'package:data_sources/eesupools/models/eesupool_issue.dart';

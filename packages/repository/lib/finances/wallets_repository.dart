@@ -1,4 +1,4 @@
-import 'package:dartz/dartz.dart';
+import 'package:either_dart/either.dart';
 import 'package:data_sources/finance/models/transaction.dart';
 import 'package:data_sources/finance/models/wallet.dart';
 import 'package:data_sources/finance/data_source/wallet_data_source.dart';
@@ -17,6 +17,23 @@ class WalletsRepository {
       return wallets;
     });
     return results;
+  }
+
+  Future<Either<EESUpException, Wallet>> fetchWalletById(int walletId) async {
+    final result = await _authRepo.executeFutureWithAuth((id) async {
+      final wallet = await _dataSource.fetchWalletById(id, walletId);
+      return wallet;
+    });
+    return result;
+  }
+
+  Future<Either<EESUpException, Wallet>> fetchWalletByUserIdAndType(
+      String type) async {
+    final result = await _authRepo.executeFutureWithAuth((id) async {
+      final wallet = await _dataSource.fetchWalletByUserIdAndType(id, type);
+      return wallet;
+    });
+    return result;
   }
 
   Future<Either<EESUpException, Wallet>> fetchCrowdfundWallet() async {
@@ -40,9 +57,12 @@ class WalletsRepository {
   Future<Either<EESUpException, List<dynamic>>> searchTransferBeneficiary(
     String query,
   ) async {
-    final results = await _authRepo.executeFutureWithAuth((_) async {
-      final transactions = await _dataSource.searchTransferBeneficiary(query);
-      return transactions;
+    if (query.isEmpty) {
+      return Left(EESUpException(message: 'Type to search for beneficiary'));
+    }
+    final results = await _authRepo.executeFutureWithAuth((id) async {
+      final found = await _dataSource.searchTransferBeneficiary(query);
+      return found.where((e) => e['user_id'] != id).toList();
     });
     return results;
   }

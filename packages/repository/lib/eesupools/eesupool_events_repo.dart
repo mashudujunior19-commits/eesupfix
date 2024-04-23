@@ -1,4 +1,4 @@
-import 'package:dartz/dartz.dart';
+import 'package:either_dart/either.dart';
 import 'package:data_sources/eesupools/models/eesupool_event.dart';
 import 'package:repository/eesupools/eesupool_repo.dart';
 import 'package:repository/utils/eesup_exception.dart';

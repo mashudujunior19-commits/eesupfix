@@ -1,4 +1,4 @@
-import 'package:dartz/dartz.dart';
+import 'package:either_dart/either.dart';
 import 'package:data_sources/auth/data_source/profile_data_source.dart';
 import 'package:data_sources/auth/models/profile.dart';
 import 'package:repository/utils/eesup_exception.dart';
@@ -49,7 +49,7 @@ class ProfileRepository {
 
       if (!isValid) {
         // If ID is not valid, return an error.
-        return left(EESUpException(
+        return Left(EESUpException(
           message: 'Invalid South African ID Number.',
         ));
       }
@@ -68,7 +68,7 @@ class ProfileRepository {
           });
           return result;
         } else {
-          return left(
+          return Left(
             EESUpException(
                 message: 'ID Number is already in use by another user.'),
           );

@@ -1,4 +1,4 @@
-import 'package:dartz/dartz.dart';
+import 'package:either_dart/either.dart';
 import 'package:data_sources/finance/data_source/voucher_dt.dart';
 import 'package:data_sources/finance/models/transaction.dart';
 import 'package:data_sources/finance/models/voucher_ledger.dart';

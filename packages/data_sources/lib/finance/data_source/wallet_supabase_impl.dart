@@ -18,6 +18,26 @@ class WalletSupabaseImpl implements WalletDataSource {
   }
 
   @override
+  Future<Wallet> fetchWalletByUserIdAndType(String userId, String type) async {
+    final results = await _client
+        .schema('finances')
+        .rpc('get_user_wallets', params: {'_user_id': userId})
+        .eq('type_id', type)
+        .single();
+    return Wallet.fromJson(results);
+  }
+
+  @override
+  Future<Wallet> fetchWalletById(String userId, int id) async {
+    final results = await _client
+        .schema('finances')
+        .rpc('get_user_wallets', params: {'_user_id': userId})
+        .eq('id', id)
+        .single();
+    return Wallet.fromJson(results);
+  }
+
+  @override
   Future<List<Transaction>> fetchWalletTransactions(int id, int limit) async {
     final results = await _client
         .schema('finances')

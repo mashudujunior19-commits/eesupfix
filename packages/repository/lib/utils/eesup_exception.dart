@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'dart:io';
-import 'package:dartz/dartz.dart';
+import 'package:either_dart/either.dart';
 import 'package:flutter/foundation.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -37,12 +37,11 @@ class EESUpException implements Exception {
         other.message == message;
   }
 
-  static fromException(Object e,StackTrace? stackTrace) {
+  static fromException(Object e, StackTrace? stackTrace) {
     return EESUpException(
-      message:'An unexpected problem occurred. Please try again.' ,
-      debugMessage: e.toString(),
-      stackTrace: stackTrace
-    );
+        message: 'An unexpected problem occurred. Please try again.',
+        debugMessage: e.toString(),
+        stackTrace: stackTrace);
   }
 
   @override

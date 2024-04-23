@@ -1,4 +1,4 @@
-import 'package:dartz/dartz.dart';
+import 'package:either_dart/either.dart';
 import 'package:data_sources/notifications/data_source/notification_data_source.dart';
 import 'package:data_sources/notifications/models/notification.dart';
 import 'package:repository/auth/auth_repository.dart';

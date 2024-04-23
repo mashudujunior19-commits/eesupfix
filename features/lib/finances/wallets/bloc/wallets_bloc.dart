@@ -15,6 +15,7 @@ class WalletsBloc extends Bloc<WalletsEvent, WalletsState> {
       results.fold((l) {
         emit(WalletsLoadingError(l));
       }, (r) {
+        r.sort((a, b) => a.sortNumber.compareTo(b.sortNumber));
         emit(WalletsLoaded(r));
       });
     });

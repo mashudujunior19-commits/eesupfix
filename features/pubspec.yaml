@@ -25,7 +25,6 @@ dependencies:
   onesignal_flutter: ^5.1.2
   sentry_flutter: ^7.17.0
   supabase_flutter: ^2.3.4
-  dartz: ^0.10.1
   email_validator: ^2.1.17
   meta: ^1.11.0
   loader_overlay: ^4.0.0
@@ -68,6 +67,7 @@ dependencies:
     path: C:/Users/misom/Documents/Work/007-Flutter/packages/flutter_yoco
   flutter_highlighted_text: ^0.0.1
   visibility_detector: ^0.4.0+2
+  either_dart: ^1.0.0
   
 dev_dependencies:
   flutter_test:

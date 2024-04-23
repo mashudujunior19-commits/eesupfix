@@ -1,7 +1,7 @@
 // ignore_for_file: avoid_print
 
 import 'dart:convert';
-import 'package:dartz/dartz.dart';
+import 'package:either_dart/either.dart';
 import 'package:dio/dio.dart' as d_io;
 import 'package:eesup_dart_frog/core/env/env_service.dart';
 import 'package:eesup_dart_frog/src/notifications/data/models/notification.dart';
@@ -47,13 +47,13 @@ class OneSignalApi {
       print(res);
 
       if (res.statusCode != 200) {
-        return left(Exception('Error sending notification'));
+        return Left(Exception('Error sending notification'));
       }
 
-      return right(true);
+      return Right(true);
     } catch (e) {
       print(e);
-      return left(e as Exception);
+      return Left(e as Exception);
     }
   }
 }

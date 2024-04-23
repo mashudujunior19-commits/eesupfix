@@ -1,4 +1,4 @@
-import 'package:dartz/dartz.dart';
+import 'package:either_dart/either.dart';
 import 'package:data_sources/eesupreneur/data_source/eesupreneur_data_source.dart';
 import 'package:data_sources/eesupreneur/models/eesupreneur.dart';
 import 'package:data_sources/orders/models/order.dart' as ord;
@@ -17,7 +17,7 @@ class EESUpreneurRepository {
     int limit,
   ) async {
     if (lat == null || lng == null) {
-      return const Right( []);
+      return const Right([]);
     }
     final result = await authRepo.executeFutureWithAuth((_) {
       return dataSource.getClosestEESUpreneurs(lat, lng, limit);
@@ -26,7 +26,7 @@ class EESUpreneurRepository {
   }
 
   Future<Either<EESUpException, List<EESUpreneur>>>
-      getUsertEESUpreneurs() async {
+      fetchUserKasipreneurs() async {
     final result = await authRepo.executeFutureWithAuth((id) {
       return dataSource.getUserEESUpreneurs(id);
     });

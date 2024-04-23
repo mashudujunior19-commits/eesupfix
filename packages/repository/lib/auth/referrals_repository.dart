@@ -1,4 +1,4 @@
-import 'package:dartz/dartz.dart';
+import 'package:either_dart/either.dart';
 import 'package:data_sources/referrals/data_source/referrals_data_source.dart';
 import 'package:data_sources/referrals/models/referral.dart';
 import 'package:repository/auth/auth_repository.dart';

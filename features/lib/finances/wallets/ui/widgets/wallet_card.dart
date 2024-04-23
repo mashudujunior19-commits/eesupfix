@@ -1,5 +1,9 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:features/core/extensions/context_theme_ext.dart';
+import 'package:features/core/navigation/app_route.gr.dart';
+import 'package:features/finances/wallets/bloc/wallets_bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:data_sources/finance/models/wallet.dart';
 
@@ -11,9 +15,9 @@ class WalletCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () async {
-        // context.push(WalletViewScreen.route, extra: wallet).whenComplete(() {
-        //   ref.invalidate(walletsProvider);
-        // });
+        context.router.push(WalletViewRoute(id: wallet.id)).then((value) {
+          context.read<WalletsBloc>().add(WalletsFetched());
+        });
       },
       child: Container(
         margin: const EdgeInsets.only(left: 18, right: 18, top: 15),

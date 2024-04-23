@@ -9,6 +9,7 @@ import 'package:features/core/env/app_type.dart';
 import 'package:features/core/extensions/context_environment_ext.dart';
 import 'package:features/core/themes/eesup_light_theme.dart';
 import 'package:features/core/themes/my_kasi_light_theme.dart';
+import 'package:features/finances/wallets/bloc/wallets_bloc.dart';
 import 'package:features/shop/cart/bloc/cart_bloc.dart';
 import 'package:repository/auth/profile_repository.dart';
 import 'package:repository/eesupools/eesupool_repo.dart';
@@ -115,10 +116,8 @@ class MainApp extends StatelessWidget {
       child: MultiBlocProvider(
         providers: [
           BlocProvider(
-            create: (context) => AuthBloc(context.read<AuthRepository>())
-              ..add(
-                AppStarted(),
-              ),
+            create: (context) =>
+                AuthBloc(context.read<AuthRepository>())..add(AppStarted()),
           ),
           BlocProvider(
             create: (context) => ProfileBloc(context.read<ProfileRepository>()),
@@ -134,6 +133,9 @@ class MainApp extends StatelessWidget {
             ),
           ),
           BlocProvider(create: (context) => CartBloc()),
+          BlocProvider(
+            create: (context) => WalletsBloc(context.read<WalletsRepository>()),
+          ),
         ],
 
         ///This is the global loader overlay, it is used to show a loading animation

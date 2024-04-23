@@ -1,4 +1,4 @@
-import 'package:dartz/dartz.dart';
+import 'package:either_dart/either.dart';
 import 'package:data_sources/finance/data_source/wallet_data_source.dart';
 import 'package:data_sources/finance/models/payment_gateway.dart';
 import 'package:repository/auth/auth_repository.dart';

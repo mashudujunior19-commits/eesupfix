@@ -6,8 +6,10 @@ import 'package:features/core/extensions/context_theme_ext.dart';
 import 'package:features/core/widgets/eesup_form_field.dart';
 import 'package:features/finances/wallets/ui/widgets/search_transfer_beneficiary_dialog.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_animated_dialog/flutter_animated_dialog.dart';
 import 'package:data_sources/finance/models/wallet.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:loader_overlay/loader_overlay.dart';
+import 'package:repository/finances/wallets_repository.dart';
 
 @RoutePage()
 class TransferScreen extends StatefulWidget {
@@ -143,28 +145,28 @@ class _TransferScreenState extends State<TransferScreen> {
                         positiveColor: context.colorScheme.primary,
                         positiveText: 'Transfer',
                         negativeText: 'Cancel', onPositive: () async {
-                      // context.loaderOverlay.show();
-                      // final results = await ref
-                      //     .read(walletRepoProvider)
-                      //     .transferFundsWalletToWallet(
-                      //       fromWalletId: widget.wallet.id,
-                      //       toWalletId: toWallet,
-                      //       amount: amount,
-                      //       toRef: _beneficiaryRefController.text,
-                      //       fromRef: _myRefController.text,
-                      //     );
-                      // context.loaderOverlay.hide();
+                      context.loaderOverlay.show();
+                      final results = await context
+                          .read<WalletsRepository>()
+                          .transferFundsWalletToWallet(
+                            fromWalletId: widget.wallet.id,
+                            toWalletId: toWallet,
+                            amount: amount,
+                            toRef: _beneficiaryRefController.text,
+                            fromRef: _myRefController.text,
+                          );
+                      context.loaderOverlay.hide();
 
-                      // results.fold((l) {
-                      //   context.snackBarError(l.message);
-                      // }, (r) {
-                      //   if (r != null) {
-                      //     context.snackBarSuccess('Transfer successful');
-                      //     Navigator.pop(context);
-                      //   } else {
-                      //     context.snackBarError('Transfer failed');
-                      //   }
-                      // });
+                      results.fold((l) {
+                        context.snackBarError(l.message);
+                      }, (r) {
+                        if (r != null) {
+                          context.snackBarSuccess('Transfer successful');
+                          Navigator.pop(context);
+                        } else {
+                          context.snackBarError('Transfer failed');
+                        }
+                      });
                     });
                   },
                   child: const Text('Transfer'),
@@ -174,104 +176,6 @@ class _TransferScreenState extends State<TransferScreen> {
           ),
         ),
       ),
-    );
-  }
-
-  Future<void> transfer() async {
-    FocusScope.of(context).unfocus();
-    if (_beneficiary == null) {
-      context.snackBarError('Please select a beneficiary');
-
-      return;
-    }
-
-    if (_myRefController.text.isEmpty) {
-      context.snackBarError('Please enter your reference');
-      return;
-    }
-
-    if (_beneficiaryRefController.text.isEmpty) {
-      context.snackBarError('Please enter beneficiary reference');
-      return;
-    }
-
-    if (_amountController.text.isEmpty) {
-      context.snackBarError('Please enter an amount');
-      return;
-    }
-
-    final amount = double.tryParse(_amountController.text);
-
-    if (amount == null) {
-      return;
-    }
-
-    double balance = widget.wallet.balance;
-
-    if (balance <= 0) {
-      context.snackBarError('Insufficient funds');
-      return;
-    }
-
-    if (balance < amount) {
-      context.snackBarError('Insufficient funds');
-      return;
-    }
-
-    //final result = await _confirmationDialog(context, amount);
-
-    // if (result == true) {
-    //   ref.read(busyIndicatorProvider.notifier).toggleBusy(true);
-    //   final success = await ref.read(walletRepositoryProvider).transfer(
-    //         fromWalletId: widget.wallet.walletId,
-    //         toWalletId: _beneficiary!.walletId,
-    //         amount: amount,
-    //         myReference: _myRefController.text,
-    //         beneficiaryReference: _beneficiaryRefController.text,
-    //       );
-    //   ref.read(busyIndicatorProvider.notifier).toggleBusy(false);
-
-    //   if (success) {
-    //     showSnackBar(
-    //       context: context,
-    //       type: SnackBarType.success,
-    //       message: 'Transfer successful',
-    //     );
-    //     //   ref.invalidate(userWalletsProvider);
-    //     ref.invalidate(walletTransactions(widget.wallet.walletId));
-    //     Navigator.of(context).pop(true);
-    //     Navigator.of(context).pop(true);
-    //   } else {
-    //     showSnackBar(
-    //       context: context,
-    //       type: SnackBarType.error,
-    //       message: 'Transfer failed',
-    //     );
-    //   }
-  }
-
-  Future<Object?> _confirmationDialog(BuildContext context, double? amount) {
-    return showAnimatedDialog(
-      context: context,
-      barrierDismissible: false,
-      builder: (BuildContext context) {
-        return ClassicGeneralDialogWidget(
-          titleText: 'Confirm transfer',
-          contentText:
-              'Are you sure you want to transfer R${amount!.toStringAsFixed(2)} to ${_beneficiary?['full_name']}?',
-          negativeText: 'Cancel',
-          positiveText: 'Confirm',
-          onPositiveClick: () {
-            Navigator.of(context).pop(true);
-          },
-          onNegativeClick: () {
-            Navigator.of(context).pop(false);
-          },
-        );
-      },
-      animationType: DialogTransitionType.slideFromBottom,
-      curve: Curves.fastOutSlowIn,
-      duration: const Duration(seconds: 1),
     );
   }
 }

@@ -1,4 +1,4 @@
-import 'package:dartz/dartz.dart';
+import 'package:either_dart/either.dart';
 import 'package:data_sources/eesupools/models/eesupool_order.dart';
 import 'package:repository/eesupools/eesupool_repo.dart';
 import 'package:repository/utils/eesup_exception.dart';
@@ -12,8 +12,8 @@ extension EESUpoolOrdersRepo on EESUpoolRepository {
       return dataSource.fetchEESUpoolOrders(poolId, limit);
     });
     return result.fold(
-      (l) => left(l),
-      (r) => right(r),
+      (l) => Left(l),
+      (r) => Right(r),
     );
   }
 
@@ -23,8 +23,8 @@ extension EESUpoolOrdersRepo on EESUpoolRepository {
       return dataSource.fetchUserOpenEESUpoolOrders(id);
     });
     return result.fold(
-      (l) => left(l),
-      (r) => right(r),
+      (l) => Left(l),
+      (r) => Right(r),
     );
   }
 
@@ -34,8 +34,8 @@ extension EESUpoolOrdersRepo on EESUpoolRepository {
     });
 
     return result.fold(
-      (l) => left(l),
-      (r) => right(r),
+      (l) => Left(l),
+      (r) => Right(r),
     );
   }
 
@@ -44,8 +44,8 @@ extension EESUpoolOrdersRepo on EESUpoolRepository {
       return dataSource.updateEESUpoolOrder(order);
     });
     return result.fold(
-      (l) => left(l),
-      (r) => right(r),
+      (l) => Left(l),
+      (r) => Right(r),
     );
   }
 
@@ -55,8 +55,8 @@ extension EESUpoolOrdersRepo on EESUpoolRepository {
       return dataSource.fetchEESUpoolOpenOrder(poolId);
     });
     return result.fold(
-      (l) => left(l),
-      (r) => right(r),
+      (l) => Left(l),
+      (r) => Right(r),
     );
   }
 
@@ -68,8 +68,8 @@ extension EESUpoolOrdersRepo on EESUpoolRepository {
       return dataSource.updateMemberOrderAssignments(assignments, orderId);
     });
     return result.fold(
-      (l) => left(l),
-      (r) => right(r),
+      (l) => Left(l),
+      (r) => Right(r),
     );
   }
 }

@@ -1,10 +1,16 @@
 import 'package:bootstrap_icons/bootstrap_icons.dart';
+import 'package:either_dart/either.dart';
 import 'package:features/core/extensions/context_theme_ext.dart';
+import 'package:features/core/extensions/sizedbox_ext.dart';
 import 'package:features/core/widgets/eesup_form_field.dart';
+import 'package:features/core/widgets/fullscreen_error_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_animated_dialog/flutter_animated_dialog.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
+import 'package:repository/finances/wallets_repository.dart';
+import 'package:repository/utils/eesup_exception.dart';
 
 Future<Object?> searchTransferBeneficiaryDialog(BuildContext context) {
   return showAnimatedDialog(
@@ -19,26 +25,19 @@ Future<Object?> searchTransferBeneficiaryDialog(BuildContext context) {
   );
 }
 
-// final _searchBeneficiaryProvider = FutureProvider.family
-//     .autoDispose<List<dynamic>, String>((ref, query) async {
-//   final repo = ref.read(walletRepoProvider);
-//   final results = await repo.searchTransferBeneficiary(query);
-//   return results.fold((l) {
-//     throw l;
-//   }, (r) => r);
-// });
-
 class _SearchTransferBeneficiary extends StatefulWidget {
-  const _SearchTransferBeneficiary({super.key});
+  const _SearchTransferBeneficiary();
+
 
   @override
   State<_SearchTransferBeneficiary> createState() =>
-      __SearchTransferBeneficiaryState();
+      _SearchTransferBeneficiaryState();
 }
 
-class __SearchTransferBeneficiaryState
+class _SearchTransferBeneficiaryState
     extends State<_SearchTransferBeneficiary> {
-  final _searchController = TextEditingController();
+  final _controller = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     Map<String, dynamic> found = {};
@@ -60,39 +59,59 @@ class __SearchTransferBeneficiaryState
               child: EESUpTextFormField(
                 hintText: 'Search referral code, first name, last name...',
                 readOnly: false,
+                controller: _controller,
                 type: TextInputType.text,
-                controller: _searchController,
-                onChanged: (v) => setState(() {}),
+                onChanged: (v) {
+                  setState(() {});
+                },
               ),
             ),
           ),
-          body: ListView.builder(
-            itemCount: found.length,
-            itemBuilder: (context, index) {
-              return ListTile(
-                leading: CircleAvatar(
-                  backgroundColor: context.colorScheme.primary.withOpacity(
-                    .5,
-                  ),
-                  child: const Icon(
-                    BootstrapIcons.person,
-                    color: Colors.white,
-                  ),
-                ),
-                title: Text(
-                  found[index]['full_name'] ?? found[index]['corp_name'],
-                ),
-                subtitle: Text(
-                  found[index]['description'] + ' wallet',
-                ),
-                trailing: const Icon(
-                  IconlyLight.arrowRight2,
-                  size: 20,
-                ),
-                onTap: () {
-                  Navigator.pop(context, found[index]);
-                },
-              );
+          body: FutureBuilder<Either<EESUpException, List<dynamic>>>(
+            future: context
+                .read<WalletsRepository>()
+                .searchTransferBeneficiary(_controller.text),
+            builder: (context, snapshot) {
+              if (snapshot.hasData && snapshot.data != null) {
+                final found = snapshot.data!;
+                return found.fold((left) {
+                  return Center(child: FullScreenError(exception: left));
+                }, (right) {
+                  return ListView.builder(
+                    itemCount: right.length,
+                    itemBuilder: (context, index) {
+                      return ListTile(
+                        leading: CircleAvatar(
+                          backgroundColor:
+                              context.colorScheme.primary.withOpacity(
+                            .5,
+                          ),
+                          child: const Icon(
+                            BootstrapIcons.person,
+                            color: Colors.white,
+                          ),
+                        ),
+                        title: Text(
+                          right[index]['full_name'] ??
+                              right[index]['corp_name'],
+                        ),
+                        subtitle: Text(
+                          right[index]['description'] + ' wallet',
+                        ),
+                        trailing: const Icon(
+                          IconlyLight.arrowRight2,
+                          size: 20,
+                        ),
+                        onTap: () {
+                          Navigator.pop(context, right[index]);
+                        },
+                      );
+                    },
+                  );
+                });
+              } else {
+                return 0.sW;
+              }
             },
           ),
         ),

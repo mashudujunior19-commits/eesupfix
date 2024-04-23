@@ -1,4 +1,4 @@
-import 'package:dartz/dartz.dart';
+import 'package:either_dart/either.dart';
 import 'package:data_sources/geolocation/data_source/geo_data_source.dart';
 import 'package:data_sources/geolocation/models/address.dart';
 import 'package:repository/auth/auth_repository.dart';

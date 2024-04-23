@@ -3,22 +3,32 @@ import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
 
 class FullScreenLoadingShimmer extends StatelessWidget {
-  const FullScreenLoadingShimmer({super.key, this.margin});
+  const FullScreenLoadingShimmer(
+      {super.key, this.margin, this.showPopButton = false});
+  final bool showPopButton;
   final EdgeInsets? margin;
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding:margin?? const EdgeInsets.only(left: 15, right: 15, top: 15),
-      child: Shimmer.fromColors(
-        baseColor: Colors.grey.shade200,
-        highlightColor: Colors.grey.shade50,
-        child: Column(
-          children: List.generate(
-            3,
-            (index) => const _ShimmerContainer(),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        if (showPopButton) const BackButton(),
+        Padding(
+          padding:
+              margin ?? const EdgeInsets.only(left: 15, right: 15, top: 15),
+          child: Shimmer.fromColors(
+            baseColor: Colors.grey.shade200,
+            highlightColor: Colors.grey.shade50,
+            child: Column(
+              children: List.generate(
+                3,
+                (index) => const _ShimmerContainer(),
+              ),
+            ),
           ),
         ),
-      ),
+      ],
     );
   }
 }

@@ -1,6 +1,6 @@
 import 'dart:io';
-import 'package:dartz/dartz.dart' as dartz;
 import 'package:data_sources/orders/models/order_ticket.dart';
+import 'package:either_dart/either.dart';
 import 'package:repository/auth/auth_repository.dart';
 import 'package:repository/utils/eesup_exception.dart';
 import 'package:data_sources/orders/models/order.dart';
@@ -12,7 +12,7 @@ class OrderRepository {
 
   OrderRepository(this._ordersDataSource, this._authRepository);
 
-  Future<dartz.Either<EESUpException, OrderResponse>> createOrder(
+  Future<Either<EESUpException, OrderResponse>> createOrder(
       Order order) async {
     final result = await _authRepository.executeFutureWithAuth((id) async {
       final response = await _ordersDataSource.createOrder(
@@ -22,7 +22,7 @@ class OrderRepository {
     return result;
   }
 
-  Stream<dartz.Either<EESUpException, List<Order>>> streamCustomerOrders(
+  Stream<Either<EESUpException, List<Order>>> streamCustomerOrders(
     List<OrderStatus> statuses,
     int limit,
   ) async* {
@@ -37,7 +37,7 @@ class OrderRepository {
     yield* stream;
   }
 
-  Stream<dartz.Either<EESUpException, List<Order>>> streamShopOrders({
+  Stream<Either<EESUpException, List<Order>>> streamShopOrders({
     required String shopId,
     required List<OrderStatus> statuses,
     required int limit,
@@ -53,7 +53,7 @@ class OrderRepository {
     yield* result;
   }
 
-  Stream<dartz.Either<EESUpException, List<Order>>> streamPoolOrders({
+  Stream<Either<EESUpException, List<Order>>> streamPoolOrders({
     required int orderId,
     required List<OrderStatus> statuses,
     required int limit,
@@ -69,7 +69,7 @@ class OrderRepository {
     yield* result;
   }
 
-  Future<dartz.Either<EESUpException, bool>> saveStatusChanges(
+  Future<Either<EESUpException, bool>> saveStatusChanges(
       Order order) async {
     final result = await _authRepository.executeFutureWithAuth((_) async {
       final response = await _ordersDataSource.saveOrderStatus(order);
@@ -78,7 +78,7 @@ class OrderRepository {
     return result;
   }
 
-  Future<dartz.Either<EESUpException, String?>> uploadTicketImage(
+  Future<Either<EESUpException, String?>> uploadTicketImage(
     String name,
     File file,
   ) async {
@@ -89,7 +89,7 @@ class OrderRepository {
     return result;
   }
 
-  Future<dartz.Either<EESUpException, bool>> saveTicket(
+  Future<Either<EESUpException, bool>> saveTicket(
     OrderTicket ticket,
   ) async {
     final result = await _authRepository.executeFutureWithAuth((_) async {
@@ -99,7 +99,7 @@ class OrderRepository {
     return result;
   }
 
-  Future<dartz.Either<EESUpException, List<OrderTicket>>> fetchOrderTickets(
+  Future<Either<EESUpException, List<OrderTicket>>> fetchOrderTickets(
     int orderId,
   ) async {
     final result = await _authRepository.executeFutureWithAuth((_) async {

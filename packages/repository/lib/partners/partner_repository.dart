@@ -1,4 +1,4 @@
-import 'package:dartz/dartz.dart';
+import 'package:either_dart/either.dart';
 import 'package:data_sources/partners/data_source/partner_data_source.dart';
 import 'package:data_sources/partners/models/partner.dart';
 import 'package:data_sources/partners/models/partner_application.dart';

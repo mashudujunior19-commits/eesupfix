@@ -1,4 +1,4 @@
-import 'package:dartz/dartz.dart';
+import 'package:either_dart/either.dart';
 import 'package:data_sources/shopping/models/basket.dart';
 import 'package:data_sources/shopping/models/basket_product.dart';
 import 'package:repository/shop/shopping_repository.dart';
