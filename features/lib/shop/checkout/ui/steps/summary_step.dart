@@ -229,7 +229,8 @@ class SummaryStep extends StatelessWidget {
     final sendbox = dotenv.env['INSTAPAY_SENDBOX'];
     final successUrl = dotenv.env['INSAPAY_SUCCESS_URL'];
     final failedUrl = dotenv.env['INSAPAY_FAILED_URL'];
-    final notifyUrl = dotenv.env['INSAPAY_NOTIFY_URL'];
+    // final notifyUrl = dotenv.env['INSAPAY_NOTIFY_URL'];
+    final notifyUrl = 'https://zngp5d89-8080.inc1.devtunnels.ms/v1/payments/insta_pay';
 
     if (merchantId == null ||
         accountUUid == null ||

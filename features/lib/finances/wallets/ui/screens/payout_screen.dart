@@ -43,8 +43,13 @@ class PayoutScreen extends StatelessWidget {
                   controller: bankController,
                 ),
                 EESUpTextFormField(
+                  label: 'Account holder',
+                  hintText: 'Savings, Cheque...',
+                  controller: accountNameController,
+                ),
+                EESUpTextFormField(
                   label: 'Account number',
-                  hintText: '1234567890',
+                  hintText: 'John Doe',
                   type: TextInputType.number,
                   controller: accountNumberController,
                 ),
