@@ -160,8 +160,12 @@ class _Transact extends StatelessWidget {
           PopupMenuItem(
             onTap: () {
               context.router.push(TransferRoute(wallet: wallet)).then(
-                    (value) {},
-                  );
+                (value) {
+                  context.read<WalletViewBloc>().add(
+                        WalletViewFetched(wallet.id),
+                      );
+                },
+              );
             },
             child: Row(
               mainAxisSize: MainAxisSize.min,
@@ -174,6 +178,15 @@ class _Transact extends StatelessWidget {
           ),
           //    if (wallet.withdrawals == true)
           PopupMenuItem(
+            onTap: () {
+              context.router.push(PayoutRoute(wallet: wallet)).then(
+                (value) {
+                  context.read<WalletViewBloc>().add(
+                        WalletViewFetched(wallet.id),
+                      );
+                },
+              );
+            },
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [

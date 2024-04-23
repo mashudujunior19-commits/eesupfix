@@ -27,7 +27,7 @@ class WalletsTab extends StatelessWidget {
                 wallet: wallet
                
               ).animate().slideIn(
-                    index * 50,
+                    index * 50
                   );
             },
           );

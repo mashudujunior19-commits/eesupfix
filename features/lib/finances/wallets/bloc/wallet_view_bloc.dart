@@ -12,6 +12,7 @@ class WalletViewBloc extends Bloc<WalletViewEvent, WalletViewState> {
   final WalletsRepository _walletsRepository;
   WalletViewBloc(this._walletsRepository) : super(WalletViewInitial()) {
     on<WalletViewFetched>((event, emit) async {
+      emit(WalletViewInitial());
       late final List<Transaction> transactions;
       late final Wallet wallet;
 

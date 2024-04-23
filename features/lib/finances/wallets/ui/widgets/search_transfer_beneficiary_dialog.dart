@@ -40,7 +40,6 @@ class _SearchTransferBeneficiaryState
 
   @override
   Widget build(BuildContext context) {
-    Map<String, dynamic> found = {};
     return SafeArea(
       child: Container(
         margin: EdgeInsets.only(
