@@ -1,20 +1,19 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:features/auth/sign_in/ui/background_decoration.dart';
 import 'package:features/core/extensions/context_alerts_ext.dart';
 import 'package:features/core/extensions/context_theme_ext.dart';
 import 'package:features/core/extensions/sizedbox_ext.dart';
 import 'package:features/core/extensions/slide_in_animation_ext.dart';
 import 'package:features/core/widgets/eesup_form_field.dart';
 import 'package:features/auth/sign_in/bloc/auth_bloc.dart';
+import 'package:features/core/widgets/eesup_phone_text_field.dart';
 import 'package:flutter_highlighted_text/flutter_highlighted_text.dart';
-import 'package:repository/utils/localize_south_african_phone.dart';
 import 'package:features/core/navigation/app_route.gr.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:int_phone_text_field/int_phone_text_field.dart';
 import 'package:loader_overlay/loader_overlay.dart';
 import 'package:tab_container/tab_container.dart';
-import 'widgets/background_decoration.dart';
 
 String? _phone = '';
 String? _email = '';
@@ -39,6 +38,10 @@ class SignInScreen extends StatelessWidget {
 
             if (state is AuthError) {
               context.snackBarError(state.error.message);
+            }
+
+            if (state is Authenticated) {
+              context.router.replaceAll([const OverviewRoute()]);
             }
           },
           child: BlocBuilder<AuthBloc, AuthBlocState>(
@@ -79,8 +82,6 @@ class SignInScreen extends StatelessWidget {
                           context.read<AuthBloc>().add(
                                 SignInPressed(_email, _phone, _password),
                               );
-
-                      
                         },
                       ).animate().slideIn(200),
                       20.sH,
@@ -168,28 +169,7 @@ class _SignInForm extends StatelessWidget {
                   _email = email;
                 },
               ),
-              Container(
-                margin: const EdgeInsets.only(top: 10),
-                padding: const EdgeInsets.only(left: 10, right: 10),
-                decoration: BoxDecoration(
-                  color: context.colorScheme.primary.withOpacity(.03),
-                  borderRadius: BorderRadius.circular(10),
-                  border: Border.all(
-                    color: Colors.grey.shade300,
-                    width: .5,
-                  ),
-                ),
-                child: PhoneTextField(
-                  key: const Key('phone_text_field'),
-                  initialCountry: countries.firstWhere((e) => e.code == 'ZA'),
-                  decoration: const InputDecoration(
-                    border: InputBorder.none,
-                  ),
-                  onChanged: (phone) {
-                    _phone = localizeSAPhoneNumber(phone);
-                  },
-                ),
-              ),
+              EESUpPhoneTextField(),
             ],
           ),
         ).animate().slideIn(100),

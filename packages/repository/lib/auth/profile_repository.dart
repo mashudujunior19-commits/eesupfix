@@ -32,15 +32,24 @@ class ProfileRepository {
     return result;
   }
 
+  Future<Either<EESUpException, bool>> changePhone(String phone) async {
+    print(phone);
+    final result = await _authRepository.executeFutureWithAuth((id) async {
+      final res = await _profileDataSource.changePhone(id);
+      return res;
+    });
+    return result;
+  }
+
   ///previoudId is the id of the profile before it was updated
   ///TODO:JUST A TEMPORARY FIX FOR THE ID NUMBER VALIDATION
   Future<Either<EESUpException, bool>> updateProfile(
     Profile profile,
-    String prevId,
+    String? prevIdNumber,
   ) async {
     final idNumber = profile.rsaIdNumber;
 
-    if (idNumber != null && idNumber != prevId) {
+    if (idNumber != null && idNumber != prevIdNumber) {
       final isValid = isValidSouthAfricanID(idNumber);
 
       if (kDebugMode) {
@@ -70,7 +79,8 @@ class ProfileRepository {
         } else {
           return Left(
             EESUpException(
-                message: 'ID Number is already in use by another user.'),
+              message: 'ID Number is already in use by another user.',
+            ),
           );
         }
       });

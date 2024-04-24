@@ -6,5 +6,9 @@ abstract class ProfileDataSource {
 
   Future<bool> deactivateAccount(String id);
 
+  Future<bool> changePhone(String phone);
+
+  Future<bool> changeEmail(String email);
+
   Future<bool> updateProfile(Profile profile);
 }

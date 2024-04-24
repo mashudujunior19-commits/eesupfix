@@ -24,7 +24,7 @@ class MenuButton extends StatelessWidget {
         height: 100,
         width: 100,
         margin: const EdgeInsets.all(10),
-        padding: const EdgeInsets.all(15),
+        padding: const EdgeInsets.only(left: 5, right: 5),
         decoration: BoxDecoration(
           color: Colors.grey.shade50,
           borderRadius: BorderRadius.circular(10),
@@ -38,13 +38,13 @@ class MenuButton extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              5.sH,
+              10.sH,
               Icon(icon, size: 32),
               5.sH,
               Expanded(
                 child: Text(
                   label,
-                  style: textTheme.labelMedium?.copyWith(fontSize: 11.5),
+                  style: textTheme.labelMedium?.copyWith(fontSize: 9.5),
                   textAlign: TextAlign.center,
                 ),
               )

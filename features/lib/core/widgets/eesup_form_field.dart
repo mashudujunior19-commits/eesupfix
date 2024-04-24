@@ -1,4 +1,5 @@
 import 'package:bootstrap_icons/bootstrap_icons.dart';
+import 'package:features/core/extensions/context_theme_ext.dart';
 import 'package:flutter/material.dart';
 
 class EESUpTextFormField extends StatefulWidget {
@@ -72,11 +73,6 @@ class _EESUpTextFormFieldState extends State<EESUpTextFormField> {
   @override
   Widget build(BuildContext context) {
     if (!widget.visible) return const SizedBox.shrink();
-
-    final theme = Theme.of(context);
-    final textTheme = theme.textTheme.bodySmall;
-    final labelTheme = theme.textTheme.labelMedium;
-
     return Container(
       margin: widget.margin ?? const EdgeInsets.only(top: 15),
       child: Column(
@@ -88,7 +84,7 @@ class _EESUpTextFormFieldState extends State<EESUpTextFormField> {
               children: [
                 Text(
                   widget.label!,
-                  style: labelTheme!.copyWith(
+                  style: context.textTheme.labelMedium?.copyWith(
                     fontSize: 15,
                     fontWeight: FontWeight.w500,
                   ),
@@ -96,10 +92,10 @@ class _EESUpTextFormFieldState extends State<EESUpTextFormField> {
                 if (widget.isRequired)
                   Text(
                     ' *',
-                    style: labelTheme.copyWith(
+                    style: context.textTheme.labelMedium?.copyWith(
                       fontSize: 15,
                       fontWeight: FontWeight.w500,
-                      color: theme.colorScheme.error,
+                      color: context.colorScheme.error,
                     ),
                   ),
               ],
@@ -112,7 +108,7 @@ class _EESUpTextFormFieldState extends State<EESUpTextFormField> {
                   (widget.suffixIcon != null) || mustAdgustPadding() ? 0 : 10,
             ),
             decoration: BoxDecoration(
-              color: theme.colorScheme.primary.withOpacity(.03),
+              color: context.colorScheme.primary.withOpacity(.03),
               borderRadius: BorderRadius.circular(10),
               border: Border.all(
                 color: Colors.grey.shade300,
@@ -134,7 +130,7 @@ class _EESUpTextFormFieldState extends State<EESUpTextFormField> {
               onTap: widget.onTap,
               textAlign: widget.textAlign ?? TextAlign.start,
               style: widget.style ??
-                  textTheme!.copyWith(
+                  context.textTheme.bodySmall?.copyWith(
                     fontSize: 14,
                     fontWeight: FontWeight.w600,
                     decoration: TextDecoration.none,
@@ -144,7 +140,7 @@ class _EESUpTextFormFieldState extends State<EESUpTextFormField> {
                     ? const EdgeInsets.only(top: 14)
                     : const EdgeInsets.only(top: 5),
                 hintText: widget.hintText,
-                hintStyle: theme.textTheme.bodySmall!.copyWith(
+                hintStyle: context.textTheme.bodySmall?.copyWith(
                   color: Colors.grey.withOpacity(.8),
                   fontSize: 13.5,
                 ),
@@ -168,7 +164,7 @@ class _EESUpTextFormFieldState extends State<EESUpTextFormField> {
                           _obscureText
                               ? BootstrapIcons.eye
                               : BootstrapIcons.eye_slash,
-                          color: theme.colorScheme.primary,
+                          color: context.colorScheme.primary,
                           size: 19,
                         ),
                       )

@@ -17,6 +17,11 @@ class AppRouter extends $AppRouter {
           durationInMilliseconds: 300,
         ),
         CustomRoute(
+          page: EditProfileRoute.page,
+          transitionsBuilder: TransitionsBuilders.slideLeftWithFade,
+          durationInMilliseconds: 300,
+        ),
+        CustomRoute(
           page: OverviewRoute.page,
           transitionsBuilder: TransitionsBuilders.slideLeftWithFade,
           durationInMilliseconds: 300,
@@ -101,7 +106,7 @@ class AppRouter extends $AppRouter {
           transitionsBuilder: TransitionsBuilders.slideLeftWithFade,
           durationInMilliseconds: 300,
         ),
-                CustomRoute(
+        CustomRoute(
           page: PayoutRoute.page,
           transitionsBuilder: TransitionsBuilders.slideLeftWithFade,
           durationInMilliseconds: 300,

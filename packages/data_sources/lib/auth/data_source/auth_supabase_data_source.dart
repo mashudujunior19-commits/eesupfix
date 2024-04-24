@@ -76,11 +76,12 @@ class AuthSupabaseDataSource implements IAuthDataSource {
   }
 
   @override
-  Future<bool> verifyOtp(
-      {String? email,
-      String? phone,
-      required String otp,
-      required OtpType type}) async {
+  Future<bool> verifyOtp({
+    String? email,
+    String? phone,
+    required String otp,
+    required OtpType type,
+  }) async {
     try {
       await _client.auth.verifyOTP(
         email: email,

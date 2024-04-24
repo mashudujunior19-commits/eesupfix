@@ -153,16 +153,6 @@ class MainApp extends StatelessWidget {
                 ///and navigate to the appropriate screen
                 if (state is UnAuthenticated) {
                   _appRouter.replaceAll([const SignInRoute()]);
-                } else if (state is Authenticated) {
-                  ///off cause we want to navigate to the shop overview screen, only on start up
-                  ///if the user is already authenticated and is on another screen
-                  ///We don't want to navigate to the shop overview screen again, hence the isStartUp check
-                  if (state.isStartUp) {
-                    //  if (_appRouter.stack.isNotEmpty) {
-
-                    _appRouter.push(const OverviewRoute());
-                    // }
-                  }
                 }
               },
               child: MaterialApp.router(

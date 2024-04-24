@@ -9,19 +9,20 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:auto_route/auto_route.dart' as _i30;
+import 'package:data_sources/auth/models/profile.dart' as _i37;
 import 'package:data_sources/eesupools/models/eesupool.dart' as _i35;
-import 'package:data_sources/finance/models/wallet.dart' as _i40;
+import 'package:data_sources/finance/models/wallet.dart' as _i41;
 import 'package:data_sources/geolocation/models/address.dart' as _i36;
-import 'package:data_sources/orders/models/order.dart' as _i38;
+import 'package:data_sources/orders/models/order.dart' as _i39;
 import 'package:data_sources/orders/models/order_product.dart' as _i34;
-import 'package:data_sources/partners/models/partner.dart' as _i39;
+import 'package:data_sources/partners/models/partner.dart' as _i40;
 import 'package:data_sources/shopping/models/basket.dart' as _i32;
 import 'package:data_sources/shopping/models/category.dart' as _i33;
 import 'package:features/auth/profile/ui/edit_profile_screen.dart' as _i8;
 import 'package:features/auth/register/ui/register_screen.dart' as _i21;
 import 'package:features/auth/reset_password/reset_password_screen.dart'
     as _i22;
-import 'package:features/auth/sign_in/sign_in_screen.dart' as _i24;
+import 'package:features/auth/sign_in/ui/sign_in_screen.dart' as _i24;
 import 'package:features/auth/start_up_screen.dart' as _i25;
 import 'package:features/core/widgets/media_file_uploader.dart' as _i14;
 import 'package:features/eesupools/ui/eesupool_view_screen.dart' as _i6;
@@ -60,7 +61,7 @@ import 'package:features/shop/checkout/ui/checkout_screen.dart' as _i5;
 import 'package:features/shop/searching/ui/category_screen.dart' as _i4;
 import 'package:features/shop/searching/ui/search_products_screen.dart' as _i23;
 import 'package:flutter/material.dart' as _i31;
-import 'package:instapay_flutter/data/merchant_transaction.dart' as _i37;
+import 'package:instapay_flutter/data/merchant_transaction.dart' as _i38;
 
 abstract class $AppRouter extends _i30.RootStackRouter {
   $AppRouter({super.navigatorKey});
@@ -135,9 +136,13 @@ abstract class $AppRouter extends _i30.RootStackRouter {
       );
     },
     EditProfileRoute.name: (routeData) {
+      final args = routeData.argsAs<EditProfileRouteArgs>();
       return _i30.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const _i8.EditProfileScreen(),
+        child: _i8.EditProfileScreen(
+          key: args.key,
+          profile: args.profile,
+        ),
       );
     },
     InstapayConfirmDetailsRoute.name: (routeData) {
@@ -549,16 +554,40 @@ class EditAddressRouteArgs {
 
 /// generated route for
 /// [_i8.EditProfileScreen]
-class EditProfileRoute extends _i30.PageRouteInfo<void> {
-  const EditProfileRoute({List<_i30.PageRouteInfo>? children})
-      : super(
+class EditProfileRoute extends _i30.PageRouteInfo<EditProfileRouteArgs> {
+  EditProfileRoute({
+    _i31.Key? key,
+    required _i37.Profile profile,
+    List<_i30.PageRouteInfo>? children,
+  }) : super(
           EditProfileRoute.name,
+          args: EditProfileRouteArgs(
+            key: key,
+            profile: profile,
+          ),
           initialChildren: children,
         );
 
   static const String name = 'EditProfileRoute';
 
-  static const _i30.PageInfo<void> page = _i30.PageInfo<void>(name);
+  static const _i30.PageInfo<EditProfileRouteArgs> page =
+      _i30.PageInfo<EditProfileRouteArgs>(name);
+}
+
+class EditProfileRouteArgs {
+  const EditProfileRouteArgs({
+    this.key,
+    required this.profile,
+  });
+
+  final _i31.Key? key;
+
+  final _i37.Profile profile;
+
+  @override
+  String toString() {
+    return 'EditProfileRouteArgs{key: $key, profile: $profile}';
+  }
 }
 
 /// generated route for
@@ -567,7 +596,7 @@ class InstapayConfirmDetailsRoute
     extends _i30.PageRouteInfo<InstapayConfirmDetailsRouteArgs> {
   InstapayConfirmDetailsRoute({
     _i31.Key? key,
-    required _i37.MerchantTransaction transaction,
+    required _i38.MerchantTransaction transaction,
     List<_i30.PageRouteInfo>? children,
   }) : super(
           InstapayConfirmDetailsRoute.name,
@@ -592,7 +621,7 @@ class InstapayConfirmDetailsRouteArgs {
 
   final _i31.Key? key;
 
-  final _i37.MerchantTransaction transaction;
+  final _i38.MerchantTransaction transaction;
 
   @override
   String toString() {
@@ -605,7 +634,7 @@ class InstapayConfirmDetailsRouteArgs {
 class InstapayRoute extends _i30.PageRouteInfo<InstapayRouteArgs> {
   InstapayRoute({
     _i31.Key? key,
-    required _i37.MerchantTransaction transaction,
+    required _i38.MerchantTransaction transaction,
     List<_i30.PageRouteInfo>? children,
   }) : super(
           InstapayRoute.name,
@@ -630,7 +659,7 @@ class InstapayRouteArgs {
 
   final _i31.Key? key;
 
-  final _i37.MerchantTransaction transaction;
+  final _i38.MerchantTransaction transaction;
 
   @override
   String toString() {
@@ -699,8 +728,8 @@ class MediaFilePreviewUploaderRoute extends _i30.PageRouteInfo<void> {
 class OrderTrackingRoute extends _i30.PageRouteInfo<OrderTrackingRouteArgs> {
   OrderTrackingRoute({
     _i31.Key? key,
-    required _i38.Order order,
-    required _i38.OrderEditPrivilage privilage,
+    required _i39.Order order,
+    required _i39.OrderEditPrivilage privilage,
     List<_i30.PageRouteInfo>? children,
   }) : super(
           OrderTrackingRoute.name,
@@ -727,9 +756,9 @@ class OrderTrackingRouteArgs {
 
   final _i31.Key? key;
 
-  final _i38.Order order;
+  final _i39.Order order;
 
-  final _i38.OrderEditPrivilage privilage;
+  final _i39.OrderEditPrivilage privilage;
 
   @override
   String toString() {
@@ -809,7 +838,7 @@ class OzowRouteArgs {
 class PartnerAppRoute extends _i30.PageRouteInfo<PartnerAppRouteArgs> {
   PartnerAppRoute({
     _i31.Key? key,
-    required _i39.Partner partner,
+    required _i40.Partner partner,
     List<_i30.PageRouteInfo>? children,
   }) : super(
           PartnerAppRoute.name,
@@ -834,7 +863,7 @@ class PartnerAppRouteArgs {
 
   final _i31.Key? key;
 
-  final _i39.Partner partner;
+  final _i40.Partner partner;
 
   @override
   String toString() {
@@ -847,7 +876,7 @@ class PartnerAppRouteArgs {
 class PayoutRoute extends _i30.PageRouteInfo<PayoutRouteArgs> {
   PayoutRoute({
     _i31.Key? key,
-    required _i40.Wallet wallet,
+    required _i41.Wallet wallet,
     List<_i30.PageRouteInfo>? children,
   }) : super(
           PayoutRoute.name,
@@ -872,7 +901,7 @@ class PayoutRouteArgs {
 
   final _i31.Key? key;
 
-  final _i40.Wallet wallet;
+  final _i41.Wallet wallet;
 
   @override
   String toString() {
@@ -969,7 +998,7 @@ class StartUpRoute extends _i30.PageRouteInfo<void> {
 class TransferRoute extends _i30.PageRouteInfo<TransferRouteArgs> {
   TransferRoute({
     _i31.Key? key,
-    required _i40.Wallet wallet,
+    required _i41.Wallet wallet,
     List<_i30.PageRouteInfo>? children,
   }) : super(
           TransferRoute.name,
@@ -994,7 +1023,7 @@ class TransferRouteArgs {
 
   final _i31.Key? key;
 
-  final _i40.Wallet wallet;
+  final _i41.Wallet wallet;
 
   @override
   String toString() {
