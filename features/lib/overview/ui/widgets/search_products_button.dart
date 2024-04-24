@@ -13,7 +13,7 @@ class SearchProductsButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        context.router.push(SearchProductsRoute());
+        context.router.push(const BrowseShopRoute());
       },
       child: Container(
         width: MediaQuery.sizeOf(context).width,

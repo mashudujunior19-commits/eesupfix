@@ -4,14 +4,12 @@ import 'package:meta/meta.dart';
 import 'package:repository/shop/shopping_repository.dart';
 import 'package:repository/utils/eesup_exception.dart';
 
-part 'product_searching_event.dart';
-part 'product_searching_state.dart';
+part 'browsing_event.dart';
+part 'browsing_state.dart';
 
-class ProductSearchingBloc
-    extends Bloc<ProductSearchingEvent, ProductSearchingState> {
-  final ShoppingRepository _shoppingRepository;
-  ProductSearchingBloc(this._shoppingRepository)
-      : super(ProductSearchingInitial()) {
+class BrowsingBloc extends Bloc<BrowsingEvent, BrowsingState> {
+    final ShoppingRepository _shoppingRepository;
+  BrowsingBloc(this._shoppingRepository) : super(BrowsingInitial()) {
     on<ProductsSearched>((event, emit) async {
       final results = await _shoppingRepository.searchProductsAndCategories(
         event.input,
@@ -19,9 +17,9 @@ class ProductSearchingBloc
         event.limit,
       );
       results.fold((l) {
-        emit(ProductSearchingError(l));
+        emit(BrowsingError(l));
       }, (r) {
-        emit(ProductSearchingResults(r));
+        emit(BrowsingSearchResults(r));
       });
     });
   }

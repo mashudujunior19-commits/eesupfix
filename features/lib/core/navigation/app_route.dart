@@ -87,7 +87,7 @@ class AppRouter extends $AppRouter {
           durationInMilliseconds: 300,
         ),
         CustomRoute(
-          page: SearchProductsRoute.page,
+          page: BrowseShopRoute.page,
           transitionsBuilder: TransitionsBuilders.slideLeftWithFade,
           durationInMilliseconds: 300,
         ),
@@ -108,6 +108,11 @@ class AppRouter extends $AppRouter {
         ),
         CustomRoute(
           page: PayoutRoute.page,
+          transitionsBuilder: TransitionsBuilders.slideLeftWithFade,
+          durationInMilliseconds: 300,
+        ),
+        CustomRoute(
+          page: SettingsRoutes.page,
           transitionsBuilder: TransitionsBuilders.slideLeftWithFade,
           durationInMilliseconds: 300,
         ),

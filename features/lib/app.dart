@@ -10,6 +10,7 @@ import 'package:features/core/extensions/context_environment_ext.dart';
 import 'package:features/core/themes/eesup_light_theme.dart';
 import 'package:features/core/themes/my_kasi_light_theme.dart';
 import 'package:features/finances/wallets/bloc/wallets_bloc.dart';
+import 'package:features/shop/browsing/bloc/products_filter_bloc.dart';
 import 'package:features/shop/cart/bloc/cart_bloc.dart';
 import 'package:repository/auth/profile_repository.dart';
 import 'package:repository/eesupools/eesupool_repo.dart';
@@ -135,6 +136,9 @@ class MainApp extends StatelessWidget {
           BlocProvider(create: (context) => CartBloc()),
           BlocProvider(
             create: (context) => WalletsBloc(context.read<WalletsRepository>()),
+          ),
+          BlocProvider(
+            create: (context) => ProductsFilterBloc(),
           ),
         ],
 

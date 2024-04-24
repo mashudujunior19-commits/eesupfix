@@ -65,7 +65,9 @@ class MenuTab extends StatelessWidget {
               MenuButton(
                 label: 'Settings',
                 icon: IconlyLight.setting,
-                onTap: () {},
+                onTap: () {
+                  context.router.push(const SettingsRoutes());
+                },
               ),
               MenuButton(
                 label: 'Support',

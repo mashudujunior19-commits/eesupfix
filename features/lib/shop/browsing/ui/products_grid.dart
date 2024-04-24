@@ -1,12 +1,13 @@
 import 'package:data_sources/shopping/models/product.dart';
 import 'package:data_sources/shopping/models/product_filter.dart';
 import 'package:features/core/extensions/slide_in_animation_ext.dart';
-import 'package:features/shop/searching/ui/product_card.dart';
+import 'package:features/shop/browsing/ui/product_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 
-class ProductGrid extends StatelessWidget {
-  const ProductGrid({super.key, required this.filter, required this.products});
+class ProductsGridView extends StatelessWidget {
+  const ProductsGridView(
+      {super.key, required this.filter, required this.products});
   final ProductFilter filter;
   final List<Product> products;
 
@@ -41,7 +42,7 @@ class ProductGrid extends StatelessWidget {
       crossAxisSpacing: 10,
       mainAxisSpacing: 10,
       addAutomaticKeepAlives: true,
-      padding: const EdgeInsets.only(left: 15, right: 15, top: 10, bottom: 200),
+      padding: const EdgeInsets.only(left: 16, right: 16, top: 10, bottom: 200),
       children: List.generate(
         sortedProducts.length,
         (index) {

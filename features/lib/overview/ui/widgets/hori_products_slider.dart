@@ -1,6 +1,6 @@
 import 'package:data_sources/shopping/models/product.dart';
 import 'package:features/core/extensions/context_theme_ext.dart';
-import 'package:features/shop/searching/ui/product_card.dart';
+import 'package:features/shop/browsing/ui/product_card.dart';
 import 'package:flutter/material.dart';
 
 class HoriProductSlider extends StatelessWidget {
