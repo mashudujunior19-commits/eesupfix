@@ -23,7 +23,9 @@ class InstapayScreen extends StatelessWidget {
           if (url != null) {
             if (url.contains('payment_success')) {
               Navigator.of(context).pop(true);
+              Navigator.of(context).pop(true);
             } else if (url.contains('payment_failed')) {
+              Navigator.of(context).pop(false);
               Navigator.of(context).pop(false);
             }
           }

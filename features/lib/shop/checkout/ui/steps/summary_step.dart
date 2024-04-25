@@ -32,6 +32,10 @@ class SummaryStep extends StatelessWidget {
           _restartCheckout(state.order, context);
         }
 
+        if (state is CheckoutCompleted) {
+          tabController.animateTo(tabController.index++);
+        }
+
         if (state is OutstandingPayment) {
           final method = state.paymentMethod;
 
@@ -64,6 +68,16 @@ class SummaryStep extends StatelessWidget {
                   _restartCheckout(state.order, context);
                 } else {
                   Navigator.of(context).pop(true);
+                }
+              }).then((value) {
+                if (value == true) {
+                  context.read<CheckoutBloc>().add(
+                        CheckoutFinished(state.order.id!, true),
+                      );
+                } else if (value == false) {
+                  context.read<CheckoutBloc>().add(
+                        CheckoutFinished(state.order.id!, false),
+                      );
                 }
               });
 
@@ -230,7 +244,8 @@ class SummaryStep extends StatelessWidget {
     final successUrl = dotenv.env['INSAPAY_SUCCESS_URL'];
     final failedUrl = dotenv.env['INSAPAY_FAILED_URL'];
     // final notifyUrl = dotenv.env['INSAPAY_NOTIFY_URL'];
-    final notifyUrl = 'https://zngp5d89-8080.inc1.devtunnels.ms/v1/payments/insta_pay';
+    const notifyUrl =
+        'https://zngp5d89-8080.inc1.devtunnels.ms/v1/payments/instapay/notify';
 
     if (merchantId == null ||
         accountUUid == null ||

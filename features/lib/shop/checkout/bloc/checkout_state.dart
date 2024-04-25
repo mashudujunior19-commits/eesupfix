@@ -26,10 +26,14 @@ final class OutstandingPayment extends CheckoutState {
   final Order order;
   final OrderResponse response;
   final PaymentMethod paymentMethod;
-  OutstandingPayment(this.response, this.paymentMethod,this.order);
+  OutstandingPayment(this.response, this.paymentMethod, this.order);
 }
 
-final class OrderPlacedSuccess extends CheckoutState {}
+final class CheckoutCompleted extends CheckoutState {
+  final int orderId;
+  final bool isSuccess;
+  CheckoutCompleted(this.orderId,this.isSuccess);
+}
 
 final class CheckoutError extends CheckoutState {
   final EESUpException exception;

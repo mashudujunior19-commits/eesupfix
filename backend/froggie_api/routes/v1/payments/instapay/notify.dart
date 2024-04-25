@@ -9,9 +9,13 @@ import 'package:supabase/supabase.dart';
 Future<Response> onRequest(RequestContext context) async {
   final request = context.request;
   final queryParams = queryStringToMap(await request.body());
+
+  print(queryParams);
+
   final supabase = GetIt.I.get<SupabaseClient>();
   final provider = PaymentSupabaseProvider(supabase);
   final repository = InstapayRepository(provider);
+
   final result = await repository.confirmInstaPayment(queryParams);
 
   return result;

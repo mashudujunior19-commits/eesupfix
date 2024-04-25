@@ -78,7 +78,7 @@ class _CheckoutScreenState extends State<CheckoutScreen>
                       CollectionStep(tabController: _tabController),
                       PaymentMethodStep(tabController: _tabController),
                       SummaryStep(tabController: _tabController),
-                      ResultStep(tabController: _tabController),
+                      ResultStep(),
                     ],
                   ),
                 )

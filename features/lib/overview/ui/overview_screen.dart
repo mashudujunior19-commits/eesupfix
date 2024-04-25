@@ -34,11 +34,12 @@ class _OverviewScreenState extends State<OverviewScreen>
   Widget build(BuildContext context) {
     return SafeArea(
       key: const Key('shop_overview_screen'),
-      child: Scaffold(
-        bottomNavigationBar: BottomTabBar(tabController: _tabController),
-        body: Container(
-          decoration: context.bgImage,
-          child: TabBarView(
+      child: Container(
+        decoration: context.bgImage,
+        child: Scaffold(
+          backgroundColor: Colors.transparent,
+          bottomNavigationBar: BottomTabBar(tabController: _tabController),
+          body: TabBarView(
             controller: _tabController,
             children: const [
               OverviewTab(),

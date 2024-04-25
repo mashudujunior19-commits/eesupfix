@@ -1,13 +1,21 @@
+import 'package:auto_route/auto_route.dart';
+import 'package:bootstrap_icons/bootstrap_icons.dart';
 import 'package:data_sources/shopping/models/product.dart';
 import 'package:data_sources/shopping/models/product_filter.dart';
+import 'package:features/core/extensions/context_theme_ext.dart';
+import 'package:features/core/extensions/sizedbox_ext.dart';
 import 'package:features/core/extensions/slide_in_animation_ext.dart';
+import 'package:features/core/navigation/app_route.gr.dart';
 import 'package:features/shop/browsing/ui/product_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 
 class ProductsGridView extends StatelessWidget {
-  const ProductsGridView(
-      {super.key, required this.filter, required this.products});
+  const ProductsGridView({
+    super.key,
+    required this.filter,
+    required this.products,
+  });
   final ProductFilter filter;
   final List<Product> products;
 
@@ -43,17 +51,85 @@ class ProductsGridView extends StatelessWidget {
       mainAxisSpacing: 10,
       addAutomaticKeepAlives: true,
       padding: const EdgeInsets.only(left: 16, right: 16, top: 10, bottom: 200),
-      children: List.generate(
-        sortedProducts.length,
-        (index) {
-          return ProductCard(
-            product: sortedProducts[index],
-          )
-              .animate()
-              .fadeIn(delay: (200 + index * 50).ms)
-              .slideIn(10.00 * index);
-        },
-      ),
+      children: [
+        for (int i = 0; i < sortedProducts.length; i++)
+          ProductCard(
+            product: sortedProducts[i],
+          ).animate().slideIn(10.00 * i),
+        // InkWell(
+        //   onTap: () {},
+        //   child: Container(
+        //     padding: const EdgeInsets.all(10),
+        //     decoration: BoxDecoration(
+        //       color: Colors.white.withOpacity(.3),
+        //       borderRadius: BorderRadius.circular(10),
+        //       border: Border.all(
+        //         color: Colors.grey.shade200,
+        //         width: 1,
+        //       ),
+        //     ),
+        //     child: Center(
+        //       child: Text(
+        //         'Load more',
+        //         style: context.textTheme.bodySmall?.copyWith(
+        //           decoration: TextDecoration.underline,
+        //           color: context.colorScheme.primary,
+        //           fontSize: 16,
+        //           fontStyle: FontStyle.italic,
+        //         ),
+        //       ),
+        //     ),
+        //   ),
+        // ),
+
+        Container(
+          padding: const EdgeInsets.all(10),
+          decoration: BoxDecoration(
+            color: Colors.white.withOpacity(.3),
+            borderRadius: BorderRadius.circular(10),
+            border: Border.all(
+              color: Colors.grey.shade200,
+              width: 1,
+            ),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                "Can't find what you are looking for?",
+                textAlign: TextAlign.center,
+                style: context.textTheme.bodySmall?.copyWith(
+                  color: Colors.grey,
+                  fontSize: 16,
+                  fontStyle: FontStyle.italic,
+                ),
+              ),
+              TextButton(
+                onPressed: () {
+                  context.router.push(const BrowseShopRoute());
+                },
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      'Search',
+                      style: context.textTheme.bodySmall?.copyWith(
+                        decoration: TextDecoration.underline,
+                        color: context.colorScheme.primary,
+                        fontSize: 16,
+                        fontStyle: FontStyle.italic,
+                      ),
+                    ),
+                    5.sW,
+                    const Icon(BootstrapIcons.search, size: 16),
+                  ],
+                ),
+              )
+            ],
+          ),
+        )
+      ],
     );
   }
 }

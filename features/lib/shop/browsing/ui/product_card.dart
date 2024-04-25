@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 class ProductCard extends StatelessWidget {
   const ProductCard({super.key, required this.product, this.isBundle = false});
@@ -27,7 +28,7 @@ class ProductCard extends StatelessWidget {
             ? const EdgeInsets.only(left: 10, right: 10, top: 5, bottom: 20)
             : const EdgeInsets.only(left: 10, right: 10, top: 5, bottom: 5),
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: Colors.white.withOpacity(.35),
           borderRadius: BorderRadius.circular(10),
           border: Border.all(
             color: Colors.grey.shade200,
@@ -62,9 +63,14 @@ class ProductCard extends StatelessWidget {
                   height: 70,
                   width: 70,
                   child: product.imageUrl != null
-                      ? Image.network(product.imageUrl!, width: 27)
-                      : Image.asset('assets/images/no-photo.png',
-                          width: 27, color: Colors.grey),
+                      ? CachedNetworkImage(
+                          imageUrl: product.imageUrl!,
+                          placeholder: (context, url) => _placeHolder(
+                            color: Colors.grey.shade100,
+                          ),
+                          errorWidget: (context, url, error) => _imageError(),
+                        )
+                      : _placeHolder(),
                 ),
               ],
             ),
@@ -125,6 +131,21 @@ class ProductCard extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+
+  Widget _imageError() {
+    return const Icon(
+      Icons.error_outline,
+      color: Colors.grey,
+    );
+  }
+
+  Widget _placeHolder({Color color = Colors.grey}) {
+    return Image.asset(
+      'assets/images/no-photo.png',
+      width: 27,
+      color: color,
     );
   }
 }

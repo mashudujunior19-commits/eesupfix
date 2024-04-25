@@ -12,6 +12,8 @@ Handler middleware(Handler handler) {
     final queryParams = queryStringToMap(await request.body());
     final authKey = queryParams['payeeCategory3'];
 
+    print(authKey);
+
     if (authKey == null) {
       return Response.json(
         statusCode: HttpStatus.unauthorized,
@@ -26,7 +28,8 @@ Handler middleware(Handler handler) {
     final supabase = GetIt.I.get<SupabaseClient>();
     final auth = AuthRepository(AuthSupabaseProvider(supabase));
     final isAuthorized = await auth.isAuthorized(key: authKey);
-
+    
+    print('Is authorized $isAuthorized');
     if (!isAuthorized) {
       return Response.json(
         statusCode: HttpStatus.unauthorized,

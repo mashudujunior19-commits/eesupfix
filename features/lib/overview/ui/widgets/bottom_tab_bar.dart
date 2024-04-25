@@ -1,4 +1,5 @@
 import 'package:bootstrap_icons/bootstrap_icons.dart';
+import 'package:features/core/extensions/context_theme_ext.dart';
 import 'package:flutter/material.dart';
 
 class BottomTabBar extends StatelessWidget {
@@ -7,27 +8,25 @@ class BottomTabBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final textTheme = theme.textTheme.labelMedium;
     int index = tabController.index;
     return Container(
       height: 60,
       width: MediaQuery.sizeOf(context).width,
       decoration: BoxDecoration(
-        color: Colors.white,
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey.shade300,
-            blurRadius: 5,
-            offset: const Offset(0, -1),
-          ),
-        ],
+        color: Colors.white.withOpacity(.3),
+        // boxShadow: [
+        //   BoxShadow(
+        //     color: Colors.grey.shade300,
+        //     blurRadius: 5,
+        //     offset: const Offset(0, -1),
+        //   ),
+        // ],
       ),
       child: TabBar(
         controller: tabController,
-        labelColor: theme.colorScheme.primary,
+        labelColor: context.colorScheme.primary,
         unselectedLabelColor: Colors.black.withOpacity(.99),
-        labelStyle: textTheme?.copyWith(fontSize: 9),
+        labelStyle: context.textTheme.labelMedium?.copyWith(fontSize: 9),
         indicatorColor: Colors.transparent,
         tabs: [
           Tab(
@@ -60,7 +59,7 @@ class BottomTabBar extends StatelessWidget {
               'assets/images/open-menu.png',
               width: 23,
               color: tabController.index == 3
-                  ? theme.colorScheme.primary
+                  ? context.colorScheme.primary
                   : Colors.black,
             ),
             iconMargin: const EdgeInsets.only(bottom: 2),

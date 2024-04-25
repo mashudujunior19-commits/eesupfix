@@ -105,13 +105,17 @@ class CheckoutBloc extends Bloc<CheckoutEvent, CheckoutState> {
         }, (outcome) {
           if (outcome.outstandingAmount > 0) {
             emit(
-              OutstandingPayment(outcome, order.paymentMethod,order),
+              OutstandingPayment(outcome, order.paymentMethod, order),
             );
           } else {
             emit(CurrentCheckout(order));
           }
         });
       }
+    });
+
+    on<CheckoutFinished>((event, emit) {
+      emit(CheckoutCompleted(event.orderId, event.isPlaced));
     });
   }
 }

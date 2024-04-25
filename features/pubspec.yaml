@@ -68,6 +68,7 @@ dependencies:
   flutter_highlighted_text: ^0.0.1
   visibility_detector: ^0.4.0+2
   either_dart: ^1.0.0
+  rive: ^0.13.2
   
 dev_dependencies:
   flutter_test:

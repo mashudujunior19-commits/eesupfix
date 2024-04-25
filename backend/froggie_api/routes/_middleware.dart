@@ -10,7 +10,7 @@ Handler middleware(Handler handler) {
     final getIt = GetIt.I;
 
     if (!getIt.isRegistered<EnvService>()) {
-      getIt.registerSingleton(const EnvService(EnvType.production));
+      getIt.registerSingleton(const EnvService(EnvType.development));
     }
 
     final env = getIt.get<EnvService>();
