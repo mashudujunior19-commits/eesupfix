@@ -18,9 +18,7 @@ class OrdersBloc extends Bloc<OrdersEvent, OrdersState> {
         event.initLimit,
       );
 
-      
-
-      //using the forEach event method to emit the appropriate state
+          //using the forEach event method to emit the appropriate state
       await emit.forEach(
         stream,
         onData: (data) {

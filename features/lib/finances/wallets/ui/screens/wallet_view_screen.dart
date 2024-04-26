@@ -31,6 +31,7 @@ class WalletViewScreen extends StatelessWidget {
         child: Scaffold(
           body: Container(
             decoration: context.bgImage,
+            height: context.height,
             child: BlocBuilder<WalletViewBloc, WalletViewState>(
               builder: (context, state) {
                 if (state is WalletViewLoaded) {
