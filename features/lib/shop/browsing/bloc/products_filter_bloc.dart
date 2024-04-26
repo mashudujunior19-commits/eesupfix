@@ -11,7 +11,7 @@ class ProductsFilterBloc
       : super(
           CurrentProductsFilters(
             const ProductFilter(
-              limit: 50,
+              limit: 500,
               sort: ProductSortEnums.defaultSort,
             ),
           ),

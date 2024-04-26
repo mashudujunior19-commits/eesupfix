@@ -11,7 +11,7 @@ import 'package:features/core/widgets/fullscreen_error_widget.dart';
 import 'package:features/core/widgets/fullscreen_loading_shimmer.dart';
 import 'package:features/shop/browsing/bloc/category_bloc.dart';
 import 'package:features/shop/browsing/bloc/products_filter_bloc.dart';
-import 'package:features/shop/browsing/ui/filter_button.dart';
+import 'package:features/shop/browsing/ui/filter_dialog.dart';
 import 'package:features/shop/browsing/ui/products_grid.dart';
 import 'package:features/shop/cart/ui/cart_button.dart';
 import 'package:flutter/material.dart';

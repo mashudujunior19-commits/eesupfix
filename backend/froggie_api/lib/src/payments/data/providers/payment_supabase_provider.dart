@@ -38,9 +38,10 @@ class PaymentSupabaseProvider implements PaymentGatewayProvider {
       await _supabase.schema('finances').from('online_payment').update({
         'confirmed_at': DateTime.now().toIso8601String(),
         'status': isConfirmed ? 'Complete' : 'Cancelled'
-      });
+      }).eq('reference_id', reference);
       return true;
     } catch (e) {
+      print(e.toString());
       return false;
     }
   }

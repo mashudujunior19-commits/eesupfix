@@ -10,7 +10,7 @@ import 'package:features/shop/browsing/bloc/browsing_bloc.dart';
 import 'package:features/shop/browsing/bloc/categories_bloc.dart';
 import 'package:features/shop/browsing/bloc/products_filter_bloc.dart';
 import 'package:features/shop/browsing/ui/categories_list.dart';
-import 'package:features/shop/browsing/ui/filter_button.dart';
+import 'package:features/shop/browsing/ui/filter_dialog.dart';
 import 'package:features/shop/browsing/ui/products_grid.dart';
 import 'package:features/shop/cart/ui/cart_button.dart';
 import 'package:flutter/material.dart';

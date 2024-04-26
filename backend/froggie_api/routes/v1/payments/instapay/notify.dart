@@ -1,4 +1,6 @@
 // ignore_for_file: avoid_print
+import 'dart:io';
+
 import 'package:dart_frog/dart_frog.dart';
 import 'package:eesup_dart_frog/core/utils/query_string_to_map.dart';
 import 'package:eesup_dart_frog/src/payments/data/providers/payment_supabase_provider.dart';
@@ -7,16 +9,23 @@ import 'package:get_it/get_it.dart';
 import 'package:supabase/supabase.dart';
 
 Future<Response> onRequest(RequestContext context) async {
-  final request = context.request;
-  final queryParams = queryStringToMap(await request.body());
+  try {
+    final request = context.request;
+    final queryParams = queryStringToMap(await request.body());
+    // final queryParams = await request.json();
+    // print(queryParams);
 
-  print(queryParams);
+    final supabase = GetIt.I.get<SupabaseClient>();
+    final provider = PaymentSupabaseProvider(supabase);
+    final repository = InstapayRepository(provider);
 
-  final supabase = GetIt.I.get<SupabaseClient>();
-  final provider = PaymentSupabaseProvider(supabase);
-  final repository = InstapayRepository(provider);
+    final result = await repository.confirmInstaPayment(queryParams);
 
-  final result = await repository.confirmInstaPayment(queryParams);
-
-  return result;
+    return result;
+  } catch (e) {
+    
+    return Response.json(statusCode: HttpStatus.internalServerError, body: {
+      'error': 'something went wrong while proccesing the request',
+    });
+  }
 }

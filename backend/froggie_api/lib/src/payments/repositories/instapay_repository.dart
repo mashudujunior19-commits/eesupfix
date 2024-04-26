@@ -28,7 +28,9 @@ class InstapayRepository {
       currency,
       secret
     ];
+
     final str = checksumString.join('_');
+
     String checksum = md5.convert(utf8.encode(str)).toString();
     if (checksum != json['checksum']) {
       return Response.json(statusCode: HttpStatus.badRequest, body: {
@@ -36,7 +38,8 @@ class InstapayRepository {
         'message': 'Invalid checksum',
       });
     }
-    final reference = int.tryParse(json['payeeCategory1']);
+    final reference = int.tryParse(json['payeeCategory1'].toString());
+
     if (reference == null) {
       return Response.json(statusCode: HttpStatus.badRequest, body: {
         'status': 'error',
@@ -44,6 +47,7 @@ class InstapayRepository {
       });
     }
     final type = json['payeeCategory2'];
+
     if (type == null) {
       return Response.json(statusCode: HttpStatus.badRequest, body: {
         'status': 'error',
@@ -56,6 +60,7 @@ class InstapayRepository {
 
     return response;
   }
+
   Future<Response> _updatePayment(
       int reference, String type, InstapayStatus status) async {
     switch (status) {
