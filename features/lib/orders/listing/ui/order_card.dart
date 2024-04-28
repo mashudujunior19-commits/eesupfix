@@ -2,7 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:data_sources/orders/models/order.dart';
 import 'package:features/core/extensions/context_theme_ext.dart';
 import 'package:features/core/extensions/sizedbox_ext.dart';
-import 'package:features/core/navigation/app_route.gr.dart';
+import 'package:features/app_route.gr.dart';
 import 'package:features/core/utils/date_formatter.dart';
 import 'package:flutter/material.dart';
 

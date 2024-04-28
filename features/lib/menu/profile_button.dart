@@ -3,7 +3,7 @@ import 'package:bootstrap_icons/bootstrap_icons.dart';
 import 'package:data_sources/auth/models/user_role.dart';
 import 'package:features/auth/profile/bloc/profile_bloc.dart';
 import 'package:features/core/extensions/context_theme_ext.dart';
-import 'package:features/core/navigation/app_route.gr.dart';
+import 'package:features/app_route.gr.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';

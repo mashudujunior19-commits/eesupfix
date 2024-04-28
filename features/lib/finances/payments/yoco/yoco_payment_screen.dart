@@ -34,11 +34,7 @@ class YocoPaymentScreen extends StatelessWidget {
             successUrl: 'https://eesup.com/success/',
             cancelUrl: 'https://eesup.com/failed/',
             failureUrl: 'https://eesup.com/canceled/',
-            onComplete: (transaction) {
-              Navigator.of(context).pop(
-                transaction.status == YocoTransactionStatus.success,
-              );
-            },
+            onComplete: (transaction) {},
           );
         }(),
       ),

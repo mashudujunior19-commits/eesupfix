@@ -5,7 +5,7 @@ import 'package:data_sources/shopping/models/product_filter.dart';
 import 'package:features/core/extensions/context_theme_ext.dart';
 import 'package:features/core/extensions/sizedbox_ext.dart';
 import 'package:features/core/extensions/slide_in_animation_ext.dart';
-import 'package:features/core/navigation/app_route.gr.dart';
+import 'package:features/app_route.gr.dart';
 import 'package:features/shop/browsing/ui/product_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';

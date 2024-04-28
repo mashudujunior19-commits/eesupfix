@@ -5,7 +5,7 @@ import 'package:features/core/extensions/bg_image_deco_ext.dart';
 import 'package:features/core/extensions/context_theme_ext.dart';
 import 'package:features/core/extensions/sizedbox_ext.dart';
 import 'package:features/core/extensions/slide_in_animation_ext.dart';
-import 'package:features/core/navigation/app_route.gr.dart';
+import 'package:features/app_route.gr.dart';
 import 'package:features/core/widgets/fullscreen_error_widget.dart';
 import 'package:features/core/widgets/fullscreen_loading_shimmer.dart';
 import 'package:features/finances/wallets/bloc/wallet_view_bloc.dart';

@@ -2,7 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:features/core/extensions/context_alerts_ext.dart';
 import 'package:features/core/extensions/sizedbox_ext.dart';
 import 'package:features/core/extensions/slide_in_animation_ext.dart';
-import 'package:features/core/navigation/app_route.gr.dart';
+import 'package:features/app_route.gr.dart';
 import 'package:features/core/widgets/fullscreen_loading_shimmer.dart';
 import 'package:features/geolocation/bloc/addresses_bloc.dart';
 import 'package:features/geolocation/ui/widgets/address_card.dart';

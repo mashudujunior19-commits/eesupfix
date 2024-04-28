@@ -1,7 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:data_sources/shopping/models/category.dart';
 import 'package:features/core/extensions/slide_in_animation_ext.dart';
-import 'package:features/core/navigation/app_route.gr.dart';
+import 'package:features/app_route.gr.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';

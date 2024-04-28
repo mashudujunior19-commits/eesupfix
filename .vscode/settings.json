@@ -4,14 +4,13 @@
     "reloadButton":"♻️",
     "commands": [
         {
-            "name": "🧹🧹",
-            "color": "amberAccent",
-            "singleInstance": true,
+            "name": "🧹🧼",
+            "singleInstance": false,
             "command": "melos fresh",
         },
           {
             "name": "🏗️",
-            "singleInstance": true,
+            "singleInstance": false,
             "command": "melos br",
         },
         ]

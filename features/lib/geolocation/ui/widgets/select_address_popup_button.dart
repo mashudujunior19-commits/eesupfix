@@ -2,7 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:data_sources/geolocation/models/address.dart';
 import 'package:features/core/extensions/bottom_sheet_context_ext.dart';
 import 'package:features/core/extensions/context_theme_ext.dart';
-import 'package:features/core/navigation/app_route.gr.dart';
+import 'package:features/app_route.gr.dart';
 import 'package:features/geolocation/ui/widgets/select_addresses_dialog.dart';
 import 'package:flutter/material.dart';
 

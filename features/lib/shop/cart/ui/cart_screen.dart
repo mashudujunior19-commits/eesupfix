@@ -6,7 +6,7 @@ import 'package:features/core/extensions/context_alerts_ext.dart';
 import 'package:features/core/extensions/context_theme_ext.dart';
 import 'package:features/core/extensions/sizedbox_ext.dart';
 import 'package:features/core/extensions/slide_in_animation_ext.dart';
-import 'package:features/core/navigation/app_route.gr.dart';
+import 'package:features/app_route.gr.dart';
 import 'package:features/shop/cart/bloc/cart_bloc.dart';
 import 'package:features/shop/cart/ui/cart_product_card.dart';
 import 'package:flutter/material.dart';

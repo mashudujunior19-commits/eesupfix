@@ -4,7 +4,7 @@ import 'package:features/auth/profile/bloc/profile_bloc.dart';
 import 'package:features/core/extensions/bg_image_deco_ext.dart';
 import 'package:features/core/extensions/context_alerts_ext.dart';
 import 'package:features/core/extensions/sizedbox_ext.dart';
-import 'package:features/core/navigation/app_route.gr.dart';
+import 'package:features/app_route.gr.dart';
 import 'package:features/core/widgets/eesup_form_field.dart';
 import 'package:features/core/widgets/fullscreen_loading_shimmer.dart';
 import 'package:flutter/material.dart';

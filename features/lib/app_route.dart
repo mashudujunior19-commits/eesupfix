@@ -1,5 +1,5 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:features/core/navigation/app_route.gr.dart';
+import 'package:features/app_route.gr.dart';
 
 @AutoRouterConfig()
 class AppRouter extends $AppRouter {

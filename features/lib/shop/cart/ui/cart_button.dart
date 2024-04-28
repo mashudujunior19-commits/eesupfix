@@ -1,6 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:features/core/extensions/context_theme_ext.dart';
-import 'package:features/core/navigation/app_route.gr.dart';
+import 'package:features/app_route.gr.dart';
 import 'package:features/shop/cart/bloc/cart_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

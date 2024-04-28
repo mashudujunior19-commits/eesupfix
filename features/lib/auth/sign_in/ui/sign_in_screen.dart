@@ -8,7 +8,7 @@ import 'package:features/core/widgets/eesup_form_field.dart';
 import 'package:features/auth/sign_in/bloc/auth_bloc.dart';
 import 'package:features/core/widgets/eesup_phone_text_field.dart';
 import 'package:flutter_highlighted_text/flutter_highlighted_text.dart';
-import 'package:features/core/navigation/app_route.gr.dart';
+import 'package:features/app_route.gr.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

@@ -1,6 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:features/auth/sign_in/bloc/auth_bloc.dart';
-import 'package:features/core/navigation/app_route.gr.dart';
+import 'package:features/app_route.gr.dart';
 import 'package:features/core/widgets/loading_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

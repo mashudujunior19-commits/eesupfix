@@ -2,7 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:bootstrap_icons/bootstrap_icons.dart';
 import 'package:features/auth/sign_in/bloc/auth_bloc.dart';
 import 'package:features/core/extensions/context_theme_ext.dart';
-import 'package:features/core/navigation/app_route.gr.dart';
+import 'package:features/app_route.gr.dart';
 import 'package:features/menu/menu_button.dart';
 import 'package:features/menu/menu_button_tile.dart';
 import 'package:features/menu/profile_button.dart';
