@@ -49,11 +49,16 @@ class SummaryStep extends StatelessWidget {
                 bankRef: "${state.response.orderId} EESUp",
               ))
                   .then((value) {
-                if (value == false) {
-                  _restartCheckout(state.order, context);
-                } else {
-                  Navigator.of(context).pop(true);
+                if (value == true) {
+                  context.read<CheckoutBloc>().add(
+                        CheckoutFinished(state.order.id, true),
+                      );
+                } else if (value == false) {
+                  context.read<CheckoutBloc>().add(
+                        CheckoutFinished(state.order.id, false),
+                      );
                 }
+                tabController.animateTo(tabController.index + 1);
               });
 
             case PaymentMethod.instapay || PaymentMethod.splitInstapay:
@@ -64,21 +69,16 @@ class SummaryStep extends StatelessWidget {
               context.router
                   .push(InstapayConfirmDetailsRoute(transaction: transaction))
                   .then((value) {
-                if (value == false) {
-                  _restartCheckout(state.order, context);
-                } else {
-                  Navigator.of(context).pop(true);
-                }
-              }).then((value) {
                 if (value == true) {
                   context.read<CheckoutBloc>().add(
-                        CheckoutFinished(state.order.id!, true),
+                        CheckoutFinished(state.order.id, true),
                       );
                 } else if (value == false) {
                   context.read<CheckoutBloc>().add(
-                        CheckoutFinished(state.order.id!, false),
+                        CheckoutFinished(state.order.id, false),
                       );
                 }
+                tabController.animateTo(tabController.index + 1);
               });
 
             case PaymentMethod.yoco || PaymentMethod.splitYoco:

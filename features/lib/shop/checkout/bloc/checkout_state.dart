@@ -30,7 +30,7 @@ final class OutstandingPayment extends CheckoutState {
 }
 
 final class CheckoutCompleted extends CheckoutState {
-  final int orderId;
+  final int? orderId;
   final bool isSuccess;
   CheckoutCompleted(this.orderId,this.isSuccess);
 }

@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:data_sources/orders/models/order_product.dart';
 import 'package:features/core/extensions/bg_image_deco_ext.dart';
 import 'package:features/core/extensions/context_theme_ext.dart';
+import 'package:features/core/extensions/sizedbox_ext.dart';
 import 'package:features/shop/checkout/bloc/checkout_bloc.dart';
 import 'package:features/shop/checkout/ui/steps/address_selection_step.dart';
 import 'package:features/shop/checkout/ui/steps/collection_step.dart';
@@ -56,6 +57,8 @@ class _CheckoutScreenState extends State<CheckoutScreen>
               onPressed: () {
                 if (index > 0) {
                   _tabController.animateTo(index - 1);
+                } else if (index == 4) {
+                  Navigator.pop(context);
                 } else {
                   Navigator.pop(context);
                 }
@@ -69,7 +72,14 @@ class _CheckoutScreenState extends State<CheckoutScreen>
             decoration: context.bgImage,
             child: Column(
               children: [
-                StepIndicator(activeStep: index),
+                BlocBuilder<CheckoutBloc, CheckoutState>(
+                  builder: (context, state) {
+                    if (state is! CheckoutCompleted) {
+                      return StepIndicator(activeStep: index);
+                    }
+                    return 0.sW;
+                  },
+                ),
                 Expanded(
                   child: TabBarView(
                     controller: _tabController,
@@ -78,7 +88,7 @@ class _CheckoutScreenState extends State<CheckoutScreen>
                       CollectionStep(tabController: _tabController),
                       PaymentMethodStep(tabController: _tabController),
                       SummaryStep(tabController: _tabController),
-                      ResultStep(),
+                      const ResultStep(),
                     ],
                   ),
                 )

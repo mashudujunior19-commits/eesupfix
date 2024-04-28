@@ -47,7 +47,7 @@ final class PayFeesWithWalletUpdated extends CheckoutEvent {
 }
 
 final class CheckoutFinished extends CheckoutEvent {
-  final int orderId;
+  final int? orderId;
   final bool isPlaced;
   CheckoutFinished(this.orderId,this.isPlaced);
 }

@@ -56,7 +56,7 @@ dependencies:
   omni_datetime_picker: ^1.0.9
   just_audio: ^0.9.36
   audio_video_progress_bar: ^2.0.2
-  flutter_ozow: ^1.1.6
+  flutter_ozow: ^1.1.7
   flutter_expanded_tile: ^0.3.7
   path_provider: ^2.1.2
   syncfusion_flutter_sliders: ^25.1.35

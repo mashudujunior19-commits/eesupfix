@@ -128,27 +128,6 @@ class PaymentMethodStep extends StatelessWidget {
                               },
                             ).animate().slideIn(50),
                             PaymentMethodTile(
-                              gateway: gatewayState.gateway(PaymentMethod.ozow),
-                              title: 'Ozow',
-                              amount: total ?? 0,
-                              isVisible: gatewayState
-                                      .gateway(PaymentMethod.ozow)
-                                      ?.isActive ??
-                                  false,
-                              imagePath: 'assets/images/ozow.png',
-                              subtitle: 'EFT with FNB, ABSA, Nedbank, etc.',
-                              onTap: (gateway) {
-                                context.read<CheckoutBloc>().add(
-                                      PaymentMethodUpdated(
-                                        PaymentMethod.ozow,
-                                        gateway,
-                                      ),
-                                    );
-                                tabController
-                                    .animateTo(tabController.index + 1);
-                              },
-                            ).animate().slideIn(100),
-                            PaymentMethodTile(
                               gateway: gatewayState.gateway(
                                 PaymentMethod.instapay,
                               ),
@@ -165,6 +144,28 @@ class PaymentMethodStep extends StatelessWidget {
                                 context.read<CheckoutBloc>().add(
                                       PaymentMethodUpdated(
                                         PaymentMethod.instapay,
+                                        gateway,
+                                      ),
+                                    );
+                                tabController
+                                    .animateTo(tabController.index + 1);
+                              },
+                            ).animate().slideIn(100),
+                            PaymentMethodTile(
+                              gateway: gatewayState.gateway(PaymentMethod.ozow),
+                              title: 'Ozow',
+                              amount: total ?? 0,
+                              isVisible: gatewayState
+                                      .gateway(PaymentMethod.ozow)
+                                      ?.isActive ??
+                                  false,
+                              imagePath: 'assets/images/ozow.png',
+                              subtitle:
+                                  'EFT with FNB, ABSA, Nedbank, etc. \n**Capitec Pay Not Available**',
+                              onTap: (gateway) {
+                                context.read<CheckoutBloc>().add(
+                                      PaymentMethodUpdated(
+                                        PaymentMethod.ozow,
                                         gateway,
                                       ),
                                     );

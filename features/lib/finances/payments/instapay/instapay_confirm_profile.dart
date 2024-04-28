@@ -136,7 +136,8 @@ class InstapayConfirmDetailsScreen extends StatelessWidget {
                           return;
                         }
 
-                        context.router.push(
+                        context.router
+                            .push(
                           InstapayRoute(
                             transaction: transaction.copyWith(
                               bEmail: emailController.text,
@@ -145,7 +146,14 @@ class InstapayConfirmDetailsScreen extends StatelessWidget {
                               bMobile: phone,
                             ),
                           ),
-                        );
+                        )
+                            .then((value) {
+                          if (value == true) {
+                            Navigator.of(context).pop(true);
+                          } else if (value == false) {
+                            Navigator.of(context).pop(false);
+                          }
+                        });
                       },
                       child: const Text("Next"),
                     )

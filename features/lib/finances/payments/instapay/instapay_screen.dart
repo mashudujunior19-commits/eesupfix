@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:instapay_flutter/data/merchant_transaction.dart';
-import 'package:instapay_flutter/presentation/instapay.dart';
+import 'package:instapay_flutter/ui/instapay.dart';
 
 @RoutePage()
 // ignore: must_be_immutable
@@ -23,9 +23,7 @@ class InstapayScreen extends StatelessWidget {
           if (url != null) {
             if (url.contains('payment_success')) {
               Navigator.of(context).pop(true);
-              Navigator.of(context).pop(true);
             } else if (url.contains('payment_failed')) {
-              Navigator.of(context).pop(false);
               Navigator.of(context).pop(false);
             }
           }
