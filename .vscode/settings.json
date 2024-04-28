@@ -1,0 +1,19 @@
+{
+    "actionButtons": {
+    "defaultColor": "#ff0034",
+    "reloadButton":"♻️",
+    "commands": [
+        {
+            "name": "🧹🧹",
+            "color": "amberAccent",
+            "singleInstance": true,
+            "command": "melos fresh",
+        },
+          {
+            "name": "🏗️",
+            "singleInstance": true,
+            "command": "melos br",
+        },
+        ]
+    }
+}

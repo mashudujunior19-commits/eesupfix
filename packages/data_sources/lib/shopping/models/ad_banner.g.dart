@@ -8,7 +8,7 @@ part of 'ad_banner.dart';
 
 _$AdBannerImpl _$$AdBannerImplFromJson(Map<String, dynamic> json) =>
     _$AdBannerImpl(
-      id: json['id'] as int,
+      id: (json['id'] as num).toInt(),
       content: (json['content'] as List<dynamic>)
           .map((e) =>
               const AdContentConverter().fromJson(e as Map<String, dynamic>))
@@ -26,7 +26,7 @@ _$AdContentImpl _$$AdContentImplFromJson(Map<String, dynamic> json) =>
     _$AdContentImpl(
       url: json['url'] as String,
       type: json['type'] as String,
-      orderNumber: json['order_number'] as int,
+      orderNumber: (json['order_number'] as num).toInt(),
     );
 
 Map<String, dynamic> _$$AdContentImplToJson(_$AdContentImpl instance) =>

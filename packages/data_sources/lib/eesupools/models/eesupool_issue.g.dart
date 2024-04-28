@@ -9,8 +9,8 @@ part of 'eesupool_issue.dart';
 _$EESUpoolIssueImpl _$$EESUpoolIssueImplFromJson(Map<String, dynamic> json) =>
     _$EESUpoolIssueImpl(
       id: json['issue_id'] as String,
-      eesupoolId: json['eesupool_id'] as int,
-      parentPoolId: json['parent_pool_id'] as int?,
+      eesupoolId: (json['eesupool_id'] as num).toInt(),
+      parentPoolId: (json['parent_pool_id'] as num?)?.toInt(),
       createdAt: DateTime.parse(json['created_at'] as String),
       reporterId: json['reporter_id'] as String?,
       offenderId: json['offender_id'] as String?,
@@ -18,7 +18,7 @@ _$EESUpoolIssueImpl _$$EESUpoolIssueImplFromJson(Map<String, dynamic> json) =>
       resolvedAt: json['resolved_at'] == null
           ? null
           : DateTime.parse(json['resolved_at'] as String),
-      chatMessageId: json['message_id'] as int?,
+      chatMessageId: (json['message_id'] as num?)?.toInt(),
       attachments: (json['attachments'] as List<dynamic>?)
           ?.map((e) =>
               const MediaFileConverter().fromJson(e as Map<String, dynamic>))

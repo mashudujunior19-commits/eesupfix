@@ -8,12 +8,12 @@ part of 'eesupool_order.dart';
 
 _$EESUpoolOrderImpl _$$EESUpoolOrderImplFromJson(Map<String, dynamic> json) =>
     _$EESUpoolOrderImpl(
-      id: json['id'] as int,
-      eesupoolId: json['eesupool_id'] as int,
+      id: (json['id'] as num).toInt(),
+      eesupoolId: (json['eesupool_id'] as num).toInt(),
       createdAt: DateTime.parse(json['created_at'] as String),
       scheduleFor: DateTime.parse(json['schedule_for'] as String),
       closesAt: DateTime.parse(json['closes_at'] as String),
-      secretPin: json['secret_pin'] as int?,
+      secretPin: (json['secret_pin'] as num?)?.toInt(),
       receiverId: json['receiver_id'] as String?,
       deliveredAt: json['delivered_at'] == null
           ? null
@@ -22,13 +22,13 @@ _$EESUpoolOrderImpl _$$EESUpoolOrderImplFromJson(Map<String, dynamic> json) =>
       packerFee: (json['packer_fee'] as num?)?.toDouble(),
       receiverFee: (json['receiver_fee'] as num?)?.toDouble(),
       collectionFee: (json['collection_fee'] as num?)?.toDouble(),
-      addressId: json['address_id'] as int?,
+      addressId: (json['address_id'] as num?)?.toInt(),
       eesupoolName: json['eesupool_name'] as String?,
       receiver: _$JsonConverterFromJson<Map<String, dynamic>, EESUpoolMember>(
           json['receiver'], const EESUpoolMemberConverter().fromJson),
       address: _$JsonConverterFromJson<Map<String, dynamic>, Address>(
           json['address'], const AddressConverter().fromJson),
-      ordersCount: json['orders_count'] as int? ?? 0,
+      ordersCount: (json['orders_count'] as num?)?.toInt() ?? 0,
       currentAmount: (json['current_amount'] as num?)?.toDouble() ?? 0.00,
     );
 
@@ -57,8 +57,8 @@ Value? _$JsonConverterFromJson<Json, Value>(
 _$MemberOrderAssignmentImpl _$$MemberOrderAssignmentImplFromJson(
         Map<String, dynamic> json) =>
     _$MemberOrderAssignmentImpl(
-      orderId: json['order_id'] as int,
-      eesupoolOrderId: json['eesupool_ord_id'] as int,
+      orderId: (json['order_id'] as num).toInt(),
+      eesupoolOrderId: (json['eesupool_ord_id'] as num).toInt(),
       memberId: json['member_id'] as String,
       fullName: json['full_name'] as String?,
       corpName: json['corp_name'] as String?,

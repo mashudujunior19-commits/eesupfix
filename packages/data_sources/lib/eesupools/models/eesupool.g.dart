@@ -8,7 +8,7 @@ part of 'eesupool.dart';
 
 _$EESUpoolImpl _$$EESUpoolImplFromJson(Map<String, dynamic> json) =>
     _$EESUpoolImpl(
-      eesupoolId: json['eesupool_id'] as int?,
+      eesupoolId: (json['eesupool_id'] as num?)?.toInt(),
       name: json['name'] as String,
       description: json['description'] as String?,
       adminFee: (json['admin_fee'] as num?)?.toDouble(),
@@ -17,13 +17,13 @@ _$EESUpoolImpl _$$EESUpoolImplFromJson(Map<String, dynamic> json) =>
       packagingFee: (json['packaging_fee'] as num?)?.toDouble(),
       isPublic: json['is_public'] as bool? ?? true,
       chatEnabled: json['chat_enabled'] as bool? ?? false,
-      code: json['code'] as int?,
-      addressId: json['address_id'] as int?,
+      code: (json['code'] as num?)?.toInt(),
+      addressId: (json['address_id'] as num?)?.toInt(),
       level: _$JsonConverterFromJson<String, EESUpoolLevel>(
           json['level'], const EESUpoolLevelConverter().fromJson),
       boxCode: json['box_code'] as String?,
       streetCode: json['street_code'] as String?,
-      parentId: json['parent_id'] as int?,
+      parentId: (json['parent_id'] as num?)?.toInt(),
       chatTags: (json['chat_tags'] as List<dynamic>?)
           ?.map((e) => e as String)
           .toList(),
@@ -35,8 +35,8 @@ _$EESUpoolImpl _$$EESUpoolImplFromJson(Map<String, dynamic> json) =>
       isCensored: json['is_censored'] as bool?,
       type: const EESUpoolTypeConverter().fromJson(json['type'] as String),
       memberId: json['member_id'] as String?,
-      numMembers: json['num_members'] as int?,
-      unseenMessages: json['unseen_messages'] as int?,
+      numMembers: (json['num_members'] as num?)?.toInt(),
+      unseenMessages: (json['unseen_messages'] as num?)?.toInt(),
       address: _$JsonConverterFromJson<Map<String, dynamic>, Address>(
           json['address'], const AddressConverter().fromJson),
     );

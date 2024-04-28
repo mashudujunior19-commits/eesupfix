@@ -7,10 +7,10 @@ part of 'order.dart';
 // **************************************************************************
 
 _$OrderImpl _$$OrderImplFromJson(Map<String, dynamic> json) => _$OrderImpl(
-      id: json['id'] as int?,
+      id: (json['id'] as num?)?.toInt(),
       customerId: json['customer_id'] as String,
       eesupreneurId: json['eesupreneur_id'] as String?,
-      eesupoolOrderId: json['eesupool_order_id'] as int?,
+      eesupoolOrderId: (json['eesupool_order_id'] as num?)?.toInt(),
       createdAt: json['created_at'] == null
           ? null
           : DateTime.parse(json['created_at'] as String),
@@ -32,8 +32,8 @@ _$OrderImpl _$$OrderImplFromJson(Map<String, dynamic> json) => _$OrderImpl(
       value: (json['value'] as num).toDouble(),
       paymentMethod: const PaymentMethodConverter()
           .fromJson(json['payment_method'] as String),
-      secretPin: json['secret_pin'] as int,
-      deliveryAddressId: json['delivery_address_id'] as int?,
+      secretPin: (json['secret_pin'] as num).toInt(),
+      deliveryAddressId: (json['delivery_address_id'] as num?)?.toInt(),
       deliveryFee: (json['delivery_fee'] as num?)?.toDouble(),
       cardFee: (json['card_fee'] as num?)?.toDouble(),
       payFeesWithRetailWallet: json['pay_fees_with_retail_wallet'] ?? false,

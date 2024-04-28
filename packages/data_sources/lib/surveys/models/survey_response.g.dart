@@ -10,7 +10,7 @@ _$SurveyResponseImpl _$$SurveyResponseImplFromJson(Map<String, dynamic> json) =>
     _$SurveyResponseImpl(
       userId: json['user_id'] as String,
       surveyId: json['survey_id'] as String,
-      score: json['score'] as int,
+      score: (json['score'] as num).toInt(),
       passed: json['passed'] as bool,
       answers: (json['answers'] as List<dynamic>)
           .map((e) => const QuestionAnswerConverter()
@@ -31,9 +31,9 @@ Map<String, dynamic> _$$SurveyResponseImplToJson(
 
 _$QuestionAnswerImpl _$$QuestionAnswerImplFromJson(Map<String, dynamic> json) =>
     _$QuestionAnswerImpl(
-      questionId: json['question_id'] as int,
-      sliderValue: json['slider_value'] as int?,
-      ratingValue: json['rating_value'] as int?,
+      questionId: (json['question_id'] as num).toInt(),
+      sliderValue: (json['slider_value'] as num?)?.toInt(),
+      ratingValue: (json['rating_value'] as num?)?.toInt(),
       openEndedAnswer: json['open_ended_answer'] as String?,
       recordingUrl: json['recording_url'] as String?,
       files: (json['files'] as List<dynamic>?)

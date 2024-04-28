@@ -8,8 +8,8 @@ part of 'order_ticket.dart';
 
 _$OrderTicketImpl _$$OrderTicketImplFromJson(Map<String, dynamic> json) =>
     _$OrderTicketImpl(
-      id: json['id'] as int?,
-      orderId: json['order_id'] as int,
+      id: (json['id'] as num?)?.toInt(),
+      orderId: (json['order_id'] as num).toInt(),
       createdAt: DateTime.parse(json['created_at'] as String),
       customerComment: json['customer_comment'] as String?,
       eesupreneurComment: json['eesupreneur_comment'] as String?,

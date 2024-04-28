@@ -8,7 +8,7 @@ part of 'notification.dart';
 
 _$NotificationImpl _$$NotificationImplFromJson(Map<String, dynamic> json) =>
     _$NotificationImpl(
-      id: json['id'] as int,
+      id: (json['id'] as num).toInt(),
       title: json['title'] as String,
       body: json['body'] as String?,
       createdAt: DateTime.parse(json['created_at'] as String),

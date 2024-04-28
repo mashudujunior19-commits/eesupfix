@@ -9,7 +9,7 @@ part of 'partner_application.dart';
 _$PartnerApplicationImpl _$$PartnerApplicationImplFromJson(
         Map<String, dynamic> json) =>
     _$PartnerApplicationImpl(
-      id: json['id'] as int,
+      id: (json['id'] as num).toInt(),
       partnerId: json['partner_id'] as String,
       userId: json['user_id'] as String,
       createdAt: json['created_at'] == null
