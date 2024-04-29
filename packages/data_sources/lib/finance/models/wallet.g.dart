@@ -7,7 +7,7 @@ part of 'wallet.dart';
 // **************************************************************************
 
 _$WalletImpl _$$WalletImplFromJson(Map<String, dynamic> json) => _$WalletImpl(
-      id: (json['id'] as num).toInt(),
+      id: json['id'] as int,
       userId: json['user_id'] as String,
       balance: (json['balance'] as num).toDouble(),
       typeId: json['type_id'] as String,
@@ -20,7 +20,7 @@ _$WalletImpl _$$WalletImplFromJson(Map<String, dynamic> json) => _$WalletImpl(
       shopping: json['shopping'] as bool,
       isActive: json['is_active'] as bool,
       requireRsaId: json['require_rsa_id'] as bool,
-      sortNumber: (json['sort_num'] as num).toInt(),
+      sortNumber: json['sort_num'] as int,
     );
 
 Map<String, dynamic> _$$WalletImplToJson(_$WalletImpl instance) =>

@@ -8,8 +8,8 @@ part of 'product.dart';
 
 _$ProductImpl _$$ProductImplFromJson(Map<String, dynamic> json) =>
     _$ProductImpl(
-      id: (json['id'] as num).toInt(),
-      categoryId: (json['category_id'] as num?)?.toInt(),
+      id: json['id'] as int,
+      categoryId: json['category_id'] as int?,
       name: json['name'] as String,
       description: json['description'] as String?,
       imageUrl: json['image_url'] as String?,
@@ -23,9 +23,9 @@ _$ProductImpl _$$ProductImplFromJson(Map<String, dynamic> json) =>
       costPrice: (json['cost_price'] as num?)?.toDouble(),
       vaa: (json['vaa'] as num?)?.toDouble(),
       vat: (json['vat'] as num?)?.toDouble(),
-      orderMax: (json['order_max'] as num?)?.toInt(),
-      childId: (json['child_id'] as num?)?.toInt(),
-      childBreakQty: (json['child_break_qty'] as num?)?.toInt(),
+      orderMax: json['order_max'] as int?,
+      childId: json['child_id'] as int?,
+      childBreakQty: json['child_break_qty'] as int?,
       barCode: json['bar_code'] as String?,
       kitKatRef: json['kit_kat_ref'] as String?,
       vatClaimable: json['vat_claimable'] as bool?,

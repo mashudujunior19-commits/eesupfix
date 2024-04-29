@@ -23,13 +23,13 @@ _$ProfileImpl _$$ProfileImplFromJson(Map<String, dynamic> json) =>
       corpName: json['corp_name'] as String?,
       npcReg: json['npc_reg'] as String?,
       corpReg: json['corp_reg'] as String?,
-      corpAddressId: (json['corp_address_id'] as num?)?.toInt(),
+      corpAddressId: json['corp_address_id'] as int?,
       corpVatNo: json['corp_vat_no'] as String?,
       isApproved: json['is_approved'] as bool?,
       createdAt: json['created_at'] == null
           ? null
           : DateTime.parse(json['created_at'] as String),
-      referralCode: (json['referral_code'] as num?)?.toInt(),
+      referralCode: json['referral_code'] as int?,
       isVerified: json['is_verified'] as bool,
     );
 

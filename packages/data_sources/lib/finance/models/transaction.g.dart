@@ -8,9 +8,9 @@ part of 'transaction.dart';
 
 _$TransactionImpl _$$TransactionImplFromJson(Map<String, dynamic> json) =>
     _$TransactionImpl(
-      id: (json['id'] as num).toInt(),
+      id: json['id'] as int,
       type: json['type'] as String,
-      docRef: (json['doc_ref'] as num).toInt(),
+      docRef: json['doc_ref'] as int,
       value: (json['value'] as num).toDouble(),
       vested: json['vested'] as bool,
       description: json['description'] as String,

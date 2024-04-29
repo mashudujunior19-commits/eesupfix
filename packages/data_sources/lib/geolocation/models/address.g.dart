@@ -8,8 +8,8 @@ part of 'address.dart';
 
 _$AddressImpl _$$AddressImplFromJson(Map<String, dynamic> json) =>
     _$AddressImpl(
-      id: (json['id'] as num?)?.toInt(),
-      areaId: (json['area_id'] as num?)?.toInt(),
+      id: json['id'] as int?,
+      areaId: json['area_id'] as int?,
       userId: json['user_id'] as String?,
       recipientName: json['recipient_name'] as String,
       recipientPhone: json['recipient_phone'] as String,

@@ -12,7 +12,7 @@ _$ReferralImpl _$$ReferralImplFromJson(Map<String, dynamic> json) =>
       refereedUserId: json['refereed_user_id'] as String,
       refereedFullName: json['refereed_full_name'] as String,
       createdAt: DateTime.parse(json['created_at'] as String),
-      transactionId: (json['transaction_id'] as num).toInt(),
+      transactionId: json['transaction_id'] as int,
       isCompleted: json['is_completed'] as bool,
     );
 

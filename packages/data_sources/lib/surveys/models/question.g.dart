@@ -8,7 +8,7 @@ part of 'question.dart';
 
 _$QuestionImpl _$$QuestionImplFromJson(Map<String, dynamic> json) =>
     _$QuestionImpl(
-      questionId: (json['question_id'] as num).toInt(),
+      questionId: json['question_id'] as int,
       question: json['question'] as String,
       type: const QuestionTypeConverter().fromJson(json['type'] as String),
       isRequired: json['is_required'] as bool,
@@ -20,10 +20,10 @@ _$QuestionImpl _$$QuestionImplFromJson(Map<String, dynamic> json) =>
               const OptionConverter().fromJson(e as Map<String, dynamic>))
           .toList(),
       imageUrl: json['image_url'] as String?,
-      numRatings: (json['num_ratings'] as num?)?.toInt(),
-      sliderInterval: (json['slider_interval'] as num?)?.toInt(),
-      sliderMax: (json['slider_max'] as num?)?.toInt(),
-      sliderMin: (json['slider_min'] as num?)?.toInt(),
+      numRatings: json['num_ratings'] as int?,
+      sliderInterval: json['slider_interval'] as int?,
+      sliderMax: json['slider_max'] as int?,
+      sliderMin: json['slider_min'] as int?,
       comment: json['comment'] as String?,
       allowMultipleFiles: json['allow_multiple_files'] as bool? ?? false,
       mediaFileType: json['media_file_type'] as String?,

@@ -7,7 +7,7 @@ part of 'option.dart';
 // **************************************************************************
 
 _$OptionImpl _$$OptionImplFromJson(Map<String, dynamic> json) => _$OptionImpl(
-      optionId: (json['option_id'] as num).toInt(),
+      optionId: json['option_id'] as int,
       option: json['option'] as String,
       isCorrect: json['is_correct'] as bool,
     );

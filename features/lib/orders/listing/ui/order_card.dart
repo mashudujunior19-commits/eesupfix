@@ -1,8 +1,9 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:data_sources/orders/models/order.dart';
+import 'package:either_dart/either.dart';
+import 'package:features/app_route.gr.dart';
 import 'package:features/core/extensions/context_theme_ext.dart';
 import 'package:features/core/extensions/sizedbox_ext.dart';
-import 'package:features/app_route.gr.dart';
 import 'package:features/core/utils/date_formatter.dart';
 import 'package:flutter/material.dart';
 
@@ -21,23 +22,19 @@ class OrderCard extends StatelessWidget {
 
   double totalAmount() {
     double total = 0;
-
     for (var item in order.products) {
       total += item.price * item.quantity;
     }
-
     return total;
   }
 
   String get customer {
     final name = order.fullName;
-
     if (name != null) {
       if (name.trim().isEmpty == false) {
         return order.fullName!;
       }
     }
-
     if (order.corpName != null) {
       if (order.corpName?.isNotEmpty == true) {
         return order.corpName!;
@@ -53,7 +50,7 @@ class OrderCard extends StatelessWidget {
       onTap: onTap ??
           () {
             context.router.push(
-              OrderTrackingRoute(order: order, privilage: privilege),
+              OrderTrackingRoute(params: Right(order), privilage: privilege),
             );
           },
       splashColor: Colors.transparent,
@@ -185,15 +182,12 @@ class OrderCard extends StatelessWidget {
     if (order.readyAt != null) {
       return 'Ready for from ${DateFormatter.formatDateToNamedayWithTime(order.readyAt!)}';
     }
-
     if (order.packagedAt != null) {
       return 'Parkaged at ${DateFormatter.formatDateToNamedayWithTime(order.packagedAt!)}';
     }
-
     if (order.placedAt != null) {
       return 'Placed at ${DateFormatter.formatDateToNamedayWithTime(order.placedAt!)}';
     }
-
     return 'Created at ${DateFormatter.formatDateToNamedayWithTime(order.createdAt!)}';
   }
 

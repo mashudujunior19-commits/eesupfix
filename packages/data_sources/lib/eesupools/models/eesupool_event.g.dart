@@ -9,11 +9,11 @@ part of 'eesupool_event.dart';
 _$EESUpoolEventImpl _$$EESUpoolEventImplFromJson(Map<String, dynamic> json) =>
     _$EESUpoolEventImpl(
       id: json['id'] as String,
-      eesupoolId: (json['eesupool_id'] as num).toInt(),
+      eesupoolId: json['eesupool_id'] as int,
       createdAt: DateTime.parse(json['created_at'] as String),
       title: json['title'] as String,
       notes: json['notes'] as String?,
-      addressId: (json['address_id'] as num?)?.toInt(),
+      addressId: json['address_id'] as int?,
       startAt: DateTime.parse(json['start_at'] as String),
       endAt: DateTime.parse(json['end_at'] as String),
       attendees: (json['attendees'] as List<dynamic>?)

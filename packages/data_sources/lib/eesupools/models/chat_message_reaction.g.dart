@@ -9,7 +9,7 @@ part of 'chat_message_reaction.dart';
 _$ChatMessageReactionImpl _$$ChatMessageReactionImplFromJson(
         Map<String, dynamic> json) =>
     _$ChatMessageReactionImpl(
-      messageId: (json['message_id'] as num).toInt(),
+      messageId: json['message_id'] as int,
       memberId: json['member_id'] as String,
       createdAt: DateTime.parse(json['created_at'] as String),
       memberName: json['member_full_name'] as String,

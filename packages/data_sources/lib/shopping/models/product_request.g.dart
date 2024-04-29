@@ -8,17 +8,17 @@ part of 'product_request.dart';
 
 _$ProductRequestImpl _$$ProductRequestImplFromJson(Map<String, dynamic> json) =>
     _$ProductRequestImpl(
-      id: (json['id'] as num).toInt(),
+      id: json['id'] as int,
       userId: json['user_id'] as String,
       createdAt: json['created_at'] == null
           ? null
           : DateTime.parse(json['created_at'] as String),
-      productId: (json['product_id'] as num?)?.toInt(),
+      productId: json['product_id'] as int?,
       packSize: json['pack_size'] as String,
       type: json['type'] as String,
       brand: json['brand'] as String,
       variant: json['variant'] as String?,
-      quantity: (json['quantity'] as num?)?.toInt(),
+      quantity: json['quantity'] as int?,
     );
 
 Map<String, dynamic> _$$ProductRequestImplToJson(

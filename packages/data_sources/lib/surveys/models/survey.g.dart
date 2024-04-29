@@ -17,12 +17,12 @@ _$SurveyImpl _$$SurveyImplFromJson(Map<String, dynamic> json) => _$SurveyImpl(
       description: json['description'] as String?,
       wallet: json['wallet'] as String?,
       type: const SurveyTypeConverter().fromJson(json['type'] as String),
-      maxResponses: (json['max_responses'] as num?)?.toInt(),
+      maxResponses: json['max_responses'] as int?,
       imageUrl: json['image_url'] as String?,
       videoUrl: json['video_url'] as String?,
       rewardAmount: (json['reward_amount'] as num?)?.toDouble(),
-      duration: (json['duration'] as num?)?.toInt(),
-      points: (json['points'] as num?)?.toInt(),
+      duration: json['duration'] as int?,
+      points: json['points'] as int?,
       respondedAt: json['responded_at'] == null
           ? null
           : DateTime.parse(json['responded_at'] as String),
@@ -33,7 +33,7 @@ _$SurveyImpl _$$SurveyImplFromJson(Map<String, dynamic> json) => _$SurveyImpl(
       preSurvey: _$JsonConverterFromJson<Map<String, dynamic>, Survey>(
           json['pre_survey'], const SurveyConverter().fromJson),
       passed: json['passed'] as bool?,
-      score: (json['score'] as num?)?.toInt(),
+      score: json['score'] as int?,
     );
 
 Map<String, dynamic> _$$SurveyImplToJson(_$SurveyImpl instance) =>

@@ -9,11 +9,11 @@ part of 'basket_product.dart';
 _$BasketProductImpl _$$BasketProductImplFromJson(Map<String, dynamic> json) =>
     _$BasketProductImpl(
       basketId: json['basket_id'] as String,
-      productId: (json['product_id'] as num).toInt(),
+      productId: json['product_id'] as int,
       imageUrl: json['image_url'] as String?,
       category: json['category'] as String,
       name: json['name'] as String,
-      quantity: (json['quantity'] as num).toInt(),
+      quantity: json['quantity'] as int,
       price: (json['price'] as num).toDouble(),
       substituteBrand: json['substitute_brand'] as bool? ?? false,
       substituteVariant: json['substitute_variant'] as bool? ?? false,

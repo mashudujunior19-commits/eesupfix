@@ -11,13 +11,14 @@
 import 'package:auto_route/auto_route.dart' as _i31;
 import 'package:data_sources/auth/models/profile.dart' as _i38;
 import 'package:data_sources/eesupools/models/eesupool.dart' as _i36;
-import 'package:data_sources/finance/models/wallet.dart' as _i42;
+import 'package:data_sources/finance/models/wallet.dart' as _i43;
 import 'package:data_sources/geolocation/models/address.dart' as _i37;
-import 'package:data_sources/orders/models/order.dart' as _i40;
+import 'package:data_sources/orders/models/order.dart' as _i41;
 import 'package:data_sources/orders/models/order_product.dart' as _i35;
-import 'package:data_sources/partners/models/partner.dart' as _i41;
+import 'package:data_sources/partners/models/partner.dart' as _i42;
 import 'package:data_sources/shopping/models/basket.dart' as _i33;
 import 'package:data_sources/shopping/models/category.dart' as _i34;
+import 'package:either_dart/either.dart' as _i40;
 import 'package:features/auth/profile/ui/edit_profile_screen.dart' as _i9;
 import 'package:features/auth/register/ui/register_screen.dart' as _i22;
 import 'package:features/auth/reset_password/reset_password_screen.dart'
@@ -202,7 +203,7 @@ abstract class $AppRouter extends _i31.RootStackRouter {
         routeData: routeData,
         child: _i16.OrderTrackingScreen(
           key: args.key,
-          order: args.order,
+          params: args.params,
           privilage: args.privilage,
         ),
       );
@@ -749,14 +750,14 @@ class MediaFilePreviewUploaderRoute extends _i31.PageRouteInfo<void> {
 class OrderTrackingRoute extends _i31.PageRouteInfo<OrderTrackingRouteArgs> {
   OrderTrackingRoute({
     _i32.Key? key,
-    required _i40.Order order,
-    required _i40.OrderEditPrivilage privilage,
+    required _i40.Either<int, _i41.Order> params,
+    required _i41.OrderEditPrivilage privilage,
     List<_i31.PageRouteInfo>? children,
   }) : super(
           OrderTrackingRoute.name,
           args: OrderTrackingRouteArgs(
             key: key,
-            order: order,
+            params: params,
             privilage: privilage,
           ),
           initialChildren: children,
@@ -771,19 +772,19 @@ class OrderTrackingRoute extends _i31.PageRouteInfo<OrderTrackingRouteArgs> {
 class OrderTrackingRouteArgs {
   const OrderTrackingRouteArgs({
     this.key,
-    required this.order,
+    required this.params,
     required this.privilage,
   });
 
   final _i32.Key? key;
 
-  final _i40.Order order;
+  final _i40.Either<int, _i41.Order> params;
 
-  final _i40.OrderEditPrivilage privilage;
+  final _i41.OrderEditPrivilage privilage;
 
   @override
   String toString() {
-    return 'OrderTrackingRouteArgs{key: $key, order: $order, privilage: $privilage}';
+    return 'OrderTrackingRouteArgs{key: $key, params: $params, privilage: $privilage}';
   }
 }
 
@@ -859,7 +860,7 @@ class OzowRouteArgs {
 class PartnerAppRoute extends _i31.PageRouteInfo<PartnerAppRouteArgs> {
   PartnerAppRoute({
     _i32.Key? key,
-    required _i41.Partner partner,
+    required _i42.Partner partner,
     List<_i31.PageRouteInfo>? children,
   }) : super(
           PartnerAppRoute.name,
@@ -884,7 +885,7 @@ class PartnerAppRouteArgs {
 
   final _i32.Key? key;
 
-  final _i41.Partner partner;
+  final _i42.Partner partner;
 
   @override
   String toString() {
@@ -897,7 +898,7 @@ class PartnerAppRouteArgs {
 class PayoutRoute extends _i31.PageRouteInfo<PayoutRouteArgs> {
   PayoutRoute({
     _i32.Key? key,
-    required _i42.Wallet wallet,
+    required _i43.Wallet wallet,
     List<_i31.PageRouteInfo>? children,
   }) : super(
           PayoutRoute.name,
@@ -922,7 +923,7 @@ class PayoutRouteArgs {
 
   final _i32.Key? key;
 
-  final _i42.Wallet wallet;
+  final _i43.Wallet wallet;
 
   @override
   String toString() {
@@ -1019,7 +1020,7 @@ class StartUpRoute extends _i31.PageRouteInfo<void> {
 class TransferRoute extends _i31.PageRouteInfo<TransferRouteArgs> {
   TransferRoute({
     _i32.Key? key,
-    required _i42.Wallet wallet,
+    required _i43.Wallet wallet,
     List<_i31.PageRouteInfo>? children,
   }) : super(
           TransferRoute.name,
@@ -1044,7 +1045,7 @@ class TransferRouteArgs {
 
   final _i32.Key? key;
 
-  final _i42.Wallet wallet;
+  final _i43.Wallet wallet;
 
   @override
   String toString() {

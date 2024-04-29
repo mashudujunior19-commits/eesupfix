@@ -11,7 +11,7 @@ _$EESUpoolRequestImpl _$$EESUpoolRequestImplFromJson(
     _$EESUpoolRequestImpl(
       userId: json['user_id'] as String,
       createdAt: DateTime.parse(json['created_at'] as String),
-      eesupoolId: (json['eesupool_id'] as num).toInt(),
+      eesupoolId: json['eesupool_id'] as int,
       type: json['request_type'] as String,
       status: json['status'] as String,
       eesupoolName: json['eesupool_name'] as String?,

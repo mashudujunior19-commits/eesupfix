@@ -9,7 +9,7 @@ part of 'day_schedule.dart';
 _$DayScheduleImpl _$$DayScheduleImplFromJson(Map<String, dynamic> json) =>
     _$DayScheduleImpl(
       day: json['day'] as String,
-      index: (json['index'] as num).toInt(),
+      index: json['index'] as int,
       openTime: json['open'] as String,
       closeTime: json['close'] as String,
       isClosed: json['is_closed'] as bool,

@@ -10,8 +10,8 @@ _$NotificationDataImpl _$$NotificationDataImplFromJson(
         Map<String, dynamic> json) =>
     _$NotificationDataImpl(
       userId: json['user_id'] as String?,
-      eesupoolId: (json['eesupool_id'] as num?)?.toInt(),
-      orderId: (json['order_id'] as num?)?.toInt(),
+      eesupoolId: json['eesupool_id'] as int?,
+      orderId: json['order_id'] as int?,
     );
 
 Map<String, dynamic> _$$NotificationDataImplToJson(

@@ -13,9 +13,9 @@ _$VoucherImpl _$$VoucherImplFromJson(Map<String, dynamic> json) =>
       createdAt: DateTime.parse(json['created_at'] as String),
       balance: (json['balance'] as num).toDouble(),
       value: (json['value'] as num).toDouble(),
-      id: (json['id'] as num?)?.toInt(),
+      id: json['id'] as int?,
       cycle: const VoucherCycleConverter().fromJson(json['cycle'] as String),
-      period: (json['period'] as num).toInt(),
+      period: json['period'] as int,
       endDate: DateTime.parse(json['end_date'] as String),
       confirmedAt: json['confirmed_at'] == null
           ? null

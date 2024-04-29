@@ -13,7 +13,7 @@ _$VoucherParameterImpl _$$VoucherParameterImplFromJson(
       createdAt: json['created_at'] == null
           ? null
           : DateTime.parse(json['created_at'] as String),
-      period: (json['period'] as num).toInt(),
+      period: json['period'] as int,
       interest: (json['interest'] as num).toDouble(),
       minimumValue: (json['minimum_value'] as num).toDouble(),
     );

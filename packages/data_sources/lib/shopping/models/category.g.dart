@@ -8,10 +8,10 @@ part of 'category.dart';
 
 _$CategoryImpl _$$CategoryImplFromJson(Map<String, dynamic> json) =>
     _$CategoryImpl(
-      id: (json['id'] as num).toInt(),
-      products: (json['products'] as num?)?.toInt(),
+      id: json['id'] as int,
+      products: json['products'] as int?,
       name: json['name'] as String,
-      parentId: (json['parent_id'] as num?)?.toInt(),
+      parentId: json['parent_id'] as int?,
       imageUrl: json['image_url'] as String?,
     );
 
