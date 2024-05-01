@@ -21,7 +21,7 @@ import 'package:data_sources/shopping/models/category.dart' as _i34;
 import 'package:either_dart/either.dart' as _i40;
 import 'package:features/auth/profile/ui/edit_profile_screen.dart' as _i9;
 import 'package:features/auth/register/ui/register_screen.dart' as _i22;
-import 'package:features/auth/reset_password/reset_password_screen.dart'
+import 'package:features/auth/reset_password/ui/reset_password_screen.dart'
     as _i23;
 import 'package:features/auth/sign_in/ui/sign_in_screen.dart' as _i25;
 import 'package:features/auth/start_up_screen.dart' as _i26;
@@ -262,7 +262,7 @@ abstract class $AppRouter extends _i31.RootStackRouter {
     ResetPasswordRoute.name: (routeData) {
       return _i31.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const _i23.ResetPasswordScreen(),
+        child:  _i23.ResetPasswordScreen(),
       );
     },
     SettingsRoutes.name: (routeData) {

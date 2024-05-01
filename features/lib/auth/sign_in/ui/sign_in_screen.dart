@@ -67,6 +67,7 @@ class SignInScreen extends StatelessWidget {
                         key: const Key('sign_in_button'),
                         child: const Text('Sign In'),
                         onPressed: () {
+                          print(_phone);
                           if (_email == null && _phone == null) {
                             context.snackBarError(
                               'Please enter either email or phone number',
@@ -146,7 +147,7 @@ class _SignInForm extends StatelessWidget {
       children: [
         Container(
           margin: const EdgeInsets.only(top: 25),
-          height: 140,
+          height: 160,
           child: TabContainer(
             childPadding: const EdgeInsets.only(
               left: 10,
@@ -169,7 +170,11 @@ class _SignInForm extends StatelessWidget {
                   _email = email;
                 },
               ),
-              EESUpPhoneTextField(),
+              EESUpPhoneTextField(
+                onChanged: (phone) {
+                  _phone = phone;
+                },
+              ),
             ],
           ),
         ).animate().slideIn(100),
