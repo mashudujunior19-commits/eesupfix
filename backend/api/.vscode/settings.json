@@ -1,0 +1,13 @@
+{
+    "actionButtons": {
+    "defaultColor": "#ff0034",
+    "reloadButton":"♻️",
+    "commands": [
+            {
+                "name": "🏃🏻",
+                "singleInstance": false,
+                "command": "uvicorn main:app --reload",
+            },
+        ]
+    }
+}
