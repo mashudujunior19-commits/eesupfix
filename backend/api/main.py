@@ -1,15 +1,38 @@
-from typing import Union
+import time
+from typing import Dict
 
-from fastapi import FastAPI
-
-app = FastAPI()
-
-
-@app.get("/")
-def read_root():
-    return {"Hello": "World"}
+import jwt
+# from decouple import config
 
 
-@app.get("/items/{item_id}")
-def read_item(item_id: int, q: Union[str, None] = None):
-    return {"item_id": item_id, "q": q}
+JWT_SECRET = 'qwertyuiopasdfgh'
+JWT_ALGORITHM = 'HS256'
+
+
+def token_response(token: str):
+    return {
+        "access_token": token
+    }
+
+# function used for signing the JWT string
+def signJWT(user_id: str) -> Dict[str, str]:
+    payload = {
+        "user_id": user_id,
+        "expires": time.time() + 600
+    }
+    token = jwt.encode(payload, JWT_SECRET, algorithm=JWT_ALGORITHM)
+    return token_response(token)
+
+
+def decodeJWT(token: str) -> dict:
+    try:
+        decoded_token = jwt.decode(jwt = token.encode('utf-8'),key = JWT_SECRET, algorithms=[JWT_ALGORITHM])
+        return decoded_token if decoded_token["expires"] >= time.time() else None
+    except:
+        return None
+
+
+token = signJWT(user_id='id')
+print(token)
+decoded = decodeJWT(token=token['access_token'])
+print(decoded)
