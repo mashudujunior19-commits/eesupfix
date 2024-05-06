@@ -4,7 +4,7 @@ drop function if exists "communities"."get_open_eesupool_order"(pool_id integer)
 
 drop function if exists "communities"."get_open_eesupool_orders"(_user_id uuid, _eesupool_id integer, _limit_to integer);
 
-alter table "communities"."eesupool_order" add column "secret_pin" integer not null default sales.generate_order_secret_pin();
+alter table "communities"."eesupool_order" add column "secret_pin" integer not null default sales.allocate_profit_earnings_for_eesupool_member_orders_trigger();
 
 set check_function_bodies = off;
 

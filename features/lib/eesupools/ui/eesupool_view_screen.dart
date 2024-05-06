@@ -7,7 +7,7 @@ import 'package:features/core/extensions/bg_image_deco_ext.dart';
 import 'package:features/core/extensions/context_theme_ext.dart';
 import 'package:features/eesupools/bloc/eesupool_view_bloc.dart';
 import 'package:features/eesupools/ui/tabs/chats/ui/chat_tab.dart';
-import 'package:features/eesupools/ui/tabs/events/events_tab.dart';
+import 'package:features/eesupools/ui/tabs/events/ui/events_list.dart';
 import 'package:features/eesupools/ui/tabs/members/ui/members_tab.dart';
 import 'package:features/eesupools/ui/tabs/my_kasi_tree/mykasi_tree.dart';
 import 'package:features/eesupools/ui/tabs/orders/ui/orders_tab.dart';
@@ -103,7 +103,7 @@ List<Widget> _getTabBarViews(EESUpool pool) {
     return [
       ChatsTab(pool: pool),
       if (type == EESUpoolType.trade) OrdersPoolTab(pool: pool),
-      const EventsTab(),
+      EventsTab(pool: pool),
       if (type == EESUpoolType.Kasi && level != EESUpoolLevel.Street)
         const MyKasiTreeTab(),
       MembersTab(pool: pool),
@@ -112,7 +112,7 @@ List<Widget> _getTabBarViews(EESUpool pool) {
   } else if (!isAdmin && type == EESUpoolType.interestGroup) {
     return [
       ChatsTab(pool: pool),
-      const EventsTab(),
+      EventsTab(pool: pool),
       MembersTab(pool: pool),
     ];
   } else {

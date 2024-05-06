@@ -1,4 +1,5 @@
 import 'package:bootstrap_icons/bootstrap_icons.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:repository/utils/eesup_exception.dart';
 import 'package:features/core/extensions/context_theme_ext.dart';
 import 'package:features/core/extensions/sizedbox_ext.dart';
@@ -27,40 +28,42 @@ class FullScreenError extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        if (showPopButton) const BackButton(),
-        Padding(
-          padding: const EdgeInsets.only(left: 15, right: 15),
-          child: Center(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Icon(
-                  !isError ? BootstrapIcons.emoji_smile : Icons.error_outline,
-                  color: !isError
-                      ? Colors.grey
-                      : context.colorScheme.error.withOpacity(.4),
-                ),
-                5.sH,
-                Text(
-                  decodeException().message,
-                  style: context.textTheme.labelSmall?.copyWith(
+    return Center(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          if (showPopButton) const BackButton(),
+          Padding(
+            padding: const EdgeInsets.only(left: 15, right: 15),
+            child: Center(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Icon(
+                    !isError ? BootstrapIcons.emoji_smile : Icons.error_outline,
                     color: !isError
                         ? Colors.grey
                         : context.colorScheme.error.withOpacity(.4),
                   ),
-                  textAlign: TextAlign.center,
-                ),
-              ],
+                  5.sH,
+                  Text(
+                    decodeException().message,
+                    style: context.textTheme.labelSmall?.copyWith(
+                      color: !isError
+                          ? Colors.grey
+                          : context.colorScheme.error.withOpacity(.4),
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                ],
+              ),
             ),
-          ),
-        ),
-      ],
+          ).animate().shakeX(),
+        ],
+      ),
     );
   }
 }

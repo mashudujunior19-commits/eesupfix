@@ -83,6 +83,7 @@ DECLARE
     _collection_fee NUMERIC DEFAULT 0.00;
     _packaging_fee NUMERIC DEFAULT 0.00;
     _admin_fee NUMERIC DEFAULT 0.00;
+    _receiving_fee NUMERIC DEFAULT 0.00;
     _pool_fees_rec RECORD;
     _order_earnings RECORD;
     _admin_wallet_id integer;
@@ -118,6 +119,7 @@ BEGIN
 
         -- Calculate fees
         _admin_fee := (_order_earnings.eia_total * _admin_fee) / 100;
+        _receiving_fee := (_order_earnings.eia_total * _) / 100;
         _packaging_fee := (_order_earnings.eia_total * _packaging_fee) / 100;
         _collection_fee := (_order_earnings.eia_total * _collection_fee) / 100;
 

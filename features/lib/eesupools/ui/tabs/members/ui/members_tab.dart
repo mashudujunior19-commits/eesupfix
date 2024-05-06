@@ -6,7 +6,7 @@ import 'package:features/eesupools/ui/tabs/members/ui/members_requests.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:tab_indicator_styler/tab_indicator_styler.dart';
-import 'members_list_view.dart';
+import 'members_list.dart';
 
 class MembersTab extends StatelessWidget {
   const MembersTab({super.key, required this.pool});

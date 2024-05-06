@@ -5,7 +5,6 @@ import 'package:features/core/widgets/fullscreen_error_widget.dart';
 import 'package:features/core/extensions/context_theme_ext.dart';
 import 'package:features/core/extensions/slide_in_animation_ext.dart';
 import 'package:features/core/widgets/fullscreen_loading_shimmer.dart';
-import 'package:features/core/widgets/fullscreen_message_widget.dart';
 import 'package:features/eesupools/ui/tabs/members/bloc/members_invites_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
@@ -29,8 +28,11 @@ class MembersRequests extends StatelessWidget {
             return const FullScreenLoadingShimmer();
           } else if (state is MembersInvitesLoaded) {
             if (state.invites.isEmpty) {
-              return const FullScreenMessageWidget(
-                message: "There are not requests yet.",
+              return FullScreenError(
+                isError: false,
+                exception: EESUpException(
+                  message: "There are not requests yet.",
+                ),
               );
             }
             return ListView.builder(

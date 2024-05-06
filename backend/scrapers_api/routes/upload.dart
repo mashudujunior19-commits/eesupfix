@@ -1,12 +1,9 @@
 import 'dart:io';
-
 import 'package:dart_frog/dart_frog.dart';
-import 'package:eesup_dart_frog/src/scrapers/repositories/scraper_repository.dart';
+import 'package:scrapers_api/repositories/scraper_repository.dart';
 
 Future<Response> onRequest(RequestContext context) async {
   try {
-    // ignore: avoid_print
-    print("Received a post");
     //extract the request from the context
     final request = context.request;
     //check if the request is a post request
@@ -16,7 +13,6 @@ Future<Response> onRequest(RequestContext context) async {
         statusCode: 405,
       );
     }
-
     final body = await request.json();
     final repo = ScraperRepository();
     final results = await repo.uploadProduct(body as Map<String, dynamic>);
@@ -24,7 +20,7 @@ Future<Response> onRequest(RequestContext context) async {
   } catch (e) {
     return Response.json(
       statusCode: HttpStatus.badRequest,
-      body: {"error": "Internal server error"},
+      body: {'error': 'Internal server error'},
     );
   }
 }

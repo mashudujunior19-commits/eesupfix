@@ -1,10 +1,8 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:data_sources/auth/models/profile.dart';
 import 'package:data_sources/auth/models/user_role.dart';
-import 'package:features/auth/otp_auth/ui/otp_auth_dialog.dart';
 import 'package:features/auth/profile/bloc/edit_profile_bloc.dart';
 import 'package:features/core/extensions/bg_image_deco_ext.dart';
-import 'package:features/core/extensions/bottom_sheet_context_ext.dart';
 import 'package:features/core/extensions/context_theme_ext.dart';
 import 'package:features/core/extensions/sizedbox_ext.dart';
 import 'package:features/core/widgets/eesup_form_field.dart';
@@ -13,7 +11,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:loader_overlay/loader_overlay.dart';
 import 'package:repository/auth/profile_repository.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 
 @RoutePage()
 class EditProfileScreen extends StatelessWidget {

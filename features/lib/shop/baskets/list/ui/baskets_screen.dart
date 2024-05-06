@@ -1,7 +1,9 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:bootstrap_icons/bootstrap_icons.dart';
 import 'package:data_sources/shopping/models/basket.dart';
+import 'package:features/core/extensions/bg_image_deco_ext.dart';
 import 'package:features/core/extensions/sizedbox_ext.dart';
-import 'package:features/shop/baskets/listing/ui/create_basket_dialog.dart';
+import 'package:features/shop/baskets/list/ui/create_basket_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 
@@ -13,9 +15,9 @@ import 'package:flutter_iconly/flutter_iconly.dart';
 //   }, (r) => r);
 // });
 
+@RoutePage()
 class BasketsScreen extends StatelessWidget {
   const BasketsScreen({super.key});
-  static const route = '/baskets-screen';
 
   @override
   Widget build(BuildContext context) {
@@ -36,19 +38,19 @@ class BasketsScreen extends StatelessWidget {
             10.sW,
           ],
         ),
-        // body: Container(
-        //   width: double.infinity,
-        //   height: double.infinity,
-        //   decoration: context.bgImage,
-        //   child: ListView.builder(
-        //     padding: const EdgeInsets.only(bottom: 300),
-        //     itemCount: baskets.length,
-        //     itemBuilder: (context, index) {
-        //       final basket = baskets[index];
-        //       return _BasketCard(basket: basket).animate().slideIn(index * 50);
-        //     },
-        //   ),
-        // ),
+        body: Container(
+          width: double.infinity,
+          height: double.infinity,
+          decoration: context.bgImage,
+          child: ListView.builder(
+            padding: const EdgeInsets.only(bottom: 300),
+            itemCount: baskets.length,
+            itemBuilder: (context, index) {
+              final basket = baskets[index];
+              return _BasketCard(basket: basket).animate().slideIn(index * 50);
+            },
+          ),
+        ),
       ),
     );
   }

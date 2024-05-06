@@ -5,7 +5,6 @@ import 'package:features/core/widgets/fullscreen_error_widget.dart';
 import 'package:features/core/extensions/context_theme_ext.dart';
 import 'package:features/core/extensions/slide_in_animation_ext.dart';
 import 'package:features/core/widgets/fullscreen_loading_shimmer.dart';
-import 'package:features/core/widgets/fullscreen_message_widget.dart';
 import 'package:features/eesupools/ui/tabs/members/bloc/members_invites_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
@@ -22,15 +21,20 @@ class MembersInvites extends StatelessWidget {
     return BlocProvider(
       create: (context) =>
           MembersInvitesBloc(context.read<EESUpoolRepository>())
-            ..add(MembersInvitesFetched(pool.eesupoolId!, 50, 'Invite')),
+            ..add(
+              MembersInvitesFetched(pool.eesupoolId!, 50, 'Invite'),
+            ),
       child: BlocBuilder<MembersInvitesBloc, MembersInvitesState>(
         builder: (context, state) {
           if (state is MembersInvitesLoading) {
             return const FullScreenLoadingShimmer();
           } else if (state is MembersInvitesLoaded) {
             if (state.invites.isEmpty) {
-              return const FullScreenMessageWidget(
-                message: "There are not invites yet",
+              return FullScreenError(
+                isError: false,
+                exception: EESUpException(
+                  message: "There are not invites yet",
+                ),
               );
             }
             return ListView.builder(

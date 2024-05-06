@@ -1,10 +1,10 @@
 import 'package:dart_frog/dart_frog.dart';
-import 'package:eesup_dart_frog/src/scrapers/data/providers/scraper_dts.dart';
-import 'package:eesup_dart_frog/src/scrapers/data/models/checkers_product.dart';
-import 'package:eesup_dart_frog/src/scrapers/data/models/kit_kat_product.dart';
-import 'package:eesup_dart_frog/src/scrapers/data/models/makro_product.dart';
-import 'package:eesup_dart_frog/src/scrapers/data/models/pnp_product.dart';
-import 'package:eesup_dart_frog/src/scrapers/data/models/product_reference.dart';
+import 'package:scrapers_api/data/models/checkers_product.dart';
+import 'package:scrapers_api/data/models/kit_kat_product.dart';
+import 'package:scrapers_api/data/models/makro_product.dart';
+import 'package:scrapers_api/data/models/pnp_product.dart';
+import 'package:scrapers_api/data/models/product_reference.dart';
+import 'package:scrapers_api/data/providers/scraper_provider.dart';
 
 class ScraperRepository {
   ///remove the ZAR from the string
@@ -34,7 +34,7 @@ class ScraperRepository {
 
   Future<Response> uploadProduct(Map<String, dynamic> product) async {
     try {
-      final source = product['source'];
+      final source = product['source'].toString();
 
       switch (source) {
         case 'Checkers':
@@ -149,7 +149,6 @@ class ScraperRepository {
               usage: newProduct.description,
               keyword: newProduct.keyword,
             );
-
             final res = await _upload('kit_kat', productRef);
             return res;
           }
@@ -165,9 +164,8 @@ class ScraperRepository {
   }
 
   Future<Response> _upload(String table, ScraperProduct product) async {
-    final dt = ScraperDtsImpl();
+    final dt = ScraperDataProvider();
     final success = await dt.submitProduct(table, product);
-
     if (success) {
       return Response.json(
         body: {'message': 'Product uploaded and verified'},
