@@ -10,6 +10,7 @@ This document outlines the prerequisites, setup instructions, and project direct
 * **Flutter:** Download and install Flutter following the instructions at https://flutter.dev/docs/get-started/install
 * **Melos:** Install globally using `pub global activate melos`  (https://pub.dev/packages/melos)
 * **Dart-Frog:** Install globally using `pub global activate dart_frog` (https://pub.dev/packages/dart_frog)
+* **Python (FastApi):** The Restfull api is currently being reimplemented with FastApi, as it offers robustness and scallablity. (Muturity)
 
 **Melos Usage**
 
