@@ -131,9 +131,18 @@ class AppRouter extends $AppRouter {
           transitionsBuilder: TransitionsBuilders.slideLeftWithFade,
           durationInMilliseconds: 300,
         ),
-
-                CustomRoute(
+        CustomRoute(
           page: EESUpoolOrderViewRoute.page,
+          transitionsBuilder: TransitionsBuilders.slideLeftWithFade,
+          durationInMilliseconds: 300,
+        ),
+        CustomRoute(
+          page: PartnerRoute.page,
+          transitionsBuilder: TransitionsBuilders.slideLeftWithFade,
+          durationInMilliseconds: 300,
+        ),
+        CustomRoute(
+          page: PartnerAppRoute.page,
           transitionsBuilder: TransitionsBuilders.slideLeftWithFade,
           durationInMilliseconds: 300,
         ),

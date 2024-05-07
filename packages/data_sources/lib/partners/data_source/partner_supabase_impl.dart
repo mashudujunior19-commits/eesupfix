@@ -1,3 +1,4 @@
+import 'package:data_sources/auth/models/user_role.dart';
 import 'package:data_sources/partners/data_source/partner_data_source.dart';
 import 'package:data_sources/partners/models/partner.dart';
 import 'package:data_sources/partners/models/partner_application.dart';
@@ -10,13 +11,13 @@ class PartnerSupabaseImpl implements PartnerDataSource {
   PartnerSupabaseImpl(this._client);
 
   @override
-  Future<List<Partner>> fetchPartnerships() async {
+  Future<List<Partner>> fetchPartnerships(UserRole role) async {
     final response = await _client
         .schema('services')
-        .from('partner')
-        .select()
-        .eq('is_open', true);
-    return response.map((e) => Partner.fromJson(e)).toList();
+        .rpc('get_available_partnerships', params: {
+      'role': role.toString(),
+    });
+    return (response as List).map((e) => Partner.fromJson(e)).toList();
   }
 
   @override

@@ -141,44 +141,46 @@ class SummaryStep extends StatelessWidget {
                         value:
                             'R${newOrder?.cardFee?.toStringAsFixed(2) ?? '0.00'}',
                       ),
-                      GestureDetector(
-                        onTap: () {
-                          final value =
-                              !(newOrder?.payFeesWithRetailWallet ?? false);
-                          context
-                              .read<CheckoutBloc>()
-                              .add(PayFeesWithWalletUpdated(value));
-                        },
-                        child: Padding(
-                          padding: const EdgeInsets.only(left: 10),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Expanded(
-                                child: Text(
-                                  '**Tap to Pay the fee with you Retail wallet',
-                                  style: context.textTheme.labelSmall?.copyWith(
-                                    fontSize: 13,
-                                    fontStyle: FontStyle.italic,
-                                    color: Colors.grey.shade700,
+                      if (newOrder?.paymentMethod != PaymentMethod.retailWallet)
+                        GestureDetector(
+                          onTap: () {
+                            final value =
+                                !(newOrder?.payFeesWithRetailWallet ?? false);
+                            context
+                                .read<CheckoutBloc>()
+                                .add(PayFeesWithWalletUpdated(value));
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.only(left: 10),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Expanded(
+                                  child: Text(
+                                    '**Tap to Pay the fee with you Retail wallet',
+                                    style:
+                                        context.textTheme.labelSmall?.copyWith(
+                                      fontSize: 13,
+                                      fontStyle: FontStyle.italic,
+                                      color: Colors.grey.shade700,
+                                    ),
                                   ),
                                 ),
-                              ),
-                              Checkbox(
-                                value:
-                                    newOrder?.payFeesWithRetailWallet ?? false,
-                                onChanged: (value) {
-                                  context.read<CheckoutBloc>().add(
-                                        PayFeesWithWalletUpdated(
-                                            value ?? false),
-                                      );
-                                },
-                                visualDensity: VisualDensity.compact,
-                              ),
-                            ],
+                                Checkbox(
+                                  value: newOrder?.payFeesWithRetailWallet ??
+                                      false,
+                                  onChanged: (value) {
+                                    context.read<CheckoutBloc>().add(
+                                          PayFeesWithWalletUpdated(
+                                              value ?? false),
+                                        );
+                                  },
+                                  visualDensity: VisualDensity.compact,
+                                ),
+                              ],
+                            ),
                           ),
                         ),
-                      ),
                       15.sH,
                     ],
                   ),
@@ -243,9 +245,9 @@ class SummaryStep extends StatelessWidget {
     final sendbox = dotenv.env['INSTAPAY_SENDBOX'];
     final successUrl = dotenv.env['INSAPAY_SUCCESS_URL'];
     final failedUrl = dotenv.env['INSAPAY_FAILED_URL'];
-    // final notifyUrl = dotenv.env['INSAPAY_NOTIFY_URL'];
-    const notifyUrl =
-        'https://zngp5d89-8080.inc1.devtunnels.ms/v1/payments/instapay/notify';
+    final notifyUrl = dotenv.env['INSAPAY_NOTIFY_URL'];
+    // const notifyUrl =
+    //     'https://zngp5d89-8080.inc1.devtunnels.ms/v1/payments/instapay/notify';
 
     if (merchantId == null ||
         accountUUid == null ||

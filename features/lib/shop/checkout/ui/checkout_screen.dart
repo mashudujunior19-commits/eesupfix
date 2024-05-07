@@ -55,10 +55,10 @@ class _CheckoutScreenState extends State<CheckoutScreen>
           appBar: AppBar(
             leading: BackButton(
               onPressed: () {
-                if (index > 0) {
+                if (index > 0 && index != 4) {
                   _tabController.animateTo(index - 1);
                 } else if (index == 4) {
-                  Navigator.pop(context);
+                  Navigator.pop(context, true);
                 } else {
                   Navigator.pop(context);
                 }

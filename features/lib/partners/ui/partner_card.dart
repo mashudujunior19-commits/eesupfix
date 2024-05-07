@@ -1,4 +1,7 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:data_sources/partners/models/partner.dart';
+import 'package:features/app_route.gr.dart';
+import 'package:features/core/extensions/context_theme_ext.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 
@@ -8,12 +11,9 @@ class PartnerCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final textTheme = theme.textTheme;
-    final colorScheme = theme.colorScheme;
     return InkWell(
       onTap: () {
-        // context.push(PartnerAppScreen.route, extra: partner);
+        context.router.push(PartnerAppRoute(partner: partner));
       },
       child: Container(
         margin: const EdgeInsets.only(top: 15, right: 20, left: 20),
@@ -29,20 +29,20 @@ class PartnerCard extends StatelessWidget {
         child: ListTile(
           contentPadding: const EdgeInsets.all(0),
           leading: CircleAvatar(
-            backgroundColor: colorScheme.primary.withOpacity(.1),
+            backgroundColor: context.colorScheme.primary.withOpacity(.1),
             child: Icon(
               IconlyLight.work,
-              color: colorScheme.primary,
+              color: context.colorScheme.primary,
             ),
           ),
           title: Text(partner.title),
           subtitle: Text(
             partner.description,
-            style: textTheme.labelSmall,
+            style: context.textTheme.labelSmall,
           ),
           trailing: Icon(
             IconlyLight.arrowRight2,
-            color: colorScheme.primary,
+            color: context.colorScheme.primary,
             size: 17,
           ),
         ),

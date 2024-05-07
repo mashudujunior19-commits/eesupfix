@@ -107,6 +107,8 @@ class CheckoutBloc extends Bloc<CheckoutEvent, CheckoutState> {
             emit(
               OutstandingPayment(outcome, order.paymentMethod, order),
             );
+          } else if (outcome.outstandingAmount == 0) {
+            emit(CheckoutCompleted(outcome.orderId, true));
           } else {
             emit(CurrentCheckout(order));
           }

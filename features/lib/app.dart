@@ -4,6 +4,7 @@ import 'package:data_sources/eesupools/data_source/eesupool_supabase_impl.dart';
 import 'package:data_sources/finance/data_source/wallet_supabase_impl.dart';
 import 'package:data_sources/geolocation/data_source/geo_supabase_impl.dart';
 import 'package:data_sources/orders/data_source/orders_supabase_impl.dart';
+import 'package:data_sources/partners/data_source/partner_supabase_impl.dart';
 import 'package:data_sources/shopping/data_source/shopping_supabase_impl.dart';
 import 'package:features/core/env/app_type.dart';
 import 'package:features/core/extensions/context_environment_ext.dart';
@@ -18,6 +19,7 @@ import 'package:repository/finances/payment_gateway_repository.dart';
 import 'package:repository/finances/wallets_repository.dart';
 import 'package:repository/geolocation/geo_repository.dart';
 import 'package:repository/orders/order_repository.dart';
+import 'package:repository/partners/partner_repository.dart';
 import 'package:repository/shop/shopping_repository.dart';
 import 'package:features/auth/profile/bloc/profile_bloc.dart';
 import 'package:features/auth/sign_in/bloc/auth_bloc.dart';
@@ -96,6 +98,13 @@ class MainApp extends StatelessWidget {
     ),
   );
 
+  final _partnerRepository = RepositoryProvider(
+    create: (context) => PartnerRepository(
+      PartnerSupabaseImpl(GetIt.I.get<SupabaseClient>()),
+      context.read<AuthRepository>(),
+    ),
+  );
+
   @override
   Widget build(BuildContext context) {
     ///get the correct theme based on the app type (eesup or my kasi)
@@ -112,7 +121,8 @@ class MainApp extends StatelessWidget {
         _ordersRepo,
         _geoRepo,
         _walletsRepo,
-        _paymentGatewayRepo
+        _paymentGatewayRepo,
+        _partnerRepository
       ],
       child: MultiBlocProvider(
         providers: [

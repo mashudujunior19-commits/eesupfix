@@ -3,20 +3,15 @@ import 'package:data_sources/partners/models/partner.dart';
 import 'package:data_sources/partners/models/partner_application.dart';
 import 'package:features/core/extensions/bg_image_deco_ext.dart';
 import 'package:features/core/extensions/slide_in_animation_ext.dart';
+import 'package:features/core/widgets/fullscreen_error_widget.dart';
+import 'package:features/core/widgets/fullscreen_loading_shimmer.dart';
+import 'package:features/partners/bloc/applications_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
-
-
-// final _partnersAppsProvider = FutureProvider.autoDispose
-//     .family<List<PartnerApplication>, String>((ref, id) async {
-//   final repo = ref.watch(partnerRepoProvider);
-//   final results = await repo.fetchPartnerApplications(id);
-//   return results.fold(
-//     (l) => throw l,
-//     (r) => r,
-//   );
-// });
+import 'package:repository/partners/partner_repository.dart';
+import 'package:repository/utils/eesup_exception.dart';
 
 @RoutePage()
 class PartnerAppScreen extends StatelessWidget {
@@ -28,77 +23,96 @@ class PartnerAppScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final apps = [];
-    return SafeArea(
-      child: Scaffold(
-        appBar: AppBar(
-          leading: const BackButton(),
-          title: Text(partner.title),
-          actions: [
-            IconButton(
-              onPressed: () async {
-                // if (_currentAppsCount == partner.maxApps) {
-                //   context.snackBarError(
-                //     'You can only apply for ${partner.maxApps} applications at a time.',
-                //   );
-                //   return;
-                // }
+    return BlocProvider(
+      create: (context) => ApplicationsBloc(context.read<PartnerRepository>())
+        ..add(ApplicationsFetched(partner.id)),
+      child: SafeArea(
+        child: Scaffold(
+          appBar: AppBar(
+            leading: const BackButton(),
+            title: Text(partner.title),
+            actions: [
+              IconButton(
+                onPressed: () async {
+                  // if (_currentAppsCount == partner.maxApps) {
+                  //   context.snackBarError(
+                  //     'You can only apply for ${partner.maxApps} applications at a time.',
+                  //   );
+                  //   return;
+                  // }
 
-                // if (context.loaderOverlay.visible) return;
+                  // if (context.loaderOverlay.visible) return;
 
-                // context.loaderOverlay.show();
-                // final result = await ref
-                //     .read(partnerRepoProvider)
-                //     .createPartnerApplications(partner.id);
-                // if (context.mounted) {
-                //   context.loaderOverlay.hide();
-                // }
+                  // context.loaderOverlay.show();
+                  // final result = await ref
+                  //     .read(partnerRepoProvider)
+                  //     .createPartnerApplications(partner.id);
+                  // if (context.mounted) {
+                  //   context.loaderOverlay.hide();
+                  // }
 
-                // result.fold(
-                //   (l) {
-                //     context.snackBarError(l.message);
-                //   },
-                //   (r) {
-                //     if (r == 0) {
-                //       context.snackBarError(
-                //         'Your current account type is not allowed to create an'
-                //         ' application for this Service. for more information, refer to EESUp\'s'
-                //         'Youtube channel or contact support.',
-                //       );
-                //       return;
-                //     }
+                  // result.fold(
+                  //   (l) {
+                  //     context.snackBarError(l.message);
+                  //   },
+                  //   (r) {
+                  //     if (r == 0) {
+                  //       context.snackBarError(
+                  //         'Your current account type is not allowed to create an'
+                  //         ' application for this Service. for more information, refer to EESUp\'s'
+                  //         'Youtube channel or contact support.',
+                  //       );
+                  //       return;
+                  //     }
 
-                //     if (r == 1) {
-                //       context.snackBarError(
-                //         'Failed to create an appplication. if this error'
-                //         ' persists, please contact support.',
-                //       );
-                //       return;
-                //     }
+                  //     if (r == 1) {
+                  //       context.snackBarError(
+                  //         'Failed to create an appplication. if this error'
+                  //         ' persists, please contact support.',
+                  //       );
+                  //       return;
+                  //     }
 
-                //     ref.invalidate(_partnersAppsProvider(partner.id));
-                //     context.snackBarSuccess(
-                //       'Applcation started, complete the questioneers.',
-                //     );
-                //   },
-                // );
+                  //     ref.invalidate(_partnersAppsProvider(partner.id));
+                  //     context.snackBarSuccess(
+                  //       'Applcation started, complete the questioneers.',
+                  //     );
+                  //   },
+                  // );
+                },
+                icon: const Icon(Icons.add),
+              ),
+            ],
+          ),
+          body: Container(
+            decoration: context.bgImage,
+            height: double.infinity,
+            width: double.infinity,
+            child: BlocBuilder<ApplicationsBloc, ApplicationsState>(
+              builder: (context, state) {
+                if (state is ApplicationsLoaded) {
+                  final apps = state.applications;
+                  return ListView.builder(
+                    itemCount: apps.length,
+                    itemBuilder: (context, index) {
+                      final app = apps[index];
+                      return _ApplicationCard(app: app, partner: partner)
+                          .animate()
+                          .slideIn(index * 50);
+                    },
+                  );
+                } else if (state is ApplicationsLoading) {
+                  return const FullScreenLoadingShimmer();
+                } else if (state is ApplicationsError) {
+                  return FullScreenError(exception: state.exception);
+                } else {
+                  return FullScreenError(
+                    exception: EESUpException(message: ''),
+                    isError: false,
+                  );
+                }
               },
-              icon: const Icon(Icons.add),
             ),
-          ],
-        ),
-        body: Container(
-          decoration: context.bgImage,
-          height: double.infinity,
-          width: double.infinity,
-          child: ListView.builder(
-            itemCount: apps.length,
-            itemBuilder: (context, index) {
-              final app = apps[index];
-              return _ApplicationCard(app: app, partner: partner)
-                  .animate()
-                  .slideIn(index * 50);
-            },
           ),
         ),
       ),

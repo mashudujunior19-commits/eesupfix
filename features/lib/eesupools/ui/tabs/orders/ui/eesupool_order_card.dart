@@ -14,7 +14,7 @@ class EESUpoolOrderCard extends StatelessWidget {
     this.onTap,
     required this.pool,
   });
-  final EESUpool pool;
+  final EESUpool? pool;
   final EESUpoolOrder order;
   final void Function()? onTap;
 
@@ -25,9 +25,11 @@ class EESUpoolOrderCard extends StatelessWidget {
     return InkWell(
       onTap: onTap ??
           () {
-            context.router.push(
-              EESUpoolOrderViewRoute(pool: pool, order: order),
-            );
+            if (pool != null) {
+              context.router.push(
+                EESUpoolOrderViewRoute(pool: pool!, order: order),
+              );
+            }
           },
       child: Container(
         margin: const EdgeInsets.only(right: 15, left: 15, top: 15),

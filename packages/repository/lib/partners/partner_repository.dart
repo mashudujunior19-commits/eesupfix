@@ -1,3 +1,4 @@
+import 'package:data_sources/auth/models/user_role.dart';
 import 'package:either_dart/either.dart';
 import 'package:data_sources/partners/data_source/partner_data_source.dart';
 import 'package:data_sources/partners/models/partner.dart';
@@ -12,9 +13,10 @@ class PartnerRepository {
 
   PartnerRepository(this.dataSource, this.authRepo);
 
-  Future<Either<EESUpException, List<Partner>>> fetchPartnerships() async {
+  Future<Either<EESUpException, List<Partner>>> fetchPartnerships(
+      UserRole role) async {
     final results = await authRepo.executeFutureWithAuth((_) {
-      return dataSource.fetchPartnerships();
+      return dataSource.fetchPartnerships(role);
     });
     return results;
   }

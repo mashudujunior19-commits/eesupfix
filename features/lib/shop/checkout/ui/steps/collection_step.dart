@@ -1,3 +1,4 @@
+import 'package:data_sources/eesupools/models/eesupool.dart';
 import 'package:data_sources/eesupools/models/eesupool_order.dart';
 import 'package:data_sources/eesupreneur/data_source/eesupreneur_supabase_data_soruce.dart';
 import 'package:data_sources/eesupreneur/models/eesupreneur.dart';
@@ -5,9 +6,12 @@ import 'package:features/core/extensions/context_alerts_ext.dart';
 import 'package:features/core/extensions/context_theme_ext.dart';
 import 'package:features/core/extensions/sizedbox_ext.dart';
 import 'package:features/core/extensions/slide_in_animation_ext.dart';
+import 'package:features/core/widgets/fullscreen_error_widget.dart';
 import 'package:features/core/widgets/fullscreen_loading_shimmer.dart';
+import 'package:features/eesupools/ui/tabs/orders/ui/eesupool_order_card.dart';
 import 'package:features/shop/checkout/bloc/checkout_bloc.dart';
 import 'package:features/shop/checkout/bloc/collection_points_bloc.dart';
+import 'package:features/shop/checkout/bloc/open_eesupool_orders_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -17,6 +21,7 @@ import 'package:loader_overlay/loader_overlay.dart';
 import 'package:repository/auth/auth_repository.dart';
 import 'package:repository/eesupools/eesupool_repo.dart';
 import 'package:repository/partners/eesupreneur_repository.dart';
+import 'package:repository/utils/eesup_exception.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:tab_indicator_styler/tab_indicator_styler.dart';
 
@@ -25,6 +30,7 @@ class CollectionStep extends StatelessWidget {
     super.key,
     required this.tabController,
   });
+
   final TabController tabController;
 
   @override
@@ -72,7 +78,10 @@ class CollectionStep extends StatelessWidget {
                                 shops: shops,
                                 tabController: tabController,
                               ),
-                              _OrdersTab(orders: orders),
+                              _OrdersTab(
+                                orders: orders,
+                                tabController: tabController,
+                              ),
                             ],
                           ),
                         ),
@@ -95,7 +104,6 @@ class CollectionStep extends StatelessWidget {
 
 class _ShopsTab extends StatelessWidget {
   const _ShopsTab({
-    super.key,
     required this.tabController,
     required this.shops,
   });
@@ -118,12 +126,63 @@ class _ShopsTab extends StatelessWidget {
 }
 
 class _OrdersTab extends StatelessWidget {
-  const _OrdersTab({super.key, required this.orders});
+  const _OrdersTab({
+    required this.orders,
+    required this.tabController,
+  });
   final List<EESUpoolOrder> orders;
+  final TabController tabController;
 
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return BlocProvider(
+      create: (context) =>
+          OpenEESUpoolOrdersBloc(context.read<EESUpoolRepository>())
+            ..add(OpenOrdersFetched()),
+      child: BlocBuilder<OpenEESUpoolOrdersBloc, OpenEesUpoolOrdersState>(
+        builder: (context, state) {
+          if (state is OpenEESUpoolOrdersLoaded) {
+            final orders = state.openOrders;
+            if (orders.isNotEmpty) {
+              return ListView.builder(
+                itemBuilder: (context, index) {
+                  final order = orders[index];
+                  return EESUpoolOrderCard(
+                    order: order,
+                    pool: null,
+                    onTap: () {
+                      context.read<CheckoutBloc>().add(
+                            CollectionPointUpdated(null, order.id, null),
+                          );
+                      tabController.animateTo(tabController.index + 1);
+                    },
+                  );
+                },
+                itemCount: orders.length,
+              );
+            } else {
+              return FullScreenError(
+                isError: false,
+                exception: EESUpException(
+                  message: 'There are no available orders at the moment.',
+                ),
+              );
+            }
+          } else if (state is OpenEESUpoolOrdersLoading) {
+            return const FullScreenLoadingShimmer();
+          } else if (state is OpenEESUpoolOrdersError) {
+            return FullScreenError(exception: state.exception);
+          } else {
+            return FullScreenError(
+              exception: EESUpException(
+                message: 'Something went wrong while'
+                    ' trying to fetch open orders.',
+              ),
+            );
+          }
+        },
+      ),
+    );
   }
 }
 
