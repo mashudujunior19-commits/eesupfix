@@ -108,4 +108,12 @@ extension BasketRepository on ShoppingRepository {
     });
     return result.fold((ex) => Left(ex), (baskets) => Right(baskets));
   }
+
+  Future<Either<EESUpException, bool>> updateBasketProduct(
+    BasketProduct product,
+  ) async {
+    final result = await authRepository.executeFutureWithAuth(
+        (_) => shoppingDataSrc.updateBasketProduct(product));
+    return result.fold((ex) => Left(ex), (baskets) => Right(baskets));
+  }
 }

@@ -186,7 +186,7 @@ extension EESUpoolMembersRepo on EESUpoolRepository {
   Future<Either<EESUpException, dynamic>> searchKasiStreetPoolsById(
       int parentId, int limit) async {
     final result = authRepository.executeFutureWithAuth((id) {
-      final r = dataSource.KasiStreetsSearch(
+      final r = dataSource.kasiStreetsSearch(
           parentId: parentId, userId: id, limit: limit);
       return r;
     });

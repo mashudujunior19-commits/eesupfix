@@ -32,8 +32,6 @@ mixin _$EESUpoolOrder {
   DateTime get closesAt => throw _privateConstructorUsedError;
   @JsonKey(name: 'secret_pin')
   int? get secretPin => throw _privateConstructorUsedError;
-  @JsonKey(name: 'receiver_id')
-  String? get receiverId => throw _privateConstructorUsedError;
   @JsonKey(name: 'delivered_at')
   DateTime? get deliveredAt => throw _privateConstructorUsedError;
   @JsonKey(name: 'admin_fee')
@@ -51,8 +49,8 @@ mixin _$EESUpoolOrder {
   @JsonKey(name: 'eesupool_name', includeToJson: false)
   String? get eesupoolName => throw _privateConstructorUsedError;
   @EESUpoolMemberConverter()
-  @JsonKey(name: 'receiver', includeToJson: false)
-  EESUpoolMember? get receiver => throw _privateConstructorUsedError;
+  @JsonKey(name: 'receivers', includeToJson: false, includeFromJson: false)
+  List<EESUpoolMember>? get receivers => throw _privateConstructorUsedError;
   @AddressConverter()
   @JsonKey(includeToJson: false)
   Address? get address => throw _privateConstructorUsedError;
@@ -80,7 +78,6 @@ abstract class $EESUpoolOrderCopyWith<$Res> {
       @JsonKey(name: 'schedule_for') DateTime scheduleFor,
       @JsonKey(name: 'closes_at') DateTime closesAt,
       @JsonKey(name: 'secret_pin') int? secretPin,
-      @JsonKey(name: 'receiver_id') String? receiverId,
       @JsonKey(name: 'delivered_at') DateTime? deliveredAt,
       @JsonKey(name: 'admin_fee') double? adminFee,
       @JsonKey(name: 'packer_fee') double? packerFee,
@@ -90,14 +87,13 @@ abstract class $EESUpoolOrderCopyWith<$Res> {
       @JsonKey(name: 'eesupool_name', includeToJson: false)
       String? eesupoolName,
       @EESUpoolMemberConverter()
-      @JsonKey(name: 'receiver', includeToJson: false)
-      EESUpoolMember? receiver,
+      @JsonKey(name: 'receivers', includeToJson: false, includeFromJson: false)
+      List<EESUpoolMember>? receivers,
       @AddressConverter() @JsonKey(includeToJson: false) Address? address,
       @JsonKey(name: 'orders_count', includeToJson: false) int ordersCount,
       @JsonKey(name: 'current_amount', includeToJson: false)
       double currentAmount});
 
-  $EESUpoolMemberCopyWith<$Res>? get receiver;
   $AddressCopyWith<$Res>? get address;
 }
 
@@ -120,7 +116,6 @@ class _$EESUpoolOrderCopyWithImpl<$Res, $Val extends EESUpoolOrder>
     Object? scheduleFor = null,
     Object? closesAt = null,
     Object? secretPin = freezed,
-    Object? receiverId = freezed,
     Object? deliveredAt = freezed,
     Object? adminFee = freezed,
     Object? packerFee = freezed,
@@ -128,7 +123,7 @@ class _$EESUpoolOrderCopyWithImpl<$Res, $Val extends EESUpoolOrder>
     Object? collectionFee = freezed,
     Object? addressId = freezed,
     Object? eesupoolName = freezed,
-    Object? receiver = freezed,
+    Object? receivers = freezed,
     Object? address = freezed,
     Object? ordersCount = null,
     Object? currentAmount = null,
@@ -158,10 +153,6 @@ class _$EESUpoolOrderCopyWithImpl<$Res, $Val extends EESUpoolOrder>
           ? _value.secretPin
           : secretPin // ignore: cast_nullable_to_non_nullable
               as int?,
-      receiverId: freezed == receiverId
-          ? _value.receiverId
-          : receiverId // ignore: cast_nullable_to_non_nullable
-              as String?,
       deliveredAt: freezed == deliveredAt
           ? _value.deliveredAt
           : deliveredAt // ignore: cast_nullable_to_non_nullable
@@ -190,10 +181,10 @@ class _$EESUpoolOrderCopyWithImpl<$Res, $Val extends EESUpoolOrder>
           ? _value.eesupoolName
           : eesupoolName // ignore: cast_nullable_to_non_nullable
               as String?,
-      receiver: freezed == receiver
-          ? _value.receiver
-          : receiver // ignore: cast_nullable_to_non_nullable
-              as EESUpoolMember?,
+      receivers: freezed == receivers
+          ? _value.receivers
+          : receivers // ignore: cast_nullable_to_non_nullable
+              as List<EESUpoolMember>?,
       address: freezed == address
           ? _value.address
           : address // ignore: cast_nullable_to_non_nullable
@@ -207,18 +198,6 @@ class _$EESUpoolOrderCopyWithImpl<$Res, $Val extends EESUpoolOrder>
           : currentAmount // ignore: cast_nullable_to_non_nullable
               as double,
     ) as $Val);
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $EESUpoolMemberCopyWith<$Res>? get receiver {
-    if (_value.receiver == null) {
-      return null;
-    }
-
-    return $EESUpoolMemberCopyWith<$Res>(_value.receiver!, (value) {
-      return _then(_value.copyWith(receiver: value) as $Val);
-    });
   }
 
   @override
@@ -249,7 +228,6 @@ abstract class _$$EESUpoolOrderImplCopyWith<$Res>
       @JsonKey(name: 'schedule_for') DateTime scheduleFor,
       @JsonKey(name: 'closes_at') DateTime closesAt,
       @JsonKey(name: 'secret_pin') int? secretPin,
-      @JsonKey(name: 'receiver_id') String? receiverId,
       @JsonKey(name: 'delivered_at') DateTime? deliveredAt,
       @JsonKey(name: 'admin_fee') double? adminFee,
       @JsonKey(name: 'packer_fee') double? packerFee,
@@ -259,15 +237,13 @@ abstract class _$$EESUpoolOrderImplCopyWith<$Res>
       @JsonKey(name: 'eesupool_name', includeToJson: false)
       String? eesupoolName,
       @EESUpoolMemberConverter()
-      @JsonKey(name: 'receiver', includeToJson: false)
-      EESUpoolMember? receiver,
+      @JsonKey(name: 'receivers', includeToJson: false, includeFromJson: false)
+      List<EESUpoolMember>? receivers,
       @AddressConverter() @JsonKey(includeToJson: false) Address? address,
       @JsonKey(name: 'orders_count', includeToJson: false) int ordersCount,
       @JsonKey(name: 'current_amount', includeToJson: false)
       double currentAmount});
 
-  @override
-  $EESUpoolMemberCopyWith<$Res>? get receiver;
   @override
   $AddressCopyWith<$Res>? get address;
 }
@@ -289,7 +265,6 @@ class __$$EESUpoolOrderImplCopyWithImpl<$Res>
     Object? scheduleFor = null,
     Object? closesAt = null,
     Object? secretPin = freezed,
-    Object? receiverId = freezed,
     Object? deliveredAt = freezed,
     Object? adminFee = freezed,
     Object? packerFee = freezed,
@@ -297,7 +272,7 @@ class __$$EESUpoolOrderImplCopyWithImpl<$Res>
     Object? collectionFee = freezed,
     Object? addressId = freezed,
     Object? eesupoolName = freezed,
-    Object? receiver = freezed,
+    Object? receivers = freezed,
     Object? address = freezed,
     Object? ordersCount = null,
     Object? currentAmount = null,
@@ -327,10 +302,6 @@ class __$$EESUpoolOrderImplCopyWithImpl<$Res>
           ? _value.secretPin
           : secretPin // ignore: cast_nullable_to_non_nullable
               as int?,
-      receiverId: freezed == receiverId
-          ? _value.receiverId
-          : receiverId // ignore: cast_nullable_to_non_nullable
-              as String?,
       deliveredAt: freezed == deliveredAt
           ? _value.deliveredAt
           : deliveredAt // ignore: cast_nullable_to_non_nullable
@@ -359,10 +330,10 @@ class __$$EESUpoolOrderImplCopyWithImpl<$Res>
           ? _value.eesupoolName
           : eesupoolName // ignore: cast_nullable_to_non_nullable
               as String?,
-      receiver: freezed == receiver
-          ? _value.receiver
-          : receiver // ignore: cast_nullable_to_non_nullable
-              as EESUpoolMember?,
+      receivers: freezed == receivers
+          ? _value._receivers
+          : receivers // ignore: cast_nullable_to_non_nullable
+              as List<EESUpoolMember>?,
       address: freezed == address
           ? _value.address
           : address // ignore: cast_nullable_to_non_nullable
@@ -389,7 +360,6 @@ class _$EESUpoolOrderImpl implements _EESUpoolOrder {
       @JsonKey(name: 'schedule_for') required this.scheduleFor,
       @JsonKey(name: 'closes_at') required this.closesAt,
       @JsonKey(name: 'secret_pin') this.secretPin,
-      @JsonKey(name: 'receiver_id') this.receiverId,
       @JsonKey(name: 'delivered_at') this.deliveredAt,
       @JsonKey(name: 'admin_fee') this.adminFee,
       @JsonKey(name: 'packer_fee') this.packerFee,
@@ -398,12 +368,13 @@ class _$EESUpoolOrderImpl implements _EESUpoolOrder {
       @JsonKey(name: 'address_id') this.addressId,
       @JsonKey(name: 'eesupool_name', includeToJson: false) this.eesupoolName,
       @EESUpoolMemberConverter()
-      @JsonKey(name: 'receiver', includeToJson: false)
-      this.receiver,
+      @JsonKey(name: 'receivers', includeToJson: false, includeFromJson: false)
+      final List<EESUpoolMember>? receivers,
       @AddressConverter() @JsonKey(includeToJson: false) this.address,
       @JsonKey(name: 'orders_count', includeToJson: false) this.ordersCount = 0,
       @JsonKey(name: 'current_amount', includeToJson: false)
-      this.currentAmount = 0.00});
+      this.currentAmount = 0.00})
+      : _receivers = receivers;
 
   factory _$EESUpoolOrderImpl.fromJson(Map<String, dynamic> json) =>
       _$$EESUpoolOrderImplFromJson(json);
@@ -427,9 +398,6 @@ class _$EESUpoolOrderImpl implements _EESUpoolOrder {
   @JsonKey(name: 'secret_pin')
   final int? secretPin;
   @override
-  @JsonKey(name: 'receiver_id')
-  final String? receiverId;
-  @override
   @JsonKey(name: 'delivered_at')
   final DateTime? deliveredAt;
   @override
@@ -452,10 +420,18 @@ class _$EESUpoolOrderImpl implements _EESUpoolOrder {
   @override
   @JsonKey(name: 'eesupool_name', includeToJson: false)
   final String? eesupoolName;
+  final List<EESUpoolMember>? _receivers;
   @override
   @EESUpoolMemberConverter()
-  @JsonKey(name: 'receiver', includeToJson: false)
-  final EESUpoolMember? receiver;
+  @JsonKey(name: 'receivers', includeToJson: false, includeFromJson: false)
+  List<EESUpoolMember>? get receivers {
+    final value = _receivers;
+    if (value == null) return null;
+    if (_receivers is EqualUnmodifiableListView) return _receivers;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
+
   @override
   @AddressConverter()
   @JsonKey(includeToJson: false)
@@ -469,7 +445,7 @@ class _$EESUpoolOrderImpl implements _EESUpoolOrder {
 
   @override
   String toString() {
-    return 'EESUpoolOrder(id: $id, eesupoolId: $eesupoolId, createdAt: $createdAt, scheduleFor: $scheduleFor, closesAt: $closesAt, secretPin: $secretPin, receiverId: $receiverId, deliveredAt: $deliveredAt, adminFee: $adminFee, packerFee: $packerFee, receiverFee: $receiverFee, collectionFee: $collectionFee, addressId: $addressId, eesupoolName: $eesupoolName, receiver: $receiver, address: $address, ordersCount: $ordersCount, currentAmount: $currentAmount)';
+    return 'EESUpoolOrder(id: $id, eesupoolId: $eesupoolId, createdAt: $createdAt, scheduleFor: $scheduleFor, closesAt: $closesAt, secretPin: $secretPin, deliveredAt: $deliveredAt, adminFee: $adminFee, packerFee: $packerFee, receiverFee: $receiverFee, collectionFee: $collectionFee, addressId: $addressId, eesupoolName: $eesupoolName, receivers: $receivers, address: $address, ordersCount: $ordersCount, currentAmount: $currentAmount)';
   }
 
   @override
@@ -488,8 +464,6 @@ class _$EESUpoolOrderImpl implements _EESUpoolOrder {
                 other.closesAt == closesAt) &&
             (identical(other.secretPin, secretPin) ||
                 other.secretPin == secretPin) &&
-            (identical(other.receiverId, receiverId) ||
-                other.receiverId == receiverId) &&
             (identical(other.deliveredAt, deliveredAt) ||
                 other.deliveredAt == deliveredAt) &&
             (identical(other.adminFee, adminFee) ||
@@ -504,8 +478,8 @@ class _$EESUpoolOrderImpl implements _EESUpoolOrder {
                 other.addressId == addressId) &&
             (identical(other.eesupoolName, eesupoolName) ||
                 other.eesupoolName == eesupoolName) &&
-            (identical(other.receiver, receiver) ||
-                other.receiver == receiver) &&
+            const DeepCollectionEquality()
+                .equals(other._receivers, _receivers) &&
             (identical(other.address, address) || other.address == address) &&
             (identical(other.ordersCount, ordersCount) ||
                 other.ordersCount == ordersCount) &&
@@ -523,7 +497,6 @@ class _$EESUpoolOrderImpl implements _EESUpoolOrder {
       scheduleFor,
       closesAt,
       secretPin,
-      receiverId,
       deliveredAt,
       adminFee,
       packerFee,
@@ -531,7 +504,7 @@ class _$EESUpoolOrderImpl implements _EESUpoolOrder {
       collectionFee,
       addressId,
       eesupoolName,
-      receiver,
+      const DeepCollectionEquality().hash(_receivers),
       address,
       ordersCount,
       currentAmount);
@@ -558,7 +531,6 @@ abstract class _EESUpoolOrder implements EESUpoolOrder {
       @JsonKey(name: 'schedule_for') required final DateTime scheduleFor,
       @JsonKey(name: 'closes_at') required final DateTime closesAt,
       @JsonKey(name: 'secret_pin') final int? secretPin,
-      @JsonKey(name: 'receiver_id') final String? receiverId,
       @JsonKey(name: 'delivered_at') final DateTime? deliveredAt,
       @JsonKey(name: 'admin_fee') final double? adminFee,
       @JsonKey(name: 'packer_fee') final double? packerFee,
@@ -568,8 +540,8 @@ abstract class _EESUpoolOrder implements EESUpoolOrder {
       @JsonKey(name: 'eesupool_name', includeToJson: false)
       final String? eesupoolName,
       @EESUpoolMemberConverter()
-      @JsonKey(name: 'receiver', includeToJson: false)
-      final EESUpoolMember? receiver,
+      @JsonKey(name: 'receivers', includeToJson: false, includeFromJson: false)
+      final List<EESUpoolMember>? receivers,
       @AddressConverter() @JsonKey(includeToJson: false) final Address? address,
       @JsonKey(name: 'orders_count', includeToJson: false)
       final int ordersCount,
@@ -598,9 +570,6 @@ abstract class _EESUpoolOrder implements EESUpoolOrder {
   @JsonKey(name: 'secret_pin')
   int? get secretPin;
   @override
-  @JsonKey(name: 'receiver_id')
-  String? get receiverId;
-  @override
   @JsonKey(name: 'delivered_at')
   DateTime? get deliveredAt;
   @override
@@ -625,8 +594,8 @@ abstract class _EESUpoolOrder implements EESUpoolOrder {
   String? get eesupoolName;
   @override
   @EESUpoolMemberConverter()
-  @JsonKey(name: 'receiver', includeToJson: false)
-  EESUpoolMember? get receiver;
+  @JsonKey(name: 'receivers', includeToJson: false, includeFromJson: false)
+  List<EESUpoolMember>? get receivers;
   @override
   @AddressConverter()
   @JsonKey(includeToJson: false)

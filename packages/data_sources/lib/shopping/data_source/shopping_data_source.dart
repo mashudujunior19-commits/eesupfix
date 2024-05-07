@@ -58,6 +58,7 @@ abstract class ShoppingDataSource {
   Future<List<ProductRequest>> fetchProductRequests(String userId);
   Future<bool> createProductRequest(ProductRequest request);
   Future<bool> deleteProductRequest(int id);
+  Future<bool> updateBasketProduct(BasketProduct product);
 
   Future<bool> updateBasketProductSubstitute(
     String basketId,

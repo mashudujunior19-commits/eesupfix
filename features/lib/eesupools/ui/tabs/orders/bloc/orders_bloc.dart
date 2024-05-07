@@ -13,14 +13,24 @@ class OrdersBloc extends Bloc<OrdersEvent, OrdersState> {
   OrdersBloc(this._poolRepo) : super(OrdersLoading()) {
     on<PoolOrdersFetched>((event, emit) async {
       emit(OrdersLoading());
-      final results = await _poolRepo.fetchEESUpoolOrders(
+      late final List<EESUpoolOrder> orders;
+      EESUpoolOrder? openOrder;
+      final openRes = await _poolRepo.fetchOpenOrder(event.poolId);
+      final ordersRes = await _poolRepo.fetchEESUpoolOrders(
         event.poolId,
         event.limit,
       );
-
-      results.fold((l) {}, (r) {
-        emit(OrdersLoaded(r));
+      ordersRes.fold((l) {
+        emit(OrdersError(l));
+      }, (r) {
+        orders = r;
       });
+      openRes.fold((left) {
+        emit(OrdersError(left));
+      }, (right) {
+        openOrder = right;
+      });
+      emit(OrdersLoaded(openOrder, orders));
     });
   }
 }

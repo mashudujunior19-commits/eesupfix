@@ -136,8 +136,7 @@ abstract class EESUpoolDataSource {
   Future<EESUpoolOrder?> fetchEESUpoolOpenOrder(int poolId);
 
   Future<bool> joinKasi(String userId, int poolId);
-
-  Future<dynamic> KasiStreetsSearch({
+  Future<dynamic> kasiStreetsSearch({
     required int parentId,
     required String userId,
     required int limit,

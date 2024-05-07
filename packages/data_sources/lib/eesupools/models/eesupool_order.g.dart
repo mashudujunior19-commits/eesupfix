@@ -14,7 +14,6 @@ _$EESUpoolOrderImpl _$$EESUpoolOrderImplFromJson(Map<String, dynamic> json) =>
       scheduleFor: DateTime.parse(json['schedule_for'] as String),
       closesAt: DateTime.parse(json['closes_at'] as String),
       secretPin: json['secret_pin'] as int?,
-      receiverId: json['receiver_id'] as String?,
       deliveredAt: json['delivered_at'] == null
           ? null
           : DateTime.parse(json['delivered_at'] as String),
@@ -24,8 +23,6 @@ _$EESUpoolOrderImpl _$$EESUpoolOrderImplFromJson(Map<String, dynamic> json) =>
       collectionFee: (json['collection_fee'] as num?)?.toDouble(),
       addressId: json['address_id'] as int?,
       eesupoolName: json['eesupool_name'] as String?,
-      receiver: _$JsonConverterFromJson<Map<String, dynamic>, EESUpoolMember>(
-          json['receiver'], const EESUpoolMemberConverter().fromJson),
       address: _$JsonConverterFromJson<Map<String, dynamic>, Address>(
           json['address'], const AddressConverter().fromJson),
       ordersCount: json['orders_count'] as int? ?? 0,
@@ -39,7 +36,6 @@ Map<String, dynamic> _$$EESUpoolOrderImplToJson(_$EESUpoolOrderImpl instance) =>
       'schedule_for': instance.scheduleFor.toIso8601String(),
       'closes_at': instance.closesAt.toIso8601String(),
       'secret_pin': instance.secretPin,
-      'receiver_id': instance.receiverId,
       'delivered_at': instance.deliveredAt?.toIso8601String(),
       'admin_fee': instance.adminFee,
       'packer_fee': instance.packerFee,

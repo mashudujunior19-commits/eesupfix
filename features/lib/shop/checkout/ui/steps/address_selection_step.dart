@@ -61,6 +61,7 @@ class AddressSelectionStep extends StatelessWidget {
                     final address = state.addresses[index];
                     return AddressCard(
                       address: address,
+                      allowDelete: false,
                       margin: const EdgeInsets.only(top: 15),
                       onTap: () {
                         context

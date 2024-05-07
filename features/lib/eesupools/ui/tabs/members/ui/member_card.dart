@@ -12,12 +12,14 @@ class MemberCard extends StatelessWidget {
     super.key,
     required this.member,
     required this.pool,
+    this.trailing,
     this.margin,
     this.onTap,
   });
   final EdgeInsets? margin;
   final EESUpoolMember member;
   final EESUpool pool;
+  final Widget? trailing;
   final void Function()? onTap;
 
   bool isMe(String id) {
@@ -123,7 +125,7 @@ class MemberCard extends StatelessWidget {
                 ),
             ],
           ),
-          trailing: const Icon(IconlyLight.arrowRight2, size: 15),
+          trailing:trailing?? const Icon(IconlyLight.arrowRight2, size: 15),
         ),
       ),
     );

@@ -1,7 +1,7 @@
 import 'package:data_sources/auth/models/user_role.dart';
 import 'package:features/core/env/app_type.dart';
 import 'package:features/core/extensions/context_environment_ext.dart';
-import 'package:features/referrals/ui/widgets/referral_code_tile.dart';
+import 'package:features/referrals/ui/referral_code_tile.dart';
 import 'package:features/shop/cart/ui/cart_button.dart';
 import 'package:repository/shop/shopping_repository.dart';
 import 'package:features/core/widgets/fullscreen_error_widget.dart';

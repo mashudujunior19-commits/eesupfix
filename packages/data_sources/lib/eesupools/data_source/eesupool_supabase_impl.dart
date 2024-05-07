@@ -383,12 +383,14 @@ class EESUpoolSupabaseImp implements EESUpoolDataSource {
   @override
   Future<bool> createEESUpoolOrder(EESUpoolOrder order) async {
     try {
-      await client
-          .schema('communities')
-          .from('eesupool_order')
-          .insert(order.toJson());
+      Map<String, dynamic> ord = order.toJson();
+      ord.addAll(
+        {'receivers': order.receivers?.map((e) => e.memberId).toList()},
+      );
+      await client.schema('communities').from('eesupool_order').insert(ord);
       return true;
     } catch (e) {
+      print(e);
       return false;
     }
   }
@@ -480,7 +482,7 @@ class EESUpoolSupabaseImp implements EESUpoolDataSource {
   }
 
   @override
-  Future KasiStreetsSearch({
+  Future kasiStreetsSearch({
     required int parentId,
     required String userId,
     required int limit,

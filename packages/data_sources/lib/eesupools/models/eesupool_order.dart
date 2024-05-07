@@ -16,7 +16,6 @@ class EESUpoolOrder with _$EESUpoolOrder {
     @JsonKey(name: 'schedule_for') required DateTime scheduleFor,
     @JsonKey(name: 'closes_at') required DateTime closesAt,
     @JsonKey(name: 'secret_pin') int? secretPin,
-    @JsonKey(name: 'receiver_id') String? receiverId,
     @JsonKey(name: 'delivered_at') DateTime? deliveredAt,
     @JsonKey(name: 'admin_fee') double? adminFee,
     @JsonKey(name: 'packer_fee') double? packerFee,
@@ -27,8 +26,8 @@ class EESUpoolOrder with _$EESUpoolOrder {
     ///other
     @JsonKey(name: 'eesupool_name', includeToJson: false) String? eesupoolName,
     @EESUpoolMemberConverter()
-    @JsonKey(name: 'receiver', includeToJson: false)
-    EESUpoolMember? receiver,
+    @JsonKey(name: 'receivers', includeToJson: false,includeFromJson: false)
+    List<EESUpoolMember>? receivers,
     @AddressConverter() @JsonKey(includeToJson: false) Address? address,
     @JsonKey(name: 'orders_count', includeToJson: false)
     @Default(0)

@@ -67,9 +67,11 @@ class CartBloc extends Bloc<CartEvent, CartState> {
       var currentCart = [...(state as CurrentCart).products];
 
       var index = currentCart.indexWhere(
-        (element) => element.productId == event.id,
+        (e) => e.productId == event.id,
       );
+
       if (index != -1) {
+        print(index);
         currentCart[index] = currentCart[index].copyWith(
           substituteBrand: event.substituteBrand,
           substituteVariant: event.substituteVariant,

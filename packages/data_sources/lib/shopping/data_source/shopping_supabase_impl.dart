@@ -290,4 +290,27 @@ class ShoppingSupabaseImp implements ShoppingDataSource {
       return false;
     }
   }
+
+  @override
+  Future<bool> updateBasketProduct(BasketProduct product) async {
+    try {
+      await _client
+          .schema('public')
+          .from('basket_product')
+          .update({
+            'quantity': product.quantity,
+            'substitute_brand': product.substituteBrand,
+            'substitute_variant': product.substituteVariant,
+          })
+          .eq('basket_id', product.basketId)
+          .eq('product_id', product.productId);
+      return true;
+    } catch (e) {
+      if (foundation.kDebugMode) {
+        // ignore: avoid_print
+        print(e.toString());
+      }
+      return false;
+    }
+  }
 }

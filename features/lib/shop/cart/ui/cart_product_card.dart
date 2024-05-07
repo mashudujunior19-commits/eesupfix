@@ -133,41 +133,19 @@ class CartProductCard extends StatelessWidget {
                 ],
               ),
             ),
-            const Padding(
-              padding: EdgeInsets.only(left: 14, right: 14),
-              child: Divider(thickness: .35),
-            ),
             ProductSubstitutionSettings(
-              isExpanded: product.isExpanded,
-              substituteVariants: product.substituteVariant,
               substituteBrands: product.substituteBrand,
-              onTap: () {
-                context.read<CartBloc>().add(
-                      ProductSettingsExpanded(
-                        product.productId,
-                        !product.isExpanded,
-                      ),
-                    );
-              },
-              onVariantChanged: (v) {
+              substituteVariants: product.substituteVariant,
+              onSaved: (brand, varaint) {
                 context.read<CartBloc>().add(
                       ProductSubsitutesUpdated(
                         id: product.productId,
-                        substituteVariant: v ?? false,
                         substituteBrand: product.substituteBrand,
-                      ),
-                    );
-              },
-              onBrandChanged: (v) {
-                context.read<CartBloc>().add(
-                      ProductSubsitutesUpdated(
-                        id: product.productId,
                         substituteVariant: product.substituteVariant,
-                        substituteBrand: v ?? false,
                       ),
                     );
               },
-            )
+            ),
           ],
         ),
       ),
