@@ -1,11 +1,11 @@
-import 'package:features/surveys/response/ui/widgets/date_picker.dart';
-import 'package:features/surveys/response/ui/widgets/date_time_picker.dart';
-import 'package:features/surveys/response/ui/widgets/file_upload_question.dart';
-import 'package:features/surveys/response/ui/widgets/multiple_choice.dart';
-import 'package:features/surveys/response/ui/widgets/rating_scale.dart';
-import 'package:features/surveys/response/ui/widgets/simple_open_ended_question.dart';
-import 'package:features/surveys/response/ui/widgets/slider_scale.dart';
-import 'package:features/surveys/response/ui/widgets/time_picker.dart';
+import 'package:features/surveys/ui/widgets/date_picker.dart';
+import 'package:features/surveys/ui/widgets/date_time_picker.dart';
+import 'package:features/surveys/ui/widgets/file_upload_question.dart';
+import 'package:features/surveys/ui/widgets/multiple_choice.dart';
+import 'package:features/surveys/ui/widgets/rating_scale.dart';
+import 'package:features/surveys/ui/widgets/simple_open_ended_question.dart';
+import 'package:features/surveys/ui/widgets/slider_scale.dart';
+import 'package:features/surveys/ui/widgets/time_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:data_sources/surveys/models/question.dart';
 

@@ -1,19 +1,36 @@
 import 'package:features/core/extensions/context_theme_ext.dart';
+import 'package:features/core/extensions/sizedbox_ext.dart';
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
 
 class FullScreenLoadingShimmer extends StatelessWidget {
-  const FullScreenLoadingShimmer(
-      {super.key, this.margin, this.showPopButton = false});
+  const FullScreenLoadingShimmer({
+    super.key,
+    this.margin,
+    this.showPopButton = false,
+    this.title,
+  });
   final bool showPopButton;
   final EdgeInsets? margin;
+  final String? title;
   @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,
       children: [
-        if (showPopButton) const BackButton(),
+        if (showPopButton)
+          Container(
+            color: Colors.white,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const BackButton(),
+                if (title != null) Text(title!),
+                50.sW,
+              ],
+            ),
+          ),
         Padding(
           padding:
               margin ?? const EdgeInsets.only(left: 15, right: 15, top: 15),

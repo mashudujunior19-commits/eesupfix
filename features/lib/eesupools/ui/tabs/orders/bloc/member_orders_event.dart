@@ -9,3 +9,9 @@ final class MemberOrdersFetched extends MemberOrdersEvent {
   final int orderId;
   MemberOrdersFetched(this.initStatuses, this.initLimit, this.orderId);
 }
+
+final class MemberOrderAssignmentsUpdated extends MemberOrdersEvent {
+  final int orderId;
+  final List<MemberOrderAssignment> assignments;
+  MemberOrderAssignmentsUpdated(this.orderId,this.assignments);
+}

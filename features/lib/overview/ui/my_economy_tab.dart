@@ -70,12 +70,12 @@ class _TabBar extends StatelessWidget {
           color: context.colorScheme.primary,
         ),
         tabs: const [
-          Tab(text: 'EESUpools'),
-          Tab(text: 'Orders'),
-          Tab(text: 'Kasipreneur'),
-          Tab(text: 'Wallets'),
-          Tab(text: 'Crowdfund Wallet & Vouchers'),
-          Tab(text: 'Referrals'),
+          Tab(text: 'EESUPOOLS'),
+          Tab(text: 'ORDERS'),
+          Tab(text: 'KASIPRENEUR'),
+          Tab(text: 'WALLETS'),
+          Tab(text: 'CROWDFUND WALLET & VOUCHERS'),
+          Tab(text: 'REFERRALS'),
         ],
       ),
     );

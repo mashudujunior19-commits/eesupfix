@@ -10,8 +10,10 @@ class FullScreenError extends StatelessWidget {
     super.key,
     this.isError = true,
     required this.exception,
+    this.title,
     this.showPopButton = false,
   });
+  final String? title;
   final bool showPopButton;
   final bool isError;
   final Exception exception;
@@ -33,7 +35,18 @@ class FullScreenError extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
         children: [
-          if (showPopButton) const BackButton(),
+          if (showPopButton)
+            Container(
+              color: Colors.white,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const BackButton(),
+                  if (title != null) Text(title!),
+                  50.sW,
+                ],
+              ),
+            ),
           Padding(
             padding: const EdgeInsets.only(left: 15, right: 15),
             child: Center(

@@ -7,7 +7,6 @@ import 'package:features/eesupools/ui/tabs/members/ui/member_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:repository/eesupools/eesupool_repo.dart';
 import 'package:repository/utils/eesup_exception.dart';
 

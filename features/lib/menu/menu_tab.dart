@@ -63,7 +63,9 @@ class MenuTab extends StatelessWidget {
                     _MenuButton(
                       label: 'Surveys',
                       icon: IconlyLight.chart,
-                      onTap: () {},
+                      onTap: () {
+                        context.router.push(const SurveyRoute());
+                      },
                     ),
                     _MenuButton(
                       label: 'Get Involved',

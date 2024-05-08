@@ -1,9 +1,12 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:features/core/extensions/context_alerts_ext.dart';
 import 'package:features/core/extensions/context_theme_ext.dart';
 import 'package:flutter/material.dart';
 
+
 ///Displays the current question in a survey.
 ///as well as the navigation and submit buttons.
+@RoutePage()
 class ResponseScreen extends StatelessWidget {
   const ResponseScreen({super.key});
   static const route = '/take-survey';

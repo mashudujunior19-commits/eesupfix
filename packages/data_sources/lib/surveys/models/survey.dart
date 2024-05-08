@@ -66,6 +66,18 @@ enum SurveyType {
         throw Exception('Unknown survey type: $ty');
     }
   }
+
+  @override
+  String toString() {
+    switch (this) {
+      case SurveyType.Test:
+        return 'Test';
+      case SurveyType.Survey:
+        return 'Survey';
+      case SurveyType.Application:
+        return 'Application';
+    }
+  }
 }
 
 class SurveyTypeConverter implements JsonConverter<SurveyType, String> {

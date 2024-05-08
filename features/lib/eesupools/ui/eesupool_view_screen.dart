@@ -131,25 +131,25 @@ List<Tab> _getCorrectTabs(EESUpool pool) {
 
   if (isAdmin) {
     return [
-      const Tab(text: 'Chats'),
-      if (type == EESUpoolType.trade) const Tab(text: 'Orders'),
-      const Tab(text: 'Events'),
+      const Tab(text: 'CHATS'),
+      if (type == EESUpoolType.trade) const Tab(text: 'ORDERS'),
+      const Tab(text: 'EVENTS'),
       if (type == EESUpoolType.Kasi && level != EESUpoolLevel.Street)
-        const Tab(text: 'MyKasi Tree'),
-      const Tab(text: 'Members'),
-      const Tab(text: 'Settings'),
+        const Tab(text: 'MYKASI TREE'),
+      const Tab(text: 'MEMBERS'),
+      const Tab(text: 'SETTINGS'),
     ];
   } else if (!isAdmin && type == EESUpoolType.interestGroup) {
     return [
-      const Tab(text: 'Chats'),
-      const Tab(text: 'Events'),
-      const Tab(text: 'Members'),
+      const Tab(text: 'CHATS'),
+      const Tab(text: 'EVENTS'),
+      const Tab(text: 'MEMBERS'),
     ];
   } else {
     return [
-      const Tab(text: 'Chats'),
-      const Tab(text: 'Orders'),
-      const Tab(text: 'Members'),
+      const Tab(text: 'CHATS'),
+      const Tab(text: 'ORDERS'),
+      const Tab(text: 'MEMBERS'),
     ];
   }
 }

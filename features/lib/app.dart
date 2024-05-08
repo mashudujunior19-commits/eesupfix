@@ -6,6 +6,7 @@ import 'package:data_sources/geolocation/data_source/geo_supabase_impl.dart';
 import 'package:data_sources/orders/data_source/orders_supabase_impl.dart';
 import 'package:data_sources/partners/data_source/partner_supabase_impl.dart';
 import 'package:data_sources/shopping/data_source/shopping_supabase_impl.dart';
+import 'package:data_sources/surveys/data_source/survey_supabase_impl.dart';
 import 'package:features/core/env/app_type.dart';
 import 'package:features/core/extensions/context_environment_ext.dart';
 import 'package:features/core/themes/eesup_light_theme.dart';
@@ -15,6 +16,7 @@ import 'package:features/shop/browsing/bloc/products_filter_bloc.dart';
 import 'package:features/shop/cart/bloc/cart_bloc.dart';
 import 'package:repository/auth/profile_repository.dart';
 import 'package:repository/eesupools/eesupool_repo.dart';
+import 'package:repository/engagments/survey_repository.dart';
 import 'package:repository/finances/payment_gateway_repository.dart';
 import 'package:repository/finances/wallets_repository.dart';
 import 'package:repository/geolocation/geo_repository.dart';
@@ -105,6 +107,13 @@ class MainApp extends StatelessWidget {
     ),
   );
 
+  final _surveysRepository = RepositoryProvider(
+    create: (context) => SurveyRepository(
+      SurveySupabaseImpl(GetIt.I.get<SupabaseClient>()),
+      context.read<AuthRepository>(),
+    ),
+  );
+
   @override
   Widget build(BuildContext context) {
     ///get the correct theme based on the app type (eesup or my kasi)
@@ -122,7 +131,8 @@ class MainApp extends StatelessWidget {
         _geoRepo,
         _walletsRepo,
         _paymentGatewayRepo,
-        _partnerRepository
+        _partnerRepository,
+        _surveysRepository
       ],
       child: MultiBlocProvider(
         providers: [

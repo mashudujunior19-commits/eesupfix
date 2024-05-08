@@ -5,10 +5,10 @@ import 'package:data_sources/surveys/models/survey_response.dart';
 import 'package:flutter/foundation.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-class SurveySupaseImpl implements SurveyDataSource {
+class SurveySupabaseImpl implements SurveyDataSource {
   final SupabaseClient _client;
 
-  SurveySupaseImpl(this._client);
+  SurveySupabaseImpl(this._client);
 
   @override
   Future<List<Survey>> fetchSurveys(String userId, SurveyType type) async {

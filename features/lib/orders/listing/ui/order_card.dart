@@ -56,7 +56,7 @@ class OrderCard extends StatelessWidget {
       splashColor: Colors.transparent,
       child: Container(
         margin: const EdgeInsets.only(left: 20, right: 20, top: 15),
-        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+        padding: const EdgeInsets.symmetric(vertical: 10),
         decoration: BoxDecoration(
           color: Colors.white,
           border: Border.all(
@@ -68,103 +68,116 @@ class OrderCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Row(
-                  children: [
-                    Image.asset(
-                      'assets/images/package.png',
-                      width: 18,
-                      color: context.colorScheme.primary,
-                    ),
-                    const SizedBox(width: 5),
-                    Text(
-                      '${order.id.toString()} ~ ',
-                      style: context.textTheme.labelSmall?.copyWith(
-                        fontWeight: FontWeight.w700,
-                        fontSize: 14,
+            Padding(
+              padding: const EdgeInsets.only(left: 12, right: 10),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Row(
+                        children: [
+                          Image.asset(
+                            'assets/images/package.png',
+                            width: 18,
+                            color: context.colorScheme.primary,
+                          ),
+                          const SizedBox(width: 5),
+                          Text(
+                            '${order.id.toString()} ~ ',
+                            style: context.textTheme.labelSmall?.copyWith(
+                              fontWeight: FontWeight.w700,
+                              fontSize: 14,
+                            ),
+                          ),
+                          Container(
+                            constraints: const BoxConstraints(
+                              maxWidth: 150,
+                            ),
+                            child: Text(
+                              customer,
+                              maxLines: 1,
+                              style: context.textTheme.labelSmall?.copyWith(
+                                fontWeight: FontWeight.w700,
+                                fontSize: 14,
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
+                      Row(
+                        children: [
+                          Icon(
+                            Icons.track_changes,
+                            size: 10,
+                            color: Colors.blueGrey.shade300,
+                          ),
+                          const SizedBox(width: 5),
+                          Text(
+                            'Tap to track',
+                            style: context.textTheme.labelSmall?.copyWith(
+                              color: Colors.blueGrey.shade300,
+                            ),
+                          ),
+                        ],
+                      )
+                    ],
+                  ),
+                  5.sH,
+                  Text(
+                    _getStatusDateString(),
+                    style: context.textTheme.labelSmall?.copyWith(
+                      fontSize: 11,
                     ),
-                    Container(
-                      constraints: const BoxConstraints(
-                        maxWidth: 150,
+                  ),
+                  Container(
+                    margin: const EdgeInsets.only(top: 7, bottom: 5),
+                    height: 0.5,
+                    color: Colors.blueGrey.shade100,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Amount',
+                            style: context.textTheme.labelSmall?.copyWith(),
+                          ),
+                          3.sH,
+                          Text('R${totalAmount().toStringAsFixed(2)}'),
+                        ],
                       ),
-                      child: Text(
-                        customer,
-                        maxLines: 1,
-                        style: context.textTheme.labelSmall?.copyWith(
-                          fontWeight: FontWeight.w700,
-                          fontSize: 14,
+                      Container(
+                        padding: const EdgeInsets.only(
+                          left: 10,
+                          right: 10,
+                          top: 3,
+                          bottom: 3,
                         ),
-                      ),
-                    ),
-                  ],
-                ),
-                Row(
-                  children: [
-                    Icon(
-                      Icons.track_changes,
-                      size: 10,
-                      color: Colors.blueGrey.shade300,
-                    ),
-                    const SizedBox(width: 5),
-                    Text(
-                      'Tap to track',
-                      style: context.textTheme.labelSmall?.copyWith(
-                        color: Colors.blueGrey.shade300,
-                      ),
-                    ),
-                  ],
-                )
-              ],
-            ),
-            5.sH,
-            Text(
-              _getStatusDateString(),
-              style: context.textTheme.labelSmall?.copyWith(
-                fontSize: 11,
+                        decoration: BoxDecoration(
+                          color: _getStatusColor(context),
+                          borderRadius: BorderRadius.circular(7),
+                        ),
+                        child: Text(
+                          order.status.toString(),
+                          style: context.textTheme.labelSmall
+                              ?.copyWith(color: Colors.white),
+                        ),
+                      )
+                    ],
+                  ),
+                ],
               ),
             ),
-            Container(
-              margin: const EdgeInsets.only(top: 7, bottom: 5),
-              height: 0.5,
-              color: Colors.blueGrey.shade100,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Amount',
-                      style: context.textTheme.labelSmall?.copyWith(),
-                    ),
-                    3.sH,
-                    Text('R${totalAmount().toStringAsFixed(2)}'),
-                  ],
-                ),
-                Container(
-                  padding: const EdgeInsets.only(
-                    left: 10,
-                    right: 10,
-                    top: 3,
-                    bottom: 3,
-                  ),
-                  decoration: BoxDecoration(
-                    color: _getStatusColor(context),
-                    borderRadius: BorderRadius.circular(7),
-                  ),
-                  child: Text(
-                    order.status.toString(),
-                    style: context.textTheme.labelSmall
-                        ?.copyWith(color: Colors.white),
-                  ),
-                )
-              ],
-            ),
-            if (bottomChildren.isNotEmpty) const Divider(thickness: .5),
+            if (bottomChildren.isNotEmpty)
+              const Padding(
+                padding: EdgeInsets.only(left: 12, right: 12),
+                child: Divider(thickness: .5),
+              ),
             ...bottomChildren
           ],
         ),
