@@ -1,6 +1,8 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:data_sources/eesupools/models/eesupool.dart';
 import 'package:data_sources/eesupools/models/eesupool_member.dart';
 import 'package:data_sources/eesupools/models/eesupool_order.dart';
+import 'package:features/app_route.gr.dart';
 import 'package:features/core/extensions/bottom_sheet_context_ext.dart';
 import 'package:features/core/extensions/context_theme_ext.dart';
 import 'package:features/core/extensions/sizedbox_ext.dart';
@@ -186,41 +188,48 @@ class OrderDetailsTab extends StatelessWidget {
             ],
           ),
         ),
-        Container(
-          margin: const EdgeInsets.only(left: 20, right: 20, top: 20),
-          padding:
-              const EdgeInsets.only(left: 10, right: 10, bottom: 15, top: 15),
-          decoration: BoxDecoration(
-            border: Border.all(width: .5, color: Colors.grey.shade400),
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(10),
-          ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Row(
-                mainAxisSize: MainAxisSize.min,
+        if (order.receiversId != null)
+          InkWell(
+            onTap: () {
+              context.router.push(OrderReceiverRoute(ids: order.receiversId!));
+            },
+            child: Container(
+              margin: const EdgeInsets.only(left: 20, right: 20, top: 20),
+              padding: const EdgeInsets.only(
+                  left: 10, right: 10, bottom: 15, top: 15),
+              decoration: BoxDecoration(
+                border: Border.all(width: .5, color: Colors.grey.shade400),
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const Icon(
-                    IconlyBold.user3,
-                    color: Colors.black,
-                    size: 18,
+                  Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      const Icon(
+                        IconlyBold.user3,
+                        color: Colors.black,
+                        size: 18,
+                      ),
+                      10.sW,
+                      Text(
+                        'Bulk Order Receivers',
+                        style: context.textTheme.labelMedium?.copyWith(
+                          decoration: TextDecoration.underline,
+                          color: Colors.black,
+                          fontSize: 14,
+                        ),
+                      ),
+                    ],
                   ),
-                  10.sW,
-                  Text(
-                    'Bulk Order Receivers',
-                    style: context.textTheme.labelMedium?.copyWith(
-                      decoration: TextDecoration.underline,
-                      color: Colors.black,
-                      fontSize: 14,
-                    ),
-                  ),
+                  const Icon(IconlyLight.arrowRight2,
+                      size: 18, color: Colors.black)
                 ],
               ),
-              const Icon(IconlyLight.arrowRight2, size: 18, color: Colors.black)
-            ],
+            ),
           ),
-        ),
         if (order.address != null)
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -245,4 +254,3 @@ class OrderDetailsTab extends StatelessWidget {
     );
   }
 }
-

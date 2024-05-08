@@ -182,25 +182,26 @@ class _OrderCardX extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 const Text("Role Assignments"),
-                InkWell(
-                  onTap: () {
-                    context
-                        .showBottomSheetDialog(
-                            child: EditOrderAssignmentsDialog(
-                                order: order, pool: pool))
-                        .then((value) {
-                      if (value is List<MemberOrderAssignment>) {
-                        context.read<MemberOrdersBloc>().add(
-                              MemberOrderAssignmentsUpdated(order.id!, value),
-                            );
-                      }
-                    });
-                  },
-                  child: const Icon(
-                    IconlyLight.edit,
-                    size: 17,
-                  ),
-                )
+                if (pool.role == EESUpoolMemberRole.admin)
+                  InkWell(
+                    onTap: () {
+                      context
+                          .showBottomSheetDialog(
+                              child: EditOrderAssignmentsDialog(
+                                  order: order, pool: pool))
+                          .then((value) {
+                        if (value is List<MemberOrderAssignment>) {
+                          context.read<MemberOrdersBloc>().add(
+                                MemberOrderAssignmentsUpdated(order.id!, value),
+                              );
+                        }
+                      });
+                    },
+                    child: const Icon(
+                      IconlyLight.edit,
+                      size: 17,
+                    ),
+                  )
               ],
             ),
             trailing: const Icon(IconlyLight.arrowRight2, size: 18),

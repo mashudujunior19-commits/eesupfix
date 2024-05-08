@@ -1,3 +1,4 @@
+import 'package:data_sources/eesupools/models/eesupool_member.dart';
 import 'package:either_dart/either.dart';
 import 'package:data_sources/eesupools/models/eesupool.dart';
 import 'package:data_sources/eesupools/models/eesupool_level.dart';
@@ -20,6 +21,14 @@ class EESUpoolRepository {
   ) async {
     final result = authRepository.executeFutureWithAuth((id) {
       return dataSource.fetchEESUpools(id, type);
+    });
+    return result;
+  }
+
+  Future<Either<EESUpException, List<EESUpoolMember>>> fetchEESUpoolMembersByIdsArray(
+      List<String> ids) async {
+    final result = authRepository.executeFutureWithAuth((_) {
+      return dataSource.fetchMembersByIdList(ids);
     });
     return result;
   }

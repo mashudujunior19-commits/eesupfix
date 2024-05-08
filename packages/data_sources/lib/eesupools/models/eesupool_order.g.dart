@@ -22,6 +22,9 @@ _$EESUpoolOrderImpl _$$EESUpoolOrderImplFromJson(Map<String, dynamic> json) =>
       receiverFee: (json['receiver_fee'] as num?)?.toDouble(),
       collectionFee: (json['collection_fee'] as num?)?.toDouble(),
       addressId: json['address_id'] as int?,
+      receiversId: (json['receivers'] as List<dynamic>?)
+          ?.map((e) => e as String)
+          .toList(),
       eesupoolName: json['eesupool_name'] as String?,
       address: _$JsonConverterFromJson<Map<String, dynamic>, Address>(
           json['address'], const AddressConverter().fromJson),
@@ -42,6 +45,7 @@ Map<String, dynamic> _$$EESUpoolOrderImplToJson(_$EESUpoolOrderImpl instance) =>
       'receiver_fee': instance.receiverFee,
       'collection_fee': instance.collectionFee,
       'address_id': instance.addressId,
+      'receivers': instance.receiversId,
     };
 
 Value? _$JsonConverterFromJson<Json, Value>(

@@ -22,11 +22,12 @@ class EESUpoolOrder with _$EESUpoolOrder {
     @JsonKey(name: 'receiver_fee') double? receiverFee,
     @JsonKey(name: 'collection_fee') double? collectionFee,
     @JsonKey(name: 'address_id') int? addressId,
+    @JsonKey(name: 'receivers') List<String>? receiversId,
 
     ///other
     @JsonKey(name: 'eesupool_name', includeToJson: false) String? eesupoolName,
     @EESUpoolMemberConverter()
-    @JsonKey(name: 'receivers', includeToJson: false,includeFromJson: false)
+    @JsonKey(includeToJson: false, includeFromJson: false)
     List<EESUpoolMember>? receivers,
     @AddressConverter() @JsonKey(includeToJson: false) Address? address,
     @JsonKey(name: 'orders_count', includeToJson: false)

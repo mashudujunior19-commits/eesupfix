@@ -404,6 +404,7 @@ class EESUpoolSupabaseImp implements EESUpoolDataSource {
         'limit_to': limit,
       },
     );
+    print(res);
     return (res as List).map((e) => EESUpoolOrder.fromJson(e)).toList();
   }
 
@@ -596,10 +597,14 @@ class EESUpoolSupabaseImp implements EESUpoolDataSource {
 
   @override
   Future<EESUpoolOrder?> fetchEESUpoolOpenOrder(int poolId) async {
-    final order = await client
-        .schema('communities')
-        .rpc('get_open_eesupool_order', params: {'pool_id': poolId}).single();
-    return EESUpoolOrder.fromJson(order);
+    try {
+      final order = await client
+          .schema('communities')
+          .rpc('get_open_eesupool_order', params: {'pool_id': poolId}).single();
+      return EESUpoolOrder.fromJson(order);
+    } catch (e) {
+      return null;
+    }
   }
 
   @override
@@ -628,5 +633,13 @@ class EESUpoolSupabaseImp implements EESUpoolDataSource {
       }
       return false;
     }
+  }
+
+  @override
+  Future<List<EESUpoolMember>> fetchMembersByIdList(List<String> ids) async {
+    final results = await client.schema('communities').rpc(
+        'get_eesupool_members_by_id_array',
+        params: {'members': ids.toList()});
+    return (results as List).map((e) => EESUpoolMember.fromJson(e)).toList();
   }
 }

@@ -174,4 +174,6 @@ abstract class EESUpoolDataSource {
 
   Future<bool> updateMemberOrderAssignments(
       List<MemberOrderAssignment> assignment, int orderId);
+  Future<List<EESUpoolMember>> fetchMembersByIdList(
+      List<String> ids);
 }
