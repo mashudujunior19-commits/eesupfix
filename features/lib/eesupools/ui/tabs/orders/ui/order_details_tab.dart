@@ -71,16 +71,18 @@ class OrderDetailsTab extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          'Closes on: ',
-                          style: context.textTheme.labelMedium?.copyWith(
-                            fontSize: 14,
+                          order.closesAt.isBefore(DateTime.now())
+                              ? 'Closed on'
+                              : 'Closes on',
+                          style: context.textTheme.bodySmall?.copyWith(
+                            fontSize: 13,
                           ),
                         ),
                         Text(
                           DateFormatter.formatDateToNamedayWithTime3(
                               order.closesAt),
                           style: context.textTheme.labelMedium?.copyWith(
-                            fontSize: 14,
+                            fontSize: 13,
                           ),
                         ),
                       ],
@@ -90,15 +92,15 @@ class OrderDetailsTab extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          'Member orders: ',
-                          style: context.textTheme.labelMedium?.copyWith(
-                            fontSize: 14,
+                          'Member orders',
+                          style: context.textTheme.bodySmall?.copyWith(
+                            fontSize: 13,
                           ),
                         ),
                         Text(
                           order.ordersCount.toString(),
                           style: context.textTheme.labelMedium?.copyWith(
-                            fontSize: 14,
+                            fontSize: 13,
                           ),
                         ),
                       ],
@@ -108,15 +110,15 @@ class OrderDetailsTab extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          'Amount: ',
-                          style: context.textTheme.labelMedium?.copyWith(
-                            fontSize: 14,
+                          'Amount',
+                          style: context.textTheme.bodySmall?.copyWith(
+                            fontSize: 13,
                           ),
                         ),
                         Text(
                           'R${order.currentAmount.toStringAsFixed(2)}',
                           style: context.textTheme.labelMedium?.copyWith(
-                            fontSize: 14,
+                            fontSize: 13,
                           ),
                         ),
                       ],
@@ -127,19 +129,39 @@ class OrderDetailsTab extends StatelessWidget {
                       children: [
                         Text(
                           'Delivery on: ',
-                          style: context.textTheme.labelMedium?.copyWith(
-                            fontSize: 14,
+                          style: context.textTheme.bodySmall?.copyWith(
+                            fontSize: 13,
                           ),
                         ),
                         Text(
                           DateFormatter.formatDateToNamedayWithTime3(
                               order.scheduleFor),
                           style: context.textTheme.labelMedium?.copyWith(
-                            fontSize: 14,
+                            fontSize: 13,
                           ),
                         ),
                       ],
                     ),
+                    3.sH,
+                    if (order.deliveredAt != null)
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            'Received At',
+                            style: context.textTheme.bodySmall?.copyWith(
+                              fontSize: 13,
+                            ),
+                          ),
+                          Text(
+                            DateFormatter.formatDateToNamedayWithTime3(
+                                order.deliveredAt!),
+                            style: context.textTheme.labelMedium?.copyWith(
+                              fontSize: 13,
+                            ),
+                          ),
+                        ],
+                      ),
                     if (pool.role == EESUpoolMemberRole.admin)
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -152,7 +174,7 @@ class OrderDetailsTab extends StatelessWidget {
                               Text(
                                 'Confirm delivery: ',
                                 style: context.textTheme.labelMedium?.copyWith(
-                                  fontSize: 14,
+                                  fontSize: 13,
                                 ),
                               ),
                               Transform.scale(
@@ -191,7 +213,13 @@ class OrderDetailsTab extends StatelessWidget {
         if (order.receiversId != null)
           InkWell(
             onTap: () {
-              context.router.push(OrderReceiverRoute(ids: order.receiversId!));
+              context.router.push(
+                OrderReceiverRoute(
+                  order: order,
+                  ids: order.receiversId!,
+                  pool: pool,
+                ),
+              );
             },
             child: Container(
               margin: const EdgeInsets.only(left: 20, right: 20, top: 20),

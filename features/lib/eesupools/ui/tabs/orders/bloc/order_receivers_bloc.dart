@@ -21,5 +21,31 @@ class OrderReceiversBloc
         emit(OrderReceiversLoaded(right));
       });
     });
+
+    on<OrderReceiverAdded>((event, emit) {
+      if (state is OrderReceiversLoaded) {
+        List<EESUpoolMember> receivers = [
+          ...(state as OrderReceiversLoaded).receivers
+        ];
+        if (!receivers.contains(event.member)) {
+          receivers.add(event.member);
+          final ids = receivers.map((e) => e.memberId).toList();
+          _repository.updatePoolOrderReceivers(event.orderId, ids);
+          emit(OrderReceiversLoaded(receivers));
+        }
+      }
+    });
+
+    on<OrderReceiverRemoved>((event, emit) {
+      if (state is OrderReceiversLoaded) {
+        List<EESUpoolMember> receivers = [
+          ...(state as OrderReceiversLoaded).receivers
+        ];
+        receivers.remove(event.member);
+        final ids = receivers.map((e) => e.memberId).toList();
+        _repository.updatePoolOrderReceivers(event.orderId, ids);
+        emit(OrderReceiversLoaded(receivers));
+      }
+    });
   }
 }

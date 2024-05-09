@@ -65,7 +65,7 @@ class AddressCard extends StatelessWidget {
               Text(
                 address.streetAddress,
                 style: theme.textTheme.labelMedium?.copyWith(
-                  fontSize: 14,
+                  fontSize: 13,
                   fontWeight: FontWeight.w500,
                 ),
               ),
@@ -78,15 +78,15 @@ class AddressCard extends StatelessWidget {
                       child: Text(
                         '${address.buildingName}',
                         style: theme.textTheme.labelMedium?.copyWith(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w500,
+                          fontSize: 13,
+                          // fontWeight: FontWeight.w500,
                         ),
                       ),
                     ),
                   Text(
                     address.province,
                     style: theme.textTheme.labelMedium?.copyWith(
-                      fontSize: 14,
+                      fontSize: 13,
                       fontWeight: FontWeight.w500,
                     ),
                   ),
@@ -98,7 +98,7 @@ class AddressCard extends StatelessWidget {
                   Text(
                     '👨🏽‍🦱 ${address.recipientName}',
                     style: theme.textTheme.labelMedium?.copyWith(
-                      fontSize: 14,
+                      fontSize: 13,
                       fontWeight: FontWeight.w500,
                     ),
                   ),
@@ -106,7 +106,7 @@ class AddressCard extends StatelessWidget {
                   Text(
                     '📞 ${address.recipientPhone}',
                     style: theme.textTheme.labelMedium?.copyWith(
-                      fontSize: 14,
+                      fontSize: 13,
                       fontWeight: FontWeight.w500,
                     ),
                   ),
@@ -130,7 +130,7 @@ class AddressCard extends StatelessWidget {
                             Text(
                               ' Verified  ',
                               style: theme.textTheme.labelMedium?.copyWith(
-                                fontSize: 15,
+                                fontSize: 13,
                                 fontWeight: FontWeight.w400,
                                 color: theme.colorScheme.primary,
                               ),
@@ -144,7 +144,7 @@ class AddressCard extends StatelessWidget {
                                   'Verified means this address is within one of EESUp\'s operational area',
                               child: Icon(
                                 Icons.help_outline,
-                                size: 14,
+                                size: 13,
                               ),
                             ),
                             10.sW,
@@ -154,7 +154,7 @@ class AddressCard extends StatelessWidget {
                         Text(
                           'Primary',
                           style: theme.textTheme.labelMedium?.copyWith(
-                            fontSize: 14,
+                            fontSize: 13,
                             fontWeight: FontWeight.w400,
                             color: theme.colorScheme.primary.withOpacity(.5),
                           ),

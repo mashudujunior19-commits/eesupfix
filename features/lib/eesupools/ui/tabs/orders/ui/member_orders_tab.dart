@@ -70,7 +70,11 @@ class MemberOrdersTab extends StatelessWidget {
                       padding: const EdgeInsets.only(bottom: 400),
                       itemCount: orders.length,
                       itemBuilder: (context, index) {
-                        return _OrderCardX(order: orders[index], pool: pool);
+                        return _OrderCardX(
+                          order: orders[index],
+                          pool: pool,
+                          poolOrder: poolOrder,
+                        );
                       },
                     ),
                   ),
@@ -105,9 +109,14 @@ class MemberOrdersTab extends StatelessWidget {
 }
 
 class _OrderCardX extends StatelessWidget {
-  const _OrderCardX({required this.order, required this.pool});
+  const _OrderCardX({
+    required this.order,
+    required this.pool,
+    required this.poolOrder,
+  });
   final EESUpool pool;
   final Order order;
+  final EESUpoolOrder poolOrder;
 
   String customer(MemberOrderAssignment assignment) {
     final name = assignment.fullName;
@@ -140,6 +149,9 @@ class _OrderCardX extends StatelessWidget {
   }
 
   OrderEditPrivilage getPrevillage() {
+    if (poolOrder.deliveredAt == null) {
+      return OrderEditPrivilage.none;
+    }
     try {
       final memberId = pool.memberId;
       final assignment = order.assignments.firstWhere(

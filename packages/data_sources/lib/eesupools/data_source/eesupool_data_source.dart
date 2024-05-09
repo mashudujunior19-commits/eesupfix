@@ -37,6 +37,8 @@ abstract class EESUpoolDataSource {
   ///Given a user id, return a list of pools that the user is a member of
   Future<List<EESUpool>> fetchEESUpools(String sessionId, EESUpoolType type);
 
+  Future<bool> updatePoolOrderReceivers(int orderId, List<String> memberIds);
+
   ///Given a user id, return a list of pools that the user is a member of
   Future<EESUpool> fetchEESUpool(int poolId, String userId);
 
@@ -174,6 +176,5 @@ abstract class EESUpoolDataSource {
 
   Future<bool> updateMemberOrderAssignments(
       List<MemberOrderAssignment> assignment, int orderId);
-  Future<List<EESUpoolMember>> fetchMembersByIdList(
-      List<String> ids);
+  Future<List<EESUpoolMember>> fetchMembersByIdList(List<String> ids);
 }

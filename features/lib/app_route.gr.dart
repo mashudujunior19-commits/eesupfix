@@ -229,6 +229,8 @@ abstract class $AppRouter extends _i37.RootStackRouter {
         routeData: routeData,
         child: _i18.OrderReceiverScreen(
           key: args.key,
+          order: args.order,
+          pool: args.pool,
           ids: args.ids,
         ),
       );
@@ -866,12 +868,16 @@ class MediaFilePreviewUploaderRoute extends _i37.PageRouteInfo<void> {
 class OrderReceiverRoute extends _i37.PageRouteInfo<OrderReceiverRouteArgs> {
   OrderReceiverRoute({
     _i38.Key? key,
+    required _i43.EESUpoolOrder order,
+    required _i42.EESUpool pool,
     required List<String> ids,
     List<_i37.PageRouteInfo>? children,
   }) : super(
           OrderReceiverRoute.name,
           args: OrderReceiverRouteArgs(
             key: key,
+            order: order,
+            pool: pool,
             ids: ids,
           ),
           initialChildren: children,
@@ -886,16 +892,22 @@ class OrderReceiverRoute extends _i37.PageRouteInfo<OrderReceiverRouteArgs> {
 class OrderReceiverRouteArgs {
   const OrderReceiverRouteArgs({
     this.key,
+    required this.order,
+    required this.pool,
     required this.ids,
   });
 
   final _i38.Key? key;
 
+  final _i43.EESUpoolOrder order;
+
+  final _i42.EESUpool pool;
+
   final List<String> ids;
 
   @override
   String toString() {
-    return 'OrderReceiverRouteArgs{key: $key, ids: $ids}';
+    return 'OrderReceiverRouteArgs{key: $key, order: $order, pool: $pool, ids: $ids}';
   }
 }
 

@@ -25,8 +25,18 @@ class EESUpoolRepository {
     return result;
   }
 
-  Future<Either<EESUpException, List<EESUpoolMember>>> fetchEESUpoolMembersByIdsArray(
-      List<String> ids) async {
+  Future<Either<EESUpException, bool>> updatePoolOrderReceivers(
+    int orderId,
+    List<String> memberIds,
+  ) async {
+    final result = authRepository.executeFutureWithAuth((_) {
+      return dataSource.updatePoolOrderReceivers(orderId, memberIds);
+    });
+    return result;
+  }
+
+  Future<Either<EESUpException, List<EESUpoolMember>>>
+      fetchEESUpoolMembersByIdsArray(List<String> ids) async {
     final result = authRepository.executeFutureWithAuth((_) {
       return dataSource.fetchMembersByIdList(ids);
     });

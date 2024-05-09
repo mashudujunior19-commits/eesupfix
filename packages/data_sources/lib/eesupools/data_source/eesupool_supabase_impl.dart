@@ -390,7 +390,6 @@ class EESUpoolSupabaseImp implements EESUpoolDataSource {
       await client.schema('communities').from('eesupool_order').insert(ord);
       return true;
     } catch (e) {
-      print(e);
       return false;
     }
   }
@@ -404,7 +403,6 @@ class EESUpoolSupabaseImp implements EESUpoolDataSource {
         'limit_to': limit,
       },
     );
-    print(res);
     return (res as List).map((e) => EESUpoolOrder.fromJson(e)).toList();
   }
 
@@ -641,5 +639,24 @@ class EESUpoolSupabaseImp implements EESUpoolDataSource {
         'get_eesupool_members_by_id_array',
         params: {'members': ids.toList()});
     return (results as List).map((e) => EESUpoolMember.fromJson(e)).toList();
+  }
+
+  @override
+  Future<bool> updatePoolOrderReceivers(
+    int orderId,
+    List<String> memberIds,
+  ) async {
+    try {
+      await client
+          .schema('communities')
+          .from('eesupool_order')
+          .update({'receivers': memberIds.toList()}).eq('id', orderId);
+      return true;
+    } catch (e) {
+      if (kDebugMode) {
+        print(e);
+      }
+      return false;
+    }
   }
 }
