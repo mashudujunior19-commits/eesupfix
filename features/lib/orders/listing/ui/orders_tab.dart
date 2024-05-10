@@ -24,7 +24,7 @@ class OrdersTab extends StatelessWidget {
         BlocProvider(
           create: (context) => OrdersBloc(context.read<OrderRepository>())
             ..add(
-              OrdersFetched(OrderStatus.values, 10),
+              OrdersFetched(OrderStatus.values, 500),
             ),
         ),
         BlocProvider(create: (context) => OrdersFilterBloc()),

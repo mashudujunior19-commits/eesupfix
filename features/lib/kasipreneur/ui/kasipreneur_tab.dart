@@ -2,8 +2,9 @@ import 'package:data_sources/eesupreneur/data_source/eesupreneur_supabase_data_s
 import 'package:features/core/extensions/slide_in_animation_ext.dart';
 import 'package:features/core/widgets/fullscreen_error_widget.dart';
 import 'package:features/core/widgets/fullscreen_loading_shimmer.dart';
-import 'package:features/kasipreneur/listing/bloc/kasipreneur_bloc.dart';
-import 'package:features/kasipreneur/viewing/ui/eesupreneur_screen.dart';
+import 'package:features/kasipreneur/bloc/kasipreneur_bloc.dart';
+import 'package:features/kasipreneur/ui/kasipreneur_card.dart';
+import 'package:features/kasipreneur/ui/kasipreneur_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

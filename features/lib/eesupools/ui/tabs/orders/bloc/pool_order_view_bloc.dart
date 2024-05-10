@@ -7,6 +7,7 @@ part 'pool_order_view_event.dart';
 part 'pool_order_view_state.dart';
 
 class PoolOrderViewBloc extends Bloc<PoolOrderViewEvent, PoolOrderViewState> {
+  // ignore: unused_field
   final EESUpoolRepository _repository;
   PoolOrderViewBloc(this._repository) : super(PoolOrderViewLoading()) {
     on<PoolOrderInitialized>((event, emit) {

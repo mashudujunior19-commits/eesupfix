@@ -1,6 +1,10 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:data_sources/eesupreneur/models/eesupreneur.dart';
+import 'package:features/app_route.gr.dart';
 import 'package:features/core/extensions/context_theme_ext.dart';
+import 'package:features/kasipreneur/bloc/kasipreneur_bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 
 class KasipreneurCard extends StatelessWidget {
@@ -10,7 +14,13 @@ class KasipreneurCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {},
+      onTap: () {
+        context.router
+            .push(KasipreneurRoute(eesupreneur: eesupreneur))
+            .then((value) {
+          context.read<KasipreneurBloc>().add(KasipreneurFetched());
+        });
+      },
       child: Container(
         margin: const EdgeInsets.only(right: 20, left: 20, top: 15),
         decoration: BoxDecoration(

@@ -3,7 +3,7 @@ import 'package:features/core/extensions/context_theme_ext.dart';
 import 'package:features/eesupools/ui/eesupool_type_view.dart';
 import 'package:features/finances/crowdvouchers/ui/crowdfund_wallet_screen.dart';
 import 'package:features/finances/wallets/ui/screens/wallets_tab.dart';
-import 'package:features/kasipreneur/listing/ui/kasipreneur_tab.dart';
+import 'package:features/kasipreneur/ui/kasipreneur_tab.dart';
 import 'package:features/orders/listing/ui/orders_tab.dart';
 import 'package:flutter/material.dart';
 import 'package:tab_indicator_styler/tab_indicator_styler.dart';
