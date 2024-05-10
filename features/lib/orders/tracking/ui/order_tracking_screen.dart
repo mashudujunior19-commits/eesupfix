@@ -14,20 +14,17 @@ import 'package:features/orders/tracking/ui/track_statuses.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pdf/pdf.dart';
-import 'package:pdf/widgets.dart' as pw;
-import 'package:path_provider/path_provider.dart';
+import 'package:repository/orders/order_repository.dart';
 
-Future<String> get _localPath async {
-  final directory = await getApplicationDocumentsDirectory();
-  return directory.path;
-}
+// Future<String> get _localPath async {
+//   final directory = await getApplicationDocumentsDirectory();
+//   return directory.path;
+// }
 
-Future<File> get _localFile async {
-  final path = await _localPath;
-  return File('$path/counter.txt');
-}
-
-
+// Future<File> get _localFile async {
+//   final path = await _localPath;
+//   return File('$path/counter.txt');
+// }
 
 @RoutePage()
 class OrderTrackingScreen extends StatelessWidget {
@@ -42,7 +39,8 @@ class OrderTrackingScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => OrderTrackingBloc()..add(OrderLoaded(params)),
+      create: (context) => OrderTrackingBloc(context.read<OrderRepository>())
+        ..add(OrderLoaded(params)),
       child: BlocBuilder<OrderTrackingBloc, OrderTrackingState>(
         builder: (context, state) {
           return SafeArea(
@@ -57,18 +55,18 @@ class OrderTrackingScreen extends StatelessWidget {
                 actions: [
                   IconButton(
                     onPressed: () async {
-                      final doc = pw.Document();
+                      // final doc = pw.Document();
 
-                      doc.addPage(
-                        pw.Page(
-                          pageFormat: PdfPageFormat.a4,
-                          build: (pw.Context context) {
-                            return pw.Center(
-                              child: pw.Text('Hello World'),
-                            ); // Center
-                          },
-                        ),
-                      );
+                      // doc.addPage(
+                      //   pw.Page(
+                      //     pageFormat: PdfPageFormat.a4,
+                      //     build: (pw.Context context) {
+                      //       return pw.Center(
+                      //         child: pw.Text('Hello World'),
+                      //       ); // Center
+                      //     },
+                      //   ),
+                      // );
 
                       // print(doc.document.);
                     },
