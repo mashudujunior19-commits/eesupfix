@@ -50,7 +50,7 @@ class OrderCard extends StatelessWidget {
       onTap: onTap ??
           () {
             context.router.push(
-              OrderTrackingRoute(params: Right(order), privilage: privilege),
+              OrderTrackingRoute(id: order.id!, privilage: privilege),
             );
           },
       splashColor: Colors.transparent,

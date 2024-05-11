@@ -173,7 +173,7 @@ class _OrderCardX extends StatelessWidget {
       privilege: OrderEditPrivilage.none,
       onTap: () {
         context.router.push(
-          OrderTrackingRoute(params: Right(order), privilage: getPrevillage()),
+          OrderTrackingRoute(id: order.id!, privilage: getPrevillage()),
         );
       },
       bottomChildren: [

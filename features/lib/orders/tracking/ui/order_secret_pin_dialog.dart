@@ -3,7 +3,6 @@ import 'package:features/core/extensions/context_theme_ext.dart';
 import 'package:features/core/extensions/sizedbox_ext.dart';
 import 'package:flutter/material.dart';
 
-
 class OrderSecretPinDialog extends StatelessWidget {
   const OrderSecretPinDialog({super.key, required this.pin});
   final String pin;
@@ -14,15 +13,7 @@ class OrderSecretPinDialog extends StatelessWidget {
       resizeToAvoidBottomInset: false,
       backgroundColor: Colors.transparent,
       appBar: AppBar(
-        leading: Padding(
-          padding: const EdgeInsets.only(left: 10),
-          child: TextButton(
-            onPressed: () {
-              Navigator.pop(context);
-            },
-            child: const Text('Done'),
-          ),
-        ),
+        leading: const BackButton(),
         centerTitle: true,
         title: const Text('Confirm Order'),
       ),
@@ -34,7 +25,7 @@ class OrderSecretPinDialog extends StatelessWidget {
             15.sH,
             Text(
               'By providing this screte pin to an EESUpreneur, you are '
-              'confirming that you have review the products and you are '
+              'confirming that you have reviewed the products and you are '
               'satisfied with the order.',
               textAlign: TextAlign.center,
               style: context.textTheme.labelSmall?.copyWith(

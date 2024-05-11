@@ -22,6 +22,8 @@ abstract class OrdersDataSource {
     required int limit,
   });
 
+  Stream<Order> streamOrderChanges({required int orderId});
+
   Stream<List<Order>> streamEESUpoolMemberOrders({
     required int poolOrderId,
     required List<OrderStatus> statuses,
@@ -35,6 +37,8 @@ abstract class OrdersDataSource {
     required List<OrderStatus> statuses,
     required int limit,
   });
+
+  Future<Order> fetchOrderById({required int orderId});
 
   Future<bool> saveOrderStatus(Order order);
 

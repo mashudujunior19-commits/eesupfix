@@ -5,6 +5,12 @@ sealed class OrderTrackingState {}
 
 final class OrderTrackingInitial extends OrderTrackingState {}
 
+
+final class CurrentOrderTrackingError extends OrderTrackingState {
+  final EESUpException error;
+  CurrentOrderTrackingError(this.error);
+}
+
 final class CurrentOrderTracking extends OrderTrackingState {
   final Order order;
   CurrentOrderTracking(this.order);

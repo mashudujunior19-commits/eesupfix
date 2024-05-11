@@ -62,6 +62,17 @@ class OrdersTab extends StatelessWidget {
                       return const FullScreenLoadingShimmer();
                     } else if (state is OrdersLoaded) {
                       final orders = state.orders;
+                      if (orders.isEmpty) {
+                        return Padding(
+                          padding: const EdgeInsets.only(top: 250),
+                          child: FullScreenError(
+                            isError: false,
+                            exception: EESUpException(
+                              message: 'You don\'t orders yet.',
+                            ),
+                          ),
+                        );
+                      }
                       return Expanded(
                         child: ListView.builder(
                           padding: const EdgeInsets.only(bottom: 300),

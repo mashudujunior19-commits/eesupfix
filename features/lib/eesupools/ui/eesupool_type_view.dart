@@ -10,6 +10,7 @@ import 'package:features/eesupools/ui/widgets/eesupool_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:repository/utils/eesup_exception.dart';
 
 class EESUpoolsTypeView extends StatelessWidget {
   const EESUpoolsTypeView({
@@ -44,18 +45,28 @@ class EESUpoolsTypeView extends StatelessWidget {
                         key: const Key('value'),
                         kasiPoolsCount: state.kasiPoolsCount,
                       ),
-                    Expanded(
-                      child: ListView.builder(
-                        padding: const EdgeInsets.only(bottom: 300),
-                        itemCount: state.eesupools.length,
-                        itemBuilder: (context, index) {
-                          final pool = state.eesupools[index];
-                          return EESUpoolCard(eesupool: pool)
-                              .animate()
-                              .slideIn((index + 1) * 50);
-                        },
+                    if (state.eesupools.isEmpty)
+                      Padding(
+                        padding: const EdgeInsets.only(top: 350),
+                        child: FullScreenError(
+                          isError: false,
+                          exception: EESUpException(
+                              message: 'Oops!! nothing to show here'),
+                        ),
+                      )
+                    else
+                      Expanded(
+                        child: ListView.builder(
+                          padding: const EdgeInsets.only(bottom: 300),
+                          itemCount: state.eesupools.length,
+                          itemBuilder: (context, index) {
+                            final pool = state.eesupools[index];
+                            return EESUpoolCard(eesupool: pool)
+                                .animate()
+                                .slideIn((index + 1) * 50);
+                          },
+                        ),
                       ),
-                    ),
                   ],
                 );
               }

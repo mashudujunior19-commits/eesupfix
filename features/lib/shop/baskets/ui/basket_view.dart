@@ -11,7 +11,6 @@ import 'package:features/shop/baskets/bloc/basket_view_bloc.dart';
 import 'package:features/shop/baskets/ui/add_products_dialog.dart';
 import 'package:features/shop/cart/ui/product_substitution_settings.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';

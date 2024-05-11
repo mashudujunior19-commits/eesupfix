@@ -1,9 +1,12 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:data_sources/orders/models/order.dart';
+import 'package:features/app_route.gr.dart';
 import 'package:features/core/extensions/bottom_sheet_context_ext.dart';
 import 'package:features/core/extensions/context_theme_ext.dart';
 import 'package:features/core/extensions/sizedbox_ext.dart';
 import 'package:features/orders/tracking/bloc/order_tracking_bloc.dart';
 import 'package:features/orders/tracking/ui/confirm_order_collection.dart';
+import 'package:features/orders/tracking/ui/order_secret_pin_dialog.dart';
 import 'package:features/orders/tracking/ui/status_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -13,15 +16,16 @@ class TrackStatuses extends StatelessWidget {
   const TrackStatuses({
     super.key,
     required this.order,
-    required this.previlage,
+    required this.privilage,
   });
   final Order order;
-  final OrderEditPrivilage previlage;
-  bool hasPrevilage(OrderEditPrivilage funprevilage) {
-    if (previlage == OrderEditPrivilage.all) {
+  final OrderEditPrivilage privilage;
+
+  bool hasPrevilage(OrderEditPrivilage p) {
+    if (privilage == OrderEditPrivilage.all) {
       return true;
     }
-    if (previlage == funprevilage) {
+    if (privilage == p) {
       return true;
     }
     return false;
@@ -67,48 +71,43 @@ class TrackStatuses extends StatelessWidget {
             status: OrderStatus.packaged,
             date: order.packagedAt,
             onChanged: (status) {
-              context.read<OrderTrackingBloc>().add(
-                    OrderStatusUpdated(
-                      order.copyWith(
-                        status: OrderStatus.packaged,
-                        packagedAt: DateTime.now(),
-                      ),
-                    ),
-                  );
-              // final products = order.products;
-              // if (products.isEmpty) return;
-              // reviewProductsDialog(
-              //   context,
-              //   products: products,
-              //   isOwner: isOwner(ref),
-              //   previlage: previlage,
-              // ).then((value) {
-              //   if (hasPrevilage(OrderEditPrivilage.packer)) {
-              //     if (value == true && value != null) {
-              //       updateTracker(
-              //         ref,
-              //         order.copyWith(
-              //           status: OrderStatus.packaged,
-              //           packagedAt: order.packagedAt ?? DateTime.now(),
-              //         ),
-              //       );
-              //     } else {
-              //       updateTracker(
-              //         ref,
-              //         order.copyWith(
-              //           status: OrderStatus.placed,
-              //           packagedAt: null,
-              //           readyAt: null,
-              //           collectedAt: null,
-              //         ),
-              //       );
-              //     }
-              //   }
-              // });
+              if (hasPrevilage(OrderEditPrivilage.packer)) {
+                if (order.status == OrderStatus.placed) {
+                  context.router
+                      .push(ReviewProductsRoute(
+                          order: order, privilage: privilage))
+                      .then((value) {
+                    if (value == true) {
+                      context.read<OrderTrackingBloc>().add(
+                            OrderStatusUpdated(
+                              order.copyWith(
+                                status: OrderStatus.packaged,
+                                packagedAt: DateTime.now(),
+                              ),
+                            ),
+                          );
+                    }
+                  });
+                } else {
+                  context.read<OrderTrackingBloc>().add(
+                        OrderStatusUpdated(
+                          order.copyWith(
+                            status: OrderStatus.placed,
+                            packagedAt: null,
+                          ),
+                        ),
+                      );
+                }
+              }
             },
-            label: order.status == OrderStatus.placed
-                ? 'Tap to package'
-                : 'Packaged',
+            label: () {
+              if (privilage != OrderEditPrivilage.owner &&
+                  order.status == OrderStatus.placed) {
+                return 'Tap to pack';
+              } else {
+                return 'Packaged';
+              }
+            }(),
             icon: MdiIcons.packageVariantPlus,
             isVisible: order.cancelledAt == null,
             canEdit: order.placedAt != null &&
@@ -120,24 +119,21 @@ class TrackStatuses extends StatelessWidget {
             date: order.readyAt,
             onChanged: (status) {
               if (hasPrevilage(OrderEditPrivilage.collector)) {
-                if (order.status == OrderStatus.ready) {
+                if (order.status == OrderStatus.packaged) {
+                  context.read<OrderTrackingBloc>().add(
+                        OrderStatusUpdated(
+                          order.copyWith(
+                            status: OrderStatus.ready,
+                            readyAt: DateTime.now(),
+                          ),
+                        ),
+                      );
+                } else {
                   context.read<OrderTrackingBloc>().add(
                         OrderStatusUpdated(
                           order.copyWith(
                             status: OrderStatus.packaged,
                             readyAt: null,
-                          ),
-                        ),
-                      );
-
-                  return;
-                } else {
-                  context.read<OrderTrackingBloc>().add(
-                        OrderStatusUpdated(
-                          order.copyWith(
-                            packagedAt: order.packagedAt ?? DateTime.now(),
-                            readyAt: DateTime.now(),
-                            status: OrderStatus.ready,
                           ),
                         ),
                       );
@@ -155,60 +151,56 @@ class TrackStatuses extends StatelessWidget {
             status: OrderStatus.collected,
             date: order.collectedAt,
             onChanged: (status) {},
-            label: previlage == OrderEditPrivilage.owner
-                ? 'Tap to Review products'
-                : order.status == OrderStatus.ready
-                    ? 'Tap to Confirm collection'
-                    : 'Collected',
+            label: () {
+              if (privilage == OrderEditPrivilage.owner &&
+                  order.status == OrderStatus.ready) {
+                return 'Tap to Review products';
+              } else if (privilage != OrderEditPrivilage.owner &&
+                  order.status == OrderStatus.ready) {
+                return 'Tap to Confirm collection';
+              } else {
+                return 'Collected';
+              }
+            }(),
             isLast: true,
             icon: Icons.done_all,
             isVisible: order.cancelledAt == null,
-            //canEdit: order.readyAt != null && hasCollectprevilage(ref),
             canEdit: false,
             onTap: () {
-              if (previlage == OrderEditPrivilage.owner &&
-                  order.status == OrderStatus.ready) {
-                // reviewProductsDialog(
-                //   context,
-                //   products: order.products,
-                //   isOwner: true,
-                //   previlage: previlage,
-                // ).then((value) {
-                //   if (value == true) {
-                //     orderScretePinDialog(context,
-                //         pin: order.secretPin.toString());
-                //   }
-                // });
-              } else if (hasPrevilage(OrderEditPrivilage.collector) &&
+              if (privilage != OrderEditPrivilage.owner &&
                   order.status == OrderStatus.ready) {
                 context
                     .showBottomSheetDialog(
-                  child: ConfirmOrderCollectionDialog(
-                      pin: order.secretPin.toString(), isEESUpoolOrder: true),
+                        child: ConfirmOrderCollectionDialog(
+                            pin: order.secretPin.toString()))
+                    .then((value) {
+                  if (value == true) {
+                    context.read<OrderTrackingBloc>().add(
+                          OrderStatusUpdated(
+                            order.copyWith(
+                              status: OrderStatus.collected,
+                              collectedAt: DateTime.now(),
+                            ),
+                          ),
+                        );
+                  }
+                });
+              } else if (privilage == OrderEditPrivilage.owner &&
+                  order.status == OrderStatus.ready) {
+                context
+                    .showBottomSheetDialog(
+                  child: OrderSecretPinDialog(pin: order.secretPin.toString()),
                 )
                     .then((value) {
                   if (value == true) {
-                    if (order.status == OrderStatus.collected) {
-                      context.read<OrderTrackingBloc>().add(
-                            OrderStatusUpdated(
-                              order.copyWith(
-                                status: OrderStatus.ready,
-                                collectedAt: null,
-                              ),
+                    context.read<OrderTrackingBloc>().add(
+                          OrderStatusUpdated(
+                            order.copyWith(
+                              status: OrderStatus.collected,
+                              collectedAt: DateTime.now(),
                             ),
-                          );
-                    } else {
-                      context.read<OrderTrackingBloc>().add(
-                            OrderStatusUpdated(
-                              order.copyWith(
-                                readyAt: order.readyAt ?? DateTime.now(),
-                                packagedAt: order.packagedAt ?? DateTime.now(),
-                                collectedAt: DateTime.now(),
-                                status: OrderStatus.collected,
-                              ),
-                            ),
-                          );
-                    }
+                          ),
+                        );
                   }
                 });
               }

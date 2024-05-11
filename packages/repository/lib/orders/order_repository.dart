@@ -12,11 +12,10 @@ class OrderRepository {
 
   OrderRepository(this._ordersDataSource, this._authRepository);
 
-  Future<Either<EESUpException, OrderResponse>> createOrder(
-      Order order) async {
+  Future<Either<EESUpException, OrderResponse>> createOrder(Order order) async {
     final result = await _authRepository.executeFutureWithAuth((id) async {
-      final response = await _ordersDataSource.createOrder(
-          order.copyWith(customerId: id));
+      final response =
+          await _ordersDataSource.createOrder(order.copyWith(customerId: id));
       return response;
     });
     return result;
@@ -31,6 +30,18 @@ class OrderRepository {
         statuses: statuses,
         userId: id,
         limit: limit,
+      );
+      yield* response;
+    });
+    yield* stream;
+  }
+
+  Stream<Either<EESUpException, Order>> streamOrderById(
+    int orderId,
+  ) async* {
+    final stream = _authRepository.executeStreamWithAuth((id) async* {
+      final response = _ordersDataSource.streamOrderChanges(
+        orderId: orderId,
       );
       yield* response;
     });
@@ -69,8 +80,7 @@ class OrderRepository {
     yield* result;
   }
 
-  Future<Either<EESUpException, bool>> saveStatusChanges(
-      Order order) async {
+  Future<Either<EESUpException, bool>> saveStatusChanges(Order order) async {
     final result = await _authRepository.executeFutureWithAuth((_) async {
       final response = await _ordersDataSource.saveOrderStatus(order);
       return response;

@@ -3607,7 +3607,7 @@ BEGIN
     -- Get profit allocations based on customer role
     SELECT * INTO _allocations
     FROM finances.profit_allocation
-    WHERE _customer_role = ANY (roles);
+    WHERE create_wallet_transaction = ANY (roles);
 
     -- Set allocations on NEW record
     NEW.cia := ROUND((_profit * _allocations.cia) / 100, 2);

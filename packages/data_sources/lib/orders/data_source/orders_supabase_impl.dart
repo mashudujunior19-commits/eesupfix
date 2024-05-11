@@ -77,12 +77,18 @@ class OrdersSupabaseImpl implements OrdersDataSource {
   @override
   Future<bool> saveOrderStatus(Order order) async {
     try {
-      await _client.schema('sales').from('order').update({
+      final data = {
         'status': order.status.toString(),
         'packaged_at': order.packagedAt?.toIso8601String(),
         'ready_at': order.readyAt?.toIso8601String(),
         'collected_at': order.collectedAt?.toIso8601String(),
-      }).eq('id', order.id!);
+      };
+
+      await _client
+          .schema('sales')
+          .from('order')
+          .update(data)
+          .eq('id', order.id!);
       return true;
     } catch (e) {
       if (kDebugMode) {
@@ -191,5 +197,27 @@ class OrdersSupabaseImpl implements OrdersDataSource {
         .eq('order_id', orderId);
     final tickets = results.map((e) => OrderTicket.fromJson(e)).toList();
     return tickets;
+  }
+
+  @override
+  Stream<Order> streamOrderChanges({required int orderId}) async* {
+    final stream = _client
+        .schema('sales')
+        .from('order')
+        .stream(primaryKey: ['id']).eq('id', orderId);
+    await for (final event in stream) {
+      final order = await fetchOrderById(orderId: orderId);
+      yield order;
+    }
+  }
+
+  @override
+  Future<Order> fetchOrderById({required int orderId}) async {
+    final response = await _client
+        .schema('sales')
+        .rpc('get_order_by_id', params: {'_order_id': orderId})
+        .order('id', ascending: false)
+        .single();
+    return Order.fromJson(response);
   }
 }

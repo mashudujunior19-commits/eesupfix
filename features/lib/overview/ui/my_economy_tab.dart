@@ -16,7 +16,7 @@ class MyEconomyTab extends StatelessWidget {
     return const Scaffold(
       backgroundColor: Colors.transparent,
       body: DefaultTabController(
-        length: 6,
+        length: 5,
         child: Column(
           children: [
             _TabBar(),
@@ -27,7 +27,7 @@ class MyEconomyTab extends StatelessWidget {
                   OrdersTab(),
                   KasipreneurTab(),
                   WalletsTab(),
-                  CrowdfundWalletScreen(),
+                  //  CrowdfundWalletScreen(),
                   Center(child: Text('Referrals')),
                 ],
               ),
@@ -74,7 +74,7 @@ class _TabBar extends StatelessWidget {
           Tab(text: 'ORDERS'),
           Tab(text: 'KASIPRENEUR'),
           Tab(text: 'WALLETS'),
-          Tab(text: 'CROWDFUND WALLET & VOUCHERS'),
+          //  Tab(text: 'CROWDFUND WALLET & VOUCHERS'),
           Tab(text: 'REFERRALS'),
         ],
       ),

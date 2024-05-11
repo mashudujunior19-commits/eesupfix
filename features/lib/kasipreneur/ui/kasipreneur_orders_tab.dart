@@ -34,6 +34,15 @@ class KasipreneurOrdersTab extends StatelessWidget {
             return const FullScreenLoadingShimmer();
           } else if (state is OrdersLoaded) {
             final orders = state.orders;
+            if (orders.isEmpty) {
+              return FullScreenError(
+                isError: false,
+                exception: EESUpException(
+                  message: 'You don\'t '
+                      'have orders yet',
+                ),
+              );
+            }
             return ListView.builder(
               padding: const EdgeInsets.only(bottom: 300),
               itemCount: orders.length,

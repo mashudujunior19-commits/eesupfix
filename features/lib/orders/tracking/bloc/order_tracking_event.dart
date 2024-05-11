@@ -4,8 +4,8 @@ part of 'order_tracking_bloc.dart';
 sealed class OrderTrackingEvent {}
 
 final class OrderLoaded extends OrderTrackingEvent {
-  final Either<int, Order> params;
-  OrderLoaded(this.params);
+  final int id;
+  OrderLoaded(this.id);
 }
 
 final class OrderStatusUpdated extends OrderTrackingEvent {

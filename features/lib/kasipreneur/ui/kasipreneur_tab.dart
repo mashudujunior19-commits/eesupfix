@@ -32,6 +32,13 @@ class KasipreneurTab extends StatelessWidget {
             if (state is KasipreneurInitial) {
               return const FullScreenLoadingShimmer();
             } else if (state is KasipreneursLoaded) {
+              if (state.kasipreneurs.isEmpty) {
+                return FullScreenError(
+                  isError: false,
+                  exception:
+                      EESUpException(message: 'Oops!! nothing to show here'),
+                );
+              }
               return ListView.builder(
                 itemCount: state.kasipreneurs.length,
                 itemBuilder: (context, index) {

@@ -34,7 +34,7 @@ class WalletViewBloc extends Bloc<WalletViewEvent, WalletViewState> {
         return;
       }, (r) {
         transactions = r;
-        transactions.sort((a, b) => a.id.compareTo(b.id));
+        //transactions.sort((a, b) => a.id.compareTo(b.id));
       });
       emit(WalletViewLoaded(wallet, transactions));
     });
