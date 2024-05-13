@@ -1,7 +1,6 @@
 import 'package:data/eesupools/models/eesupool_type.dart';
 import 'package:ui/core/extensions/context_theme_ext.dart';
 import 'package:ui/eesupools/ui/eesupool_type_view.dart';
-import 'package:ui/finances/crowdvouchers/ui/crowdfund_wallet_screen.dart';
 import 'package:ui/finances/wallets/ui/screens/wallets_tab.dart';
 import 'package:ui/kasipreneur/ui/kasipreneur_tab.dart';
 import 'package:ui/orders/listing/ui/orders_tab.dart';

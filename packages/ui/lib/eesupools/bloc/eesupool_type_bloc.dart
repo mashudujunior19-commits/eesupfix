@@ -20,7 +20,7 @@ class EESUpoolTypeViewBloc
         event.type,
       );
       final countRes = await eesupoolRepo.countUserEESUpoolsByType(
-        EESUpoolType.Kasi,
+        EESUpoolType.kasi,
       );
       eesupoolsRes.fold((l) {
         emit(EESUpoolTypeViewError(l));

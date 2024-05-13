@@ -71,7 +71,6 @@ class CartBloc extends Bloc<CartEvent, CartState> {
       );
 
       if (index != -1) {
-        print(index);
         currentCart[index] = currentCart[index].copyWith(
           substituteBrand: event.substituteBrand,
           substituteVariant: event.substituteVariant,

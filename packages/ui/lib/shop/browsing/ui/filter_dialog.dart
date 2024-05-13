@@ -40,7 +40,7 @@ class ShoppingFiltersButton extends StatelessWidget {
 }
 
 class _ProductsFilterDialog extends StatefulWidget {
-  const _ProductsFilterDialog({super.key, required this.currentFilter});
+  const _ProductsFilterDialog({required this.currentFilter});
   final ProductFilter currentFilter;
 
   @override

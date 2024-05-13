@@ -61,7 +61,6 @@ class ChatTextFieldBloc extends Bloc<ChatTextFieldEvent, ChatTextFieldState> {
         message.files,
         message.replyTo,
       );
-      print(results);
       results.fold((l) {
         emit(ChatTextFieldError(l));
       }, (r) {

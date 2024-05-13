@@ -1,6 +1,5 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:data/orders/models/order.dart';
-import 'package:either_dart/either.dart';
 import 'package:ui/app_route.gr.dart';
 import 'package:ui/core/extensions/context_theme_ext.dart';
 import 'package:ui/core/extensions/sizedbox_ext.dart';

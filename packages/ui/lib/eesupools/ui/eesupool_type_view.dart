@@ -100,7 +100,7 @@ class _TypeHeader extends StatelessWidget {
           Row(
             children: [
               _EESUpoolTypeViewActionBtn(
-                  isEnabled: type != EESUpoolType.Kasi,
+                  isEnabled: type != EESUpoolType.kasi,
                   label: 'Create',
                   onPressed: () {}),
               20.sW,

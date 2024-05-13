@@ -41,6 +41,7 @@ class PaymentSupabaseProvider implements PaymentGatewayProvider {
       }).eq('reference_id', reference);
       return true;
     } catch (e) {
+      // ignore: avoid_print
       print(e.toString());
       return false;
     }

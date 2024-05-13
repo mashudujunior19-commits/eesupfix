@@ -104,7 +104,7 @@ List<Widget> _getTabBarViews(EESUpool pool) {
       ChatsTab(pool: pool),
       if (type == EESUpoolType.trade) OrdersPoolTab(pool: pool),
       EventsTab(pool: pool),
-      if (type == EESUpoolType.Kasi && level != EESUpoolLevel.Street)
+      if (type == EESUpoolType.kasi && level != EESUpoolLevel.Street)
         const MyKasiTreeTab(),
       MembersTab(pool: pool),
       SettingsTab(pool: pool),
@@ -134,7 +134,7 @@ List<Tab> _getCorrectTabs(EESUpool pool) {
       const Tab(text: 'CHATS'),
       if (type == EESUpoolType.trade) const Tab(text: 'ORDERS'),
       const Tab(text: 'EVENTS'),
-      if (type == EESUpoolType.Kasi && level != EESUpoolLevel.Street)
+      if (type == EESUpoolType.kasi && level != EESUpoolLevel.Street)
         const Tab(text: 'MYKASI TREE'),
       const Tab(text: 'MEMBERS'),
       const Tab(text: 'SETTINGS'),

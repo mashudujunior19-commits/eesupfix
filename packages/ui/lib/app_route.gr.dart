@@ -819,7 +819,7 @@ class JoinPoolRoute extends _i37.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i15.KasipreneurScreen]
+/// [_i15.kasipreneurScreen]
 class KasipreneurRoute extends _i37.PageRouteInfo<KasipreneurRouteArgs> {
   KasipreneurRoute({
     _i38.Key? key,

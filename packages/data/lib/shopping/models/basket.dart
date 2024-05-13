@@ -1,6 +1,6 @@
 
 
-// ignore_for_file: invalid_annotation_target
+// ignore_for_file: invalid_annotation_target, constant_identifier_names
 
 import 'package:freezed_annotation/freezed_annotation.dart';
 

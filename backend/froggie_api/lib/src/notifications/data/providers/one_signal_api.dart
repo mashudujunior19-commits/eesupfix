@@ -50,7 +50,7 @@ class OneSignalApi {
         return Left(Exception('Error sending notification'));
       }
 
-      return Right(true);
+      return const Right(true);
     } catch (e) {
       print(e);
       return Left(e as Exception);

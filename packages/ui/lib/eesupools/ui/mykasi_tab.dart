@@ -16,7 +16,7 @@ class MyKasiTab extends StatelessWidget {
             decoration: const BoxDecoration(color: Colors.white),
             child: const Row(children: [Text('MyKasi')]),
           ),
-          const Expanded(child: EESUpoolsTypeView(type: EESUpoolType.Kasi)),
+          const Expanded(child: EESUpoolsTypeView(type: EESUpoolType.kasi)),
         ],
       ),
     );

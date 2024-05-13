@@ -6,7 +6,7 @@ class SurveyTimer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // if (survey?.enforceTimeLimit == true && survey?.duration != null) {
-    return Column(
+    return const Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         // Padding(

@@ -16,7 +16,7 @@ class EESUpoolTypeConverter implements JsonConverter<EESUpoolType, String> {
 
 enum EESUpoolType {
   trade,
-  Kasi,
+  kasi,
   interestGroup;
 
   @override
@@ -24,7 +24,7 @@ enum EESUpoolType {
     switch (this) {
       case EESUpoolType.trade:
         return 'Trade';
-      case EESUpoolType.Kasi:
+      case EESUpoolType.kasi:
         return 'Kasi';
       case EESUpoolType.interestGroup:
         return 'Interest Group';
@@ -38,7 +38,7 @@ enum EESUpoolType {
       case 'Trade':
         return EESUpoolType.trade;
       case 'Kasi':
-        return EESUpoolType.Kasi;
+        return EESUpoolType.kasi;
       case 'Interest Group':
         return EESUpoolType.interestGroup;
       default:

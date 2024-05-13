@@ -1,5 +1,4 @@
 import 'package:ui/auth/register/ui/password_strength.dart';
-import 'package:ui/core/extensions/context_theme_ext.dart';
 import 'package:ui/core/extensions/sizedbox_ext.dart';
 import 'package:ui/core/extensions/slide_in_animation_ext.dart';
 import 'package:ui/core/widgets/eesup_form_field.dart';

@@ -1,4 +1,3 @@
-import 'package:bootstrap_icons/bootstrap_icons.dart';
 import 'package:ui/core/extensions/context_theme_ext.dart';
 import 'package:ui/core/extensions/sizedbox_ext.dart';
 import 'package:flutter/material.dart';

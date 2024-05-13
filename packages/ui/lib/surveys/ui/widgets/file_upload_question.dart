@@ -82,6 +82,7 @@ class FilePickerQuestion extends StatelessWidget {
     );
   }
 
+  // ignore: unused_element
   Future<List<File>> _pickFiles() async {
     FilePickerResult? result = await FilePicker.platform.pickFiles(
       type: FileType.custom,

@@ -10,7 +10,6 @@ final class KasipreneursLoaded extends KasipreneurState {
   KasipreneursLoaded(this.kasipreneurs);
 }
 
-
 final class KasipreneursError extends KasipreneurState {
   final EESUpException exception;
   KasipreneursError(this.exception);

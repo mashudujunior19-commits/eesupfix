@@ -44,12 +44,12 @@ class CorporateForm extends StatelessWidget {
           },
         ).animate().slideIn(0),
         if (1 == 1)
-          EESUpTextFormField(
+          const EESUpTextFormField(
             label: 'NPC Registration Number',
             hintText: 'Optional',
           ).animate().slideIn(100)
         else
-          EESUpTextFormField(
+          const EESUpTextFormField(
             label: 'Company Registration',
             hintText: 'Optional',
           ).animate().slideIn(100),

@@ -65,8 +65,8 @@ class _CredentialsFormTabState extends State<CredentialsFormTab> {
               'Phone',
             ],
             children: [
-              EESUpTextFormField(
-                margin: const EdgeInsets.only(top: 0),
+              const EESUpTextFormField(
+                margin: EdgeInsets.only(top: 0),
                 hintText: 'email@gmail.com',
                 label: 'Email',
               ),

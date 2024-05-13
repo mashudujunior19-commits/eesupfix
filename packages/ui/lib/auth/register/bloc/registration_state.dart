@@ -78,6 +78,7 @@ final class SignUpForm extends RegistrationFormState {
     );
   }
 
+  // ignore: unused_element
   bool _isValidEmail() {
     if (email == null) return false;
     return EmailValidator.validate(email.toString());

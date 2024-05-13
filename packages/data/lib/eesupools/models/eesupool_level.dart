@@ -30,7 +30,7 @@ enum EESUpoolLevel {
       case 'Township':
         return EESUpoolLevel.Township;
       case 'Kasi':
-        return EESUpoolLevel.Kasi;
+        return EESUpoolLevel.kasi;
       case 'Street':
         return EESUpoolLevel.Street;
       default:
@@ -49,7 +49,7 @@ enum EESUpoolLevel {
         return 'Regional';
       case EESUpoolLevel.Township:
         return 'Township';
-      case EESUpoolLevel.Kasi:
+      case EESUpoolLevel.kasi:
         return 'Kasi';
       case EESUpoolLevel.Street:
         return 'Street';
@@ -63,8 +63,8 @@ enum EESUpoolLevel {
   EESUpoolLevel? get child => {
         EESUpoolLevel.National: EESUpoolLevel.Regional,
         EESUpoolLevel.Regional: EESUpoolLevel.Township,
-        EESUpoolLevel.Township: EESUpoolLevel.Kasi,
-        EESUpoolLevel.Kasi: EESUpoolLevel.Street,
+        EESUpoolLevel.Township: EESUpoolLevel.kasi,
+        EESUpoolLevel.kasi: EESUpoolLevel.Street,
         EESUpoolLevel.Street: null,
       }[this];
 
@@ -72,8 +72,8 @@ enum EESUpoolLevel {
         EESUpoolLevel.National: null,
         EESUpoolLevel.Regional: EESUpoolLevel.National,
         EESUpoolLevel.Township: EESUpoolLevel.Regional,
-        EESUpoolLevel.Kasi: EESUpoolLevel.Township,
-        EESUpoolLevel.Street: EESUpoolLevel.Kasi,
+        EESUpoolLevel.kasi: EESUpoolLevel.Township,
+        EESUpoolLevel.Street: EESUpoolLevel.kasi,
       }[this];
 
   List<EESUpoolLevel> lowerLevels() {
@@ -82,18 +82,18 @@ enum EESUpoolLevel {
         return [
           EESUpoolLevel.Regional,
           EESUpoolLevel.Township,
-          EESUpoolLevel.Kasi,
+          EESUpoolLevel.kasi,
           EESUpoolLevel.Street
         ];
       case EESUpoolLevel.Regional:
         return [
           EESUpoolLevel.Township,
-          EESUpoolLevel.Kasi,
+          EESUpoolLevel.kasi,
           EESUpoolLevel.Street
         ];
       case EESUpoolLevel.Township:
-        return [EESUpoolLevel.Kasi, EESUpoolLevel.Street];
-      case EESUpoolLevel.Kasi:
+        return [EESUpoolLevel.kasi, EESUpoolLevel.Street];
+      case EESUpoolLevel.kasi:
         return [EESUpoolLevel.Street];
       case EESUpoolLevel.Street:
         return [];
@@ -113,7 +113,7 @@ enum EESUpoolLevel {
   //         EESUpoolLevel.National,
   //         EESUpoolLevel.Regional,
   //       ],
-  //       EESUpoolLevel.Kasi: [
+  //       EESUpoolLevel.kasi: [
   //         EESUpoolLevel.National,
   //         EESUpoolLevel.Regional,
   //         EESUpoolLevel.Township,
@@ -122,7 +122,7 @@ enum EESUpoolLevel {
   //         EESUpoolLevel.National,
   //         EESUpoolLevel.Regional,
   //         EESUpoolLevel.Township,
-  //         EESUpoolLevel.Kasi,
+  //         EESUpoolLevel.kasi,
   //       ],
   //     }[this]!;
 }

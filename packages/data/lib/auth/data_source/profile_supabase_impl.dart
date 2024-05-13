@@ -43,7 +43,9 @@ class ProfileSupabaseImpl implements ProfileDataSource {
           );
       return true;
     } catch (e) {
-      print(e);
+      if (kDebugMode) {
+        print(e);
+      }
       return false;
     }
   }
@@ -53,18 +55,18 @@ class ProfileSupabaseImpl implements ProfileDataSource {
     // final results =
     //     await _client.auth.updateUser(UserAttributes(phone: '+27618640746'));
     // print(results.user);
-    final results = await _client.auth
-        .updateUser(UserAttributes(email: 'miso@canbushack.com'));
-    // final results = await _client.auth.verifyOTP(
-    //     token: '885521', phone: '+27618640745', type: OtpType.phoneChange);
-    print(results.user);
+    // final results = await _client.auth
+    //     .updateUser(UserAttributes(email: 'miso@canbushack.com'));
+    // // final results = await _client.auth.verifyOTP(
+    // //     token: '885521', phone: '+27618640745', type: OtpType.phoneChange);
+    // print(results.user);
     return true;
   }
 
   @override
   Future<bool> changeEmail(String email) async {
-    final results = await _client.auth
-        .updateUser(UserAttributes(email: 'miso@canbushack.com'));  
+    // final results = await _client.auth
+    //     .updateUser(UserAttributes(email: 'miso@canbushack.com'));  
     return true;
   }
 }

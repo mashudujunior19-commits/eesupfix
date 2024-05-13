@@ -265,7 +265,7 @@ class _TextField extends StatelessWidget {
 }
 
 class _ReplyPreview extends StatelessWidget {
-  const _ReplyPreview({super.key, required this.reply});
+  const _ReplyPreview({required this.reply});
   final ChatMessage reply;
 
   @override

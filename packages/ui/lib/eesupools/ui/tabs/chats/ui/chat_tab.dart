@@ -72,7 +72,7 @@ class ChatsTab extends StatelessWidget {
 }
 
 class _Encryption extends StatelessWidget {
-  const _Encryption({super.key});
+  const _Encryption();
 
   @override
   Widget build(BuildContext context) {

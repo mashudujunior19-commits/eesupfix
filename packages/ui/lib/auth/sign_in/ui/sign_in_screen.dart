@@ -67,8 +67,7 @@ class SignInScreen extends StatelessWidget {
                         key: const Key('sign_in_button'),
                         child: const Text('Sign In'),
                         onPressed: () {
-                          print(_phone);
-                          if (_email == null && _phone == null) {
+                                                 if (_email == null && _phone == null) {
                             context.snackBarError(
                               'Please enter either email or phone number',
                             );

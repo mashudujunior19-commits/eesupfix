@@ -11,12 +11,10 @@ class AutoCompletionBloc
     on<AutoCompletionRequested>((event, emit) async {
       emit(AutoCompletionLoading());
       try {
-        print(event.key);
         final results = await FlutterGooglePlace(key: event.key, region: 'za')
             .getPredictions(
           event.input,
         );
-        print(results);
         emit(AutoCompletionsLoaded(results));
       } catch (e) {
         if (kDebugMode) {

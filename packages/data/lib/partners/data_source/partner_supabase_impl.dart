@@ -3,6 +3,7 @@ import 'package:data/partners/data_source/partner_data_source.dart';
 import 'package:data/partners/models/partner.dart';
 import 'package:data/partners/models/partner_application.dart';
 import 'package:data/surveys/models/survey.dart';
+import 'package:flutter/foundation.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class PartnerSupabaseImpl implements PartnerDataSource {
@@ -58,10 +59,11 @@ class PartnerSupabaseImpl implements PartnerDataSource {
         '_partner_id': partnerId,
         '_user_id': userId,
       });
-      print(res);
       return res;
     } catch (e) {
-      print(e);
+      if (kDebugMode) {
+        print(e);
+      }
       return 1;
     }
   }

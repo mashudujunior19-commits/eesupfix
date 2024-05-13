@@ -33,7 +33,6 @@ class ProfileRepository {
   }
 
   Future<Either<EESUpException, bool>> changePhone(String phone) async {
-    print(phone);
     final result = await _authRepository.executeFutureWithAuth((id) async {
       final res = await _profileDataSource.changePhone(id);
       return res;
