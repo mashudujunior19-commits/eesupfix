@@ -1,0 +1,219 @@
+import 'package:auto_route/auto_route.dart';
+import 'package:ui/auth/sign_in/ui/background_decoration.dart';
+import 'package:ui/core/extensions/context_alerts_ext.dart';
+import 'package:ui/core/extensions/context_theme_ext.dart';
+import 'package:ui/core/extensions/sizedbox_ext.dart';
+import 'package:ui/core/extensions/slide_in_animation_ext.dart';
+import 'package:ui/core/widgets/eesup_form_field.dart';
+import 'package:ui/auth/sign_in/bloc/auth_bloc.dart';
+import 'package:ui/core/widgets/eesup_phone_text_field.dart';
+import 'package:flutter_highlighted_text/flutter_highlighted_text.dart';
+import 'package:ui/app_route.gr.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:loader_overlay/loader_overlay.dart';
+import 'package:tab_container/tab_container.dart';
+
+String? _phone = '';
+String? _email = '';
+String _password = '';
+
+@RoutePage()
+class SignInScreen extends StatelessWidget {
+  const SignInScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return SafeArea(
+      key: const Key('sign_in_screen'),
+      child: Scaffold(
+        body: BlocListener<AuthBloc, AuthBlocState>(
+          listener: (context, state) {
+            if (state is AuthLoading) {
+              context.loaderOverlay.show();
+            } else {
+              context.loaderOverlay.hide();
+            }
+
+            if (state is AuthError) {
+              context.snackBarError(state.error.message);
+            }
+
+            if (state is Authenticated) {
+              context.router.replaceAll([const OverviewRoute()]);
+            }
+          },
+          child: BlocBuilder<AuthBloc, AuthBlocState>(
+            builder: (context, state) {
+              return BackgroundDecoration(
+                key: const Key('background_decoration'),
+                child: Center(
+                  child: ListView(
+                    padding: const EdgeInsets.only(
+                      left: 20,
+                      right: 20,
+                      top: 100,
+                      bottom: 100,
+                    ),
+                    children: [
+                      const _WelcomeMessage(),
+                      const _SignInForm(key: Key('sign_in_form')),
+                      20.sH,
+                      const _ForgotPasswordButton(
+                        key: Key('forgot_password_button'),
+                      ).animate().slideIn(150),
+                      ElevatedButton(
+                        key: const Key('sign_in_button'),
+                        child: const Text('Sign In'),
+                        onPressed: () {
+                          print(_phone);
+                          if (_email == null && _phone == null) {
+                            context.snackBarError(
+                              'Please enter either email or phone number',
+                            );
+                            return;
+                          }
+
+                          if (_password.isEmpty) {
+                            context.snackBarError('Please enter your password');
+                            return;
+                          }
+
+                          context.read<AuthBloc>().add(
+                                SignInPressed(_email, _phone, _password),
+                              );
+                        },
+                      ).animate().slideIn(200),
+                      20.sH,
+                      HighlightedText(
+                        'Don\'t  have an account?  Register',
+                        patterns: const ['Register'],
+                        style: context.textTheme.displayMedium!.copyWith(
+                          color: Colors.grey.shade800,
+                          fontSize: 14,
+                          fontWeight: FontWeight.w500,
+                        ),
+                        dotAll: true,
+                        highLightStyle:
+                            context.textTheme.displayMedium!.copyWith(
+                          color: context.colorScheme.primary,
+                          fontSize: 14,
+                          fontWeight: FontWeight.w500,
+                        ),
+                        textAlign: TextAlign.center,
+                        onTap: (p) {
+                          context.router.push(const RegisterRoute());
+                        },
+                      ).animate().slideIn(250)
+                    ],
+                  ),
+                ),
+              );
+            },
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _ForgotPasswordButton extends StatelessWidget {
+  const _ForgotPasswordButton({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        TextButton(
+          key: key,
+          onPressed: () {
+            context.router.push(const ResetPasswordRoute());
+          },
+          child: const Text('Forgot Password?'),
+        ),
+      ],
+    );
+  }
+}
+
+class _SignInForm extends StatelessWidget {
+  const _SignInForm({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Container(
+          margin: const EdgeInsets.only(top: 25),
+          height: 160,
+          child: TabContainer(
+            childPadding: const EdgeInsets.only(
+              left: 10,
+              right: 10,
+              top: 10,
+            ),
+            onEnd: () {
+              FocusScope.of(context).unfocus();
+              _email = null;
+              _phone = null;
+            },
+            color: Colors.white.withOpacity(.5),
+            controller: TabContainerController(length: 2),
+            radius: 15,
+            tabs: const ['Email', 'Phone'],
+            children: [
+              EESUpTextFormField(
+                key: const Key('email_text_field'),
+                onChanged: (email) {
+                  _email = email;
+                },
+              ),
+              EESUpPhoneTextField(
+                onChanged: (phone) {
+                  _phone = phone;
+                },
+              ),
+            ],
+          ),
+        ).animate().slideIn(100),
+        EESUpTextFormField(
+          key: const Key('password_text_field'),
+          onChanged: (password) {
+            _password = password;
+          },
+          isPassword: true,
+          label: 'Password',
+        ).animate().slideIn(150),
+      ],
+    );
+  }
+}
+
+class _WelcomeMessage extends StatelessWidget {
+  const _WelcomeMessage();
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        SizedBox(
+          height: 30,
+          child: Image.asset(
+            'assets/images/logo.png',
+            alignment: Alignment.center,
+          ),
+        ).animate().slideIn(0),
+        15.sH,
+        Text(
+          'Welcome back!',
+          textAlign: TextAlign.center,
+          style: context.textTheme.displayMedium,
+        ).animate().slideIn(50),
+      ],
+    );
+  }
+}

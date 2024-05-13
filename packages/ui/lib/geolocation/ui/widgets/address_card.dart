@@ -1,0 +1,189 @@
+import 'package:auto_route/auto_route.dart';
+import 'package:data/geolocation/models/address.dart';
+import 'package:ui/core/extensions/sizedbox_ext.dart';
+import 'package:ui/app_route.gr.dart';
+import 'package:ui/geolocation/bloc/addresses_bloc.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_iconly/flutter_iconly.dart';
+
+class AddressCard extends StatelessWidget {
+  const AddressCard({
+    super.key,
+    required this.address,
+    this.allowDelete = true,
+    this.onTap,
+    this.margin,
+    this.color,
+  });
+  final Color? color;
+  final EdgeInsets? margin;
+  final Address address;
+  final bool allowDelete;
+  final void Function()? onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    return InkWell(
+      splashColor: Colors.transparent,
+      onTap: onTap ??
+          () {
+            context.router
+                .push(EditAddressRoute(address: address, isPersonal: true))
+                .then((value) {
+              if (value != null) {
+                context.read<AddressesBloc>().add(AddressesFetched());
+              }
+            });
+          },
+      child: Container(
+        margin: margin ?? const EdgeInsets.only(right: 17, left: 17, top: 15),
+        padding: const EdgeInsets.all(10),
+        decoration: BoxDecoration(
+          color: color ?? Colors.white,
+          borderRadius: BorderRadius.circular(12),
+          border: Border.all(
+            color: Colors.grey.shade300,
+            width: .5,
+          ),
+        ),
+        child: ListTile(
+          contentPadding: const EdgeInsets.all(0),
+          leading: CircleAvatar(
+            backgroundColor: theme.colorScheme.primary.withOpacity(
+              .2,
+            ),
+            child: Icon(
+              IconlyLight.location,
+              color: theme.colorScheme.primary,
+            ),
+          ),
+          title: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                address.streetAddress,
+                style: theme.textTheme.labelMedium?.copyWith(
+                  fontSize: 13,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+              const SizedBox(height: 2),
+              Row(
+                children: [
+                  if (address.buildingName != null)
+                    Padding(
+                      padding: const EdgeInsets.only(right: 5),
+                      child: Text(
+                        '${address.buildingName}',
+                        style: theme.textTheme.labelMedium?.copyWith(
+                          fontSize: 13,
+                          // fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    ),
+                  Text(
+                    address.province,
+                    style: theme.textTheme.labelMedium?.copyWith(
+                      fontSize: 13,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                ],
+              ),
+              5.sH,
+              Row(
+                children: [
+                  Text(
+                    '👨🏽‍🦱 ${address.recipientName}',
+                    style: theme.textTheme.labelMedium?.copyWith(
+                      fontSize: 13,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                  10.sW,
+                  Text(
+                    '📞 ${address.recipientPhone}',
+                    style: theme.textTheme.labelMedium?.copyWith(
+                      fontSize: 13,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                ],
+              ),
+              10.sH,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Row(
+                    children: [
+                      if (address.areaId != null)
+                        Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Icon(
+                              Icons.verified,
+                              color: theme.colorScheme.primary,
+                              size: 17,
+                            ),
+                            Text(
+                              ' Verified  ',
+                              style: theme.textTheme.labelMedium?.copyWith(
+                                fontSize: 13,
+                                fontWeight: FontWeight.w400,
+                                color: theme.colorScheme.primary,
+                              ),
+                            ),
+                            const Tooltip(
+                              margin: EdgeInsets.only(
+                                left: 25,
+                                right: 25,
+                              ),
+                              message:
+                                  'Verified means this address is within one of EESUp\'s operational area',
+                              child: Icon(
+                                Icons.help_outline,
+                                size: 13,
+                              ),
+                            ),
+                            10.sW,
+                          ],
+                        ),
+                      if (address.isPrimary)
+                        Text(
+                          'Primary',
+                          style: theme.textTheme.labelMedium?.copyWith(
+                            fontSize: 13,
+                            fontWeight: FontWeight.w400,
+                            color: theme.colorScheme.primary.withOpacity(.5),
+                          ),
+                        ),
+                    ],
+                  ),
+                  if (allowDelete)
+                    InkWell(
+                      onTap: () {
+                        final id = address.id;
+
+                        if (id == null) return;
+
+                        context.read<AddressesBloc>().add(
+                              AddressDeleted(id),
+                            );
+                      },
+                      child: const Icon(
+                        IconlyBold.delete,
+                        size: 18,
+                        color: Colors.redAccent,
+                      ),
+                    )
+                ],
+              )
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}

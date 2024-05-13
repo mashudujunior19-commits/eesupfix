@@ -7,12 +7,12 @@ environment:
   sdk: '>=3.3.0 <4.0.0'
 
 dependencies:
-  features:
-    path: ../../../eesup-frontend/features
   flutter:
     sdk: flutter
   google_fonts: ^6.2.1
   shorebird_code_push: ^1.1.3
+  ui:
+    path: ../../packages/ui
   
 dev_dependencies:
   flutter_test:

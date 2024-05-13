@@ -1,4 +1,0 @@
-# melos_managed_dependency_overrides: data_sources
-dependency_overrides:
-  data_sources:
-    path: ..\\data_sources
