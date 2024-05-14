@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:data/eesupools/models/eesupool.dart';
 import 'package:data/eesupools/models/eesupool_order.dart';
 import 'package:ui/app_route.gr.dart';
+import 'package:ui/core/extensions/context_theme_ext.dart';
 import 'package:ui/core/extensions/sizedbox_ext.dart';
 import 'package:ui/core/utils/date_formatter.dart';
 import 'package:flutter/material.dart';
@@ -43,15 +44,20 @@ class EESUpoolOrderCard extends StatelessWidget {
           ),
         ),
         child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Column(
-              mainAxisAlignment: MainAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 CircleAvatar(
-                  backgroundColor: Colors.transparent,
-                  //backgroundColor: theme.colorScheme.primary.withOpacity(.1),
-                  child: Image.asset('assets/images/checklist.png', width: 30),
+                  backgroundColor: context.colorScheme.primary.withOpacity(.2),
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Image.asset(
+                      'assets/images/checklist.png',
+                      width: 25,
+                    ),
+                  ),
                 ),
               ],
             ),
@@ -65,7 +71,29 @@ class EESUpoolOrderCard extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text('#${order.id.toString()}'),
-                      const Icon(IconlyLight.arrowRight2, size: 15)
+                      Container(
+                        padding: const EdgeInsets.only(
+                            left: 5, right: 5, top: 2, bottom: 2),
+                        decoration: BoxDecoration(
+                            color: order.closesAt.isBefore(DateTime.now())
+                                ? Colors.redAccent.withOpacity(.5)
+                                : context.colorScheme.primary,
+                            borderRadius: BorderRadius.circular(5)),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              order.closesAt.isBefore(DateTime.now())
+                                  ? 'Closed'
+                                  : 'Open',
+                              style: textTheme.labelMedium?.copyWith(
+                                fontSize: 13,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
                     ],
                   ),
                   3.sH,
@@ -73,15 +101,17 @@ class EESUpoolOrderCard extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        'Closes on: ',
-                        style: textTheme.labelMedium?.copyWith(
+                        order.closesAt.isBefore(DateTime.now())
+                            ? 'Closed on'
+                            : 'Closes on',
+                        style: textTheme.bodySmall?.copyWith(
                           fontSize: 14,
                         ),
                       ),
                       Text(
                         DateFormatter.formatDateToNamedayWithTime3(
                             order.closesAt),
-                        style: textTheme.labelMedium?.copyWith(
+                        style: textTheme.bodySmall?.copyWith(
                           fontSize: 14,
                         ),
                       ),
@@ -93,13 +123,13 @@ class EESUpoolOrderCard extends StatelessWidget {
                   //   children: [
                   //     Text(
                   //       'Receiver: ',
-                  //       style: textTheme.labelMedium?.copyWith(
+                  //       style: textTheme.bodySmall?.copyWith(
                   //         fontSize: 14,
                   //       ),
                   //     ),
                   //     Text(
                   //       order.receiver?.fullName ?? '~',
-                  //       style: textTheme.labelMedium?.copyWith(
+                  //       style: textTheme.bodySmall?.copyWith(
                   //         fontSize: 14,
                   //       ),
                   //     ),
@@ -111,13 +141,13 @@ class EESUpoolOrderCard extends StatelessWidget {
                     children: [
                       Text(
                         'Member orders: ',
-                        style: textTheme.labelMedium?.copyWith(
+                        style: textTheme.bodySmall?.copyWith(
                           fontSize: 14,
                         ),
                       ),
                       Text(
                         order.ordersCount.toString(),
-                        style: textTheme.labelMedium?.copyWith(
+                        style: textTheme.bodySmall?.copyWith(
                           fontSize: 14,
                         ),
                       ),
@@ -129,13 +159,13 @@ class EESUpoolOrderCard extends StatelessWidget {
                     children: [
                       Text(
                         'Amount: ',
-                        style: textTheme.labelMedium?.copyWith(
+                        style: textTheme.bodySmall?.copyWith(
                           fontSize: 14,
                         ),
                       ),
                       Text(
                         'R${order.currentAmount.toStringAsFixed(2)}',
-                        style: textTheme.labelMedium?.copyWith(
+                        style: textTheme.bodySmall?.copyWith(
                           fontSize: 14,
                         ),
                       ),

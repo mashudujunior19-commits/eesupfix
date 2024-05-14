@@ -1,5 +1,6 @@
 // ignore_for_file: use_build_context_synchronously
 import 'package:ui/auth/register/bloc/registration_bloc.dart';
+import 'package:ui/core/extensions/context_alerts_ext.dart';
 import 'package:ui/core/extensions/sizedbox_ext.dart';
 import 'package:ui/core/extensions/slide_in_animation_ext.dart';
 import 'package:ui/core/utils/date_formatter.dart';
@@ -107,6 +108,36 @@ class IndividualForm extends StatelessWidget {
         30.sH,
         ElevatedButton(
           onPressed: () async {
+            if (form.firstName == null) {
+              context.snackBarError('Please provide your first name');
+              return;
+            }
+
+            if (form.lastName == null) {
+              context.snackBarError('Please provide your last name');
+              return;
+            }
+
+            if (form.idNumber == null && form.dob == null) {
+              print('got in');
+              if (form.isRSACitizen) {
+                context.snackBarError(
+                    "Please provider your South African ID number.");
+                return;
+              } else {
+                context.snackBarError(
+                    "Please provider your South African ID number.");
+                return;
+              }
+            }
+
+            if (!form.isOfAge()) {
+              context.snackBarError(
+                "You must be 18 years and above to Register on EESUp.",
+              );
+              return;
+            }
+
             tabController.animateTo(tabController.index + 1);
           },
           child: const Text('Next'),

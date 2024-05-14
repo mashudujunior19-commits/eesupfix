@@ -18,11 +18,10 @@ class EditProfileBloc extends Bloc<EditProfileEvent, EditProfileState> {
       emit(CurrentProfileForm(event.profile));
     });
 
-    on<PhoneVerificationStarted>((event, emit) async {
-      final results =
-          await _repository.changePhone(event.currentProfile.phone!);
-      print(results);
-    });
+    // on<PhoneVerificationStarted>((event, emit) async {
+    //   final results =
+    //       await _repository.changePhone(event.currentProfile.phone!);
+    // });
 
     on<ProfileSaved>((event, emit) async {
       if (state is CurrentProfileForm) {

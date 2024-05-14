@@ -1,14 +1,22 @@
+import 'package:auto_route/auto_route.dart';
+import 'package:flutter/widgets.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_highlighted_text/flutter_highlighted_text.dart';
+import 'package:ui/auth/register/bloc/registration_bloc.dart';
 import 'package:ui/core/extensions/context_theme_ext.dart';
 import 'package:ui/core/extensions/sizedbox_ext.dart';
 import 'package:ui/core/widgets/eesup_form_field.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
 class ReferralCodeForm extends StatelessWidget {
-  ReferralCodeForm({super.key, required this.tabController});
+  ReferralCodeForm({
+    super.key,
+    required this.form,
+    required this.tabController,
+  });
+  final SignUpForm form;
   final TabController tabController;
 
-  final _codeController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return ListView(
@@ -20,52 +28,59 @@ class ReferralCodeForm extends StatelessWidget {
             const Text('Who referred you?'),
             10.sH,
             EESUpTextFormField(
-              controller: _codeController,
               type: TextInputType.number,
               hintText: 'Referral Code',
+              onChanged: (value) {
+                final code = int.tryParse(value);
+                if (code != null) {
+                  context.read<RegistrationBloc>().add(
+                        SignUpFormUpdated(form.copyWith(referralCode: code)),
+                      );
+                }
+              },
             ),
             20.sH,
             Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Checkbox(
                   visualDensity: VisualDensity.compact,
-                  value: false,
+                  value: form.agreedToTcsAndCs,
                   onChanged: (v) {
-                    // updateIsAgreed(ref, v ?? false);
+                    context.read<RegistrationBloc>().add(
+                          SignUpFormUpdated(
+                            form.copyWith(
+                              agreedToTcsAndCs: v,
+                            ),
+                          ),
+                        );
                   },
                 ),
                 Expanded(
-                  child: RichText(
-                    text: TextSpan(
-                      text: 'I agree to the EESUp\'s ',
-                      style: context.textTheme.displayMedium!.copyWith(
-                        color: Colors.grey.shade800,
-                        fontSize: 15,
-                        fontWeight: FontWeight.w500,
-                      ),
-                      children: [
-                        TextSpan(
-                          text: 'Terms of Service',
-                          style: context.textTheme.displayMedium!.copyWith(
-                            color: context.colorScheme.primary,
-                            fontSize: 15,
-                            fontWeight: FontWeight.w500,
-                          ),
-                          recognizer: TapGestureRecognizer()
-                            ..onTap = () {
-                              // context.push(TermsAndConditionsScreen.route);
-                            },
-                        ),
-                      ],
+                  child: HighlightedText(
+                    'I agree to the EESUp\'s Terms of Service',
+                    patterns: const ['Terms of Service'],
+                    onTap: (p) {
+                      if (p == 'Terms of Service') {
+                        print(p);
+                        //context.router.push(route)
+                      }
+                    },
+                    style: context.textTheme.labelSmall?.copyWith(
+                      fontSize: 14,
                     ),
-                    textAlign: TextAlign.start,
+                    highLightStyle: context.textTheme.labelMedium?.copyWith(
+                      fontSize: 14,
+                      color: context.colorScheme.primary,
+                      decoration: TextDecoration.underline,
+                    ),
                   ),
                 ),
               ],
             ),
             20.sH,
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 TextButton(
                   onPressed: () {},
@@ -76,7 +91,9 @@ class ReferralCodeForm extends StatelessWidget {
                   width: 120,
                   height: 40,
                   child: ElevatedButton(
-                    onPressed: () async {},
+                    onPressed: () async {
+                      print(form.toJson());
+                    },
                     child: const Text(
                       'Got it, Sign up',
                       style: TextStyle(fontSize: 13),
@@ -89,10 +106,5 @@ class ReferralCodeForm extends StatelessWidget {
         ),
       ],
     );
-  }
-
-  String capitalizeFirstLetter(String str) {
-    if (str.isEmpty) return str;
-    return str[0].toUpperCase() + str.substring(1);
   }
 }

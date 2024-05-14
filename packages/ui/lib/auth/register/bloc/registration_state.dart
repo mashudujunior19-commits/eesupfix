@@ -78,6 +78,18 @@ final class SignUpForm extends RegistrationFormState {
     );
   }
 
+  SignUpForm copyWith2({
+    required String? email,
+    required String? phone,
+  }) {
+    return SignUpForm(
+      email: email,
+      phone: phone,
+    );
+  }
+
+  
+
   // ignore: unused_element
   bool _isValidEmail() {
     if (email == null) return false;
@@ -90,6 +102,14 @@ final class SignUpForm extends RegistrationFormState {
   }
 
   bool isOfAge() {
+    if (idNumber == null && isRSACitizen) {
+      return false;
+    }
+
+    if (dob == null && !isRSACitizen) {
+      return false;
+    }
+
     int age = 0;
     if (isRSACitizen) {
       final d = _extractDateOfBirth(idNumber!);
@@ -108,9 +128,6 @@ final class SignUpForm extends RegistrationFormState {
   //   if (tempPhone.isEmpty && tempEmail.isEmpty) {
   //     return (emailPhoneEmpty: true, invalidEmail: null, invalidPhone: null);
   //   }
-
-
-
 
   // }
 

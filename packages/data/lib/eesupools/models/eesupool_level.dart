@@ -18,7 +18,7 @@ enum EESUpoolLevel {
   National,
   Regional,
   Township,
-  Kasi,
+  kasi,
   Street;
 
   factory EESUpoolLevel.fromString(String level) {

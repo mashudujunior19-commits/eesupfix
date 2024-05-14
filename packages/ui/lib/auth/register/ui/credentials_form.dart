@@ -44,7 +44,8 @@ class CredentialsForm extends StatelessWidget {
                 onChanged: (value) {
                   final v = value.isEmpty ? null : value;
                   context.read<RegistrationBloc>().add(
-                        SignUpFormUpdated(form.copyWith(email: v, phone: null)),
+                        SignUpFormUpdated(
+                            form.copyWith2(email: v, phone: null)),
                       );
                 },
               ),
@@ -68,9 +69,11 @@ class CredentialsForm extends StatelessWidget {
                   ),
                   onChanged: (value) {
                     final phone = localizeSAPhoneNumber(value);
+
                     context.read<RegistrationBloc>().add(
                           SignUpFormUpdated(
-                              form.copyWith(phone: phone, email: null)),
+                            form.copyWith2(phone: phone, email: null),
+                          ),
                         );
                   },
                   decoration: const InputDecoration(
@@ -113,6 +116,8 @@ class CredentialsForm extends StatelessWidget {
         ElevatedButton(
           onPressed: () async {
             FocusScope.of(context).unfocus();
+
+            print(form.toJson());
 
             // final tempEmail = form.email ?? '';
             // final tempPhone = form.phone ?? '';

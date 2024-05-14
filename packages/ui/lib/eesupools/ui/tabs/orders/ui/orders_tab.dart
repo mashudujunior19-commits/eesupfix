@@ -108,8 +108,12 @@ class OrdersPoolTab extends StatelessWidget {
                     Expanded(
                       child: ListView.builder(
                         itemBuilder: (context, index) {
+                          final o = orders[index];
+                          if (o.id == openOrder?.id) {
+                            return 0.sW;
+                          }
                           return EESUpoolOrderCard(
-                            order: orders[index],
+                            order: o,
                             pool: pool,
                           );
                         },

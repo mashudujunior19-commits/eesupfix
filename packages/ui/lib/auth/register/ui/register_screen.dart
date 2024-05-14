@@ -89,7 +89,10 @@ class _RegisterScreenState extends State<RegisterScreen>
                               form: state,
                               tabController: _tabController,
                             ),
-                            ReferralCodeForm(tabController: _tabController),
+                            ReferralCodeForm(
+                              tabController: _tabController,
+                              form: state,
+                            ),
                             const WelcomeScreen(),
                           ],
                         );

@@ -25,11 +25,16 @@ class OrderDetailsTab extends StatelessWidget {
       children: [
         Container(
           margin: const EdgeInsets.only(
-            right: 15,
+            right: 20,
             left: 20,
             top: 15,
           ),
-          padding: const EdgeInsets.all(10),
+          padding: const EdgeInsets.only(
+            right: 10,
+            left: 10,
+            top: 10,
+            bottom: 10,
+          ),
           decoration: BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.circular(10),
@@ -38,175 +43,174 @@ class OrderDetailsTab extends StatelessWidget {
               width: .5,
             ),
           ),
-          child: Row(
+          child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Column(
-                mainAxisAlignment: MainAxisAlignment.start,
+              5.sH,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  CircleAvatar(
-                    backgroundColor: Colors.transparent,
-                    child: Image.asset(
-                      'assets/images/checklist.png',
-                      width: 30,
-                    ),
-                  ),
-                ],
-              ),
-              15.sW,
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    5.sH,
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text('#${order.id.toString()}'),
-                        const Icon(IconlyLight.arrowRight2, size: 15)
-                      ],
-                    ),
-                    3.sH,
-                    Row(
+                  Text('#${order.id.toString()}'),
+                  Container(
+                    padding: const EdgeInsets.only(
+                        left: 5, right: 5, top: 2, bottom: 2),
+                    decoration: BoxDecoration(
+                        color: order.closesAt.isBefore(DateTime.now())
+                            ? Colors.redAccent.withOpacity(.5)
+                            : context.colorScheme.primary,
+                        borderRadius: BorderRadius.circular(5)),
+                    child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
                           order.closesAt.isBefore(DateTime.now())
-                              ? 'Closed on'
-                              : 'Closes on',
-                          style: context.textTheme.bodySmall?.copyWith(
-                            fontSize: 13,
-                          ),
-                        ),
-                        Text(
-                          DateFormatter.formatDateToNamedayWithTime3(
-                              order.closesAt),
+                              ? 'Closed'
+                              : 'Open',
                           style: context.textTheme.labelMedium?.copyWith(
                             fontSize: 13,
+                            color: Colors.white,
                           ),
                         ),
                       ],
                     ),
-                    3.sH,
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'Member orders',
-                          style: context.textTheme.bodySmall?.copyWith(
-                            fontSize: 13,
-                          ),
-                        ),
-                        Text(
-                          order.ordersCount.toString(),
-                          style: context.textTheme.labelMedium?.copyWith(
-                            fontSize: 13,
-                          ),
-                        ),
-                      ],
+                  ),
+                ],
+              ),
+              3.sH,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    order.closesAt.isBefore(DateTime.now())
+                        ? 'Closed on'
+                        : 'Closes on',
+                    style: context.textTheme.bodySmall?.copyWith(
+                      fontSize: 13,
                     ),
-                    3.sH,
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'Amount',
-                          style: context.textTheme.bodySmall?.copyWith(
-                            fontSize: 13,
-                          ),
-                        ),
-                        Text(
-                          'R${order.currentAmount.toStringAsFixed(2)}',
-                          style: context.textTheme.labelMedium?.copyWith(
-                            fontSize: 13,
-                          ),
-                        ),
-                      ],
+                  ),
+                  Text(
+                    DateFormatter.formatDateToNamedayWithTime3(order.closesAt),
+                    style: context.textTheme.labelMedium?.copyWith(
+                      fontSize: 13,
                     ),
-                    3.sH,
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'Delivery on: ',
-                          style: context.textTheme.bodySmall?.copyWith(
-                            fontSize: 13,
-                          ),
-                        ),
-                        Text(
-                          DateFormatter.formatDateToNamedayWithTime3(
-                              order.scheduleFor),
-                          style: context.textTheme.labelMedium?.copyWith(
-                            fontSize: 13,
-                          ),
-                        ),
-                      ],
+                  ),
+                ],
+              ),
+              3.sH,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    'Member orders',
+                    style: context.textTheme.bodySmall?.copyWith(
+                      fontSize: 13,
                     ),
-                    3.sH,
-                    if (order.deliveredAt != null)
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            'Received At',
-                            style: context.textTheme.bodySmall?.copyWith(
-                              fontSize: 13,
-                            ),
-                          ),
-                          Text(
-                            DateFormatter.formatDateToNamedayWithTime3(
-                                order.deliveredAt!),
-                            style: context.textTheme.labelMedium?.copyWith(
-                              fontSize: 13,
-                            ),
-                          ),
-                        ],
+                  ),
+                  Text(
+                    order.ordersCount.toString(),
+                    style: context.textTheme.labelMedium?.copyWith(
+                      fontSize: 13,
+                    ),
+                  ),
+                ],
+              ),
+              3.sH,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    'Amount',
+                    style: context.textTheme.bodySmall?.copyWith(
+                      fontSize: 13,
+                    ),
+                  ),
+                  Text(
+                    'R${order.currentAmount.toStringAsFixed(2)}',
+                    style: context.textTheme.labelMedium?.copyWith(
+                      fontSize: 13,
+                    ),
+                  ),
+                ],
+              ),
+              3.sH,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    'Delivery on: ',
+                    style: context.textTheme.bodySmall?.copyWith(
+                      fontSize: 13,
+                    ),
+                  ),
+                  Text(
+                    DateFormatter.formatDateToNamedayWithTime3(
+                        order.scheduleFor),
+                    style: context.textTheme.labelMedium?.copyWith(
+                      fontSize: 13,
+                    ),
+                  ),
+                ],
+              ),
+              3.sH,
+              if (order.deliveredAt != null)
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      'Received At',
+                      style: context.textTheme.bodySmall?.copyWith(
+                        fontSize: 13,
                       ),
-                    if (pool.role == EESUpoolMemberRole.admin)
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          5.sH,
-                          const Divider(thickness: .5),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                'Confirm delivery: ',
-                                style: context.textTheme.labelMedium?.copyWith(
-                                  fontSize: 13,
-                                ),
-                              ),
-                              Transform.scale(
-                                scale: .7,
-                                child: Switch(
-                                  value: order.deliveredAt != null,
-                                  onChanged: (value) {
-                                    if (order.deliveredAt == null) {
-                                      context
-                                          .showBottomSheetDialog(
-                                              child:
-                                                  ConfirmOrderCollectionDialog(
-                                                      pin: '32325',
-                                                      isEESUpoolOrder: true))
-                                          .then((value) {
-                                        if (value == true) {
-                                          context.read<PoolOrderViewBloc>().add(
-                                              PoolOrderIsReceived(
-                                                  DateTime.now()));
-                                        }
-                                      });
-                                    }
-                                  },
-                                ),
-                              )
-                            ],
-                          ),
-                        ],
+                    ),
+                    Text(
+                      DateFormatter.formatDateToNamedayWithTime3(
+                          order.deliveredAt!),
+                      style: context.textTheme.labelMedium?.copyWith(
+                        fontSize: 13,
                       ),
+                    ),
                   ],
                 ),
-              ),
+              if (pool.role == EESUpoolMemberRole.admin)
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    5.sH,
+                    const Divider(thickness: .5),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'Confirm delivery: ',
+                          style: context.textTheme.labelMedium?.copyWith(
+                            fontSize: 13,
+                          ),
+                        ),
+                        Transform.scale(
+                          scale: .7,
+                          child: Switch(
+                            value: order.deliveredAt != null,
+                            onChanged: (value) {
+                              if (order.deliveredAt == null) {
+                                context
+                                    .showBottomSheetDialog(
+                                        child: ConfirmOrderCollectionDialog(
+                                            pin: order.secretPin.toString(),
+                                            isEESUpoolOrder: true))
+                                    .then((value) {
+                                  if (value == true) {
+                                    context.read<PoolOrderViewBloc>().add(
+                                        PoolOrderIsReceived(DateTime.now()));
+                                  }
+                                });
+                              }
+                            },
+                          ),
+                        )
+                      ],
+                    ),
+                  ],
+                ),
             ],
           ),
         ),

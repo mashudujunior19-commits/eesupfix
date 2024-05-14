@@ -1,5 +1,7 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:data/eesupools/models/eesupool_type.dart';
 import 'package:data/eesupools/repository/eesupool_repo.dart';
+import 'package:ui/app_route.gr.dart';
 import 'package:ui/eesupools/bloc/eesupool_type_bloc.dart';
 import 'package:ui/core/widgets/fullscreen_error_widget.dart';
 import 'package:ui/core/extensions/context_theme_ext.dart';
@@ -104,7 +106,11 @@ class _TypeHeader extends StatelessWidget {
                   label: 'Create',
                   onPressed: () {}),
               20.sW,
-              _EESUpoolTypeViewActionBtn(label: 'Search', onPressed: () {}),
+              _EESUpoolTypeViewActionBtn(
+                  label: 'Search',
+                  onPressed: () {
+                    context.router.push(EESUpoolSearchRoute(type: type));
+                  }),
             ],
           ),
         ],
