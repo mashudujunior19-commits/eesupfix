@@ -9,7 +9,7 @@ import 'package:ui/src/core/extensions/context_theme_ext.dart';
 import 'package:ui/src/features/eesupools/bloc/eesupool_view_bloc.dart';
 import 'package:ui/src/features/eesupools/ui/tabs/chats/ui/chat_tab.dart';
 import 'package:ui/src/features/eesupools/ui/tabs/members/ui/members_tab.dart';
-import 'package:ui/src/features/eesupools/ui/tabs/my_kasi_tree/mykasi_tree.dart';
+import 'package:ui/src/features/eesupools/ui/tabs/my_kasi_tree/ui/mykasi_tree.dart';
 import 'package:ui/src/features/eesupools/ui/tabs/orders/ui/orders_tab.dart';
 import 'package:ui/src/features/eesupools/ui/tabs/settings/settings_tab.dart';
 import 'package:flutter/material.dart';
@@ -104,7 +104,7 @@ List<Widget> _getTabBarViews(EESUpool pool) {
       if (type == EESUpoolType.trade) OrdersPoolTab(pool: pool),
       // EventsTab(pool: pool),
       if (type == EESUpoolType.kasi && level != EESUpoolLevel.Street)
-        const MyKasiTreeTab(),
+        MyKasiTreeTab(pool: pool),
       MembersTab(pool: pool),
       SettingsTab(pool: pool),
     ];
