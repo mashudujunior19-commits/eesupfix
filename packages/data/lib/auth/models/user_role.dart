@@ -60,7 +60,6 @@ enum UserRole {
   }
 }
 
-
 class UserRoleConverter implements JsonConverter<UserRole, String> {
   const UserRoleConverter();
 

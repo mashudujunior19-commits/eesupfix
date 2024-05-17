@@ -8,13 +8,13 @@ part of 'chat_message.dart';
 
 _$ChatMessageImpl _$$ChatMessageImplFromJson(Map<String, dynamic> json) =>
     _$ChatMessageImpl(
-      id: json['id'] as int,
-      eesupoolId: json['eesupool_id'] as int,
+      id: (json['id'] as num).toInt(),
+      eesupoolId: (json['eesupool_id'] as num).toInt(),
       authorId: json['author_id'] as String,
       createdAt: DateTime.parse(json['created_at'] as String),
       authorName: json['author_full_name'] as String?,
       content: json['content'] as String?,
-      replyOnId: json['reply_on_id'] as int?,
+      replyOnId: (json['reply_on_id'] as num?)?.toInt(),
       media: (json['attachments'] as List<dynamic>?)
           ?.map((e) =>
               const MediaFileConverter().fromJson(e as Map<String, dynamic>))

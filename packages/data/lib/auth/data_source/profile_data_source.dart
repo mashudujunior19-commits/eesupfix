@@ -1,4 +1,3 @@
-
 import 'package:data/auth/models/profile.dart';
 
 abstract class ProfileDataSource {

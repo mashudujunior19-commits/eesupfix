@@ -8,8 +8,8 @@ part of 'voucher_ledger.dart';
 
 _$VoucherLedgerImpl _$$VoucherLedgerImplFromJson(Map<String, dynamic> json) =>
     _$VoucherLedgerImpl(
-      voucherId: json['voucher_id'] as int,
-      transactionId: json['transaction_id'] as int,
+      voucherId: (json['voucher_id'] as num).toInt(),
+      transactionId: (json['transaction_id'] as num).toInt(),
       createdAt: DateTime.parse(json['created_at'] as String),
       openingBalance: (json['opening_balance'] as num?)?.toDouble(),
       payout: (json['payout'] as num?)?.toDouble(),

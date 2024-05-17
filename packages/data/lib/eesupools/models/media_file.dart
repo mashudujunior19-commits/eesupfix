@@ -3,7 +3,8 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 part 'media_file.freezed.dart';
 part 'media_file.g.dart';
 
-class MediaFileConverter implements JsonConverter<MediaFile, Map<String, dynamic>> {
+class MediaFileConverter
+    implements JsonConverter<MediaFile, Map<String, dynamic>> {
   const MediaFileConverter();
 
   @override
@@ -25,5 +26,6 @@ class MediaFile with _$MediaFile {
     required String type,
   }) = _MediaFile;
 
-  factory MediaFile.fromJson(Map<String, dynamic> json) => _$MediaFileFromJson(json);
+  factory MediaFile.fromJson(Map<String, dynamic> json) =>
+      _$MediaFileFromJson(json);
 }

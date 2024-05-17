@@ -4,7 +4,6 @@ import 'package:either_dart/either.dart';
 import 'package:data/notifications/data_source/notification_data_source.dart';
 import 'package:data/notifications/models/notification.dart';
 
-
 class NotificationRepo {
   final AuthRepository _authRepository;
   final NotificationDataSource _supaSource;

@@ -19,7 +19,7 @@ _$PartnerImpl _$$PartnerImplFromJson(Map<String, dynamic> json) =>
           ? null
           : DateTime.parse(json['created_at'] as String),
       isOpen: json['is_open'] as bool,
-      maxApps: json['max_apps'] as int,
+      maxApps: (json['max_apps'] as num).toInt(),
     );
 
 Map<String, dynamic> _$$PartnerImplToJson(_$PartnerImpl instance) =>

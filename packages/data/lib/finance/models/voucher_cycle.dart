@@ -31,7 +31,6 @@ enum VoucherCycle {
   }
 }
 
-
 class VoucherCycleConverter implements JsonConverter<VoucherCycle, String> {
   const VoucherCycleConverter();
 

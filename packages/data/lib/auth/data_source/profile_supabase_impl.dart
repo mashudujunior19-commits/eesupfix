@@ -66,7 +66,7 @@ class ProfileSupabaseImpl implements ProfileDataSource {
   @override
   Future<bool> changeEmail(String email) async {
     // final results = await _client.auth
-    //     .updateUser(UserAttributes(email: 'miso@canbushack.com'));  
+    //     .updateUser(UserAttributes(email: 'miso@canbushack.com'));
     return true;
   }
 }

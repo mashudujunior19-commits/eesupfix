@@ -8,7 +8,6 @@ import 'package:data/shopping/models/category.dart';
 import 'package:data/shopping/models/product.dart';
 import 'package:data/shopping/models/product_request.dart';
 
-
 class ShoppingRepository {
   final ShoppingDataSource shoppingDataSrc;
   final AuthRepository authRepository;

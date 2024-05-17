@@ -8,7 +8,7 @@ part of 'partner_survey.dart';
 
 _$PartnerSurveyImpl _$$PartnerSurveyImplFromJson(Map<String, dynamic> json) =>
     _$PartnerSurveyImpl(
-      index: json['index'] as int,
+      index: (json['index'] as num).toInt(),
       surveyId: json['survey_id'] as String,
     );
 

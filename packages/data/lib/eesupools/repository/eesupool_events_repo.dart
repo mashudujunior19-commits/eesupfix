@@ -3,7 +3,6 @@ import 'package:either_dart/either.dart';
 import 'package:data/eesupools/models/eesupool_event.dart';
 import 'eesupool_repo.dart';
 
-
 //TODO: Add Authentication wrapper on all functions
 extension EESUpoolEventsRepo on EESUpoolRepository {
   Future<Either<EESUpException, List<EESUpoolEvent>>> fetchEESUpoolEvents(

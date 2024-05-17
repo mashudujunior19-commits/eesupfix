@@ -8,8 +8,8 @@ part of 'order_product.dart';
 
 _$OrderProductImpl _$$OrderProductImplFromJson(Map<String, dynamic> json) =>
     _$OrderProductImpl(
-      productId: json['product_id'] as int,
-      orderId: json['order_id'] as int?,
+      productId: (json['product_id'] as num).toInt(),
+      orderId: (json['order_id'] as num?)?.toInt(),
       category: json['class'] as String?,
       imageUrl: json['image_url'] as String?,
       size: json['size'] as String?,
@@ -17,10 +17,12 @@ _$OrderProductImpl _$$OrderProductImplFromJson(Map<String, dynamic> json) =>
           json['class'], const ProductClassConverter().fromJson),
       price: (json['price'] as num).toDouble(),
       name: json['name'] as String,
-      quantity: json['quantity'] as int,
-      customerAcceptedQty: json['customer_accepted_qty'] as int? ?? 0,
-      eesupreneurAcceptedQty: json['eesupreneur_accepted_qty'] as int? ?? 0,
-      damagedQty: json['damaged_qty'] as int? ?? 0,
+      quantity: (json['quantity'] as num).toInt(),
+      customerAcceptedQty:
+          (json['customer_accepted_qty'] as num?)?.toInt() ?? 0,
+      eesupreneurAcceptedQty:
+          (json['eesupreneur_accepted_qty'] as num?)?.toInt() ?? 0,
+      damagedQty: (json['damaged_qty'] as num?)?.toInt() ?? 0,
       substituteBrand: json['substitute_brand'] as bool? ?? false,
       substituteVariant: json['substitute_variant'] as bool? ?? false,
     );

@@ -25,45 +25,62 @@ import 'package:data/shopping/models/category.dart' as _i41;
 import 'package:flutter/material.dart' as _i39;
 import 'package:flutter/widgets.dart' as _i45;
 import 'package:instapay_flutter/data/merchant_transaction.dart' as _i49;
-import 'package:ui/auth/profile/ui/edit_profile_screen.dart' as _i13;
-import 'package:ui/auth/register/ui/register_screen.dart' as _i26;
-import 'package:ui/auth/reset_password/ui/reset_password_screen.dart' as _i27;
-import 'package:ui/auth/sign_in/ui/sign_in_screen.dart' as _i31;
-import 'package:ui/auth/sign_in/ui/start_up_screen.dart' as _i32;
-import 'package:ui/core/widgets/media_file_uploader.dart' as _i17;
-import 'package:ui/eesupools/ui/eespools_search_results.dart' as _i9;
-import 'package:ui/eesupools/ui/eesupool_search_screen.dart' as _i10;
-import 'package:ui/eesupools/ui/eesupool_view_screen.dart' as _i11;
-import 'package:ui/eesupools/ui/tabs/orders/ui/eesupool_order_view.dart' as _i8;
-import 'package:ui/eesupools/ui/tabs/orders/ui/order_receivers_screen.dart'
+import 'package:ui/src/core/widgets/media_file_uploader.dart' as _i17;
+import 'package:ui/src/features/auth/profile/ui/edit_profile_screen.dart'
+    as _i13;
+import 'package:ui/src/features/auth/register/ui/register_screen.dart' as _i26;
+import 'package:ui/src/features/auth/reset_password/ui/reset_password_screen.dart'
+    as _i27;
+import 'package:ui/src/features/auth/sign_in/ui/sign_in_screen.dart' as _i31;
+import 'package:ui/src/features/auth/sign_in/ui/start_up_screen.dart' as _i32;
+import 'package:ui/src/features/eesupools/ui/eespools_search_results.dart'
+    as _i9;
+import 'package:ui/src/features/eesupools/ui/eesupool_search_screen.dart'
+    as _i10;
+import 'package:ui/src/features/eesupools/ui/eesupool_view_screen.dart' as _i11;
+import 'package:ui/src/features/eesupools/ui/tabs/orders/ui/eesupool_order_view.dart'
+    as _i8;
+import 'package:ui/src/features/eesupools/ui/tabs/orders/ui/order_receivers_screen.dart'
     as _i18;
-import 'package:ui/finances/crowdvouchers/ui/voucher_view_screen.dart' as _i35;
-import 'package:ui/finances/payments/instapay/instapay_confirm_profile.dart'
+import 'package:ui/src/features/finances/crowdvouchers/ui/voucher_view_screen.dart'
+    as _i35;
+import 'package:ui/src/features/finances/payments/instapay/instapay_confirm_profile.dart'
     as _i14;
-import 'package:ui/finances/payments/instapay/instapay_screen.dart' as _i15;
-import 'package:ui/finances/payments/ozow/ozow_screen.dart' as _i21;
-import 'package:ui/finances/payments/yoco/yoco_payment_screen.dart' as _i37;
-import 'package:ui/finances/wallets/ui/screens/payout_screen.dart' as _i24;
-import 'package:ui/finances/wallets/ui/screens/transfer_screen.dart' as _i34;
-import 'package:ui/finances/wallets/ui/screens/wallet_view_screen.dart' as _i36;
-import 'package:ui/geolocation/ui/screens/addrese_book_screen.dart' as _i1;
-import 'package:ui/geolocation/ui/screens/edit_address_screen.dart' as _i12;
-import 'package:ui/kasipreneur/ui/kasipreneur_screen.dart' as _i16;
-import 'package:ui/orders/tracking/ui/order_tracking_screen.dart' as _i19;
-import 'package:ui/orders/tracking/ui/review_products_screen.dart' as _i29;
-import 'package:ui/overview/ui/overview_screen.dart' as _i20;
-import 'package:ui/partners/ui/partner_apps_screen.dart' as _i22;
-import 'package:ui/partners/ui/partners_screen.dart' as _i23;
-import 'package:ui/referrals/ui/referrals_screen.dart' as _i25;
-import 'package:ui/settings/ui/settings_screen.dart' as _i30;
-import 'package:ui/shop/baskets/ui/basket_view.dart' as _i2;
-import 'package:ui/shop/baskets/ui/baskets_list.dart' as _i3;
-import 'package:ui/shop/browsing/ui/browse_shop.dart' as _i4;
-import 'package:ui/shop/browsing/ui/category_screen.dart' as _i6;
-import 'package:ui/shop/cart/ui/cart_screen.dart' as _i5;
-import 'package:ui/shop/checkout/ui/checkout_screen.dart' as _i7;
-import 'package:ui/surveys/ui/response_screen.dart' as _i28;
-import 'package:ui/surveys/ui/survey_screen.dart' as _i33;
+import 'package:ui/src/features/finances/payments/instapay/instapay_screen.dart'
+    as _i15;
+import 'package:ui/src/features/finances/payments/ozow/ozow_screen.dart'
+    as _i21;
+import 'package:ui/src/features/finances/payments/yoco/yoco_payment_screen.dart'
+    as _i37;
+import 'package:ui/src/features/finances/wallets/ui/screens/payout_screen.dart'
+    as _i24;
+import 'package:ui/src/features/finances/wallets/ui/screens/transfer_screen.dart'
+    as _i34;
+import 'package:ui/src/features/finances/wallets/ui/screens/wallet_view_screen.dart'
+    as _i36;
+import 'package:ui/src/features/geolocation/ui/screens/addrese_book_screen.dart'
+    as _i1;
+import 'package:ui/src/features/geolocation/ui/screens/edit_address_screen.dart'
+    as _i12;
+import 'package:ui/src/features/kasipreneur/ui/kasipreneur_screen.dart' as _i16;
+import 'package:ui/src/features/orders/tracking/ui/order_tracking_screen.dart'
+    as _i19;
+import 'package:ui/src/features/orders/tracking/ui/review_products_screen.dart'
+    as _i29;
+import 'package:ui/src/features/overview/ui/overview_screen.dart' as _i20;
+import 'package:ui/src/features/partners/ui/partner_apps_screen.dart' as _i22;
+import 'package:ui/src/features/partners/ui/partners_screen.dart' as _i23;
+import 'package:ui/src/features/settings/ui/settings_screen.dart' as _i30;
+import 'package:ui/src/features/shop/baskets/ui/basket_view.dart' as _i2;
+import 'package:ui/src/features/shop/baskets/ui/baskets_list.dart' as _i3;
+import 'package:ui/src/features/shop/browsing/ui/browse_shop.dart' as _i4;
+import 'package:ui/src/features/shop/browsing/ui/category_screen.dart' as _i6;
+import 'package:ui/src/features/shop/browsing/ui/product_view_screen.dart'
+    as _i25;
+import 'package:ui/src/features/shop/cart/ui/cart_screen.dart' as _i5;
+import 'package:ui/src/features/shop/checkout/ui/checkout_screen.dart' as _i7;
+import 'package:ui/src/features/surveys/ui/response_screen.dart' as _i28;
+import 'package:ui/src/features/surveys/ui/survey_screen.dart' as _i33;
 
 abstract class $AppRouter extends _i38.RootStackRouter {
   $AppRouter({super.navigatorKey});
@@ -299,10 +316,14 @@ abstract class $AppRouter extends _i38.RootStackRouter {
         ),
       );
     },
-    ReferralsView.name: (routeData) {
+    ProductViewRoute.name: (routeData) {
+      final args = routeData.argsAs<ProductViewRouteArgs>();
       return _i38.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const _i25.ReferralsView(),
+        child: _i25.ProductViewScreen(
+          key: args.key,
+          id: args.id,
+        ),
       );
     },
     RegisterRoute.name: (routeData) {
@@ -1229,17 +1250,41 @@ class PayoutRouteArgs {
 }
 
 /// generated route for
-/// [_i25.ReferralsView]
-class ReferralsView extends _i38.PageRouteInfo<void> {
-  const ReferralsView({List<_i38.PageRouteInfo>? children})
-      : super(
-          ReferralsView.name,
+/// [_i25.ProductViewScreen]
+class ProductViewRoute extends _i38.PageRouteInfo<ProductViewRouteArgs> {
+  ProductViewRoute({
+    _i39.Key? key,
+    required int id,
+    List<_i38.PageRouteInfo>? children,
+  }) : super(
+          ProductViewRoute.name,
+          args: ProductViewRouteArgs(
+            key: key,
+            id: id,
+          ),
           initialChildren: children,
         );
 
-  static const String name = 'ReferralsView';
+  static const String name = 'ProductViewRoute';
 
-  static const _i38.PageInfo<void> page = _i38.PageInfo<void>(name);
+  static const _i38.PageInfo<ProductViewRouteArgs> page =
+      _i38.PageInfo<ProductViewRouteArgs>(name);
+}
+
+class ProductViewRouteArgs {
+  const ProductViewRouteArgs({
+    this.key,
+    required this.id,
+  });
+
+  final _i39.Key? key;
+
+  final int id;
+
+  @override
+  String toString() {
+    return 'ProductViewRouteArgs{key: $key, id: $id}';
+  }
 }
 
 /// generated route for

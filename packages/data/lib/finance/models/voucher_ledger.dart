@@ -17,5 +17,6 @@ class VoucherLedger with _$VoucherLedger {
     @JsonKey(name: 'closing_balance') required double closingBalance,
   }) = _VoucherLedger;
 
-  factory VoucherLedger.fromJson(Map<String, dynamic> json) => _$VoucherLedgerFromJson(json);
+  factory VoucherLedger.fromJson(Map<String, dynamic> json) =>
+      _$VoucherLedgerFromJson(json);
 }

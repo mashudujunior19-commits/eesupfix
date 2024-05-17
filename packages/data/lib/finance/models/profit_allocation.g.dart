@@ -18,7 +18,7 @@ _$ProfitAllocationImpl _$$ProfitAllocationImplFromJson(
       roles: (json['roles'] as List<dynamic>)
           .map((e) => const UserRoleConverter().fromJson(e as String))
           .toList(),
-      id: json['id'] as int,
+      id: (json['id'] as num).toInt(),
       cfv: (json['cfv'] as num).toDouble(),
     );
 

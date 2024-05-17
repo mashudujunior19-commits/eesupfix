@@ -12,7 +12,8 @@ class ChatMessageReaction with _$ChatMessageReaction {
     @JsonKey(name: 'member_id') required String memberId,
     @JsonKey(name: 'created_at', includeToJson: false)
     required DateTime createdAt,
-    @JsonKey(name: 'member_full_name',includeToJson: false) required String memberName,
+    @JsonKey(name: 'member_full_name', includeToJson: false)
+    required String memberName,
     required bool liked,
   }) = _ChatMessageReaction;
 

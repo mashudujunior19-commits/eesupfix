@@ -9,7 +9,7 @@ part of 'eesupool_member.dart';
 _$EESUpoolMemberImpl _$$EESUpoolMemberImplFromJson(Map<String, dynamic> json) =>
     _$EESUpoolMemberImpl(
       memberId: json['member_id'] as String,
-      eesupoolId: json['eesupool_id'] as int,
+      eesupoolId: (json['eesupool_id'] as num).toInt(),
       userId: json['user_id'] as String,
       role:
           const EESUpoolMemberRoleConverter().fromJson(json['role'] as String),

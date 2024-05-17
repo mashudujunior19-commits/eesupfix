@@ -1,9 +1,7 @@
 import 'dart:async';
-
 import 'package:ui/app.dart';
 import 'package:ui/config.dart';
-import 'package:ui/core/env/flavor_type.dart';
-
+import 'package:ui/src/core/env/flavor_type.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 

@@ -9,9 +9,9 @@
     },
     {
       "name": "args",
-      "rootUri": "file:///C:/Users/misom/AppData/Local/Pub/Cache/hosted/pub.dev/args-2.4.2",
+      "rootUri": "file:///C:/Users/misom/AppData/Local/Pub/Cache/hosted/pub.dev/args-2.5.0",
       "packageUri": "lib/",
-      "languageVersion": "2.19"
+      "languageVersion": "3.0"
     },
     {
       "name": "async",
@@ -93,9 +93,9 @@
     },
     {
       "name": "json_annotation",
-      "rootUri": "file:///C:/Users/misom/AppData/Local/Pub/Cache/hosted/pub.dev/json_annotation-4.8.1",
+      "rootUri": "file:///C:/Users/misom/AppData/Local/Pub/Cache/hosted/pub.dev/json_annotation-4.9.0",
       "packageUri": "lib/",
-      "languageVersion": "2.19"
+      "languageVersion": "3.0"
     },
     {
       "name": "matcher",
@@ -105,13 +105,13 @@
     },
     {
       "name": "melos",
-      "rootUri": "file:///C:/Users/misom/AppData/Local/Pub/Cache/hosted/pub.dev/melos-5.2.1",
+      "rootUri": "file:///C:/Users/misom/AppData/Local/Pub/Cache/hosted/pub.dev/melos-5.3.0",
       "packageUri": "lib/",
       "languageVersion": "3.0"
     },
     {
       "name": "meta",
-      "rootUri": "file:///C:/Users/misom/AppData/Local/Pub/Cache/hosted/pub.dev/meta-1.12.0",
+      "rootUri": "file:///C:/Users/misom/AppData/Local/Pub/Cache/hosted/pub.dev/meta-1.15.0",
       "packageUri": "lib/",
       "languageVersion": "2.12"
     },
@@ -207,7 +207,7 @@
     },
     {
       "name": "test_api",
-      "rootUri": "file:///C:/Users/misom/AppData/Local/Pub/Cache/hosted/pub.dev/test_api-0.7.0",
+      "rootUri": "file:///C:/Users/misom/AppData/Local/Pub/Cache/hosted/pub.dev/test_api-0.7.1",
       "packageUri": "lib/",
       "languageVersion": "3.0"
     },
@@ -237,9 +237,9 @@
     },
     {
       "name": "yaml_edit",
-      "rootUri": "file:///C:/Users/misom/AppData/Local/Pub/Cache/hosted/pub.dev/yaml_edit-2.2.0",
+      "rootUri": "file:///C:/Users/misom/AppData/Local/Pub/Cache/hosted/pub.dev/yaml_edit-2.2.1",
       "packageUri": "lib/",
-      "languageVersion": "2.19"
+      "languageVersion": "3.0"
     },
     {
       "name": "eesup_frontend",
@@ -248,7 +248,10 @@
       "languageVersion": "3.0"
     }
   ],
-  "generated": "2024-04-29T20:18:01.902620Z",
+  "generated": "2024-05-17T17:08:27.914072Z",
   "generator": "pub",
-  "generatorVersion": "3.3.3"
+  "generatorVersion": "3.4.0",
+  "flutterRoot": "file:///C:/Users/misom/Documents/flutter",
+  "flutterVersion": "3.22.0",
+  "pubCache": "file:///C:/Users/misom/AppData/Local/Pub/Cache"
 }

@@ -28,7 +28,6 @@ class Address with _$Address {
       _$AddressFromJson(json);
 }
 
-
 class AddressConverter implements JsonConverter<Address, Map<String, dynamic>> {
   const AddressConverter();
 

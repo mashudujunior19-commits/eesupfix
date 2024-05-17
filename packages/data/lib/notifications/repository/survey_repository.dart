@@ -8,7 +8,6 @@ import 'package:data/surveys/data_source/survey_data_source.dart';
 import 'package:data/surveys/models/survey.dart';
 import 'package:data/surveys/models/survey_response.dart';
 
-
 class SurveyRepository {
   final SurveyDataSource _surveyDs;
   final AuthRepository _authRepo;
