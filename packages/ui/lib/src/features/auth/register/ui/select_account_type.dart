@@ -6,8 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class SelectUserRole extends StatelessWidget {
-  const SelectUserRole({super.key, required this.tabController});
+class SelectAccountType extends StatelessWidget {
+  const SelectAccountType({super.key, required this.tabController});
   final TabController tabController;
 
   @override
@@ -36,7 +36,7 @@ class SelectUserRole extends StatelessWidget {
                       comment: 'This is a normal company',
                       onTap: () {
                         context.read<RegistrationBloc>().add(
-                              SignUpFormUpdated(state.copyWith(isCorp: false)),
+                              AccountTypeUpdated(false),
                             );
                         tabController.animateTo(tabController.index + 1);
                       },
@@ -49,9 +49,7 @@ class SelectUserRole extends StatelessWidget {
                       comment: 'This is a normal company',
                       onTap: () {
                         context.read<RegistrationBloc>().add(
-                              SignUpFormUpdated(
-                                state.copyWith(isCorp: true),
-                              ),
+                              AccountTypeUpdated(true),
                             );
                         tabController.animateTo(tabController.index + 1);
                       },

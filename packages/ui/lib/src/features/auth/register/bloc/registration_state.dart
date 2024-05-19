@@ -3,6 +3,19 @@ part of 'registration_bloc.dart';
 @immutable
 sealed class RegistrationFormState {}
 
+final class AwaitingOtpAuth extends RegistrationFormState {
+  final SignUpForm oldForm;
+  AwaitingOtpAuth(this.oldForm);
+}
+
+final class FailedToSignUp extends RegistrationFormState {
+  final EESUpException err;
+  final SignUpForm oldForm;
+  FailedToSignUp(this.oldForm, this.err);
+}
+
+final class SignUpLoading extends RegistrationFormState {}
+
 final class SignUpForm extends RegistrationFormState {
   final String? firstName;
   final String? lastName;
@@ -40,54 +53,6 @@ final class SignUpForm extends RegistrationFormState {
     this.npcCorpReg,
   });
 
-  SignUpForm copyWith({
-    bool? isCorp,
-    String? corpName,
-    String? corpReg,
-    String? npcCorpReg,
-    String? email,
-    String? phone,
-    int? referralCode,
-    bool? agreedToTcsAndCs,
-    String? password,
-    String? retypedPassword,
-    String? firstName,
-    String? lastName,
-    String? idNumber,
-    DateTime? dob,
-    bool? isRSACitizen,
-    bool? isPasswordValid,
-  }) {
-    return SignUpForm(
-      isCorp: isCorp ?? this.isCorp,
-      corpName: corpName ?? this.corpName,
-      corpReg: corpReg ?? this.corpReg,
-      email: email ?? this.email,
-      phone: phone ?? this.phone,
-      referralCode: referralCode ?? this.referralCode,
-      agreedToTcsAndCs: agreedToTcsAndCs ?? this.agreedToTcsAndCs,
-      password: password ?? this.password,
-      retypedPassword: retypedPassword ?? this.retypedPassword,
-      firstName: firstName ?? this.firstName,
-      lastName: lastName ?? this.lastName,
-      dob: dob ?? this.dob,
-      idNumber: idNumber ?? this.idNumber,
-      isRSACitizen: isRSACitizen ?? this.isRSACitizen,
-      npcCorpReg: npcCorpReg ?? this.npcCorpReg,
-      isPasswordValid: isPasswordValid ?? this.isPasswordValid,
-    );
-  }
-
-  SignUpForm copyWith2({
-    required String? email,
-    required String? phone,
-  }) {
-    return SignUpForm(
-      email: email,
-      phone: phone,
-    );
-  }
-
   // ignore: unused_element
   bool _isValidEmail() {
     if (email == null) return false;
@@ -118,17 +83,6 @@ final class SignUpForm extends RegistrationFormState {
     return age >= 18;
   }
 
-  // ({bool? emailPhoneEmpty, bool? invalidEmail, bool? invalidPhone})
-  //     validateCreds() {
-  //   final tempEmail = email ?? '';
-  //   final tempPhone = phone ?? '';
-
-  //   if (tempPhone.isEmpty && tempEmail.isEmpty) {
-  //     return (emailPhoneEmpty: true, invalidEmail: null, invalidPhone: null);
-  //   }
-
-  // }
-
   DateTime _extractDateOfBirth(String idNumber) {
     // Extract the date of birth from the ID number
     String year = idNumber.substring(0, 2);
@@ -137,7 +91,6 @@ final class SignUpForm extends RegistrationFormState {
     // Construct the date of birth string in the format yyyy-mm-dd
     String d = '$year-$month-$day';
     final date = DateFormat('yy-MM-dd').parse(d);
-
     return date;
   }
 
@@ -146,7 +99,7 @@ final class SignUpForm extends RegistrationFormState {
       return {
         'corp_name': _capitalizeFirstLetter(corpName ?? ''),
         'corp_reg': corpReg,
-        'npc_reg': npcCorpReg,
+        'npc_reg': null,
         'type': 'Corporate',
         'is_corp': isCorp,
         'referral_code': referralCode,

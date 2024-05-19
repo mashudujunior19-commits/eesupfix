@@ -1,5 +1,10 @@
+// ignore_for_file: use_build_context_synchronously
+
+import 'package:data/auth/repository/auth_repository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_highlighted_text/flutter_highlighted_text.dart';
+import 'package:loader_overlay/loader_overlay.dart';
+import 'package:ui/src/core/extensions/context_alerts_ext.dart';
 import 'package:ui/src/core/extensions/context_theme_ext.dart';
 import 'package:ui/src/core/extensions/sizedbox_ext.dart';
 import 'package:ui/src/core/widgets/eesup_form_field.dart';
@@ -30,11 +35,13 @@ class ReferralCodeForm extends StatelessWidget {
               hintText: 'Referral Code',
               onChanged: (value) {
                 final code = int.tryParse(value);
-                if (code != null) {
-                  context.read<RegistrationBloc>().add(
-                        SignUpFormUpdated(form.copyWith(referralCode: code)),
-                      );
-                }
+
+                context.read<RegistrationBloc>().add(
+                      ReferralCodeUpdated(
+                        code: code,
+                        acceptedTsAndCs: form.agreedToTcsAndCs,
+                      ),
+                    );
               },
             ),
             20.sH,
@@ -46,10 +53,9 @@ class ReferralCodeForm extends StatelessWidget {
                   value: form.agreedToTcsAndCs,
                   onChanged: (v) {
                     context.read<RegistrationBloc>().add(
-                          SignUpFormUpdated(
-                            form.copyWith(
-                              agreedToTcsAndCs: v,
-                            ),
+                          ReferralCodeUpdated(
+                            code: form.referralCode,
+                            acceptedTsAndCs: v ?? false,
                           ),
                         );
                   },
@@ -77,28 +83,49 @@ class ReferralCodeForm extends StatelessWidget {
               ],
             ),
             20.sH,
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                TextButton(
-                  onPressed: () {},
-                  child: const Text("No one, Sign up"),
-                ),
-                20.sW,
-                SizedBox(
-                  width: 120,
-                  height: 40,
-                  child: ElevatedButton(
-                    onPressed: () async {
-                      print(form.toJson());
-                    },
-                    child: const Text(
-                      'Got it, Sign up',
-                      style: TextStyle(fontSize: 13),
-                    ),
-                  ),
-                ),
-              ],
+            ElevatedButton(
+              onPressed: () async {
+                FocusScope.of(context).unfocus();
+                if (!form.agreedToTcsAndCs) {
+                  context.snackBarError(
+                    'Please review our Terms of Service and accept them to continue.',
+                  );
+                  return;
+                }
+                if (form.referralCode != null) {
+                  context.loaderOverlay.show();
+                  final results =
+                      await context.read<AuthRepository>().isValidReferralCode(
+                            form.referralCode!,
+                          );
+                  context.loaderOverlay.hide();
+                  ({bool isValid, bool isCorporate})? res;
+                  results.fold((left) {
+                    context.snackBarError(left.message);
+                    return;
+                  }, (right) {
+                    res = right;
+                  });
+
+                  if (res?.isValid == false) {
+                    context.snackBarError('Invalid referral code.');
+                    return;
+                  }
+
+                  if (res?.isCorporate == true) {
+                    context.snackBarError(
+                        'A corporate account cannot refer other accounts');
+                    return;
+                  }
+                }
+
+                // print(form.toJson());
+
+                context.read<RegistrationBloc>().add(SignUpSubmited(form));
+              },
+              child: Text(form.referralCode != null
+                  ? 'Got it, Sign up'
+                  : 'No one, Sign up'),
             )
           ],
         ),

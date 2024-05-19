@@ -14,7 +14,6 @@ class CreateNewPassword extends StatefulWidget {
 
 class _CreateNewPasswordState extends State<CreateNewPassword> {
   final _passwordController = TextEditingController();
-
   final _confirmController = TextEditingController();
 
   @override

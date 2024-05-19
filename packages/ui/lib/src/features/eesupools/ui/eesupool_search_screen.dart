@@ -175,7 +175,7 @@ class _EESUpoolCard extends StatelessWidget {
                       Text('${pool['parent_name']}'),
                     ],
                   ),
-                //  getActions(context, pool, ref) ?? 0.sW
+                getActions(context, pool) ?? 0.sW
               ],
             ),
           ),

@@ -1,11 +1,13 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:data/geolocation/repository/geo_repository.dart';
+import 'package:data/utils/eesup_exception.dart';
 import 'package:ui/src/core/extensions/bg_image_deco_ext.dart';
 import 'package:ui/src/core/extensions/context_alerts_ext.dart';
 import 'package:ui/src/core/extensions/context_theme_ext.dart';
 import 'package:ui/src/core/extensions/sizedbox_ext.dart';
 import 'package:ui/src/core/extensions/slide_in_animation_ext.dart';
 import 'package:ui/app_route.gr.dart';
+import 'package:ui/src/core/widgets/fullscreen_error_widget.dart';
 import 'package:ui/src/core/widgets/fullscreen_loading_shimmer.dart';
 import 'package:ui/src/features/geolocation/bloc/addresses_bloc.dart';
 import 'package:ui/src/features/geolocation/ui/widgets/address_card.dart';
@@ -57,6 +59,14 @@ class AddressBookScreen extends StatelessWidget {
                 decoration: context.bgImage,
                 child: () {
                   if (state is AddressesLoaded) {
+                    if (state.addresses.isEmpty) {
+                      return FullScreenError(
+                        isError: false,
+                        exception: EESUpException(
+                          message: 'You don\'t addresses saved yet.',
+                        ),
+                      );
+                    }
                     return ListView.builder(
                       itemCount: state.addresses.length,
                       itemBuilder: (context, index) {

@@ -1,11 +1,17 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:data/auth/repository/auth_repository.dart';
+import 'package:loader_overlay/loader_overlay.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:ui/src/core/extensions/bg_image_deco_ext.dart';
+import 'package:ui/src/core/extensions/bottom_sheet_context_ext.dart';
+import 'package:ui/src/core/extensions/context_alerts_ext.dart';
+import 'package:ui/src/features/auth/otp_auth/ui/otp_auth_dialog.dart';
 import 'package:ui/src/features/auth/register/bloc/registration_bloc.dart';
 import 'package:ui/src/features/auth/register/ui/corporate_form.dart';
 import 'package:ui/src/features/auth/register/ui/credentials_form.dart';
 import 'package:ui/src/features/auth/register/ui/individual_form.dart';
 import 'package:ui/src/features/auth/register/ui/referral_code_form.dart';
-import 'package:ui/src/features/auth/register/ui/select_user_role.dart';
+import 'package:ui/src/features/auth/register/ui/select_account_type.dart';
 import 'package:ui/src/features/auth/register/ui/welcome_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -35,10 +41,46 @@ class _RegisterScreenState extends State<RegisterScreen>
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => RegistrationBloc(),
+      create: (context) => RegistrationBloc(context.read<AuthRepository>()),
       child: BlocConsumer<RegistrationBloc, RegistrationFormState>(
         listener: (context, state) {
-          // TODO: implement listener
+          if (state is SignUpLoading) {
+            context.loaderOverlay.show();
+          } else {
+            context.loaderOverlay.hide();
+          }
+
+          if (state is FailedToSignUp) {
+            context.snackBarError(state.err.message);
+            context.read<RegistrationBloc>().add(
+                  SignUpRestarted(state.oldForm),
+                );
+          }
+
+          if (state is AwaitingOtpAuth) {
+            context
+                .showBottomSheetDialog(
+              child: OtpAuthDialog(
+                type: OtpType.signup,
+                email: state.oldForm.email,
+                phone: state.oldForm.phone,
+                isSignUp: true,
+              ),
+            )
+                .then((value) {
+              ///THIS RETURNS TRUE IF OTP AUTH IS SUCCESS
+              if (value == true) {
+                _tabController.animateTo(_tabController.index++);
+              } else {
+                ///ELSE IT IS RESTARTED
+                context.snackBarError('Otp verification failed');
+
+                context
+                    .read<RegistrationBloc>()
+                    .add(SignUpRestarted(state.oldForm));
+              }
+            });
+          }
         },
         builder: (context, state) {
           return SafeArea(
@@ -74,7 +116,7 @@ class _RegisterScreenState extends State<RegisterScreen>
                           // physics: const NeverScrollableScrollPhysics(),
                           controller: _tabController,
                           children: [
-                            SelectUserRole(tabController: _tabController),
+                            SelectAccountType(tabController: _tabController),
                             if (state.isCorp)
                               CorporateForm(
                                 tabController: _tabController,

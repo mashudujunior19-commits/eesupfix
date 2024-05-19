@@ -50,6 +50,7 @@ class _EmailAndPhoneTabContainerState extends State<EmailAndPhoneTabContainer>
             onChanged: (value) {
               final v = value.isEmpty ? null : value;
               widget.onEmailChanged(v);
+              widget.onPhoneChanged(null);
             },
           ),
           Container(
@@ -73,6 +74,7 @@ class _EmailAndPhoneTabContainerState extends State<EmailAndPhoneTabContainer>
               onChanged: (value) {
                 final phone = localizeSAPhoneNumber(value);
                 widget.onPhoneChanged(phone);
+                widget.onEmailChanged(null);
               },
               decoration: const InputDecoration(
                 border: InputBorder.none,

@@ -1,3 +1,5 @@
+import 'package:email_validator/email_validator.dart';
+import 'package:ui/src/core/extensions/context_alerts_ext.dart';
 import 'package:ui/src/core/widgets/eesup_form_field.dart';
 import 'package:ui/src/features/auth/register/bloc/registration_bloc.dart';
 import 'package:ui/src/features/auth/register/ui/password_strength.dart';
@@ -29,21 +31,21 @@ class CredentialsForm extends StatelessWidget {
           initPhone: form.phone,
           onEmailChanged: (email) {
             context.read<RegistrationBloc>().add(
-                  SignUpFormUpdated(
-                    form.copyWith2(
-                      email: email,
-                      phone: null,
-                    ),
+                  CredentialsUpdated(
+                    email: email,
+                    phone: form.phone,
+                    password: form.password,
+                    retypedPassword: form.retypedPassword,
                   ),
                 );
           },
           onPhoneChanged: (phone) {
             context.read<RegistrationBloc>().add(
-                  SignUpFormUpdated(
-                    form.copyWith2(
-                      phone: phone,
-                      email: null,
-                    ),
+                  CredentialsUpdated(
+                    email: form.email,
+                    phone: phone,
+                    password: form.password,
+                    retypedPassword: form.retypedPassword,
                   ),
                 );
           },
@@ -51,10 +53,16 @@ class CredentialsForm extends StatelessWidget {
         EESUpTextFormField(
           isPassword: true,
           label: 'Password',
+          initialValue: form.password,
           onChanged: (value) {
             final v = value.isEmpty ? null : value;
             context.read<RegistrationBloc>().add(
-                  SignUpFormUpdated(form.copyWith(password: v)),
+                  CredentialsUpdated(
+                    email: form.email,
+                    phone: form.phone,
+                    password: v,
+                    retypedPassword: form.retypedPassword,
+                  ),
                 );
           },
         ).animate().slideIn(50),
@@ -67,11 +75,17 @@ class CredentialsForm extends StatelessWidget {
         ).animate().slideIn(100),
         EESUpTextFormField(
           isPassword: true,
+          initialValue: form.retypedPassword,
           label: 'Confirm Password',
           onChanged: (value) {
             final v = value.isEmpty ? null : value;
             context.read<RegistrationBloc>().add(
-                  SignUpFormUpdated(form.copyWith(retypedPassword: v)),
+                  CredentialsUpdated(
+                    email: form.email,
+                    phone: form.phone,
+                    password: form.password,
+                    retypedPassword: v,
+                  ),
                 );
           },
         ).animate().slideIn(150),
@@ -80,20 +94,29 @@ class CredentialsForm extends StatelessWidget {
           onPressed: () async {
             FocusScope.of(context).unfocus();
 
-            // print(form.toJson());
+            final tempEmail = form.email ?? '';
+            final tempPhone = form.phone ?? '';
 
-            // final tempEmail = form.email ?? '';
-            // final tempPhone = form.phone ?? '';
+            if (tempPhone.isEmpty && tempEmail.isEmpty) {
+              context.snackBarError('Please provide your email or phone');
+              return;
+            }
 
-            // if (tempPhone.isEmpty && tempEmail.isEmpty) {
-            //   context.snackBarError('Please provide your email or phone');
-            //   return;
-            // }
+            if (tempEmail.isNotEmpty) {
+              if (!EmailValidator.validate(tempEmail)) {
+                context.snackBarError('Invalid email address');
+                return;
+              }
+            }
 
-            // if (!form.isValidEmail() && tempEmail.isNotEmpty) {
-            //   context.snackBarError('Please provide a valid email address');
-            //   return;
-            // }
+            if (!isValidPassword) {
+              context.snackBarError(
+                'Your password must meet all the requirments.',
+              );
+              return;
+            }
+
+            tabController.animateTo(tabController.index++);
           },
           child: const Text('Next'),
         ).animate().slideIn(200)

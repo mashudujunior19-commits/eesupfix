@@ -1,5 +1,8 @@
 // ignore_for_file: use_build_context_synchronously
+import 'package:data/auth/repository/auth_repository.dart';
+import 'package:loader_overlay/loader_overlay.dart';
 import 'package:ui/src/core/extensions/context_alerts_ext.dart';
+import 'package:ui/src/core/extensions/context_theme_ext.dart';
 import 'package:ui/src/core/extensions/sizedbox_ext.dart';
 import 'package:ui/src/core/extensions/slide_in_animation_ext.dart';
 import 'package:ui/src/core/utils/date_formatter.dart';
@@ -30,7 +33,13 @@ class IndividualForm extends StatelessWidget {
           onChanged: (value) {
             final v = value.isEmpty ? null : value;
             context.read<RegistrationBloc>().add(
-                  SignUpFormUpdated(form.copyWith(firstName: v)),
+                  IndividualFormUpdated(
+                    firstName: v,
+                    lastName: form.lastName,
+                    dob: form.dob,
+                    isRSACitizen: form.isRSACitizen,
+                    idNumber: form.idNumber,
+                  ),
                 );
           },
         ).animate().slideIn(0),
@@ -40,30 +49,49 @@ class IndividualForm extends StatelessWidget {
           onChanged: (value) {
             final v = value.isEmpty ? null : value;
             context.read<RegistrationBloc>().add(
-                  SignUpFormUpdated(form.copyWith(lastName: v)),
+                  IndividualFormUpdated(
+                    firstName: form.firstName,
+                    lastName: v,
+                    dob: form.dob,
+                    isRSACitizen: form.isRSACitizen,
+                    idNumber: form.idNumber,
+                  ),
                 );
           },
         ).animate().slideIn(50),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            const Expanded(child: Text('I am a South African citizen?')),
-            Checkbox(
-              value: form.isRSACitizen,
-              onChanged: (v) {
-                context.read<RegistrationBloc>().add(
-                      SignUpFormUpdated(
-                        form.copyWith(
-                          isRSACitizen: v,
-                          dob: null,
-                          idNumber: null,
+        Container(
+          margin: const EdgeInsets.only(top: 15, bottom: 10),
+          padding: const EdgeInsets.only(left: 10),
+          decoration: BoxDecoration(
+            border: Border.all(width: .3, color: Colors.grey.shade400),
+            borderRadius: BorderRadius.circular(10),
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Expanded(
+                child: Text(
+                  'I am a South African citizen?',
+                  style: context.textTheme.bodyMedium?.copyWith(),
+                ),
+              ),
+              Checkbox(
+                value: form.isRSACitizen,
+                onChanged: (v) {
+                  context.read<RegistrationBloc>().add(
+                        IndividualFormUpdated(
+                          firstName: form.firstName,
+                          lastName: form.lastName,
+                          dob: form.dob,
+                          isRSACitizen: v ?? false,
+                          idNumber: form.idNumber,
                         ),
-                      ),
-                    );
-              },
-            )
-          ],
-        ).animate().slideIn(100),
+                      );
+                },
+              )
+            ],
+          ).animate().slideIn(100),
+        ),
         if (form.isRSACitizen)
           EESUpTextFormField(
             visible: form.isRSACitizen,
@@ -73,7 +101,13 @@ class IndividualForm extends StatelessWidget {
             onChanged: (value) {
               final v = value.isEmpty ? null : value;
               context.read<RegistrationBloc>().add(
-                    SignUpFormUpdated(form.copyWith(idNumber: v, dob: null)),
+                    IndividualFormUpdated(
+                      firstName: form.firstName,
+                      lastName: form.lastName,
+                      dob: null,
+                      isRSACitizen: form.isRSACitizen,
+                      idNumber: v,
+                    ),
                   );
             },
           ).animate().slideIn(150)
@@ -101,13 +135,20 @@ class IndividualForm extends StatelessWidget {
                 ),
               );
               context.read<RegistrationBloc>().add(
-                    SignUpFormUpdated(form.copyWith(dob: dob, idNumber: null)),
+                    IndividualFormUpdated(
+                      firstName: form.firstName,
+                      lastName: form.lastName,
+                      dob: dob,
+                      isRSACitizen: form.isRSACitizen,
+                      idNumber: null,
+                    ),
                   );
             },
           ).animate().slideIn(150),
         30.sH,
         ElevatedButton(
           onPressed: () async {
+            FocusScope.of(context).unfocus();
             if (form.firstName == null) {
               context.snackBarError('Please provide your first name');
               return;
@@ -130,6 +171,13 @@ class IndividualForm extends StatelessWidget {
               }
             }
 
+            if (form.idNumber != null) {
+              if (!form.isValidIdNumber()) {
+                context.snackBarError("Invalid Id number.");
+                return;
+              }
+            }
+
             if (!form.isOfAge()) {
               context.snackBarError(
                 "You must be 18 years and above to Register on EESUp.",
@@ -137,7 +185,29 @@ class IndividualForm extends StatelessWidget {
               return;
             }
 
-            tabController.animateTo(tabController.index + 1);
+            if (form.isRSACitizen) {
+              context.loaderOverlay.show();
+              final results = await context
+                  .read<AuthRepository>()
+                  .idNumberExists(form.idNumber!);
+              context.loaderOverlay.hide();
+
+              results.fold((left) {
+                context.snackBarError(left.message);
+                return;
+              }, (isUsed) {
+                if (isUsed) {
+                  context.snackBarError(
+                    'An account with this id number already exists',
+                  );
+                  return;
+                } else {
+                  tabController.animateTo(tabController.index + 1);
+                }
+              });
+            } else {
+              tabController.animateTo(tabController.index + 1);
+            }
           },
           child: const Text('Next'),
         )

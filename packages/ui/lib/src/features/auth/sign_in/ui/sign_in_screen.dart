@@ -57,7 +57,23 @@ class SignInScreen extends StatelessWidget {
                     ),
                     children: [
                       const _WelcomeMessage(),
-                      const _SignInForm(key: Key('sign_in_form')),
+                      20.sH,
+                      EmailAndPhoneTabContainer(
+                        onEmailChanged: (e) {
+                          _email = e;
+                        },
+                        onPhoneChanged: (p) {
+                          _phone = p;
+                        },
+                      ).animate().slideIn(100),
+                      EESUpTextFormField(
+                        key: const Key('password_text_field'),
+                        onChanged: (password) {
+                          _password = password;
+                        },
+                        isPassword: true,
+                        label: 'Password',
+                      ).animate().slideIn(150),
                       20.sH,
                       const _ForgotPasswordButton(
                         key: Key('forgot_password_button'),
@@ -66,21 +82,21 @@ class SignInScreen extends StatelessWidget {
                         key: const Key('sign_in_button'),
                         child: const Text('Sign In'),
                         onPressed: () {
+                          FocusScope.of(context).unfocus();
                           if (_email == null && _phone == null) {
                             context.snackBarError(
-                              'Please enter either email or phone number',
-                            );
+                                'Enter an email or phone number');
                             return;
                           }
 
                           if (_password.isEmpty) {
-                            context.snackBarError('Please enter your password');
+                            context.snackBarError('Enter your password');
                             return;
                           }
 
-                          context.read<AuthBloc>().add(
-                                SignInPressed(_email, _phone, _password),
-                              );
+                          context
+                              .read<AuthBloc>()
+                              .add(SignInPressed(_email, _phone, _password));
                         },
                       ).animate().slideIn(200),
                       20.sH,
@@ -131,33 +147,6 @@ class _ForgotPasswordButton extends StatelessWidget {
           },
           child: const Text('Forgot Password?'),
         ),
-      ],
-    );
-  }
-}
-
-class _SignInForm extends StatefulWidget {
-  const _SignInForm({super.key});
-
-  @override
-  State<_SignInForm> createState() => _SignInFormState();
-}
-
-class _SignInFormState extends State<_SignInForm> {
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        EmailAndPhoneTabContainer(
-            onEmailChanged: (e) {}, onPhoneChanged: (p) {}),
-        EESUpTextFormField(
-          key: const Key('password_text_field'),
-          onChanged: (password) {
-            _password = password;
-          },
-          isPassword: true,
-          label: 'Password',
-        ).animate().slideIn(150),
       ],
     );
   }

@@ -1,3 +1,4 @@
+import 'package:ui/src/core/extensions/context_alerts_ext.dart';
 import 'package:ui/src/core/extensions/context_theme_ext.dart';
 import 'package:ui/src/core/extensions/sizedbox_ext.dart';
 import 'package:ui/src/core/extensions/slide_in_animation_ext.dart';
@@ -38,37 +39,39 @@ class CorporateForm extends StatelessWidget {
           onChanged: (value) {
             final v = value.isEmpty ? null : value;
 
-            context.read<RegistrationBloc>().add(
-                  SignUpFormUpdated(form.copyWith(lastName: v)),
-                );
+            if (v != null) {
+              context.read<RegistrationBloc>().add(
+                    CorpFormUpdated(
+                      name: v,
+                      reg: form.corpReg,
+                    ),
+                  );
+            }
           },
         ).animate().slideIn(0),
-        if (1 == 1)
-          const EESUpTextFormField(
-            label: 'NPC Registration Number',
-            hintText: 'Optional',
-          ).animate().slideIn(100)
-        else
-          const EESUpTextFormField(
-            label: 'Company Registration',
-            hintText: 'Optional',
-          ).animate().slideIn(100),
+        EESUpTextFormField(
+          label: 'Company Registration',
+          hintText: 'Optional',
+          onChanged: (value) {
+            final v = value.isEmpty ? null : value;
+
+            if (v != null) {
+              context.read<RegistrationBloc>().add(
+                    CorpFormUpdated(name: form.corpName, reg: v),
+                  );
+            }
+          },
+        ).animate().slideIn(100),
         25.sH,
         ElevatedButton(
           onPressed: () {
-            // updateCorpName(ref, _corpNameController.text);
-            // updateCorpReg(ref, _corpRegController.text);
-            // updateNpcReg(ref, _npcRegController.text);
+            FocusScope.of(context).unfocus();
+            if (form.corpName == null) {
+              context.snackBarError('Please fill in the corporate name');
+              return;
+            }
 
-            // if (readSignUp(ref).corpName != null) {
-            //   widget.tabController.animateTo(2);
-            // } else {
-            //   showSnackBar(
-            //     context: context,
-            //     message: 'Please enter corporate name',
-            //     type: SnackBarType.error,
-            //   );
-            // }
+            tabController.animateTo(tabController.index++);
           },
           child: const Text('Next'),
         ).animate().slideIn(200),

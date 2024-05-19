@@ -29,7 +29,7 @@ import 'package:ui/src/core/widgets/media_file_uploader.dart' as _i17;
 import 'package:ui/src/features/auth/profile/ui/edit_profile_screen.dart'
     as _i13;
 import 'package:ui/src/features/auth/register/ui/register_screen.dart' as _i26;
-import 'package:ui/src/features/auth/reset_password/ui/reset_password_screen.dart'
+import 'package:ui/src/features/auth/reset_password/reset_password_screen.dart'
     as _i27;
 import 'package:ui/src/features/auth/sign_in/ui/sign_in_screen.dart' as _i31;
 import 'package:ui/src/features/auth/sign_in/ui/start_up_screen.dart' as _i32;

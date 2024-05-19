@@ -2,6 +2,7 @@ import 'package:data/utils/eesup_exception.dart';
 import 'package:either_dart/either.dart';
 import 'package:data/auth/data_source/abstract_auth_data_source.dart';
 import 'package:email_validator/email_validator.dart';
+import 'package:flutter/foundation.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -143,13 +144,13 @@ class AuthRepository {
     return results;
   }
 
-  Future<Either<EESUpException, bool>> verifyOtp({
+  Future<bool> verifyOtp({
     String? email,
     String? phone,
     required String otp,
     required OtpType type,
   }) async {
-    final results = await EESUpException.guardFuture(action: () async {
+    try {
       final res = await supaSource.verifyOtp(
         email: email,
         phone: phone,
@@ -157,8 +158,12 @@ class AuthRepository {
         type: type,
       );
       return res;
-    });
-    return results;
+    } catch (e) {
+      if (kDebugMode) {
+        print(e);
+      }
+      return false;
+    }
   }
 
   Either<EESUpException, String> validatePhoneEmail(

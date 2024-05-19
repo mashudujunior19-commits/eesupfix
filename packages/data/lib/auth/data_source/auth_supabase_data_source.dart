@@ -34,10 +34,14 @@ class AuthSupabaseDataSource implements IAuthDataSource {
   @override
   Future<({bool isValid, bool isCorporate})> isValidReferralCode(
       int code) async {
-    final res = await _client.from('profile').select('role').eq(
-          'referral_code',
-          code,
-        );
+    final res =
+        await _client.from('profile').select('role').eq('referral_code', code);
+    if (res.isEmpty) {
+      return (
+        isValid: false,
+        isCorporate: false,
+      );
+    }
     return (
       isValid: res.isNotEmpty,
       isCorporate: res.first['role'] == UserRole.Corporate.toString()
@@ -49,7 +53,7 @@ class AuthSupabaseDataSource implements IAuthDataSource {
 
   @override
   Future<bool> signOut() async {
-    await _client.auth.signOut();
+    await _client.auth.signOut(scope: SignOutScope.global);
     return true;
   }
 

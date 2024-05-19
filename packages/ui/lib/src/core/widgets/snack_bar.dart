@@ -21,11 +21,9 @@ void showSnackBar({
     SnackBar(
       elevation: 10,
       action: SnackBarAction(
-        label: 'OK',
+        label: 'Ok',
         textColor: Colors.white,
-        onPressed: () {
-          ScaffoldMessenger.of(context).hideCurrentSnackBar();
-        },
+        onPressed: () {},
       ),
       behavior: SnackBarBehavior.floating,
       margin: const EdgeInsets.only(

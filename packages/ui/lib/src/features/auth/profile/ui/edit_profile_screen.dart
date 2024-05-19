@@ -99,27 +99,30 @@ class EditProfileScreen extends StatelessWidget {
                                   );
                             },
                           ),
-                          EESUpTextFormField(
-                            initialValue: profile.rsaIdNumber,
-                            label: 'Identity number',
-                            readOnly: true,
-                            type: TextInputType.number,
-                            visible: [
-                              UserRole.Ubuntunist.toString(),
-                              UserRole.EESUpreneur.toString(),
-                              UserRole.EESUpromoter.toString(),
-                              UserRole.Driver.toString(),
-                              UserRole.Spaza.toString(),
-                            ].contains(profile.role.toString()),
-                            onChanged: (value) {
-                              context.read<EditProfileBloc>().add(
-                                    ProfileEdited(
-                                      profileForm.copyWith(
-                                        rsaIdNumber: value,
+                          Opacity(
+                            opacity: profile.rsaIdNumber != null ? 0.5 : 1,
+                            child: EESUpTextFormField(
+                              initialValue: profile.rsaIdNumber,
+                              label: 'Identity number',
+                              readOnly: profile.rsaIdNumber != null,
+                              type: TextInputType.number,
+                              visible: [
+                                UserRole.Ubuntunist.toString(),
+                                UserRole.EESUpreneur.toString(),
+                                UserRole.EESUpromoter.toString(),
+                                UserRole.Driver.toString(),
+                                UserRole.Spaza.toString(),
+                              ].contains(profile.role.toString()),
+                              onChanged: (value) {
+                                context.read<EditProfileBloc>().add(
+                                      ProfileEdited(
+                                        profileForm.copyWith(
+                                          rsaIdNumber: value,
+                                        ),
                                       ),
-                                    ),
-                                  );
-                            },
+                                    );
+                              },
+                            ),
                           ),
                           EESUpTextFormField(
                             initialValue: profile.role.toString(),
