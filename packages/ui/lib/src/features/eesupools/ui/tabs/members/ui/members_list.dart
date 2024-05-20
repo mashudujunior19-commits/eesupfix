@@ -1,9 +1,13 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:data/eesupools/models/eesupool.dart';
 import 'package:data/eesupools/repository/eesupool_repo.dart';
+import 'package:ui/src/core/extensions/bottom_sheet_context_ext.dart';
+import 'package:ui/src/core/extensions/context_theme_ext.dart';
 import 'package:ui/src/core/extensions/slide_in_animation_ext.dart';
 import 'package:ui/src/core/widgets/fullscreen_error_widget.dart';
 import 'package:ui/src/core/widgets/fullscreen_loading_shimmer.dart';
 import 'package:ui/src/features/eesupools/ui/tabs/members/bloc/members_bloc.dart';
+import 'package:ui/src/features/eesupools/ui/tabs/members/ui/invite_members_dialog.dart';
 import 'package:ui/src/features/eesupools/ui/tabs/members/ui/member_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
@@ -24,14 +28,29 @@ class MembersListView extends StatelessWidget {
           if (state is MembersLoading) {
             return const FullScreenLoadingShimmer();
           } else if (state is MembersLoaded) {
-            return ListView.builder(
-              itemCount: state.members.length,
-              itemBuilder: (context, index) {
-                return MemberCard(
-                  member: state.members[index],
-                  pool: pool,
-                ).animate().slideIn((50 * index).toDouble());
-              },
+            return Scaffold(
+              backgroundColor: Colors.transparent,
+              floatingActionButton: FloatingActionButton.small(
+                backgroundColor: context.colorScheme.primary,
+                child: const Icon(Icons.add, color: Colors.white),
+                onPressed: () {
+                  context.showBottomSheetDialog(
+                    child: InviteMembersDialog(
+                      poolId: pool.eesupoolId!,
+                      isNewPool: false,
+                    ),
+                  );
+                },
+              ),
+              body: ListView.builder(
+                itemCount: state.members.length,
+                itemBuilder: (context, index) {
+                  return MemberCard(
+                    member: state.members[index],
+                    pool: pool,
+                  ).animate().slideIn((50 * index).toDouble());
+                },
+              ),
             );
           } else {
             return FullScreenError(

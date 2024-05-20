@@ -177,11 +177,6 @@ class AppRouter extends $AppRouter {
           durationInMilliseconds: 300,
         ),
         CustomRoute(
-          page: EESUpoolSearchResultRoute.page,
-          transitionsBuilder: TransitionsBuilders.slideLeftWithFade,
-          durationInMilliseconds: 300,
-        ),
-        CustomRoute(
           page: ProductViewRoute.page,
           transitionsBuilder: TransitionsBuilders.slideLeftWithFade,
           durationInMilliseconds: 300,

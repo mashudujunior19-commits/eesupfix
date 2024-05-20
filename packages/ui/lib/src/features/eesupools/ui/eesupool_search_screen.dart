@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:auto_route/auto_route.dart';
 import 'package:data/eesupools/models/eesupool_level.dart';
 import 'package:data/eesupools/models/eesupool_type.dart';
@@ -8,7 +10,9 @@ import 'package:either_dart/either.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
+import 'package:loader_overlay/loader_overlay.dart';
 import 'package:ui/src/core/extensions/bg_image_deco_ext.dart';
+import 'package:ui/src/core/extensions/context_alerts_ext.dart';
 import 'package:ui/src/core/extensions/context_theme_ext.dart';
 import 'package:ui/src/core/extensions/sizedbox_ext.dart';
 import 'package:ui/src/core/widgets/eesup_form_field.dart';
@@ -84,7 +88,9 @@ class _EESUpoolSearchScreenState extends State<EESUpoolSearchScreen> {
                             itemBuilder: (context, index) {
                               return _EESUpoolCard(
                                 pool: list[index],
-                                onRefresh: () {},
+                                onRefresh: () {
+                                  setState(() {});
+                                },
                               );
                             },
                           );
@@ -236,27 +242,18 @@ class _EESUpoolCard extends StatelessWidget {
       padding: const EdgeInsets.only(top: 3),
       child: InkWell(
         onTap: () async {
-          // context.loaderOverlay.show();
-          // final results =
-          //     await ref.read(eesupoolRepoProvider).joinEESUpoool(pool['id']);
-          // context.loaderOverlay.hide();
+          context.loaderOverlay.show();
+          final repo = context.read<EESUpoolRepository>();
+          final results = await repo.joinEESUpoool(pool['id']);
+         context.loaderOverlay.hide();
 
-          // results.fold((l) {
-          //   showSnackBar(
-          //     context: context,
-          //     message: l.message,
-          //     type: SnackBarType.error,
-          //   );
-          // }, (r) {
-          //   Navigator.pop(context);
-
-          //   showSnackBar(
-          //     context: context,
-          //     message: 'Joined ${pool['name']}',
-          //     type: SnackBarType.success,
-          //   );
-          //   onRefresh?.call();
-          // });
+          results.fold((l) {
+            context.snackBarError(l.message);
+          }, (r) {
+            Navigator.pop(context);
+            context.snackBarSuccess('Joined ${pool['name']}');
+            onRefresh?.call();
+          });
         },
         child: Text(
           'Join',
@@ -274,29 +271,20 @@ class _EESUpoolCard extends StatelessWidget {
       padding: const EdgeInsets.only(top: 5),
       child: InkWell(
         onTap: () async {
-          // context.loaderOverlay.show();
+          context.loaderOverlay.show();
+          final repo = context.read<EESUpoolRepository>();
+          final results = await repo.deleteCurrentInviteOrRequest(pool['id']);
+          context.loaderOverlay.hide();
 
-          // final results = await ref
-          //     .read(eesupoolRepoProvider)
-          //     .deleteCurrentInviteOrRequest(pool['id']);
-          // context.loaderOverlay.hide();
-
-          // results.fold((l) {
-          //   showSnackBar(
-          //     context: context,
-          //     message: l.message,
-          //     type: SnackBarType.error,
-          //   );
-          // }, (r) {
-          //   Navigator.pop(context);
-
-          //   showSnackBar(
-          //     context: context,
-          //     message: 'Request revoked for ${pool['name']}',
-          //     type: SnackBarType.success,
-          //   );
-          //   onRefresh?.call();
-          // });
+          results.fold((l) {
+            context.snackBarError(l.message);
+          }, (r) {
+            Navigator.pop(context);
+            context.snackBarSuccess(
+              'Request revoked for ${pool['name']}',
+            );
+            onRefresh?.call();
+          });
         },
         child: Text(
           'Revoke Request',
@@ -314,29 +302,18 @@ class _EESUpoolCard extends StatelessWidget {
       padding: const EdgeInsets.only(top: 5),
       child: InkWell(
         onTap: () async {
-          // context.loaderOverlay.show();
+          context.loaderOverlay.show();
+          final repo = context.read<EESUpoolRepository>();
+          final results = await repo.createEESUpooolRequest(pool['id']);
+          context.loaderOverlay.hide();
 
-          // final results = await ref
-          //     .read(eesupoolRepoProvider)
-          //     .createEESUpooolRequest(pool['id']);
-          // context.loaderOverlay.hide();
-
-          // results.fold((l) {
-          //   showSnackBar(
-          //     context: context,
-          //     message: l.message,
-          //     type: SnackBarType.error,
-          //   );
-          // }, (r) {
-          //   Navigator.pop(context);
-
-          //   showSnackBar(
-          //     context: context,
-          //     message: 'Requested to join ${pool['name']}',
-          //     type: SnackBarType.success,
-          //   );
-          //   onRefresh?.call();
-          // });
+          results.fold((l) {
+            context.snackBarError(l.message);
+          }, (r) {
+            Navigator.pop(context);
+            context.snackBarSuccess('Requested to join ${pool['name']}');
+            onRefresh?.call();
+          });
         },
         child: Text(
           'Request',

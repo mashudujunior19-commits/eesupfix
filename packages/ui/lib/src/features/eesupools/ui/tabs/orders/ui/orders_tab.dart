@@ -1,5 +1,6 @@
 import 'package:data/eesupools/models/eesupool.dart';
 import 'package:data/eesupools/models/eesupool_member.dart';
+import 'package:data/eesupools/models/eesupool_order.dart';
 import 'package:data/eesupools/repository/eesupool_repo.dart';
 import 'package:ui/src/core/extensions/bottom_sheet_context_ext.dart';
 import 'package:ui/src/core/extensions/context_theme_ext.dart';
@@ -29,97 +30,27 @@ class OrdersPoolTab extends StatelessWidget {
             final orders = state.orders;
             return Scaffold(
               backgroundColor: Colors.transparent,
+              //IF THERE IS NO POOL ORDER THEN DISPLAY CREATE ORDER BUTTON
               floatingActionButton:
                   openOrder == null && pool.role == EESUpoolMemberRole.admin
-                      ? FloatingActionButton.small(
-                          backgroundColor: context.colorScheme.primary,
-                          onPressed: () {
-                            context
-                                .showBottomSheetDialog(
-                              child: CreatePoolOrderDialog(
-                                  pool: pool, order: openOrder),
-                            )
-                                .then((value) {
-                              context.read<OrdersBloc>().add(
-                                    PoolOrdersFetched(pool.eesupoolId!, 500),
-                                  );
-                            });
-                          },
-                          child: const Icon(Icons.add, color: Colors.white),
-                        )
+                      ? _CreateOrderButton(pool: pool, openOrder: openOrder)
                       : null,
               body: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  //DISPLAY OPEN/CURRENT EESUPOOL ORDER, IF THE IS ONE
                   if (openOrder != null)
-                    Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.only(left: 16, right: 16),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              const Text('Current Order'),
-                              Expanded(
-                                child: Container(
-                                  margin: const EdgeInsets.only(left: 5),
-                                  //  width: context.width * .75,
-                                  height: .3,
-                                  color: Colors.grey,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        EESUpoolOrderCard(order: openOrder, pool: pool),
-                      ],
+                    _CurrentOrderCard(
+                      openOrder: openOrder,
+                      pool: pool,
                     ),
                   15.sH,
-                  if (orders.isNotEmpty)
-                    Padding(
-                      padding: const EdgeInsets.only(left: 16, right: 16),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          const Text('History'),
-                          Expanded(
-                            child: Container(
-                              margin: const EdgeInsets.only(left: 5),
-                              //  width: context.width * .75,
-                              height: .3,
-                              color: Colors.grey,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  if (orders.isEmpty || orders.length == 1)
-                    Padding(
-                      padding: const EdgeInsets.only(top: 250),
-                      child: FullScreenError(
-                        isError: false,
-                        exception: EESUpException(
-                          message: 'There are no orders yet.',
-                        ),
-                      ),
-                    )
-                  else
-                    Expanded(
-                      child: ListView.builder(
-                        itemBuilder: (context, index) {
-                          final o = orders[index];
-                          if (o.id == openOrder?.id) {
-                            return 0.sW;
-                          }
-                          return EESUpoolOrderCard(
-                            order: o,
-                            pool: pool,
-                          );
-                        },
-                        itemCount: orders.length,
-                      ),
-                    ),
+                  //DISPLAY ALL THE OTHER ORDERS
+                  _OrdersHistory(
+                    orders: orders,
+                    openOrder: openOrder,
+                    pool: pool,
+                  ),
                 ],
               ),
             );
@@ -137,6 +68,133 @@ class OrdersPoolTab extends StatelessWidget {
           }
         },
       ),
+    );
+  }
+}
+
+class _OrdersHistory extends StatelessWidget {
+  const _OrdersHistory({
+    required this.orders,
+    required this.openOrder,
+    required this.pool,
+  });
+
+  final List<EESUpoolOrder> orders;
+  final EESUpoolOrder? openOrder;
+  final EESUpool pool;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        if (orders.isNotEmpty)
+          Padding(
+            padding: const EdgeInsets.only(left: 16, right: 16),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const Text('History'),
+                Expanded(
+                  child: Container(
+                    margin: const EdgeInsets.only(left: 5),
+                    //  width: context.width * .75,
+                    height: .3,
+                    color: Colors.grey,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        if (orders.isEmpty || orders.length == 1)
+          Padding(
+            padding: const EdgeInsets.only(top: 250),
+            child: FullScreenError(
+              isError: false,
+              exception: EESUpException(
+                message: 'There are no orders yet.',
+              ),
+            ),
+          )
+        else
+          Expanded(
+            child: ListView.builder(
+              itemBuilder: (context, index) {
+                final o = orders[index];
+                if (o.id == openOrder?.id) {
+                  return 0.sW;
+                }
+                return EESUpoolOrderCard(
+                  order: o,
+                  pool: pool,
+                );
+              },
+              itemCount: orders.length,
+            ),
+          ),
+      ],
+    );
+  }
+}
+
+class _CurrentOrderCard extends StatelessWidget {
+  const _CurrentOrderCard({required this.openOrder, required this.pool});
+
+  final EESUpoolOrder openOrder;
+  final EESUpool pool;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(left: 16, right: 16),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              const Text('Current Order'),
+              Expanded(
+                child: Container(
+                  margin: const EdgeInsets.only(left: 5),
+                  //  width: context.width * .75,
+                  height: .3,
+                  color: Colors.grey,
+                ),
+              ),
+            ],
+          ),
+        ),
+        EESUpoolOrderCard(order: openOrder, pool: pool),
+      ],
+    );
+  }
+}
+
+class _CreateOrderButton extends StatelessWidget {
+  const _CreateOrderButton({
+    required this.pool,
+    required this.openOrder,
+  });
+
+  final EESUpool pool;
+  final EESUpoolOrder? openOrder;
+
+  @override
+  Widget build(BuildContext context) {
+    return FloatingActionButton.small(
+      backgroundColor: context.colorScheme.primary,
+      onPressed: () {
+        context
+            .showBottomSheetDialog(
+          child: CreatePoolOrderDialog(pool: pool, order: openOrder),
+        )
+            .then((value) {
+          context.read<OrdersBloc>().add(
+                PoolOrdersFetched(pool.eesupoolId!, 500),
+              );
+        });
+      },
+      child: const Icon(Icons.add, color: Colors.white),
     );
   }
 }

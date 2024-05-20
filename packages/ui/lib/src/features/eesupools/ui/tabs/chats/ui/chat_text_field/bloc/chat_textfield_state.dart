@@ -11,6 +11,8 @@ final class ChatTextFieldCurrentState extends ChatTextFieldState {
 
 final class ChatLoading extends ChatTextFieldState {}
 
+final class MessageSentSuccess extends ChatTextFieldState {}
+
 final class ChatTextFieldError extends ChatTextFieldState {
   final EESUpException exception;
   ChatTextFieldError(this.exception);

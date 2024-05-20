@@ -1,15 +1,18 @@
 import 'package:bootstrap_icons/bootstrap_icons.dart';
 import 'package:data/eesupools/models/chat_message.dart';
 import 'package:data/eesupools/models/eesupool.dart';
+import 'package:flutter_highlighted_text/flutter_highlighted_text.dart';
+import 'package:ui/src/core/extensions/bottom_sheet_context_ext.dart';
 import 'package:ui/src/core/extensions/context_theme_ext.dart';
 import 'package:ui/src/core/extensions/sizedbox_ext.dart';
-import 'package:ui/src/features/eesupools/ui/tabs/chats/bloc/chat_bloc.dart';
 import 'package:ui/src/features/eesupools/ui/tabs/chats/ui/chat_text_field/bloc/chat_textfield_bloc.dart';
-import 'package:ui/src/features/eesupools/ui/tabs/chats/ui/widgets/message_rich_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
+import 'package:ui/src/features/eesupools/ui/tabs/chats/ui/widgets/message_reaction.dart';
+import 'package:ui/src/features/eesupools/ui/tabs/chats/ui/widgets/reply_preview.dart';
+import 'package:ui/src/features/eesupools/ui/tabs/issues/ui/create_issue_dialog.dart';
 import 'package:visibility_detector/visibility_detector.dart';
 
 class MessageBubble extends StatelessWidget {
@@ -29,19 +32,19 @@ class MessageBubble extends StatelessWidget {
       //The visibility detector is used to update the seen of
       //a message
       onVisibilityChanged: (visibilityInfo) {
-        final visibleP = visibilityInfo.visibleFraction * 100;
-        if (visibleP >= 90.00) {
-          print('visibility met');
-          print(pool.memberId);
-          print(message.messageSeens);
-          print(message.messageSeens.contains(pool.memberId));
-          //  if (message.messageSeens.contains(pool.memberId) == false) {
-          print('visibility contains');
-          context
-              .read<ChatBloc>()
-              .add(MessageSeenUpdated(message.id, pool.memberId!));
-          //}
-        }
+        // final visibleP = visibilityInfo.visibleFraction * 100;
+        // if (visibleP >= 90.00) {
+        //   print('visibility met');
+        //   print(pool.memberId);
+        //   print(message.messageSeens);
+        //   print(message.messageSeens.contains(pool.memberId));
+        //   //  if (message.messageSeens.contains(pool.memberId) == false) {
+        //   print('visibility contains');
+        //   context
+        //       .read<ChatBloc>()
+        //       .add(MessageSeenUpdated(message.id, pool.memberId!));
+        //   //}
+        // }
       },
       key: Key(message.id.toString()),
       child: Padding(
@@ -63,14 +66,13 @@ class MessageBubble extends StatelessWidget {
                 borderRadius: isReply ? _replyRadius() : _radius(),
               ),
               child: Column(
-                crossAxisAlignment: !isReply
-                    ? CrossAxisAlignment.start
-                    : CrossAxisAlignment.end,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  10.sH,
+                  ReplyPreview(pool: pool, tags: [], reply: message.reply),
                   Padding(
-                    padding: const EdgeInsets.only(left: 10, right: 10),
+                    padding:
+                        const EdgeInsets.only(left: 10, right: 10, top: 10),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -89,12 +91,18 @@ class MessageBubble extends StatelessWidget {
                                       );
                                 },
                               ),
-                              _bubblPopUpOption(
-                                context,
-                                'Report',
-                                BootstrapIcons.flag,
-                                () {},
-                              ),
+                              if (message.authorId != pool.memberId)
+                                _bubblPopUpOption(
+                                  context,
+                                  'Report',
+                                  BootstrapIcons.flag,
+                                  () {
+                                    context.showBottomSheetDialog(
+                                      child: CreateIssueDialog(
+                                          message: message, pool: pool),
+                                    );
+                                  },
+                                ),
                               _bubblPopUpOption(
                                 context,
                                 'Delete',
@@ -107,11 +115,13 @@ class MessageBubble extends StatelessWidget {
                       ],
                     ),
                   ),
-                  MessageRichText(
-                    message: message.content,
-                    tags: const ["#cycling"],
-                  ),
-                  10.sH,
+                  if (message.content != null)
+                    _MessageText(
+                      message: message,
+                      pool: pool,
+                      isReply: isReply,
+                    ),
+                  MessageReaction(pool: pool, message: message),
                 ],
               ),
             ),
@@ -160,6 +170,45 @@ class MessageBubble extends StatelessWidget {
       topLeft: Radius.circular(25),
       topRight: Radius.circular(25),
       bottomLeft: Radius.circular(25),
+    );
+  }
+}
+
+class _MessageText extends StatelessWidget {
+  const _MessageText({
+    required this.message,
+    required this.pool,
+    required this.isReply,
+  });
+
+  final ChatMessage message;
+  final EESUpool pool;
+  final bool isReply;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(
+        left: 10,
+        right: 10,
+        top: 5,
+      ),
+      child: HighlightedText(
+        message.content!,
+        patterns: [...pool.chatTags ?? []],
+        textAlign: !isReply ? TextAlign.start : TextAlign.end,
+        style: context.textTheme.bodySmall?.copyWith(
+          color: Colors.black,
+          fontWeight: FontWeight.w500,
+          fontSize: 16,
+        ),
+        highLightStyle: context.textTheme.bodySmall?.copyWith(
+          color: Colors.blue,
+          fontWeight: FontWeight.w500,
+          decoration: TextDecoration.underline,
+          fontSize: 16,
+        ),
+      ),
     );
   }
 }

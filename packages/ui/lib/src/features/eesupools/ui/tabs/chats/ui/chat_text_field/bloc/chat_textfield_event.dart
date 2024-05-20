@@ -13,6 +13,8 @@ class ChatAttachmentsPicked extends ChatTextFieldEvent {
   ChatAttachmentsPicked(this.files);
 }
 
+class ChatBoxReset extends ChatTextFieldEvent {}
+
 class ChatMessageSent extends ChatTextFieldEvent {
   final String text;
   final EESUpool pool;

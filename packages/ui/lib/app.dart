@@ -9,6 +9,9 @@ import 'package:data/finance/repository/payment_gateway_repository.dart';
 import 'package:data/finance/repository/wallets_repository.dart';
 import 'package:data/geolocation/data_source/geo_supabase_impl.dart';
 import 'package:data/geolocation/repository/geo_repository.dart';
+import 'package:data/notifications/data_source/notification_data_source.dart';
+import 'package:data/notifications/data_source/notification_supabase_impl.dart';
+import 'package:data/notifications/repository/notification_repository.dart';
 import 'package:data/notifications/repository/survey_repository.dart';
 import 'package:data/orders/data_source/orders_supabase_impl.dart';
 import 'package:data/orders/repository/order_repository.dart';
@@ -32,6 +35,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:ui/src/features/auth/profile/bloc/profile_bloc.dart';
 import 'package:ui/src/features/auth/sign_in/bloc/auth_bloc.dart';
 import 'package:ui/src/features/finances/wallets/bloc/wallets_bloc.dart';
+import 'package:ui/src/features/notifications/bloc/notifications_bloc.dart';
 import 'package:ui/src/features/shop/browsing/bloc/products_filter_bloc.dart';
 import 'package:ui/src/features/shop/cart/bloc/cart_bloc.dart';
 
@@ -114,6 +118,13 @@ class MainApp extends StatelessWidget {
     ),
   );
 
+  final _notificationRepo = RepositoryProvider(
+    create: (context) => NotificationRepo(
+      context.read<AuthRepository>(),
+      NotificationSupabaseImpl(GetIt.I.get<SupabaseClient>()),
+    ),
+  );
+
   @override
   Widget build(BuildContext context) {
     ///get the correct theme based on the app type (eesup or my kasi)
@@ -132,7 +143,8 @@ class MainApp extends StatelessWidget {
         _walletsRepo,
         _paymentGatewayRepo,
         _partnerRepository,
-        _surveysRepository
+        _surveysRepository,
+        _notificationRepo
       ],
       child: MultiBlocProvider(
         providers: [
@@ -142,6 +154,13 @@ class MainApp extends StatelessWidget {
           ),
           BlocProvider(
             create: (context) => ProfileBloc(context.read<ProfileRepository>()),
+          ),
+          BlocProvider(
+            create: (context) =>
+                NotificationsBloc(context.read<NotificationRepo>())
+                  ..add(
+                    NotificationStreamStarted(),
+                  ),
           ),
           BlocProvider(
             create: (context) => ProfileBloc(

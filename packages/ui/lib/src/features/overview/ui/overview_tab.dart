@@ -2,6 +2,7 @@ import 'package:data/auth/models/user_role.dart';
 import 'package:data/shopping/repository/shopping_repository.dart';
 import 'package:ui/src/core/env/app_type.dart';
 import 'package:ui/src/core/extensions/context_environment_ext.dart';
+import 'package:ui/src/features/notifications/ui/notification_button.dart';
 import 'package:ui/src/features/referrals/ui/referral_code_tile.dart';
 import 'package:ui/src/features/shop/cart/ui/cart_button.dart';
 import 'package:ui/src/core/widgets/fullscreen_error_widget.dart';
@@ -35,7 +36,7 @@ class OverviewTab extends StatelessWidget {
                 expandedHeight: 120,
                 centerTitle: true,
                 automaticallyImplyLeading: false,
-                // leading: NotificationButton(),
+                leading: const NotificationButton(),
                 title: Image(
                   width: context.environment.app == AppType.eesup ? 80 : 45,
                   image: const AssetImage(

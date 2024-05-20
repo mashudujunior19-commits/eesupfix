@@ -85,8 +85,11 @@ class EESUpoolsTypeView extends StatelessWidget {
 }
 
 class _TypeHeader extends StatelessWidget {
-  const _TypeHeader(
-      {super.key, required this.kasiPoolsCount, required this.type});
+  const _TypeHeader({
+    super.key,
+    required this.kasiPoolsCount,
+    required this.type,
+  });
   final int kasiPoolsCount;
   final EESUpoolType type;
 
@@ -105,14 +108,26 @@ class _TypeHeader extends StatelessWidget {
                 isEnabled: type != EESUpoolType.kasi,
                 label: 'Create',
                 onPressed: () {
-                  context.router.push(CreateEESUpoolRoute(type: type));
+                  context.router
+                      .push(CreateEESUpoolRoute(type: type))
+                      .whenComplete(() {
+                    context
+                        .read<EESUpoolTypeViewBloc>()
+                        .add(EESUpoolsTypeViewFetched(type));
+                  });
                 },
               ),
               20.sW,
               _EESUpoolTypeViewActionBtn(
                 label: 'Search',
                 onPressed: () {
-                  context.router.push(EESUpoolSearchRoute(type: type));
+                  context.router
+                      .push(EESUpoolSearchRoute(type: type))
+                      .whenComplete(() {
+                    context
+                        .read<EESUpoolTypeViewBloc>()
+                        .add(EESUpoolsTypeViewFetched(type));
+                  });
                 },
               ),
             ],

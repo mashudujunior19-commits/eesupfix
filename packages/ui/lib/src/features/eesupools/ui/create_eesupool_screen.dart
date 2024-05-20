@@ -10,7 +10,7 @@ import 'package:ui/src/core/extensions/bottom_sheet_context_ext.dart';
 import 'package:ui/src/core/extensions/context_alerts_ext.dart';
 import 'package:ui/src/core/extensions/sizedbox_ext.dart';
 import 'package:ui/src/core/widgets/eesup_form_field.dart';
-import 'package:ui/src/features/eesupools/ui/tabs/members/ui/invites_list_view.dart';
+import 'package:ui/src/features/eesupools/ui/tabs/members/ui/invite_members_dialog.dart';
 
 final _nameController = TextEditingController();
 final _descriptionController = TextEditingController();
@@ -47,6 +47,7 @@ class CreateEESUpoolScreen extends StatelessWidget {
             25.sH,
             ElevatedButton(
               onPressed: () async {
+                FocusScope.of(context).unfocus();
                 final descr = _descriptionController.text;
                 final repo = context.read<EESUpoolRepository>();
                 context.loaderOverlay.show();
@@ -69,7 +70,7 @@ class CreateEESUpoolScreen extends StatelessWidget {
                     context.snackBarSuccess(
                         'EESUpool created, invite members to join');
                     context.showBottomSheetDialog(
-                      child: InviteMembersDialog(poolId: id),
+                      child: InviteMembersDialog(poolId: id, isNewPool: true),
                     );
                   } else {
                     context.snackBarError(

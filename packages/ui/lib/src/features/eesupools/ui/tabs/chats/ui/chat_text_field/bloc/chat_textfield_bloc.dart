@@ -48,6 +48,10 @@ class ChatTextFieldBloc extends Bloc<ChatTextFieldEvent, ChatTextFieldState> {
       }
     });
 
+    on<ChatBoxReset>((event, emit) {
+      emit(ChatTextFieldCurrentState(const [], null));
+    });
+
     on<ChatMessageSent>((event, emit) async {
       final message = (state as ChatTextFieldCurrentState);
       emit(ChatLoading());
@@ -56,15 +60,16 @@ class ChatTextFieldBloc extends Bloc<ChatTextFieldEvent, ChatTextFieldState> {
         event.pool.eesupoolId!,
         event.text,
         event.pool.chatTagsSuggestions ?? [],
-        event.pool.isCensored ?? true,
+        event.pool.isCensored == true ? false : true,
         event.broadcastTo ?? [],
         message.files,
         message.replyTo,
       );
+
       results.fold((l) {
         emit(ChatTextFieldError(l));
       }, (r) {
-        emit(ChatTextFieldCurrentState(const [], null));
+        emit(MessageSentSuccess());
       });
     });
   }

@@ -28,10 +28,7 @@ class ChatsTab extends StatelessWidget {
           ),
         ),
       ],
-      child: BlocConsumer<ChatBloc, ChatState>(
-        listener: (context, state) {
-          // TODO: implement listener
-        },
+      child: BlocBuilder<ChatBloc, ChatState>(
         builder: (context, state) {
           return Scaffold(
             backgroundColor: Colors.transparent,

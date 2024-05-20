@@ -21,9 +21,7 @@ class MembersInvites extends StatelessWidget {
     return BlocProvider(
       create: (context) =>
           MembersInvitesBloc(context.read<EESUpoolRepository>())
-            ..add(
-              MembersInvitesFetched(pool.eesupoolId!, 50, 'Invite'),
-            ),
+            ..add(MembersInvitesFetched(pool.eesupoolId!, 50, 'Invite')),
       child: BlocBuilder<MembersInvitesBloc, MembersInvitesState>(
         builder: (context, state) {
           if (state is MembersInvitesLoading) {

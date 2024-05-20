@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:bootstrap_icons/bootstrap_icons.dart';
 import 'package:data/eesupools/models/chat_message.dart';
 import 'package:data/eesupools/models/eesupool.dart';
+import 'package:flutter_highlighted_text/flutter_highlighted_text.dart';
 import 'package:ui/src/core/extensions/context_alerts_ext.dart';
 import 'package:ui/src/core/extensions/context_theme_ext.dart';
 import 'package:ui/src/core/extensions/sizedbox_ext.dart';
@@ -9,7 +10,6 @@ import 'package:ui/src/core/extensions/slide_in_animation_ext.dart';
 import 'package:ui/src/features/eesupools/ui/tabs/chats/ui/chat_text_field/bloc/chat_textfield_bloc.dart';
 import 'package:ui/src/features/eesupools/ui/tabs/chats/ui/chat_text_field/local_files.dart';
 import 'package:ui/src/features/eesupools/ui/tabs/chats/ui/chat_text_field/topic_suggestions.dart';
-import 'package:ui/src/features/eesupools/ui/tabs/chats/ui/widgets/message_rich_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -71,6 +71,11 @@ class _ChatTextFieldState extends State<ChatTextField> {
 
         if (state is ChatTextFieldError) {
           context.snackBarError(state.exception.message);
+        }
+
+        if (state is MessageSentSuccess) {
+          controller.clear();
+          context.read<ChatTextFieldBloc>().add(ChatBoxReset());
         }
       },
       builder: (context, state) {
@@ -148,19 +153,20 @@ class _ChatTextFieldState extends State<ChatTextField> {
                   ),
                   10.sW,
                   _TextField(controller: controller),
-                  IconButton(
-                    onPressed: () {},
-                    icon: const Tooltip(
-                      message: 'Broadcast this message to other EESUpools',
-                      child: Padding(
-                        padding: EdgeInsets.only(bottom: 20),
-                        child: Icon(
-                          BootstrapIcons.broadcast,
-                          color: Colors.black,
-                        ),
-                      ),
-                    ),
-                  ),
+                  // if (widget.pool.role == EESUpoolMemberRole.admin)
+                  //   IconButton(
+                  //     onPressed: () {},
+                  //     icon: const Tooltip(
+                  //       message: 'Broadcast this message to other EESUpools',
+                  //       child: Padding(
+                  //         padding: EdgeInsets.only(bottom: 20),
+                  //         child: Icon(
+                  //           BootstrapIcons.broadcast,
+                  //           color: Colors.black,
+                  //         ),
+                  //       ),
+                  //     ),
+                  //   ),
                   IconButton(
                     onPressed: () {
                       FocusScope.of(context).unfocus();
@@ -303,11 +309,25 @@ class _ReplyPreview extends StatelessWidget {
                   const Text('Replying'),
                 ],
               ),
-              MessageRichText(
-                margin: const EdgeInsets.only(left: 30, bottom: 10),
-                message: reply.content,
-                tags: reply.hashTags ?? [],
-              )
+              if (reply.content != null)
+                Padding(
+                  padding: const EdgeInsets.only(left: 30, bottom: 10),
+                  child: HighlightedText(
+                    reply.content!,
+                    patterns: reply.hashTags ?? [],
+                    style: context.textTheme.bodySmall?.copyWith(
+                      color: Colors.black,
+                      fontWeight: FontWeight.w500,
+                      fontSize: 16,
+                    ),
+                    highLightStyle: context.textTheme.bodySmall?.copyWith(
+                      color: Colors.blue,
+                      fontWeight: FontWeight.w500,
+                      decoration: TextDecoration.underline,
+                      fontSize: 16,
+                    ),
+                  ),
+                )
             ],
           ),
           IconButton(

@@ -1,3 +1,10 @@
+// ignore_for_file: use_build_context_synchronously
+
+import 'package:data/eesupools/repository/eesupool_members_repo.dart';
+import 'package:data/eesupools/repository/eesupool_repo.dart';
+import 'package:data/notifications/repository/notification_repository.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:loader_overlay/loader_overlay.dart';
 import 'package:ui/src/core/extensions/context_theme_ext.dart';
 import 'package:ui/src/core/extensions/sizedbox_ext.dart';
 import 'package:ui/src/core/utils/date_formatter.dart';
@@ -87,48 +94,49 @@ class NotificationTile extends StatelessWidget {
                     children: [
                       InkWell(
                         onTap: () async {
-                          // context.loaderOverlay.show();
-                          // final poolId = notification.data?.eesupoolId;
-                          // final userId = notification.data?.userId;
-                          // if (poolId == null || userId == null) return;
-                          // final results = await ref
-                          //     .read(eesupoolRepoProvider)
-                          //     .updateEESUpoolRequest(
-                          //         userId, poolId, 'Accepted');
+                          context.loaderOverlay.show();
+                          final poolId = notification.data?.eesupoolId;
+                          final userId = notification.data?.userId;
+                          if (poolId == null || userId == null) return;
 
-                          // results.fold(
-                          //   (l) => debugPrint(l.toString()),
-                          //   (r) {
-                          //     ref
-                          //         .read(notificationRepoProvider)
-                          //         .deleteNotification(notification.id);
-                          //   },
-                          // );
-                          // context.loaderOverlay.hide();
+                          final repo = context.read<EESUpoolRepository>();
+                          final results = await repo.updateEESUpoolRequest(
+                              userId, poolId, 'Accepted');
+
+                          results.fold(
+                            (l) => debugPrint(l.toString()),
+                            (r) {
+                              context
+                                  .read<NotificationRepo>()
+                                  .deleteNotification(notification.id);
+                            },
+                          );
+
+                          context.loaderOverlay.hide();
                         },
                         child: const Text('Join'),
                       ),
                       25.sW,
                       InkWell(
                         onTap: () async {
-                          // context.loaderOverlay.show();
-                          // final poolId = notification.data?.eesupoolId;
-                          // final userId = notification.data?.userId;
-                          // if (poolId == null || userId == null) return;
-                          // final results = await ref
-                          //     .read(eesupoolRepoProvider)
-                          //     .updateEESUpoolRequest(
-                          //         userId, poolId, 'Declined');
+                          context.loaderOverlay.show();
+                          final poolId = notification.data?.eesupoolId;
+                          final userId = notification.data?.userId;
+                          if (poolId == null || userId == null) return;
 
-                          // results.fold(
-                          //   (l) => debugPrint(l.toString()),
-                          //   (r) {
-                          //     ref
-                          //         .read(notificationRepoProvider)
-                          //         .deleteNotification(notification.id);
-                          //   },
-                          // );
-                          // context.loaderOverlay.hide();
+                          final repo = context.read<EESUpoolRepository>();
+                          final results = await repo.updateEESUpoolRequest(
+                              userId, poolId, 'Declined');
+
+                          results.fold(
+                            (l) => debugPrint(l.toString()),
+                            (r) {
+                              context
+                                  .read<NotificationRepo>()
+                                  .deleteNotification(notification.id);
+                            },
+                          );
+                          context.loaderOverlay.hide();
                         },
                         child: Text(
                           'Decline',

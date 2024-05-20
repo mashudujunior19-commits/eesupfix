@@ -1,6 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:ui/src/core/extensions/bg_image_deco_ext.dart';
-import 'package:ui/src/features/eesupools/ui/mykasi_tab.dart';
+import 'package:ui/src/features/eesupools/ui/my_kasi_tab.dart';
 import 'package:ui/src/features/menu/menu_tab.dart';
 import 'package:ui/src/features/overview/ui/my_kasi_shop.dart';
 import 'package:ui/src/features/overview/ui/widgets/bottom_tab_bar.dart';

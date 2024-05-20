@@ -45,19 +45,13 @@ extension EESUpoolMembersRepo on EESUpoolRepository {
     int poolId,
     int limit,
   ) async {
-    final sessionId = authRepository.sessionId;
-    if (sessionId == null) {
-      return Left(
-        EESUpAuthException(message: 'You are not logged in'),
-      );
-    }
-
-    final result = await EESUpException.guardFuture(
-        action: () => dataSource.searchProfilesForInvites(
-              poolId: poolId,
-              query: query,
-              limit: limit,
-            ));
+    final result = authRepository.executeFutureWithAuth(
+      (_) => dataSource.searchProfilesForInvites(
+        poolId: poolId,
+        query: query,
+        limit: limit,
+      ),
+    );
     return result;
   }
 
