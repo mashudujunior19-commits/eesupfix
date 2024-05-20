@@ -37,7 +37,7 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
           event.authorId, event.messageId, event.liked);
 
       if (state is ChatMessagesLoaded) {
-        List<ChatMessage> messages = [...(state as ChatMessagesLoaded).chats];
+       // List<ChatMessage> messages = [...(state as ChatMessagesLoaded).chats];
       }
     });
   }

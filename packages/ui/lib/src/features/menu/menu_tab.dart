@@ -28,7 +28,13 @@ class MenuTab extends StatelessWidget {
           final profile = state.profile;
           return Column(
             children: [
-              EditProfileButton(profile: profile),
+              EditProfileButton(
+                profile: profile,
+                onPop: () {
+                  print('popped');
+                  context.read<ProfileBloc>().add(ProfileFetched());
+                },
+              ),
               Container(
                 margin: const EdgeInsets.only(top: 25, right: 20, left: 20),
                 padding: const EdgeInsets.all(10),
@@ -79,18 +85,19 @@ class MenuTab extends StatelessWidget {
                       icon: IconlyLight.plus,
                       onTap: () {},
                     ),
-                    _MenuButton(
-                      label: 'Settings',
-                      icon: IconlyLight.setting,
-                      onTap: () {
-                        context.router.push(const SettingsRoutes());
-                      },
-                    ),
-                    _MenuButton(
-                      label: 'Support',
-                      icon: IconlyLight.user3,
-                      onTap: () {},
-                    ),
+                    // _MenuButton(
+                    //   label: 'Settings',
+                    //   icon: IconlyLight.setting,
+                    //   onTap: () {
+                    //     context.router.push(const SettingsRoutes());
+                    //   },
+                    // ),
+                    // _MenuButton(
+                    //   isVisible: false,
+                    //   label: 'Support',
+                    //   icon: IconlyLight.user3,
+                    //   onTap: () {},
+                    // ),
                     _MenuButton(
                       label: 'Legal',
                       icon: IconlyLight.document,

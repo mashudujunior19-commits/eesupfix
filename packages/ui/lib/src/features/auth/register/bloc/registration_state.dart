@@ -97,6 +97,8 @@ final class SignUpForm extends RegistrationFormState {
   Map<String, dynamic> toJson() {
     if (isCorp) {
       return {
+        'email': email,
+        'phone': phone,
         'corp_name': _capitalizeFirstLetter(corpName ?? ''),
         'corp_reg': corpReg,
         'npc_reg': null,
@@ -106,6 +108,8 @@ final class SignUpForm extends RegistrationFormState {
       };
     } else {
       return {
+        'email': email,
+        'phone': phone,
         'first_name': _capitalizeFirstLetter(firstName ?? ''),
         'last_name': _capitalizeFirstLetter(lastName ?? ''),
         'id_number': idNumber,

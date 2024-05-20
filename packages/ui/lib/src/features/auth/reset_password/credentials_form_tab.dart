@@ -1,6 +1,4 @@
 import 'package:data/auth/repository/auth_repository.dart';
-import 'package:data/utils/eesup_exception.dart';
-import 'package:either_dart/either.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:ui/src/core/extensions/bottom_sheet_context_ext.dart';
@@ -11,14 +9,18 @@ import 'package:flutter/material.dart';
 import 'package:ui/src/features/auth/otp_auth/ui/otp_auth_dialog.dart';
 import 'package:ui/src/features/auth/register/ui/email_and_phone_tab_container.dart';
 
-String? email;
-String? phone;
-
 // ignore: must_be_immutable
-class CredentialsFormTab extends StatelessWidget {
+class CredentialsFormTab extends StatefulWidget {
   const CredentialsFormTab({super.key, required this.tabController});
   final TabController tabController;
 
+  @override
+  State<CredentialsFormTab> createState() => _CredentialsFormTabState();
+}
+
+class _CredentialsFormTabState extends State<CredentialsFormTab> {
+  String? email;
+  String? phone;
   @override
   Widget build(BuildContext context) {
     return ListView(
@@ -84,7 +86,8 @@ class CredentialsFormTab extends StatelessWidget {
                             .then((value) {
                           ///THIS RETURNS TRUE IF OTP AUTH IS SUCCESS
                           if (value == true) {
-                            tabController.animateTo(tabController.index++);
+                            widget.tabController
+                                .animateTo(widget.tabController.index++);
                           } else {
                             ///ELSE IT IS RESTARTED
                             context.snackBarError('Otp verification failed');
@@ -112,7 +115,8 @@ class CredentialsFormTab extends StatelessWidget {
                             .then((value) {
                           ///THIS RETURNS TRUE IF OTP AUTH IS SUCCESS
                           if (value == true) {
-                            tabController.animateTo(tabController.index++);
+                            widget.tabController
+                                .animateTo(widget.tabController.index++);
                           } else {
                             ///ELSE IT IS RESTARTED
                             context.snackBarError('Otp verification failed');

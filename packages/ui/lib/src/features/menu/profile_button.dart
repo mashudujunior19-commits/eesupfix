@@ -9,15 +9,22 @@ import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 class EditProfileButton extends StatelessWidget {
-  const EditProfileButton({super.key, required this.profile});
+  const EditProfileButton({
+    super.key,
+    required this.profile,
+    required this.onPop,
+  });
   final Profile profile;
+  final VoidCallback onPop;
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
       splashColor: Colors.transparent,
-      onTap: () async {
-        context.router.push(EditProfileRoute(profile: profile));
+      onTap: () {
+        context.router
+            .push(EditProfileRoute(profile: profile))
+            .whenComplete(onPop);
       },
       child: Container(
         margin: const EdgeInsets.only(top: 15, right: 20, left: 20),

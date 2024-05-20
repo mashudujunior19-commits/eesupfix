@@ -113,7 +113,7 @@ class _RegisterScreenState extends State<RegisterScreen>
                     body: () {
                       if (state is SignUpForm) {
                         return TabBarView(
-                          // physics: const NeverScrollableScrollPhysics(),
+                          physics: const NeverScrollableScrollPhysics(),
                           controller: _tabController,
                           children: [
                             SelectAccountType(tabController: _tabController),

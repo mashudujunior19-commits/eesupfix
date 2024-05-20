@@ -27,8 +27,6 @@ class CredentialsForm extends StatelessWidget {
       padding: const EdgeInsets.only(left: 20, right: 20, top: 10, bottom: 400),
       children: [
         EmailAndPhoneTabContainer(
-          initEmail: form.email,
-          initPhone: form.phone,
           onEmailChanged: (email) {
             context.read<RegistrationBloc>().add(
                   CredentialsUpdated(
@@ -115,8 +113,8 @@ class CredentialsForm extends StatelessWidget {
               );
               return;
             }
-
-            tabController.animateTo(tabController.index++);
+            final next = tabController.index + 1;
+            tabController.animateTo(next);
           },
           child: const Text('Next'),
         ).animate().slideIn(200)

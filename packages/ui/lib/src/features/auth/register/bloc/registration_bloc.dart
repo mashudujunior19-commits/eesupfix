@@ -86,6 +86,7 @@ class RegistrationBloc extends Bloc<RegistrationEvent, RegistrationFormState> {
     on<CredentialsUpdated>((event, emit) {
       if (state is SignUpForm) {
         final form = (state as SignUpForm);
+
         emit(
           SignUpForm(
             isCorp: form.isCorp,

@@ -34,7 +34,7 @@ class EditProfileScreen extends StatelessWidget {
             }
 
             if (state is ProfileSavingSuccess) {
-              context.maybePop();
+              Navigator.of(context).pop();
             }
           },
           builder: (context, state) {
@@ -125,6 +125,73 @@ class EditProfileScreen extends StatelessWidget {
                             ),
                           ),
                           EESUpTextFormField(
+                            initialValue: profile.corpName,
+                            label: 'Name',
+                            visible: [
+                              UserRole.Corporate.toString(),
+                              UserRole.EESUpliftCorporate.toString()
+                            ].contains(profile.role.toString()),
+                            onChanged: (value) {
+                              context.read<EditProfileBloc>().add(
+                                    ProfileEdited(
+                                      profileForm.copyWith(
+                                        corpName: value,
+                                      ),
+                                    ),
+                                  );
+                            },
+                          ),
+                          EESUpTextFormField(
+                            initialValue: profile.npcReg,
+                            label: 'Non-Profit reg',
+                            visible:
+                                profile.role == UserRole.EESUpliftCorporate,
+                            onChanged: (value) {
+                              context.read<EditProfileBloc>().add(
+                                    ProfileEdited(
+                                      profileForm.copyWith(
+                                        npcReg: value,
+                                      ),
+                                    ),
+                                  );
+                            },
+                          ),
+                          EESUpTextFormField(
+                            initialValue: profile.corpReg,
+                            label: 'Registration',
+                            visible: [
+                              UserRole.Corporate.toString(),
+                              UserRole.EESUpliftCorporate.toString()
+                            ].contains(profile.role.toString()),
+                            onChanged: (value) {
+                              context.read<EditProfileBloc>().add(
+                                    ProfileEdited(
+                                      profileForm.copyWith(
+                                        corpReg: value,
+                                      ),
+                                    ),
+                                  );
+                            },
+                          ),
+                          EESUpTextFormField(
+                            initialValue: profile.corpVatNo,
+                            label: 'VAT number',
+                            visible: [
+                              UserRole.Corporate.toString(),
+                              UserRole.EESUpliftCorporate.toString()
+                            ].contains(profile.role.toString()),
+                            onChanged: (value) {
+                              context.read<EditProfileBloc>().add(
+                                    ProfileEdited(
+                                      profileForm.copyWith(
+                                        corpVatNo: value,
+                                      ),
+                                    ),
+                                  );
+                            },
+                          ),
+                          15.sH,
+                          EESUpTextFormField(
                             initialValue: profile.role.toString(),
                             label: 'Role',
                             readOnly: true,
@@ -168,79 +235,12 @@ class EditProfileScreen extends StatelessWidget {
                                 //   ),
                                 // );
 
-                                context.read<EditProfileBloc>().add(
-                                      PhoneVerificationStarted(profileForm),
-                                    );
+                                // context.read<EditProfileBloc>().add(
+                                //       PhoneVerificationStarted(profileForm),
+                                //     );
                               },
                               child: const Text('Verify phone'),
                             ),
-                          EESUpTextFormField(
-                            initialValue: profile.firstName,
-                            label: 'Name',
-                            visible: [
-                              UserRole.Corporate.toString(),
-                              UserRole.EESUpliftCorporate.toString()
-                            ].contains(profile.role.toString()),
-                            onChanged: (value) {
-                              context.read<EditProfileBloc>().add(
-                                    ProfileEdited(
-                                      profileForm.copyWith(
-                                        corpName: value,
-                                      ),
-                                    ),
-                                  );
-                            },
-                          ),
-                          EESUpTextFormField(
-                            initialValue: profile.firstName,
-                            label: 'Non-Profit reg',
-                            visible:
-                                profile.role == UserRole.EESUpliftCorporate,
-                            onChanged: (value) {
-                              context.read<EditProfileBloc>().add(
-                                    ProfileEdited(
-                                      profileForm.copyWith(
-                                        npcReg: value,
-                                      ),
-                                    ),
-                                  );
-                            },
-                          ),
-                          EESUpTextFormField(
-                            initialValue: profile.firstName,
-                            label: 'Registration',
-                            visible: [
-                              UserRole.Corporate.toString(),
-                              UserRole.EESUpliftCorporate.toString()
-                            ].contains(profile.role.toString()),
-                            onChanged: (value) {
-                              context.read<EditProfileBloc>().add(
-                                    ProfileEdited(
-                                      profileForm.copyWith(
-                                        corpReg: value,
-                                      ),
-                                    ),
-                                  );
-                            },
-                          ),
-                          EESUpTextFormField(
-                            initialValue: profile.firstName,
-                            label: 'VAT number',
-                            visible: [
-                              UserRole.Corporate.toString(),
-                              UserRole.EESUpliftCorporate.toString()
-                            ].contains(profile.role.toString()),
-                            onChanged: (value) {
-                              context.read<EditProfileBloc>().add(
-                                    ProfileEdited(
-                                      profileForm.copyWith(
-                                        corpVatNo: value,
-                                      ),
-                                    ),
-                                  );
-                            },
-                          ),
-                          15.sH,
                           if (profileForm != profile)
                             ElevatedButton(
                               onPressed: () {

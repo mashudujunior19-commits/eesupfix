@@ -8,15 +8,16 @@ import 'package:ui/src/core/widgets/eesup_form_field.dart';
 class EmailAndPhoneTabContainer extends StatefulWidget {
   const EmailAndPhoneTabContainer({
     super.key,
-    this.initEmail,
-    this.initPhone,
-    required this.onEmailChanged,
-    required this.onPhoneChanged,
+    this.onEmailChanged,
+    this.onPhoneChanged,
+    this.emailController,
+    this.phoneController,
   });
-  final String? initEmail;
-  final String? initPhone;
-  final void Function(String? email) onEmailChanged;
-  final void Function(String? phone) onPhoneChanged;
+
+  final TextEditingController? emailController;
+  final TextEditingController? phoneController;
+  final void Function(String? email)? onEmailChanged;
+  final void Function(String? phone)? onPhoneChanged;
 
   @override
   State<EmailAndPhoneTabContainer> createState() =>
@@ -46,11 +47,10 @@ class _EmailAndPhoneTabContainerState extends State<EmailAndPhoneTabContainer>
           EESUpTextFormField(
             margin: const EdgeInsets.only(top: 0),
             hintText: 'email@gmail.com',
-            initialValue: widget.initEmail,
+            controller: widget.emailController,
             onChanged: (value) {
               final v = value.isEmpty ? null : value;
-              widget.onEmailChanged(v);
-              widget.onPhoneChanged(null);
+              widget.onEmailChanged?.call(v);
             },
           ),
           Container(
@@ -73,8 +73,7 @@ class _EmailAndPhoneTabContainerState extends State<EmailAndPhoneTabContainer>
               ),
               onChanged: (value) {
                 final phone = localizeSAPhoneNumber(value);
-                widget.onPhoneChanged(phone);
-                widget.onEmailChanged(null);
+                widget.onPhoneChanged?.call(phone);
               },
               decoration: const InputDecoration(
                 border: InputBorder.none,
