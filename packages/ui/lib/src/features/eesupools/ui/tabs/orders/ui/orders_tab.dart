@@ -94,7 +94,7 @@ class OrdersPoolTab extends StatelessWidget {
                         ],
                       ),
                     ),
-                  if (orders.isEmpty)
+                  if (orders.isEmpty || orders.length == 1)
                     Padding(
                       padding: const EdgeInsets.only(top: 250),
                       child: FullScreenError(

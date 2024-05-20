@@ -104,7 +104,9 @@ class _TypeHeader extends StatelessWidget {
               _EESUpoolTypeViewActionBtn(
                 isEnabled: type != EESUpoolType.kasi,
                 label: 'Create',
-                onPressed: () {},
+                onPressed: () {
+                  context.router.push(CreateEESUpoolRoute(type: type));
+                },
               ),
               20.sW,
               _EESUpoolTypeViewActionBtn(
