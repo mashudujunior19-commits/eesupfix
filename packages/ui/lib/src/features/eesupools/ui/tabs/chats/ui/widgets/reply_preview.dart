@@ -1,9 +1,9 @@
 import 'package:data/eesupools/models/chat_message.dart';
 import 'package:data/eesupools/models/eesupool.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_highlighted_text/flutter_highlighted_text.dart';
 import 'package:ui/src/core/extensions/context_theme_ext.dart';
 import 'package:ui/src/features/eesupools/ui/tabs/chats/ui/widgets/message_attachments.dart';
+import 'package:ui/src/features/eesupools/ui/tabs/chats/ui/widgets/message_text.dart';
 
 class ReplyPreview extends StatelessWidget {
   const ReplyPreview({
@@ -57,30 +57,9 @@ class ReplyPreview extends StatelessWidget {
               ],
             ),
           ),
-          MessageAttachments(mediaFiles: reply?.media),
-          if (reply != null)
-            Padding(
-              padding: const EdgeInsets.only(
-                left: 10,
-                right: 10,
-                top: 5,
-              ),
-              child: HighlightedText(
-                reply!.content!,
-                patterns: [...pool.chatTags ?? []],
-                style: context.textTheme.bodySmall?.copyWith(
-                  color: Colors.black,
-                  fontWeight: FontWeight.w500,
-                  fontSize: 16,
-                ),
-                highLightStyle: context.textTheme.bodySmall?.copyWith(
-                  color: Colors.blue,
-                  fontWeight: FontWeight.w500,
-                  decoration: TextDecoration.underline,
-                  fontSize: 16,
-                ),
-              ),
-            )
+          if (reply?.media != null)
+            MessageAttachments(mediaFiles: reply!.media!),
+          if (reply != null) MessageText(message: reply!, pool: pool)
         ],
       ),
     );

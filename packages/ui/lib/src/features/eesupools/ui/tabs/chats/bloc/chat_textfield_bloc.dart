@@ -9,8 +9,9 @@ import 'package:data/eesupools/models/eesupool.dart';
 import 'package:data/eesupools/models/eesupool_level.dart';
 import 'package:data/eesupools/models/media_file.dart';
 import 'package:flutter/material.dart';
-import 'package:meta/meta.dart';
+import 'package:encrypt/encrypt.dart' as encrypt;
 import 'package:data/utils/eesup_exception.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 part 'chat_textfield_event.dart';
 part 'chat_textfield_state.dart';
@@ -94,7 +95,7 @@ class ChatTextFieldBloc extends Bloc<ChatTextFieldEvent, ChatTextFieldState> {
         if (url != null) {
           mediaFiles.add(
             MediaFile(
-              url: url,
+              url: _encrypt(url),
               type: file.path.split('.').last,
               name: file.path.split('/').last,
             ),
@@ -118,7 +119,7 @@ class ChatTextFieldBloc extends Bloc<ChatTextFieldEvent, ChatTextFieldState> {
         authorId: memberId,
         replyOnId: replyTo?.id,
         createdAt: DateTime.now(),
-        content: message.isEmpty ? null : message,
+        content: message.isEmpty ? null : _encrypt(message),
         media: mediaFiles,
         isApproved: isApproved,
         hashTags: newTags,
@@ -128,6 +129,16 @@ class ChatTextFieldBloc extends Bloc<ChatTextFieldEvent, ChatTextFieldState> {
     );
 
     return result;
+  }
+
+  String _encrypt(String str) {
+    // Generate a key
+    final key = encrypt.Key.fromBase16(dotenv.get('CHAT_SECRET'));
+    final iv = encrypt.IV.fromBase16(dotenv.get('CHAT_SECRET'));
+    final encrypter = encrypt.Encrypter(encrypt.AES(key));
+    // Encrypt the plain text
+    final encrypted = encrypter.encrypt(str, iv: iv);
+    return encrypted.base16;
   }
 
   List<String> _findTagsInMessage(List<String> tags, String message) {

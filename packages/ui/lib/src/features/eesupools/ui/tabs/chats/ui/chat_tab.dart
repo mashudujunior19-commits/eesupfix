@@ -3,7 +3,7 @@ import 'package:data/eesupools/repository/eesupool_repo.dart';
 import 'package:ui/src/core/extensions/context_theme_ext.dart';
 import 'package:ui/src/core/extensions/sizedbox_ext.dart';
 import 'package:ui/src/features/eesupools/ui/tabs/chats/bloc/chat_bloc.dart';
-import 'package:ui/src/features/eesupools/ui/tabs/chats/ui/chat_text_field/bloc/chat_textfield_bloc.dart';
+import 'package:ui/src/features/eesupools/ui/tabs/chats/bloc/chat_textfield_bloc.dart';
 import 'package:ui/src/features/eesupools/ui/tabs/chats/ui/chat_text_field/chat_textfield.dart';
 import 'package:ui/src/features/eesupools/ui/tabs/chats/ui/widgets/message_bubble.dart';
 import 'package:flutter/material.dart';

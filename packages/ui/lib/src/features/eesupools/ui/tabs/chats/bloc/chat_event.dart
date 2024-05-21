@@ -15,10 +15,11 @@ final class MessageSeenUpdated extends ChatEvent {
 }
 
 final class MessageReactionAdded extends ChatEvent {
+  final int poolId;
   final int messageId;
   final String authorId;
   final bool liked;
-  MessageReactionAdded(this.messageId, this.authorId, this.liked);
+  MessageReactionAdded(this.poolId, this.messageId, this.authorId, this.liked);
 }
 
 final class ChatStreamStopped extends ChatEvent {

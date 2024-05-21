@@ -7,3 +7,9 @@ final class MemberSettingsInitialized extends MemberSettingsEvent {
   final EESUpoolMember member;
   MemberSettingsInitialized(this.member);
 }
+
+
+final class MemberSettingsUpdated extends MemberSettingsEvent {
+  final EESUpoolMember member;
+  MemberSettingsUpdated(this.member);
+}

@@ -46,6 +46,8 @@ class EESUpool with _$EESUpool {
 
   factory EESUpool.fromJson(Map<String, dynamic> json) =>
       _$EESUpoolFromJson(json);
+
+
 }
 
 class EESUpoolConverter

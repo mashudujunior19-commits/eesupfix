@@ -18,8 +18,7 @@ class CreateIssueDialog extends StatelessWidget {
     required this.pool,
   });
   final EESUpool pool;
-  final ChatMessage message;
-
+  final ChatMessage? message;
   final _textController = TextEditingController();
 
   @override
@@ -37,7 +36,7 @@ class CreateIssueDialog extends StatelessWidget {
           bottom: 300,
         ),
         children: [
-          _MessagePreview(message: message, pool: pool),
+          if (message != null) _MessagePreview(message: message!, pool: pool),
           10.sH,
           EESUpTextFormField(
             label: 'Description',
@@ -49,10 +48,8 @@ class CreateIssueDialog extends StatelessWidget {
           ElevatedButton(
             onPressed: () async {
               if (_textController.text.isEmpty) return;
-
               FocusScope.of(context).unfocus();
               final repo = context.read<EESUpoolRepository>();
-
               context.loaderOverlay.show();
 
               final results = await repo.reportIssue(
@@ -63,8 +60,8 @@ class CreateIssueDialog extends StatelessWidget {
                   createdAt: DateTime.now(),
                   description: _textController.text,
                   reporterId: pool.memberId,
-                  offenderId: message.authorId,
-                  chatMessageId: message.id,
+                  offenderId: message?.authorId,
+                  chatMessageId: message?.id,
                 ),
               );
               // ignore: use_build_context_synchronously

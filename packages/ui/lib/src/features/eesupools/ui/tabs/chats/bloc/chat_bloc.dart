@@ -33,12 +33,13 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
     });
 
     on<MessageReactionAdded>((event, emit) {
-      _poolRepo.addMessageReaction(
-          event.authorId, event.messageId, event.liked);
-
-      if (state is ChatMessagesLoaded) {
-        // List<ChatMessage> messages = [...(state as ChatMessagesLoaded).chats];
-      }
+      _poolRepo
+          .addMessageReaction(event.authorId, event.messageId, event.liked)
+          .then((value) {
+        value.fold((left) {}, (right) {
+          add(ChatStreamStarted(event.poolId));
+        });
+      });
     });
   }
 }

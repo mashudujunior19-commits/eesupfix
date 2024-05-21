@@ -1,8 +1,7 @@
 import 'package:flutter_dialogs/flutter_dialogs.dart';
 import 'package:ui/src/core/extensions/context_theme_ext.dart';
 import 'package:flutter/material.dart';
-// import 'package:flutter_animate/flutter_animate.dart';
-// import 'package:flutter_animated_dialog/flutter_animated_dialog.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 
 extension CustomAnimatedDialogExt on BuildContext {
   Future<Object?> showBottomSheetDialog({
@@ -29,11 +28,53 @@ extension CustomAnimatedDialogExt on BuildContext {
             ),
             child: Scaffold(body: child),
           ),
-        );
+        ).animate().slideY(
+              begin: height,
+              end: 0,
+              duration: 200.ms,
+              curve: Curves.easeInToLinear,
+            );
       },
-      // animationType: DialogTransitionType.slideFromBottomFade,
-      // curve: Curves.easeIn,
-      // duration: 400.ms,
+    );
+  }
+
+  Future<Object?> showDialog({
+    required Widget child,
+    BorderRadius? radius,
+    EdgeInsets? margin,
+    bool isDismissable = true,
+    Color color = Colors.white,
+  }) {
+    return showPlatformDialog(
+      context: this,
+      androidBarrierDismissible: isDismissable,
+      builder: (BuildContext context) {
+        return SafeArea(
+          child: Container(
+            margin: margin ??
+                EdgeInsets.only(
+                  top: height * .15,
+                  bottom: height * .15,
+                  right: 10,
+                  left: 10,
+                ),
+            padding: const EdgeInsets.all(6),
+            decoration: BoxDecoration(
+              color: color,
+              borderRadius: BorderRadius.circular(15),
+            ),
+            child: Scaffold(
+              body: child,
+              backgroundColor: color,
+            ),
+          ),
+        ).animate().slideY(
+              begin: height,
+              end: 0,
+              duration: 200.ms,
+              curve: Curves.easeInToLinear,
+            );
+      },
     );
   }
 }

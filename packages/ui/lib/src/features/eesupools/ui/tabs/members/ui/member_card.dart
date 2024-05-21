@@ -2,11 +2,13 @@ import 'package:bootstrap_icons/bootstrap_icons.dart';
 import 'package:data/eesupools/models/eesupool.dart';
 import 'package:data/eesupools/models/eesupool_member.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:ui/src/core/extensions/bottom_sheet_context_ext.dart';
 import 'package:ui/src/core/extensions/context_alerts_ext.dart';
 import 'package:ui/src/core/extensions/context_theme_ext.dart';
 import 'package:ui/src/core/extensions/sizedbox_ext.dart';
+import 'package:ui/src/features/eesupools/ui/tabs/members/bloc/members_bloc.dart';
 import 'package:ui/src/features/eesupools/ui/tabs/members/ui/member_settings.dart';
 
 class MemberCard extends StatelessWidget {
@@ -34,18 +36,29 @@ class MemberCard extends StatelessWidget {
       splashColor: Colors.transparent,
       onTap: onTap ??
           () {
-            // if (pool.memberId == member.memberId) {
-            //   context.snackBarError('You can not modify your own settings.');
-            //   return;
-            // }
-            // if (pool.role != EESUpoolMemberRole.admin) return;
+            if (pool.memberId == member.memberId) {
+              context.snackBarSuccess(
+                'You can not view or modify your own settings.',
+              );
+              return;
+            }
+            if (pool.role != EESUpoolMemberRole.admin) return;
 
-            context.showBottomSheetDialog(
+            context
+                .showBottomSheetDialog(
               child: MemberSettingsDialog(
                 pool: pool,
                 selectedMember: member,
               ),
-            );
+            )
+                .whenComplete(() {
+              context.read<MembersBloc>().add(
+                    MembersFetched(
+                      pool.eesupoolId!,
+                      1000,
+                    ),
+                  );
+            });
           },
       child: Container(
         margin: margin ?? const EdgeInsets.only(right: 15, left: 15, top: 15),

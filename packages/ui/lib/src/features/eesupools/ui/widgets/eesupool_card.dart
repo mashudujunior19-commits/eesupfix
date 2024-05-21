@@ -1,10 +1,12 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:data/eesupools/models/eesupool.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ui/app_route.gr.dart';
 import 'package:ui/src/core/extensions/context_theme_ext.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
+import 'package:ui/src/features/eesupools/bloc/eesupool_type_bloc.dart';
 
 class EESUpoolCard extends StatelessWidget {
   const EESUpoolCard({
@@ -28,15 +30,13 @@ class EESUpoolCard extends StatelessWidget {
               //onPoolTap!(eesupool);
             }
           : () {
-              // ref.read(eesupoolViewProvider.notifier).setPool(eesupool);
-              // context.push(EESUpoolViewScreen.route).whenComplete(() {
-              //   ref.read(eesupoolViewProvider.notifier).reset();
-              //   ref.invalidate(
-              //     eesupoolsProvider(eesupool.type),
-              //   );
-              // });
-
-              context.router.push(EESUpoolViewRoute(pool: eesupool));
+              context.router
+                  .push(EESUpoolViewRoute(pool: eesupool))
+                  .whenComplete(() {
+                context.read<EESUpoolTypeViewBloc>().add(
+                      EESUpoolsTypeViewFetched(eesupool.type),
+                    );
+              });
             },
       child: Container(
         margin: margin ?? const EdgeInsets.only(right: 15, left: 15, top: 15),

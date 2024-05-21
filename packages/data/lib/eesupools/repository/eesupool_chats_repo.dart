@@ -85,7 +85,7 @@ extension EESUpoolChatsRepo on EESUpoolRepository {
     int limit,
   ) async {
     final result = await authRepository.executeFutureWithAuth((_) {
-      final result = dataSource.getPoolMessages(poolId, limit, false);
+      final result = dataSource.getUnApprovedPoolMessages(poolId, limit);
       return result;
     });
     return result;

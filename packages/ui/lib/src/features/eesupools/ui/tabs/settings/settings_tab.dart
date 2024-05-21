@@ -14,16 +14,6 @@ class SettingsTab extends StatelessWidget {
   const SettingsTab({super.key, required this.pool});
   final EESUpool pool;
 
-  bool feesBalanced() {
-    double perc = (pool.adminFee ?? 0) +
-        (pool.receivingFee ?? 0) +
-        (pool.packagingFee ?? 0) +
-        (pool.collectionFee ?? 0);
-    final value = perc == 100.00;
-
-    return value;
-  }
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -38,12 +28,11 @@ class SettingsTab extends StatelessWidget {
             label: 'Name',
             initialValue: pool.name,
             onChanged: (value) {
-              context.read<EESUpoolViewBloc>().add(
-                    EESUpoolSettingsUpdated(
-                      pool.copyWith(name: value),
-                      value.isNotEmpty && feesBalanced(),
-                    ),
-                  );
+              if (value.isEmpty) return;
+
+              context
+                  .read<EESUpoolViewBloc>()
+                  .add(EESUpoolSettingsUpdated(pool.copyWith(name: value)));
             },
           ),
           EESUpTextFormField(
@@ -54,7 +43,6 @@ class SettingsTab extends StatelessWidget {
               context.read<EESUpoolViewBloc>().add(
                     EESUpoolSettingsUpdated(
                       pool.copyWith(description: value),
-                      feesBalanced(),
                     ),
                   );
             },
@@ -85,12 +73,20 @@ class SettingsTab extends StatelessWidget {
               value: pool.isPublic,
               activeTrackColor: context.colorScheme.primary,
               onChanged: (bool value) {
-                context.read<EESUpoolViewBloc>().add(
-                      EESUpoolSettingsUpdated(
-                        pool.copyWith(isPublic: value),
-                        feesBalanced(),
-                      ),
-                    );
+                if (value == true) {
+                  context.read<EESUpoolViewBloc>().add(
+                        EESUpoolSettingsUpdated(
+                          pool.copyWith(isPublic: value),
+                        ),
+                      );
+                } else {
+                  context.read<EESUpoolViewBloc>().add(
+                        EESUpoolSettingsUpdated(
+                          pool.copyWith(
+                              isPublic: value, address: null, addressId: null),
+                        ),
+                      );
+                }
               },
             ),
           ),
@@ -131,12 +127,12 @@ class SettingsTab extends StatelessWidget {
                       ],
                     ),
                     onAddressSelected: (address) {
-                      context.read<EESUpoolViewBloc>().add(
-                            EESUpoolSettingsUpdated(
-                              pool.copyWith(address: address),
-                              feesBalanced(),
-                            ),
-                          );
+                      if (address != null) {
+                        context.read<EESUpoolViewBloc>().add(
+                              EESUpoolSettingsUpdated(pool.copyWith(
+                                  address: address, addressId: address.id)),
+                            );
+                      }
                     },
                   ),
                 ],
@@ -154,6 +150,7 @@ class SettingsTab extends StatelessWidget {
                     AddressCard(
                       address: pool.address!,
                       margin: const EdgeInsets.only(top: 10),
+                      allowDelete: false,
                     )
                 ],
               ),
@@ -168,33 +165,35 @@ class SettingsTab extends StatelessWidget {
                 style: context.textTheme.labelLarge,
               ),
               const Divider(thickness: .5),
-              if (!feesBalanced())
-                Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Icon(
-                      IconlyLight.infoSquare,
-                      size: 17,
-                      color: context.colorScheme.error,
-                    ),
-                    10.sW,
-                    Text(
-                      'Ensure that the allocations sum up to 100%',
+              Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Icon(
+                    IconlyLight.infoSquare,
+                    size: 17,
+                    color: Colors.grey.shade800,
+                  ),
+                  10.sW,
+                  Expanded(
+                    child: Text(
+                      'Ensure that the allocations sum up to 100%, Otherwise the changes will not be saved',
                       style: context.textTheme.labelSmall?.copyWith(
-                        color: context.colorScheme.error,
+                        color: Colors.grey.shade800,
                       ),
                     ),
-                  ],
-                ).animate().shakeX(),
+                  ),
+                ],
+              ).animate().shakeX(),
               EESUpTextFormField(
                 label: 'Administration fee(%)',
                 initialValue: pool.adminFee?.toStringAsFixed(2),
                 type: TextInputType.number,
                 onChanged: (value) {
                   context.read<EESUpoolViewBloc>().add(
-                        EESUpoolSettingsUpdated(
-                          pool.copyWith(adminFee: double.tryParse(value)),
-                          feesBalanced(),
+                        EESUpoolPercentagesUpdated(
+                          pool.copyWith(
+                            adminFee: double.tryParse(value),
+                          ),
                         ),
                       );
                 },
@@ -205,9 +204,10 @@ class SettingsTab extends StatelessWidget {
                 initialValue: pool.collectionFee?.toStringAsFixed(2),
                 onChanged: (value) {
                   context.read<EESUpoolViewBloc>().add(
-                        EESUpoolSettingsUpdated(
-                          pool.copyWith(collectionFee: double.tryParse(value)),
-                          feesBalanced(),
+                        EESUpoolPercentagesUpdated(
+                          pool.copyWith(
+                            collectionFee: double.tryParse(value),
+                          ),
                         ),
                       );
                 },
@@ -218,9 +218,10 @@ class SettingsTab extends StatelessWidget {
                 initialValue: pool.receivingFee?.toStringAsFixed(2),
                 onChanged: (value) {
                   context.read<EESUpoolViewBloc>().add(
-                        EESUpoolSettingsUpdated(
-                          pool.copyWith(receivingFee: double.tryParse(value)),
-                          feesBalanced(),
+                        EESUpoolPercentagesUpdated(
+                          pool.copyWith(
+                            receivingFee: double.tryParse(value),
+                          ),
                         ),
                       );
                 },
@@ -231,9 +232,10 @@ class SettingsTab extends StatelessWidget {
                 initialValue: pool.packagingFee?.toStringAsFixed(2),
                 onChanged: (value) {
                   context.read<EESUpoolViewBloc>().add(
-                        EESUpoolSettingsUpdated(
-                          pool.copyWith(packagingFee: double.tryParse(value)),
-                          feesBalanced(),
+                        EESUpoolPercentagesUpdated(
+                          pool.copyWith(
+                            packagingFee: double.tryParse(value),
+                          ),
                         ),
                       );
                 },

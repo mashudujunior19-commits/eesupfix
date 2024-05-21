@@ -56,6 +56,13 @@ abstract class EESUpoolDataSource {
     bool approved,
   );
 
+    ///Get Un approved EEUSpool messages
+  ///
+  Future<List<ChatMessage>> getUnApprovedPoolMessages(
+    int poolId,
+    int limit
+  );
+
   ///Get EEUSpool messages
   ///
   Future<List<ChatMessage>> getPoolMessagesByHashTags(

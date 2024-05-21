@@ -2,20 +2,27 @@ import 'dart:io';
 import 'package:bootstrap_icons/bootstrap_icons.dart';
 import 'package:data/eesupools/models/chat_message.dart';
 import 'package:data/eesupools/models/eesupool.dart';
-import 'package:flutter_highlighted_text/flutter_highlighted_text.dart';
+import 'package:data/eesupools/models/eesupool_member.dart';
+import 'package:ui/src/core/extensions/bottom_sheet_context_ext.dart';
 import 'package:ui/src/core/extensions/context_alerts_ext.dart';
 import 'package:ui/src/core/extensions/context_theme_ext.dart';
 import 'package:ui/src/core/extensions/sizedbox_ext.dart';
 import 'package:ui/src/core/extensions/slide_in_animation_ext.dart';
-import 'package:ui/src/features/eesupools/ui/tabs/chats/ui/chat_text_field/bloc/chat_textfield_bloc.dart';
+import 'package:ui/src/features/eesupools/bloc/eesupool_view_bloc.dart';
+import 'package:ui/src/features/eesupools/ui/tabs/chats/bloc/chat_textfield_bloc.dart';
 import 'package:ui/src/features/eesupools/ui/tabs/chats/ui/chat_text_field/local_files.dart';
-import 'package:ui/src/features/eesupools/ui/tabs/chats/ui/chat_text_field/topic_suggestions.dart';
+import 'package:ui/src/features/eesupools/ui/tabs/chats/ui/chat_text_field/review_suggestion_topics_dialog.dart';
+import 'package:ui/src/features/eesupools/ui/tabs/chats/ui/chat_text_field/suggest_topic.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:loader_overlay/loader_overlay.dart';
+import 'package:ui/src/features/eesupools/ui/tabs/chats/ui/chat_text_field/topic_suggestions.dart';
+import 'package:ui/src/features/eesupools/ui/tabs/chats/ui/widgets/message_text.dart';
+import 'package:ui/src/features/eesupools/ui/tabs/chats/ui/widgets/review_messages.dart';
+import 'package:ui/src/features/eesupools/ui/tabs/issues/ui/create_issue_dialog.dart';
 
 class ChatTextField extends StatefulWidget {
   const ChatTextField({super.key, required this.pool});
@@ -92,7 +99,8 @@ class _ChatTextFieldState extends State<ChatTextField> {
           mainAxisSize: MainAxisSize.min,
           children: [
             ChatTextFieldLocalFiles(files: files),
-            if (replyTo != null) _ReplyPreview(reply: replyTo),
+            if (replyTo != null)
+              _ReplyPreview(reply: replyTo, pool: widget.pool),
             Container(
               decoration: BoxDecoration(
                 color: Colors.white,
@@ -102,71 +110,13 @@ class _ChatTextFieldState extends State<ChatTextField> {
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
                   10.sW,
-                  PopupMenuButton(
-                    // padding: const EdgeInsets.only(bottom: 50),
-                    child: const Padding(
-                      padding: EdgeInsets.only(bottom: 20),
-                      child: Icon(Icons.add),
-                    ),
-                    itemBuilder: (context) {
-                      return [
-                        _optionPopUpOption(
-                          context,
-                          'Add files',
-                          () {
-                            pickFiles().then((files) {
-                              if (files.isNotEmpty) {
-                                context.read<ChatTextFieldBloc>().add(
-                                      ChatAttachmentsPicked(files),
-                                    );
-                              }
-                            });
-                          },
-                          IconlyLight.image2,
-                        ),
-                        _optionPopUpOption(
-                          context,
-                          'Review messages',
-                          () {},
-                          IconlyLight.message,
-                        ),
-                        _optionPopUpOption(
-                          context,
-                          'Add & Review topics',
-                          () {},
-                          BootstrapIcons.hash,
-                        ),
-                        _optionPopUpOption(
-                          context,
-                          'Suggest a topic',
-                          () {},
-                          BootstrapIcons.hash,
-                        ),
-                        _optionPopUpOption(
-                          context,
-                          'Report',
-                          () {},
-                          BootstrapIcons.flag,
-                        ),
-                      ];
-                    },
-                  ),
+                  _chatPopUpMenu(),
                   10.sW,
-                  _TextField(controller: controller),
-                  // if (widget.pool.role == EESUpoolMemberRole.admin)
-                  //   IconButton(
-                  //     onPressed: () {},
-                  //     icon: const Tooltip(
-                  //       message: 'Broadcast this message to other EESUpools',
-                  //       child: Padding(
-                  //         padding: EdgeInsets.only(bottom: 20),
-                  //         child: Icon(
-                  //           BootstrapIcons.broadcast,
-                  //           color: Colors.black,
-                  //         ),
-                  //       ),
-                  //     ),
-                  //   ),
+                  _TextField(
+                      controller: controller,
+                      onChanged: () {
+                        setState(() {});
+                      }),
                   IconButton(
                     onPressed: () {
                       FocusScope.of(context).unfocus();
@@ -200,6 +150,109 @@ class _ChatTextFieldState extends State<ChatTextField> {
     ).animate().slideIn(0);
   }
 
+  PopupMenuButton<dynamic> _chatPopUpMenu() {
+    return PopupMenuButton(
+      // padding: const EdgeInsets.only(bottom: 50),
+      child: const Padding(
+        padding: EdgeInsets.only(bottom: 20),
+        child: Icon(Icons.add),
+      ),
+      itemBuilder: (context) {
+        return [
+          _optionPopUpOption(
+            context,
+            'Add files',
+            () {
+              pickFiles().then((files) {
+                if (files.isNotEmpty) {
+                  context.read<ChatTextFieldBloc>().add(
+                        ChatAttachmentsPicked(files),
+                      );
+                }
+              });
+            },
+            IconlyLight.image2,
+          ),
+          if (widget.pool.role == EESUpoolMemberRole.admin)
+            _optionPopUpOption(
+              context,
+              'Review messages',
+              () {
+                context.showBottomSheetDialog(
+                  child: ReviewMessagesDialog(pool: widget.pool),
+                );
+              },
+              IconlyLight.message,
+            ),
+          if (widget.pool.role == EESUpoolMemberRole.admin)
+            _optionPopUpOption(
+              context,
+              'Add & Review topics',
+              () {
+                context
+                    .showBottomSheetDialog(
+                  child: ReviewTopicSuggestionsDialog(
+                    pool: widget.pool,
+                  ),
+                )
+                    .then((value) {
+                  if (value != null) {
+                    final res = value as UpdateTopics;
+
+                    context.read<EESUpoolViewBloc>().add(
+                          EESUpoolSettingsUpdated(
+                            widget.pool.copyWith(
+                              chatTags: res.current,
+                              chatTagsSuggestions: res.suggestions,
+                            ),
+                          ),
+                        );
+                  }
+                });
+              },
+              BootstrapIcons.hash,
+            ),
+          _optionPopUpOption(
+            context,
+            'Suggest a topic',
+            () {
+              context
+                  .showBottomSheetDialog(
+                child: SuggestTopicDialog(
+                  pool: widget.pool,
+                ),
+              )
+                  .then((value) {
+                if (value != null) {
+                  if (value is List<String>) {
+                    context.read<EESUpoolViewBloc>().add(
+                          EESUpoolSettingsUpdated(
+                            widget.pool.copyWith(
+                              chatTagsSuggestions: value,
+                            ),
+                          ),
+                        );
+                  }
+                }
+              });
+            },
+            BootstrapIcons.hash,
+          ),
+          _optionPopUpOption(
+            context,
+            'Report',
+            () {
+              context.showBottomSheetDialog(
+                child: CreateIssueDialog(message: null, pool: widget.pool),
+              );
+            },
+            BootstrapIcons.flag,
+          ),
+        ];
+      },
+    );
+  }
+
   PopupMenuItem<dynamic> _optionPopUpOption(
     BuildContext context,
     String label,
@@ -228,8 +281,9 @@ class _ChatTextFieldState extends State<ChatTextField> {
 }
 
 class _TextField extends StatelessWidget {
-  const _TextField({required this.controller});
+  const _TextField({required this.controller, required this.onChanged});
   final TextEditingController controller;
+  final VoidCallback onChanged;
 
   @override
   Widget build(BuildContext context) {
@@ -248,7 +302,9 @@ class _TextField extends StatelessWidget {
         child: TextField(
           maxLines: null,
           controller: controller,
-          onChanged: (value) {},
+          onChanged: (value) {
+            onChanged.call();
+          },
           style: context.textTheme.bodySmall?.copyWith(
             color: Colors.black,
             fontSize: 15,
@@ -271,8 +327,9 @@ class _TextField extends StatelessWidget {
 }
 
 class _ReplyPreview extends StatelessWidget {
-  const _ReplyPreview({required this.reply});
+  const _ReplyPreview({required this.reply, required this.pool});
   final ChatMessage reply;
+  final EESUpool pool;
 
   @override
   Widget build(BuildContext context) {
@@ -309,24 +366,13 @@ class _ReplyPreview extends StatelessWidget {
                   const Text('Replying'),
                 ],
               ),
+              // if (reply.media != null)
+              //   Expanded(child: MessageAttachments(mediaFiles: reply.media!)),
               if (reply.content != null)
-                Padding(
+                MessageText(
+                  message: reply,
+                  pool: pool,
                   padding: const EdgeInsets.only(left: 30, bottom: 10),
-                  child: HighlightedText(
-                    reply.content!,
-                    patterns: reply.hashTags ?? [],
-                    style: context.textTheme.bodySmall?.copyWith(
-                      color: Colors.black,
-                      fontWeight: FontWeight.w500,
-                      fontSize: 16,
-                    ),
-                    highLightStyle: context.textTheme.bodySmall?.copyWith(
-                      color: Colors.blue,
-                      fontWeight: FontWeight.w500,
-                      decoration: TextDecoration.underline,
-                      fontSize: 16,
-                    ),
-                  ),
                 )
             ],
           ),

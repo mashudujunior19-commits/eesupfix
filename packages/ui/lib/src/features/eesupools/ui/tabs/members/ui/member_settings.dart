@@ -1,6 +1,7 @@
 import 'package:data/eesupools/models/eesupool.dart';
 import 'package:data/eesupools/models/eesupool_member.dart';
 import 'package:data/eesupools/models/eesupool_type.dart';
+import 'package:data/eesupools/repository/eesupool_repo.dart';
 import 'package:data/utils/eesup_exception.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -25,7 +26,8 @@ class MemberSettingsDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) =>
-          MemberSettingsBloc()..add(MemberSettingsInitialized(selectedMember)),
+          MemberSettingsBloc(context.read<EESUpoolRepository>())
+            ..add(MemberSettingsInitialized(selectedMember)),
       child: Scaffold(
         resizeToAvoidBottomInset: false,
         backgroundColor: Colors.transparent,
@@ -123,6 +125,12 @@ class MemberSettingsDialog extends StatelessWidget {
                         // change button value to selected value
                         onChanged: (EESUpoolMemberRole? newValue) {
                           if (newValue == null) return;
+
+                          context.read<MemberSettingsBloc>().add(
+                                MemberSettingsUpdated(
+                                  member.copyWith(role: newValue),
+                                ),
+                              );
                         },
                       ),
                     ),
@@ -146,7 +154,13 @@ class MemberSettingsDialog extends StatelessWidget {
                         width: 50,
                         child: Switch(
                           value: member.isCensored,
-                          onChanged: (bool value) {},
+                          onChanged: (bool value) {
+                            context.read<MemberSettingsBloc>().add(
+                                  MemberSettingsUpdated(
+                                    member.copyWith(isCensored: value),
+                                  ),
+                                );
+                          },
                         ),
                       ),
                     ),

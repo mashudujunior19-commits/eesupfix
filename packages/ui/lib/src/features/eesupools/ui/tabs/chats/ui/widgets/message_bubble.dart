@@ -1,19 +1,22 @@
 import 'package:bootstrap_icons/bootstrap_icons.dart';
 import 'package:data/eesupools/models/chat_message.dart';
 import 'package:data/eesupools/models/eesupool.dart';
-import 'package:flutter_highlighted_text/flutter_highlighted_text.dart';
+import 'package:data/eesupools/models/eesupool_member.dart';
 import 'package:ui/src/core/extensions/bottom_sheet_context_ext.dart';
 import 'package:ui/src/core/extensions/context_theme_ext.dart';
 import 'package:ui/src/core/extensions/sizedbox_ext.dart';
-import 'package:ui/src/features/eesupools/ui/tabs/chats/ui/chat_text_field/bloc/chat_textfield_bloc.dart';
+import 'package:ui/src/features/eesupools/ui/tabs/chats/bloc/chat_textfield_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
+import 'package:ui/src/features/eesupools/ui/tabs/chats/ui/widgets/message_attachments.dart';
 import 'package:ui/src/features/eesupools/ui/tabs/chats/ui/widgets/message_reaction.dart';
 import 'package:ui/src/features/eesupools/ui/tabs/chats/ui/widgets/reply_preview.dart';
 import 'package:ui/src/features/eesupools/ui/tabs/issues/ui/create_issue_dialog.dart';
 import 'package:visibility_detector/visibility_detector.dart';
+
+import 'message_text.dart';
 
 class MessageBubble extends StatelessWidget {
   const MessageBubble({
@@ -23,6 +26,17 @@ class MessageBubble extends StatelessWidget {
   });
   final EESUpool pool;
   final ChatMessage message;
+
+  bool displayApprovalStatus() {
+    if (message.isApproved) return false;
+    if (pool.role == EESUpoolMemberRole.admin && !message.isApproved) {
+      return true;
+    }
+    if (message.authorId == pool.memberId && !message.isApproved) {
+      return true;
+    }
+    return false;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -50,12 +64,13 @@ class MessageBubble extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.only(top: 20),
         child: Row(
+          mainAxisSize: MainAxisSize.min,
           mainAxisAlignment:
               isReply ? MainAxisAlignment.start : MainAxisAlignment.end,
           children: [
             Container(
               constraints: BoxConstraints(
-                minWidth: MediaQuery.of(context).size.width * 0.2,
+                minWidth: MediaQuery.of(context).size.width * 0.15,
                 maxWidth: MediaQuery.of(context).size.width * 0.68,
               ),
               decoration: BoxDecoration(
@@ -69,7 +84,11 @@ class MessageBubble extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  ReplyPreview(pool: pool, tags: [], reply: message.reply),
+                  ReplyPreview(
+                    pool: pool,
+                    tags: [...pool.chatTags ?? []],
+                    reply: message.reply,
+                  ),
                   Padding(
                     padding:
                         const EdgeInsets.only(left: 10, right: 10, top: 10),
@@ -115,12 +134,32 @@ class MessageBubble extends StatelessWidget {
                       ],
                     ),
                   ),
-                  if (message.content != null)
-                    _MessageText(
-                      message: message,
-                      pool: pool,
-                      isReply: isReply,
+                  if (displayApprovalStatus() && !message.isDeleted)
+                    Padding(
+                      padding: const EdgeInsets.only(left: 10),
+                      child: Text(
+                        'Pending review',
+                        style: context.textTheme.bodySmall?.copyWith(
+                          fontStyle: FontStyle.italic,
+                          color: Colors.grey,
+                        ),
+                      ),
                     ),
+                  if (message.isDeleted)
+                    Padding(
+                      padding: const EdgeInsets.only(left: 10),
+                      child: Text(
+                        'Declined by the admin',
+                        style: context.textTheme.bodySmall?.copyWith(
+                          fontStyle: FontStyle.italic,
+                          color: Colors.grey,
+                        ),
+                      ),
+                    ),
+                  if (message.media != null)
+                    MessageAttachments(mediaFiles: message.media!),
+                  if (message.content != null)
+                    MessageText(message: message, pool: pool),
                   MessageReaction(pool: pool, message: message),
                 ],
               ),
@@ -170,45 +209,6 @@ class MessageBubble extends StatelessWidget {
       topLeft: Radius.circular(25),
       topRight: Radius.circular(25),
       bottomLeft: Radius.circular(25),
-    );
-  }
-}
-
-class _MessageText extends StatelessWidget {
-  const _MessageText({
-    required this.message,
-    required this.pool,
-    required this.isReply,
-  });
-
-  final ChatMessage message;
-  final EESUpool pool;
-  final bool isReply;
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(
-        left: 10,
-        right: 10,
-        top: 5,
-      ),
-      child: HighlightedText(
-        message.content!,
-        patterns: [...pool.chatTags ?? []],
-        textAlign: !isReply ? TextAlign.start : TextAlign.end,
-        style: context.textTheme.bodySmall?.copyWith(
-          color: Colors.black,
-          fontWeight: FontWeight.w500,
-          fontSize: 16,
-        ),
-        highLightStyle: context.textTheme.bodySmall?.copyWith(
-          color: Colors.blue,
-          fontWeight: FontWeight.w500,
-          decoration: TextDecoration.underline,
-          fontSize: 16,
-        ),
-      ),
     );
   }
 }

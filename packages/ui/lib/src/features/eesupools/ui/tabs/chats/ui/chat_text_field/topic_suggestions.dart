@@ -31,7 +31,8 @@ class TopicSuggestions extends StatelessWidget {
               final words = controller.text.split("#");
               words.removeLast();
               words.add(chatTags[index]);
-              controller.text = words.join(" ");
+              controller.text =
+                  controller.text.isNotEmpty ? words.join(" ") : words.join();
             },
             child: Padding(
               padding: const EdgeInsets.only(left: 13, right: 10),

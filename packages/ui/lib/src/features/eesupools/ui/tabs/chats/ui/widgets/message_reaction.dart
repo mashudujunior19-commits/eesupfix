@@ -4,9 +4,11 @@ import 'package:data/eesupools/models/chat_message.dart';
 import 'package:data/eesupools/models/eesupool.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ui/src/core/extensions/context_theme_ext.dart';
 import 'package:ui/src/core/extensions/sizedbox_ext.dart';
 import 'package:ui/src/core/widgets/animated_reaction_btn.dart';
+import 'package:ui/src/features/eesupools/ui/tabs/chats/bloc/chat_bloc.dart';
 
 class MessageReaction extends StatelessWidget {
   const MessageReaction({
@@ -110,15 +112,16 @@ class MessageReaction extends StatelessWidget {
             ],
           ),
           onTap: () {
-            // if (memberId == null) return;
-            // ref
-            //     .read(eesupoolRepoProvider)
-            //     .addMessageReaction(memberId, message.id, true)
-            //     .whenComplete(() {
-            //   final pool = ref.read(eesupoolViewProvider);
-            //   if (pool != null) ref.invalidate(chatsStream(pool));
-            //   onReaction?.call();
-            // });
+            if (memberId == null) return;
+
+            context.read<ChatBloc>().add(
+                  MessageReactionAdded(
+                    pool.eesupoolId!,
+                    message.id,
+                    memberId,
+                    true,
+                  ),
+                );
           },
         ),
         const SizedBox(width: 5),
@@ -154,15 +157,16 @@ class MessageReaction extends StatelessWidget {
             ],
           ),
           onTap: () {
-            // if (memberId == null) return;
-            // ref
-            //     .read(eesupoolRepoProvider)
-            //     .addMessageReaction(memberId, message.id, false)
-            //     .whenComplete(() {
-            //   final pool = ref.read(eesupoolViewProvider);
-            //   if (pool != null) ref.invalidate(chatsStream(pool));
-            //   onReaction?.call();
-            // });
+            if (memberId == null) return;
+
+            context.read<ChatBloc>().add(
+                  MessageReactionAdded(
+                    pool.eesupoolId!,
+                    message.id,
+                    memberId,
+                    false,
+                  ),
+                );
           },
         ),
       ],

@@ -89,13 +89,23 @@ class EESUpoolSupabaseImp implements EESUpoolDataSource {
     int limit,
     bool approved,
   ) async {
+    final res = await client.schema('communities').rpc('get_eesupool_messages',
+        params: {'pool_id': poolId, 'limit_to': limit});
+
+    List<ChatMessage> list =
+        (res as List).map((e) => ChatMessage.fromJson(e)).toList();
+    return list;
+  }
+
+  @override
+  Future<List<ChatMessage>> getUnApprovedPoolMessages(
+      int poolId, int limit) async {
     final res = await client
         .schema('communities')
-        .rpc('get_eesupool_messages', params: {
-      'pool_id': poolId,
-      'limit_to': limit,
-      'approved': approved,
-    });
+        .rpc('get_eesupool_messages',
+            params: {'pool_id': poolId, 'limit_to': limit})
+        .eq('is_approved', false)
+        .eq('is_deleted', false);
 
     List<ChatMessage> list =
         (res as List).map((e) => ChatMessage.fromJson(e)).toList();
@@ -168,14 +178,9 @@ class EESUpoolSupabaseImp implements EESUpoolDataSource {
   @override
   Future<List<ChatMessage>> getPoolMessagesByHashTags(
       int poolId, String hastTag, int limit) async {
-    final res = await client
-        .schema('communities')
-        .rpc('get_eesupool_messages_by_hash_tag', params: {
-      'pool_id': poolId,
-      'limit_to': limit,
-      'hash_tag': hastTag,
-      'approved': true,
-    });
+    final res = await client.schema('communities').rpc(
+        'get_eesupool_messages_by_hash_tag',
+        params: {'pool_id': poolId, 'limit_to': limit, 'hash_tag': hastTag});
 
     List<ChatMessage> list =
         (res as List).map((e) => ChatMessage.fromJson(e)).toList();
@@ -193,13 +198,18 @@ class EESUpoolSupabaseImp implements EESUpoolDataSource {
 
   @override
   Future<void> deleteChatMessage(int messageId) async {
-    await client.from('stokvel_message').delete().eq('id', messageId);
+    await client
+        .schema('communities')
+        .from('message')
+        .delete()
+        .eq('id', messageId);
   }
 
   @override
   Future<void> softDeleteChatMessage(int messageId) async {
     await client
-        .from('stokvel_message')
+        .schema('communities')
+        .from('message')
         .update({'is_deleted': true}).eq('id', messageId);
   }
 
