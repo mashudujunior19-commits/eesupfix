@@ -1,5 +1,7 @@
+import 'package:data/auth/models/user_role.dart';
 import 'package:data/finance/data_source/wallet_data_source.dart';
 import 'package:data/finance/models/payment_gateway.dart';
+import 'package:data/finance/models/profit_allocation.dart';
 import 'package:data/finance/models/transaction.dart';
 import 'package:data/finance/models/wallet.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -98,5 +100,14 @@ class WalletSupabaseImpl implements WalletDataSource {
         .select()
         .eq('is_active', true);
     return results.map((e) => PaymentGateway.fromJson(e)).toList();
+  }
+
+  @override
+  Future<ProfitAllocation> fetchProfitAllocation(UserRole role) async {
+    final results = await _client.schema('finances').rpc(
+      'get_profit_allocation_by_role',
+      params: {'role': role.toString()},
+    ).single();
+    return ProfitAllocation.fromJson(results);
   }
 }

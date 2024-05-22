@@ -30,6 +30,7 @@ class CartBloc extends Bloc<CartEvent, CartState> {
             imageUrl: product.imageUrl,
             category: product.category,
             size: product.size,
+            costPrice: product.costPrice,
           ),
         );
       }

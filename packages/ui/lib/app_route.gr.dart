@@ -23,6 +23,7 @@ import 'package:data/orders/models/order_product.dart' as _i43;
 import 'package:data/partners/models/partner.dart' as _i53;
 import 'package:data/shopping/models/basket.dart' as _i41;
 import 'package:data/shopping/models/category.dart' as _i42;
+import 'package:data/surveys/models/survey.dart' as _i56;
 import 'package:flutter/material.dart' as _i40;
 import 'package:instapay_flutter/data/merchant_transaction.dart' as _i50;
 import 'package:ui/src/core/widgets/media_file_uploader.dart' as _i17;
@@ -341,9 +342,13 @@ abstract class $AppRouter extends _i39.RootStackRouter {
       );
     },
     ResponseRoute.name: (routeData) {
+      final args = routeData.argsAs<ResponseRouteArgs>();
       return _i39.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const _i28.ResponseScreen(),
+        child: _i28.ResponseScreen(
+          key: args.key,
+          survey: args.survey,
+        ),
       );
     },
     ReviewProductsRoute.name: (routeData) {
@@ -1329,16 +1334,40 @@ class ResetPasswordRoute extends _i39.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i28.ResponseScreen]
-class ResponseRoute extends _i39.PageRouteInfo<void> {
-  const ResponseRoute({List<_i39.PageRouteInfo>? children})
-      : super(
+class ResponseRoute extends _i39.PageRouteInfo<ResponseRouteArgs> {
+  ResponseRoute({
+    _i40.Key? key,
+    required _i56.Survey survey,
+    List<_i39.PageRouteInfo>? children,
+  }) : super(
           ResponseRoute.name,
+          args: ResponseRouteArgs(
+            key: key,
+            survey: survey,
+          ),
           initialChildren: children,
         );
 
   static const String name = 'ResponseRoute';
 
-  static const _i39.PageInfo<void> page = _i39.PageInfo<void>(name);
+  static const _i39.PageInfo<ResponseRouteArgs> page =
+      _i39.PageInfo<ResponseRouteArgs>(name);
+}
+
+class ResponseRouteArgs {
+  const ResponseRouteArgs({
+    this.key,
+    required this.survey,
+  });
+
+  final _i40.Key? key;
+
+  final _i56.Survey survey;
+
+  @override
+  String toString() {
+    return 'ResponseRouteArgs{key: $key, survey: $survey}';
+  }
 }
 
 /// generated route for

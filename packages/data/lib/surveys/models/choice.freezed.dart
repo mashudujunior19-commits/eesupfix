@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'option.dart';
+part of 'choice.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -14,15 +14,16 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
-Option _$OptionFromJson(Map<String, dynamic> json) {
-  return _Option.fromJson(json);
+Choice _$ChoiceFromJson(Map<String, dynamic> json) {
+  return _Choice.fromJson(json);
 }
 
 /// @nodoc
-mixin _$Option {
+mixin _$Choice {
   @JsonKey(name: 'option_id')
-  int get optionId => throw _privateConstructorUsedError;
-  String get option => throw _privateConstructorUsedError;
+  int get choiceId => throw _privateConstructorUsedError;
+  @JsonKey(name: 'option')
+  String get choice => throw _privateConstructorUsedError;
   @JsonKey(name: 'is_correct')
   bool get isCorrect => throw _privateConstructorUsedError;
   @JsonKey(name: 'is_selected', includeFromJson: false)
@@ -31,17 +32,17 @@ mixin _$Option {
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $OptionCopyWith<Option> get copyWith => throw _privateConstructorUsedError;
+  $ChoiceCopyWith<Choice> get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $OptionCopyWith<$Res> {
-  factory $OptionCopyWith(Option value, $Res Function(Option) then) =
-      _$OptionCopyWithImpl<$Res, Option>;
+abstract class $ChoiceCopyWith<$Res> {
+  factory $ChoiceCopyWith(Choice value, $Res Function(Choice) then) =
+      _$ChoiceCopyWithImpl<$Res, Choice>;
   @useResult
   $Res call(
-      {@JsonKey(name: 'option_id') int optionId,
-      String option,
+      {@JsonKey(name: 'option_id') int choiceId,
+      @JsonKey(name: 'option') String choice,
       @JsonKey(name: 'is_correct') bool isCorrect,
       @JsonKey(name: 'is_selected', includeFromJson: false)
       @JsonKey(includeFromJson: false, includeToJson: false)
@@ -49,9 +50,9 @@ abstract class $OptionCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$OptionCopyWithImpl<$Res, $Val extends Option>
-    implements $OptionCopyWith<$Res> {
-  _$OptionCopyWithImpl(this._value, this._then);
+class _$ChoiceCopyWithImpl<$Res, $Val extends Choice>
+    implements $ChoiceCopyWith<$Res> {
+  _$ChoiceCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -61,19 +62,19 @@ class _$OptionCopyWithImpl<$Res, $Val extends Option>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? optionId = null,
-    Object? option = null,
+    Object? choiceId = null,
+    Object? choice = null,
     Object? isCorrect = null,
     Object? isSelected = null,
   }) {
     return _then(_value.copyWith(
-      optionId: null == optionId
-          ? _value.optionId
-          : optionId // ignore: cast_nullable_to_non_nullable
+      choiceId: null == choiceId
+          ? _value.choiceId
+          : choiceId // ignore: cast_nullable_to_non_nullable
               as int,
-      option: null == option
-          ? _value.option
-          : option // ignore: cast_nullable_to_non_nullable
+      choice: null == choice
+          ? _value.choice
+          : choice // ignore: cast_nullable_to_non_nullable
               as String,
       isCorrect: null == isCorrect
           ? _value.isCorrect
@@ -88,15 +89,15 @@ class _$OptionCopyWithImpl<$Res, $Val extends Option>
 }
 
 /// @nodoc
-abstract class _$$OptionImplCopyWith<$Res> implements $OptionCopyWith<$Res> {
-  factory _$$OptionImplCopyWith(
-          _$OptionImpl value, $Res Function(_$OptionImpl) then) =
-      __$$OptionImplCopyWithImpl<$Res>;
+abstract class _$$ChoiceImplCopyWith<$Res> implements $ChoiceCopyWith<$Res> {
+  factory _$$ChoiceImplCopyWith(
+          _$ChoiceImpl value, $Res Function(_$ChoiceImpl) then) =
+      __$$ChoiceImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
-      {@JsonKey(name: 'option_id') int optionId,
-      String option,
+      {@JsonKey(name: 'option_id') int choiceId,
+      @JsonKey(name: 'option') String choice,
       @JsonKey(name: 'is_correct') bool isCorrect,
       @JsonKey(name: 'is_selected', includeFromJson: false)
       @JsonKey(includeFromJson: false, includeToJson: false)
@@ -104,29 +105,29 @@ abstract class _$$OptionImplCopyWith<$Res> implements $OptionCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$OptionImplCopyWithImpl<$Res>
-    extends _$OptionCopyWithImpl<$Res, _$OptionImpl>
-    implements _$$OptionImplCopyWith<$Res> {
-  __$$OptionImplCopyWithImpl(
-      _$OptionImpl _value, $Res Function(_$OptionImpl) _then)
+class __$$ChoiceImplCopyWithImpl<$Res>
+    extends _$ChoiceCopyWithImpl<$Res, _$ChoiceImpl>
+    implements _$$ChoiceImplCopyWith<$Res> {
+  __$$ChoiceImplCopyWithImpl(
+      _$ChoiceImpl _value, $Res Function(_$ChoiceImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? optionId = null,
-    Object? option = null,
+    Object? choiceId = null,
+    Object? choice = null,
     Object? isCorrect = null,
     Object? isSelected = null,
   }) {
-    return _then(_$OptionImpl(
-      optionId: null == optionId
-          ? _value.optionId
-          : optionId // ignore: cast_nullable_to_non_nullable
+    return _then(_$ChoiceImpl(
+      choiceId: null == choiceId
+          ? _value.choiceId
+          : choiceId // ignore: cast_nullable_to_non_nullable
               as int,
-      option: null == option
-          ? _value.option
-          : option // ignore: cast_nullable_to_non_nullable
+      choice: null == choice
+          ? _value.choice
+          : choice // ignore: cast_nullable_to_non_nullable
               as String,
       isCorrect: null == isCorrect
           ? _value.isCorrect
@@ -142,23 +143,24 @@ class __$$OptionImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$OptionImpl implements _Option {
-  const _$OptionImpl(
-      {@JsonKey(name: 'option_id') required this.optionId,
-      required this.option,
+class _$ChoiceImpl implements _Choice {
+  const _$ChoiceImpl(
+      {@JsonKey(name: 'option_id') required this.choiceId,
+      @JsonKey(name: 'option') required this.choice,
       @JsonKey(name: 'is_correct') required this.isCorrect,
       @JsonKey(name: 'is_selected', includeFromJson: false)
       @JsonKey(includeFromJson: false, includeToJson: false)
       this.isSelected = false});
 
-  factory _$OptionImpl.fromJson(Map<String, dynamic> json) =>
-      _$$OptionImplFromJson(json);
+  factory _$ChoiceImpl.fromJson(Map<String, dynamic> json) =>
+      _$$ChoiceImplFromJson(json);
 
   @override
   @JsonKey(name: 'option_id')
-  final int optionId;
+  final int choiceId;
   @override
-  final String option;
+  @JsonKey(name: 'option')
+  final String choice;
   @override
   @JsonKey(name: 'is_correct')
   final bool isCorrect;
@@ -169,17 +171,17 @@ class _$OptionImpl implements _Option {
 
   @override
   String toString() {
-    return 'Option(optionId: $optionId, option: $option, isCorrect: $isCorrect, isSelected: $isSelected)';
+    return 'Choice(choiceId: $choiceId, choice: $choice, isCorrect: $isCorrect, isSelected: $isSelected)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$OptionImpl &&
-            (identical(other.optionId, optionId) ||
-                other.optionId == optionId) &&
-            (identical(other.option, option) || other.option == option) &&
+            other is _$ChoiceImpl &&
+            (identical(other.choiceId, choiceId) ||
+                other.choiceId == choiceId) &&
+            (identical(other.choice, choice) || other.choice == choice) &&
             (identical(other.isCorrect, isCorrect) ||
                 other.isCorrect == isCorrect) &&
             (identical(other.isSelected, isSelected) ||
@@ -189,38 +191,39 @@ class _$OptionImpl implements _Option {
   @JsonKey(ignore: true)
   @override
   int get hashCode =>
-      Object.hash(runtimeType, optionId, option, isCorrect, isSelected);
+      Object.hash(runtimeType, choiceId, choice, isCorrect, isSelected);
 
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$OptionImplCopyWith<_$OptionImpl> get copyWith =>
-      __$$OptionImplCopyWithImpl<_$OptionImpl>(this, _$identity);
+  _$$ChoiceImplCopyWith<_$ChoiceImpl> get copyWith =>
+      __$$ChoiceImplCopyWithImpl<_$ChoiceImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$OptionImplToJson(
+    return _$$ChoiceImplToJson(
       this,
     );
   }
 }
 
-abstract class _Option implements Option {
-  const factory _Option(
-      {@JsonKey(name: 'option_id') required final int optionId,
-      required final String option,
+abstract class _Choice implements Choice {
+  const factory _Choice(
+      {@JsonKey(name: 'option_id') required final int choiceId,
+      @JsonKey(name: 'option') required final String choice,
       @JsonKey(name: 'is_correct') required final bool isCorrect,
       @JsonKey(name: 'is_selected', includeFromJson: false)
       @JsonKey(includeFromJson: false, includeToJson: false)
-      final bool isSelected}) = _$OptionImpl;
+      final bool isSelected}) = _$ChoiceImpl;
 
-  factory _Option.fromJson(Map<String, dynamic> json) = _$OptionImpl.fromJson;
+  factory _Choice.fromJson(Map<String, dynamic> json) = _$ChoiceImpl.fromJson;
 
   @override
   @JsonKey(name: 'option_id')
-  int get optionId;
+  int get choiceId;
   @override
-  String get option;
+  @JsonKey(name: 'option')
+  String get choice;
   @override
   @JsonKey(name: 'is_correct')
   bool get isCorrect;
@@ -230,6 +233,6 @@ abstract class _Option implements Option {
   bool get isSelected;
   @override
   @JsonKey(ignore: true)
-  _$$OptionImplCopyWith<_$OptionImpl> get copyWith =>
+  _$$ChoiceImplCopyWith<_$ChoiceImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

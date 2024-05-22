@@ -1,4 +1,7 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:data/surveys/models/survey.dart';
+import 'package:ui/app_route.gr.dart';
+import 'package:ui/src/core/extensions/context_alerts_ext.dart';
 import 'package:ui/src/core/extensions/sizedbox_ext.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
@@ -26,41 +29,22 @@ class SurveyCard extends StatelessWidget {
     return InkWell(
       splashColor: Colors.transparent,
       onTap: () {
+        context.router.push(ResponseRoute(survey: survey));
+
         // final pre = survey.preSurvey;
         // if (pre != null) {
         //   if (pre.respondedAt == null) {
-        //     showSnackBar(
-        //       context: context,
-        //       message: 'Complete the ${pre.title} ${pre.type.name} first.',
+        //     context.snackBarError(
+        //       'Complete the ${pre.title} ${pre.type.name} first.',
         //     );
         //     return;
         //   }
         // }
 
         // if ((survey.imageUrl != null) || (survey.description != null)) {
-        //   showSurveyOnbordingDialog(context, survey).then((value) {
-        //     setSurvey(ref, survey);
-        //     if (value == true) {
-        //       context.push(ResponseScreen.route).then((results) {
-        //         if (onDone != null) {
-        //           final id = results as String?;
-        //           onDone?.call(id);
-        //         } else {
-        //           ref.invalidate(surveysProvider);
-        //         }
-        //       });
-        //     }
-        //   });
+
         // } else {
-        //   setSurvey(ref, survey);
-        //   context.push(ResponseScreen.route).then((results) {
-        //     if (onDone != null) {
-        //       final id = results as String?;
-        //       onDone?.call(id);
-        //     } else {
-        //       ref.invalidate(surveysProvider);
-        //     }
-        //   });
+
         // }
       },
       child: Container(

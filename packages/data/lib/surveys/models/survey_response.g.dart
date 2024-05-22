@@ -36,6 +36,10 @@ _$QuestionAnswerImpl _$$QuestionAnswerImplFromJson(Map<String, dynamic> json) =>
       ratingValue: (json['rating_value'] as num?)?.toInt(),
       openEndedAnswer: json['open_ended_answer'] as String?,
       recordingUrl: json['recording_url'] as String?,
+      options: (json['options'] as List<dynamic>?)
+          ?.map((e) =>
+              const ChoiceConverter().fromJson(e as Map<String, dynamic>))
+          .toList(),
       files: (json['files'] as List<dynamic>?)
           ?.map((e) =>
               const MediaFileConverter().fromJson(e as Map<String, dynamic>))
@@ -53,6 +57,7 @@ Map<String, dynamic> _$$QuestionAnswerImplToJson(
       'rating_value': instance.ratingValue,
       'open_ended_answer': instance.openEndedAnswer,
       'recording_url': instance.recordingUrl,
+      'options': instance.options?.map(const ChoiceConverter().toJson).toList(),
       'files': instance.files?.map(const MediaFileConverter().toJson).toList(),
       'date_time': instance.dateTime,
       'date': instance.date,

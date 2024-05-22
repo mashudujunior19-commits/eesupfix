@@ -37,6 +37,8 @@ mixin _$OrderProduct {
   @JsonKey(includeToJson: false, name: 'class', includeFromJson: true)
   ProductClass? get productClass => throw _privateConstructorUsedError;
   double get price => throw _privateConstructorUsedError;
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  double? get costPrice => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
   int get quantity => throw _privateConstructorUsedError;
   @JsonKey(name: 'customer_accepted_qty')
@@ -78,6 +80,7 @@ abstract class $OrderProductCopyWith<$Res> {
       @JsonKey(includeToJson: false, name: 'class', includeFromJson: true)
       ProductClass? productClass,
       double price,
+      @JsonKey(includeFromJson: false, includeToJson: false) double? costPrice,
       String name,
       int quantity,
       @JsonKey(name: 'customer_accepted_qty') int customerAcceptedQty,
@@ -108,6 +111,7 @@ class _$OrderProductCopyWithImpl<$Res, $Val extends OrderProduct>
     Object? size = freezed,
     Object? productClass = freezed,
     Object? price = null,
+    Object? costPrice = freezed,
     Object? name = null,
     Object? quantity = null,
     Object? customerAcceptedQty = null,
@@ -146,6 +150,10 @@ class _$OrderProductCopyWithImpl<$Res, $Val extends OrderProduct>
           ? _value.price
           : price // ignore: cast_nullable_to_non_nullable
               as double,
+      costPrice: freezed == costPrice
+          ? _value.costPrice
+          : costPrice // ignore: cast_nullable_to_non_nullable
+              as double?,
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -204,6 +212,7 @@ abstract class _$$OrderProductImplCopyWith<$Res>
       @JsonKey(includeToJson: false, name: 'class', includeFromJson: true)
       ProductClass? productClass,
       double price,
+      @JsonKey(includeFromJson: false, includeToJson: false) double? costPrice,
       String name,
       int quantity,
       @JsonKey(name: 'customer_accepted_qty') int customerAcceptedQty,
@@ -232,6 +241,7 @@ class __$$OrderProductImplCopyWithImpl<$Res>
     Object? size = freezed,
     Object? productClass = freezed,
     Object? price = null,
+    Object? costPrice = freezed,
     Object? name = null,
     Object? quantity = null,
     Object? customerAcceptedQty = null,
@@ -270,6 +280,10 @@ class __$$OrderProductImplCopyWithImpl<$Res>
           ? _value.price
           : price // ignore: cast_nullable_to_non_nullable
               as double,
+      costPrice: freezed == costPrice
+          ? _value.costPrice
+          : costPrice // ignore: cast_nullable_to_non_nullable
+              as double?,
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -323,6 +337,7 @@ class _$OrderProductImpl implements _OrderProduct {
       @JsonKey(includeToJson: false, name: 'class', includeFromJson: true)
       this.productClass,
       required this.price,
+      @JsonKey(includeFromJson: false, includeToJson: false) this.costPrice,
       required this.name,
       required this.quantity,
       @JsonKey(name: 'customer_accepted_qty') this.customerAcceptedQty = 0,
@@ -362,6 +377,9 @@ class _$OrderProductImpl implements _OrderProduct {
   @override
   final double price;
   @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  final double? costPrice;
+  @override
   final String name;
   @override
   final int quantity;
@@ -386,7 +404,7 @@ class _$OrderProductImpl implements _OrderProduct {
 
   @override
   String toString() {
-    return 'OrderProduct(productId: $productId, orderId: $orderId, category: $category, imageUrl: $imageUrl, size: $size, productClass: $productClass, price: $price, name: $name, quantity: $quantity, customerAcceptedQty: $customerAcceptedQty, eesupreneurAcceptedQty: $eesupreneurAcceptedQty, damagedQty: $damagedQty, substituteBrand: $substituteBrand, substituteVariant: $substituteVariant, isExpanded: $isExpanded)';
+    return 'OrderProduct(productId: $productId, orderId: $orderId, category: $category, imageUrl: $imageUrl, size: $size, productClass: $productClass, price: $price, costPrice: $costPrice, name: $name, quantity: $quantity, customerAcceptedQty: $customerAcceptedQty, eesupreneurAcceptedQty: $eesupreneurAcceptedQty, damagedQty: $damagedQty, substituteBrand: $substituteBrand, substituteVariant: $substituteVariant, isExpanded: $isExpanded)';
   }
 
   @override
@@ -405,6 +423,8 @@ class _$OrderProductImpl implements _OrderProduct {
             (identical(other.productClass, productClass) ||
                 other.productClass == productClass) &&
             (identical(other.price, price) || other.price == price) &&
+            (identical(other.costPrice, costPrice) ||
+                other.costPrice == costPrice) &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.quantity, quantity) ||
                 other.quantity == quantity) &&
@@ -433,6 +453,7 @@ class _$OrderProductImpl implements _OrderProduct {
       size,
       productClass,
       price,
+      costPrice,
       name,
       quantity,
       customerAcceptedQty,
@@ -471,6 +492,8 @@ abstract class _OrderProduct implements OrderProduct {
       @JsonKey(includeToJson: false, name: 'class', includeFromJson: true)
       final ProductClass? productClass,
       required final double price,
+      @JsonKey(includeFromJson: false, includeToJson: false)
+      final double? costPrice,
       required final String name,
       required final int quantity,
       @JsonKey(name: 'customer_accepted_qty') final int customerAcceptedQty,
@@ -509,6 +532,9 @@ abstract class _OrderProduct implements OrderProduct {
   ProductClass? get productClass;
   @override
   double get price;
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  double? get costPrice;
   @override
   String get name;
   @override

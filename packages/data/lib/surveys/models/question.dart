@@ -1,7 +1,7 @@
 // ignore_for_file: invalid_annotation_target
 
 import 'dart:io';
-import 'package:data/surveys/models/option.dart';
+import 'package:data/surveys/models/choice.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:flutter/foundation.dart';
 
@@ -19,7 +19,7 @@ class Question with _$Question {
     @JsonKey(name: 'allow_multiple_selection')
     @Default(false)
     bool allowMultipleSelection,
-    @OptionConverter() List<Option>? options,
+    @ChoiceConverter() @JsonKey(name: 'options') List<Choice>? choices,
     @JsonKey(name: 'image_url') String? imageUrl,
     @JsonKey(name: 'num_ratings') int? numRatings,
     @JsonKey(name: 'slider_interval') int? sliderInterval,

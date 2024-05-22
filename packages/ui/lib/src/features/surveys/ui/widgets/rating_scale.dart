@@ -1,7 +1,9 @@
 import 'package:data/surveys/models/question.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:ui/src/features/surveys/bloc/survey_response_bloc.dart';
 
 class RatingQuestion extends StatelessWidget {
   const RatingQuestion({super.key, required this.question});
@@ -32,10 +34,11 @@ class RatingQuestion extends StatelessWidget {
             color: Colors.amber,
           ),
           onRatingUpdate: (rating) {
-            // updateQuestionResponse(
-            //   ref,
-            //   question.copyWith(ratingValue: rating.toInt()),
-            // );
+            context.read<SurveyResponseBloc>().add(
+                  QuestionResponseUpdated(
+                    question.copyWith(ratingValue: rating.toInt()),
+                  ),
+                );
           },
         ),
       ),

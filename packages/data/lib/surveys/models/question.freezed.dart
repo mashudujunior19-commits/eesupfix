@@ -31,8 +31,9 @@ mixin _$Question {
   bool? get allowRecording => throw _privateConstructorUsedError;
   @JsonKey(name: 'allow_multiple_selection')
   bool get allowMultipleSelection => throw _privateConstructorUsedError;
-  @OptionConverter()
-  List<Option>? get options => throw _privateConstructorUsedError;
+  @ChoiceConverter()
+  @JsonKey(name: 'options')
+  List<Choice>? get choices => throw _privateConstructorUsedError;
   @JsonKey(name: 'image_url')
   String? get imageUrl => throw _privateConstructorUsedError;
   @JsonKey(name: 'num_ratings')
@@ -93,7 +94,7 @@ abstract class $QuestionCopyWith<$Res> {
       @JsonKey(name: 'is_required') bool isRequired,
       @JsonKey(name: 'allow_recording') bool? allowRecording,
       @JsonKey(name: 'allow_multiple_selection') bool allowMultipleSelection,
-      @OptionConverter() List<Option>? options,
+      @ChoiceConverter() @JsonKey(name: 'options') List<Choice>? choices,
       @JsonKey(name: 'image_url') String? imageUrl,
       @JsonKey(name: 'num_ratings') int? numRatings,
       @JsonKey(name: 'slider_interval') int? sliderInterval,
@@ -143,7 +144,7 @@ class _$QuestionCopyWithImpl<$Res, $Val extends Question>
     Object? isRequired = null,
     Object? allowRecording = freezed,
     Object? allowMultipleSelection = null,
-    Object? options = freezed,
+    Object? choices = freezed,
     Object? imageUrl = freezed,
     Object? numRatings = freezed,
     Object? sliderInterval = freezed,
@@ -190,10 +191,10 @@ class _$QuestionCopyWithImpl<$Res, $Val extends Question>
           ? _value.allowMultipleSelection
           : allowMultipleSelection // ignore: cast_nullable_to_non_nullable
               as bool,
-      options: freezed == options
-          ? _value.options
-          : options // ignore: cast_nullable_to_non_nullable
-              as List<Option>?,
+      choices: freezed == choices
+          ? _value.choices
+          : choices // ignore: cast_nullable_to_non_nullable
+              as List<Choice>?,
       imageUrl: freezed == imageUrl
           ? _value.imageUrl
           : imageUrl // ignore: cast_nullable_to_non_nullable
@@ -293,7 +294,7 @@ abstract class _$$QuestionImplCopyWith<$Res>
       @JsonKey(name: 'is_required') bool isRequired,
       @JsonKey(name: 'allow_recording') bool? allowRecording,
       @JsonKey(name: 'allow_multiple_selection') bool allowMultipleSelection,
-      @OptionConverter() List<Option>? options,
+      @ChoiceConverter() @JsonKey(name: 'options') List<Choice>? choices,
       @JsonKey(name: 'image_url') String? imageUrl,
       @JsonKey(name: 'num_ratings') int? numRatings,
       @JsonKey(name: 'slider_interval') int? sliderInterval,
@@ -341,7 +342,7 @@ class __$$QuestionImplCopyWithImpl<$Res>
     Object? isRequired = null,
     Object? allowRecording = freezed,
     Object? allowMultipleSelection = null,
-    Object? options = freezed,
+    Object? choices = freezed,
     Object? imageUrl = freezed,
     Object? numRatings = freezed,
     Object? sliderInterval = freezed,
@@ -388,10 +389,10 @@ class __$$QuestionImplCopyWithImpl<$Res>
           ? _value.allowMultipleSelection
           : allowMultipleSelection // ignore: cast_nullable_to_non_nullable
               as bool,
-      options: freezed == options
-          ? _value._options
-          : options // ignore: cast_nullable_to_non_nullable
-              as List<Option>?,
+      choices: freezed == choices
+          ? _value._choices
+          : choices // ignore: cast_nullable_to_non_nullable
+              as List<Choice>?,
       imageUrl: freezed == imageUrl
           ? _value.imageUrl
           : imageUrl // ignore: cast_nullable_to_non_nullable
@@ -487,7 +488,7 @@ class _$QuestionImpl with DiagnosticableTreeMixin implements _Question {
       @JsonKey(name: 'allow_recording') this.allowRecording,
       @JsonKey(name: 'allow_multiple_selection')
       this.allowMultipleSelection = false,
-      @OptionConverter() final List<Option>? options,
+      @ChoiceConverter() @JsonKey(name: 'options') final List<Choice>? choices,
       @JsonKey(name: 'image_url') this.imageUrl,
       @JsonKey(name: 'num_ratings') this.numRatings,
       @JsonKey(name: 'slider_interval') this.sliderInterval,
@@ -512,7 +513,7 @@ class _$QuestionImpl with DiagnosticableTreeMixin implements _Question {
       @JsonKey(includeFromJson: false, includeToJson: false)
       this.dateTimePicked,
       @JsonKey(includeFromJson: false, includeToJson: false) this.timePicked})
-      : _options = options,
+      : _choices = choices,
         _fileUrls = fileUrls,
         _pickedfiles = pickedfiles;
 
@@ -536,13 +537,14 @@ class _$QuestionImpl with DiagnosticableTreeMixin implements _Question {
   @override
   @JsonKey(name: 'allow_multiple_selection')
   final bool allowMultipleSelection;
-  final List<Option>? _options;
+  final List<Choice>? _choices;
   @override
-  @OptionConverter()
-  List<Option>? get options {
-    final value = _options;
+  @ChoiceConverter()
+  @JsonKey(name: 'options')
+  List<Choice>? get choices {
+    final value = _choices;
     if (value == null) return null;
-    if (_options is EqualUnmodifiableListView) return _options;
+    if (_choices is EqualUnmodifiableListView) return _choices;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(value);
   }
@@ -627,7 +629,7 @@ class _$QuestionImpl with DiagnosticableTreeMixin implements _Question {
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'Question(questionId: $questionId, question: $question, type: $type, isRequired: $isRequired, allowRecording: $allowRecording, allowMultipleSelection: $allowMultipleSelection, options: $options, imageUrl: $imageUrl, numRatings: $numRatings, sliderInterval: $sliderInterval, sliderMax: $sliderMax, sliderMin: $sliderMin, comment: $comment, allowMultipleFiles: $allowMultipleFiles, mediaFileType: $mediaFileType, sliderValue: $sliderValue, ratingValue: $ratingValue, openEndedAnswer: $openEndedAnswer, recordingUrl: $recordingUrl, recordingFile: $recordingFile, fileUrls: $fileUrls, pickedfiles: $pickedfiles, singleFile: $singleFile, singleFileUrl: $singleFileUrl, pickedDate: $pickedDate, dateTimePicked: $dateTimePicked, timePicked: $timePicked)';
+    return 'Question(questionId: $questionId, question: $question, type: $type, isRequired: $isRequired, allowRecording: $allowRecording, allowMultipleSelection: $allowMultipleSelection, choices: $choices, imageUrl: $imageUrl, numRatings: $numRatings, sliderInterval: $sliderInterval, sliderMax: $sliderMax, sliderMin: $sliderMin, comment: $comment, allowMultipleFiles: $allowMultipleFiles, mediaFileType: $mediaFileType, sliderValue: $sliderValue, ratingValue: $ratingValue, openEndedAnswer: $openEndedAnswer, recordingUrl: $recordingUrl, recordingFile: $recordingFile, fileUrls: $fileUrls, pickedfiles: $pickedfiles, singleFile: $singleFile, singleFileUrl: $singleFileUrl, pickedDate: $pickedDate, dateTimePicked: $dateTimePicked, timePicked: $timePicked)';
   }
 
   @override
@@ -642,7 +644,7 @@ class _$QuestionImpl with DiagnosticableTreeMixin implements _Question {
       ..add(DiagnosticsProperty('allowRecording', allowRecording))
       ..add(
           DiagnosticsProperty('allowMultipleSelection', allowMultipleSelection))
-      ..add(DiagnosticsProperty('options', options))
+      ..add(DiagnosticsProperty('choices', choices))
       ..add(DiagnosticsProperty('imageUrl', imageUrl))
       ..add(DiagnosticsProperty('numRatings', numRatings))
       ..add(DiagnosticsProperty('sliderInterval', sliderInterval))
@@ -681,7 +683,7 @@ class _$QuestionImpl with DiagnosticableTreeMixin implements _Question {
                 other.allowRecording == allowRecording) &&
             (identical(other.allowMultipleSelection, allowMultipleSelection) ||
                 other.allowMultipleSelection == allowMultipleSelection) &&
-            const DeepCollectionEquality().equals(other._options, _options) &&
+            const DeepCollectionEquality().equals(other._choices, _choices) &&
             (identical(other.imageUrl, imageUrl) ||
                 other.imageUrl == imageUrl) &&
             (identical(other.numRatings, numRatings) ||
@@ -732,7 +734,7 @@ class _$QuestionImpl with DiagnosticableTreeMixin implements _Question {
         isRequired,
         allowRecording,
         allowMultipleSelection,
-        const DeepCollectionEquality().hash(_options),
+        const DeepCollectionEquality().hash(_choices),
         imageUrl,
         numRatings,
         sliderInterval,
@@ -778,7 +780,7 @@ abstract class _Question implements Question {
       @JsonKey(name: 'allow_recording') final bool? allowRecording,
       @JsonKey(name: 'allow_multiple_selection')
       final bool allowMultipleSelection,
-      @OptionConverter() final List<Option>? options,
+      @ChoiceConverter() @JsonKey(name: 'options') final List<Choice>? choices,
       @JsonKey(name: 'image_url') final String? imageUrl,
       @JsonKey(name: 'num_ratings') final int? numRatings,
       @JsonKey(name: 'slider_interval') final int? sliderInterval,
@@ -833,8 +835,9 @@ abstract class _Question implements Question {
   @JsonKey(name: 'allow_multiple_selection')
   bool get allowMultipleSelection;
   @override
-  @OptionConverter()
-  List<Option>? get options;
+  @ChoiceConverter()
+  @JsonKey(name: 'options')
+  List<Choice>? get choices;
   @override
   @JsonKey(name: 'image_url')
   String? get imageUrl;

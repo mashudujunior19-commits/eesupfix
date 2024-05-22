@@ -15,9 +15,6 @@ _$ProfitAllocationImpl _$$ProfitAllocationImplFromJson(
       crc: (json['crc'] as num).toDouble(),
       csa: (json['csa'] as num).toDouble(),
       daa: (json['daa'] as num).toDouble(),
-      roles: (json['roles'] as List<dynamic>)
-          .map((e) => const UserRoleConverter().fromJson(e as String))
-          .toList(),
       id: (json['id'] as num).toInt(),
       cfv: (json['cfv'] as num).toDouble(),
     );
@@ -31,7 +28,6 @@ Map<String, dynamic> _$$ProfitAllocationImplToJson(
       'crc': instance.crc,
       'csa': instance.csa,
       'daa': instance.daa,
-      'roles': instance.roles.map(const UserRoleConverter().toJson).toList(),
       'id': instance.id,
       'cfv': instance.cfv,
     };

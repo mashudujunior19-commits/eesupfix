@@ -15,9 +15,9 @@ _$QuestionImpl _$$QuestionImplFromJson(Map<String, dynamic> json) =>
       allowRecording: json['allow_recording'] as bool?,
       allowMultipleSelection:
           json['allow_multiple_selection'] as bool? ?? false,
-      options: (json['options'] as List<dynamic>?)
+      choices: (json['options'] as List<dynamic>?)
           ?.map((e) =>
-              const OptionConverter().fromJson(e as Map<String, dynamic>))
+              const ChoiceConverter().fromJson(e as Map<String, dynamic>))
           .toList(),
       imageUrl: json['image_url'] as String?,
       numRatings: (json['num_ratings'] as num?)?.toInt(),
@@ -37,7 +37,7 @@ Map<String, dynamic> _$$QuestionImplToJson(_$QuestionImpl instance) =>
       'is_required': instance.isRequired,
       'allow_recording': instance.allowRecording,
       'allow_multiple_selection': instance.allowMultipleSelection,
-      'options': instance.options?.map(const OptionConverter().toJson).toList(),
+      'options': instance.choices?.map(const ChoiceConverter().toJson).toList(),
       'image_url': instance.imageUrl,
       'num_ratings': instance.numRatings,
       'slider_interval': instance.sliderInterval,

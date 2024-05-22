@@ -122,6 +122,7 @@ class CartProductCard extends StatelessWidget {
                                     imageUrl: product.imageUrl,
                                     category: product.category,
                                     size: product.size,
+                                    costPrice: product.costPrice,
                                   ),
                                 ),
                               );

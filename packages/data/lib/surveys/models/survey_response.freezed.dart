@@ -269,6 +269,9 @@ mixin _$QuestionAnswer {
   String? get openEndedAnswer => throw _privateConstructorUsedError;
   @JsonKey(name: 'recording_url')
   String? get recordingUrl => throw _privateConstructorUsedError;
+  @ChoiceConverter()
+  @JsonKey(name: 'options')
+  List<Choice>? get options => throw _privateConstructorUsedError;
   @MediaFileConverter()
   @JsonKey(name: 'files')
   List<MediaFile>? get files => throw _privateConstructorUsedError;
@@ -295,6 +298,7 @@ abstract class $QuestionAnswerCopyWith<$Res> {
       @JsonKey(name: 'rating_value') int? ratingValue,
       @JsonKey(name: 'open_ended_answer') String? openEndedAnswer,
       @JsonKey(name: 'recording_url') String? recordingUrl,
+      @ChoiceConverter() @JsonKey(name: 'options') List<Choice>? options,
       @MediaFileConverter() @JsonKey(name: 'files') List<MediaFile>? files,
       @JsonKey(name: 'date_time') String? dateTime,
       String? date,
@@ -319,6 +323,7 @@ class _$QuestionAnswerCopyWithImpl<$Res, $Val extends QuestionAnswer>
     Object? ratingValue = freezed,
     Object? openEndedAnswer = freezed,
     Object? recordingUrl = freezed,
+    Object? options = freezed,
     Object? files = freezed,
     Object? dateTime = freezed,
     Object? date = freezed,
@@ -345,6 +350,10 @@ class _$QuestionAnswerCopyWithImpl<$Res, $Val extends QuestionAnswer>
           ? _value.recordingUrl
           : recordingUrl // ignore: cast_nullable_to_non_nullable
               as String?,
+      options: freezed == options
+          ? _value.options
+          : options // ignore: cast_nullable_to_non_nullable
+              as List<Choice>?,
       files: freezed == files
           ? _value.files
           : files // ignore: cast_nullable_to_non_nullable
@@ -379,6 +388,7 @@ abstract class _$$QuestionAnswerImplCopyWith<$Res>
       @JsonKey(name: 'rating_value') int? ratingValue,
       @JsonKey(name: 'open_ended_answer') String? openEndedAnswer,
       @JsonKey(name: 'recording_url') String? recordingUrl,
+      @ChoiceConverter() @JsonKey(name: 'options') List<Choice>? options,
       @MediaFileConverter() @JsonKey(name: 'files') List<MediaFile>? files,
       @JsonKey(name: 'date_time') String? dateTime,
       String? date,
@@ -401,6 +411,7 @@ class __$$QuestionAnswerImplCopyWithImpl<$Res>
     Object? ratingValue = freezed,
     Object? openEndedAnswer = freezed,
     Object? recordingUrl = freezed,
+    Object? options = freezed,
     Object? files = freezed,
     Object? dateTime = freezed,
     Object? date = freezed,
@@ -427,6 +438,10 @@ class __$$QuestionAnswerImplCopyWithImpl<$Res>
           ? _value.recordingUrl
           : recordingUrl // ignore: cast_nullable_to_non_nullable
               as String?,
+      options: freezed == options
+          ? _value._options
+          : options // ignore: cast_nullable_to_non_nullable
+              as List<Choice>?,
       files: freezed == files
           ? _value._files
           : files // ignore: cast_nullable_to_non_nullable
@@ -456,13 +471,15 @@ class _$QuestionAnswerImpl implements _QuestionAnswer {
       @JsonKey(name: 'rating_value') this.ratingValue,
       @JsonKey(name: 'open_ended_answer') this.openEndedAnswer,
       @JsonKey(name: 'recording_url') this.recordingUrl,
+      @ChoiceConverter() @JsonKey(name: 'options') final List<Choice>? options,
       @MediaFileConverter()
       @JsonKey(name: 'files')
       final List<MediaFile>? files,
       @JsonKey(name: 'date_time') this.dateTime,
       this.date,
       this.time})
-      : _files = files;
+      : _options = options,
+        _files = files;
 
   factory _$QuestionAnswerImpl.fromJson(Map<String, dynamic> json) =>
       _$$QuestionAnswerImplFromJson(json);
@@ -482,6 +499,18 @@ class _$QuestionAnswerImpl implements _QuestionAnswer {
   @override
   @JsonKey(name: 'recording_url')
   final String? recordingUrl;
+  final List<Choice>? _options;
+  @override
+  @ChoiceConverter()
+  @JsonKey(name: 'options')
+  List<Choice>? get options {
+    final value = _options;
+    if (value == null) return null;
+    if (_options is EqualUnmodifiableListView) return _options;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
+
   final List<MediaFile>? _files;
   @override
   @MediaFileConverter()
@@ -504,7 +533,7 @@ class _$QuestionAnswerImpl implements _QuestionAnswer {
 
   @override
   String toString() {
-    return 'QuestionAnswer(questionId: $questionId, sliderValue: $sliderValue, ratingValue: $ratingValue, openEndedAnswer: $openEndedAnswer, recordingUrl: $recordingUrl, files: $files, dateTime: $dateTime, date: $date, time: $time)';
+    return 'QuestionAnswer(questionId: $questionId, sliderValue: $sliderValue, ratingValue: $ratingValue, openEndedAnswer: $openEndedAnswer, recordingUrl: $recordingUrl, options: $options, files: $files, dateTime: $dateTime, date: $date, time: $time)';
   }
 
   @override
@@ -522,6 +551,7 @@ class _$QuestionAnswerImpl implements _QuestionAnswer {
                 other.openEndedAnswer == openEndedAnswer) &&
             (identical(other.recordingUrl, recordingUrl) ||
                 other.recordingUrl == recordingUrl) &&
+            const DeepCollectionEquality().equals(other._options, _options) &&
             const DeepCollectionEquality().equals(other._files, _files) &&
             (identical(other.dateTime, dateTime) ||
                 other.dateTime == dateTime) &&
@@ -538,6 +568,7 @@ class _$QuestionAnswerImpl implements _QuestionAnswer {
       ratingValue,
       openEndedAnswer,
       recordingUrl,
+      const DeepCollectionEquality().hash(_options),
       const DeepCollectionEquality().hash(_files),
       dateTime,
       date,
@@ -565,6 +596,7 @@ abstract class _QuestionAnswer implements QuestionAnswer {
       @JsonKey(name: 'rating_value') final int? ratingValue,
       @JsonKey(name: 'open_ended_answer') final String? openEndedAnswer,
       @JsonKey(name: 'recording_url') final String? recordingUrl,
+      @ChoiceConverter() @JsonKey(name: 'options') final List<Choice>? options,
       @MediaFileConverter()
       @JsonKey(name: 'files')
       final List<MediaFile>? files,
@@ -590,6 +622,10 @@ abstract class _QuestionAnswer implements QuestionAnswer {
   @override
   @JsonKey(name: 'recording_url')
   String? get recordingUrl;
+  @override
+  @ChoiceConverter()
+  @JsonKey(name: 'options')
+  List<Choice>? get options;
   @override
   @MediaFileConverter()
   @JsonKey(name: 'files')

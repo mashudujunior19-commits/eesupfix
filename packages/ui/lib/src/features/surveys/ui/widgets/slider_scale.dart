@@ -1,6 +1,8 @@
 import 'package:data/surveys/models/question.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:syncfusion_flutter_sliders/sliders.dart';
+import 'package:ui/src/features/surveys/bloc/survey_response_bloc.dart';
 
 class SliderQuestion extends StatelessWidget {
   const SliderQuestion({super.key, required this.question});
@@ -25,12 +27,13 @@ class SliderQuestion extends StatelessWidget {
       activeColor: colorScheme.primary,
       minorTicksPerInterval: 0,
       onChanged: (dynamic value) {
-        // double v = value;
-        // int v2 = v.round();
-        // updateQuestionResponse(
-        //   ref,
-        //   question.copyWith(sliderValue: v2),
-        // );
+        double v = value;
+        int v2 = v.round();
+        context.read<SurveyResponseBloc>().add(
+              QuestionResponseUpdated(
+                question.copyWith(sliderValue: v2),
+              ),
+            );
       },
     );
   }

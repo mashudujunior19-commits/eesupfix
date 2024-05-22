@@ -9,7 +9,6 @@ import 'package:data/finance/repository/payment_gateway_repository.dart';
 import 'package:data/finance/repository/wallets_repository.dart';
 import 'package:data/geolocation/data_source/geo_supabase_impl.dart';
 import 'package:data/geolocation/repository/geo_repository.dart';
-import 'package:data/notifications/data_source/notification_data_source.dart';
 import 'package:data/notifications/data_source/notification_supabase_impl.dart';
 import 'package:data/notifications/repository/notification_repository.dart';
 import 'package:data/notifications/repository/survey_repository.dart';
@@ -34,6 +33,7 @@ import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:ui/src/features/auth/profile/bloc/profile_bloc.dart';
 import 'package:ui/src/features/auth/sign_in/bloc/auth_bloc.dart';
+import 'package:ui/src/features/finances/allocations/bloc/profit_allocation_bloc.dart';
 import 'package:ui/src/features/finances/wallets/bloc/wallets_bloc.dart';
 import 'package:ui/src/features/notifications/bloc/notifications_bloc.dart';
 import 'package:ui/src/features/shop/browsing/bloc/products_filter_bloc.dart';
@@ -161,6 +161,12 @@ class MainApp extends StatelessWidget {
                   ..add(
                     NotificationStreamStarted(),
                   ),
+          ),
+          BlocProvider(
+            create: (context) => ProfitAllocationBloc(
+              context.read<ProfileRepository>(),
+              context.read<WalletsRepository>(),
+            )..add(ProfitAllocationsFetched()),
           ),
           BlocProvider(
             create: (context) => ProfileBloc(

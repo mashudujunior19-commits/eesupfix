@@ -1,9 +1,11 @@
 import 'dart:io';
 import 'package:data/surveys/models/question.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ui/src/core/extensions/sizedbox_ext.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
+import 'package:ui/src/features/surveys/bloc/survey_response_bloc.dart';
 
 class FilePickerQuestion extends StatelessWidget {
   const FilePickerQuestion({super.key, required this.question});
@@ -19,13 +21,14 @@ class FilePickerQuestion extends StatelessWidget {
         15.sH,
         TextButton(
           onPressed: () async {
-            // final newFiles = await _pickFiles();
-            // List<File> oldFiles = [...question.pickedfiles ?? [], ...newFiles];
+            final newFiles = await _pickFiles();
+            List<File> oldFiles = [...question.pickedfiles ?? [], ...newFiles];
 
-            // updateQuestionResponse(
-            //   ref,
-            //   question.copyWith(pickedfiles: oldFiles),
-            // );
+            context.read<SurveyResponseBloc>().add(
+                  QuestionResponseUpdated(
+                    question.copyWith(pickedfiles: oldFiles),
+                  ),
+                );
           },
           child: Row(
             mainAxisSize: MainAxisSize.min,
@@ -62,14 +65,13 @@ class FilePickerQuestion extends StatelessWidget {
                     ),
                     IconButton(
                       onPressed: () {
-                        // List<File> oldFiles = [...question.pickedfiles ?? []];
-                        // oldFiles.removeAt(index);
-                        // updateQuestionResponse(
-                        //   ref,
-                        //   question.copyWith(
-                        //     pickedfiles: oldFiles,
-                        //   ),
-                        // );
+                        List<File> oldFiles = [...question.pickedfiles ?? []];
+                        oldFiles.removeAt(index);
+                        context.read<SurveyResponseBloc>().add(
+                              QuestionResponseUpdated(
+                                question.copyWith(pickedfiles: oldFiles),
+                              ),
+                            );
                       },
                       icon: const Icon(IconlyLight.delete, size: 18),
                     ),

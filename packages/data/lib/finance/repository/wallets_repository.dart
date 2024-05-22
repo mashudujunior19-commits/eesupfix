@@ -1,4 +1,6 @@
+import 'package:data/auth/models/user_role.dart';
 import 'package:data/auth/repository/auth_repository.dart';
+import 'package:data/finance/models/profit_allocation.dart';
 import 'package:data/utils/eesup_exception.dart';
 import 'package:either_dart/either.dart';
 import 'package:data/finance/models/transaction.dart';
@@ -83,6 +85,21 @@ class WalletsRepository {
         fromRef: fromRef,
       );
       return id;
+    });
+    return results;
+  }
+
+  Future<Either<EESUpException, ProfitAllocation>> fetchProfitAllocations(
+      UserRole? role) async {
+    if (role == null) {
+      return Left(
+        EESUpException(message: 'You profile could not be loaded'),
+      );
+    }
+
+    final results = await _authRepo.executeFutureWithAuth((id) async {
+      final found = await _dataSource.fetchProfitAllocation(role);
+      return found;
     });
     return results;
   }

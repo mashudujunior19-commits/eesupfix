@@ -13,6 +13,9 @@ extension ContextAlertsExt on BuildContext {
   void snackBarError(String message) =>
       showSnackBar(context: this, message: message, type: SnackBarType.error);
 
+  void snackBarWarning(String message) =>
+      showSnackBar(context: this, message: message, type: SnackBarType.error);
+
   Future<bool?> showAlertDialog(
     String title,
     String content, {

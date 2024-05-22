@@ -1,6 +1,7 @@
 // ignore_for_file: invalid_annotation_target
 
 import 'package:data/eesupools/models/media_file.dart';
+import 'package:data/surveys/models/choice.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'survey_response.freezed.dart';
@@ -43,6 +44,7 @@ class QuestionAnswer with _$QuestionAnswer {
     @JsonKey(name: 'rating_value') int? ratingValue,
     @JsonKey(name: 'open_ended_answer') String? openEndedAnswer,
     @JsonKey(name: 'recording_url') String? recordingUrl,
+    @ChoiceConverter() @JsonKey(name: 'options') List<Choice>? options,
     @MediaFileConverter() @JsonKey(name: 'files') List<MediaFile>? files,
     @JsonKey(name: 'date_time') String? dateTime,
     String? date,

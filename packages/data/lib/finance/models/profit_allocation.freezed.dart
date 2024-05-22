@@ -26,8 +26,6 @@ mixin _$ProfitAllocation {
   double get crc => throw _privateConstructorUsedError;
   double get csa => throw _privateConstructorUsedError;
   double get daa => throw _privateConstructorUsedError;
-  @UserRoleConverter()
-  List<UserRole> get roles => throw _privateConstructorUsedError;
   int get id => throw _privateConstructorUsedError;
   double get cfv => throw _privateConstructorUsedError;
 
@@ -50,7 +48,6 @@ abstract class $ProfitAllocationCopyWith<$Res> {
       double crc,
       double csa,
       double daa,
-      @UserRoleConverter() List<UserRole> roles,
       int id,
       double cfv});
 }
@@ -74,7 +71,6 @@ class _$ProfitAllocationCopyWithImpl<$Res, $Val extends ProfitAllocation>
     Object? crc = null,
     Object? csa = null,
     Object? daa = null,
-    Object? roles = null,
     Object? id = null,
     Object? cfv = null,
   }) {
@@ -103,10 +99,6 @@ class _$ProfitAllocationCopyWithImpl<$Res, $Val extends ProfitAllocation>
           ? _value.daa
           : daa // ignore: cast_nullable_to_non_nullable
               as double,
-      roles: null == roles
-          ? _value.roles
-          : roles // ignore: cast_nullable_to_non_nullable
-              as List<UserRole>,
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -134,7 +126,6 @@ abstract class _$$ProfitAllocationImplCopyWith<$Res>
       double crc,
       double csa,
       double daa,
-      @UserRoleConverter() List<UserRole> roles,
       int id,
       double cfv});
 }
@@ -156,7 +147,6 @@ class __$$ProfitAllocationImplCopyWithImpl<$Res>
     Object? crc = null,
     Object? csa = null,
     Object? daa = null,
-    Object? roles = null,
     Object? id = null,
     Object? cfv = null,
   }) {
@@ -185,10 +175,6 @@ class __$$ProfitAllocationImplCopyWithImpl<$Res>
           ? _value.daa
           : daa // ignore: cast_nullable_to_non_nullable
               as double,
-      roles: null == roles
-          ? _value._roles
-          : roles // ignore: cast_nullable_to_non_nullable
-              as List<UserRole>,
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -211,10 +197,8 @@ class _$ProfitAllocationImpl implements _ProfitAllocation {
       required this.crc,
       required this.csa,
       required this.daa,
-      @UserRoleConverter() required final List<UserRole> roles,
       required this.id,
-      required this.cfv})
-      : _roles = roles;
+      required this.cfv});
 
   factory _$ProfitAllocationImpl.fromJson(Map<String, dynamic> json) =>
       _$$ProfitAllocationImplFromJson(json);
@@ -231,15 +215,6 @@ class _$ProfitAllocationImpl implements _ProfitAllocation {
   final double csa;
   @override
   final double daa;
-  final List<UserRole> _roles;
-  @override
-  @UserRoleConverter()
-  List<UserRole> get roles {
-    if (_roles is EqualUnmodifiableListView) return _roles;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_roles);
-  }
-
   @override
   final int id;
   @override
@@ -247,7 +222,7 @@ class _$ProfitAllocationImpl implements _ProfitAllocation {
 
   @override
   String toString() {
-    return 'ProfitAllocation(cia: $cia, cwa: $cwa, eia: $eia, crc: $crc, csa: $csa, daa: $daa, roles: $roles, id: $id, cfv: $cfv)';
+    return 'ProfitAllocation(cia: $cia, cwa: $cwa, eia: $eia, crc: $crc, csa: $csa, daa: $daa, id: $id, cfv: $cfv)';
   }
 
   @override
@@ -261,15 +236,14 @@ class _$ProfitAllocationImpl implements _ProfitAllocation {
             (identical(other.crc, crc) || other.crc == crc) &&
             (identical(other.csa, csa) || other.csa == csa) &&
             (identical(other.daa, daa) || other.daa == daa) &&
-            const DeepCollectionEquality().equals(other._roles, _roles) &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.cfv, cfv) || other.cfv == cfv));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, cia, cwa, eia, crc, csa, daa,
-      const DeepCollectionEquality().hash(_roles), id, cfv);
+  int get hashCode =>
+      Object.hash(runtimeType, cia, cwa, eia, crc, csa, daa, id, cfv);
 
   @JsonKey(ignore: true)
   @override
@@ -294,7 +268,6 @@ abstract class _ProfitAllocation implements ProfitAllocation {
       required final double crc,
       required final double csa,
       required final double daa,
-      @UserRoleConverter() required final List<UserRole> roles,
       required final int id,
       required final double cfv}) = _$ProfitAllocationImpl;
 
@@ -313,9 +286,6 @@ abstract class _ProfitAllocation implements ProfitAllocation {
   double get csa;
   @override
   double get daa;
-  @override
-  @UserRoleConverter()
-  List<UserRole> get roles;
   @override
   int get id;
   @override

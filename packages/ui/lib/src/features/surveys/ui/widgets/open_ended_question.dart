@@ -3,10 +3,13 @@ import 'dart:io';
 import 'package:audio_video_progress_bar/audio_video_progress_bar.dart';
 import 'package:data/surveys/models/question.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:record/record.dart';
+import 'package:ui/src/core/extensions/context_theme_ext.dart';
+import 'package:ui/src/features/surveys/bloc/survey_response_bloc.dart';
 
 class OpenEndedQuestionField extends StatefulWidget {
   const OpenEndedQuestionField({super.key, required this.question});
@@ -137,8 +140,6 @@ class _OpenEndedQuestionFieldState extends State<OpenEndedQuestionField>
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final colorScheme = theme.colorScheme;
 
     return Column(
       children: [
@@ -179,7 +180,7 @@ class _OpenEndedQuestionFieldState extends State<OpenEndedQuestionField>
                     player.playing
                         ? Icons.pause_circle_filled
                         : Icons.play_circle_filled,
-                    color: colorScheme.primary,
+                    color: context.colorScheme.primary,
                   ),
                 ),
               ],
@@ -190,7 +191,7 @@ class _OpenEndedQuestionFieldState extends State<OpenEndedQuestionField>
             children: [
               Icon(
                 MdiIcons.record,
-                color: colorScheme.primary,
+                color: context.colorScheme.primary,
                 size: 40,
               ),
               Text(
@@ -209,14 +210,22 @@ class _OpenEndedQuestionFieldState extends State<OpenEndedQuestionField>
               width: 0.9,
             ),
           ),
-          child: TextField(
-            controller: TextEditingController(text: ''),
+          child: TextFormField(
+            initialValue: widget.question.openEndedAnswer,
             onChanged: (va) {
-              // if (va.isNotEmpty) {
-              //   widget.question.openEndedAnswer = va;
-              // } else {
-              //   widget.question.openEndedAnswer = null;
-              // }
+              if (va.isNotEmpty) {
+                context.read<SurveyResponseBloc>().add(
+                      QuestionResponseUpdated(
+                        widget.question.copyWith(openEndedAnswer: va),
+                      ),
+                    );
+              } else {
+                context.read<SurveyResponseBloc>().add(
+                      QuestionResponseUpdated(
+                        widget.question.copyWith(openEndedAnswer: null),
+                      ),
+                    );
+              }
             },
             maxLines: null,
             decoration: const InputDecoration(

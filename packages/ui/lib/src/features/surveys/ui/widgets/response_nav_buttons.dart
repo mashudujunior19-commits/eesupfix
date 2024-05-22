@@ -71,7 +71,7 @@ class ResponseNavButton extends StatelessWidget {
     }
 
     if (question.type == QuestionType.multipleChoice) {
-      return question.options!.any((element) => element.isSelected);
+      return question.choices!.any((element) => element.isSelected);
     } else if (question.type == QuestionType.openEnded) {
       return question.openEndedAnswer != null &&
           question.openEndedAnswer!.isNotEmpty;

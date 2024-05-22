@@ -30,19 +30,22 @@ class SurveyRepository {
     final result = await _authRepo.executeFutureWithAuth((id) async {
       //uploading files first and ge the urls
       List<QuestionAnswer> questionAnswers = [];
+
       for (final q in survey.questions) {
         final files = await _uploadFiles(q.pickedfiles ?? []);
         questionAnswers.add(
           QuestionAnswer(
-              questionId: q.questionId,
-              sliderValue: q.sliderValue,
-              ratingValue: q.ratingValue,
-              openEndedAnswer: q.openEndedAnswer,
-              recordingUrl: q.recordingUrl,
-              files: files,
-              dateTime: q.dateTimePicked,
-              date: q.pickedDate,
-              time: q.timePicked),
+            questionId: q.questionId,
+            sliderValue: q.sliderValue,
+            ratingValue: q.ratingValue,
+            openEndedAnswer: q.openEndedAnswer,
+            recordingUrl: q.recordingUrl,
+            files: files,
+            dateTime: q.dateTimePicked,
+            date: q.pickedDate,
+            time: q.timePicked,
+            options: q.choices?.where((e) => e.isSelected).toList(),
+          ),
         );
       }
 
@@ -53,6 +56,8 @@ class SurveyRepository {
         passed: false,
         answers: questionAnswers,
       );
+
+      print(response.toJson());
 
       ///save survey response
       final res = await _surveyDs.saveResponse(response);

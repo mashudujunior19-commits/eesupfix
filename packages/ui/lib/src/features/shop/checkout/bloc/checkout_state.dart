@@ -20,6 +20,18 @@ final class CurrentCheckout extends CheckoutState {
     double total = newOrder.value;
     return total;
   }
+
+  double _totalCostPrice() {
+    double total = 0;
+    for (final p in newOrder.products) {
+      total += (p.costPrice ?? 0) * p.quantity;
+    }
+    return total;
+  }
+
+  double profit() {
+    return subTotalToPay()- _totalCostPrice();
+  }
 }
 
 final class OutstandingPayment extends CheckoutState {

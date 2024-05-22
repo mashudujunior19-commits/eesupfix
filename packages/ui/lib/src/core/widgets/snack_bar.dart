@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-enum SnackBarType { success, error }
+enum SnackBarType { success, error, warning }
 
 /// Shows a snackbar with the given message
 ///
