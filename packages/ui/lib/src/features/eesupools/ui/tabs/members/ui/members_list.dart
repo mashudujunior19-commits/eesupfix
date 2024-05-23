@@ -1,4 +1,3 @@
-import 'package:auto_route/auto_route.dart';
 import 'package:data/eesupools/models/eesupool.dart';
 import 'package:data/eesupools/repository/eesupool_repo.dart';
 import 'package:ui/src/core/extensions/bottom_sheet_context_ext.dart';
