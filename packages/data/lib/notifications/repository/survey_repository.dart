@@ -57,8 +57,6 @@ class SurveyRepository {
         answers: questionAnswers,
       );
 
-      print(response.toJson());
-
       ///save survey response
       final res = await _surveyDs.saveResponse(response);
 

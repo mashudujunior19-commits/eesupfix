@@ -82,7 +82,9 @@ class MenuTab extends StatelessWidget {
                     _MenuButton(
                       label: 'Request Products',
                       icon: IconlyLight.plus,
-                      onTap: () {},
+                      onTap: () {
+                        context.router.push(const ProductRequestRoute());
+                      },
                     ),
                     // _MenuButton(
                     //   label: 'Settings',
