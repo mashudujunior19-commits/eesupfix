@@ -29,23 +29,21 @@ class SurveyCard extends StatelessWidget {
     return InkWell(
       splashColor: Colors.transparent,
       onTap: () {
-        context.router.push(ResponseRoute(survey: survey));
+        final pre = survey.preSurvey;
+        if (pre != null) {
+          if (pre.respondedAt == null) {
+            context.snackBarError(
+              'Complete the ${pre.title} ${pre.type.name} first.',
+            );
+            return;
+          }
+        }
 
-        // final pre = survey.preSurvey;
-        // if (pre != null) {
-        //   if (pre.respondedAt == null) {
-        //     context.snackBarError(
-        //       'Complete the ${pre.title} ${pre.type.name} first.',
-        //     );
-        //     return;
-        //   }
-        // }
-
-        // if ((survey.imageUrl != null) || (survey.description != null)) {
-
-        // } else {
-
-        // }
+        context.router.push(ResponseRoute(survey: survey)).then((value) {
+          if (value != null) {
+            onDone?.call(value.toString());
+          }
+        });
       },
       child: Container(
         margin: margin ?? const EdgeInsets.only(right: 15, left: 15, top: 15),

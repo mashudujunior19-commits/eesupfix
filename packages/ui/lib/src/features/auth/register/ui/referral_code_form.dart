@@ -1,9 +1,11 @@
 // ignore_for_file: use_build_context_synchronously
 
+import 'package:auto_route/auto_route.dart';
 import 'package:data/auth/repository/auth_repository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_highlighted_text/flutter_highlighted_text.dart';
 import 'package:loader_overlay/loader_overlay.dart';
+import 'package:ui/app_route.gr.dart';
 import 'package:ui/src/core/extensions/context_alerts_ext.dart';
 import 'package:ui/src/core/extensions/context_theme_ext.dart';
 import 'package:ui/src/core/extensions/sizedbox_ext.dart';
@@ -66,8 +68,7 @@ class ReferralCodeForm extends StatelessWidget {
                     patterns: const ['Terms of Service'],
                     onTap: (p) {
                       if (p == 'Terms of Service') {
-                        print(p);
-                        //context.router.push(route)
+                        context.router.push(const TermsOfServiceRoute());
                       }
                     },
                     style: context.textTheme.labelSmall?.copyWith(

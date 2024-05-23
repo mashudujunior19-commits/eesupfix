@@ -1,6 +1,8 @@
 import 'package:data/surveys/models/survey.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ui/src/core/extensions/slide_in_animation_ext.dart';
 import 'package:ui/src/core/widgets/fullscreen_error_widget.dart';
+import 'package:ui/src/features/surveys/bloc/surveys_list_bloc.dart';
 import 'package:ui/src/features/surveys/ui/survey_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
@@ -25,7 +27,13 @@ class SurveyList extends StatelessWidget {
       itemCount: surveys.length,
       itemBuilder: (context, index) {
         final survey = surveys[index];
-        return SurveyCard(survey: survey).animate().slideIn(index * 50);
+        return SurveyCard(
+          survey: survey,
+          onDone: (_) {
+            //REFRESH THE LIST
+            context.read<SurveysListBloc>().add(SurveysListFetched());
+          },
+        ).animate().slideIn(index * 50);
       },
     );
   }

@@ -10,6 +10,9 @@ final class ApplicationsError extends ApplicationsState {
   ApplicationsError(this.exception);
 }
 
+
+final class ApplicationCreatedSuccess extends ApplicationsState {}
+
 final class ApplicationsLoaded extends ApplicationsState {
   final List<PartnerApplication> applications;
   ApplicationsLoaded(this.applications);

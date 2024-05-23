@@ -31,7 +31,6 @@ class MenuTab extends StatelessWidget {
               EditProfileButton(
                 profile: profile,
                 onPop: () {
-                  print('popped');
                   context.read<ProfileBloc>().add(ProfileFetched());
                 },
               ),
@@ -101,7 +100,9 @@ class MenuTab extends StatelessWidget {
                     _MenuButton(
                       label: 'Legal',
                       icon: IconlyLight.document,
-                      onTap: () {},
+                      onTap: () {
+                        context.router.push(const TermsOfServiceRoute());
+                      },
                     ),
                   ],
                 ),

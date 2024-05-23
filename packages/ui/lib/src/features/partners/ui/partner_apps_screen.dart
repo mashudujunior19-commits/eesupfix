@@ -2,7 +2,9 @@ import 'package:auto_route/auto_route.dart';
 import 'package:data/partners/models/partner.dart';
 import 'package:data/partners/models/partner_application.dart';
 import 'package:data/partners/repository/partner_repository.dart';
+import 'package:ui/app_route.gr.dart';
 import 'package:ui/src/core/extensions/bg_image_deco_ext.dart';
+import 'package:ui/src/core/extensions/context_alerts_ext.dart';
 import 'package:ui/src/core/extensions/slide_in_animation_ext.dart';
 import 'package:ui/src/core/widgets/fullscreen_error_widget.dart';
 import 'package:ui/src/core/widgets/fullscreen_loading_shimmer.dart';
@@ -14,12 +16,13 @@ import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:data/utils/eesup_exception.dart';
 
 @RoutePage()
+// ignore: must_be_immutable
 class PartnerAppScreen extends StatelessWidget {
-  const PartnerAppScreen({super.key, required this.partner});
+  PartnerAppScreen({super.key, required this.partner});
   final Partner partner;
 
   //Helpler to keep track of the current number of apps
-  // int _currentAppsCount = 0;
+  int _currentAppsCount = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -34,51 +37,12 @@ class PartnerAppScreen extends StatelessWidget {
             actions: [
               IconButton(
                 onPressed: () async {
-                  // if (_currentAppsCount == partner.maxApps) {
-                  //   context.snackBarError(
-                  //     'You can only apply for ${partner.maxApps} applications at a time.',
-                  //   );
-                  //   return;
-                  // }
-
-                  // if (context.loaderOverlay.visible) return;
-
-                  // context.loaderOverlay.show();
-                  // final result = await ref
-                  //     .read(partnerRepoProvider)
-                  //     .createPartnerApplications(partner.id);
-                  // if (context.mounted) {
-                  //   context.loaderOverlay.hide();
-                  // }
-
-                  // result.fold(
-                  //   (l) {
-                  //     context.snackBarError(l.message);
-                  //   },
-                  //   (r) {
-                  //     if (r == 0) {
-                  //       context.snackBarError(
-                  //         'Your current account type is not allowed to create an'
-                  //         ' application for this Service. for more information, refer to EESUp\'s'
-                  //         'Youtube channel or contact support.',
-                  //       );
-                  //       return;
-                  //     }
-
-                  //     if (r == 1) {
-                  //       context.snackBarError(
-                  //         'Failed to create an appplication. if this error'
-                  //         ' persists, please contact support.',
-                  //       );
-                  //       return;
-                  //     }
-
-                  //     ref.invalidate(_partnersAppsProvider(partner.id));
-                  //     context.snackBarSuccess(
-                  //       'Applcation started, complete the questioneers.',
-                  //     );
-                  //   },
-                  // );
+                  if (_currentAppsCount <= partner.maxApps) {
+                  } else {
+                    context.snackBarError(
+                      'You can only have ${partner.maxApps} applications for this service',
+                    );
+                  }
                 },
                 icon: const Icon(Icons.add),
               ),
@@ -88,10 +52,13 @@ class PartnerAppScreen extends StatelessWidget {
             decoration: context.bgImage,
             height: double.infinity,
             width: double.infinity,
-            child: BlocBuilder<ApplicationsBloc, ApplicationsState>(
+            child: BlocConsumer<ApplicationsBloc, ApplicationsState>(
               builder: (context, state) {
                 if (state is ApplicationsLoaded) {
                   final apps = state.applications;
+                  //UPDATE THE COUNTER, ITS STATE DOES NOT NEED TO BE REFRESHED
+                  _currentAppsCount = apps.length;
+                  //DISPLAY THE USERS APPLICATIONS
                   return ListView.builder(
                     itemCount: apps.length,
                     itemBuilder: (context, index) {
@@ -110,6 +77,13 @@ class PartnerAppScreen extends StatelessWidget {
                     exception: EESUpException(message: ''),
                     isError: false,
                   );
+                }
+              },
+              listener: (BuildContext context, ApplicationsState state) {
+                if (state is ApplicationCreatedSuccess) {
+                  context.read<ApplicationsBloc>().add(
+                        ApplicationsFetched(partner.id),
+                      );
                 }
               },
             ),
@@ -132,10 +106,7 @@ class _ApplicationCard extends StatelessWidget {
     final colorScheme = theme.colorScheme;
     return InkWell(
       onTap: () {
-        // context.push(
-        //   EditApplication.route,
-        //   extra: (app: app, partner: partner),
-        // );
+        context.router.push(EditApplicationRoute(app: app, partner: partner));
       },
       child: Container(
         margin: const EdgeInsets.only(top: 15, right: 20, left: 20),

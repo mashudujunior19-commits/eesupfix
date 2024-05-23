@@ -18,5 +18,15 @@ class ApplicationsBloc extends Bloc<ApplicationsEvent, ApplicationsState> {
         emit(ApplicationsLoaded(right));
       });
     });
+
+    on<ApplicationCreated>((event, emit) async {
+      emit(ApplicationsLoading());
+      final results = await _repository.createPartnerApplications(event.id);
+      results.fold((left) {
+        emit(ApplicationsError(left));
+      }, (right) {
+        emit(ApplicationCreatedSuccess());
+      });
+    });
   }
 }

@@ -54,7 +54,7 @@ class _OzowScreenState extends State<OzowScreen> {
         body: () {
           final privateKey = dotenv.env['OZOW_PRIVATE_KEY'];
           final apitKey = dotenv.env['OZOW_API_KEY'];
-          final siteCode = dotenv.env['SITE_CODE'];
+          final siteCode = dotenv.env['OZOW_SITE_CODE'];
           final eesupKey = dotenv.env['EESUP_API_KEY'];
           final eesupApiUrl = dotenv.env['EESUP_API_BASE_URL'];
 

@@ -15,7 +15,6 @@ class PartnersBloc extends Bloc<PartnersEvent, PartnersState> {
       emit(PartnersLoading());
       final results = await _repository.fetchPartnerships(event.role);
       results.fold((left) {
-        print(left);
         emit(PartnersError(left));
       }, (right) {
         emit(PartnersLoaded(right));
