@@ -34,20 +34,20 @@ class OrderTrackingScreen extends StatelessWidget {
                 leading: const BackButton(),
                 title: Text('Order  #$id'),
                 actions: [
-                  if (state is CurrentOrderTracking)
-                    IconButton(
-                      onPressed: () async {
-                        context.read<OrderTrackingBloc>().add(
-                              OrderInvoiceGenerated(state.order),
-                            );
-                      },
-                      icon: Icon(
-                        BootstrapIcons.printer,
-                        color: Colors.grey.shade900,
-                        size: 20,
-                      ),
-                    ),
-                  2.sW,
+                  // if (state is CurrentOrderTracking)
+                  //   IconButton(
+                  //     onPressed: () async {
+                  //       context.read<OrderTrackingBloc>().add(
+                  //             OrderInvoiceGenerated(state.order),
+                  //           );
+                  //     },
+                  //     icon: Icon(
+                  //       BootstrapIcons.printer,
+                  //       color: Colors.grey.shade900,
+                  //       size: 20,
+                  //     ),
+                  //   ),
+                  // 2.sW,
                 ],
               ),
               body: Container(

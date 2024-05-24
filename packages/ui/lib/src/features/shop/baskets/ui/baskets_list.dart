@@ -4,6 +4,8 @@ import 'package:data/shopping/models/basket.dart';
 import 'package:data/shopping/repository/shopping_repository.dart';
 import 'package:ui/app_route.gr.dart';
 import 'package:ui/src/core/extensions/bg_image_deco_ext.dart';
+import 'package:ui/src/core/extensions/bottom_sheet_context_ext.dart';
+import 'package:ui/src/core/extensions/context_theme_ext.dart';
 import 'package:ui/src/core/extensions/sizedbox_ext.dart';
 import 'package:ui/src/core/extensions/slide_in_animation_ext.dart';
 import 'package:ui/src/core/widgets/fullscreen_error_widget.dart';
@@ -14,6 +16,7 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:data/utils/eesup_exception.dart';
+import 'package:ui/src/features/shop/baskets/ui/create_basket_dialog.dart';
 
 @RoutePage()
 class BasketsListScreen extends StatelessWidget {
@@ -31,14 +34,18 @@ class BasketsListScreen extends StatelessWidget {
             leading: const BackButton(),
             title: const Text('My Baskets'),
             actions: [
-              IconButton(
-                onPressed: () {
-                  // createBasketDialog(context).whenComplete(() {
-                  //   // ref.invalidate(basketsProvider);
-                  // });
-                },
-                icon: const Icon(IconlyLight.plus),
-              ),
+              Builder(builder: (context) {
+                return IconButton(
+                  onPressed: () {
+                    context
+                        .showBottomSheetDialog(child: CreateBasketDialog())
+                        .whenComplete(() {
+                      context.read<BasketListBloc>().add(BasketListsFetched());
+                    });
+                  },
+                  icon: const Icon(IconlyLight.plus),
+                );
+              }),
               10.sW,
             ],
           ),
@@ -94,43 +101,67 @@ class _BasketCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final colorScheme = theme.colorScheme;
-    final textTheme = theme.textTheme;
-    return InkWell(
-      onTap: () {
-        context.router.push(BasketViewRoute(basket: basket)).whenComplete(() {});
+    return Dismissible(
+      key: UniqueKey(),
+      direction: basket.type != null
+          ? DismissDirection.none
+          : DismissDirection.endToStart,
+      onDismissed: (direction) {
+        context.read<BasketListBloc>().add(
+              BasketDeleted(basket),
+            );
       },
-      child: Container(
-        margin: const EdgeInsets.only(right: 21, left: 19, top: 15),
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(10),
-          border: Border.all(
-            color: Colors.grey.shade300,
-            width: .5,
-          ),
-        ),
-        child: ListTile(
-          contentPadding: const EdgeInsets.only(left: 10, right: 5),
-          leading: CircleAvatar(
-            backgroundColor: colorScheme.primary.withOpacity(.1),
-            child: Icon(
-              BootstrapIcons.basket,
-              color: colorScheme.primary,
-              size: 20,
+      background: Row(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(right: 20),
+            child: Text(
+              'Swipe Left to remove',
+              style: context.textTheme.labelMedium?.copyWith(
+                color: Colors.redAccent,
+              ),
+            ),
+          ).animate().shimmer(duration: 1000.ms),
+        ],
+      ),
+      child: InkWell(
+        onTap: () {
+          context.router.push(BasketViewRoute(basket: basket)).whenComplete(() {
+            context.read<BasketListBloc>().add(BasketListsFetched());
+          });
+        },
+        child: Container(
+          margin: const EdgeInsets.only(right: 21, left: 19, top: 15),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(10),
+            border: Border.all(
+              color: Colors.grey.shade300,
+              width: .5,
             ),
           ),
-          title: Text(basket.name),
-          subtitle: Text(
-            basket.type?.name ?? 'Custom Basket',
-            style: textTheme.labelSmall?.copyWith(
-              color: colorScheme.primary,
+          child: ListTile(
+            contentPadding: const EdgeInsets.only(left: 10, right: 5),
+            leading: CircleAvatar(
+              backgroundColor: context.colorScheme.primary.withOpacity(.1),
+              child: Icon(
+                BootstrapIcons.basket,
+                color: context.colorScheme.primary,
+                size: 20,
+              ),
             ),
-          ),
-          trailing: const Icon(
-            IconlyLight.arrowRight2,
-            size: 18,
+            title: Text(basket.name),
+            subtitle: Text(
+              basket.type?.name ?? 'Custom Basket',
+              style: context.textTheme.labelSmall?.copyWith(
+                color: context.colorScheme.primary,
+              ),
+            ),
+            trailing: const Icon(
+              IconlyLight.arrowRight2,
+              size: 18,
+            ),
           ),
         ),
       ),

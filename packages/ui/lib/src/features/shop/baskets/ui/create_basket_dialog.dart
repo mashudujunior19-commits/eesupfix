@@ -18,6 +18,13 @@ class CreateBasketDialog extends StatelessWidget {
       appBar: AppBar(
         leading: const BackButton(),
         title: const Text('Create Basket'),
+        actions: [
+          TextButton(
+            child: const Text('Save'),
+            onPressed: () => _saveBasket(context),
+          ),
+          10.sW,
+        ],
       ),
       body: ListView(
         padding: const EdgeInsets.only(left: 20, right: 20),
@@ -27,34 +34,32 @@ class CreateBasketDialog extends StatelessWidget {
             hintText: "My Monthly groceries",
             controller: controller,
           ),
-          25.sH,
-          ElevatedButton(
-            onPressed: () async {
-              if (controller.text.isEmpty) {
-                context.snackBarError("Enter the name of your basket");
-                return;
-              }
-              context.loaderOverlay.show();
-              final repo = context.read<ShoppingRepository>();
-              final success = await repo.createBasket(
-                controller.text,
-              );
-        
-              if (context.mounted) {
-                context.loaderOverlay.hide();
-              }
-        
-              success.fold((l) {
-                context.snackBarError(l.message);
-              }, (r) {
-                context.snackBarSuccess("Basket created successfully");
-                Navigator.pop(context);
-              });
-            },
-            child: const Text("Create"),
-          )
         ],
       ),
     );
+  }
+
+  Future<void> _saveBasket(BuildContext context) async {
+    FocusScope.of(context).unfocus();
+    if (controller.text.isEmpty) {
+      context.snackBarError("Enter the name of your basket");
+      return;
+    }
+    context.loaderOverlay.show();
+    final repo = context.read<ShoppingRepository>();
+    final success = await repo.createBasket(
+      controller.text,
+    );
+
+    if (context.mounted) {
+      context.loaderOverlay.hide();
+    }
+
+    success.fold((l) {
+      context.snackBarError(l.message);
+    }, (r) {
+      context.snackBarSuccess("Basket created successfully");
+      Navigator.pop(context);
+    });
   }
 }

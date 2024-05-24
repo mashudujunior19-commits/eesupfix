@@ -199,6 +199,7 @@ class EditProfileScreen extends StatelessWidget {
                           EESUpTextFormField(
                             initialValue: profile.email,
                             label: 'Email',
+                            readOnly: true,
                             onChanged: (value) {
                               context.read<EditProfileBloc>().add(
                                     ProfileEdited(
@@ -214,16 +215,19 @@ class EditProfileScreen extends StatelessWidget {
                               onPressed: () {},
                               child: const Text('Verify email'),
                             ),
-                          EESUpPhoneTextField(
-                            onChanged: (phone) {
-                              context.read<EditProfileBloc>().add(
-                                    ProfileEdited(
-                                      profileForm.copyWith(
-                                        phone: phone,
+                          AbsorbPointer(
+                            absorbing: true,
+                            child: EESUpPhoneTextField(
+                              onChanged: (phone) {
+                                context.read<EditProfileBloc>().add(
+                                      ProfileEdited(
+                                        profileForm.copyWith(
+                                          phone: phone,
+                                        ),
                                       ),
-                                    ),
-                                  );
-                            },
+                                    );
+                              },
+                            ),
                           ),
                           if (state.pendingPhoneVerification(profile.phone))
                             TextButton(

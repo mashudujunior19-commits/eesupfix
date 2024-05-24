@@ -31,10 +31,10 @@ class OrdersPoolTab extends StatelessWidget {
             return Scaffold(
               backgroundColor: Colors.transparent,
               //IF THERE IS NO POOL ORDER THEN DISPLAY CREATE ORDER BUTTON
-              floatingActionButton:
-                  openOrder == null && pool.role == EESUpoolMemberRole.admin
-                      ? _CreateOrderButton(pool: pool, openOrder: openOrder)
-                      : null,
+              // floatingActionButton:
+              //     openOrder == null && pool.role == EESUpoolMemberRole.admin
+              //         ? _CreateOrderButton(pool: pool, openOrder: openOrder)
+              //         : null,
               body: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [

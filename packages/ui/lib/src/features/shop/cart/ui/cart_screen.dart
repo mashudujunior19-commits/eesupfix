@@ -40,7 +40,9 @@ class CartScreen extends StatelessWidget {
                     ),
                   ),
                 InkWell(
-                  onTap: () {},
+                  onTap: () {
+                    context.router.push(const BasketsListRoute());
+                  },
                   child: const Padding(
                     padding: EdgeInsets.only(bottom: 9, right: 20),
                     child: Icon(

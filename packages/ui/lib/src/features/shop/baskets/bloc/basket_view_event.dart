@@ -12,3 +12,9 @@ final class BasketProductChanged extends BasketViewEvent {
   final BasketProduct product;
   BasketProductChanged(this.product);
 }
+
+
+final class BasketProductRemoved extends BasketViewEvent {
+  final BasketProduct product;
+  BasketProductRemoved(this.product);
+}

@@ -88,65 +88,7 @@ class _EditAddressScreenState extends State<EditAddressScreen> {
                   Padding(
                     padding: const EdgeInsets.only(top: 0),
                     child: TextButton(
-                      onPressed: () async {
-                        if (_streetController.text.isEmpty) {
-                          context.snackBarError('Street address is required');
-                          return;
-                        }
-
-                        final phone =
-                            localizeSAPhoneNumber(_phoneController.text);
-
-                        if (phone == null) {
-                          context.snackBarError(
-                            'Please provide a valid South African phone number',
-                          );
-                          return;
-                        }
-
-                        if (_recipientController.text.isEmpty) {
-                          context.snackBarError('Recipient name is required');
-                          return;
-                        }
-
-                        if (province == 'Province') {
-                          context.snackBarError('Select a province');
-                          return;
-                        }
-
-                        final address = Address(
-                          id: widget.address?.id,
-                          userId: widget.address?.userId,
-                          areaId: widget.address?.areaId,
-                          streetAddress: _streetController.text,
-                          buildingName: _buildingController.text,
-                          recipientPhone: phone,
-                          recipientName: _recipientController.text,
-                          latitude: latitude,
-                          longitude: longitude,
-                          type: type,
-                          province: province,
-                          isPrimary: isPrimary,
-                          createdAt: DateTime.now(),
-                        );
-
-                        context.loaderOverlay.show();
-
-                        final saveResults = await context
-                            .read<GeoRepository>()
-                            .saveAddress(address, widget.isPersonal);
-
-                        if (context.mounted) {
-                          context.loaderOverlay.hide();
-                        }
-
-                        saveResults.fold((l) {
-                          context.snackBarError(l.message);
-                        }, (r) {
-                          context.snackBarSuccess('Address saved successfully');
-                          Navigator.pop(context, r);
-                        });
-                      },
+                      onPressed: _saveAddress,
                       child: const Text(
                         'Save',
                         style: TextStyle(fontSize: 16),
@@ -255,6 +197,65 @@ class _EditAddressScreenState extends State<EditAddressScreen> {
         },
       ),
     );
+  }
+
+  Future<void> _saveAddress() async {
+    if (_streetController.text.isEmpty) {
+      context.snackBarError('Street address is required');
+      return;
+    }
+
+    final phone = localizeSAPhoneNumber(_phoneController.text);
+
+    if (phone == null) {
+      context.snackBarError(
+        'Please provide a valid South African phone number',
+      );
+      return;
+    }
+
+    if (_recipientController.text.isEmpty) {
+      context.snackBarError('Recipient name is required');
+      return;
+    }
+
+    if (province == 'Province') {
+      context.snackBarError('Select a province');
+      return;
+    }
+
+    final address = Address(
+      id: widget.address?.id,
+      userId: widget.address?.userId,
+      areaId: widget.address?.areaId,
+      streetAddress: _streetController.text,
+      buildingName: _buildingController.text,
+      recipientPhone: phone,
+      recipientName: _recipientController.text,
+      latitude: latitude,
+      longitude: longitude,
+      type: type,
+      province: province,
+      isPrimary: isPrimary,
+      createdAt: DateTime.now(),
+    );
+
+    context.loaderOverlay.show();
+
+    final saveResults = await context
+        .read<GeoRepository>()
+        .saveAddress(address, widget.isPersonal);
+
+    if (context.mounted) {
+      context.loaderOverlay.hide();
+    }
+
+    saveResults.fold((l) {
+      context.snackBarError(l.message);
+    }, (r) {
+      context.snackBarSuccess('Address saved successfully');
+      Navigator.pop(context, r);
+    });
   }
 
   void _autoCompleteSearch(String p0, BuildContext context) {

@@ -24,7 +24,9 @@ class EditProfileButton extends StatelessWidget {
       onTap: () {
         context.router
             .push(EditProfileRoute(profile: profile))
-            .whenComplete(onPop);
+            .whenComplete(() {
+          onPop.call();
+        });
       },
       child: Container(
         margin: const EdgeInsets.only(top: 15, right: 20, left: 20),

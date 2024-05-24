@@ -24,5 +24,9 @@ class BasketListBloc extends Bloc<BasketListEvent, BasketListState> {
         }
       });
     });
+
+    on<BasketDeleted>((event, emit) {
+      _repository.deleteBasket(event.basket.id);
+    });
   }
 }

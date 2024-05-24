@@ -28,12 +28,14 @@ class MenuTab extends StatelessWidget {
           final profile = state.profile;
           return Column(
             children: [
-              EditProfileButton(
-                profile: profile,
-                onPop: () {
-                  context.read<ProfileBloc>().add(ProfileFetched());
-                },
-              ),
+              Builder(builder: (context) {
+                return EditProfileButton(
+                  profile: profile,
+                  onPop: () {
+                    context.read<ProfileBloc>().add(ProfileFetched());
+                  },
+                );
+              }),
               Container(
                 margin: const EdgeInsets.only(top: 25, right: 20, left: 20),
                 padding: const EdgeInsets.all(10),

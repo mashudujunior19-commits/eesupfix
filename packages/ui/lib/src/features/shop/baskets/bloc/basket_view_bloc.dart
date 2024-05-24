@@ -41,5 +41,20 @@ class BasketViewBloc extends Bloc<BasketViewEvent, BasketViewState> {
         }
       }
     });
+
+    on<BasketProductRemoved>((event, emit) {
+      _repository
+          .removeProductFromBasket(
+        event.product.basketId,
+        event.product.productId,
+      )
+          .then((v) {
+        v.fold((l) {
+          print(l);
+        }, (r) {
+          print(r);
+        });
+      });
+    });
   }
 }

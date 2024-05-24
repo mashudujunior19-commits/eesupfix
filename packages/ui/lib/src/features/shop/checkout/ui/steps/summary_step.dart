@@ -5,7 +5,7 @@ import 'package:ui/src/core/extensions/context_alerts_ext.dart';
 import 'package:ui/src/core/extensions/context_theme_ext.dart';
 import 'package:ui/src/core/extensions/sizedbox_ext.dart';
 import 'package:ui/app_route.gr.dart';
-import 'package:ui/src/features/finances/allocations/bloc/profit_allocation_bloc.dart';
+
 import 'package:ui/src/features/shop/checkout/bloc/checkout_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -21,232 +21,213 @@ class SummaryStep extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<CheckoutBloc, CheckoutState>(
-      listener: (BuildContext context, CheckoutState state) {
-        if (state is CheckoutLoading) {
-          context.loaderOverlay.show();
-        } else {
-          context.loaderOverlay.hide();
-        }
+        listener: (BuildContext context, CheckoutState state) {
+      if (state is CheckoutLoading) {
+        context.loaderOverlay.show();
+      } else {
+        context.loaderOverlay.hide();
+      }
 
-        if (state is CheckoutError) {
-          context.snackBarError(state.exception.message);
-          _restartCheckout(state.order, context);
-        }
+      if (state is CheckoutError) {
+        context.snackBarError(state.exception.message);
+        _restartCheckout(state.order, context);
+      }
 
-        if (state is CheckoutCompleted) {
-          tabController.animateTo(tabController.index++);
-        }
+      if (state is CheckoutCompleted) {
+        tabController.animateTo(tabController.index++);
+      }
 
-        if (state is OutstandingPayment) {
-          final method = state.paymentMethod;
+      if (state is OutstandingPayment) {
+        final method = state.paymentMethod;
 
-          switch (method) {
-            case PaymentMethod.ozow || PaymentMethod.splitOzow:
-              context.router
-                  .push(OzowRoute(
+        switch (method) {
+          case PaymentMethod.ozow || PaymentMethod.splitOzow:
+            context.router
+                .push(OzowRoute(
+              reference: state.response.orderId!,
+              amount: state.response.outstandingAmount,
+              type: "Order",
+              bankRef: "${state.response.orderId} EESUp",
+            ))
+                .then((value) {
+              if (value == true) {
+                context.read<CheckoutBloc>().add(
+                      CheckoutFinished(state.order.id, true),
+                    );
+              } else if (value == false) {
+                context.read<CheckoutBloc>().add(
+                      CheckoutFinished(state.order.id, false),
+                    );
+              }
+              tabController.animateTo(tabController.index + 1);
+            });
+
+          case PaymentMethod.instapay || PaymentMethod.splitInstapay:
+            final transaction = _getInstapayTransaction(state.response);
+            if (transaction == null) {
+              return;
+            }
+            context.router
+                .push(InstapayConfirmDetailsRoute(transaction: transaction))
+                .then((value) {
+              if (value == true) {
+                context.read<CheckoutBloc>().add(
+                      CheckoutFinished(state.order.id, true),
+                    );
+              } else if (value == false) {
+                context.read<CheckoutBloc>().add(
+                      CheckoutFinished(state.order.id, false),
+                    );
+              }
+              tabController.animateTo(tabController.index + 1);
+            });
+
+          case PaymentMethod.yoco || PaymentMethod.splitYoco:
+            context.router
+                .push(
+              YocoPaymentRoute(
                 reference: state.response.orderId!,
                 amount: state.response.outstandingAmount,
-                type: "Order",
-                bankRef: "${state.response.orderId} EESUp",
-              ))
-                  .then((value) {
-                if (value == true) {
-                  context.read<CheckoutBloc>().add(
-                        CheckoutFinished(state.order.id, true),
-                      );
-                } else if (value == false) {
-                  context.read<CheckoutBloc>().add(
-                        CheckoutFinished(state.order.id, false),
-                      );
-                }
-                tabController.animateTo(tabController.index + 1);
-              });
-
-            case PaymentMethod.instapay || PaymentMethod.splitInstapay:
-              final transaction = _getInstapayTransaction(state.response);
-              if (transaction == null) {
-                return;
+              ),
+            )
+                .then((value) {
+              if (value == false) {
+                _restartCheckout(state.order, context);
+              } else {
+                Navigator.of(context).pop(true);
               }
-              context.router
-                  .push(InstapayConfirmDetailsRoute(transaction: transaction))
-                  .then((value) {
-                if (value == true) {
-                  context.read<CheckoutBloc>().add(
-                        CheckoutFinished(state.order.id, true),
-                      );
-                } else if (value == false) {
-                  context.read<CheckoutBloc>().add(
-                        CheckoutFinished(state.order.id, false),
-                      );
-                }
-                tabController.animateTo(tabController.index + 1);
-              });
+            });
+          //Ignored
+          case PaymentMethod.retailWallet:
+        }
+      }
+    }, builder: (context, state) {
+      Order? newOrder;
+      double? total;
 
-            case PaymentMethod.yoco || PaymentMethod.splitYoco:
-              context.router
-                  .push(
-                YocoPaymentRoute(
-                  reference: state.response.orderId!,
-                  amount: state.response.outstandingAmount,
+      if (state is CurrentCheckout) {
+        newOrder = state.newOrder;
+        total = state.totalToPay();
+        // totalProfit = state.profit();
+      }
+      return ListView(
+        padding: const EdgeInsets.only(left: 25, right: 25, top: 30),
+        children: [
+          Container(
+            decoration: const BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(10),
+                topRight: Radius.circular(10),
+              ),
+            ),
+            child: Column(
+              children: [
+                const Text('Order Summary'),
+                20.sH,
+                _LineTile(
+                  label: 'Payment method',
+                  value: newOrder?.paymentMethod.toString() ?? "No selected",
                 ),
-              )
-                  .then((value) {
-                if (value == false) {
-                  _restartCheckout(state.order, context);
-                } else {
-                  Navigator.of(context).pop(true);
-                }
-              });
-            //Ignored
-            case PaymentMethod.retailWallet:
-          }
-        }
-      },
-      builder: (context, state) {
-        Order? newOrder;
-        double? total;
-        double? totalProfit;
-        if (state is CurrentCheckout) {
-          newOrder = state.newOrder;
-          total = state.totalToPay();
-          totalProfit = state.profit();
-        }
-        return BlocBuilder<ProfitAllocationBloc, ProfitAllocationState>(
-          builder: (context, allocationState) {
-            if (allocationState is ProfitAllocationLoaded) {
-              double discount =
-                  (totalProfit ?? 0) * (allocationState.allocation.cia / 100);
-              return ListView(
-                padding: const EdgeInsets.only(left: 25, right: 25, top: 30),
-                children: [
-                  Container(
-                    decoration: const BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(10),
-                        topRight: Radius.circular(10),
-                      ),
+                // _LineTile(
+                //   label: 'Discount',
+                //   value: 'R${discount.toStringAsFixed(2)}',
+                // ),
+                _LineTile(
+                  label: 'Subtotal',
+                  value: 'R${newOrder?.value.toStringAsFixed(2) ?? '0.00'}',
+                ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    _LineTile(
+                      label: 'Card fee',
+                      isVisible: newOrder?.cardFee != null,
+                      value:
+                          'R${newOrder?.cardFee?.toStringAsFixed(2) ?? '0.00'}',
                     ),
-                    child: Column(
-                      children: [
-                        const Text('Order Summary'),
-                        20.sH,
-                        _LineTile(
-                          label: 'Payment method',
-                          value: newOrder?.paymentMethod.toString() ??
-                              "No selected",
-                        ),
-                        _LineTile(
-                          label: 'Discount',
-                          value: 'R${discount.toStringAsFixed(2)}',
-                        ),
-                        _LineTile(
-                          label: 'Subtotal',
-                          value:
-                              'R${newOrder?.value.toStringAsFixed(2) ?? '0.00'}',
-                        ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            _LineTile(
-                              label: 'Card fee',
-                              isVisible: newOrder?.cardFee != null,
-                              value:
-                                  'R${newOrder?.cardFee?.toStringAsFixed(2) ?? '0.00'}',
-                            ),
-                            if (newOrder?.paymentMethod !=
-                                PaymentMethod.retailWallet)
-                              GestureDetector(
-                                onTap: () {
-                                  final value =
-                                      !(newOrder?.payFeesWithRetailWallet ??
-                                          false);
-                                  context
-                                      .read<CheckoutBloc>()
-                                      .add(PayFeesWithWalletUpdated(value));
-                                },
-                                child: Padding(
-                                  padding: const EdgeInsets.only(left: 10),
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Expanded(
-                                        child: Text(
-                                          '**Tap to Pay the fee with you Retail wallet',
-                                          style: context.textTheme.labelSmall
-                                              ?.copyWith(
-                                            fontSize: 13,
-                                            fontStyle: FontStyle.italic,
-                                            color: Colors.grey.shade700,
-                                          ),
-                                        ),
-                                      ),
-                                      Checkbox(
-                                        value:
-                                            newOrder?.payFeesWithRetailWallet ??
-                                                false,
-                                        onChanged: (value) {
-                                          context.read<CheckoutBloc>().add(
-                                                PayFeesWithWalletUpdated(
-                                                    value ?? false),
-                                              );
-                                        },
-                                        visualDensity: VisualDensity.compact,
-                                      ),
-                                    ],
+                    if (newOrder?.paymentMethod != PaymentMethod.retailWallet)
+                      GestureDetector(
+                        onTap: () {
+                          final value =
+                              !(newOrder?.payFeesWithRetailWallet ?? false);
+                          context
+                              .read<CheckoutBloc>()
+                              .add(PayFeesWithWalletUpdated(value));
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 10),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Expanded(
+                                child: Text(
+                                  '**Tap to Pay the fee with you Retail wallet',
+                                  style: context.textTheme.labelSmall?.copyWith(
+                                    fontSize: 13,
+                                    fontStyle: FontStyle.italic,
+                                    color: Colors.grey.shade700,
                                   ),
                                 ),
                               ),
-                            15.sH,
-                          ],
+                              Checkbox(
+                                value:
+                                    newOrder?.payFeesWithRetailWallet ?? false,
+                                onChanged: (value) {
+                                  context.read<CheckoutBloc>().add(
+                                        PayFeesWithWalletUpdated(
+                                            value ?? false),
+                                      );
+                                },
+                                visualDensity: VisualDensity.compact,
+                              ),
+                            ],
+                          ),
                         ),
-                      ],
-                    ),
-                  ),
-                  Container(
-                    margin: const EdgeInsets.only(top: 25),
-                    padding: const EdgeInsets.all(10),
-                    decoration: const BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(10),
-                        topRight: Radius.circular(10),
                       ),
-                    ),
-                    child: Column(
-                      children: [
-                        _LineTile(
-                          label: 'Delivery fee',
-                          value:
-                              "R${newOrder?.deliveryFee?.toStringAsFixed(2) ?? 0.00}",
-                        ),
-                        _LineTile(
-                          label: 'Total',
-                          value: "R${total?.toStringAsFixed(2) ?? 0.00}",
-                          isBold: true,
-                        ),
-                      ],
-                    ),
-                  ),
-                  Image.asset("assets/images/receipt_bottom.png"),
-                  30.sH,
-                  ElevatedButton(
-                    onPressed: () {
-                      context.read<CheckoutBloc>().add(OrderPlaced());
-                    },
-                    child: const Text("Place order"),
-                  )
-                ],
-              );
-            } else {
-              return 0.sH;
-            }
-          },
-        );
-      },
-    );
+                    15.sH,
+                  ],
+                ),
+              ],
+            ),
+          ),
+          Container(
+            margin: const EdgeInsets.only(top: 25),
+            padding: const EdgeInsets.all(10),
+            decoration: const BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(10),
+                topRight: Radius.circular(10),
+              ),
+            ),
+            child: Column(
+              children: [
+                _LineTile(
+                  label: 'Delivery fee',
+                  value:
+                      "R${newOrder?.deliveryFee?.toStringAsFixed(2) ?? 0.00}",
+                ),
+                _LineTile(
+                  label: 'Total',
+                  value: "R${total?.toStringAsFixed(2) ?? 0.00}",
+                  isBold: true,
+                ),
+              ],
+            ),
+          ),
+          Image.asset("assets/images/receipt_bottom.png"),
+          30.sH,
+          ElevatedButton(
+            onPressed: () {
+              context.read<CheckoutBloc>().add(OrderPlaced());
+            },
+            child: const Text("Place order"),
+          )
+        ],
+      );
+    });
   }
 
   void _restartCheckout(Order order, BuildContext context) {

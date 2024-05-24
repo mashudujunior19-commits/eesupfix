@@ -1,15 +1,16 @@
 import 'package:data/shopping/models/product.dart';
 import 'package:data/shopping/repository/basket_repository.dart';
 import 'package:data/shopping/repository/shopping_repository.dart';
+import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ui/src/core/extensions/context_alerts_ext.dart';
-import 'package:ui/src/core/extensions/context_theme_ext.dart';
 import 'package:ui/src/core/extensions/slide_in_animation_ext.dart';
 import 'package:ui/src/core/widgets/eesup_form_field.dart';
 import 'package:ui/src/features/eesupools/ui/tabs/chats/ui/widgets/animated_reaction_btn.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
+import 'package:ui/src/features/shop/baskets/cubit/search_products_cubit.dart';
 
 class AddBasketProductsDialog extends StatelessWidget {
   AddBasketProductsDialog({super.key, required this.basketId});
@@ -18,39 +19,41 @@ class AddBasketProductsDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final products = <Product>[];
-    return SafeArea(
-      child: Container(
-        margin: EdgeInsets.only(top: context.height * .09),
-        padding: const EdgeInsets.all(6),
-        decoration: const BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(15),
-            topRight: Radius.circular(15),
-          ),
-        ),
-        child: Scaffold(
-          appBar: AppBar(
-            automaticallyImplyLeading: false,
-            title: EESUpTextFormField(
+    return BlocProvider(
+      create: (context) =>
+          SearchProductsCubit(context.read<ShoppingRepository>()),
+      child: Scaffold(
+        appBar: AppBar(
+          automaticallyImplyLeading: false,
+          title: Builder(builder: (context) {
+            return EESUpTextFormField(
               margin: const EdgeInsets.only(bottom: 5, top: 15),
               hintText: 'Search products',
               prefixIcon: const BackButton(),
               controller: controller,
-              onChanged: (p0) {},
-            ),
-          ),
-          body: ListView.builder(
-            padding: const EdgeInsets.only(bottom: 300),
-            itemCount: products.length,
-            itemBuilder: (context, index) {
-              return _ProductCard(
-                product: products[index],
-                basketId: basketId,
-              ).animate().slideIn(index * 50);
-            },
-          ),
+              onChanged: (p0) {
+                EasyDebounce.debounce(
+                  'basket_products_search',
+                  const Duration(milliseconds: 500),
+                  () => context.read<SearchProductsCubit>().search(p0),
+                );
+              },
+            );
+          }),
+        ),
+        body: BlocBuilder<SearchProductsCubit, List<Product>>(
+          builder: (context, products) {
+            return ListView.builder(
+              padding: const EdgeInsets.only(bottom: 300),
+              itemCount: products.length,
+              itemBuilder: (context, index) {
+                return _ProductCard(
+                  product: products[index],
+                  basketId: basketId,
+                ).animate().slideIn(index * 50);
+              },
+            );
+          },
         ),
       ),
     );
