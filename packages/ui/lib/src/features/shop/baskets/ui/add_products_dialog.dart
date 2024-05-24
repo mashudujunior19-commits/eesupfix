@@ -1,4 +1,8 @@
 import 'package:data/shopping/models/product.dart';
+import 'package:data/shopping/repository/basket_repository.dart';
+import 'package:data/shopping/repository/shopping_repository.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:ui/src/core/extensions/context_alerts_ext.dart';
 import 'package:ui/src/core/extensions/context_theme_ext.dart';
 import 'package:ui/src/core/extensions/slide_in_animation_ext.dart';
 import 'package:ui/src/core/widgets/eesup_form_field.dart';
@@ -109,10 +113,10 @@ class _ProductCard extends StatelessWidget {
         trailing: AnimatedReactionButton(
           child: const Icon(IconlyLight.plus),
           onTap: () {
-            // ref.read(shoppingRepoProvider).addProductToBasket(
-            //       basketId,
-            //       product.id,
-            //     );
+            final repo = context.read<ShoppingRepository>();
+            repo.addProductToBasket(basketId, product.id).whenComplete(() {
+              context.snackBarSuccess('Item added to basket.');
+            });
           },
         ),
       ),

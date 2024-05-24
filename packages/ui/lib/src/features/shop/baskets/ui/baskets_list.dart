@@ -16,14 +16,15 @@ import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:data/utils/eesup_exception.dart';
 
 @RoutePage()
-class BasketsList extends StatelessWidget {
-  const BasketsList({super.key});
+class BasketsListScreen extends StatelessWidget {
+  const BasketsListScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => BasketListBloc(context.read<ShoppingRepository>())
-        ..add(BasketListsFetched()),
+      create: (context) => BasketListBloc(
+        context.read<ShoppingRepository>(),
+      )..add(BasketListsFetched()),
       child: SafeArea(
         child: Scaffold(
           appBar: AppBar(
@@ -98,7 +99,7 @@ class _BasketCard extends StatelessWidget {
     final textTheme = theme.textTheme;
     return InkWell(
       onTap: () {
-        context.router.push(BasketView(basket: basket)).whenComplete(() {});
+        context.router.push(BasketViewRoute(basket: basket)).whenComplete(() {});
       },
       child: Container(
         margin: const EdgeInsets.only(right: 21, left: 19, top: 15),

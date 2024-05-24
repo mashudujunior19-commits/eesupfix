@@ -62,7 +62,7 @@ class MenuTab extends StatelessWidget {
                       label: 'MyBaskets',
                       icon: BootstrapIcons.basket,
                       onTap: () {
-                        context.router.push(const BasketsList());
+                        context.router.push(const BasketsListRoute());
                       },
                     ),
                     _MenuButton(

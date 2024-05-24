@@ -17,8 +17,8 @@ import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:data/utils/eesup_exception.dart';
 
 @RoutePage()
-class BasketView extends StatelessWidget {
-  const BasketView({super.key, required this.basket});
+class BasketViewScreen extends StatelessWidget {
+  const BasketViewScreen({super.key, required this.basket});
   final Basket basket;
 
   @override
@@ -123,8 +123,8 @@ class BasketView extends StatelessWidget {
                 } else {
                   return FullScreenError(
                     exception: EESUpException(
-                      message: 'Something went wrong'
-                          ' while fetching your basket products',
+                      message: 'Something went wrong while '
+                          'fetching your basket products',
                     ),
                   );
                 }

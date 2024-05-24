@@ -1,15 +1,19 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:bootstrap_icons/bootstrap_icons.dart';
+import 'package:data/auth/models/user_role.dart';
 import 'package:data/shopping/models/product.dart';
 import 'package:data/shopping/repository/shopping_repository.dart';
 import 'package:data/utils/eesup_exception.dart';
 import 'package:either_dart/either.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:ui/src/core/extensions/bottom_sheet_context_ext.dart';
 import 'package:ui/src/core/extensions/context_theme_ext.dart';
 import 'package:ui/src/core/extensions/sizedbox_ext.dart';
 import 'package:ui/src/core/widgets/fullscreen_error_widget.dart';
 import 'package:ui/src/core/widgets/fullscreen_loading_shimmer.dart';
+import 'package:ui/src/features/shop/baskets/ui/basket_selection_dialog.dart';
+import 'package:ui/src/features/shop/browsing/ui/product_card.dart';
 import 'package:ui/src/features/shop/cart/ui/cart_button.dart';
 import 'package:readmore/readmore.dart';
 
@@ -24,40 +28,40 @@ class ProductViewScreen extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(
           leading: const BackButton(),
-          actions: [
-            const CartButton(),
-            10.sW,
-          ],
+          actions: [const CartButton(), 10.sW],
         ),
         body: FutureBuilder<Either<EESUpException, Product>>(
-            future: context.read<ShoppingRepository>().fetchProduct(id),
-            builder: (context, snapshot) {
-              if (snapshot.hasData) {
-                final result = snapshot.data;
-                if (result == null) {
-                  return FullScreenError(
-                    exception: EESUpException(
-                      message: '',
-                    ),
-                  );
-                }
-                return result.fold((left) {
-                  return FullScreenError(exception: left);
-                }, (right) {
-                  final product = right;
-                  return ListView(
-                    padding: const EdgeInsets.only(bottom: 100),
-                    children: [
-                      _Product(product: product),
-                      // if (product.categoryId != null)
-                      //   _PeopleLike(categoryId: product.categoryId!)
-                    ],
-                  );
-                });
-              } else {
-                return const FullScreenLoadingShimmer();
+          future: context.read<ShoppingRepository>().fetchProduct(id),
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              final result = snapshot.data;
+              if (result == null) {
+                return FullScreenError(
+                  exception: EESUpException(
+                    message: '',
+                  ),
+                );
               }
-            }),
+              return result.fold((left) {
+                return FullScreenError(exception: left);
+              }, (right) {
+                final product = right;
+                return ListView(
+                  padding: const EdgeInsets.only(bottom: 100),
+                  children: [
+                    _ProductInformation(product: product),
+                    if (product.categoryId != null)
+                      _PeopleLike(
+                        categoryId: product.categoryId!,
+                      )
+                  ],
+                );
+              });
+            } else {
+              return const FullScreenLoadingShimmer();
+            }
+          },
+        ),
       ),
     );
   }
@@ -76,41 +80,44 @@ class _PeopleLike extends StatelessWidget {
           margin: const EdgeInsets.only(top: 10, left: 25, right: 25),
           child: const Text('People also liked'),
         ),
-        // if (product.categoryId != null)
-        //   Padding(
-        //     padding: const EdgeInsets.only(left: 10, right: 0),
-        //     child: ref
-        //         .watch(_relatedProducts(
-        //           product.categoryId!,
-        //         ))
-        //         .when(
-        //           data: (products) {
-        //             return SingleChildScrollView(
-        //               scrollDirection: Axis.horizontal,
-        //               child: Row(
-        //                 children: List.generate(
-        //                   products.length,
-        //                   (index) => ProductCard(
-        //                     isBundle: true,
-        //                     product: products[index],
-        //                   ),
-        //                 ),
-        //               ),
-        //             );
-        //           },
-        //           error: (error, stackTrace) => const SizedBox(),
-        //           loading: () {
-        //             return 0.sH;
-        //           },
-        //         ),
-        //   ),
+        FutureBuilder<Either<EESUpException, List<Product>>>(
+          future: context.read<ShoppingRepository>().fetchCategoryProducts(
+                categoryId,
+                UserRole.Ubuntunist,
+                50,
+              ),
+          builder: (context, snap) {
+            if (snap.hasData) {
+              final data = snap.data;
+              if (data != null) {
+                return data.fold((l) {
+                  return 0.sW;
+                }, (products) {
+                  return SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Row(
+                      children: List.generate(
+                        products.length,
+                        (index) => ProductCard(
+                          isBundle: true,
+                          product: products[index],
+                        ),
+                      ),
+                    ),
+                  );
+                });
+              }
+            }
+            return 0.sW;
+          },
+        )
       ],
     );
   }
 }
 
-class _Product extends StatelessWidget {
-  const _Product({required this.product});
+class _ProductInformation extends StatelessWidget {
+  const _ProductInformation({required this.product});
 
   final Product product;
 
@@ -153,8 +160,11 @@ class _Product extends StatelessWidget {
                   Builder(builder: (context) {
                     return InkWell(
                       onTap: () {
-                        // addProductToBasketDialog(
-                        //     context, product);
+                        context.showBottomSheetDialog(
+                          child: BasketSelectionDialog(
+                            product: product,
+                          ),
+                        );
                       },
                       child: const Icon(
                         BootstrapIcons.basket,

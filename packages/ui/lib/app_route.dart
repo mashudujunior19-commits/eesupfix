@@ -122,12 +122,12 @@ class AppRouter extends $AppRouter {
           durationInMilliseconds: 300,
         ),
         CustomRoute(
-          page: BasketView.page,
+          page: BasketViewRoute.page,
           transitionsBuilder: TransitionsBuilders.slideLeftWithFade,
           durationInMilliseconds: 300,
         ),
         CustomRoute(
-          page: BasketsList.page,
+          page: BasketsListRoute.page,
           transitionsBuilder: TransitionsBuilders.slideLeftWithFade,
           durationInMilliseconds: 300,
         ),

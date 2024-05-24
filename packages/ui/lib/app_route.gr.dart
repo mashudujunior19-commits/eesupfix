@@ -100,20 +100,20 @@ abstract class $AppRouter extends _i42.RootStackRouter {
         child: const _i1.AddressBookScreen(),
       );
     },
-    BasketView.name: (routeData) {
-      final args = routeData.argsAs<BasketViewArgs>();
+    BasketViewRoute.name: (routeData) {
+      final args = routeData.argsAs<BasketViewRouteArgs>();
       return _i42.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: _i2.BasketView(
+        child: _i2.BasketViewScreen(
           key: args.key,
           basket: args.basket,
         ),
       );
     },
-    BasketsList.name: (routeData) {
+    BasketsListRoute.name: (routeData) {
       return _i42.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const _i3.BasketsList(),
+        child: const _i3.BasketsListScreen(),
       );
     },
     BrowseShopRoute.name: (routeData) {
@@ -479,29 +479,29 @@ class AddressBookRoute extends _i42.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i2.BasketView]
-class BasketView extends _i42.PageRouteInfo<BasketViewArgs> {
-  BasketView({
+/// [_i2.BasketViewScreen]
+class BasketViewRoute extends _i42.PageRouteInfo<BasketViewRouteArgs> {
+  BasketViewRoute({
     _i43.Key? key,
     required _i44.Basket basket,
     List<_i42.PageRouteInfo>? children,
   }) : super(
-          BasketView.name,
-          args: BasketViewArgs(
+          BasketViewRoute.name,
+          args: BasketViewRouteArgs(
             key: key,
             basket: basket,
           ),
           initialChildren: children,
         );
 
-  static const String name = 'BasketView';
+  static const String name = 'BasketViewRoute';
 
-  static const _i42.PageInfo<BasketViewArgs> page =
-      _i42.PageInfo<BasketViewArgs>(name);
+  static const _i42.PageInfo<BasketViewRouteArgs> page =
+      _i42.PageInfo<BasketViewRouteArgs>(name);
 }
 
-class BasketViewArgs {
-  const BasketViewArgs({
+class BasketViewRouteArgs {
+  const BasketViewRouteArgs({
     this.key,
     required this.basket,
   });
@@ -512,20 +512,20 @@ class BasketViewArgs {
 
   @override
   String toString() {
-    return 'BasketViewArgs{key: $key, basket: $basket}';
+    return 'BasketViewRouteArgs{key: $key, basket: $basket}';
   }
 }
 
 /// generated route for
-/// [_i3.BasketsList]
-class BasketsList extends _i42.PageRouteInfo<void> {
-  const BasketsList({List<_i42.PageRouteInfo>? children})
+/// [_i3.BasketsListScreen]
+class BasketsListRoute extends _i42.PageRouteInfo<void> {
+  const BasketsListRoute({List<_i42.PageRouteInfo>? children})
       : super(
-          BasketsList.name,
+          BasketsListRoute.name,
           initialChildren: children,
         );
 
-  static const String name = 'BasketsList';
+  static const String name = 'BasketsListRoute';
 
   static const _i42.PageInfo<void> page = _i42.PageInfo<void>(name);
 }
