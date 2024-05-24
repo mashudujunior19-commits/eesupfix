@@ -1,5 +1,6 @@
 import 'package:data/auth/models/user_role.dart';
 import 'package:data/finance/models/payment_gateway.dart';
+import 'package:data/finance/models/payout_request.dart';
 import 'package:data/finance/models/profit_allocation.dart';
 import 'package:data/finance/models/transaction.dart';
 import 'package:data/finance/models/wallet.dart';
@@ -20,5 +21,7 @@ abstract class WalletDataSource {
   });
   Future<List<PaymentGateway>> fetchPaymentGateways();
 
-   Future<ProfitAllocation> fetchProfitAllocation(UserRole role);
+  Future<ProfitAllocation> fetchProfitAllocation(UserRole role);
+
+  Future<bool> createPayoutRequest(PayoutRequest request);
 }

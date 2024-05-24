@@ -43,7 +43,7 @@ extension ContextAlertsExt on BuildContext {
               TextButton(
                 onPressed: () {
                   onNegative?.call();
-                  Navigator.pop(context, false);
+                  Navigator.pop(context);
                 },
                 child: Text(
                   negativeText,
@@ -55,7 +55,7 @@ extension ContextAlertsExt on BuildContext {
               TextButton(
                 onPressed: () {
                   onPositive?.call();
-                  Navigator.pop(context, true);
+                  Navigator.pop(context);
                 },
                 child: Text(
                   positiveText,

@@ -1,9 +1,11 @@
 import 'package:data/auth/models/user_role.dart';
 import 'package:data/finance/data_source/wallet_data_source.dart';
 import 'package:data/finance/models/payment_gateway.dart';
+import 'package:data/finance/models/payout_request.dart';
 import 'package:data/finance/models/profit_allocation.dart';
 import 'package:data/finance/models/transaction.dart';
 import 'package:data/finance/models/wallet.dart';
+import 'package:flutter/foundation.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class WalletSupabaseImpl implements WalletDataSource {
@@ -109,5 +111,20 @@ class WalletSupabaseImpl implements WalletDataSource {
       params: {'role': role.toString()},
     ).single();
     return ProfitAllocation.fromJson(results);
+  }
+
+  @override
+  Future<bool> createPayoutRequest(PayoutRequest request) async {
+    try {
+      await _client.schema('finances').from('payout_request').insert(
+            request.toJson(),
+          );
+      return true;
+    } catch (e) {
+      if (kDebugMode) {
+        print(e);
+      }
+      return false;
+    }
   }
 }

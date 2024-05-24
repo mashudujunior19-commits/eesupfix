@@ -9,6 +9,7 @@ import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:loader_overlay/loader_overlay.dart';
 import 'package:ui/src/core/extensions/bg_image_deco_ext.dart';
 import 'package:ui/src/core/extensions/bottom_sheet_context_ext.dart';
+import 'package:ui/src/core/extensions/context_alerts_ext.dart';
 import 'package:ui/src/core/extensions/context_theme_ext.dart';
 import 'package:ui/src/core/extensions/slide_in_animation_ext.dart';
 import 'package:ui/src/core/widgets/fullscreen_error_widget.dart';
@@ -74,9 +75,12 @@ class _ProductRequestScreenState extends State<ProductRequestScreen> {
                       itemCount: products.length,
                       itemBuilder: (context, index) {
                         final product = products[index];
-                        return _ProductRequestCard(product: product)
-                            .animate()
-                            .slideIn(index * 50);
+                        return _ProductRequestCard(
+                          product: product,
+                          onRefresh: () {
+                            setState(() {});
+                          },
+                        ).animate().slideIn(index * 50);
                       },
                     );
                   });
@@ -99,8 +103,8 @@ class _ProductRequestScreenState extends State<ProductRequestScreen> {
 }
 
 class _ProductRequestCard extends StatelessWidget {
-  const _ProductRequestCard({required this.product});
-
+  const _ProductRequestCard({required this.product, required this.onRefresh});
+  final VoidCallback onRefresh;
   final ProductRequest product;
 
   @override
@@ -161,20 +165,20 @@ class _ProductRequestCard extends StatelessWidget {
         trailing: IconButton(
           onPressed: () async {
             context.loaderOverlay.show();
-            // final results =
-            //     await ref.read(shoppingRepoProvider).deleteRequest(product.id);
+            final repo = context.read<ShoppingRepository>();
+            final results = await repo.deleteRequest(product.id);
 
-            // context.loaderOverlay.hide();
-            // results.fold((l) {
-            //   context.snackBarError(l.message);
-            // }, (r) {
-            //   if (r) {
-            //     context.snackBarSuccess("Request deleted successfully");
-            //     ref.invalidate(productRequestsProvider);
-            //   } else {
-            //     context.snackBarError("Failed to delete request");
-            //   }
-            // });
+            context.loaderOverlay.hide();
+            results.fold((l) {
+              context.snackBarError(l.message);
+            }, (r) {
+              if (r) {
+                context.snackBarSuccess("Request deleted successfully");
+                onRefresh.call();
+              } else {
+                context.snackBarError("Failed to delete request");
+              }
+            });
           },
           icon: const Icon(IconlyLight.delete, size: 20),
         ),

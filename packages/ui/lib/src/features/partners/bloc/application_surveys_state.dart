@@ -20,5 +20,3 @@ final class ApplicationSurveysLoaded extends ApplicationSurveysState {
   final List<IndexedSurvey> surveys;
   ApplicationSurveysLoaded(this.surveys);
 }
-
-

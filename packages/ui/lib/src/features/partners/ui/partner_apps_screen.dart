@@ -35,17 +35,22 @@ class PartnerAppScreen extends StatelessWidget {
             leading: const BackButton(),
             title: Text(partner.title),
             actions: [
-              IconButton(
-                onPressed: () async {
-                  if (_currentAppsCount <= partner.maxApps) {
-                  } else {
-                    context.snackBarError(
-                      'You can only have ${partner.maxApps} applications for this service',
-                    );
-                  }
-                },
-                icon: const Icon(Icons.add),
-              ),
+              Builder(builder: (context) {
+                return IconButton(
+                  onPressed: () async {
+                    if (_currentAppsCount <= partner.maxApps) {
+                      context
+                          .read<ApplicationsBloc>()
+                          .add(ApplicationCreated(partner.id));
+                    } else {
+                      context.snackBarError(
+                        'You can only have ${partner.maxApps} applications for this service',
+                      );
+                    }
+                  },
+                  icon: const Icon(Icons.add),
+                );
+              }),
             ],
           ),
           body: Container(
@@ -106,7 +111,18 @@ class _ApplicationCard extends StatelessWidget {
     final colorScheme = theme.colorScheme;
     return InkWell(
       onTap: () {
-        context.router.push(EditApplicationRoute(app: app, partner: partner));
+        context.router
+            .push(
+          EditApplicationRoute(
+            app: app,
+            partner: partner,
+          ),
+        )
+            .whenComplete(() {
+          context.read<ApplicationsBloc>().add(
+                ApplicationsFetched(partner.id),
+              );
+        });
       },
       child: Container(
         margin: const EdgeInsets.only(top: 15, right: 20, left: 20),

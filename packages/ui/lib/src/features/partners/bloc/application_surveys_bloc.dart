@@ -29,6 +29,8 @@ class ApplicationSurveysBloc
             final indexedSurvey = _indexSurvey(event.partner.surveys, survey);
             surveys.add(indexedSurvey);
           }
+          surveys.sort((a, b) => a.index.compareTo(b.index));
+          emit(ApplicationSurveysLoaded(surveys));
         } catch (e) {
           emit(
             ApplicationSurveysError(
@@ -44,6 +46,7 @@ class ApplicationSurveysBloc
     on<ApplicationUpdated>((event, emit) async {
       emit(ApplicationSurveysLoading());
       final results = await _repository.updatePartnerSurveys(event.application);
+
       results.fold((l) {
         emit(ApplicationSurveysError(l));
       }, (r) {

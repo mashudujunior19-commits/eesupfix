@@ -36,98 +36,8 @@ class ResponseScreen extends StatelessWidget {
                 body: CurrentQuestionView(question: question),
                 floatingActionButtonLocation:
                     FloatingActionButtonLocation.centerFloat,
-                floatingActionButton: Padding(
-                  padding: const EdgeInsets.only(
-                    left: 15,
-                    bottom: 20,
-                    right: 15,
-                  ),
-                  child: Row(
-                    children: [
-                      if (state.index != 0)
-                        Container(
-                          margin: const EdgeInsets.only(right: 10),
-                          width: 115,
-                          child: ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.red,
-                              elevation: 0,
-                            ),
-                            onPressed: () {
-                              context.read<SurveyResponseBloc>().add(
-                                    NextQuestionPressed(state.index - 1),
-                                  );
-                            },
-                            child: const Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Icon(IconlyLight.arrowLeft),
-                                Text('  Back'),
-                              ],
-                            ),
-                          ),
-                        ),
-                      () {
-                        int next = state.index + 1;
-                        return Expanded(
-                          child: ElevatedButton(
-                            onPressed: () async {
-                              if (canProcced(question)) {
-                                if (next < state.survey.questions.length) {
-                                  context.read<SurveyResponseBloc>().add(
-                                        NextQuestionPressed(next),
-                                      );
-                                } else {
-                                  context.loaderOverlay.show();
-                                  final repo = context.read<SurveyRepository>();
-                                  final results = await repo
-                                      .submitSurveyResponse(state.survey);
-                                  context.loaderOverlay.hide();
-
-                                  results.fold((l) {
-                                    context.snackBarError(l.message);
-                                  }, (id) {
-                                    if (id != null) {
-                                      context
-                                          .snackBarSuccess('Response captured');
-                                      Navigator.of(context).pop(id);
-                                    } else {
-                                      context.snackBarError(
-                                        'Something went wrong while trying to save the response.',
-                                      );
-                                    }
-                                  });
-                                }
-                              } else {
-                                context.snackBarError(
-                                  'This question is required.',
-                                );
-                              }
-                            },
-                            child: next == state.survey.questions.length
-                                ? const Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: [
-                                      Icon(Icons.done_all),
-                                      Text('  Submit'),
-                                    ],
-                                  )
-                                : const Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: [
-                                      Icon(IconlyLight.arrowRight),
-                                      Text('  Next'),
-                                    ],
-                                  ),
-                          ),
-                        );
-                      }(),
-                    ],
-                  ),
-                ),
+                floatingActionButton:
+                    _navigationButtons(state, context, question),
               );
             } else {
               return Scaffold(
@@ -137,6 +47,104 @@ class ResponseScreen extends StatelessWidget {
             }
           },
         ),
+      ),
+    );
+  }
+
+  Padding _navigationButtons(
+    CurrentResponseSurvey state,
+    BuildContext context,
+    Question question,
+  ) {
+    return Padding(
+      padding: const EdgeInsets.only(
+        left: 15,
+        bottom: 20,
+        right: 15,
+      ),
+      child: Row(
+        children: [
+          if (state.index != 0)
+            Container(
+              margin: const EdgeInsets.only(right: 10),
+              width: 115,
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.red,
+                  elevation: 0,
+                ),
+                onPressed: () {
+                  context.read<SurveyResponseBloc>().add(
+                        NextQuestionPressed(state.index - 1),
+                      );
+                },
+                child: const Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Icon(IconlyLight.arrowLeft),
+                    Text('  Back'),
+                  ],
+                ),
+              ),
+            ),
+          () {
+            int next = state.index + 1;
+            return Expanded(
+              child: ElevatedButton(
+                onPressed: () async {
+                  if (canProcced(question)) {
+                    if (next < state.survey.questions.length) {
+                      context.read<SurveyResponseBloc>().add(
+                            NextQuestionPressed(next),
+                          );
+                    } else {
+                      context.loaderOverlay.show();
+                      final repo = context.read<SurveyRepository>();
+                      final results = await repo.submitSurveyResponse(
+                        state.survey,
+                      );
+                      context.loaderOverlay.hide();
+                      results.fold((l) {
+                        context.snackBarError(l.message);
+                      }, (id) {
+                        if (id != null) {
+                          context.snackBarSuccess('Response captured');
+                          Navigator.of(context).pop(id);
+                        } else {
+                          context.snackBarError(
+                            'Something went wrong while trying to save the response.',
+                          );
+                        }
+                      });
+                    }
+                  } else {
+                    context.snackBarError(
+                      'This question is required.',
+                    );
+                  }
+                },
+                child: next == state.survey.questions.length
+                    ? const Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Icon(Icons.done_all),
+                          Text('  Submit'),
+                        ],
+                      )
+                    : const Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Icon(IconlyLight.arrowRight),
+                          Text('  Next'),
+                        ],
+                      ),
+              ),
+            );
+          }(),
+        ],
       ),
     );
   }

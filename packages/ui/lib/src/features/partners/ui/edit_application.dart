@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
+import 'package:ui/src/core/extensions/context_alerts_ext.dart';
 import 'package:ui/src/core/extensions/context_theme_ext.dart';
 import 'package:ui/src/core/extensions/sizedbox_ext.dart';
 import 'package:ui/src/core/extensions/slide_in_animation_ext.dart';
@@ -35,49 +36,91 @@ class EditApplicationScreen extends StatelessWidget {
             leading: const BackButton(),
             title: Text('REF-${app.id} ${partner.title}'),
           ),
-          body: BlocBuilder<ApplicationSurveysBloc, ApplicationSurveysState>(
+          body: BlocConsumer<ApplicationSurveysBloc, ApplicationSurveysState>(
             builder: (context, state) {
               if (state is ApplicationSurveysLoaded) {
                 final surveys = state.surveys;
-                return ListView.separated(
-                  separatorBuilder: (context, index) => Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      24.sW,
-                      Icon(
-                        IconlyBroken.arrowDown,
-                        color: context.colorScheme.primary.withOpacity(.5),
-                        size: 20,
+
+                return Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(
+                        left: 20,
+                        right: 20,
+                        top: 15,
                       ),
-                    ],
-                  ).animate().slideIn(index * 50),
-                  itemCount: surveys.length,
-                  itemBuilder: (context, index) {
-                    final survey = surveys[index];
-                    return _SurveyCard(
-                      indexedSurvey: survey,
-                      onSurveyCompleted: (id) {
-                        if (id != null) {
-                          final response = PartnerSurveyResponse(
-                            index: index,
-                            surveyId: survey.survey.id,
-                            responseId: id,
-                          );
-                          if (!app.surveyResponses.contains(response)) {
-                            final currentRes = [
-                              ...app.surveyResponses,
-                              response
-                            ];
-                            context.read<ApplicationSurveysBloc>().add(
-                                  ApplicationUpdated(
-                                    app.copyWith(surveyResponses: currentRes),
-                                  ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          const Text('Status'),
+                          Text(
+                            app.approvedAt != null ? 'Approved' : 'Pending',
+                            style: context.textTheme.labelSmall?.copyWith(
+                              color: app.approvedAt != null
+                                  ? context.colorScheme.primary
+                                  : context.colorScheme.error,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    15.sH,
+                    Expanded(
+                      child: ListView.separated(
+                        separatorBuilder: (context, index) => Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            24.sW,
+                            Icon(
+                              IconlyBroken.arrowDown,
+                              color:
+                                  context.colorScheme.primary.withOpacity(.5),
+                              size: 20,
+                            ),
+                          ],
+                        ).animate().slideIn(index * 50),
+                        itemCount: surveys.length,
+                        itemBuilder: (context, index) {
+                          final survey = surveys[index];
+                          return _SurveyCard(
+                            isCompleted: () {
+                              bool isCompleted = false;
+                              for (final s in app.surveyResponses) {
+                                if (s.surveyId == survey.survey.id) {
+                                  isCompleted = true;
+                                }
+                              }
+                              return isCompleted;
+                            }(),
+                            indexedSurvey: survey,
+                            onSurveyCompleted: (id) {
+                              if (id != null) {
+                                final response = PartnerSurveyResponse(
+                                  index: index,
+                                  surveyId: survey.survey.id,
+                                  responseId: id,
                                 );
-                          }
-                        }
-                      },
-                    ).animate().slideIn(index * 50);
-                  },
+
+                                if (!app.surveyResponses.contains(response)) {
+                                  final currentRes = [
+                                    ...app.surveyResponses,
+                                    response
+                                  ];
+
+                                  context.read<ApplicationSurveysBloc>().add(
+                                        ApplicationUpdated(
+                                          app.copyWith(
+                                              surveyResponses: currentRes),
+                                        ),
+                                      );
+                                }
+                              }
+                            },
+                          ).animate().slideIn(index * 50);
+                        },
+                      ),
+                    ),
+                  ],
                 );
               } else if (state is ApplicationSurveysError) {
                 return FullScreenError(exception: state.err);
@@ -91,6 +134,23 @@ class EditApplicationScreen extends StatelessWidget {
                 );
               }
             },
+            listener: (BuildContext context, ApplicationSurveysState state) {
+              if (state is ApplicationSurveysUpdatedSuccess) {
+                // context.read<ApplicationSurveysBloc>().add(
+                //       ApplicationSurveysFetched(partner),
+                //     );
+                context.snackBarSuccess(
+                    'Form submited, You can continue with the other forms.'
+                    ' if you have done all of them, your application will be '
+                    'reviewd. and feedback will be communicated.');
+                Navigator.of(context).pop();
+              } else if (state is ApplicationSurveysUpdatedFailed) {
+                // context.read<ApplicationSurveysBloc>().add(
+                //       ApplicationSurveysFetched(partner),
+                //     );
+                context.snackBarError("Form not submited");
+              }
+            },
           ),
         ),
       ),
@@ -100,9 +160,11 @@ class EditApplicationScreen extends StatelessWidget {
 
 class _SurveyCard extends StatelessWidget {
   const _SurveyCard({
+    required this.isCompleted,
     required this.indexedSurvey,
     required this.onSurveyCompleted,
   });
+  final bool isCompleted;
   final IndexedSurvey indexedSurvey;
   final void Function(String? responseId) onSurveyCompleted;
 
@@ -111,13 +173,17 @@ class _SurveyCard extends StatelessWidget {
     return ListTile(
       contentPadding: const EdgeInsets.only(left: 17, right: 20),
       leading: CircleAvatar(
-        backgroundColor: context.colorScheme.primary.withOpacity(.1),
-        child: Text(
-          indexedSurvey.index.toString(),
-          style: context.textTheme.labelMedium?.copyWith(
-            color: context.colorScheme.primary,
-          ),
+        backgroundColor: context.colorScheme.primary.withOpacity(
+          isCompleted ? 1 : .1,
         ),
+        child: isCompleted
+            ? const Icon(Icons.done_all, color: Colors.white)
+            : Text(
+                indexedSurvey.index.toString(),
+                style: context.textTheme.labelMedium?.copyWith(
+                  color: context.colorScheme.primary,
+                ),
+              ),
       ),
       title: SurveyCard(
         survey: indexedSurvey.survey,
