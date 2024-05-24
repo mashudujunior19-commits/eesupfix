@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:data/geolocation/models/address.dart';
 import 'package:data/geolocation/repository/geo_repository.dart';
 import 'package:data/utils/localize_south_african_phone.dart';
+import 'package:easy_debounce/easy_debounce.dart';
 import 'package:ui/src/core/extensions/context_alerts_ext.dart';
 import 'package:ui/src/core/extensions/context_theme_ext.dart';
 import 'package:ui/src/core/extensions/sizedbox_ext.dart';
@@ -171,8 +172,17 @@ class _EditAddressScreenState extends State<EditAddressScreen> {
                     maxLines: 3,
                     onChanged: (p0) {
                       final chars = p0.split(',');
-
-                      _autoCompleteSearch(chars, p0, context);
+                      if (chars.length >= 2) {
+                        EasyDebounce.debounce(
+                          'auto_complete_search_debouncer',
+                          const Duration(milliseconds: 500),
+                          () => _autoCompleteSearch(p0, context),
+                        );
+                      } else {
+                        context
+                            .read<AutoCompletionBloc>()
+                            .add(AutoCompletionReseted());
+                      }
                     },
                   ),
                   () {
@@ -247,24 +257,16 @@ class _EditAddressScreenState extends State<EditAddressScreen> {
     );
   }
 
-  void _autoCompleteSearch(List<String> chars, String p0, BuildContext context) {
-         if (chars.length >= 2) {
-      if (p0.isNotEmpty) {
-        try {
-          final key = dotenv.get('GOOGLE_API_KEY');
-          context.read<AutoCompletionBloc>().add(
-                AutoCompletionRequested(key, p0),
-              );
-        } catch (e) {
-          context.read<AutoCompletionBloc>().add(
-                AutoCompletionReseted(),
-              );
-        }
+  void _autoCompleteSearch(String p0, BuildContext context) {
+    if (p0.isNotEmpty) {
+      try {
+        final key = dotenv.get('GOOGLE_API_KEY');
+        context
+            .read<AutoCompletionBloc>()
+            .add(AutoCompletionRequested(key, p0));
+      } catch (e) {
+        context.read<AutoCompletionBloc>().add(AutoCompletionReseted());
       }
-    } else {
-      context.read<AutoCompletionBloc>().add(
-            AutoCompletionReseted(),
-          );
     }
   }
 
