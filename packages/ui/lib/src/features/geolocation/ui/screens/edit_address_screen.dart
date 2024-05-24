@@ -172,24 +172,7 @@ class _EditAddressScreenState extends State<EditAddressScreen> {
                     onChanged: (p0) {
                       final chars = p0.split(',');
 
-                      if (chars.length >= 2) {
-                        if (p0.isNotEmpty) {
-                          try {
-                            final key = dotenv.get('GOOGLE_API_KEY');
-                            context.read<AutoCompletionBloc>().add(
-                                  AutoCompletionRequested(key, p0),
-                                );
-                          } catch (e) {
-                            context.read<AutoCompletionBloc>().add(
-                                  AutoCompletionReseted(),
-                                );
-                          }
-                        }
-                      } else {
-                        context.read<AutoCompletionBloc>().add(
-                              AutoCompletionReseted(),
-                            );
-                      }
+                      _autoCompleteSearch(chars, p0, context);
                     },
                   ),
                   () {
@@ -262,6 +245,27 @@ class _EditAddressScreenState extends State<EditAddressScreen> {
         },
       ),
     );
+  }
+
+  void _autoCompleteSearch(List<String> chars, String p0, BuildContext context) {
+         if (chars.length >= 2) {
+      if (p0.isNotEmpty) {
+        try {
+          final key = dotenv.get('GOOGLE_API_KEY');
+          context.read<AutoCompletionBloc>().add(
+                AutoCompletionRequested(key, p0),
+              );
+        } catch (e) {
+          context.read<AutoCompletionBloc>().add(
+                AutoCompletionReseted(),
+              );
+        }
+      }
+    } else {
+      context.read<AutoCompletionBloc>().add(
+            AutoCompletionReseted(),
+          );
+    }
   }
 
   Widget _province(BuildContext context) {
