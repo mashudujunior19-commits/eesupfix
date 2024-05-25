@@ -19,14 +19,14 @@ class AppConfig {
     final env = environment.type;
     if (env == FlavorType.development || env == FlavorType.test) {
       await dotenv.load(fileName: ".dev.env");
-    } else if (env == FlavorType.development) {
+    } else if (env == FlavorType.production) {
       await dotenv.load(fileName: ".env");
     }
   }
 
   Future<void> intitializeServices() async {
     //final env = environment.type;
-    await Firebase.initializeApp();
+    // await Firebase.initializeApp();
 
     // Initialize Supabase
     await Supabase.initialize(

@@ -12,49 +12,62 @@ class ResultStep extends StatelessWidget {
     return BlocBuilder<CheckoutBloc, CheckoutState>(
       builder: (context, state) {
         if (state is CheckoutCompleted) {
-          return Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              150.sH,
-              const SizedBox(
-                height: 100,
-                child: RiveAnimation.asset(
-                  'assets/animations/success.riv',
-                ),
-              ),
-              15.sH,
-              TextButton(
-                onPressed: () {},
-                child: const Text('Finish'),
-              )
-            ],
-          );
+          if (!state.isSuccess) {
+            return _failed(context);
+          }
+          return _success(context);
         } else {
-          return Column(
-            children: [
-              150.sH,
-              const SizedBox(
-                height: 100,
-                child: RiveAnimation.asset(
-                  'assets/animations/error.riv',
-                ),
-              ),
-              15.sH,
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-                child: const Text(
-                  'Finish',
-                  style: TextStyle(
-                    color: Colors.redAccent,
-                  ),
-                ),
-              )
-            ],
-          );
+          return _failed(context);
         }
       },
+    );
+  }
+
+  Column _failed(BuildContext context) {
+    return Column(
+      children: [
+        150.sH,
+        const SizedBox(
+          height: 100,
+          child: RiveAnimation.asset(
+            'assets/animations/error.riv',
+          ),
+        ),
+        15.sH,
+        TextButton(
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+          child: const Text(
+            'Finish',
+            style: TextStyle(
+              color: Colors.redAccent,
+            ),
+          ),
+        )
+      ],
+    );
+  }
+
+  Column _success(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        150.sH,
+        const SizedBox(
+          height: 100,
+          child: RiveAnimation.asset(
+            'assets/animations/success.riv',
+          ),
+        ),
+        15.sH,
+        TextButton(
+          onPressed: () {
+            Navigator.of(context).pop(true);
+          },
+          child: const Text('Finish'),
+        )
+      ],
     );
   }
 }

@@ -66,59 +66,60 @@ CREATE EXTENSION IF NOT EXISTS "supabase_vault" WITH SCHEMA "vault";
 
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp" WITH SCHEMA "extensions";
 
-CREATE TYPE "communities"."eesupool_level" AS ENUM (
-    'National',
-    'Regional',
-    'Township',
-    'Kasi',
-    'Street'
-);
 
-ALTER TYPE "communities"."eesupool_level" OWNER TO "postgres";
+-- CREATE TYPE "communities"."eesupool_level" AS ENUM (
+--     'National',
+--     'Regional',
+--     'Township',
+--     'Kasi',
+--     'Street'
+-- );
 
-CREATE TYPE "communities"."eesupool_member_role" AS ENUM (
-    'Admin',
-    'Member'
-);
+-- ALTER TYPE "communities"."eesupool_level" OWNER TO "postgres";
 
-ALTER TYPE "communities"."eesupool_member_role" OWNER TO "postgres";
+-- CREATE TYPE "communities"."eesupool_member_role" AS ENUM (
+--     'Admin',
+--     'Member'
+-- );
 
-CREATE TYPE "communities"."eesupool_request_status" AS ENUM (
-    'Pending',
-    'Accepted',
-    'Declined'
-);
+-- ALTER TYPE "communities"."eesupool_member_role" OWNER TO "postgres";
 
-ALTER TYPE "communities"."eesupool_request_status" OWNER TO "postgres";
+-- CREATE TYPE "communities"."eesupool_request_status" AS ENUM (
+--     'Pending',
+--     'Accepted',
+--     'Declined'
+-- );
 
-CREATE TYPE "communities"."eesupool_type" AS ENUM (
-    'Trade',
-    'Kasi Connect',
-    'Interest Group',
-    'Kasi'
-);
+-- ALTER TYPE "communities"."eesupool_request_status" OWNER TO "postgres";
 
-ALTER TYPE "communities"."eesupool_type" OWNER TO "postgres";
+-- CREATE TYPE "communities"."eesupool_type" AS ENUM (
+--     'Trade',
+--     'Kasi Connect',
+--     'Interest Group',
+--     'Kasi'
+-- );
 
-CREATE TYPE "engagements"."survey_type" AS ENUM (
-    'Test',
-    'Survey',
-    'Application'
-);
+-- ALTER TYPE "communities"."eesupool_type" OWNER TO "postgres";
 
-ALTER TYPE "engagements"."survey_type" OWNER TO "postgres";
+-- CREATE TYPE "engagements"."survey_type" AS ENUM (
+--     'Test',
+--     'Survey',
+--     'Application'
+-- );
 
-CREATE TYPE "finances"."payment_method" AS ENUM (
-    'Retail wallet',
-    'Ozow',
-    'Split-Ozow',
-    'Split-Instapay',
-    'Yoco',
-    'Instapay',
-    'Split-Yoco'
-);
+-- ALTER TYPE "engagements"."survey_type" OWNER TO "postgres";
 
-ALTER TYPE "finances"."payment_method" OWNER TO "postgres";
+-- CREATE TYPE "finances"."payment_method" AS ENUM (
+--     'Retail wallet',
+--     'Ozow',
+--     'Split-Ozow',
+--     'Split-Instapay',
+--     'Yoco',
+--     'Instapay',
+--     'Split-Yoco'
+-- );
+
+-- ALTER TYPE "finances"."payment_method" OWNER TO "postgres";
 
 CREATE TYPE "finances"."payment_status" AS ENUM (
     'Complete',
@@ -135,22 +136,22 @@ CREATE TYPE "finances"."payment_type" AS ENUM (
 
 ALTER TYPE "finances"."payment_type" OWNER TO "postgres";
 
-CREATE TYPE "finances"."voucher_cycle" AS ENUM (
-    'Weekly',
-    'Monthly',
-    'Once-off'
-);
+-- CREATE TYPE "finances"."voucher_cycle" AS ENUM (
+--     'Weekly',
+--     'Monthly',
+--     'Once-off'
+-- );
 
-ALTER TYPE "finances"."voucher_cycle" OWNER TO "postgres";
+-- ALTER TYPE "finances"."voucher_cycle" OWNER TO "postgres";
 
-CREATE TYPE "inventory"."product_class" AS ENUM (
-    'Food',
-    'Crowdfund-voucher',
-    'Airtime',
-    'Mobile-data'
-);
+-- CREATE TYPE "inventory"."product_class" AS ENUM (
+--     'Food',
+--     'Crowdfund-voucher',
+--     'Airtime',
+--     'Mobile-data'
+-- );
 
-ALTER TYPE "inventory"."product_class" OWNER TO "postgres";
+-- ALTER TYPE "inventory"."product_class" OWNER TO "postgres";
 
 CREATE TYPE "public"."app_type" AS ENUM (
     'EESUp',
@@ -159,95 +160,95 @@ CREATE TYPE "public"."app_type" AS ENUM (
 
 ALTER TYPE "public"."app_type" OWNER TO "postgres";
 
-CREATE TYPE "public"."basket_type" AS ENUM (
-    'Weekly',
-    'Monthly',
-    'Anually'
-);
+-- CREATE TYPE "public"."basket_type" AS ENUM (
+--     'Weekly',
+--     'Monthly',
+--     'Anually'
+-- );
 
-ALTER TYPE "public"."basket_type" OWNER TO "postgres";
+-- ALTER TYPE "public"."basket_type" OWNER TO "postgres";
 
-CREATE TYPE "public"."eesupreneur_employee_role" AS ENUM (
-    'Owner',
-    'Employee'
-);
+-- CREATE TYPE "public"."eesupreneur_employee_role" AS ENUM (
+--     'Owner',
+--     'Employee'
+-- );
 
-ALTER TYPE "public"."eesupreneur_employee_role" OWNER TO "postgres";
+-- ALTER TYPE "public"."eesupreneur_employee_role" OWNER TO "postgres";
 
-CREATE TYPE "public"."notification_channel" AS ENUM (
-    'push',
-    'sms',
-    'email',
-    'all'
-);
+-- CREATE TYPE "public"."notification_channel" AS ENUM (
+--     'push',
+--     'sms',
+--     'email',
+--     'all'
+-- );
 
-ALTER TYPE "public"."notification_channel" OWNER TO "postgres";
+-- ALTER TYPE "public"."notification_channel" OWNER TO "postgres";
 
-CREATE TYPE "public"."notification_type" AS ENUM (
-    'order',
-    'eesupool',
-    'eesupool_invite',
-    'other'
-);
+-- CREATE TYPE "public"."notification_type" AS ENUM (
+--     'order',
+--     'eesupool',
+--     'eesupool_invite',
+--     'other'
+-- );
 
-ALTER TYPE "public"."notification_type" OWNER TO "postgres";
+-- ALTER TYPE "public"."notification_type" OWNER TO "postgres";
 
-CREATE TYPE "public"."service_type" AS ENUM (
-    'EESUpreneur',
-    'Driver'
-);
+-- CREATE TYPE "public"."service_type" AS ENUM (
+--     'EESUpreneur',
+--     'Driver'
+-- );
 
-ALTER TYPE "public"."service_type" OWNER TO "postgres";
+-- ALTER TYPE "public"."service_type" OWNER TO "postgres";
 
-CREATE TYPE "public"."user_class" AS ENUM (
-    'Individual',
-    'Organization',
-    'Reseller',
-    'Non-Profit Organization'
-);
+-- CREATE TYPE "public"."user_class" AS ENUM (
+--     'Individual',
+--     'Organization',
+--     'Reseller',
+--     'Non-Profit Organization'
+-- );
 
-ALTER TYPE "public"."user_class" OWNER TO "postgres";
+-- ALTER TYPE "public"."user_class" OWNER TO "postgres";
 
-CREATE TYPE "public"."user_role" AS ENUM (
-    'Ubuntunist',
-    'EESUpreneur',
-    'EESUpromoter',
-    'Corporate',
-    'EESUplift-Corporate',
-    'Admin',
-    'Driver',
-    'Spaza',
-    'Anonymous'
-);
+-- CREATE TYPE "public"."user_role" AS ENUM (
+--     'Ubuntunist',
+--     'EESUpreneur',
+--     'EESUpromoter',
+--     'Corporate',
+--     'EESUplift-Corporate',
+--     'Admin',
+--     'Driver',
+--     'Spaza',
+--     'Anonymous'
+-- );
 
-ALTER TYPE "public"."user_role" OWNER TO "postgres";
+-- ALTER TYPE "public"."user_role" OWNER TO "postgres";
 
-CREATE TYPE "sales"."order_edit_privilage" AS ENUM (
-    'Packer',
-    'Collector',
-    'Owner',
-    'All'
-);
+-- CREATE TYPE "sales"."order_edit_privilage" AS ENUM (
+--     'Packer',
+--     'Collector',
+--     'Owner',
+--     'All'
+-- );
 
-ALTER TYPE "sales"."order_edit_privilage" OWNER TO "postgres";
+-- ALTER TYPE "sales"."order_edit_privilage" OWNER TO "postgres";
 
-CREATE TYPE "sales"."order_status" AS ENUM (
-    'Pending',
-    'Placed',
-    'Packaged',
-    'Ready',
-    'Collected',
-    'Cancelled'
-);
+-- CREATE TYPE "sales"."order_status" AS ENUM (
+--     'Pending',
+--     'Placed',
+--     'Packaged',
+--     'Ready',
+--     'Collected',
+--     'Cancelled'
+-- );
 
-ALTER TYPE "sales"."order_status" OWNER TO "postgres";
+-- ALTER TYPE "sales"."order_status" OWNER TO "postgres";
 
-CREATE TYPE "sales"."ticket_resolution_type" AS ENUM (
-    'Reorder',
-    'Refund'
-);
+-- CREATE TYPE "sales"."ticket_resolution_type" AS ENUM (
+--     'Reorder',
+--     'Refund'
+-- );
 
-ALTER TYPE "sales"."ticket_resolution_type" OWNER TO "postgres";
+-- ALTER TYPE "sales"."ticket_resolution_type" OWNER TO "postgres";
 
 CREATE OR REPLACE FUNCTION "communities"."add_or_delete_reaction"("_message_id" integer, "_member_id" "uuid", "_liked" boolean) RETURNS "void"
     LANGUAGE "plpgsql"
@@ -777,6 +778,8 @@ $$;
 
 ALTER FUNCTION "communities"."get_eesupool_messages_by_hash_tag"("pool_id" integer, "hash_tag" "text", "approved" boolean, "limit_to" integer) OWNER TO "postgres";
 
+drop function "communities"."get_eesupool_orders"("pool_id" integer, "limit_to" integer);
+
 CREATE OR REPLACE FUNCTION "communities"."get_eesupool_orders"("pool_id" integer, "limit_to" integer) RETURNS TABLE("id" integer, "eesupool_id" integer, "created_at" timestamp with time zone, "schedule_for" timestamp with time zone, "delivered_at" timestamp with time zone, "closes_at" timestamp with time zone, "admin_fee" numeric, "packer_fee" numeric, "receiver_fee" numeric, "collection_fee" numeric, "address_id" integer, "eesupool_name" "text", "address" "jsonb", "orders_count" integer, "current_amount" numeric, "secret_pin" integer)
     LANGUAGE "plpgsql"
     AS $$
@@ -1050,6 +1053,8 @@ $$;
 
 ALTER FUNCTION "communities"."get_message_reactions"("m_id" integer) OWNER TO "postgres";
 
+drop FUNCTION "communities"."get_open_eesupool_order"("pool_id" integer);
+
 CREATE OR REPLACE FUNCTION "communities"."get_open_eesupool_order"("pool_id" integer) RETURNS TABLE("id" integer, "eesupool_id" integer, "created_at" timestamp with time zone, "schedule_for" timestamp with time zone, "delivered_at" timestamp with time zone, "closes_at" timestamp with time zone, "admin_fee" numeric, "packer_fee" numeric, "receiver_fee" numeric, "collection_fee" numeric, "address_id" integer, "eesupool_name" "text", "address" "jsonb", "orders_count" integer, "current_amount" numeric, "secret_pin" integer)
     LANGUAGE "plpgsql"
     AS $$
@@ -1081,6 +1086,7 @@ END;
 $$;
 
 ALTER FUNCTION "communities"."get_open_eesupool_order"("pool_id" integer) OWNER TO "postgres";
+drop FUNCTION "communities"."get_open_eesupool_orders"("_user_id" "uuid", "_eesupool_id" integer, "_limit_to" integer);
 
 CREATE OR REPLACE FUNCTION "communities"."get_open_eesupool_orders"("_user_id" "uuid", "_eesupool_id" integer, "_limit_to" integer) RETURNS TABLE("id" integer, "eesupool_id" integer, "created_at" timestamp with time zone, "schedule_for" timestamp with time zone, "delivered_at" timestamp with time zone, "closes_at" timestamp with time zone, "admin_fee" numeric, "packer_fee" numeric, "receiver_fee" numeric, "collection_fee" numeric, "address_id" integer, "eesupool_name" "text", "address" "jsonb", "orders_count" integer, "current_amount" numeric, "secret_pin" integer)
     LANGUAGE "plpgsql"
@@ -1852,7 +1858,7 @@ END;
 $$;
 
 ALTER FUNCTION "finances"."confirm_voucher_eft"("reference" integer, "is_confirmed" boolean) OWNER TO "postgres";
-
+drop FUNCTION "finances"."create_crowdfunding_voucher"("_user_id" "uuid", "_parameter_id" "uuid", "_value" numeric, "_cycle" "finances"."voucher_cycle", "_period" integer, "_end_date" timestamp with time zone);
 CREATE OR REPLACE FUNCTION "finances"."create_crowdfunding_voucher"("_user_id" "uuid", "_parameter_id" "uuid", "_value" numeric, "_cycle" "finances"."voucher_cycle", "_period" integer, "_end_date" timestamp with time zone) RETURNS "record"
     LANGUAGE "plpgsql"
     AS $$
@@ -2229,6 +2235,9 @@ END;
 $$;
 
 ALTER FUNCTION "finances"."process_voucher_transactions"("voucher_id" integer, "crowd_fund_wallet_id" integer, "withdrawal_amount" numeric, "opening_balance" numeric, "profit_share" numeric, "closing_balance" numeric) OWNER TO "postgres";
+
+
+drop FUNCTION "finances"."search_transfer_beneficiary"("query_str" "text", "wallet_type" "text");
 
 CREATE OR REPLACE FUNCTION "finances"."search_transfer_beneficiary"("query_str" "text", "wallet_type" "text") RETURNS TABLE("user_id" "uuid", "description" "text", "full_name" "text", "corp_name" "text", "wallet_id" integer)
     LANGUAGE "plpgsql"
@@ -3885,23 +3894,23 @@ CREATE TABLE IF NOT EXISTS "communities"."eesupool" (
 
 ALTER TABLE "communities"."eesupool" OWNER TO "postgres";
 
-ALTER TABLE "communities"."eesupool" ALTER COLUMN "code" ADD GENERATED BY DEFAULT AS IDENTITY (
-    SEQUENCE NAME "communities"."eesupool_code_seq1"
-    START WITH 53940
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1
-);
+-- ALTER TABLE "communities"."eesupool" ALTER COLUMN "code" ADD GENERATED BY DEFAULT AS IDENTITY (
+--     SEQUENCE NAME "communities"."eesupool_code_seq1"
+--     START WITH 53940
+--     INCREMENT BY 1
+--     NO MINVALUE
+--     NO MAXVALUE
+--     CACHE 1
+-- );
 
-ALTER TABLE "communities"."eesupool" ALTER COLUMN "id" ADD GENERATED BY DEFAULT AS IDENTITY (
-    SEQUENCE NAME "communities"."eesupool_id_seq"
-    START WITH 1576921
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1
-);
+-- ALTER TABLE "communities"."eesupool" ALTER COLUMN "id" ADD GENERATED BY DEFAULT AS IDENTITY (
+--     SEQUENCE NAME "communities"."eesupool_id_seq"
+--     START WITH 1576921
+--     INCREMENT BY 1
+--     NO MINVALUE
+--     NO MAXVALUE
+--     CACHE 1
+-- );
 
 CREATE TABLE IF NOT EXISTS "communities"."eesupool_issue" (
     "id" "uuid" DEFAULT "gen_random_uuid"() NOT NULL,
@@ -3947,14 +3956,14 @@ CREATE TABLE IF NOT EXISTS "communities"."eesupool_order" (
 
 ALTER TABLE "communities"."eesupool_order" OWNER TO "postgres";
 
-ALTER TABLE "communities"."eesupool_order" ALTER COLUMN "id" ADD GENERATED BY DEFAULT AS IDENTITY (
-    SEQUENCE NAME "communities"."eesupool_order_id_seq"
-    START WITH 1503000
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1
-);
+-- ALTER TABLE "communities"."eesupool_order" ALTER COLUMN "id" ADD GENERATED BY DEFAULT AS IDENTITY (
+--     SEQUENCE NAME "communities"."eesupool_order_id_seq"
+--     START WITH 1503000
+--     INCREMENT BY 1
+--     NO MINVALUE
+--     NO MAXVALUE
+--     CACHE 1
+-- );
 
 CREATE TABLE IF NOT EXISTS "communities"."eesupool_request" (
     "user_id" "uuid" NOT NULL,
@@ -4014,14 +4023,14 @@ CREATE TABLE IF NOT EXISTS "communities"."message" (
 
 ALTER TABLE "communities"."message" OWNER TO "postgres";
 
-ALTER TABLE "communities"."message" ALTER COLUMN "id" ADD GENERATED BY DEFAULT AS IDENTITY (
-    SEQUENCE NAME "communities"."message_id_seq"
-    START WITH 1000
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1
-);
+-- ALTER TABLE "communities"."message" ALTER COLUMN "id" ADD GENERATED BY DEFAULT AS IDENTITY (
+--     SEQUENCE NAME "communities"."message_id_seq"
+--     START WITH 1000
+--     INCREMENT BY 1
+--     NO MINVALUE
+--     NO MAXVALUE
+--     CACHE 1
+-- );
 
 CREATE TABLE IF NOT EXISTS "communities"."message_reaction" (
     "member_id" "uuid" NOT NULL,
@@ -4048,14 +4057,14 @@ CREATE TABLE IF NOT EXISTS "engagements"."banner" (
 
 ALTER TABLE "engagements"."banner" OWNER TO "postgres";
 
-ALTER TABLE "engagements"."banner" ALTER COLUMN "id" ADD GENERATED BY DEFAULT AS IDENTITY (
-    SEQUENCE NAME "engagements"."banner_id_seq"
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1
-);
+-- ALTER TABLE "engagements"."banner" ALTER COLUMN "id" ADD GENERATED BY DEFAULT AS IDENTITY (
+--     SEQUENCE NAME "engagements"."banner_id_seq"
+--     START WITH 1
+--     INCREMENT BY 1
+--     NO MINVALUE
+--     NO MAXVALUE
+--     CACHE 1
+-- );
 
 CREATE TABLE IF NOT EXISTS "engagements"."notification" (
     "id" bigint NOT NULL,
@@ -4071,14 +4080,14 @@ CREATE TABLE IF NOT EXISTS "engagements"."notification" (
 
 ALTER TABLE "engagements"."notification" OWNER TO "postgres";
 
-ALTER TABLE "engagements"."notification" ALTER COLUMN "id" ADD GENERATED BY DEFAULT AS IDENTITY (
-    SEQUENCE NAME "engagements"."notification_id_seq"
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1
-);
+-- ALTER TABLE "engagements"."notification" ALTER COLUMN "id" ADD GENERATED BY DEFAULT AS IDENTITY (
+--     SEQUENCE NAME "engagements"."notification_id_seq"
+--     START WITH 1
+--     INCREMENT BY 1
+--     NO MINVALUE
+--     NO MAXVALUE
+--     CACHE 1
+-- );
 
 CREATE TABLE IF NOT EXISTS "engagements"."response" (
     "created_at" timestamp with time zone DEFAULT "now"() NOT NULL,
@@ -4178,14 +4187,14 @@ CREATE TABLE IF NOT EXISTS "finances"."profit_allocation" (
 
 ALTER TABLE "finances"."profit_allocation" OWNER TO "postgres";
 
-ALTER TABLE "finances"."profit_allocation" ALTER COLUMN "id" ADD GENERATED BY DEFAULT AS IDENTITY (
-    SEQUENCE NAME "finances"."profit_allocation_id_seq"
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1
-);
+-- ALTER TABLE "finances"."profit_allocation" ALTER COLUMN "id" ADD GENERATED BY DEFAULT AS IDENTITY (
+--     SEQUENCE NAME "finances"."profit_allocation_id_seq"
+--     START WITH 1
+--     INCREMENT BY 1
+--     NO MINVALUE
+--     NO MAXVALUE
+--     CACHE 1
+-- );
 
 CREATE TABLE IF NOT EXISTS "finances"."transaction" (
     "type" "text" NOT NULL,
@@ -4203,14 +4212,14 @@ CREATE TABLE IF NOT EXISTS "finances"."transaction" (
 
 ALTER TABLE "finances"."transaction" OWNER TO "postgres";
 
-ALTER TABLE "finances"."transaction" ALTER COLUMN "id" ADD GENERATED BY DEFAULT AS IDENTITY (
-    SEQUENCE NAME "finances"."transaction_id_seq"
-    START WITH 2601375
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1
-);
+-- ALTER TABLE "finances"."transaction" ALTER COLUMN "id" ADD GENERATED BY DEFAULT AS IDENTITY (
+--     SEQUENCE NAME "finances"."transaction_id_seq"
+--     START WITH 2601375
+--     INCREMENT BY 1
+--     NO MINVALUE
+--     NO MAXVALUE
+--     CACHE 1
+-- );
 
 CREATE TABLE IF NOT EXISTS "finances"."transaction_type" (
     "id" "text" NOT NULL,
@@ -4237,14 +4246,14 @@ CREATE TABLE IF NOT EXISTS "finances"."voucher" (
 
 ALTER TABLE "finances"."voucher" OWNER TO "postgres";
 
-ALTER TABLE "finances"."voucher" ALTER COLUMN "id" ADD GENERATED BY DEFAULT AS IDENTITY (
-    SEQUENCE NAME "finances"."voucher_id_seq1"
-    START WITH 150000
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1
-);
+-- ALTER TABLE "finances"."voucher" ALTER COLUMN "id" ADD GENERATED BY DEFAULT AS IDENTITY (
+--     SEQUENCE NAME "finances"."voucher_id_seq1"
+--     START WITH 150000
+--     INCREMENT BY 1
+--     NO MINVALUE
+--     NO MAXVALUE
+--     CACHE 1
+-- );
 
 CREATE TABLE IF NOT EXISTS "finances"."voucher_ledger" (
     "voucher_id" integer NOT NULL,
@@ -4278,14 +4287,14 @@ CREATE TABLE IF NOT EXISTS "finances"."wallet" (
 
 ALTER TABLE "finances"."wallet" OWNER TO "postgres";
 
-ALTER TABLE "finances"."wallet" ALTER COLUMN "id" ADD GENERATED BY DEFAULT AS IDENTITY (
-    SEQUENCE NAME "finances"."wallet_id_seq"
-    START WITH 150002600
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1
-);
+-- ALTER TABLE "finances"."wallet" ALTER COLUMN "id" ADD GENERATED BY DEFAULT AS IDENTITY (
+--     SEQUENCE NAME "finances"."wallet_id_seq"
+--     START WITH 150002600
+--     INCREMENT BY 1
+--     NO MINVALUE
+--     NO MAXVALUE
+--     CACHE 1
+-- );
 
 CREATE TABLE IF NOT EXISTS "finances"."wallet_transaction" (
     "wallet_id" integer NOT NULL,
@@ -4328,14 +4337,14 @@ CREATE TABLE IF NOT EXISTS "geolocations"."address" (
 
 ALTER TABLE "geolocations"."address" OWNER TO "postgres";
 
-ALTER TABLE "geolocations"."address" ALTER COLUMN "id" ADD GENERATED BY DEFAULT AS IDENTITY (
-    SEQUENCE NAME "geolocations"."address_id_seq"
-    START WITH 10185
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1
-);
+-- ALTER TABLE "geolocations"."address" ALTER COLUMN "id" ADD GENERATED BY DEFAULT AS IDENTITY (
+--     SEQUENCE NAME "geolocations"."address_id_seq"
+--     START WITH 10185
+--     INCREMENT BY 1
+--     NO MINVALUE
+--     NO MAXVALUE
+--     CACHE 1
+-- );
 
 CREATE TABLE IF NOT EXISTS "geolocations"."target_area" (
     "id" integer NOT NULL,
@@ -4349,14 +4358,14 @@ CREATE TABLE IF NOT EXISTS "geolocations"."target_area" (
 
 ALTER TABLE "geolocations"."target_area" OWNER TO "postgres";
 
-ALTER TABLE "geolocations"."target_area" ALTER COLUMN "id" ADD GENERATED BY DEFAULT AS IDENTITY (
-    SEQUENCE NAME "geolocations"."target_area_area_id_seq"
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1
-);
+-- ALTER TABLE "geolocations"."target_area" ALTER COLUMN "id" ADD GENERATED BY DEFAULT AS IDENTITY (
+--     SEQUENCE NAME "geolocations"."target_area_area_id_seq"
+--     START WITH 1
+--     INCREMENT BY 1
+--     NO MINVALUE
+--     NO MAXVALUE
+--     CACHE 1
+-- );
 
 CREATE TABLE IF NOT EXISTS "inventory"."category" (
     "id" integer NOT NULL,
@@ -4369,14 +4378,14 @@ CREATE TABLE IF NOT EXISTS "inventory"."category" (
 
 ALTER TABLE "inventory"."category" OWNER TO "postgres";
 
-ALTER TABLE "inventory"."category" ALTER COLUMN "id" ADD GENERATED BY DEFAULT AS IDENTITY (
-    SEQUENCE NAME "inventory"."category_id_seq"
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1
-);
+-- ALTER TABLE "inventory"."category" ALTER COLUMN "id" ADD GENERATED BY DEFAULT AS IDENTITY (
+--     SEQUENCE NAME "inventory"."category_id_seq"
+--     START WITH 1
+--     INCREMENT BY 1
+--     NO MINVALUE
+--     NO MAXVALUE
+--     CACHE 1
+-- );
 
 CREATE TABLE IF NOT EXISTS "inventory"."product" (
     "id" integer NOT NULL,
@@ -4417,14 +4426,14 @@ CREATE TABLE IF NOT EXISTS "inventory"."product" (
 
 ALTER TABLE "inventory"."product" OWNER TO "postgres";
 
-ALTER TABLE "inventory"."product" ALTER COLUMN "id" ADD GENERATED BY DEFAULT AS IDENTITY (
-    SEQUENCE NAME "inventory"."product_id_seq"
-    START WITH 4011
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1
-);
+-- ALTER TABLE "inventory"."product" ALTER COLUMN "id" ADD GENERATED BY DEFAULT AS IDENTITY (
+--     SEQUENCE NAME "inventory"."product_id_seq"
+--     START WITH 4011
+--     INCREMENT BY 1
+--     NO MINVALUE
+--     NO MAXVALUE
+--     CACHE 1
+-- );
 
 CREATE TABLE IF NOT EXISTS "inventory"."product_request" (
     "id" bigint NOT NULL,
@@ -4440,14 +4449,14 @@ CREATE TABLE IF NOT EXISTS "inventory"."product_request" (
 
 ALTER TABLE "inventory"."product_request" OWNER TO "postgres";
 
-ALTER TABLE "inventory"."product_request" ALTER COLUMN "id" ADD GENERATED BY DEFAULT AS IDENTITY (
-    SEQUENCE NAME "inventory"."product_request_id_seq"
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1
-);
+-- ALTER TABLE "inventory"."product_request" ALTER COLUMN "id" ADD GENERATED BY DEFAULT AS IDENTITY (
+--     SEQUENCE NAME "inventory"."product_request_id_seq"
+--     START WITH 1
+--     INCREMENT BY 1
+--     NO MINVALUE
+--     NO MAXVALUE
+--     CACHE 1
+-- );
 
 CREATE TABLE IF NOT EXISTS "inventory"."scraped_product" (
     "id" integer NOT NULL,
@@ -4476,14 +4485,14 @@ CREATE TABLE IF NOT EXISTS "inventory"."scraped_product" (
 
 ALTER TABLE "inventory"."scraped_product" OWNER TO "postgres";
 
-ALTER TABLE "inventory"."scraped_product" ALTER COLUMN "id" ADD GENERATED BY DEFAULT AS IDENTITY (
-    SEQUENCE NAME "inventory"."scraped_product_id_seq"
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1
-);
+-- ALTER TABLE "inventory"."scraped_product" ALTER COLUMN "id" ADD GENERATED BY DEFAULT AS IDENTITY (
+--     SEQUENCE NAME "inventory"."scraped_product_id_seq"
+--     START WITH 1
+--     INCREMENT BY 1
+--     NO MINVALUE
+--     NO MAXVALUE
+--     CACHE 1
+-- );
 
 CREATE TABLE IF NOT EXISTS "public"."basket" (
     "id" "uuid" DEFAULT "gen_random_uuid"() NOT NULL,
@@ -4530,14 +4539,14 @@ CREATE TABLE IF NOT EXISTS "public"."profile" (
 
 ALTER TABLE "public"."profile" OWNER TO "postgres";
 
-ALTER TABLE "public"."profile" ALTER COLUMN "referral_code" ADD GENERATED BY DEFAULT AS IDENTITY (
-    SEQUENCE NAME "public"."profile_referral_code_seq1"
-    START WITH 14750
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1
-);
+-- ALTER TABLE "public"."profile" ALTER COLUMN "referral_code" ADD GENERATED BY DEFAULT AS IDENTITY (
+--     SEQUENCE NAME "public"."profile_referral_code_seq1"
+--     START WITH 14750
+--     INCREMENT BY 1
+--     NO MINVALUE
+--     NO MAXVALUE
+--     CACHE 1
+-- );
 
 CREATE TABLE IF NOT EXISTS "public"."referral" (
     "referrer_user_id" "uuid" NOT NULL,
@@ -4571,14 +4580,14 @@ CREATE TABLE IF NOT EXISTS "sales"."order" (
 
 ALTER TABLE "sales"."order" OWNER TO "postgres";
 
-ALTER TABLE "sales"."order" ALTER COLUMN "id" ADD GENERATED BY DEFAULT AS IDENTITY (
-    SEQUENCE NAME "sales"."order_id_seq"
-    START WITH 101883
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1
-);
+-- ALTER TABLE "sales"."order" ALTER COLUMN "id" ADD GENERATED BY DEFAULT AS IDENTITY (
+--     SEQUENCE NAME "sales"."order_id_seq"
+--     START WITH 101883
+--     INCREMENT BY 1
+--     NO MINVALUE
+--     NO MAXVALUE
+--     CACHE 1
+-- );
 
 CREATE TABLE IF NOT EXISTS "sales"."order_product" (
     "product_id" integer NOT NULL,
@@ -4620,14 +4629,14 @@ CREATE TABLE IF NOT EXISTS "sales"."order_ticket" (
 
 ALTER TABLE "sales"."order_ticket" OWNER TO "postgres";
 
-ALTER TABLE "sales"."order_ticket" ALTER COLUMN "id" ADD GENERATED BY DEFAULT AS IDENTITY (
-    SEQUENCE NAME "sales"."order_ticket_id_seq"
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1
-);
+-- ALTER TABLE "sales"."order_ticket" ALTER COLUMN "id" ADD GENERATED BY DEFAULT AS IDENTITY (
+--     SEQUENCE NAME "sales"."order_ticket_id_seq"
+--     START WITH 1
+--     INCREMENT BY 1
+--     NO MINVALUE
+--     NO MAXVALUE
+--     CACHE 1
+-- );
 
 CREATE TABLE IF NOT EXISTS "sales"."order_transaction" (
     "order_id" integer NOT NULL,
@@ -4686,14 +4695,14 @@ CREATE TABLE IF NOT EXISTS "services"."partner_application" (
 
 ALTER TABLE "services"."partner_application" OWNER TO "postgres";
 
-ALTER TABLE "services"."partner_application" ALTER COLUMN "id" ADD GENERATED BY DEFAULT AS IDENTITY (
-    SEQUENCE NAME "services"."partner_application_id_seq"
-    START WITH 13230
-    INCREMENT BY 3
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1
-);
+-- ALTER TABLE "services"."partner_application" ALTER COLUMN "id" ADD GENERATED BY DEFAULT AS IDENTITY (
+--     SEQUENCE NAME "services"."partner_application_id_seq"
+--     START WITH 13230
+--     INCREMENT BY 3
+--     NO MINVALUE
+--     NO MAXVALUE
+--     CACHE 1
+-- );
 
 CREATE TABLE IF NOT EXISTS "system_configs"."api_key" (
     "id" "text" NOT NULL,
@@ -4740,182 +4749,182 @@ CREATE TABLE IF NOT EXISTS "warehousing"."warehouse" (
 
 ALTER TABLE "warehousing"."warehouse" OWNER TO "postgres";
 
-ALTER TABLE ONLY "communities"."eesupool_issue"
-    ADD CONSTRAINT "eesupool_issue_pkey" PRIMARY KEY ("id");
+-- ALTER TABLE ONLY "communities"."eesupool_issue"
+--     ADD CONSTRAINT "eesupool_issue_pkey" PRIMARY KEY ("id");
 
-ALTER TABLE ONLY "communities"."eesupool_member"
-    ADD CONSTRAINT "eesupool_member_pkey" PRIMARY KEY ("id");
+-- ALTER TABLE ONLY "communities"."eesupool_member"
+--     ADD CONSTRAINT "eesupool_member_pkey" PRIMARY KEY ("id");
 
-ALTER TABLE ONLY "communities"."eesupool_order"
-    ADD CONSTRAINT "eesupool_order_pkey" PRIMARY KEY ("id");
+-- ALTER TABLE ONLY "communities"."eesupool_order"
+--     ADD CONSTRAINT "eesupool_order_pkey" PRIMARY KEY ("id");
 
-ALTER TABLE ONLY "communities"."eesupool"
-    ADD CONSTRAINT "eesupool_pkey" PRIMARY KEY ("id");
+-- ALTER TABLE ONLY "communities"."eesupool"
+--     ADD CONSTRAINT "eesupool_pkey" PRIMARY KEY ("id");
 
-ALTER TABLE ONLY "communities"."eesupool_request"
-    ADD CONSTRAINT "eesupool_request_pkey" PRIMARY KEY ("user_id", "eesupool_id");
+-- ALTER TABLE ONLY "communities"."eesupool_request"
+--     ADD CONSTRAINT "eesupool_request_pkey" PRIMARY KEY ("user_id", "eesupool_id");
 
-ALTER TABLE ONLY "communities"."event_attendee"
-    ADD CONSTRAINT "event_attandee_pkey" PRIMARY KEY ("event_id", "member_id");
+-- ALTER TABLE ONLY "communities"."event_attendee"
+--     ADD CONSTRAINT "event_attandee_pkey" PRIMARY KEY ("event_id", "member_id");
 
-ALTER TABLE ONLY "communities"."event"
-    ADD CONSTRAINT "event_pkey" PRIMARY KEY ("id");
+-- ALTER TABLE ONLY "communities"."event"
+--     ADD CONSTRAINT "event_pkey" PRIMARY KEY ("id");
 
-ALTER TABLE ONLY "communities"."member_order_assignment"
-    ADD CONSTRAINT "member_order_assignment_pkey" PRIMARY KEY ("order_id", "eesupool_ord_id", "member_id");
+-- ALTER TABLE ONLY "communities"."member_order_assignment"
+--     ADD CONSTRAINT "member_order_assignment_pkey" PRIMARY KEY ("order_id", "eesupool_ord_id", "member_id");
 
-ALTER TABLE ONLY "communities"."message"
-    ADD CONSTRAINT "message_pkey" PRIMARY KEY ("id");
+-- ALTER TABLE ONLY "communities"."message"
+--     ADD CONSTRAINT "message_pkey" PRIMARY KEY ("id");
 
-ALTER TABLE ONLY "communities"."message_reaction"
-    ADD CONSTRAINT "message_reaction_pkey" PRIMARY KEY ("member_id", "message_id");
+-- ALTER TABLE ONLY "communities"."message_reaction"
+--     ADD CONSTRAINT "message_reaction_pkey" PRIMARY KEY ("member_id", "message_id");
 
-ALTER TABLE ONLY "communities"."message_seen"
-    ADD CONSTRAINT "message_read_pkey" PRIMARY KEY ("member_id", "message_id");
+-- ALTER TABLE ONLY "communities"."message_seen"
+--     ADD CONSTRAINT "message_read_pkey" PRIMARY KEY ("member_id", "message_id");
 
-ALTER TABLE ONLY "communities"."eesupool"
-    ADD CONSTRAINT "stokvel_name_key" UNIQUE ("name");
+-- ALTER TABLE ONLY "communities"."eesupool"
+--     ADD CONSTRAINT "stokvel_name_key" UNIQUE ("name");
 
-ALTER TABLE ONLY "communities"."eesupool_member"
-    ADD CONSTRAINT "unique_eesupool_member" UNIQUE ("user_id", "eesupool_id");
+-- ALTER TABLE ONLY "communities"."eesupool_member"
+--     ADD CONSTRAINT "unique_eesupool_member" UNIQUE ("user_id", "eesupool_id");
 
-ALTER TABLE ONLY "communities"."eesupool_request"
-    ADD CONSTRAINT "unique_user_and_pool_ids" UNIQUE ("user_id", "eesupool_id");
+-- ALTER TABLE ONLY "communities"."eesupool_request"
+--     ADD CONSTRAINT "unique_user_and_pool_ids" UNIQUE ("user_id", "eesupool_id");
 
-ALTER TABLE ONLY "engagements"."banner"
-    ADD CONSTRAINT "banner_pkey" PRIMARY KEY ("id");
+-- ALTER TABLE ONLY "engagements"."banner"
+--     ADD CONSTRAINT "banner_pkey" PRIMARY KEY ("id");
 
-ALTER TABLE ONLY "engagements"."response"
-    ADD CONSTRAINT "limit_user_to_one_response" UNIQUE ("user_id", "survey_id");
+-- ALTER TABLE ONLY "engagements"."response"
+--     ADD CONSTRAINT "limit_user_to_one_response" UNIQUE ("user_id", "survey_id");
 
-ALTER TABLE ONLY "engagements"."notification"
-    ADD CONSTRAINT "notification_pkey" PRIMARY KEY ("id");
+-- ALTER TABLE ONLY "engagements"."notification"
+--     ADD CONSTRAINT "notification_pkey" PRIMARY KEY ("id");
 
-ALTER TABLE ONLY "engagements"."response"
-    ADD CONSTRAINT "response_pkey" PRIMARY KEY ("id");
+-- ALTER TABLE ONLY "engagements"."response"
+--     ADD CONSTRAINT "response_pkey" PRIMARY KEY ("id");
 
-ALTER TABLE ONLY "engagements"."survey"
-    ADD CONSTRAINT "survey_pkey" PRIMARY KEY ("id");
+-- ALTER TABLE ONLY "engagements"."survey"
+--     ADD CONSTRAINT "survey_pkey" PRIMARY KEY ("id");
 
-ALTER TABLE ONLY "finances"."online_payment"
-    ADD CONSTRAINT "online_payment_pkey" PRIMARY KEY ("payment_id");
+-- ALTER TABLE ONLY "finances"."online_payment"
+--     ADD CONSTRAINT "online_payment_pkey" PRIMARY KEY ("payment_id");
 
-ALTER TABLE ONLY "finances"."online_payment"
-    ADD CONSTRAINT "online_payment_secondary_id_key" UNIQUE ("secondary_id");
+-- ALTER TABLE ONLY "finances"."online_payment"
+--     ADD CONSTRAINT "online_payment_secondary_id_key" UNIQUE ("secondary_id");
 
-ALTER TABLE ONLY "finances"."payment_gateway"
-    ADD CONSTRAINT "payment_gateway_pkey" PRIMARY KEY ("id");
+-- ALTER TABLE ONLY "finances"."payment_gateway"
+--     ADD CONSTRAINT "payment_gateway_pkey" PRIMARY KEY ("id");
 
-ALTER TABLE ONLY "finances"."payout_request"
-    ADD CONSTRAINT "payout_request_pkey" PRIMARY KEY ("id");
+-- ALTER TABLE ONLY "finances"."payout_request"
+--     ADD CONSTRAINT "payout_request_pkey" PRIMARY KEY ("id");
 
-ALTER TABLE ONLY "finances"."profit_allocation"
-    ADD CONSTRAINT "profit_allocation_pkey" PRIMARY KEY ("id");
+-- ALTER TABLE ONLY "finances"."profit_allocation"
+--     ADD CONSTRAINT "profit_allocation_pkey" PRIMARY KEY ("id");
 
-ALTER TABLE ONLY "finances"."transaction"
-    ADD CONSTRAINT "transaction_pkey" PRIMARY KEY ("id");
+-- ALTER TABLE ONLY "finances"."transaction"
+--     ADD CONSTRAINT "transaction_pkey" PRIMARY KEY ("id");
 
-ALTER TABLE ONLY "finances"."transaction_type"
-    ADD CONSTRAINT "transaction_type_pkey" PRIMARY KEY ("id");
+-- ALTER TABLE ONLY "finances"."transaction_type"
+--     ADD CONSTRAINT "transaction_type_pkey" PRIMARY KEY ("id");
 
-ALTER TABLE ONLY "finances"."voucher_ledger"
-    ADD CONSTRAINT "voucher_ledger_pkey" PRIMARY KEY ("voucher_id", "transaction_id");
+-- ALTER TABLE ONLY "finances"."voucher_ledger"
+--     ADD CONSTRAINT "voucher_ledger_pkey" PRIMARY KEY ("voucher_id", "transaction_id");
 
-ALTER TABLE ONLY "finances"."voucher_parameter"
-    ADD CONSTRAINT "voucher_parameter_pkey" PRIMARY KEY ("id");
+-- ALTER TABLE ONLY "finances"."voucher_parameter"
+--     ADD CONSTRAINT "voucher_parameter_pkey" PRIMARY KEY ("id");
 
-ALTER TABLE ONLY "finances"."voucher"
-    ADD CONSTRAINT "voucher_pkey" PRIMARY KEY ("id");
+-- ALTER TABLE ONLY "finances"."voucher"
+--     ADD CONSTRAINT "voucher_pkey" PRIMARY KEY ("id");
 
-ALTER TABLE ONLY "finances"."wallet"
-    ADD CONSTRAINT "wallet_pkey" PRIMARY KEY ("id");
+-- ALTER TABLE ONLY "finances"."wallet"
+--     ADD CONSTRAINT "wallet_pkey" PRIMARY KEY ("id");
 
-ALTER TABLE ONLY "finances"."wallet_transaction"
-    ADD CONSTRAINT "wallet_transaction_pkey" PRIMARY KEY ("wallet_id", "transaction_id");
+-- ALTER TABLE ONLY "finances"."wallet_transaction"
+--     ADD CONSTRAINT "wallet_transaction_pkey" PRIMARY KEY ("wallet_id", "transaction_id");
 
-ALTER TABLE ONLY "finances"."wallet_type"
-    ADD CONSTRAINT "wallet_type_pkey" PRIMARY KEY ("id");
+-- ALTER TABLE ONLY "finances"."wallet_type"
+--     ADD CONSTRAINT "wallet_type_pkey" PRIMARY KEY ("id");
 
-ALTER TABLE ONLY "geolocations"."address"
-    ADD CONSTRAINT "address_pkey" PRIMARY KEY ("id");
+-- ALTER TABLE ONLY "geolocations"."address"
+--     ADD CONSTRAINT "address_pkey" PRIMARY KEY ("id");
 
-ALTER TABLE ONLY "geolocations"."target_area"
-    ADD CONSTRAINT "target_area_pkey" PRIMARY KEY ("id");
+-- ALTER TABLE ONLY "geolocations"."target_area"
+--     ADD CONSTRAINT "target_area_pkey" PRIMARY KEY ("id");
 
-ALTER TABLE ONLY "inventory"."category"
-    ADD CONSTRAINT "category_pkey" PRIMARY KEY ("id");
+-- ALTER TABLE ONLY "inventory"."category"
+--     ADD CONSTRAINT "category_pkey" PRIMARY KEY ("id");
 
-ALTER TABLE ONLY "inventory"."product"
-    ADD CONSTRAINT "product_pkey" PRIMARY KEY ("id");
+-- ALTER TABLE ONLY "inventory"."product"
+--     ADD CONSTRAINT "product_pkey" PRIMARY KEY ("id");
 
-ALTER TABLE ONLY "inventory"."product_request"
-    ADD CONSTRAINT "product_request_pkey" PRIMARY KEY ("id");
+-- ALTER TABLE ONLY "inventory"."product_request"
+--     ADD CONSTRAINT "product_request_pkey" PRIMARY KEY ("id");
 
-ALTER TABLE ONLY "inventory"."scraped_product"
-    ADD CONSTRAINT "scraped_product_pkey" PRIMARY KEY ("id");
+-- ALTER TABLE ONLY "inventory"."scraped_product"
+--     ADD CONSTRAINT "scraped_product_pkey" PRIMARY KEY ("id");
 
-ALTER TABLE ONLY "public"."basket_product"
-    ADD CONSTRAINT "basket_product_pkey" PRIMARY KEY ("basket_id", "product_id");
+-- ALTER TABLE ONLY "public"."basket_product"
+--     ADD CONSTRAINT "basket_product_pkey" PRIMARY KEY ("basket_id", "product_id");
 
-ALTER TABLE ONLY "public"."profile"
-    ADD CONSTRAINT "profile_email_key" UNIQUE ("email");
+-- ALTER TABLE ONLY "public"."profile"
+--     ADD CONSTRAINT "profile_email_key" UNIQUE ("email");
 
-ALTER TABLE ONLY "public"."profile"
-    ADD CONSTRAINT "profile_phone_key" UNIQUE ("phone");
+-- ALTER TABLE ONLY "public"."profile"
+--     ADD CONSTRAINT "profile_phone_key" UNIQUE ("phone");
 
-ALTER TABLE ONLY "public"."referral"
-    ADD CONSTRAINT "referral_pkey" PRIMARY KEY ("referrer_user_id", "refereed_user_id");
+-- ALTER TABLE ONLY "public"."referral"
+--     ADD CONSTRAINT "referral_pkey" PRIMARY KEY ("referrer_user_id", "refereed_user_id");
 
-ALTER TABLE ONLY "public"."profile"
-    ADD CONSTRAINT "users_pkey" PRIMARY KEY ("user_id");
+-- ALTER TABLE ONLY "public"."profile"
+--     ADD CONSTRAINT "users_pkey" PRIMARY KEY ("user_id");
 
-ALTER TABLE ONLY "public"."profile"
-    ADD CONSTRAINT "users_rsa_id_number_key" UNIQUE ("rsa_id_number");
+-- ALTER TABLE ONLY "public"."profile"
+--     ADD CONSTRAINT "users_rsa_id_number_key" UNIQUE ("rsa_id_number");
 
-ALTER TABLE ONLY "public"."basket"
-    ADD CONSTRAINT "wishlist_pkey" PRIMARY KEY ("id");
+-- ALTER TABLE ONLY "public"."basket"
+--     ADD CONSTRAINT "wishlist_pkey" PRIMARY KEY ("id");
 
-ALTER TABLE ONLY "sales"."order"
-    ADD CONSTRAINT "order_pkey" PRIMARY KEY ("id");
+-- ALTER TABLE ONLY "sales"."order"
+--     ADD CONSTRAINT "order_pkey" PRIMARY KEY ("id");
 
-ALTER TABLE ONLY "sales"."order_product"
-    ADD CONSTRAINT "order_product_pkey" PRIMARY KEY ("product_id", "order_id");
+-- ALTER TABLE ONLY "sales"."order_product"
+--     ADD CONSTRAINT "order_product_pkey" PRIMARY KEY ("product_id", "order_id");
 
-ALTER TABLE ONLY "sales"."order_ticket"
-    ADD CONSTRAINT "order_ticket_pkey" PRIMARY KEY ("id");
+-- ALTER TABLE ONLY "sales"."order_ticket"
+--     ADD CONSTRAINT "order_ticket_pkey" PRIMARY KEY ("id");
 
-ALTER TABLE ONLY "sales"."order_transaction"
-    ADD CONSTRAINT "order_transaction_pkey" PRIMARY KEY ("order_id", "transaction_id");
+-- ALTER TABLE ONLY "sales"."order_transaction"
+--     ADD CONSTRAINT "order_transaction_pkey" PRIMARY KEY ("order_id", "transaction_id");
 
-ALTER TABLE ONLY "services"."eesupreneur_employee"
-    ADD CONSTRAINT "eesupreneur_employee_pkey" PRIMARY KEY ("user_id", "eesupreneur_id");
+-- ALTER TABLE ONLY "services"."eesupreneur_employee"
+--     ADD CONSTRAINT "eesupreneur_employee_pkey" PRIMARY KEY ("user_id", "eesupreneur_id");
 
-ALTER TABLE ONLY "services"."eesupreneur"
-    ADD CONSTRAINT "eesupreneur_pkey" PRIMARY KEY ("id");
+-- ALTER TABLE ONLY "services"."eesupreneur"
+--     ADD CONSTRAINT "eesupreneur_pkey" PRIMARY KEY ("id");
 
-ALTER TABLE ONLY "services"."partner_application"
-    ADD CONSTRAINT "partner_application_pkey" PRIMARY KEY ("id");
+-- ALTER TABLE ONLY "services"."partner_application"
+--     ADD CONSTRAINT "partner_application_pkey" PRIMARY KEY ("id");
 
-ALTER TABLE ONLY "services"."partner"
-    ADD CONSTRAINT "service_pkey" PRIMARY KEY ("id");
+-- ALTER TABLE ONLY "services"."partner"
+--     ADD CONSTRAINT "service_pkey" PRIMARY KEY ("id");
 
-ALTER TABLE ONLY "system_configs"."api_key"
-    ADD CONSTRAINT "api_key_key_key" UNIQUE ("key");
+-- ALTER TABLE ONLY "system_configs"."api_key"
+--     ADD CONSTRAINT "api_key_key_key" UNIQUE ("key");
 
-ALTER TABLE ONLY "system_configs"."api_key"
-    ADD CONSTRAINT "api_key_pkey" PRIMARY KEY ("id");
+-- ALTER TABLE ONLY "system_configs"."api_key"
+--     ADD CONSTRAINT "api_key_pkey" PRIMARY KEY ("id");
 
-ALTER TABLE ONLY "system_configs"."remote_config"
-    ADD CONSTRAINT "remote_config_pkey" PRIMARY KEY ("id");
+-- ALTER TABLE ONLY "system_configs"."remote_config"
+--     ADD CONSTRAINT "remote_config_pkey" PRIMARY KEY ("id");
 
-ALTER TABLE ONLY "warehousing"."distribution_centre"
-    ADD CONSTRAINT "distribution_centre_pkey" PRIMARY KEY ("id");
+-- ALTER TABLE ONLY "warehousing"."distribution_centre"
+--     ADD CONSTRAINT "distribution_centre_pkey" PRIMARY KEY ("id");
 
-ALTER TABLE ONLY "warehousing"."supplier"
-    ADD CONSTRAINT "supplier_pkey" PRIMARY KEY ("id");
+-- ALTER TABLE ONLY "warehousing"."supplier"
+--     ADD CONSTRAINT "supplier_pkey" PRIMARY KEY ("id");
 
-ALTER TABLE ONLY "warehousing"."warehouse"
-    ADD CONSTRAINT "warehouse_pkey" PRIMARY KEY ("id");
+-- ALTER TABLE ONLY "warehousing"."warehouse"
+--     ADD CONSTRAINT "warehouse_pkey" PRIMARY KEY ("id");
 
 CREATE OR REPLACE TRIGGER "broadcast_eesupool_message_trigger" AFTER INSERT ON "communities"."message" FOR EACH ROW EXECUTE FUNCTION "communities"."broadcast_eesupool_message"();
 
@@ -4963,234 +4972,234 @@ CREATE OR REPLACE TRIGGER "on_partner_application_approved_trigger" AFTER INSERT
 
 CREATE OR REPLACE TRIGGER "prevent_editing_of_the_partner_id_value_trigger" BEFORE UPDATE ON "services"."partner" FOR EACH ROW EXECUTE FUNCTION "services"."prevent_editing_of_the_partner_id_value"();
 
-ALTER TABLE ONLY "communities"."eesupool"
-    ADD CONSTRAINT "eesupool_address_id_fkey" FOREIGN KEY ("address_id") REFERENCES "geolocations"."address"("id") ON DELETE SET NULL;
+-- ALTER TABLE ONLY "communities"."eesupool"
+--     ADD CONSTRAINT "eesupool_address_id_fkey" FOREIGN KEY ("address_id") REFERENCES "geolocations"."address"("id") ON DELETE SET NULL;
 
-ALTER TABLE ONLY "communities"."eesupool_issue"
-    ADD CONSTRAINT "eesupool_issue_eesupool_id_fkey" FOREIGN KEY ("eesupool_id") REFERENCES "communities"."eesupool"("id") ON DELETE CASCADE;
+-- ALTER TABLE ONLY "communities"."eesupool_issue"
+--     ADD CONSTRAINT "eesupool_issue_eesupool_id_fkey" FOREIGN KEY ("eesupool_id") REFERENCES "communities"."eesupool"("id") ON DELETE CASCADE;
 
-ALTER TABLE ONLY "communities"."eesupool_issue"
-    ADD CONSTRAINT "eesupool_issue_message_id_fkey" FOREIGN KEY ("message_id") REFERENCES "communities"."message"("id") ON DELETE CASCADE;
+-- ALTER TABLE ONLY "communities"."eesupool_issue"
+--     ADD CONSTRAINT "eesupool_issue_message_id_fkey" FOREIGN KEY ("message_id") REFERENCES "communities"."message"("id") ON DELETE CASCADE;
 
-ALTER TABLE ONLY "communities"."eesupool_issue"
-    ADD CONSTRAINT "eesupool_issue_offender_id_fkey" FOREIGN KEY ("offender_id") REFERENCES "communities"."eesupool_member"("id") ON DELETE SET NULL;
+-- ALTER TABLE ONLY "communities"."eesupool_issue"
+--     ADD CONSTRAINT "eesupool_issue_offender_id_fkey" FOREIGN KEY ("offender_id") REFERENCES "communities"."eesupool_member"("id") ON DELETE SET NULL;
 
-ALTER TABLE ONLY "communities"."eesupool_issue"
-    ADD CONSTRAINT "eesupool_issue_parent_pool_id_fkey" FOREIGN KEY ("parent_pool_id") REFERENCES "communities"."eesupool"("id") ON DELETE SET NULL;
+-- ALTER TABLE ONLY "communities"."eesupool_issue"
+--     ADD CONSTRAINT "eesupool_issue_parent_pool_id_fkey" FOREIGN KEY ("parent_pool_id") REFERENCES "communities"."eesupool"("id") ON DELETE SET NULL;
 
-ALTER TABLE ONLY "communities"."eesupool_issue"
-    ADD CONSTRAINT "eesupool_issue_reporter_id_fkey" FOREIGN KEY ("reporter_id") REFERENCES "communities"."eesupool_member"("id") ON DELETE SET NULL;
+-- ALTER TABLE ONLY "communities"."eesupool_issue"
+--     ADD CONSTRAINT "eesupool_issue_reporter_id_fkey" FOREIGN KEY ("reporter_id") REFERENCES "communities"."eesupool_member"("id") ON DELETE SET NULL;
 
-ALTER TABLE ONLY "communities"."eesupool_member"
-    ADD CONSTRAINT "eesupool_member_eesupool_id_fkey" FOREIGN KEY ("eesupool_id") REFERENCES "communities"."eesupool"("id") ON DELETE CASCADE;
+-- ALTER TABLE ONLY "communities"."eesupool_member"
+--     ADD CONSTRAINT "eesupool_member_eesupool_id_fkey" FOREIGN KEY ("eesupool_id") REFERENCES "communities"."eesupool"("id") ON DELETE CASCADE;
 
-ALTER TABLE ONLY "communities"."eesupool_member"
-    ADD CONSTRAINT "eesupool_member_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "public"."profile"("user_id") ON DELETE CASCADE;
+-- ALTER TABLE ONLY "communities"."eesupool_member"
+--     ADD CONSTRAINT "eesupool_member_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "public"."profile"("user_id") ON DELETE CASCADE;
 
-ALTER TABLE ONLY "communities"."eesupool_order"
-    ADD CONSTRAINT "eesupool_order_address_id_fkey" FOREIGN KEY ("address_id") REFERENCES "geolocations"."address"("id") ON DELETE CASCADE;
+-- ALTER TABLE ONLY "communities"."eesupool_order"
+--     ADD CONSTRAINT "eesupool_order_address_id_fkey" FOREIGN KEY ("address_id") REFERENCES "geolocations"."address"("id") ON DELETE CASCADE;
 
-ALTER TABLE ONLY "communities"."eesupool_order"
-    ADD CONSTRAINT "eesupool_order_eesupool_id_fkey" FOREIGN KEY ("eesupool_id") REFERENCES "communities"."eesupool"("id") ON DELETE CASCADE;
+-- ALTER TABLE ONLY "communities"."eesupool_order"
+--     ADD CONSTRAINT "eesupool_order_eesupool_id_fkey" FOREIGN KEY ("eesupool_id") REFERENCES "communities"."eesupool"("id") ON DELETE CASCADE;
 
-ALTER TABLE ONLY "communities"."eesupool"
-    ADD CONSTRAINT "eesupool_parent_id_fkey" FOREIGN KEY ("parent_id") REFERENCES "communities"."eesupool"("id") ON DELETE SET NULL;
+-- ALTER TABLE ONLY "communities"."eesupool"
+--     ADD CONSTRAINT "eesupool_parent_id_fkey" FOREIGN KEY ("parent_id") REFERENCES "communities"."eesupool"("id") ON DELETE SET NULL;
 
-ALTER TABLE ONLY "communities"."eesupool_request"
-    ADD CONSTRAINT "eesupool_request_eesupool_id_fkey" FOREIGN KEY ("eesupool_id") REFERENCES "communities"."eesupool"("id") ON DELETE CASCADE;
+-- ALTER TABLE ONLY "communities"."eesupool_request"
+--     ADD CONSTRAINT "eesupool_request_eesupool_id_fkey" FOREIGN KEY ("eesupool_id") REFERENCES "communities"."eesupool"("id") ON DELETE CASCADE;
 
-ALTER TABLE ONLY "communities"."eesupool_request"
-    ADD CONSTRAINT "eesupool_request_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "public"."profile"("user_id") ON DELETE CASCADE;
+-- ALTER TABLE ONLY "communities"."eesupool_request"
+--     ADD CONSTRAINT "eesupool_request_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "public"."profile"("user_id") ON DELETE CASCADE;
 
-ALTER TABLE ONLY "communities"."event"
-    ADD CONSTRAINT "event_address_id_fkey" FOREIGN KEY ("address_id") REFERENCES "geolocations"."address"("id") ON DELETE SET NULL;
+-- ALTER TABLE ONLY "communities"."event"
+--     ADD CONSTRAINT "event_address_id_fkey" FOREIGN KEY ("address_id") REFERENCES "geolocations"."address"("id") ON DELETE SET NULL;
 
-ALTER TABLE ONLY "communities"."event_attendee"
-    ADD CONSTRAINT "event_attendee_event_id_fkey" FOREIGN KEY ("event_id") REFERENCES "communities"."event"("id") ON DELETE CASCADE;
+-- ALTER TABLE ONLY "communities"."event_attendee"
+--     ADD CONSTRAINT "event_attendee_event_id_fkey" FOREIGN KEY ("event_id") REFERENCES "communities"."event"("id") ON DELETE CASCADE;
 
-ALTER TABLE ONLY "communities"."event_attendee"
-    ADD CONSTRAINT "event_attendee_member_id_fkey" FOREIGN KEY ("member_id") REFERENCES "communities"."eesupool_member"("id") ON DELETE CASCADE;
+-- ALTER TABLE ONLY "communities"."event_attendee"
+--     ADD CONSTRAINT "event_attendee_member_id_fkey" FOREIGN KEY ("member_id") REFERENCES "communities"."eesupool_member"("id") ON DELETE CASCADE;
 
-ALTER TABLE ONLY "communities"."event"
-    ADD CONSTRAINT "event_eesupool_id_fkey" FOREIGN KEY ("eesupool_id") REFERENCES "communities"."eesupool"("id") ON DELETE CASCADE;
+-- ALTER TABLE ONLY "communities"."event"
+--     ADD CONSTRAINT "event_eesupool_id_fkey" FOREIGN KEY ("eesupool_id") REFERENCES "communities"."eesupool"("id") ON DELETE CASCADE;
 
-ALTER TABLE ONLY "communities"."member_order_assignment"
-    ADD CONSTRAINT "member_order_assignment_eesupool_ord_id_fkey" FOREIGN KEY ("eesupool_ord_id") REFERENCES "communities"."eesupool_order"("id") ON DELETE CASCADE;
+-- ALTER TABLE ONLY "communities"."member_order_assignment"
+--     ADD CONSTRAINT "member_order_assignment_eesupool_ord_id_fkey" FOREIGN KEY ("eesupool_ord_id") REFERENCES "communities"."eesupool_order"("id") ON DELETE CASCADE;
 
-ALTER TABLE ONLY "communities"."member_order_assignment"
-    ADD CONSTRAINT "member_order_assignment_member_id_fkey" FOREIGN KEY ("member_id") REFERENCES "communities"."eesupool_member"("id") ON DELETE CASCADE;
+-- ALTER TABLE ONLY "communities"."member_order_assignment"
+--     ADD CONSTRAINT "member_order_assignment_member_id_fkey" FOREIGN KEY ("member_id") REFERENCES "communities"."eesupool_member"("id") ON DELETE CASCADE;
 
-ALTER TABLE ONLY "communities"."member_order_assignment"
-    ADD CONSTRAINT "member_order_assignment_order_id_fkey" FOREIGN KEY ("order_id") REFERENCES "sales"."order"("id") ON DELETE CASCADE;
+-- ALTER TABLE ONLY "communities"."member_order_assignment"
+--     ADD CONSTRAINT "member_order_assignment_order_id_fkey" FOREIGN KEY ("order_id") REFERENCES "sales"."order"("id") ON DELETE CASCADE;
 
-ALTER TABLE ONLY "communities"."message"
-    ADD CONSTRAINT "message_author_id_fkey" FOREIGN KEY ("author_id") REFERENCES "communities"."eesupool_member"("id") ON DELETE SET NULL;
+-- ALTER TABLE ONLY "communities"."message"
+--     ADD CONSTRAINT "message_author_id_fkey" FOREIGN KEY ("author_id") REFERENCES "communities"."eesupool_member"("id") ON DELETE SET NULL;
 
-ALTER TABLE ONLY "communities"."message"
-    ADD CONSTRAINT "message_eesupool_id_fkey" FOREIGN KEY ("eesupool_id") REFERENCES "communities"."eesupool"("id") ON DELETE CASCADE;
+-- ALTER TABLE ONLY "communities"."message"
+--     ADD CONSTRAINT "message_eesupool_id_fkey" FOREIGN KEY ("eesupool_id") REFERENCES "communities"."eesupool"("id") ON DELETE CASCADE;
 
-ALTER TABLE ONLY "communities"."message_reaction"
-    ADD CONSTRAINT "message_reaction_member_id_fkey" FOREIGN KEY ("member_id") REFERENCES "communities"."eesupool_member"("id") ON DELETE CASCADE;
+-- ALTER TABLE ONLY "communities"."message_reaction"
+--     ADD CONSTRAINT "message_reaction_member_id_fkey" FOREIGN KEY ("member_id") REFERENCES "communities"."eesupool_member"("id") ON DELETE CASCADE;
 
-ALTER TABLE ONLY "communities"."message_reaction"
-    ADD CONSTRAINT "message_reaction_message_id_fkey" FOREIGN KEY ("message_id") REFERENCES "communities"."message"("id") ON DELETE CASCADE;
+-- ALTER TABLE ONLY "communities"."message_reaction"
+--     ADD CONSTRAINT "message_reaction_message_id_fkey" FOREIGN KEY ("message_id") REFERENCES "communities"."message"("id") ON DELETE CASCADE;
 
-ALTER TABLE ONLY "communities"."message_seen"
-    ADD CONSTRAINT "message_seen_member_id_fkey" FOREIGN KEY ("member_id") REFERENCES "communities"."eesupool_member"("id") ON DELETE CASCADE;
+-- ALTER TABLE ONLY "communities"."message_seen"
+--     ADD CONSTRAINT "message_seen_member_id_fkey" FOREIGN KEY ("member_id") REFERENCES "communities"."eesupool_member"("id") ON DELETE CASCADE;
 
-ALTER TABLE ONLY "communities"."message_seen"
-    ADD CONSTRAINT "message_seen_message_id_fkey" FOREIGN KEY ("message_id") REFERENCES "communities"."message"("id") ON DELETE CASCADE;
+-- ALTER TABLE ONLY "communities"."message_seen"
+--     ADD CONSTRAINT "message_seen_message_id_fkey" FOREIGN KEY ("message_id") REFERENCES "communities"."message"("id") ON DELETE CASCADE;
 
-ALTER TABLE ONLY "engagements"."notification"
-    ADD CONSTRAINT "notification_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "public"."profile"("user_id") ON DELETE CASCADE;
+-- ALTER TABLE ONLY "engagements"."notification"
+--     ADD CONSTRAINT "notification_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "public"."profile"("user_id") ON DELETE CASCADE;
 
-ALTER TABLE ONLY "engagements"."response"
-    ADD CONSTRAINT "response_survey_id_fkey" FOREIGN KEY ("survey_id") REFERENCES "engagements"."survey"("id") ON DELETE CASCADE;
+-- ALTER TABLE ONLY "engagements"."response"
+--     ADD CONSTRAINT "response_survey_id_fkey" FOREIGN KEY ("survey_id") REFERENCES "engagements"."survey"("id") ON DELETE CASCADE;
 
-ALTER TABLE ONLY "engagements"."response"
-    ADD CONSTRAINT "response_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "public"."profile"("user_id") ON DELETE CASCADE;
+-- ALTER TABLE ONLY "engagements"."response"
+--     ADD CONSTRAINT "response_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "public"."profile"("user_id") ON DELETE CASCADE;
 
-ALTER TABLE ONLY "engagements"."survey"
-    ADD CONSTRAINT "survey_pre_id_fkey" FOREIGN KEY ("pre_id") REFERENCES "engagements"."survey"("id") ON DELETE SET NULL;
+-- ALTER TABLE ONLY "engagements"."survey"
+--     ADD CONSTRAINT "survey_pre_id_fkey" FOREIGN KEY ("pre_id") REFERENCES "engagements"."survey"("id") ON DELETE SET NULL;
 
-ALTER TABLE ONLY "engagements"."survey"
-    ADD CONSTRAINT "survey_wallet_fkey" FOREIGN KEY ("wallet") REFERENCES "finances"."wallet_type"("id") ON DELETE SET NULL;
+-- ALTER TABLE ONLY "engagements"."survey"
+--     ADD CONSTRAINT "survey_wallet_fkey" FOREIGN KEY ("wallet") REFERENCES "finances"."wallet_type"("id") ON DELETE SET NULL;
 
-ALTER TABLE ONLY "finances"."online_payment"
-    ADD CONSTRAINT "finances_online_payment_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "public"."profile"("user_id") ON DELETE CASCADE;
+-- ALTER TABLE ONLY "finances"."online_payment"
+--     ADD CONSTRAINT "finances_online_payment_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "public"."profile"("user_id") ON DELETE CASCADE;
 
-ALTER TABLE ONLY "finances"."voucher_ledger"
-    ADD CONSTRAINT "finances_voucher_ledger_transaction_id_fkey" FOREIGN KEY ("transaction_id") REFERENCES "finances"."transaction"("id") ON UPDATE CASCADE ON DELETE CASCADE;
+-- ALTER TABLE ONLY "finances"."voucher_ledger"
+--     ADD CONSTRAINT "finances_voucher_ledger_transaction_id_fkey" FOREIGN KEY ("transaction_id") REFERENCES "finances"."transaction"("id") ON UPDATE CASCADE ON DELETE CASCADE;
 
-ALTER TABLE ONLY "finances"."voucher_ledger"
-    ADD CONSTRAINT "finances_voucher_ledger_voucher_id_fkey" FOREIGN KEY ("voucher_id") REFERENCES "finances"."voucher"("id") ON DELETE CASCADE;
+-- ALTER TABLE ONLY "finances"."voucher_ledger"
+--     ADD CONSTRAINT "finances_voucher_ledger_voucher_id_fkey" FOREIGN KEY ("voucher_id") REFERENCES "finances"."voucher"("id") ON DELETE CASCADE;
 
-ALTER TABLE ONLY "finances"."voucher"
-    ADD CONSTRAINT "finances_voucher_parameter_id_fkey" FOREIGN KEY ("parameter_id") REFERENCES "finances"."voucher_parameter"("id") ON DELETE CASCADE;
+-- ALTER TABLE ONLY "finances"."voucher"
+--     ADD CONSTRAINT "finances_voucher_parameter_id_fkey" FOREIGN KEY ("parameter_id") REFERENCES "finances"."voucher_parameter"("id") ON DELETE CASCADE;
 
-ALTER TABLE ONLY "finances"."voucher"
-    ADD CONSTRAINT "finances_voucher_wallet_id_fkey" FOREIGN KEY ("wallet_id") REFERENCES "finances"."wallet"("id") ON DELETE CASCADE;
+-- ALTER TABLE ONLY "finances"."voucher"
+--     ADD CONSTRAINT "finances_voucher_wallet_id_fkey" FOREIGN KEY ("wallet_id") REFERENCES "finances"."wallet"("id") ON DELETE CASCADE;
 
-ALTER TABLE ONLY "finances"."transaction"
-    ADD CONSTRAINT "transaction_type_fkey" FOREIGN KEY ("type") REFERENCES "finances"."transaction_type"("id") ON DELETE SET NULL;
+-- ALTER TABLE ONLY "finances"."transaction"
+--     ADD CONSTRAINT "transaction_type_fkey" FOREIGN KEY ("type") REFERENCES "finances"."transaction_type"("id") ON DELETE SET NULL;
 
-ALTER TABLE ONLY "finances"."wallet_transaction"
-    ADD CONSTRAINT "wallet_transaction_transaction_id_fkey" FOREIGN KEY ("transaction_id") REFERENCES "finances"."transaction"("id") ON UPDATE CASCADE ON DELETE CASCADE;
+-- ALTER TABLE ONLY "finances"."wallet_transaction"
+--     ADD CONSTRAINT "wallet_transaction_transaction_id_fkey" FOREIGN KEY ("transaction_id") REFERENCES "finances"."transaction"("id") ON UPDATE CASCADE ON DELETE CASCADE;
 
-ALTER TABLE ONLY "finances"."wallet_transaction"
-    ADD CONSTRAINT "wallet_transaction_wallet_id_fkey" FOREIGN KEY ("wallet_id") REFERENCES "finances"."wallet"("id") ON DELETE CASCADE;
+-- ALTER TABLE ONLY "finances"."wallet_transaction"
+--     ADD CONSTRAINT "wallet_transaction_wallet_id_fkey" FOREIGN KEY ("wallet_id") REFERENCES "finances"."wallet"("id") ON DELETE CASCADE;
 
-ALTER TABLE ONLY "finances"."wallet"
-    ADD CONSTRAINT "wallet_type_fkey" FOREIGN KEY ("type") REFERENCES "finances"."wallet_type"("id") ON DELETE RESTRICT;
+-- ALTER TABLE ONLY "finances"."wallet"
+--     ADD CONSTRAINT "wallet_type_fkey" FOREIGN KEY ("type") REFERENCES "finances"."wallet_type"("id") ON DELETE RESTRICT;
 
-ALTER TABLE ONLY "finances"."wallet"
-    ADD CONSTRAINT "wallet_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "public"."profile"("user_id") ON DELETE CASCADE;
+-- ALTER TABLE ONLY "finances"."wallet"
+--     ADD CONSTRAINT "wallet_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "public"."profile"("user_id") ON DELETE CASCADE;
 
-ALTER TABLE ONLY "geolocations"."address"
-    ADD CONSTRAINT "address_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "public"."profile"("user_id") ON DELETE CASCADE;
+-- ALTER TABLE ONLY "geolocations"."address"
+--     ADD CONSTRAINT "address_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "public"."profile"("user_id") ON DELETE CASCADE;
 
-ALTER TABLE ONLY "geolocations"."address"
-    ADD CONSTRAINT "geolocations_address_area_id_fkey" FOREIGN KEY ("area_id") REFERENCES "geolocations"."target_area"("id") ON DELETE SET NULL;
+-- ALTER TABLE ONLY "geolocations"."address"
+--     ADD CONSTRAINT "geolocations_address_area_id_fkey" FOREIGN KEY ("area_id") REFERENCES "geolocations"."target_area"("id") ON DELETE SET NULL;
 
-ALTER TABLE ONLY "inventory"."category"
-    ADD CONSTRAINT "category_parent_id_fkey" FOREIGN KEY ("parent_id") REFERENCES "inventory"."category"("id") ON DELETE SET NULL;
+-- ALTER TABLE ONLY "inventory"."category"
+--     ADD CONSTRAINT "category_parent_id_fkey" FOREIGN KEY ("parent_id") REFERENCES "inventory"."category"("id") ON DELETE SET NULL;
 
-ALTER TABLE ONLY "inventory"."product"
-    ADD CONSTRAINT "product_category_id_fkey" FOREIGN KEY ("category_id") REFERENCES "inventory"."category"("id") ON DELETE RESTRICT;
+-- ALTER TABLE ONLY "inventory"."product"
+--     ADD CONSTRAINT "product_category_id_fkey" FOREIGN KEY ("category_id") REFERENCES "inventory"."category"("id") ON DELETE RESTRICT;
 
-ALTER TABLE ONLY "inventory"."product_request"
-    ADD CONSTRAINT "product_request_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "public"."profile"("user_id") ON DELETE CASCADE;
+-- ALTER TABLE ONLY "inventory"."product_request"
+--     ADD CONSTRAINT "product_request_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "public"."profile"("user_id") ON DELETE CASCADE;
 
-ALTER TABLE ONLY "public"."basket_product"
-    ADD CONSTRAINT "basket_product_basket_id_fkey" FOREIGN KEY ("basket_id") REFERENCES "public"."basket"("id") ON DELETE CASCADE;
+-- ALTER TABLE ONLY "public"."basket_product"
+--     ADD CONSTRAINT "basket_product_basket_id_fkey" FOREIGN KEY ("basket_id") REFERENCES "public"."basket"("id") ON DELETE CASCADE;
 
-ALTER TABLE ONLY "public"."profile"
-    ADD CONSTRAINT "profile_new_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "auth"."users"("id") ON DELETE CASCADE;
+-- ALTER TABLE ONLY "public"."profile"
+--     ADD CONSTRAINT "profile_new_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "auth"."users"("id") ON DELETE CASCADE;
 
-ALTER TABLE ONLY "public"."profile"
-    ADD CONSTRAINT "profile_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "auth"."users"("id") ON DELETE CASCADE;
+-- ALTER TABLE ONLY "public"."profile"
+--     ADD CONSTRAINT "profile_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "auth"."users"("id") ON DELETE CASCADE;
 
-ALTER TABLE ONLY "public"."referral"
-    ADD CONSTRAINT "referral_refereed_user_id_fkey" FOREIGN KEY ("refereed_user_id") REFERENCES "public"."profile"("user_id") ON DELETE CASCADE;
+-- ALTER TABLE ONLY "public"."referral"
+--     ADD CONSTRAINT "referral_refereed_user_id_fkey" FOREIGN KEY ("refereed_user_id") REFERENCES "public"."profile"("user_id") ON DELETE CASCADE;
 
-ALTER TABLE ONLY "public"."referral"
-    ADD CONSTRAINT "referral_referrer_user_id_fkey" FOREIGN KEY ("referrer_user_id") REFERENCES "public"."profile"("user_id") ON DELETE CASCADE;
+-- ALTER TABLE ONLY "public"."referral"
+--     ADD CONSTRAINT "referral_referrer_user_id_fkey" FOREIGN KEY ("referrer_user_id") REFERENCES "public"."profile"("user_id") ON DELETE CASCADE;
 
-ALTER TABLE ONLY "public"."referral"
-    ADD CONSTRAINT "referral_transaction_id_fkey" FOREIGN KEY ("transaction_id") REFERENCES "finances"."transaction"("id") ON DELETE CASCADE;
+-- ALTER TABLE ONLY "public"."referral"
+--     ADD CONSTRAINT "referral_transaction_id_fkey" FOREIGN KEY ("transaction_id") REFERENCES "finances"."transaction"("id") ON DELETE CASCADE;
 
-ALTER TABLE ONLY "public"."basket"
-    ADD CONSTRAINT "wishlist_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "public"."profile"("user_id") ON DELETE CASCADE;
+-- ALTER TABLE ONLY "public"."basket"
+--     ADD CONSTRAINT "wishlist_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "public"."profile"("user_id") ON DELETE CASCADE;
 
-ALTER TABLE ONLY "sales"."order"
-    ADD CONSTRAINT "order_customer_id_fkey" FOREIGN KEY ("customer_id") REFERENCES "public"."profile"("user_id") ON DELETE CASCADE;
+-- ALTER TABLE ONLY "sales"."order"
+--     ADD CONSTRAINT "order_customer_id_fkey" FOREIGN KEY ("customer_id") REFERENCES "public"."profile"("user_id") ON DELETE CASCADE;
 
-ALTER TABLE ONLY "sales"."order"
-    ADD CONSTRAINT "order_delivery_address_id_fkey" FOREIGN KEY ("delivery_address_id") REFERENCES "geolocations"."address"("id") ON DELETE RESTRICT;
+-- ALTER TABLE ONLY "sales"."order"
+--     ADD CONSTRAINT "order_delivery_address_id_fkey" FOREIGN KEY ("delivery_address_id") REFERENCES "geolocations"."address"("id") ON DELETE RESTRICT;
 
-ALTER TABLE ONLY "sales"."order"
-    ADD CONSTRAINT "order_eesupool_order_id_fkey" FOREIGN KEY ("eesupool_order_id") REFERENCES "communities"."eesupool_order"("id") ON DELETE RESTRICT;
+-- ALTER TABLE ONLY "sales"."order"
+--     ADD CONSTRAINT "order_eesupool_order_id_fkey" FOREIGN KEY ("eesupool_order_id") REFERENCES "communities"."eesupool_order"("id") ON DELETE RESTRICT;
 
-ALTER TABLE ONLY "sales"."order"
-    ADD CONSTRAINT "order_eesupreneur_id_fkey" FOREIGN KEY ("eesupreneur_id") REFERENCES "services"."eesupreneur"("id") ON DELETE CASCADE;
+-- ALTER TABLE ONLY "sales"."order"
+--     ADD CONSTRAINT "order_eesupreneur_id_fkey" FOREIGN KEY ("eesupreneur_id") REFERENCES "services"."eesupreneur"("id") ON DELETE CASCADE;
 
-ALTER TABLE ONLY "sales"."order_product"
-    ADD CONSTRAINT "order_product_order_id_fkey" FOREIGN KEY ("order_id") REFERENCES "sales"."order"("id") ON DELETE CASCADE;
+-- ALTER TABLE ONLY "sales"."order_product"
+--     ADD CONSTRAINT "order_product_order_id_fkey" FOREIGN KEY ("order_id") REFERENCES "sales"."order"("id") ON DELETE CASCADE;
 
-ALTER TABLE ONLY "sales"."order_ticket"
-    ADD CONSTRAINT "order_ticket_order_id_fkey" FOREIGN KEY ("order_id") REFERENCES "sales"."order"("id") ON DELETE CASCADE;
+-- ALTER TABLE ONLY "sales"."order_ticket"
+--     ADD CONSTRAINT "order_ticket_order_id_fkey" FOREIGN KEY ("order_id") REFERENCES "sales"."order"("id") ON DELETE CASCADE;
 
-ALTER TABLE ONLY "sales"."order_transaction"
-    ADD CONSTRAINT "order_transaction_order_id_fkey" FOREIGN KEY ("order_id") REFERENCES "sales"."order"("id") ON DELETE CASCADE;
+-- ALTER TABLE ONLY "sales"."order_transaction"
+--     ADD CONSTRAINT "order_transaction_order_id_fkey" FOREIGN KEY ("order_id") REFERENCES "sales"."order"("id") ON DELETE CASCADE;
 
-ALTER TABLE ONLY "sales"."order_transaction"
-    ADD CONSTRAINT "order_transaction_transaction_id_fkey" FOREIGN KEY ("transaction_id") REFERENCES "finances"."transaction"("id") ON UPDATE CASCADE ON DELETE CASCADE;
+-- ALTER TABLE ONLY "sales"."order_transaction"
+--     ADD CONSTRAINT "order_transaction_transaction_id_fkey" FOREIGN KEY ("transaction_id") REFERENCES "finances"."transaction"("id") ON UPDATE CASCADE ON DELETE CASCADE;
 
-ALTER TABLE ONLY "services"."eesupreneur"
-    ADD CONSTRAINT "eesupreneur_address_id_fkey" FOREIGN KEY ("address_id") REFERENCES "geolocations"."address"("id") ON DELETE CASCADE;
+-- ALTER TABLE ONLY "services"."eesupreneur"
+--     ADD CONSTRAINT "eesupreneur_address_id_fkey" FOREIGN KEY ("address_id") REFERENCES "geolocations"."address"("id") ON DELETE CASCADE;
 
-ALTER TABLE ONLY "services"."eesupreneur_employee"
-    ADD CONSTRAINT "eesupreneur_employee_eesupreneur_id_fkey" FOREIGN KEY ("eesupreneur_id") REFERENCES "services"."eesupreneur"("id") ON DELETE CASCADE;
+-- ALTER TABLE ONLY "services"."eesupreneur_employee"
+--     ADD CONSTRAINT "eesupreneur_employee_eesupreneur_id_fkey" FOREIGN KEY ("eesupreneur_id") REFERENCES "services"."eesupreneur"("id") ON DELETE CASCADE;
 
-ALTER TABLE ONLY "services"."eesupreneur_employee"
-    ADD CONSTRAINT "eesupreneur_employee_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "public"."profile"("user_id") ON DELETE CASCADE;
+-- ALTER TABLE ONLY "services"."eesupreneur_employee"
+--     ADD CONSTRAINT "eesupreneur_employee_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "public"."profile"("user_id") ON DELETE CASCADE;
 
-ALTER TABLE ONLY "services"."eesupreneur"
-    ADD CONSTRAINT "eesupreneur_owner_id_fkey" FOREIGN KEY ("owner_id") REFERENCES "public"."profile"("user_id") ON DELETE CASCADE;
+-- ALTER TABLE ONLY "services"."eesupreneur"
+--     ADD CONSTRAINT "eesupreneur_owner_id_fkey" FOREIGN KEY ("owner_id") REFERENCES "public"."profile"("user_id") ON DELETE CASCADE;
 
-ALTER TABLE ONLY "services"."partner_application"
-    ADD CONSTRAINT "partner_application_partner_id_fkey" FOREIGN KEY ("partner_id") REFERENCES "services"."partner"("id") ON DELETE RESTRICT;
+-- ALTER TABLE ONLY "services"."partner_application"
+--     ADD CONSTRAINT "partner_application_partner_id_fkey" FOREIGN KEY ("partner_id") REFERENCES "services"."partner"("id") ON DELETE RESTRICT;
 
-ALTER TABLE ONLY "services"."partner_application"
-    ADD CONSTRAINT "partner_application_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "public"."profile"("user_id") ON DELETE CASCADE;
+-- ALTER TABLE ONLY "services"."partner_application"
+--     ADD CONSTRAINT "partner_application_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "public"."profile"("user_id") ON DELETE CASCADE;
 
-ALTER TABLE ONLY "warehousing"."distribution_centre"
-    ADD CONSTRAINT "distribution_centre_address_id_fkey" FOREIGN KEY ("address_id") REFERENCES "geolocations"."address"("id") ON DELETE SET NULL;
+-- ALTER TABLE ONLY "warehousing"."distribution_centre"
+--     ADD CONSTRAINT "distribution_centre_address_id_fkey" FOREIGN KEY ("address_id") REFERENCES "geolocations"."address"("id") ON DELETE SET NULL;
 
-ALTER TABLE ONLY "warehousing"."warehouse"
-    ADD CONSTRAINT "warehouse_address_id_fkey" FOREIGN KEY ("address_id") REFERENCES "geolocations"."address"("id") ON DELETE SET NULL;
+-- ALTER TABLE ONLY "warehousing"."warehouse"
+--     ADD CONSTRAINT "warehouse_address_id_fkey" FOREIGN KEY ("address_id") REFERENCES "geolocations"."address"("id") ON DELETE SET NULL;
 
-CREATE POLICY "Enable access for authenticated users only" ON "communities"."eesupool_request" TO "authenticated" USING (true) WITH CHECK (true);
+-- CREATE POLICY "Enable access for authenticated users only" ON "communities"."eesupool_request" TO "authenticated" USING (true) WITH CHECK (true);
 
-CREATE POLICY "Enable access for authenticated users only" ON "communities"."member_order_assignment" TO "authenticated" USING (true) WITH CHECK (true);
+-- CREATE POLICY "Enable access for authenticated users only" ON "communities"."member_order_assignment" TO "authenticated" USING (true) WITH CHECK (true);
 
-CREATE POLICY "Enable access to Authenticated Users only" ON "communities"."eesupool" TO "authenticated" USING (true);
+-- CREATE POLICY "Enable access to Authenticated Users only" ON "communities"."eesupool" TO "authenticated" USING (true);
 
-CREATE POLICY "Enable access to Authenticated Users only" ON "communities"."eesupool_issue" TO "authenticated" USING (true);
+-- CREATE POLICY "Enable access to Authenticated Users only" ON "communities"."eesupool_issue" TO "authenticated" USING (true);
 
-CREATE POLICY "Enable access to Authenticated Users only" ON "communities"."eesupool_member" TO "authenticated" USING (true);
+-- CREATE POLICY "Enable access to Authenticated Users only" ON "communities"."eesupool_member" TO "authenticated" USING (true);
 
-CREATE POLICY "Enable access to Authenticated Users only" ON "communities"."eesupool_order" TO "authenticated" USING (true);
+-- CREATE POLICY "Enable access to Authenticated Users only" ON "communities"."eesupool_order" TO "authenticated" USING (true);
 
-CREATE POLICY "Enable access to Authenticated Users only" ON "communities"."event" TO "authenticated" USING (true);
+-- CREATE POLICY "Enable access to Authenticated Users only" ON "communities"."event" TO "authenticated" USING (true);
 
-CREATE POLICY "Enable access to Authenticated Users only" ON "communities"."event_attendee" TO "authenticated" USING (true);
+-- CREATE POLICY "Enable access to Authenticated Users only" ON "communities"."event_attendee" TO "authenticated" USING (true);
 
-CREATE POLICY "Enable access to Authenticated Users only" ON "communities"."message" TO "authenticated" USING (true);
+-- CREATE POLICY "Enable access to Authenticated Users only" ON "communities"."message" TO "authenticated" USING (true);
 
-CREATE POLICY "Enable access to Authenticated Users only" ON "communities"."message_reaction" TO "authenticated" USING (true);
+-- CREATE POLICY "Enable access to Authenticated Users only" ON "communities"."message_reaction" TO "authenticated" USING (true);
 
-CREATE POLICY "Enable access to Authenticated Users only" ON "communities"."message_seen" TO "authenticated" USING (true);
+-- CREATE POLICY "Enable access to Authenticated Users only" ON "communities"."message_seen" TO "authenticated" USING (true);
 
 ALTER TABLE "communities"."eesupool" ENABLE ROW LEVEL SECURITY;
 
@@ -5214,13 +5223,13 @@ ALTER TABLE "communities"."message_reaction" ENABLE ROW LEVEL SECURITY;
 
 ALTER TABLE "communities"."message_seen" ENABLE ROW LEVEL SECURITY;
 
-CREATE POLICY "Enable access for authenticated users only" ON "engagements"."banner" TO "authenticated" USING (true) WITH CHECK (true);
+-- CREATE POLICY "Enable access for authenticated users only" ON "engagements"."banner" TO "authenticated" USING (true) WITH CHECK (true);
 
-CREATE POLICY "Enable access for authenticated users only" ON "engagements"."notification" TO "authenticated" USING (true) WITH CHECK (true);
+-- CREATE POLICY "Enable access for authenticated users only" ON "engagements"."notification" TO "authenticated" USING (true) WITH CHECK (true);
 
-CREATE POLICY "Enable access to Authenticated Users only" ON "engagements"."response" TO "authenticated" USING (true);
+-- CREATE POLICY "Enable access to Authenticated Users only" ON "engagements"."response" TO "authenticated" USING (true);
 
-CREATE POLICY "Enable access to Authenticated Users only" ON "engagements"."survey" TO "authenticated" USING (true);
+-- CREATE POLICY "Enable access to Authenticated Users only" ON "engagements"."survey" TO "authenticated" USING (true);
 
 ALTER TABLE "engagements"."banner" ENABLE ROW LEVEL SECURITY;
 
@@ -5230,27 +5239,27 @@ ALTER TABLE "engagements"."response" ENABLE ROW LEVEL SECURITY;
 
 ALTER TABLE "engagements"."survey" ENABLE ROW LEVEL SECURITY;
 
-CREATE POLICY "Enable access for authenticated users only" ON "finances"."online_payment" TO "authenticated" USING (true) WITH CHECK (true);
+-- CREATE POLICY "Enable access for authenticated users only" ON "finances"."online_payment" TO "authenticated" USING (true) WITH CHECK (true);
 
-CREATE POLICY "Enable access for authenticated users only" ON "finances"."payment_gateway" TO "authenticated" USING (true) WITH CHECK (true);
+-- CREATE POLICY "Enable access for authenticated users only" ON "finances"."payment_gateway" TO "authenticated" USING (true) WITH CHECK (true);
 
-CREATE POLICY "Enable access for authenticated users only" ON "finances"."profit_allocation" TO "authenticated" USING (true) WITH CHECK (true);
+-- CREATE POLICY "Enable access for authenticated users only" ON "finances"."profit_allocation" TO "authenticated" USING (true) WITH CHECK (true);
 
-CREATE POLICY "Enable access for authenticated users only" ON "finances"."voucher" TO "authenticated" USING (true) WITH CHECK (true);
+-- CREATE POLICY "Enable access for authenticated users only" ON "finances"."voucher" TO "authenticated" USING (true) WITH CHECK (true);
 
-CREATE POLICY "Enable access for authenticated users only" ON "finances"."voucher_ledger" TO "authenticated" USING (true) WITH CHECK (true);
+-- CREATE POLICY "Enable access for authenticated users only" ON "finances"."voucher_ledger" TO "authenticated" USING (true) WITH CHECK (true);
 
-CREATE POLICY "Enable access for authenticated users only" ON "finances"."voucher_parameter" TO "authenticated" USING (true) WITH CHECK (true);
+-- CREATE POLICY "Enable access for authenticated users only" ON "finances"."voucher_parameter" TO "authenticated" USING (true) WITH CHECK (true);
 
-CREATE POLICY "Enable access to Authenticated Users only" ON "finances"."transaction" TO "authenticated" USING (true) WITH CHECK (true);
+-- CREATE POLICY "Enable access to Authenticated Users only" ON "finances"."transaction" TO "authenticated" USING (true) WITH CHECK (true);
 
-CREATE POLICY "Enable access to Authenticated Users only" ON "finances"."transaction_type" TO "authenticated" USING (true);
+-- CREATE POLICY "Enable access to Authenticated Users only" ON "finances"."transaction_type" TO "authenticated" USING (true);
 
-CREATE POLICY "Enable access to Authenticated Users only" ON "finances"."wallet" TO "authenticated" USING (true);
+-- CREATE POLICY "Enable access to Authenticated Users only" ON "finances"."wallet" TO "authenticated" USING (true);
 
-CREATE POLICY "Enable access to Authenticated Users only" ON "finances"."wallet_transaction" TO "authenticated" USING (true) WITH CHECK (true);
+-- CREATE POLICY "Enable access to Authenticated Users only" ON "finances"."wallet_transaction" TO "authenticated" USING (true) WITH CHECK (true);
 
-CREATE POLICY "Enable access to Authenticated Users only" ON "finances"."wallet_type" TO "authenticated" USING (true);
+-- CREATE POLICY "Enable access to Authenticated Users only" ON "finances"."wallet_type" TO "authenticated" USING (true);
 
 ALTER TABLE "finances"."online_payment" ENABLE ROW LEVEL SECURITY;
 
@@ -5276,19 +5285,19 @@ ALTER TABLE "finances"."wallet_transaction" ENABLE ROW LEVEL SECURITY;
 
 ALTER TABLE "finances"."wallet_type" ENABLE ROW LEVEL SECURITY;
 
-CREATE POLICY "Enable access for authenticated users only" ON "geolocations"."address" TO "authenticated" USING (true) WITH CHECK (true);
+-- CREATE POLICY "Enable access for authenticated users only" ON "geolocations"."address" TO "authenticated" USING (true) WITH CHECK (true);
 
-CREATE POLICY "Enable access for authenticated users only" ON "geolocations"."target_area" TO "authenticated" USING (true) WITH CHECK (true);
+-- CREATE POLICY "Enable access for authenticated users only" ON "geolocations"."target_area" TO "authenticated" USING (true) WITH CHECK (true);
 
 ALTER TABLE "geolocations"."address" ENABLE ROW LEVEL SECURITY;
 
 ALTER TABLE "geolocations"."target_area" ENABLE ROW LEVEL SECURITY;
 
-CREATE POLICY "Enable access for authenticated users only" ON "inventory"."product_request" TO "authenticated" USING (true) WITH CHECK (true);
+-- CREATE POLICY "Enable access for authenticated users only" ON "inventory"."product_request" TO "authenticated" USING (true) WITH CHECK (true);
 
-CREATE POLICY "Enable access to Authenticated Users only" ON "inventory"."category" TO "authenticated" USING (true);
+-- CREATE POLICY "Enable access to Authenticated Users only" ON "inventory"."category" TO "authenticated" USING (true);
 
-CREATE POLICY "Enable access to Authenticated Users only" ON "inventory"."product" TO "authenticated" USING (true);
+-- CREATE POLICY "Enable access to Authenticated Users only" ON "inventory"."product" TO "authenticated" USING (true);
 
 ALTER TABLE "inventory"."category" ENABLE ROW LEVEL SECURITY;
 
@@ -5296,15 +5305,15 @@ ALTER TABLE "inventory"."product" ENABLE ROW LEVEL SECURITY;
 
 ALTER TABLE "inventory"."product_request" ENABLE ROW LEVEL SECURITY;
 
-CREATE POLICY "Enable access for authenticated users only" ON "public"."profile" TO "authenticated" USING (true) WITH CHECK (true);
+-- CREATE POLICY "Enable access for authenticated users only" ON "public"."profile" TO "authenticated" USING (true) WITH CHECK (true);
 
-CREATE POLICY "Enable access to Authenticated Users only" ON "public"."basket" TO "authenticated" USING (true);
+-- CREATE POLICY "Enable access to Authenticated Users only" ON "public"."basket" TO "authenticated" USING (true);
 
-CREATE POLICY "Enable access to Authenticated Users only" ON "public"."basket_product" TO "authenticated" USING (true);
+-- CREATE POLICY "Enable access to Authenticated Users only" ON "public"."basket_product" TO "authenticated" USING (true);
 
-CREATE POLICY "Enable access to Authenticated Users only" ON "public"."referral" TO "authenticated" USING (true);
+-- CREATE POLICY "Enable access to Authenticated Users only" ON "public"."referral" TO "authenticated" USING (true);
 
-CREATE POLICY "Enable read access for all users" ON "public"."profile" FOR SELECT USING (true);
+-- CREATE POLICY "Enable read access for all users" ON "public"."profile" FOR SELECT USING (true);
 
 ALTER TABLE "public"."basket" ENABLE ROW LEVEL SECURITY;
 
@@ -5314,13 +5323,13 @@ ALTER TABLE "public"."profile" ENABLE ROW LEVEL SECURITY;
 
 ALTER TABLE "public"."referral" ENABLE ROW LEVEL SECURITY;
 
-CREATE POLICY "Enable access for authenticated users only" ON "sales"."order_transaction" TO "authenticated" USING (true) WITH CHECK (true);
+-- CREATE POLICY "Enable access for authenticated users only" ON "sales"."order_transaction" TO "authenticated" USING (true) WITH CHECK (true);
 
-CREATE POLICY "Enable access to Authenticated Users only" ON "sales"."order" TO "authenticated" USING (true);
+-- CREATE POLICY "Enable access to Authenticated Users only" ON "sales"."order" TO "authenticated" USING (true);
 
-CREATE POLICY "Enable access to Authenticated Users only" ON "sales"."order_product" TO "authenticated" USING (true);
+-- CREATE POLICY "Enable access to Authenticated Users only" ON "sales"."order_product" TO "authenticated" USING (true);
 
-CREATE POLICY "Enable for authenticated users only" ON "sales"."order_ticket" TO "authenticated" USING (true) WITH CHECK (true);
+-- CREATE POLICY "Enable for authenticated users only" ON "sales"."order_ticket" TO "authenticated" USING (true) WITH CHECK (true);
 
 ALTER TABLE "sales"."order" ENABLE ROW LEVEL SECURITY;
 
@@ -5330,13 +5339,13 @@ ALTER TABLE "sales"."order_ticket" ENABLE ROW LEVEL SECURITY;
 
 ALTER TABLE "sales"."order_transaction" ENABLE ROW LEVEL SECURITY;
 
-CREATE POLICY "Enable access for authenticated users only" ON "services"."eesupreneur_employee" TO "authenticated" USING (true) WITH CHECK (true);
+-- CREATE POLICY "Enable access for authenticated users only" ON "services"."eesupreneur_employee" TO "authenticated" USING (true) WITH CHECK (true);
 
-CREATE POLICY "Enable access for authenticated users only" ON "services"."partner" TO "authenticated" USING (true) WITH CHECK (true);
+-- CREATE POLICY "Enable access for authenticated users only" ON "services"."partner" TO "authenticated" USING (true) WITH CHECK (true);
 
-CREATE POLICY "Enable access for authenticated users only" ON "services"."partner_application" TO "authenticated" USING (true) WITH CHECK (true);
+-- CREATE POLICY "Enable access for authenticated users only" ON "services"."partner_application" TO "authenticated" USING (true) WITH CHECK (true);
 
-CREATE POLICY "Enable access to Authenticated Users only" ON "services"."eesupreneur" TO "authenticated" USING (true);
+-- CREATE POLICY "Enable access to Authenticated Users only" ON "services"."eesupreneur" TO "authenticated" USING (true);
 
 ALTER TABLE "services"."eesupreneur" ENABLE ROW LEVEL SECURITY;
 
@@ -5346,9 +5355,9 @@ ALTER TABLE "services"."partner" ENABLE ROW LEVEL SECURITY;
 
 ALTER TABLE "services"."partner_application" ENABLE ROW LEVEL SECURITY;
 
-CREATE POLICY "Enable access for authenticated users only" ON "system_configs"."api_key" TO "authenticated" USING (true) WITH CHECK (true);
+-- CREATE POLICY "Enable access for authenticated users only" ON "system_configs"."api_key" TO "authenticated" USING (true) WITH CHECK (true);
 
-CREATE POLICY "Enable access for authenticated users only" ON "system_configs"."remote_config" TO "authenticated" USING (true) WITH CHECK (true);
+-- CREATE POLICY "Enable access for authenticated users only" ON "system_configs"."remote_config" TO "authenticated" USING (true) WITH CHECK (true);
 
 ALTER TABLE "system_configs"."api_key" ENABLE ROW LEVEL SECURITY;
 
@@ -5362,13 +5371,13 @@ ALTER TABLE "warehousing"."warehouse" ENABLE ROW LEVEL SECURITY;
 
 ALTER PUBLICATION "supabase_realtime" OWNER TO "postgres";
 
-ALTER PUBLICATION "supabase_realtime" ADD TABLE ONLY "communities"."message";
+-- ALTER PUBLICATION "supabase_realtime" ADD TABLE ONLY "communities"."message";
 
-ALTER PUBLICATION "supabase_realtime" ADD TABLE ONLY "communities"."message_reaction";
+-- ALTER PUBLICATION "supabase_realtime" ADD TABLE ONLY "communities"."message_reaction";
 
-ALTER PUBLICATION "supabase_realtime" ADD TABLE ONLY "engagements"."notification";
+-- ALTER PUBLICATION "supabase_realtime" ADD TABLE ONLY "engagements"."notification";
 
-ALTER PUBLICATION "supabase_realtime" ADD TABLE ONLY "sales"."order";
+-- ALTER PUBLICATION "supabase_realtime" ADD TABLE ONLY "sales"."order";
 
 GRANT USAGE ON SCHEMA "communities" TO "anon";
 GRANT USAGE ON SCHEMA "communities" TO "authenticated";
@@ -5979,9 +5988,9 @@ GRANT ALL ON TABLE "finances"."voucher" TO "anon";
 GRANT ALL ON TABLE "finances"."voucher" TO "authenticated";
 GRANT ALL ON TABLE "finances"."voucher" TO "service_role";
 
-GRANT ALL ON SEQUENCE "finances"."voucher_id_seq1" TO "anon";
-GRANT ALL ON SEQUENCE "finances"."voucher_id_seq1" TO "authenticated";
-GRANT ALL ON SEQUENCE "finances"."voucher_id_seq1" TO "service_role";
+-- GRANT ALL ON SEQUENCE "finances"."voucher_id_seq1" TO "anon";
+-- GRANT ALL ON SEQUENCE "finances"."voucher_id_seq1" TO "authenticated";
+-- GRANT ALL ON SEQUENCE "finances"."voucher_id_seq1" TO "service_role";
 
 GRANT ALL ON TABLE "finances"."voucher_ledger" TO "anon";
 GRANT ALL ON TABLE "finances"."voucher_ledger" TO "authenticated";

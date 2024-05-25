@@ -55,6 +55,7 @@ class SummaryStep extends StatelessWidget {
                       CheckoutFinished(state.order.id, true),
                     );
               } else if (value == false) {
+                print(value);
                 context.read<CheckoutBloc>().add(
                       CheckoutFinished(state.order.id, false),
                     );
