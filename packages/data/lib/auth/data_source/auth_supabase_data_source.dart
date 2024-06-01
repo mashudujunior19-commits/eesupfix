@@ -125,13 +125,21 @@ class AuthSupabaseDataSource implements IAuthDataSource {
     required String password,
     required Map<String, dynamic> data,
   }) async {
-    await _client.auth.signUp(
-      email: email,
-      phone: phone,
-      password: password,
-      data: data,
-    );
-    return true;
+    print(phone);
+    print(password);
+
+    try {
+      await _client.auth.signUp(
+        email: email,
+        phone: phone,
+        password: password,
+        data: data,
+      );
+      return true;
+    } catch (e) {
+      print(e.toString());
+      return false;
+    }
   }
 
   @override
@@ -200,6 +208,21 @@ class AuthSupabaseDataSource implements IAuthDataSource {
       return result.session != null;
     } catch (e) {
       rethrow;
+    }
+  }
+
+  @override
+  Future<String?> fetchSystemIssue() async {
+    try {
+      final res = await _client
+          .schema('system_configs')
+          .from('remote_config')
+          .select('text_value')
+          .eq('id', 'system_issue')
+          .single();
+      return res['text_value'];
+    } catch (e) {
+      return null;
     }
   }
 }

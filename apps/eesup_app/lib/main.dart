@@ -1,4 +1,3 @@
-import 'package:flutter/widgets.dart';
 import 'package:ui/ui.dart';
 
 ///Main function to bootstrap the app

@@ -352,4 +352,9 @@ class AuthRepository {
     });
     return results;
   }
+
+  Future<String?> fetchSystemIssue() async {
+    final res = await supaSource.fetchSystemIssue();
+    return res;
+  }
 }

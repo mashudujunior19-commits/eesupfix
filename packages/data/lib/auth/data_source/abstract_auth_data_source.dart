@@ -87,4 +87,6 @@ abstract class IAuthDataSource {
   Future<bool> resetPasswordWithEmail(String email);
 
   Future<bool> resetPasswordWithPhone(String phone);
+
+  Future<String?> fetchSystemIssue();
 }

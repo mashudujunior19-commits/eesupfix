@@ -45,8 +45,8 @@ android {
         applicationId "com.eesup.mobile"
         minSdkVersion 25
         targetSdkVersion flutter.targetSdkVersion
-        versionCode 128
-        versionName '16.2.8'
+        versionCode 129
+        versionName '16.2.9'
         manifestPlaceholders['appAuthRedirectScheme'] = "xxxxxx"
     }
 
