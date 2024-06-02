@@ -9,7 +9,7 @@ import 'package:ui/src/core/widgets/fullscreen_error_widget.dart';
 import 'package:ui/src/core/widgets/fullscreen_loading_shimmer.dart';
 import 'package:ui/src/views/eesupools/ui/tabs/orders/bloc/orders_bloc.dart';
 import 'package:ui/src/views/eesupools/ui/tabs/orders/ui/create_order_dialog.dart';
-import 'package:ui/src/views/eesupools/ui/tabs/orders/ui/eesupool_order_card.dart';
+import 'package:ui/src/views/eesupools/ui/tabs/orders/ui/order_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:data/utils/eesup_exception.dart';
@@ -31,10 +31,13 @@ class OrdersPoolTab extends StatelessWidget {
             return Scaffold(
               backgroundColor: Colors.transparent,
               //IF THERE IS NO POOL ORDER THEN DISPLAY CREATE ORDER BUTTON
-              // floatingActionButton:
-              //     openOrder == null && pool.role == EESUpoolMemberRole.admin
-              //         ? _CreateOrderButton(pool: pool, openOrder: openOrder)
-              //         : null,
+              floatingActionButton:
+                  openOrder == null && pool.role == EESUpoolMemberRole.admin
+                      ? _CreateOrderButton(
+                          pool: pool,
+                          openOrder: openOrder,
+                        )
+                      : null,
               body: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [

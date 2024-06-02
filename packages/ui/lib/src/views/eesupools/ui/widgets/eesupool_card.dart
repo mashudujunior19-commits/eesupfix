@@ -105,32 +105,32 @@ class EESUpoolCard extends StatelessWidget {
                   ),
                 ],
               ),
-              if (unseenMessages > 0)
-                Padding(
-                  padding: const EdgeInsets.only(top: 3),
-                  child: Row(
-                    children: [
-                      Icon(
-                        IconlyLight.message,
-                        size: 13,
-                        color: context.colorScheme.primary,
-                      ),
-                      const SizedBox(width: 5),
-                      Text(
-                        '${eesupool.unseenMessages} New Messages',
-                        style: context.textTheme.bodySmall?.copyWith(
-                          color: context.colorScheme.primary,
-                          fontSize: 13,
-                        ),
-                      ),
-                    ],
-                  ),
-                ).animate().shakeX(
-                      delay: 1000.ms,
-                      duration: 1000.ms,
-                      // rotation: .23,
-                      curve: Curves.easeInCubic,
-                    ),
+              // if (unseenMessages > 0)
+              //   Padding(
+              //     padding: const EdgeInsets.only(top: 3),
+              //     child: Row(
+              //       children: [
+              //         Icon(
+              //           IconlyLight.message,
+              //           size: 13,
+              //           color: context.colorScheme.primary,
+              //         ),
+              //         const SizedBox(width: 5),
+              //         Text(
+              //           '${eesupool.unseenMessages} New Messages',
+              //           style: context.textTheme.bodySmall?.copyWith(
+              //             color: context.colorScheme.primary,
+              //             fontSize: 13,
+              //           ),
+              //         ),
+              //       ],
+              //     ),
+              //   ).animate().shakeX(
+              //         delay: 1000.ms,
+              //         duration: 1000.ms,
+              //         // rotation: .23,
+              //         curve: Curves.easeInCubic,
+              //       ),
             ],
           ),
           trailing: Icon(

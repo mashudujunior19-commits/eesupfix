@@ -12,6 +12,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:data/utils/eesup_exception.dart';
 import 'package:tab_indicator_styler/tab_indicator_styler.dart';
+import 'package:ui/src/views/eesupools/ui/tabs/orders/ui/order_products_tab.dart';
 import 'member_orders_tab.dart';
 import 'order_details_tab.dart';
 
@@ -86,7 +87,7 @@ class EESUpoolOrderViewScreen extends StatelessWidget {
                           child: TabBarView(
                             children: [
                               OrderDetailsTab(order: orderState, pool: pool),
-                              OrderDetailsTab(order: orderState, pool: pool),
+                              OrderProductsTab(id: order.id),
                               MemberOrdersTab(pool: pool, poolOrder: orderState)
                             ],
                           ),

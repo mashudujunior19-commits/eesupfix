@@ -10,6 +10,7 @@ import 'package:data/eesupools/models/eesupool_member.dart';
 import 'package:data/eesupools/models/eesupool_order.dart';
 import 'package:data/eesupools/models/eesupool_request.dart';
 import 'package:data/eesupools/models/eesupool_type.dart';
+import 'package:data/orders/models/order_product.dart';
 import 'package:flutter/foundation.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -668,5 +669,14 @@ class EESUpoolSupabaseImp implements EESUpoolDataSource {
       }
       return false;
     }
+  }
+
+  @override
+  Future<List<OrderProduct>> fetchPoolOrderProducts(int orderId) async {
+    final res =
+        await client.schema('sales').rpc('get_pool_order_products', params: {
+      'ord_id': orderId,
+    });
+    return (res as List).map((e) => OrderProduct.fromJson(e)).toList();
   }
 }

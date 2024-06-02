@@ -1,4 +1,5 @@
 import 'package:data/eesupools/models/eesupool.dart';
+import 'package:data/eesupools/models/eesupool_member.dart';
 import 'package:data/eesupools/repository/eesupool_repo.dart';
 import 'package:ui/src/core/extensions/bottom_sheet_context_ext.dart';
 import 'package:ui/src/core/extensions/context_theme_ext.dart';
@@ -29,18 +30,20 @@ class MembersListView extends StatelessWidget {
           } else if (state is MembersLoaded) {
             return Scaffold(
               backgroundColor: Colors.transparent,
-              floatingActionButton: FloatingActionButton.small(
-                backgroundColor: context.colorScheme.primary,
-                child: const Icon(Icons.add, color: Colors.white),
-                onPressed: () {
-                  context.showBottomSheetDialog(
-                    child: InviteMembersDialog(
-                      poolId: pool.eesupoolId!,
-                      isNewPool: false,
-                    ),
-                  );
-                },
-              ),
+              floatingActionButton: pool.role == EESUpoolMemberRole.admin
+                  ? FloatingActionButton.small(
+                      backgroundColor: context.colorScheme.primary,
+                      child: const Icon(Icons.add, color: Colors.white),
+                      onPressed: () {
+                        context.showBottomSheetDialog(
+                          child: InviteMembersDialog(
+                            poolId: pool.eesupoolId!,
+                            isNewPool: false,
+                          ),
+                        );
+                      },
+                    )
+                  : null,
               body: ListView.builder(
                 itemCount: state.members.length,
                 itemBuilder: (context, index) {

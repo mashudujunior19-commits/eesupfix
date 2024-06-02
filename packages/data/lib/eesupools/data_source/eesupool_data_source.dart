@@ -10,6 +10,7 @@ import 'package:data/eesupools/models/eesupool_member.dart';
 import 'package:data/eesupools/models/eesupool_order.dart';
 import 'package:data/eesupools/models/eesupool_request.dart';
 import 'package:data/eesupools/models/eesupool_type.dart';
+import 'package:data/orders/models/order_product.dart';
 
 abstract class EESUpoolDataSource {
   ///Creates a new EESUpool, returns the id of the created EESUpool
@@ -56,12 +57,9 @@ abstract class EESUpoolDataSource {
     bool approved,
   );
 
-    ///Get Un approved EEUSpool messages
+  ///Get Un approved EEUSpool messages
   ///
-  Future<List<ChatMessage>> getUnApprovedPoolMessages(
-    int poolId,
-    int limit
-  );
+  Future<List<ChatMessage>> getUnApprovedPoolMessages(int poolId, int limit);
 
   ///Get EEUSpool messages
   ///
@@ -184,4 +182,5 @@ abstract class EESUpoolDataSource {
   Future<bool> updateMemberOrderAssignments(
       List<MemberOrderAssignment> assignment, int orderId);
   Future<List<EESUpoolMember>> fetchMembersByIdList(List<String> ids);
+  Future<List<OrderProduct>> fetchPoolOrderProducts(int orderId);
 }
