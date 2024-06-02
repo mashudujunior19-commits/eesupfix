@@ -57,7 +57,7 @@ class _OzowScreenState extends State<OzowScreen> {
           final siteCode = dotenv.env['OZOW_SITE_CODE'];
           final eesupKey = dotenv.env['EESUP_API_KEY'];
           final eesupApiUrl = dotenv.env['EESUP_API_BASE_URL'];
-
+          // const eesupApiUrl = 'https://zngp5d89-8080.inc1.devtunnels.ms/v1';
           if (privateKey == null ||
               apitKey == null ||
               siteCode == null ||
@@ -79,9 +79,9 @@ class _OzowScreenState extends State<OzowScreen> {
             bankRef: widget.bankRef,
             amount: widget.amount,
             isTest: context.environment.type == FlavorType.development,
-            optional2: eesupApiUrl,
+            optional2: eesupKey,
             optional3: widget.type,
-            notifyUrl: '$eesupApiUrl/payments/ozow',
+            notifyUrl: '$eesupApiUrl/payments/ozow/notify',
             onComplete: (transaction, status) {
               setState(() {
                 this.status = status;

@@ -23,7 +23,7 @@ Future<Response> onRequest(RequestContext context) async {
     final hash = queryParams['Hash'];
     final isTest = queryParams['IsTest'] == 'True';
     final type = queryParams['Optional3'];
-    
+
     final provider = PaymentSupabaseProvider(GetIt.I.get<SupabaseClient>());
     final repository = OzowRepository(provider);
 

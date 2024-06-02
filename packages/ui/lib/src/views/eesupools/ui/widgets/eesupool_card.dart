@@ -4,7 +4,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ui/app_route.gr.dart';
 import 'package:ui/src/core/extensions/context_theme_ext.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:ui/src/views/eesupools/bloc/eesupool_type_bloc.dart';
 
@@ -22,7 +21,6 @@ class EESUpoolCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final numMembers = eesupool.numMembers ?? 0;
-    final unseenMessages = eesupool.unseenMessages ?? 0;
     return InkWell(
       splashColor: Colors.transparent,
       onTap: onPoolTap != null
