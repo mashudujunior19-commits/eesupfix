@@ -4,7 +4,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ui/app_route.gr.dart';
 import 'package:ui/src/core/extensions/context_theme_ext.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:ui/src/views/eesupools/bloc/eesupool_type_bloc.dart';
 
@@ -22,7 +21,6 @@ class EESUpoolCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final numMembers = eesupool.numMembers ?? 0;
-    final unseenMessages = eesupool.unseenMessages ?? 0;
     return InkWell(
       splashColor: Colors.transparent,
       onTap: onPoolTap != null
@@ -105,32 +103,32 @@ class EESUpoolCard extends StatelessWidget {
                   ),
                 ],
               ),
-              if (unseenMessages > 0)
-                Padding(
-                  padding: const EdgeInsets.only(top: 3),
-                  child: Row(
-                    children: [
-                      Icon(
-                        IconlyLight.message,
-                        size: 13,
-                        color: context.colorScheme.primary,
-                      ),
-                      const SizedBox(width: 5),
-                      Text(
-                        '${eesupool.unseenMessages} New Messages',
-                        style: context.textTheme.bodySmall?.copyWith(
-                          color: context.colorScheme.primary,
-                          fontSize: 13,
-                        ),
-                      ),
-                    ],
-                  ),
-                ).animate().shakeX(
-                      delay: 1000.ms,
-                      duration: 1000.ms,
-                      // rotation: .23,
-                      curve: Curves.easeInCubic,
-                    ),
+              // if (unseenMessages > 0)
+              //   Padding(
+              //     padding: const EdgeInsets.only(top: 3),
+              //     child: Row(
+              //       children: [
+              //         Icon(
+              //           IconlyLight.message,
+              //           size: 13,
+              //           color: context.colorScheme.primary,
+              //         ),
+              //         const SizedBox(width: 5),
+              //         Text(
+              //           '${eesupool.unseenMessages} New Messages',
+              //           style: context.textTheme.bodySmall?.copyWith(
+              //             color: context.colorScheme.primary,
+              //             fontSize: 13,
+              //           ),
+              //         ),
+              //       ],
+              //     ),
+              //   ).animate().shakeX(
+              //         delay: 1000.ms,
+              //         duration: 1000.ms,
+              //         // rotation: .23,
+              //         curve: Curves.easeInCubic,
+              //       ),
             ],
           ),
           trailing: Icon(

@@ -2,7 +2,6 @@ import 'package:auto_route/auto_route.dart';
 import 'package:data/auth/repository/auth_repository.dart';
 import 'package:loader_overlay/loader_overlay.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:ui/src/core/extensions/bg_image_deco_ext.dart';
 import 'package:ui/src/core/extensions/bottom_sheet_context_ext.dart';
 import 'package:ui/src/core/extensions/context_alerts_ext.dart';
 import 'package:ui/src/core/widgets/eesup_scaffold.dart';
@@ -45,7 +44,6 @@ class _RegisterScreenState extends State<RegisterScreen>
     return BlocProvider(
       create: (context) => RegistrationBloc(context.read<AuthRepository>()),
       child: BlocConsumer<RegistrationBloc, RegistrationFormState>(
-        listener: signUpListner,
         builder: (context, state) {
           return SafeArea(
             child: EESUpScaffold(
@@ -107,45 +105,46 @@ class _RegisterScreenState extends State<RegisterScreen>
             ),
           );
         },
+        listener: (BuildContext context, RegistrationFormState state) {
+          if (state is SignUpLoading) {
+            context.loaderOverlay.show();
+          } else {
+            context.loaderOverlay.hide();
+          }
+
+          if (state is FailedToSignUp) {
+            context.snackBarError(state.err.message);
+            context.read<RegistrationBloc>().add(
+                  SignUpRestarted(state.oldForm),
+                );
+          }
+
+          if (state is AwaitingOtpAuth) {
+            context
+                .showBottomSheetDialog(
+              child: OtpAuthDialog(
+                type: OtpType.signup,
+                email: state.oldForm.email,
+                phone: state.oldForm.phone,
+                isSignUp: true,
+              ),
+            )
+                .then((value) {
+              ///THIS RETURNS TRUE IF OTP AUTH IS SUCCESS
+              if (value == true) {
+                _tabController.animateTo(_tabController.index++);
+              } else {
+                ///ELSE IT IS RESTARTED
+                context.snackBarError('Otp verification failed');
+
+                context
+                    .read<RegistrationBloc>()
+                    .add(SignUpRestarted(state.oldForm));
+              }
+            });
+          }
+        },
       ),
     );
-  }
-
-  void signUpListner(context, state) {
-    if (state is SignUpLoading) {
-      context.loaderOverlay.show();
-    } else {
-      context.loaderOverlay.hide();
-    }
-
-    if (state is FailedToSignUp) {
-      context.snackBarError(state.err.message);
-      context.read<RegistrationBloc>().add(
-            SignUpRestarted(state.oldForm),
-          );
-    }
-
-    if (state is AwaitingOtpAuth) {
-      context
-          .showBottomSheetDialog(
-        child: OtpAuthDialog(
-          type: OtpType.signup,
-          email: state.oldForm.email,
-          phone: state.oldForm.phone,
-          isSignUp: true,
-        ),
-      )
-          .then((value) {
-        ///THIS RETURNS TRUE IF OTP AUTH IS SUCCESS
-        if (value == true) {
-          _tabController.animateTo(_tabController.index++);
-        } else {
-          ///ELSE IT IS RESTARTED
-          context.snackBarError('Otp verification failed');
-
-          context.read<RegistrationBloc>().add(SignUpRestarted(state.oldForm));
-        }
-      });
-    }
   }
 }

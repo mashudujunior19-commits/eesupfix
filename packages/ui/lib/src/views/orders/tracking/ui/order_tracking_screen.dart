@@ -1,5 +1,4 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:bootstrap_icons/bootstrap_icons.dart';
 import 'package:data/orders/models/order.dart';
 import 'package:data/orders/repository/order_repository.dart';
 import 'package:ui/src/core/extensions/bg_image_deco_ext.dart';

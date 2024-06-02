@@ -6,10 +6,11 @@ import 'package:supabase/supabase.dart';
 
 Handler middleware(Handler handler) {
   return (context) async {
+
     ///register supabase client
     final getIt = GetIt.I;
     if (!getIt.isRegistered<EnvService>()) {
-      getIt.registerSingleton(const EnvService(EnvType.development));
+      getIt.registerSingleton(const EnvService(EnvType.production));
     }
     final env = getIt.get<EnvService>();
     if (!getIt.isRegistered<SupabaseClient>()) {

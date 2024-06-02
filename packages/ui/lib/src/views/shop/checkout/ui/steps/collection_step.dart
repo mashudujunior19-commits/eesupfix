@@ -10,7 +10,7 @@ import 'package:ui/src/core/extensions/sizedbox_ext.dart';
 import 'package:ui/src/core/extensions/slide_in_animation_ext.dart';
 import 'package:ui/src/core/widgets/fullscreen_error_widget.dart';
 import 'package:ui/src/core/widgets/fullscreen_loading_shimmer.dart';
-import 'package:ui/src/views/eesupools/ui/tabs/orders/ui/eesupool_order_card.dart';
+import 'package:ui/src/views/eesupools/ui/tabs/orders/ui/order_card.dart';
 import 'package:ui/src/views/shop/checkout/bloc/checkout_bloc.dart';
 import 'package:ui/src/views/shop/checkout/bloc/collection_points_bloc.dart';
 import 'package:ui/src/views/shop/checkout/bloc/open_eesupool_orders_bloc.dart';

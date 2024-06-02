@@ -1,3 +1,4 @@
+import 'package:data/orders/models/order_product.dart';
 import 'package:data/utils/eesup_exception.dart';
 import 'package:either_dart/either.dart';
 import 'package:data/eesupools/models/eesupool_order.dart';
@@ -66,6 +67,17 @@ extension EESUpoolOrdersRepo on EESUpoolRepository {
   ) async {
     final result = await authRepository.executeFutureWithAuth((_) {
       return dataSource.updateMemberOrderAssignments(assignments, orderId);
+    });
+    return result.fold(
+      (l) => Left(l),
+      (r) => Right(r),
+    );
+  }
+
+  Future<Either<EESUpException, List<OrderProduct>>> fetchPoolOrderProducts(
+      int orderId) async {
+    final result = await authRepository.executeFutureWithAuth((_) {
+      return dataSource.fetchPoolOrderProducts(orderId);
     });
     return result.fold(
       (l) => Left(l),
