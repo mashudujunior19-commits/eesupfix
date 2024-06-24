@@ -1,6 +1,6 @@
 name: ui
 description: "A new Flutter package project."
-version: 0.0.1
+version: 16.2.8+128
 publish_to: "none"
 
 environment:
@@ -22,7 +22,7 @@ dependencies:
   flutter_bloc: ^8.1.4
   flutter_dotenv: ^5.1.0
   get_it: ^7.6.7
-  onesignal_flutter: ^5.1.2
+  onesignal_flutter: ^5.2.0
   sentry_flutter: ^8.2.0
   supabase_flutter: ^2.3.4
   email_validator: ^2.1.17
