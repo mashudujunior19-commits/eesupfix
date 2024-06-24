@@ -20,9 +20,6 @@ import 'widgets/eesupool_view_tab_bar.dart';
 
 @RoutePage()
 class EESUpoolViewScreen extends StatelessWidget {
-  //we take both the poolId and the pool object
-  //if we get the id, we can fetch the pool object from the repository
-  //if we get the pool object, we can use it directly
   const EESUpoolViewScreen({super.key, this.poolId, this.pool});
   final int? poolId;
   final EESUpool? pool;
@@ -51,6 +48,7 @@ class EESUpoolViewScreen extends StatelessWidget {
                   if (state is CurrentEESUpoolView) {
                     final pool = state.eesupool;
                     final tabs = _getCorrectTabs(pool);
+                    final tabViews = _getTabBarViews(pool);
                     return DefaultTabController(
                       length: tabs.length,
                       child: Column(
@@ -60,29 +58,16 @@ class EESUpoolViewScreen extends StatelessWidget {
                             child: Row(
                               children: [
                                 const BackButton(),
-                                EESUpoolViewTabBar(
-                                  tabs: tabs,
-                                  key: const Key('pool_getCorrectTabs'),
-                                ),
+                                EESUpoolViewTabBar(tabs: tabs),
                               ],
                             ),
-                          ).animate().fadeIn(delay: (50).ms).slide(
-                                begin: const Offset(0, -1),
-                                end: const Offset(0, 0),
-                                duration: 600.ms,
-                                curve: Curves.easeInOutCubic,
-                              ),
-                          Expanded(
-                            child: TabBarView(
-                              children: [
-                                ..._getTabBarViews(pool),
-                              ],
-                            ),
-                          )
+                          ).animate().fadeIn(),
+                          Expanded(child: TabBarView(children: tabViews))
                         ],
                       ),
                     );
                   }
+                  return Container(); // Return an empty container if state is not CurrentEESUpoolView
                 }(),
               ),
             ),
@@ -102,7 +87,6 @@ List<Widget> _getTabBarViews(EESUpool pool) {
     return [
       ChatsTab(pool: pool),
       if (type == EESUpoolType.trade) OrdersPoolTab(pool: pool),
-      // EventsTab(pool: pool),
       if (type == EESUpoolType.kasi && level != EESUpoolLevel.Street)
         MyKasiTreeTab(pool: pool),
       MembersTab(pool: pool),
@@ -111,7 +95,6 @@ List<Widget> _getTabBarViews(EESUpool pool) {
   } else if (!isAdmin && type == EESUpoolType.interestGroup) {
     return [
       ChatsTab(pool: pool),
-      // EventsTab(pool: pool),
       MembersTab(pool: pool),
     ];
   } else {
@@ -132,7 +115,6 @@ List<Tab> _getCorrectTabs(EESUpool pool) {
     return [
       const Tab(text: 'CHATS'),
       if (type == EESUpoolType.trade) const Tab(text: 'ORDERS'),
-      // const Tab(text: 'EVENTS'),
       if (type == EESUpoolType.kasi && level != EESUpoolLevel.Street)
         const Tab(text: 'MYKASI TREE'),
       const Tab(text: 'MEMBERS'),
@@ -141,7 +123,6 @@ List<Tab> _getCorrectTabs(EESUpool pool) {
   } else if (!isAdmin && type == EESUpoolType.interestGroup) {
     return [
       const Tab(text: 'CHATS'),
-      // const Tab(text: 'EVENTS'),
       const Tab(text: 'MEMBERS'),
     ];
   } else {

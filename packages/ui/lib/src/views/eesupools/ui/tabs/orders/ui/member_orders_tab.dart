@@ -10,7 +10,6 @@ import 'package:ui/app_route.gr.dart';
 import 'package:ui/src/core/extensions/bottom_sheet_context_ext.dart';
 import 'package:ui/src/core/extensions/context_theme_ext.dart';
 import 'package:ui/src/core/extensions/sizedbox_ext.dart';
-import 'package:ui/src/core/widgets/eesup_form_field.dart';
 import 'package:ui/src/core/widgets/fullscreen_error_widget.dart';
 import 'package:ui/src/core/widgets/fullscreen_loading_shimmer.dart';
 import 'package:ui/src/views/eesupools/ui/tabs/orders/bloc/member_orders_bloc.dart';
@@ -23,11 +22,8 @@ import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:data/utils/eesup_exception.dart';
 
 class MemberOrdersTab extends StatelessWidget {
-  const MemberOrdersTab({
-    super.key,
-    required this.pool,
-    required this.poolOrder,
-  });
+  const MemberOrdersTab(
+      {super.key, required this.pool, required this.poolOrder});
   final EESUpool pool;
   final EESUpoolOrder poolOrder;
 
@@ -47,23 +43,23 @@ class MemberOrdersTab extends StatelessWidget {
             if (orders.isNotEmpty) {
               return Column(
                 children: [
-                  Container(
-                    color: Colors.white,
-                    child: EESUpTextFormField(
-                      margin: const EdgeInsets.only(
-                        left: 23,
-                        right: 21,
-                        top: 10,
-                      ),
-                      hintText: 'Search ORDER-ID, MEMBER NAME',
-                      prefixIcon: const Padding(
-                        padding: EdgeInsets.only(top: 12),
-                        child: Icon(IconlyLight.search,
-                            size: 21, color: Colors.grey),
-                      ),
-                      onSubmit: (value) {},
-                    ),
-                  ),
+                  // Container(
+                  //   color: Colors.white,
+                  //   child: EESUpTextFormField(
+                  //     margin: const EdgeInsets.only(
+                  //       left: 23,
+                  //       right: 21,
+                  //       top: 10,
+                  //     ),
+                  //     hintText: 'Search ORDER-ID, MEMBER NAME',
+                  //     prefixIcon: const Padding(
+                  //       padding: EdgeInsets.only(top: 12),
+                  //       child: Icon(IconlyLight.search,
+                  //           size: 21, color: Colors.grey),
+                  //     ),
+                  //     onSubmit: (value) {},
+                  //   ),
+                  // ),
                   Expanded(
                     child: ListView.builder(
                       padding: const EdgeInsets.only(bottom: 400),

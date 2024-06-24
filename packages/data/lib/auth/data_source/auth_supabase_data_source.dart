@@ -125,9 +125,6 @@ class AuthSupabaseDataSource implements IAuthDataSource {
     required String password,
     required Map<String, dynamic> data,
   }) async {
-    print(phone);
-    print(password);
-
     try {
       await _client.auth.signUp(
         email: email,
@@ -137,7 +134,6 @@ class AuthSupabaseDataSource implements IAuthDataSource {
       );
       return true;
     } catch (e) {
-      print(e.toString());
       return false;
     }
   }

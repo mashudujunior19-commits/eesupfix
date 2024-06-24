@@ -27,6 +27,13 @@ class OrderProductsTab extends StatelessWidget {
                   return FullScreenError(exception: l);
                 },
                 (r) {
+                  if (r.isEmpty) {
+                    return FullScreenError(
+                      exception: EESUpException(
+                          message: 'Members have not placed orders yet.'),
+                      isError: false,
+                    );
+                  }
                   return ListView.builder(
                     padding: const EdgeInsets.only(bottom: 300),
                     itemBuilder: (context, index) {

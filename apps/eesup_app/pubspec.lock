@@ -1359,7 +1359,7 @@ packages:
     source: hosted
     version: "3.0.0"
   shorebird_code_push:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: shorebird_code_push
       sha256: "872839ac1e9b86f97db99c6456c4886620246f15e1cff9d29d4101e2beb991eb"

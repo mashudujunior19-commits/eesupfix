@@ -2,6 +2,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:bootstrap_icons/bootstrap_icons.dart';
 import 'package:data/auth/repository/profile_repository.dart';
+import 'package:shorebird_code_push/shorebird_code_push.dart';
 import 'package:ui/src/views/auth/profile/bloc/profile_bloc.dart';
 import 'package:ui/src/views/auth/sign_in/bloc/auth_bloc.dart';
 import 'package:ui/src/core/extensions/context_theme_ext.dart';
@@ -14,6 +15,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:data/utils/eesup_exception.dart';
+
+final shorebirdCodePush = ShorebirdCodePush();
 
 class MenuTab extends StatelessWidget {
   const MenuTab({super.key});
@@ -114,11 +117,20 @@ class MenuTab extends StatelessWidget {
               _MenuButtonTile(
                 showBorder: false,
                 icon: IconlyLight.logout,
-                label: 'Sign out',
+                label: 'Sign Out',
                 onTap: () {
                   context.read<AuthBloc>().add(SignOutPressed());
                 },
-              )
+              ),
+              // FutureBuilder(
+              //     future: shorebirdCodePush.currentPatchNumber(),
+              //     builder: (context, snap) {
+              //       if (snap.hasData) {
+              //         return Text(snap.data.toString());
+              //       } else {
+              //         return const SizedBox.shrink();
+              //       }
+              //     })
             ],
           );
         } else if (state is ProfileLoading) {

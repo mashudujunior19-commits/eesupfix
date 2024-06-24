@@ -798,8 +798,10 @@ BEGIN
         COALESCE((SELECT row_to_json(t)::jsonb 
                   FROM 
                   (SELECT * FROM geolocations.get_address_by_id(eo.address_id)) t), null::jsonb) AS address,
-        CAST((select count(*) from sales.order o where o.eesupool_order_id = eo.id) as integer) as orders_count,
-        COALESCE(CAST((SELECT SUM(o.value) FROM sales.order o WHERE o.eesupool_order_id = eo.id AND (o.status <> 'Pending' AND o.status <> 'Cancelled')) AS numeric),0.00) AS current_amount,
+        CAST((select count(*) from sales.order o where o.eesupool_order_id = eo.id AND
+        o.placed_at is not null AND o.cancelled_at isnull) as integer) as orders_count,
+        COALESCE(CAST((SELECT SUM(o.value) FROM sales.order o WHERE o.eesupool_order_id = eo.id
+        AND o.placed_at is not null AND o.cancelled_at isnull) AS numeric),0.00) AS current_amount,
         eo.secret_pin,
         eo.receivers    
     FROM communities.eesupool_order eo
@@ -1072,8 +1074,10 @@ BEGIN
         COALESCE((SELECT row_to_json(t)::jsonb 
                   FROM 
                   (SELECT * FROM geolocations.get_address_by_id(eo.address_id)) t), null::jsonb) AS address,
-        CAST((select count(*) from sales.order o where o.eesupool_order_id = eo.id) as integer) as orders_count,
-        COALESCE(CAST((SELECT SUM(o.value) FROM sales.order o WHERE o.eesupool_order_id = eo.id AND (o.status <> 'Pending' AND o.status <> 'Cancelled')) AS numeric),0.00) AS current_amount,
+        CAST((select count(*) from sales.order o where o.eesupool_order_id = eo.id
+        AND o.placed_at is not null AND o.cancelled_at isnull) as integer) as orders_count,
+        COALESCE(CAST((SELECT SUM(o.value) FROM sales.order o WHERE o.eesupool_order_id = eo.id
+        AND o.placed_at is not null AND o.cancelled_at isnull) AS numeric),0.00) AS current_amount,
         eo.secret_pin,
         eo.receivers  
     FROM communities.eesupool_order eo
@@ -1111,8 +1115,10 @@ BEGIN
         COALESCE((SELECT row_to_json(t)::jsonb 
                   FROM (SELECT * FROM geolocations.get_address_by_id(eo.address_id)) t), 
                  null::jsonb) AS address,
-        CAST((select count(*) from sales.order o where o.eesupool_order_id = eo.id) as integer) as orders_count,
-        COALESCE(CAST((SELECT SUM(o.value) FROM sales.order o WHERE o.eesupool_order_id = eo.id AND (o.status <> 'Pending' AND o.status <> 'Cancelled')) AS numeric),0.00) AS current_amount,
+        CAST((select count(*) from sales.order o where o.eesupool_order_id = eo.id AND
+        o.placed_at is not null AND o.cancelled_at isnull) as integer) as orders_count,
+        COALESCE(CAST((SELECT SUM(o.value) FROM sales.order o WHERE o.eesupool_order_id = eo.id
+        AND o.placed_at is not null AND o.cancelled_at isnull) AS numeric),0.00) AS current_amount,
         eo.secret_pin  
     FROM communities.eesupool_order eo 
     INNER JOIN communities.eesupool_member eem ON eo.eesupool_id = eem.eesupool_id
@@ -2322,6 +2328,7 @@ $$;
 
 ALTER FUNCTION "finances"."transfer_funds_wallet_to_wallet"("to_wallet_id" integer, "from_wallet_id" integer, "to_ref" "text", "from_ref" "text", "amount" numeric) OWNER TO "postgres";
 
+
 CREATE OR REPLACE FUNCTION "finances"."update_wallet_balance_on_txn_confirmed"() RETURNS "trigger"
     LANGUAGE "plpgsql"
     AS $$
@@ -2335,27 +2342,27 @@ BEGIN
     FROM finances.wallet_transaction wtxn 
     WHERE wtxn.transaction_id = NEW.id;
     
-
     IF _wallet_id IS NOT NULL THEN
-
-    IF NEW.vested = TRUE AND NEW.confirmed_at IS NOT NULL
-    AND NEW.cancelled_at IS NULL AND NEW.is_deleted = false THEN
+        IF NEW.vested = TRUE AND NEW.confirmed_at IS NOT NULL
+        AND NEW.cancelled_at IS NULL AND NEW.is_deleted = false THEN
           
-        SELECT balance into _balance from finances.wallet
-        WHERE id = _wallet_id;
+            SELECT balance INTO _balance FROM finances.wallet
+            WHERE id = _wallet_id;
 
-        _new_balance := _balance + NEW.value;
+            _new_balance := _balance + NEW.value;
 
-        -- Update statement as before
-        UPDATE finances.wallet
-        SET balance = _new_balance
-        WHERE id = _wallet_id;
+            -- Update statement
+            UPDATE finances.wallet
+            SET balance = _new_balance
+            WHERE id = _wallet_id;
 
+        END IF;
     END IF;
 
     RETURN NEW;
 END;
 $$;
+
 
 ALTER FUNCTION "finances"."update_wallet_balance_on_txn_confirmed"() OWNER TO "postgres";
 
@@ -3264,7 +3271,7 @@ BEGIN
         END LOOP;
 
         SELECT eo.receivers INTO _receivers FROM communities.eesupool_order eo
-        WHERE eo.id = new.eesupool_order_id;
+        WHERE eo.id = NEW.eesupool_order_id;
 
         _receivers_count := array_length(_receivers, 1);
         -- Loop through each element of the array
@@ -3272,7 +3279,7 @@ BEGIN
             FOR _admin_wallet_id IN
                 SELECT w.id FROM communities.eesupool_member em
                 JOIN finances.wallet w ON em.user_id = w.user_id
-                WHERE em.id =_receivers[i] AND w.type = 'retail'
+                WHERE em.id = _receivers[i] AND w.type = 'retail'
             LOOP
                 PERFORM finances.create_wallet_transaction(_admin_wallet_id, 'EIA', _receiving_fee / _receivers_count,
                 true, CONCAT('Order-# ', NEW.id, ' Order Receiving Share'));
@@ -3301,6 +3308,8 @@ BEGIN
             END IF;
         END LOOP;
     END IF;
+    RETURN NEW;
+END IF;
     RETURN NEW;
 END;
 $$;
@@ -3648,6 +3657,45 @@ END;
 $$;
 
 ALTER FUNCTION "sales"."get_order_products"("ord_id" integer) OWNER TO "postgres";
+
+CREATE OR REPLACE FUNCTION "sales"."get_pool_order_products"("ord_id" integer) RETURNS TABLE("order_id" integer, "product_id" integer, "image_url" "text", "category" "text", "name" "text", "quantity" integer, "customer_accepted_qty" integer, "eesupreneur_accepted_qty" integer, "price" numeric, "size" "text", "class" "inventory"."product_class")
+    LANGUAGE "plpgsql"
+    AS $$
+BEGIN
+    RETURN QUERY 
+    SELECT
+        op.order_id,
+        op.product_id,
+        p.image_url,
+        c.name AS category,
+        p.name,
+       cast(sum(op.quantity) as integer) AS quantity,
+        op.customer_accepted_qty,
+        op.eesupreneur_accepted_qty,
+        sum(op.price) AS price,
+        p.size,
+        p.class
+    FROM
+        sales.order_product AS op
+        JOIN inventory.product AS p ON op.product_id = p.id
+        JOIN inventory.category AS c ON p.category_id = c.id
+        JOIN sales.order AS o ON o.id = op.order_id
+    WHERE
+        o.eesupool_order_id = ord_id AND o.placed_at is not null
+    GROUP BY
+        op.order_id,
+        op.product_id,
+        p.image_url,
+        c.name,
+        p.name,
+        op.customer_accepted_qty,
+        op.eesupreneur_accepted_qty,
+        p.size,
+        p.class;
+END;
+$$;
+
+ALTER FUNCTION "sales"."get_pool_order_products"("ord_id" integer) OWNER TO "postgres";
 
 CREATE OR REPLACE FUNCTION "sales"."insert_order_products"("_order_id" integer, "_products" "jsonb"[]) RETURNS "void"
     LANGUAGE "plpgsql"
@@ -4314,7 +4362,7 @@ CREATE TABLE IF NOT EXISTS "finances"."profit_allocation" (
     "daa" numeric DEFAULT 0.00 NOT NULL,
     "roles" "public"."user_role"[] NOT NULL,
     "id" integer NOT NULL,
-    "cfv" numeric DEFAULT '0'::numeric NOT NULL
+    "cfv" numeric DEFAULT 0.00 NOT NULL
 );
 
 ALTER TABLE "finances"."profit_allocation" OWNER TO "postgres";
@@ -5058,6 +5106,8 @@ ALTER TABLE ONLY "warehousing"."supplier"
 ALTER TABLE ONLY "warehousing"."warehouse"
     ADD CONSTRAINT "warehouse_pkey" PRIMARY KEY ("id");
 
+CREATE INDEX "profile_user_id_idx" ON "public"."profile" USING "btree" ("user_id");
+
 CREATE OR REPLACE TRIGGER "broadcast_eesupool_message_trigger" AFTER INSERT ON "communities"."message" FOR EACH ROW EXECUTE FUNCTION "communities"."broadcast_eesupool_message"();
 
 CREATE OR REPLACE TRIGGER "create_eesupool_invite_notification_triggere" AFTER INSERT ON "communities"."eesupool_request" FOR EACH ROW EXECUTE FUNCTION "communities"."create_eesupool_invite_notification"();
@@ -5080,6 +5130,8 @@ CREATE OR REPLACE TRIGGER "on_payment_confirmed_trigger" AFTER INSERT OR UPDATE 
 
 CREATE OR REPLACE TRIGGER "on_payout_request_create_transaction_trigger" BEFORE INSERT ON "finances"."payout_request" FOR EACH ROW EXECUTE FUNCTION "finances"."on_payout_request_create_transaction"();
 
+CREATE OR REPLACE TRIGGER "on_unverified_prevent_income_wallet_txn_confirmations_trigger" BEFORE INSERT OR UPDATE ON "finances"."transaction" FOR EACH ROW EXECUTE FUNCTION "finances"."on_unverified_prevent_income_wallet_txn_confirmations"();
+
 CREATE OR REPLACE TRIGGER "update_wallet_balance_on_txn_confirmed_trigger" AFTER UPDATE ON "finances"."transaction" FOR EACH ROW EXECUTE FUNCTION "finances"."update_wallet_balance_on_txn_confirmed"();
 
 CREATE OR REPLACE TRIGGER "check_and_update_verification_trigger" AFTER INSERT OR UPDATE ON "geolocations"."address" FOR EACH ROW EXECUTE FUNCTION "public"."check_and_update_verification"();
@@ -5093,6 +5145,10 @@ CREATE OR REPLACE TRIGGER "create_user_default_basket_trigger" AFTER INSERT ON "
 CREATE OR REPLACE TRIGGER "create_user_wallets_trigger" AFTER INSERT ON "public"."profile" FOR EACH ROW EXECUTE FUNCTION "finances"."create_user_wallets"();
 
 CREATE OR REPLACE TRIGGER "on_profile_verified_complete_referral_trigger" AFTER UPDATE ON "public"."profile" FOR EACH ROW EXECUTE FUNCTION "public"."on_profile_verified_complete_referral"();
+
+CREATE OR REPLACE TRIGGER "on_profile_verified_update_confirm_income_txns_trigger" AFTER UPDATE ON "public"."profile" FOR EACH ROW EXECUTE FUNCTION "public"."on_profile_verified_update_confirm_income_txns"();
+
+CREATE OR REPLACE TRIGGER "allocate_profit_earnings_for_eesupool_member_orders_trigger" AFTER UPDATE ON "sales"."order" FOR EACH ROW EXECUTE FUNCTION "sales"."allocate_profit_earnings_for_eesupool_member_orders"();
 
 CREATE OR REPLACE TRIGGER "allocate_profit_earnings_for_eesupreneur_orders_trigger" AFTER UPDATE ON "sales"."order" FOR EACH ROW EXECUTE FUNCTION "sales"."allocate_profit_earnings_for_eesupreneur_orders"();
 
@@ -5499,7 +5555,7 @@ ALTER TABLE "services"."partner_application" ENABLE ROW LEVEL SECURITY;
 
 CREATE POLICY "Enable access for authenticated users only" ON "system_configs"."api_key" TO "authenticated" USING (true) WITH CHECK (true);
 
-CREATE POLICY "Enable access for authenticated users only" ON "system_configs"."remote_config" TO "authenticated" USING (true) WITH CHECK (true);
+CREATE POLICY "Enable access for authenticated users only" ON "system_configs"."remote_config" TO "authenticated", "anon" USING (true) WITH CHECK (true);
 
 ALTER TABLE "system_configs"."api_key" ENABLE ROW LEVEL SECURITY;
 
@@ -5977,6 +6033,10 @@ GRANT ALL ON FUNCTION "sales"."get_order_by_id"("_order_id" integer) TO "service
 GRANT ALL ON FUNCTION "sales"."get_order_products"("ord_id" integer) TO "anon";
 GRANT ALL ON FUNCTION "sales"."get_order_products"("ord_id" integer) TO "authenticated";
 GRANT ALL ON FUNCTION "sales"."get_order_products"("ord_id" integer) TO "service_role";
+
+GRANT ALL ON FUNCTION "sales"."get_pool_order_products"("ord_id" integer) TO "anon";
+GRANT ALL ON FUNCTION "sales"."get_pool_order_products"("ord_id" integer) TO "authenticated";
+GRANT ALL ON FUNCTION "sales"."get_pool_order_products"("ord_id" integer) TO "service_role";
 
 GRANT ALL ON FUNCTION "sales"."insert_order_products"("_order_id" integer, "_products" "jsonb"[]) TO "anon";
 GRANT ALL ON FUNCTION "sales"."insert_order_products"("_order_id" integer, "_products" "jsonb"[]) TO "authenticated";

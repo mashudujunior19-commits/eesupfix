@@ -1,6 +1,5 @@
 import 'package:ui/src/core/env/app_type.dart';
 import 'package:ui/src/core/env/flavor_type.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get_it/get_it.dart';

@@ -4,7 +4,6 @@ import 'package:ui/src/core/extensions/context_theme_ext.dart';
 
 class EESUpoolViewTabBar extends StatelessWidget {
   const EESUpoolViewTabBar({super.key, required this.tabs});
-
   final List<Tab> tabs;
 
   @override
