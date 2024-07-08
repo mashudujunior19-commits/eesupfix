@@ -679,4 +679,15 @@ class EESUpoolSupabaseImp implements EESUpoolDataSource {
     });
     return (res as List).map((e) => OrderProduct.fromJson(e)).toList();
   }
+
+  @override
+  Future<void> acceptEESUpoolInvite(String userId, int poolId) async {
+    await client
+        .schema('communities')
+        .from('eesupool_request')
+        .update({'status': 'Accepted'})
+        .eq('user_id', userId)
+        .eq('eesupool_id', poolId)
+        .select();
+  }
 }

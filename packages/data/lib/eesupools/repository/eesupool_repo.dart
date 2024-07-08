@@ -138,4 +138,12 @@ class EESUpoolRepository {
     });
     return result;
   }
+
+  Future<Either<EESUpException, void>> acceptEESUpoolInvite(
+      String userId, int poolId) async {
+    final result = authRepository.executeFutureWithAuth((id) {
+      return dataSource.acceptEESUpoolInvite(userId, poolId);
+    });
+    return result;
+  }
 }

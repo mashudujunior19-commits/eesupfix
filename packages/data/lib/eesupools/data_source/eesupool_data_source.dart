@@ -131,6 +131,8 @@ abstract class EESUpoolDataSource {
   Future<dynamic> searchProfilesForInvites(
       {required int poolId, required String query, required int limit});
 
+  Future<void> acceptEESUpoolInvite(String userId, int poolId);
+
   Future<void> deleteInviteOrRequest(String userId, int poolId);
 
   Future<void> updateEESUpoolRequest(String userId, int poolId, String status);

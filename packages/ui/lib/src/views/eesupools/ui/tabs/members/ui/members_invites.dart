@@ -164,6 +164,10 @@ class _InviteCard extends StatelessWidget {
                             "Revoke",
                             style: TextStyle(color: Colors.redAccent),
                           ),
+                          Text(
+                            'Accept',
+                            style: TextStyle(color: Colors.greenAccent),
+                          )
                         ],
                       ),
                     ),
