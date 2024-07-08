@@ -139,11 +139,17 @@ class EESUpoolRepository {
     return result;
   }
 
-  Future<Either<EESUpException, void>> acceptEESUpoolInvite(
-      String userId, int poolId) async {
-    final result = authRepository.executeFutureWithAuth((id) {
-      return dataSource.acceptEESUpoolInvite(userId, poolId);
-    });
+  Future<Either<EESUpException, void>> updateEESUpoolRequest(
+      String userId, int poolId, String status) async {
+    final sessionId = authRepository.sessionId;
+    if (sessionId == null) {
+      return Left(
+        EESUpAuthException(message: 'You are not logged in'),
+      );
+    }
+
+    final result = await EESUpException.guardFuture(
+        action: () => dataSource.updateEESUpoolRequest(userId, poolId, status));
     return result;
   }
 }

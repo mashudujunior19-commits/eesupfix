@@ -1,7 +1,10 @@
 import 'package:data/eesupools/models/eesupool.dart';
 import 'package:data/eesupools/models/eesupool_member.dart';
 import 'package:data/eesupools/models/eesupool_request.dart';
+import 'package:data/eesupools/repository/eesupool_members_repo.dart';
 import 'package:data/eesupools/repository/eesupool_repo.dart';
+import 'package:loader_overlay/loader_overlay.dart';
+import 'package:ui/src/core/extensions/context_alerts_ext.dart';
 import 'package:ui/src/core/extensions/context_theme_ext.dart';
 import 'package:ui/src/core/extensions/slide_in_animation_ext.dart';
 import 'package:ui/src/core/widgets/fullscreen_error_widget.dart';
@@ -120,55 +123,97 @@ class _InviteCard extends StatelessWidget {
                   children: [
                     const Divider(),
                     InkWell(
-                      onTap: () async {
-                        // final id = pool.eesupoolId;
-
-                        // if (id == null) return;
-                        // ref
-                        //     .read(loadingStateProvider.notifier)
-                        //     .toggle();
-                        // final result = await ref
-                        //     .read(eesupoolRepoProvider)
-                        //     .deleteInviteOrRequest(
-                        //         invite.userId, id);
-                        // ref
-                        //     .read(loadingStateProvider.notifier)
-                        //     .toggle();
-
-                        // result.fold((l) {
-                        //   showSnackBar(
-                        //     context: context,
-                        //     type: SnackBarType.error,
-                        //     message: l.message,
-                        //   );
-                        // }, (r) {
-                        //   ref.invalidate(
-                        //       _eesupoolInvitesProvider(id));
-                        //   showSnackBar(
-                        //     context: context,
-                        //     type: SnackBarType.success,
-                        //     message:
-                        //         'Invitation revoked for ${invite.fullName}',
-                        //   );
-                        // });
-                      },
-                      child: const Row(
+                      onTap: () async {},
+                      child: Row(
                         children: [
-                          Icon(
-                            Icons.close,
-                            size: 17,
-                            color: Colors.redAccent,
+                          InkWell(
+                            onTap: () async {
+                              final repo = context.read<EESUpoolRepository>();
+
+                              context.loaderOverlay.show();
+                              final result = await repo.updateEESUpoolRequest(
+                                  invite.userId, invite.eesupoolId, 'Accepted');
+                              context.loaderOverlay.hide();
+
+                              result.fold((l) {
+                                context.snackBarError(
+                                    'Failed to accept the invite');
+                              }, (r) {
+                                context.snackBarSuccess(
+                                  '${invite.fullName ?? invite.corporateName} has been accepted to join this EESUpool',
+                                );
+                              });
+                            },
+                            child: const Row(
+                              children: [
+                                Icon(Icons.check,
+                                    size: 17, color: Colors.green),
+                                SizedBox(width: 5),
+                                Text(
+                                  "Accept",
+                                  style: TextStyle(color: Colors.green),
+                                ),
+                              ],
+                            ),
                           ),
-                          SizedBox(width: 5),
-                          Text(
-                            "Revoke",
-                            style: TextStyle(color: Colors.redAccent),
+                          const SizedBox(width: 20),
+                          InkWell(
+                            onTap: () async {
+                              final repo = context.read<EESUpoolRepository>();
+                              context.loaderOverlay.show();
+                              final result = await repo.deleteInviteOrRequest(
+                                  invite.userId, invite.eesupoolId);
+                              context.loaderOverlay.hide();
+
+                              result.fold((l) {
+                                context.snackBarError(
+                                    'Failed to revoke the invite');
+                              }, (r) {
+                                context.snackBarSuccess('Invite revoked');
+                              });
+                              context.read<EESUpoolRepository>();
+                              context.loaderOverlay.show();
+                              await repo.deleteInviteOrRequest(
+                                  invite.userId, invite.eesupoolId);
+                              context.loaderOverlay.hide();
+
+                              result.fold((l) {
+                                context.snackBarError(
+                                    'Failed to revoke the invite');
+                              }, (r) {
+                                context.snackBarSuccess('Invite revoked');
+                              });
+                            },
+                            child: const Row(
+                              children: [
+                                Icon(
+                                  Icons.close,
+                                  size: 17,
+                                  color: Colors.redAccent,
+                                ),
+                                SizedBox(width: 5),
+                                Text(
+                                  "Revoke",
+                                  style: TextStyle(color: Colors.redAccent),
+                                ),
+                              ],
+                            ),
                           ),
                         ],
                       ),
                     ),
                   ],
                 ),
+            if (invite.status == 'Accepted')
+              const Text(
+                "Accepted",
+                style: TextStyle(color: Colors.green),
+              ),
+            if (invite.status == 'Declined')
+              const Text(
+                "Rejected",
+                style: TextStyle(color: Colors.redAccent),
+              ),
           ],
         ),
       ),

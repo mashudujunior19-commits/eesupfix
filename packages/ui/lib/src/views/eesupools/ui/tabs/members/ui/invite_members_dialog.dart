@@ -270,10 +270,8 @@ class _AcceptInvite extends StatelessWidget {
         final repo = context.read<EESUpoolRepository>();
 
         context.loaderOverlay.show();
-        final result = await repo.acceptEESUpoolInvite(
-          item['user_id'],
-          poolId,
-        );
+        final result = await repo.updateEESUpoolRequest(
+            item['user_id'], poolId, 'Accepted');
         context.loaderOverlay.hide();
 
         result.fold((l) {
