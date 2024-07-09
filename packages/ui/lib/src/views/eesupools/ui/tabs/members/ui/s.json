@@ -1,0 +1,71 @@
+{
+    "title": "Some title",
+    "description": "string",
+    "questions": [
+        {
+            "type": "Multiple Choice",
+            "comment": "string or null",
+            "options": [
+                {
+                    "option": "string",
+                    "option_id": 1,
+                    "is_correct": "boolean"
+                },
+                {
+                    "option": "string",
+                    "option_id": 2,
+                    "is_correct": "boolean"
+                }
+            ],
+            "question": "A or B?",
+            "is_required": "boolean",
+            "question_id": 1,
+            "allow_multiple_selection": "boolean"
+        },
+        {
+            "type": "Open-ended",
+            "comment": "string or null",
+            "question": "string",
+            "is_required": "boolean",
+            "question_id": 2,
+            "allow_recording": "boolean"
+        },
+        {
+            "type": "File-upload",
+            "comment": null,
+            "question": "",
+            "image_url": null,
+            "slider_max": null,
+            "slider_min": null,
+            "is_required": false,
+            "num_ratings": null,
+            "question_id": 1,
+            "allow_recording": false,
+            "media_file_type": "Image",
+            "slider_interval": 1,
+            "allow_multiple_files": false,
+            "allow_multiple_selection": false
+        }
+    ],
+    "wallet": null,
+    "max_responses": "integer",
+    "image_url": "string",
+    "video_url": "string",
+    "reward_amount": "string",
+    "duration": "5 minutes",
+    "points": "integer",
+    "pass_percentage": "integer",
+    "enable_scoring": "boolean",
+    "require_all": "boolean",
+    "enforce_time_limit": "boolean",
+    "is_public": "boolean",
+    "roles": [
+        "Ubuntunist",
+        "EESUplift-Corp"
+    ],
+    "pre_id": "string",
+    "is_private": false,
+    "can_delete": "boolean",
+    "type": "Test/Survey"
+}
+

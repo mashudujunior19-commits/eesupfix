@@ -1,5 +1,6 @@
 import 'package:data/auth/repository/auth_repository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:loader_overlay/loader_overlay.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:ui/src/core/extensions/bottom_sheet_context_ext.dart';
 import 'package:ui/src/core/extensions/context_alerts_ext.dart';
@@ -66,10 +67,12 @@ class _CredentialsFormTabState extends State<CredentialsFormTab> {
                   print(email);
 
                   if (email != null) {
+                    context.loaderOverlay.show();
                     final res = await context
                         .read<AuthRepository>()
                         .resetPasswordWithEmail(email!);
-
+                    context.loaderOverlay.hide();
+                    print(res);
                     res.fold((left) {
                       context.snackBarError(left.message);
                     }, (right) {
@@ -96,9 +99,11 @@ class _CredentialsFormTabState extends State<CredentialsFormTab> {
                       }
                     });
                   } else if (phone != null) {
+                    context.loaderOverlay.show();
                     final res = await context
                         .read<AuthRepository>()
                         .resetPasswordWithPhone(phone!);
+                    context.loaderOverlay.hide();
                     res.fold((left) {
                       context.snackBarError(left.message);
                     }, (right) {

@@ -1,0 +1,153 @@
+{
+    "title": "Delivery provider application",
+    "description": "To be completed by community members to assess suitabilty to serve the community",
+    "questions": [
+        {
+            "type": "Multiple Choice",
+            "comment": null,
+            "options": [
+                {
+                    "option": "Full Time",
+                    "option_id": 1,
+                    "is_correct": null
+                },
+                {
+                    "option": "Part Time",
+                    "option_id": 2,
+                    "is_correct": null
+                }
+            ],
+            "question": "Do you want to assist with deliveries full time or part time?",
+            "is_required": true,
+            "question_id": 1,
+            "allow_multiple_selection": false
+        },
+        {
+            "type": "Open-ended",
+            "comment": null,
+            "question": "Make of vehicle",
+            "is_required": true,
+            "question_id": 2,
+            "allow_recording": false
+        },
+        {
+            "type": "Open-ended",
+            "comment": null,
+            "question": "Year model of vehicle",
+            "is_required": true,
+            "question_id": 3,
+            "allow_recording": false
+        },
+        {
+            "type": "Open-ended",
+            "comment": null,
+            "question": "Loading capacity of vehicle",
+            "is_required": true,
+            "question_id": 4,
+            "allow_recording": false
+        },
+        {
+            "type": "Multiple Choice",
+            "comment": null,
+            "options": [
+                {
+                    "option": "Yes",
+                    "option_id": 1,
+                    "is_correct": null
+                },
+                {
+                    "option": "No",
+                    "option_id": 2,
+                    "is_correct": null
+                }
+            ],
+            "question": "Does your delivery vehicle have a canopy?",
+            "is_required": true,
+            "question_id": 5,
+            "allow_multiple_selection": false
+        },
+        {
+            "type": "File-upload",
+            "comment": null,
+            "question": "Upload a photo of your drivers license",
+            "image_url": null,
+            "slider_max": null,
+            "slider_min": null,
+            "is_required": true,
+            "num_ratings": null,
+            "question_id": 6,
+            "allow_recording": false,
+            "media_file_type": "Image",
+            "slider_interval": 1,
+            "allow_multiple_files": false,
+            "allow_multiple_selection": false
+        },
+        {
+            "type": "File-upload",
+            "comment": null,
+            "question": "Upload a photo of vehicle license disk",
+            "image_url": null,
+            "slider_max": null,
+            "slider_min": null,
+            "is_required": true,
+            "num_ratings": null,
+            "question_id": 7,
+            "allow_recording": false,
+            "media_file_type": "Image",
+            "slider_interval": 1,
+            "allow_multiple_files": false,
+            "allow_multiple_selection": false
+        },
+        {
+            "type": "File-upload",
+            "comment": null,
+            "question": "Upload photo of vehicle registration document",
+            "image_url": null,
+            "slider_max": null,
+            "slider_min": null,
+            "is_required": true,
+            "num_ratings": null,
+            "question_id": 8,
+            "allow_recording": false,
+            "media_file_type": "Image",
+            "slider_interval": 1,
+            "allow_multiple_files": false,
+            "allow_multiple_selection": false
+        },
+        {
+            "type": "File-upload",
+            "comment": null,
+            "question": "Upload photo of insurance policy",
+            "image_url": null,
+            "slider_max": null,
+            "slider_min": null,
+            "is_required": true,
+            "num_ratings": null,
+            "question_id": 9,
+            "allow_recording": false,
+            "media_file_type": "Image",
+            "slider_interval": 1,
+            "allow_multiple_files": true,
+            "allow_multiple_selection": false
+        }
+    ],
+    "wallet": null,
+    "max_responses": 1,
+    "image_url": null,
+    "video_url": null,
+    "reward_amount": null,
+    "duration": "5 minutes",
+    "points": null,
+    "pass_percentage": null,
+    "enable_scoring": false,
+    "require_all": true,
+    "enforce_time_limit": false,
+    "is_public": true,
+    "roles": [
+        "Ubuntunist"
+    ],
+    "pre_id": null,
+    "is_private": false,
+    "can_delete": false,
+    "type": "Survey"
+}

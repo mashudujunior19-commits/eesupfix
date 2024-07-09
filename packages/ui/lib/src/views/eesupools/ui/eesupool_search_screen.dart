@@ -32,6 +32,7 @@ class _EESUpoolSearchScreenState extends State<EESUpoolSearchScreen> {
   final _controller = TextEditingController();
   @override
   Widget build(BuildContext context) {
+    final repo = context.read<EESUpoolRepository>();
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
@@ -67,11 +68,18 @@ class _EESUpoolSearchScreenState extends State<EESUpoolSearchScreen> {
               );
             } else {
               return FutureBuilder<Either<EESUpException, dynamic>>(
-                future: context.read<EESUpoolRepository>().searchPoolsByType(
-                      _controller.text,
-                      widget.type,
-                      20,
-                    ),
+                future: widget.type == EESUpoolType.trade
+                    ? repo.searchTradePools(
+                        _controller.text,
+                        50,
+                        23.00,
+                        23.00,
+                      )
+                    : repo.searchPoolsByType(
+                        _controller.text,
+                        widget.type,
+                        20,
+                      ),
                 builder: (context, snap) {
                   if (snap.hasData) {
                     final results = snap.data;
@@ -245,7 +253,7 @@ class _EESUpoolCard extends StatelessWidget {
           context.loaderOverlay.show();
           final repo = context.read<EESUpoolRepository>();
           final results = await repo.joinEESUpoool(pool['id']);
-         context.loaderOverlay.hide();
+          context.loaderOverlay.hide();
 
           results.fold((l) {
             context.snackBarError(l.message);

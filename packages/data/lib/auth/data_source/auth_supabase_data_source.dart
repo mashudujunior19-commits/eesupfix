@@ -159,6 +159,7 @@ class AuthSupabaseDataSource implements IAuthDataSource {
       await _client.auth.resetPasswordForEmail(email);
       return true;
     } catch (e) {
+      print(e);
       rethrow;
     }
   }

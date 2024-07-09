@@ -61,11 +61,11 @@ class SignInScreen extends StatelessWidget {
                       20.sH,
                       EmailAndPhoneTabContainer(
                         onEmailChanged: (e) {
-                          _email = e;
+                          _email = e?.trim();
                           _phone = null;
                         },
                         onPhoneChanged: (p) {
-                          _phone = p;
+                          _phone = p?.trim();
                           _email = null;
                         },
                       ).animate().slideIn(100),

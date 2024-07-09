@@ -28,6 +28,14 @@ class NotificationsDialog extends StatelessWidget {
           builder: (context, state) {
             if (state is NotificationsStreaming) {
               final notifications = state.notifications;
+              if (notifications.isEmpty) {
+                return FullScreenError(
+                  isError: false,
+                  exception: EESUpException(
+                    message: 'You don\'t have new notifications.',
+                  ),
+                );
+              }
               return ListView.builder(
                 padding: const EdgeInsets.only(left: 15, right: 15),
                 itemBuilder: (context, index) {
@@ -38,13 +46,18 @@ class NotificationsDialog extends StatelessWidget {
                 itemCount: notifications.length,
               );
             } else if (state is NotificationsInitial) {
-              return const FullScreenLoadingShimmer();
+              return FullScreenError(
+                isError: false,
+                exception: EESUpException(
+                  message: 'You don\'t have new notifications.',
+                ),
+              );
             } else if (state is NotificationsError) {
               return FullScreenError(exception: state.err);
             } else {
               return FullScreenError(
                 exception: EESUpException(
-                  message: 'You don\'s have notifications.',
+                  message: 'You don\'t have new notifications.',
                 ),
               );
             }

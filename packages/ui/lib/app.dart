@@ -149,18 +149,20 @@ class MainApp extends StatelessWidget {
       child: MultiBlocProvider(
         providers: [
           BlocProvider(
-            create: (context) =>
-                AuthBloc(context.read<AuthRepository>())..add(AppStarted()),
+            create: (context) => AuthBloc(context.read<AuthRepository>())
+              ..add(
+                AppStarted(),
+              ),
           ),
           BlocProvider(
-            create: (context) => ProfileBloc(context.read<ProfileRepository>()),
+            create: (context) => ProfileBloc(
+              context.read<ProfileRepository>(),
+            ),
           ),
           BlocProvider(
-            create: (context) =>
-                NotificationsBloc(context.read<NotificationRepo>())
-                  ..add(
-                    NotificationStreamStarted(),
-                  ),
+            create: (context) => NotificationsBloc(
+              context.read<NotificationRepo>(),
+            )..add(NotificationStreamStarted()),
           ),
           BlocProvider(
             create: (context) => ProfitAllocationBloc(

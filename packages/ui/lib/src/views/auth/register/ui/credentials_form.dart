@@ -93,8 +93,8 @@ class CredentialsForm extends StatelessWidget {
           onPressed: () async {
             FocusScope.of(context).unfocus();
 
-            final tempEmail = form.email ?? '';
-            final tempPhone = form.phone ?? '';
+            final tempEmail = form.email?.trim() ?? '';
+            final tempPhone = form.phone?.trim() ?? '';
 
             if (tempPhone.isEmpty && tempEmail.isEmpty) {
               context.snackBarError('Please provide your email or phone');

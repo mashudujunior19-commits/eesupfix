@@ -206,7 +206,7 @@ class _SearchBox extends StatelessWidget {
         ),
         onChanged: (value) {
           if (value.length < 3) return;
-          context.read<BrowsingBloc>().add(ProductsSearched(value, 15));
+          context.read<BrowsingBloc>().add(ProductsSearched(value, 500));
         },
       ),
     );

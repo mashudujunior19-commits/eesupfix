@@ -1,0 +1,383 @@
+[
+    {
+        "id": "0480533a-56c2-4eac-8630-98f501f494f5",
+        "created_at": "1/20/24",
+        "title": "TVET Test 9 (Leadership II)",
+        "description": "Duration: 15 minutes ",
+        "questions": [
+            {
+                "type": "Multiple Choice",
+                "comment": null,
+                "options": [
+                    {
+                        "option": "Launch into a passionate speech about environmental threats, potentially overwhelming and demotivating others. ",
+                        "option_id": 1,
+                        "is_correct": false
+                    },
+                    {
+                        "option": "Silently plan the festival alone, assuming others will follow your lead without needing inspiration. ",
+                        "option_id": 2,
+                        "is_correct": false
+                    },
+                    {
+                        "option": "Hold open brainstorming sessions, inviting diverse community members to share ideas and contribute to the vision. ",
+                        "option_id": 3,
+                        "is_correct": true
+                    },
+                    {
+                        "option": "Focus on attracting celebrity guests and sponsors, hoping their presence will automatically revitalize the event.",
+                        "option_id": 4,
+                        "is_correct": false
+                    }
+                ],
+                "question": "Scenario 1: Leadership\nYou're a passionate environmentalist living in Green Valley, a picturesque town struggling with pollution and environmental neglect. The annual Green Valley Festival, once a thriving celebration of nature, has dwindled into a half-hearted affair. You dream of revitalizing the festival and inspiring the community to embrace a greener future.\n\nChallenge: Spark renewed enthusiasm for environmental action by transforming the festival into a vibrant, impactful event that motivates residents to get involved.\n\nYour initial approach to galvanizing the community is:",
+                "image_url": null,
+                "slider_max": null,
+                "slider_min": null,
+                "is_required": false,
+                "num_ratings": null,
+                "question_id": 1,
+                "allow_recording": false,
+                "media_file_type": "Image",
+                "slider_interval": 1,
+                "allow_multiple_files": false,
+                "allow_multiple_selection": false
+            },
+            {
+                "type": "Multiple Choice",
+                "comment": null,
+                "options": [
+                    {
+                        "option": "Publicly criticize and shame their views, potentially fostering division and resentment. ",
+                        "option_id": 1,
+                        "is_correct": false
+                    },
+                    {
+                        "option": "Dismiss their concerns and proceed with your plans, ignoring potential obstacles to community-wide engagement. ",
+                        "option_id": 2,
+                        "is_correct": false
+                    },
+                    {
+                        "option": "Engage in respectful dialogue, addressing their concerns and finding common ground through solutions that benefit everyone. ",
+                        "option_id": 3,
+                        "is_correct": true
+                    },
+                    {
+                        "option": "Abandon the festival altogether, discouraged by the lack of initial enthusiasm.",
+                        "option_id": 4,
+                        "is_correct": false
+                    }
+                ],
+                "question": "When faced with opposition from some who consider environmentalism \"inconvenient\" or \"unrealistic,\" you:",
+                "image_url": null,
+                "slider_max": null,
+                "slider_min": null,
+                "is_required": false,
+                "num_ratings": null,
+                "question_id": 2,
+                "allow_recording": false,
+                "media_file_type": "Image",
+                "slider_interval": 1,
+                "allow_multiple_files": false,
+                "allow_multiple_selection": false
+            },
+            {
+                "type": "Multiple Choice",
+                "comment": null,
+                "options": [
+                    {
+                        "option": "Focusing on expensive, large-scale projects that may impress but lack long-term sustainability. ",
+                        "option_id": 1,
+                        "is_correct": false
+                    },
+                    {
+                        "option": "Organizing interactive workshops and activities that empower individuals to take small, actionable steps towards green living. ",
+                        "option_id": 2,
+                        "is_correct": true
+                    },
+                    {
+                        "option": " Hosting purely symbolic events with minimal practical outcomes, aiming for optics over positive change. ",
+                        "option_id": 3,
+                        "is_correct": false
+                    },
+                    {
+                        "option": " Exclude those with limited resources or knowledge, assuming only certain demographics can contribute to environmental action.",
+                        "option_id": 4,
+                        "is_correct": false
+                    }
+                ],
+                "question": "To make the festival impactful, you propose:",
+                "image_url": null,
+                "slider_max": null,
+                "slider_min": null,
+                "is_required": false,
+                "num_ratings": null,
+                "question_id": 3,
+                "allow_recording": false,
+                "media_file_type": "Image",
+                "slider_interval": 1,
+                "allow_multiple_files": false,
+                "allow_multiple_selection": false
+            },
+            {
+                "type": "Multiple Choice",
+                "comment": null,
+                "options": [
+                    {
+                        "option": "Panic and blame others, abandoning your leadership role and seeking external solutions. ",
+                        "option_id": 1,
+                        "is_correct": false
+                    },
+                    {
+                        "option": "Remain calm and collected, rallying the team to find creative solutions and overcome obstacles collaboratively. ",
+                        "option_id": 2,
+                        "is_correct": true
+                    },
+                    {
+                        "option": "Micromanage every aspect of the festival, stifling creativity and iniciativae among community members.",
+                        "option_id": 3,
+                        "is_correct": false
+                    },
+                    {
+                        "option": "Delegate tasks haphazardly, expecting everyone to know their roles without clear guidance or communication.",
+                        "option_id": 4,
+                        "is_correct": false
+                    }
+                ],
+                "question": "When challenges arise during the festival's planning or execution, you:",
+                "image_url": null,
+                "slider_max": null,
+                "slider_min": null,
+                "is_required": false,
+                "num_ratings": null,
+                "question_id": 4,
+                "allow_recording": false,
+                "media_file_type": "Image",
+                "slider_interval": 1,
+                "allow_multiple_files": false,
+                "allow_multiple_selection": false
+            },
+            {
+                "type": "Multiple Choice",
+                "comment": null,
+                "options": [
+                    {
+                        "option": "Take sole credit for the success, downplaying the crucial contributions of the community and team members. ",
+                        "option_id": 1,
+                        "is_correct": false
+                    },
+                    {
+                        "option": "Express sincere gratitude to everyone involved, celebrating the collective achievement and motivating further action. ",
+                        "option_id": 2,
+                        "is_correct": true
+                    },
+                    {
+                        "option": "Use the success as a platform for self-promotion, seeking personal gain instead of focusing on continued environmental impact. ",
+                        "option_id": 3,
+                        "is_correct": false
+                    },
+                    {
+                        "option": "View the festival as a one-time event and abandon further efforts, neglecting the potential for sustained positive change.",
+                        "option_id": 4,
+                        "is_correct": false
+                    }
+                ],
+                "question": "The revitalized Green Valley Festival becomes a resounding success, inspiring residents to adopt sustainable practices and sparking ongoing environmental initiatives. Your response is:",
+                "image_url": null,
+                "slider_max": null,
+                "slider_min": null,
+                "is_required": false,
+                "num_ratings": null,
+                "question_id": 5,
+                "allow_recording": false,
+                "media_file_type": "Image",
+                "slider_interval": 1,
+                "allow_multiple_files": false,
+                "allow_multiple_selection": false
+            },
+            {
+                "type": "Multiple Choice",
+                "comment": null,
+                "options": [
+                    {
+                        "option": "Continue with the agenda, assuming enthusiasm will naturally increase.",
+                        "option_id": 1,
+                        "is_correct": false
+                    },
+                    {
+                        "option": "Express your own excitement for the project, emphasizing its potential impact.",
+                        "option_id": 2,
+                        "is_correct": true
+                    },
+                    {
+                        "option": "Delegate the task of boosting team morale to a more outgoing team member.",
+                        "option_id": 3,
+                        "is_correct": false
+                    },
+                    {
+                        "option": "Discuss individual team members' concerns privately after the meeting.",
+                        "option_id": 4,
+                        "is_correct": false
+                    }
+                ],
+                "question": "Scenario 2: Leadership\nYou are a team leader at Energize Innovations, leading a dynamic group of individuals on a project. Answer the following multiple-choice questions based on your ability to inspire and motivate others, demonstrate initiative, and take on leadership roles when appropriate.\n\nQuestion: At the project kickoff meeting, the team seems hesitant and lacks enthusiasm. How do you address this situation?",
+                "image_url": null,
+                "slider_max": null,
+                "slider_min": null,
+                "is_required": false,
+                "num_ratings": null,
+                "question_id": 6,
+                "allow_recording": false,
+                "media_file_type": "Image",
+                "slider_interval": 1,
+                "allow_multiple_files": false,
+                "allow_multiple_selection": false
+            },
+            {
+                "type": "Multiple Choice",
+                "comment": null,
+                "options": [
+                    {
+                        "option": "Assume team members will naturally collaborate without intervention.",
+                        "option_id": 1,
+                        "is_correct": false
+                    },
+                    {
+                        "option": "Assign specific roles without considering team members' strengths.",
+                        "option_id": 2,
+                        "is_correct": false
+                    },
+                    {
+                        "option": "Facilitate a collaborative discussion, encouraging team members to share their expertise.",
+                        "option_id": 3,
+                        "is_correct": true
+                    },
+                    {
+                        "option": "Let team members decide on collaboration without providing any guidance.",
+                        "option_id": 4,
+                        "is_correct": false
+                    }
+                ],
+                "question": "A complex task requires collaboration between team members with different expertise. How do you encourage collaboration?",
+                "image_url": null,
+                "slider_max": null,
+                "slider_min": null,
+                "is_required": false,
+                "num_ratings": null,
+                "question_id": 7,
+                "allow_recording": false,
+                "media_file_type": "Image",
+                "slider_interval": 1,
+                "allow_multiple_files": false,
+                "allow_multiple_selection": false
+            },
+            {
+                "type": "Multiple Choice",
+                "comment": null,
+                "options": [
+                    {
+                        "option": "Seek direction from higher management before taking any action.",
+                        "option_id": 1,
+                        "is_correct": false
+                    },
+                    {
+                        "option": "Assign the task of addressing the challenge to a specific team member.",
+                        "option_id": 2,
+                        "is_correct": false
+                    },
+                    {
+                        "option": "Proactively lead the team in brainstorming solutions and taking immediate action.",
+                        "option_id": 3,
+                        "is_correct": true
+                    },
+                    {
+                        "option": "Ignore the challenge, assuming it will resolve itself.",
+                        "option_id": 4,
+                        "is_correct": false
+                    }
+                ],
+                "question": "The team encounters an unexpected challenge that wasn't addressed in the initial plan. How do you approach this challenge?",
+                "image_url": null,
+                "slider_max": null,
+                "slider_min": null,
+                "is_required": false,
+                "num_ratings": null,
+                "question_id": 8,
+                "allow_recording": false,
+                "media_file_type": "Image",
+                "slider_interval": 1,
+                "allow_multiple_files": false,
+                "allow_multiple_selection": false
+            },
+            {
+                "type": "Multiple Choice",
+                "comment": null,
+                "options": [
+                    {
+                        "option": "Briefly mention the success without additional recognition efforts.",
+                        "option_id": 1,
+                        "is_correct": false
+                    },
+                    {
+                        "option": "Delegate the task of acknowledging achievements to another team member.",
+                        "option_id": 2,
+                        "is_correct": false
+                    },
+                    {
+                        "option": "Organize a team celebration, expressing gratitude for everyone's hard work.",
+                        "option_id": 3,
+                        "is_correct": true
+                    },
+                    {
+                        "option": "Downplay the achievement to avoid overemphasizing success.",
+                        "option_id": 4,
+                        "is_correct": false
+                    }
+                ],
+                "question": "The team successfully completes a challenging phase of the project. How do you acknowledge this achievement?",
+                "image_url": null,
+                "slider_max": null,
+                "slider_min": null,
+                "is_required": false,
+                "num_ratings": null,
+                "question_id": 9,
+                "allow_recording": false,
+                "media_file_type": "Image",
+                "slider_interval": 1,
+                "allow_multiple_files": false,
+                "allow_multiple_selection": false
+            },
+            {
+                "type": "Multiple Choice",
+                "comment": null,
+                "options": [
+                    {
+                        "option": "Assign the task to the most experienced team member without consulting others.",
+                        "option_id": 1,
+                        "is_correct": false
+                    },
+                    {
+                        "option": "Let team members decide among them...",
+                        "wallet": "",
+                        "max_responses": 1,
+                        "image_url": "",
+                        "video_url": "",
+                        "reward_amount": "",
+                        "duration": 15,
+                        "points": 10,
+                        "pass_percentage": 90,
+                        "enable_scoring": false,
+                        "require_all": true,
+                        "enforce_time_limit": true,
+                        "is_public": true,
+                        "roles": [],
+                        "pre_id": "6f5be9ce-f231-4ace-953c-4197ba802d51",
+                        "is_private": true,
+                        "can_delete": true,
+                        "type": "Test"
+                    }
+                ]
+            }
+        ]
+    }
+]
