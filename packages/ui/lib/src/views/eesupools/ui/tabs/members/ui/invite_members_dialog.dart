@@ -110,20 +110,34 @@ class _InviteMembersDialogState extends State<InviteMembersDialog> {
           color: Colors.grey.shade500,
         ),
       ),
-      trailing: item['status'] != null
-          ? _RevokeInvite(
+      trailing: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          if (item['status'] == 'pending')
+            _AcceptInvite(
               onRequestSetState: () {
                 setState(() {});
               },
               poolId: widget.poolId,
-              item: item)
-          : _SendInvite(
+              item: item,
+            ),
+          if (item['status'] != null)
+            _RevokeInvite(
+                onRequestSetState: () {
+                  setState(() {});
+                },
+                poolId: widget.poolId,
+                item: item),
+          if (item['status'] == null)
+            _SendInvite(
               onRequestSetState: () {
                 setState(() {});
               },
               item: item,
               poolId: widget.poolId,
             ),
+        ],
+      ),
     );
   }
 }
@@ -226,6 +240,47 @@ class _RevokeInvite extends StatelessWidget {
           context.snackBarError('Failed to revoke the invite');
         }, (r) {
           context.snackBarSuccess('Invite revoked');
+          onRequestSetState.call();
+        });
+      },
+    );
+  }
+}
+
+class _AcceptInvite extends StatelessWidget {
+  const _AcceptInvite({
+    required this.onRequestSetState,
+    required this.item,
+    required this.poolId,
+  });
+  final VoidCallback onRequestSetState;
+  final int poolId;
+  final dynamic item;
+
+  @override
+  Widget build(BuildContext context) {
+    return TextButton(
+      child: const Padding(
+        padding: EdgeInsets.only(
+          right: 15,
+        ),
+        child: Text('Accept'),
+      ),
+      onPressed: () async {
+        final repo = context.read<EESUpoolRepository>();
+
+        context.loaderOverlay.show();
+        final result = await repo.updateEESUpoolRequest(
+            item['user_id'], poolId, 'Accepted');
+        context.loaderOverlay.hide();
+
+        result.fold((l) {
+          context.snackBarError('Failed to accept the invite');
+        }, (r) {
+          context.snackBarSuccess(
+            '${item['full_name'] ?? item['corporate_name']} has been accepted to join this EESUpool',
+          );
+
           onRequestSetState.call();
         });
       },
