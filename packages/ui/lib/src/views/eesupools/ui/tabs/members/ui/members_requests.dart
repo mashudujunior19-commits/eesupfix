@@ -60,13 +60,18 @@ class MembersRequests extends StatelessWidget {
   }
 }
 
-class _InviteCard extends StatelessWidget {
-  const _InviteCard({required this.invite, required this.pool});
-  final EESUpoolRequest invite;
+class _InviteCard extends StatefulWidget {
+  _InviteCard({required this.invite, required this.pool});
   final EESUpool pool;
+  late EESUpoolRequest invite;
+  @override
+  State<_InviteCard> createState() => _InviteCardState();
+}
 
+class _InviteCardState extends State<_InviteCard> {
   @override
   Widget build(BuildContext context) {
+    bool accepting = false;
     return Container(
       margin: const EdgeInsets.only(right: 15, left: 15, top: 15),
       decoration: BoxDecoration(
@@ -81,9 +86,10 @@ class _InviteCard extends StatelessWidget {
         contentPadding: const EdgeInsets.only(left: 16, right: 10),
         leading: CircleAvatar(
           backgroundColor: context.colorScheme.primary.withOpacity(.1),
-          child: Text(invite.fullName?.substring(0, 1) ?? '~'),
+          child: Text(widget.invite.fullName?.substring(0, 1) ?? '~'),
         ),
-        title: Text(invite.fullName ?? invite.corporateName ?? '~'),
+        title:
+            Text(widget.invite.fullName ?? widget.invite.corporateName ?? '~'),
         subtitle: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -91,7 +97,7 @@ class _InviteCard extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               children: [
                 Text(
-                  invite.role.toString(),
+                  widget.invite.role.toString(),
                   style: context.textTheme.labelMedium?.copyWith(
                     fontSize: 12,
                     color: Colors.grey.shade500,
@@ -107,7 +113,7 @@ class _InviteCard extends StatelessWidget {
                       color: context.colorScheme.primary,
                       borderRadius: BorderRadius.circular(5)),
                   child: Text(
-                    invite.status,
+                    widget.invite.status,
                     style: context.textTheme.labelMedium?.copyWith(
                       color: Colors.white,
                       fontSize: 9,
@@ -116,8 +122,8 @@ class _InviteCard extends StatelessWidget {
                 ),
               ],
             ),
-            if (invite.status == 'Pending')
-              if (pool.role == EESUpoolMemberRole.admin)
+            if (widget.invite.status == 'Pending')
+              if (widget.pool.role == EESUpoolMemberRole.admin)
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -128,20 +134,33 @@ class _InviteCard extends StatelessWidget {
                         children: [
                           InkWell(
                             onTap: () async {
+                              setState(() {
+                                accepting = true;
+                              });
                               final repo = context.read<EESUpoolRepository>();
 
                               context.loaderOverlay.show();
                               final result = await repo.updateEESUpoolRequest(
-                                  invite.userId, invite.eesupoolId, 'Accepted');
+                                  widget.invite.userId,
+                                  widget.invite.eesupoolId,
+                                  'Accepted');
                               context.loaderOverlay.hide();
 
                               result.fold((l) {
                                 context.snackBarError(
                                     'Failed to accept the invite');
                               }, (r) {
+                                setState(() {
+                                  widget.invite = widget.invite
+                                      .copyWith(status: 'Accepted');
+                                });
+
                                 context.snackBarSuccess(
-                                  '${invite.fullName ?? invite.corporateName} has been accepted to join this EESUpool',
+                                  '${widget.invite.fullName ?? widget.invite.corporateName} has been accepted to join this EESUpool',
                                 );
+                              });
+                              setState(() {
+                                accepting = false;
                               });
                             },
                             child: const Row(
@@ -159,10 +178,31 @@ class _InviteCard extends StatelessWidget {
                           const SizedBox(width: 20),
                           InkWell(
                             onTap: () async {
+                              setState(() {
+                                accepting = true;
+                              });
                               final repo = context.read<EESUpoolRepository>();
                               context.loaderOverlay.show();
                               final result = await repo.deleteInviteOrRequest(
-                                  invite.userId, invite.eesupoolId);
+                                  widget.invite.userId,
+                                  widget.invite.eesupoolId);
+                              context.loaderOverlay.hide();
+
+                              result.fold((l) {
+                                context.snackBarError(
+                                    'Failed to revoke the invite');
+                              }, (r) {
+                                setState(() {
+                                  widget.invite =
+                                      widget.invite.copyWith(status: 'Revoked');
+                                });
+                                context.snackBarSuccess('Invite revoked');
+                              });
+                              context.read<EESUpoolRepository>();
+                              context.loaderOverlay.show();
+                              await repo.deleteInviteOrRequest(
+                                  widget.invite.userId,
+                                  widget.invite.eesupoolId);
                               context.loaderOverlay.hide();
 
                               result.fold((l) {
@@ -171,17 +211,8 @@ class _InviteCard extends StatelessWidget {
                               }, (r) {
                                 context.snackBarSuccess('Invite revoked');
                               });
-                              context.read<EESUpoolRepository>();
-                              context.loaderOverlay.show();
-                              await repo.deleteInviteOrRequest(
-                                  invite.userId, invite.eesupoolId);
-                              context.loaderOverlay.hide();
-
-                              result.fold((l) {
-                                context.snackBarError(
-                                    'Failed to revoke the invite');
-                              }, (r) {
-                                context.snackBarSuccess('Invite revoked');
+                              setState(() {
+                                accepting = false;
                               });
                             },
                             child: const Row(
@@ -204,12 +235,12 @@ class _InviteCard extends StatelessWidget {
                     ),
                   ],
                 ),
-            if (invite.status == 'Accepted')
+            if (widget.invite.status == 'Accepted')
               const Text(
                 "Accepted",
                 style: TextStyle(color: Colors.green),
               ),
-            if (invite.status == 'Declined')
+            if (widget.invite.status == 'Declined')
               const Text(
                 "Rejected",
                 style: TextStyle(color: Colors.redAccent),
