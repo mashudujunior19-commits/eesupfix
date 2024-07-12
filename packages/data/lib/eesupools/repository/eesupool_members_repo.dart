@@ -210,4 +210,12 @@ extension EESUpoolMembersRepo on EESUpoolRepository {
     });
     return result;
   }
+
+  Future<Either<EESUpException, bool>> deleteEESUpoolMember(int poolId,String userId) async {
+    final result = authRepository.executeFutureWithAuth((_) {
+      final r = dataSource.deleteMember(poolId, userId);
+      return r;
+    });
+    return result;
+  }
 }

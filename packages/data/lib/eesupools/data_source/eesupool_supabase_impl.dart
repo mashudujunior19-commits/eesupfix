@@ -49,12 +49,14 @@ class EESUpoolSupabaseImp implements EESUpoolDataSource {
           .eq('user_id', userId)
           .eq('eesupool_id', poolId);
       await client
+          .schema('communities')
           .from('eesupool_request')
           .delete()
           .eq('user_id', userId)
           .eq('eesupool_id', poolId);
       return true;
     } catch (e) {
+      print(e);
       return false;
     }
   }
@@ -558,6 +560,7 @@ class EESUpoolSupabaseImp implements EESUpoolDataSource {
       );
       return true;
     } catch (e) {
+      print(e);
       return false;
     }
   }

@@ -9,11 +9,11 @@ import 'package:ui/src/core/extensions/sizedbox_ext.dart';
 import 'package:flutter/material.dart';
 import 'package:ui/src/views/auth/otp_auth/ui/otp_auth_dialog.dart';
 import 'package:ui/src/views/auth/register/ui/email_and_phone_tab_container.dart';
+import 'package:ui/src/views/auth/reset_password/create_password_tab.dart';
 
 // ignore: must_be_immutable
 class CredentialsFormTab extends StatefulWidget {
-  const CredentialsFormTab({super.key, required this.tabController});
-  final TabController tabController;
+  const CredentialsFormTab({super.key});
 
   @override
   State<CredentialsFormTab> createState() => _CredentialsFormTabState();
@@ -63,16 +63,13 @@ class _CredentialsFormTabState extends State<CredentialsFormTab> {
                 onPressed: () async {
                   FocusScope.of(context).unfocus();
 
-                  print(phone);
-                  print(email);
-
                   if (email != null) {
                     context.loaderOverlay.show();
                     final res = await context
                         .read<AuthRepository>()
                         .resetPasswordWithEmail(email!);
                     context.loaderOverlay.hide();
-                    print(res);
+
                     res.fold((left) {
                       context.snackBarError(left.message);
                     }, (right) {
@@ -89,8 +86,12 @@ class _CredentialsFormTabState extends State<CredentialsFormTab> {
                             .then((value) {
                           ///THIS RETURNS TRUE IF OTP AUTH IS SUCCESS
                           if (value == true) {
-                            widget.tabController
-                                .animateTo(widget.tabController.index++);
+                            context.showDialog(
+                              child: CreateNewPasswordDialog(
+                                email: email,
+                                phone: null,
+                              ),
+                            );
                           } else {
                             ///ELSE IT IS RESTARTED
                             context.snackBarError('Otp verification failed');
@@ -120,8 +121,12 @@ class _CredentialsFormTabState extends State<CredentialsFormTab> {
                             .then((value) {
                           ///THIS RETURNS TRUE IF OTP AUTH IS SUCCESS
                           if (value == true) {
-                            widget.tabController
-                                .animateTo(widget.tabController.index++);
+                            context.showDialog(
+                              child: CreateNewPasswordDialog(
+                                email: null,
+                                phone: phone,
+                              ),
+                            );
                           } else {
                             ///ELSE IT IS RESTARTED
                             context.snackBarError('Otp verification failed');

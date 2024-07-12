@@ -25,7 +25,7 @@ class EESUpoolCard extends StatelessWidget {
       splashColor: Colors.transparent,
       onTap: onPoolTap != null
           ? () {
-              //onPoolTap!(eesupool);
+              onPoolTap?.call(eesupool);
             }
           : () {
               context.router

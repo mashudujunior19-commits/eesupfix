@@ -1,7 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:ui/src/core/extensions/bg_image_deco_ext.dart';
 import 'package:ui/src/core/extensions/context_theme_ext.dart';
-import 'package:ui/src/views/auth/reset_password/create_password_tab.dart';
 import 'package:flutter/material.dart';
 import 'package:ui/src/views/auth/reset_password/credentials_form_tab.dart';
 
@@ -12,15 +11,7 @@ class ResetPasswordScreen extends StatefulWidget {
   State<ResetPasswordScreen> createState() => _ResetPasswordScreenState();
 }
 
-class _ResetPasswordScreenState extends State<ResetPasswordScreen>
-    with SingleTickerProviderStateMixin {
-  late final TabController _controller;
-  @override
-  void initState() {
-    super.initState();
-    _controller = TabController(length: 2, vsync: this);
-  }
-
+class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -33,13 +24,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen>
           decoration: context.bgImage,
           height: context.height,
           width: context.width,
-          child: TabBarView(
-            controller: _controller,
-            children: [
-              CredentialsFormTab(tabController: _controller),
-              CreateNewPassword()
-            ],
-          ),
+          child: const CredentialsFormTab(),
         ),
       ),
     );

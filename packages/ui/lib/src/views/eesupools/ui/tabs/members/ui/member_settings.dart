@@ -1,11 +1,16 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:data/eesupools/models/eesupool.dart';
 import 'package:data/eesupools/models/eesupool_member.dart';
 import 'package:data/eesupools/models/eesupool_type.dart';
+import 'package:data/eesupools/repository/eesupool_members_repo.dart';
 import 'package:data/eesupools/repository/eesupool_repo.dart';
 import 'package:data/utils/eesup_exception.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
+import 'package:loader_overlay/loader_overlay.dart';
+import 'package:ui/app_route.gr.dart';
+import 'package:ui/src/core/extensions/context_alerts_ext.dart';
 import 'package:ui/src/core/extensions/context_theme_ext.dart';
 import 'package:ui/src/core/extensions/sizedbox_ext.dart';
 import 'package:ui/src/core/utils/date_formatter.dart';
@@ -167,8 +172,9 @@ class MemberSettingsDialog extends StatelessWidget {
                     if (pool.type == EESUpoolType.kasi)
                       ListTile(
                         onTap: () {
-                          // context.push(TransferMembersScreen.route,
-                          //     extra: member);
+                          context.router.push(
+                            TransferMemberRoute(member: member),
+                          );
                         },
                         contentPadding: const EdgeInsets.only(top: 15),
                         title: Text(
@@ -188,7 +194,31 @@ class MemberSettingsDialog extends StatelessWidget {
                       ),
                     if (pool.type != EESUpoolType.kasi)
                       ListTile(
-                        onTap: () {},
+                        onTap: () async {
+                          context.loaderOverlay.show();
+                          final res = await context
+                              .read<EESUpoolRepository>()
+                              .deleteEESUpoolMember(
+                                member.eesupoolId,
+                                member.userId,
+                              );
+                          context.loaderOverlay.hide();
+
+                          res.fold((l) {
+                            context.snackBarError(
+                              'Failed to remove the member',
+                            );
+                          }, (r) {
+                            if (r) {
+                              context.snackBarSuccess('Member removed');
+                              Navigator.of(context).pop();
+                            } else {
+                              context.snackBarError(
+                                'Failed to remove the member',
+                              );
+                            }
+                          });
+                        },
                         contentPadding: const EdgeInsets.only(top: 15),
                         title: Text(
                           'Remove Member',

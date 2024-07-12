@@ -8,26 +8,27 @@
 // coverage:ignore-file
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:auto_route/auto_route.dart' as _i43;
-import 'package:data/auth/models/profile.dart' as _i55;
-import 'package:data/auth/models/user_role.dart' as _i60;
-import 'package:data/eesupools/models/eesupool.dart' as _i50;
-import 'package:data/eesupools/models/eesupool_issue.dart' as _i57;
-import 'package:data/eesupools/models/eesupool_level.dart' as _i48;
-import 'package:data/eesupools/models/eesupool_order.dart' as _i51;
-import 'package:data/eesupools/models/eesupool_type.dart' as _i49;
-import 'package:data/eesupreneur/models/eesupreneur.dart' as _i58;
-import 'package:data/finance/models/wallet.dart' as _i61;
-import 'package:data/geolocation/models/address.dart' as _i52;
-import 'package:data/orders/models/order.dart' as _i59;
-import 'package:data/orders/models/order_product.dart' as _i47;
-import 'package:data/partners/models/partner.dart' as _i54;
-import 'package:data/partners/models/partner_application.dart' as _i53;
-import 'package:data/shopping/models/basket.dart' as _i45;
-import 'package:data/shopping/models/category.dart' as _i46;
-import 'package:data/surveys/models/survey.dart' as _i62;
-import 'package:flutter/material.dart' as _i44;
-import 'package:instapay_flutter/data/merchant_transaction.dart' as _i56;
+import 'package:auto_route/auto_route.dart' as _i44;
+import 'package:data/auth/models/profile.dart' as _i56;
+import 'package:data/auth/models/user_role.dart' as _i61;
+import 'package:data/eesupools/models/eesupool.dart' as _i51;
+import 'package:data/eesupools/models/eesupool_issue.dart' as _i58;
+import 'package:data/eesupools/models/eesupool_level.dart' as _i49;
+import 'package:data/eesupools/models/eesupool_member.dart' as _i64;
+import 'package:data/eesupools/models/eesupool_order.dart' as _i52;
+import 'package:data/eesupools/models/eesupool_type.dart' as _i50;
+import 'package:data/eesupreneur/models/eesupreneur.dart' as _i59;
+import 'package:data/finance/models/wallet.dart' as _i62;
+import 'package:data/geolocation/models/address.dart' as _i53;
+import 'package:data/orders/models/order.dart' as _i60;
+import 'package:data/orders/models/order_product.dart' as _i48;
+import 'package:data/partners/models/partner.dart' as _i55;
+import 'package:data/partners/models/partner_application.dart' as _i54;
+import 'package:data/shopping/models/basket.dart' as _i46;
+import 'package:data/shopping/models/category.dart' as _i47;
+import 'package:data/surveys/models/survey.dart' as _i63;
+import 'package:flutter/material.dart' as _i45;
+import 'package:instapay_flutter/data/merchant_transaction.dart' as _i57;
 import 'package:ui/src/core/widgets/media_file_uploader.dart' as _i19;
 import 'package:ui/src/views/auth/profile/ui/edit_profile_screen.dart' as _i14;
 import 'package:ui/src/views/auth/register/ui/register_screen.dart' as _i29;
@@ -40,25 +41,27 @@ import 'package:ui/src/views/eesupools/ui/eesupool_search_screen.dart' as _i10;
 import 'package:ui/src/views/eesupools/ui/eesupool_view_screen.dart' as _i11;
 import 'package:ui/src/views/eesupools/ui/tabs/issues/ui/issue_view_screen.dart'
     as _i17;
+import 'package:ui/src/views/eesupools/ui/tabs/members/ui/transfer_member_screen.dart'
+    as _i39;
 import 'package:ui/src/views/eesupools/ui/tabs/orders/ui/order_receivers_screen.dart'
     as _i20;
 import 'package:ui/src/views/eesupools/ui/tabs/orders/ui/order_view.dart'
     as _i9;
 import 'package:ui/src/views/finances/crowdvouchers/ui/voucher_view_screen.dart'
-    as _i40;
+    as _i41;
 import 'package:ui/src/views/finances/payments/instapay/instapay_confirm_profile.dart'
     as _i15;
 import 'package:ui/src/views/finances/payments/instapay/instapay_screen.dart'
     as _i16;
 import 'package:ui/src/views/finances/payments/ozow/ozow_screen.dart' as _i23;
 import 'package:ui/src/views/finances/payments/yoco/yoco_payment_screen.dart'
-    as _i42;
+    as _i43;
 import 'package:ui/src/views/finances/wallets/ui/screens/payout_screen.dart'
     as _i26;
 import 'package:ui/src/views/finances/wallets/ui/screens/transfer_screen.dart'
-    as _i39;
+    as _i40;
 import 'package:ui/src/views/finances/wallets/ui/screens/wallet_view_screen.dart'
-    as _i41;
+    as _i42;
 import 'package:ui/src/views/geolocation/ui/screens/addrese_book_screen.dart'
     as _i1;
 import 'package:ui/src/views/geolocation/ui/screens/edit_address_screen.dart'
@@ -87,20 +90,20 @@ import 'package:ui/src/views/support/ui/support_screen.dart' as _i36;
 import 'package:ui/src/views/surveys/ui/response_screen.dart' as _i31;
 import 'package:ui/src/views/surveys/ui/survey_screen.dart' as _i37;
 
-abstract class $AppRouter extends _i43.RootStackRouter {
+abstract class $AppRouter extends _i44.RootStackRouter {
   $AppRouter({super.navigatorKey});
 
   @override
-  final Map<String, _i43.PageFactory> pagesMap = {
+  final Map<String, _i44.PageFactory> pagesMap = {
     AddressBookRoute.name: (routeData) {
-      return _i43.AutoRoutePage<dynamic>(
+      return _i44.AutoRoutePage<dynamic>(
         routeData: routeData,
         child: const _i1.AddressBookScreen(),
       );
     },
     BasketViewRoute.name: (routeData) {
       final args = routeData.argsAs<BasketViewRouteArgs>();
-      return _i43.AutoRoutePage<dynamic>(
+      return _i44.AutoRoutePage<dynamic>(
         routeData: routeData,
         child: _i2.BasketViewScreen(
           key: args.key,
@@ -109,26 +112,26 @@ abstract class $AppRouter extends _i43.RootStackRouter {
       );
     },
     BasketsListRoute.name: (routeData) {
-      return _i43.AutoRoutePage<dynamic>(
+      return _i44.AutoRoutePage<dynamic>(
         routeData: routeData,
         child: const _i3.BasketsListScreen(),
       );
     },
     BrowseShopRoute.name: (routeData) {
-      return _i43.AutoRoutePage<dynamic>(
+      return _i44.AutoRoutePage<dynamic>(
         routeData: routeData,
         child: const _i4.BrowseShopScreen(),
       );
     },
     CartRoute.name: (routeData) {
-      return _i43.AutoRoutePage<dynamic>(
+      return _i44.AutoRoutePage<dynamic>(
         routeData: routeData,
         child: const _i5.CartScreen(),
       );
     },
     CategoryRoute.name: (routeData) {
       final args = routeData.argsAs<CategoryRouteArgs>();
-      return _i43.AutoRoutePage<dynamic>(
+      return _i44.AutoRoutePage<dynamic>(
         routeData: routeData,
         child: _i6.CategoryScreen(
           key: args.key,
@@ -138,7 +141,7 @@ abstract class $AppRouter extends _i43.RootStackRouter {
     },
     CheckoutRoute.name: (routeData) {
       final args = routeData.argsAs<CheckoutRouteArgs>();
-      return _i43.AutoRoutePage<dynamic>(
+      return _i44.AutoRoutePage<dynamic>(
         routeData: routeData,
         child: _i7.CheckoutScreen(
           key: args.key,
@@ -149,7 +152,7 @@ abstract class $AppRouter extends _i43.RootStackRouter {
     },
     CreateEESUpoolRoute.name: (routeData) {
       final args = routeData.argsAs<CreateEESUpoolRouteArgs>();
-      return _i43.AutoRoutePage<dynamic>(
+      return _i44.AutoRoutePage<dynamic>(
         routeData: routeData,
         child: _i8.CreateEESUpoolScreen(
           key: args.key,
@@ -161,7 +164,7 @@ abstract class $AppRouter extends _i43.RootStackRouter {
     },
     EESUpoolOrderViewRoute.name: (routeData) {
       final args = routeData.argsAs<EESUpoolOrderViewRouteArgs>();
-      return _i43.AutoRoutePage<dynamic>(
+      return _i44.AutoRoutePage<dynamic>(
         routeData: routeData,
         child: _i9.EESUpoolOrderViewScreen(
           key: args.key,
@@ -172,7 +175,7 @@ abstract class $AppRouter extends _i43.RootStackRouter {
     },
     EESUpoolSearchRoute.name: (routeData) {
       final args = routeData.argsAs<EESUpoolSearchRouteArgs>();
-      return _i43.AutoRoutePage<dynamic>(
+      return _i44.AutoRoutePage<dynamic>(
         routeData: routeData,
         child: _i10.EESUpoolSearchScreen(
           key: args.key,
@@ -183,7 +186,7 @@ abstract class $AppRouter extends _i43.RootStackRouter {
     EESUpoolViewRoute.name: (routeData) {
       final args = routeData.argsAs<EESUpoolViewRouteArgs>(
           orElse: () => const EESUpoolViewRouteArgs());
-      return _i43.AutoRoutePage<dynamic>(
+      return _i44.AutoRoutePage<dynamic>(
         routeData: routeData,
         child: _i11.EESUpoolViewScreen(
           key: args.key,
@@ -195,7 +198,7 @@ abstract class $AppRouter extends _i43.RootStackRouter {
     EditAddressRoute.name: (routeData) {
       final args = routeData.argsAs<EditAddressRouteArgs>(
           orElse: () => const EditAddressRouteArgs());
-      return _i43.AutoRoutePage<dynamic>(
+      return _i44.AutoRoutePage<dynamic>(
         routeData: routeData,
         child: _i12.EditAddressScreen(
           key: args.key,
@@ -206,7 +209,7 @@ abstract class $AppRouter extends _i43.RootStackRouter {
     },
     EditApplicationRoute.name: (routeData) {
       final args = routeData.argsAs<EditApplicationRouteArgs>();
-      return _i43.AutoRoutePage<dynamic>(
+      return _i44.AutoRoutePage<dynamic>(
         routeData: routeData,
         child: _i13.EditApplicationScreen(
           key: args.key,
@@ -217,7 +220,7 @@ abstract class $AppRouter extends _i43.RootStackRouter {
     },
     EditProfileRoute.name: (routeData) {
       final args = routeData.argsAs<EditProfileRouteArgs>();
-      return _i43.AutoRoutePage<dynamic>(
+      return _i44.AutoRoutePage<dynamic>(
         routeData: routeData,
         child: _i14.EditProfileScreen(
           key: args.key,
@@ -227,7 +230,7 @@ abstract class $AppRouter extends _i43.RootStackRouter {
     },
     InstapayConfirmDetailsRoute.name: (routeData) {
       final args = routeData.argsAs<InstapayConfirmDetailsRouteArgs>();
-      return _i43.AutoRoutePage<dynamic>(
+      return _i44.AutoRoutePage<dynamic>(
         routeData: routeData,
         child: _i15.InstapayConfirmDetailsScreen(
           key: args.key,
@@ -237,7 +240,7 @@ abstract class $AppRouter extends _i43.RootStackRouter {
     },
     InstapayRoute.name: (routeData) {
       final args = routeData.argsAs<InstapayRouteArgs>();
-      return _i43.AutoRoutePage<dynamic>(
+      return _i44.AutoRoutePage<dynamic>(
         routeData: routeData,
         child: _i16.InstapayScreen(
           key: args.key,
@@ -247,7 +250,7 @@ abstract class $AppRouter extends _i43.RootStackRouter {
     },
     IssueViewRoute.name: (routeData) {
       final args = routeData.argsAs<IssueViewRouteArgs>();
-      return _i43.AutoRoutePage<dynamic>(
+      return _i44.AutoRoutePage<dynamic>(
         routeData: routeData,
         child: _i17.IssueViewScreen(
           key: args.key,
@@ -258,7 +261,7 @@ abstract class $AppRouter extends _i43.RootStackRouter {
     },
     KasipreneurRoute.name: (routeData) {
       final args = routeData.argsAs<KasipreneurRouteArgs>();
-      return _i43.AutoRoutePage<dynamic>(
+      return _i44.AutoRoutePage<dynamic>(
         routeData: routeData,
         child: _i18.KasipreneurScreen(
           key: args.key,
@@ -267,14 +270,14 @@ abstract class $AppRouter extends _i43.RootStackRouter {
       );
     },
     MediaFilePreviewUploaderRoute.name: (routeData) {
-      return _i43.AutoRoutePage<dynamic>(
+      return _i44.AutoRoutePage<dynamic>(
         routeData: routeData,
         child: const _i19.MediaFilePreviewUploaderScreen(),
       );
     },
     OrderReceiverRoute.name: (routeData) {
       final args = routeData.argsAs<OrderReceiverRouteArgs>();
-      return _i43.AutoRoutePage<dynamic>(
+      return _i44.AutoRoutePage<dynamic>(
         routeData: routeData,
         child: _i20.OrderReceiverScreen(
           key: args.key,
@@ -286,7 +289,7 @@ abstract class $AppRouter extends _i43.RootStackRouter {
     },
     OrderTrackingRoute.name: (routeData) {
       final args = routeData.argsAs<OrderTrackingRouteArgs>();
-      return _i43.AutoRoutePage<dynamic>(
+      return _i44.AutoRoutePage<dynamic>(
         routeData: routeData,
         child: _i21.OrderTrackingScreen(
           key: args.key,
@@ -296,14 +299,14 @@ abstract class $AppRouter extends _i43.RootStackRouter {
       );
     },
     OverviewRoute.name: (routeData) {
-      return _i43.AutoRoutePage<dynamic>(
+      return _i44.AutoRoutePage<dynamic>(
         routeData: routeData,
         child: const _i22.OverviewScreen(),
       );
     },
     OzowRoute.name: (routeData) {
       final args = routeData.argsAs<OzowRouteArgs>();
-      return _i43.AutoRoutePage<dynamic>(
+      return _i44.AutoRoutePage<dynamic>(
         routeData: routeData,
         child: _i23.OzowScreen(
           key: args.key,
@@ -316,7 +319,7 @@ abstract class $AppRouter extends _i43.RootStackRouter {
     },
     PartnerAppRoute.name: (routeData) {
       final args = routeData.argsAs<PartnerAppRouteArgs>();
-      return _i43.AutoRoutePage<dynamic>(
+      return _i44.AutoRoutePage<dynamic>(
         routeData: routeData,
         child: _i24.PartnerAppScreen(
           key: args.key,
@@ -326,7 +329,7 @@ abstract class $AppRouter extends _i43.RootStackRouter {
     },
     PartnerRoute.name: (routeData) {
       final args = routeData.argsAs<PartnerRouteArgs>();
-      return _i43.AutoRoutePage<dynamic>(
+      return _i44.AutoRoutePage<dynamic>(
         routeData: routeData,
         child: _i25.PartnerScreen(
           key: args.key,
@@ -336,7 +339,7 @@ abstract class $AppRouter extends _i43.RootStackRouter {
     },
     PayoutRoute.name: (routeData) {
       final args = routeData.argsAs<PayoutRouteArgs>();
-      return _i43.AutoRoutePage<dynamic>(
+      return _i44.AutoRoutePage<dynamic>(
         routeData: routeData,
         child: _i26.PayoutScreen(
           key: args.key,
@@ -345,14 +348,14 @@ abstract class $AppRouter extends _i43.RootStackRouter {
       );
     },
     ProductRequestRoute.name: (routeData) {
-      return _i43.AutoRoutePage<dynamic>(
+      return _i44.AutoRoutePage<dynamic>(
         routeData: routeData,
         child: const _i27.ProductRequestScreen(),
       );
     },
     ProductViewRoute.name: (routeData) {
       final args = routeData.argsAs<ProductViewRouteArgs>();
-      return _i43.AutoRoutePage<dynamic>(
+      return _i44.AutoRoutePage<dynamic>(
         routeData: routeData,
         child: _i28.ProductViewScreen(
           key: args.key,
@@ -361,20 +364,20 @@ abstract class $AppRouter extends _i43.RootStackRouter {
       );
     },
     RegisterRoute.name: (routeData) {
-      return _i43.AutoRoutePage<dynamic>(
+      return _i44.AutoRoutePage<dynamic>(
         routeData: routeData,
         child: const _i29.RegisterScreen(),
       );
     },
     ResetPasswordRoute.name: (routeData) {
-      return _i43.AutoRoutePage<dynamic>(
+      return _i44.AutoRoutePage<dynamic>(
         routeData: routeData,
         child: const _i30.ResetPasswordScreen(),
       );
     },
     ResponseRoute.name: (routeData) {
       final args = routeData.argsAs<ResponseRouteArgs>();
-      return _i43.AutoRoutePage<dynamic>(
+      return _i44.AutoRoutePage<dynamic>(
         routeData: routeData,
         child: _i31.ResponseScreen(
           key: args.key,
@@ -384,7 +387,7 @@ abstract class $AppRouter extends _i43.RootStackRouter {
     },
     ReviewProductsRoute.name: (routeData) {
       final args = routeData.argsAs<ReviewProductsRouteArgs>();
-      return _i43.AutoRoutePage<dynamic>(
+      return _i44.AutoRoutePage<dynamic>(
         routeData: routeData,
         child: _i32.ReviewProductsScreen(
           key: args.key,
@@ -394,46 +397,56 @@ abstract class $AppRouter extends _i43.RootStackRouter {
       );
     },
     SettingsRoutes.name: (routeData) {
-      return _i43.AutoRoutePage<dynamic>(
+      return _i44.AutoRoutePage<dynamic>(
         routeData: routeData,
         child: const _i33.SettingsScreens(),
       );
     },
     SignInRoute.name: (routeData) {
-      return _i43.AutoRoutePage<dynamic>(
+      return _i44.AutoRoutePage<dynamic>(
         routeData: routeData,
         child: const _i34.SignInScreen(),
       );
     },
     StartUpRoute.name: (routeData) {
-      return _i43.AutoRoutePage<dynamic>(
+      return _i44.AutoRoutePage<dynamic>(
         routeData: routeData,
         child: const _i35.StartUpScreen(),
       );
     },
     SupportRoute.name: (routeData) {
-      return _i43.AutoRoutePage<dynamic>(
+      return _i44.AutoRoutePage<dynamic>(
         routeData: routeData,
         child: const _i36.SupportScreen(),
       );
     },
     SurveyRoute.name: (routeData) {
-      return _i43.AutoRoutePage<dynamic>(
+      return _i44.AutoRoutePage<dynamic>(
         routeData: routeData,
         child: const _i37.SurveyScreen(),
       );
     },
     TermsOfServiceRoute.name: (routeData) {
-      return _i43.AutoRoutePage<dynamic>(
+      return _i44.AutoRoutePage<dynamic>(
         routeData: routeData,
         child: const _i38.TermsOfServiceScreen(),
       );
     },
+    TransferMemberRoute.name: (routeData) {
+      final args = routeData.argsAs<TransferMemberRouteArgs>();
+      return _i44.AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: _i39.TransferMemberScreen(
+          key: args.key,
+          member: args.member,
+        ),
+      );
+    },
     TransferRoute.name: (routeData) {
       final args = routeData.argsAs<TransferRouteArgs>();
-      return _i43.AutoRoutePage<dynamic>(
+      return _i44.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: _i39.TransferScreen(
+        child: _i40.TransferScreen(
           key: args.key,
           wallet: args.wallet,
         ),
@@ -441,9 +454,9 @@ abstract class $AppRouter extends _i43.RootStackRouter {
     },
     VoucherViewRoute.name: (routeData) {
       final args = routeData.argsAs<VoucherViewRouteArgs>();
-      return _i43.AutoRoutePage<dynamic>(
+      return _i44.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: _i40.VoucherViewScreen(
+        child: _i41.VoucherViewScreen(
           key: args.key,
           voucherId: args.voucherId,
         ),
@@ -451,9 +464,9 @@ abstract class $AppRouter extends _i43.RootStackRouter {
     },
     WalletViewRoute.name: (routeData) {
       final args = routeData.argsAs<WalletViewRouteArgs>();
-      return _i43.AutoRoutePage<dynamic>(
+      return _i44.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: _i41.WalletViewScreen(
+        child: _i42.WalletViewScreen(
           key: args.key,
           id: args.id,
         ),
@@ -461,9 +474,9 @@ abstract class $AppRouter extends _i43.RootStackRouter {
     },
     YocoPaymentRoute.name: (routeData) {
       final args = routeData.argsAs<YocoPaymentRouteArgs>();
-      return _i43.AutoRoutePage<dynamic>(
+      return _i44.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: _i42.YocoPaymentScreen(
+        child: _i43.YocoPaymentScreen(
           key: args.key,
           reference: args.reference,
           amount: args.amount,
@@ -475,8 +488,8 @@ abstract class $AppRouter extends _i43.RootStackRouter {
 
 /// generated route for
 /// [_i1.AddressBookScreen]
-class AddressBookRoute extends _i43.PageRouteInfo<void> {
-  const AddressBookRoute({List<_i43.PageRouteInfo>? children})
+class AddressBookRoute extends _i44.PageRouteInfo<void> {
+  const AddressBookRoute({List<_i44.PageRouteInfo>? children})
       : super(
           AddressBookRoute.name,
           initialChildren: children,
@@ -484,16 +497,16 @@ class AddressBookRoute extends _i43.PageRouteInfo<void> {
 
   static const String name = 'AddressBookRoute';
 
-  static const _i43.PageInfo<void> page = _i43.PageInfo<void>(name);
+  static const _i44.PageInfo<void> page = _i44.PageInfo<void>(name);
 }
 
 /// generated route for
 /// [_i2.BasketViewScreen]
-class BasketViewRoute extends _i43.PageRouteInfo<BasketViewRouteArgs> {
+class BasketViewRoute extends _i44.PageRouteInfo<BasketViewRouteArgs> {
   BasketViewRoute({
-    _i44.Key? key,
-    required _i45.Basket basket,
-    List<_i43.PageRouteInfo>? children,
+    _i45.Key? key,
+    required _i46.Basket basket,
+    List<_i44.PageRouteInfo>? children,
   }) : super(
           BasketViewRoute.name,
           args: BasketViewRouteArgs(
@@ -505,8 +518,8 @@ class BasketViewRoute extends _i43.PageRouteInfo<BasketViewRouteArgs> {
 
   static const String name = 'BasketViewRoute';
 
-  static const _i43.PageInfo<BasketViewRouteArgs> page =
-      _i43.PageInfo<BasketViewRouteArgs>(name);
+  static const _i44.PageInfo<BasketViewRouteArgs> page =
+      _i44.PageInfo<BasketViewRouteArgs>(name);
 }
 
 class BasketViewRouteArgs {
@@ -515,9 +528,9 @@ class BasketViewRouteArgs {
     required this.basket,
   });
 
-  final _i44.Key? key;
+  final _i45.Key? key;
 
-  final _i45.Basket basket;
+  final _i46.Basket basket;
 
   @override
   String toString() {
@@ -527,8 +540,8 @@ class BasketViewRouteArgs {
 
 /// generated route for
 /// [_i3.BasketsListScreen]
-class BasketsListRoute extends _i43.PageRouteInfo<void> {
-  const BasketsListRoute({List<_i43.PageRouteInfo>? children})
+class BasketsListRoute extends _i44.PageRouteInfo<void> {
+  const BasketsListRoute({List<_i44.PageRouteInfo>? children})
       : super(
           BasketsListRoute.name,
           initialChildren: children,
@@ -536,13 +549,13 @@ class BasketsListRoute extends _i43.PageRouteInfo<void> {
 
   static const String name = 'BasketsListRoute';
 
-  static const _i43.PageInfo<void> page = _i43.PageInfo<void>(name);
+  static const _i44.PageInfo<void> page = _i44.PageInfo<void>(name);
 }
 
 /// generated route for
 /// [_i4.BrowseShopScreen]
-class BrowseShopRoute extends _i43.PageRouteInfo<void> {
-  const BrowseShopRoute({List<_i43.PageRouteInfo>? children})
+class BrowseShopRoute extends _i44.PageRouteInfo<void> {
+  const BrowseShopRoute({List<_i44.PageRouteInfo>? children})
       : super(
           BrowseShopRoute.name,
           initialChildren: children,
@@ -550,13 +563,13 @@ class BrowseShopRoute extends _i43.PageRouteInfo<void> {
 
   static const String name = 'BrowseShopRoute';
 
-  static const _i43.PageInfo<void> page = _i43.PageInfo<void>(name);
+  static const _i44.PageInfo<void> page = _i44.PageInfo<void>(name);
 }
 
 /// generated route for
 /// [_i5.CartScreen]
-class CartRoute extends _i43.PageRouteInfo<void> {
-  const CartRoute({List<_i43.PageRouteInfo>? children})
+class CartRoute extends _i44.PageRouteInfo<void> {
+  const CartRoute({List<_i44.PageRouteInfo>? children})
       : super(
           CartRoute.name,
           initialChildren: children,
@@ -564,16 +577,16 @@ class CartRoute extends _i43.PageRouteInfo<void> {
 
   static const String name = 'CartRoute';
 
-  static const _i43.PageInfo<void> page = _i43.PageInfo<void>(name);
+  static const _i44.PageInfo<void> page = _i44.PageInfo<void>(name);
 }
 
 /// generated route for
 /// [_i6.CategoryScreen]
-class CategoryRoute extends _i43.PageRouteInfo<CategoryRouteArgs> {
+class CategoryRoute extends _i44.PageRouteInfo<CategoryRouteArgs> {
   CategoryRoute({
-    _i44.Key? key,
-    required _i46.Category category,
-    List<_i43.PageRouteInfo>? children,
+    _i45.Key? key,
+    required _i47.Category category,
+    List<_i44.PageRouteInfo>? children,
   }) : super(
           CategoryRoute.name,
           args: CategoryRouteArgs(
@@ -585,8 +598,8 @@ class CategoryRoute extends _i43.PageRouteInfo<CategoryRouteArgs> {
 
   static const String name = 'CategoryRoute';
 
-  static const _i43.PageInfo<CategoryRouteArgs> page =
-      _i43.PageInfo<CategoryRouteArgs>(name);
+  static const _i44.PageInfo<CategoryRouteArgs> page =
+      _i44.PageInfo<CategoryRouteArgs>(name);
 }
 
 class CategoryRouteArgs {
@@ -595,9 +608,9 @@ class CategoryRouteArgs {
     required this.category,
   });
 
-  final _i44.Key? key;
+  final _i45.Key? key;
 
-  final _i46.Category category;
+  final _i47.Category category;
 
   @override
   String toString() {
@@ -607,12 +620,12 @@ class CategoryRouteArgs {
 
 /// generated route for
 /// [_i7.CheckoutScreen]
-class CheckoutRoute extends _i43.PageRouteInfo<CheckoutRouteArgs> {
+class CheckoutRoute extends _i44.PageRouteInfo<CheckoutRouteArgs> {
   CheckoutRoute({
-    _i44.Key? key,
-    required List<_i47.OrderProduct> products,
+    _i45.Key? key,
+    required List<_i48.OrderProduct> products,
     required double total,
-    List<_i43.PageRouteInfo>? children,
+    List<_i44.PageRouteInfo>? children,
   }) : super(
           CheckoutRoute.name,
           args: CheckoutRouteArgs(
@@ -625,8 +638,8 @@ class CheckoutRoute extends _i43.PageRouteInfo<CheckoutRouteArgs> {
 
   static const String name = 'CheckoutRoute';
 
-  static const _i43.PageInfo<CheckoutRouteArgs> page =
-      _i43.PageInfo<CheckoutRouteArgs>(name);
+  static const _i44.PageInfo<CheckoutRouteArgs> page =
+      _i44.PageInfo<CheckoutRouteArgs>(name);
 }
 
 class CheckoutRouteArgs {
@@ -636,9 +649,9 @@ class CheckoutRouteArgs {
     required this.total,
   });
 
-  final _i44.Key? key;
+  final _i45.Key? key;
 
-  final List<_i47.OrderProduct> products;
+  final List<_i48.OrderProduct> products;
 
   final double total;
 
@@ -650,13 +663,13 @@ class CheckoutRouteArgs {
 
 /// generated route for
 /// [_i8.CreateEESUpoolScreen]
-class CreateEESUpoolRoute extends _i43.PageRouteInfo<CreateEESUpoolRouteArgs> {
+class CreateEESUpoolRoute extends _i44.PageRouteInfo<CreateEESUpoolRouteArgs> {
   CreateEESUpoolRoute({
-    _i44.Key? key,
+    _i45.Key? key,
     int? parentId,
-    _i48.EESUpoolLevel? level,
-    required _i49.EESUpoolType type,
-    List<_i43.PageRouteInfo>? children,
+    _i49.EESUpoolLevel? level,
+    required _i50.EESUpoolType type,
+    List<_i44.PageRouteInfo>? children,
   }) : super(
           CreateEESUpoolRoute.name,
           args: CreateEESUpoolRouteArgs(
@@ -670,8 +683,8 @@ class CreateEESUpoolRoute extends _i43.PageRouteInfo<CreateEESUpoolRouteArgs> {
 
   static const String name = 'CreateEESUpoolRoute';
 
-  static const _i43.PageInfo<CreateEESUpoolRouteArgs> page =
-      _i43.PageInfo<CreateEESUpoolRouteArgs>(name);
+  static const _i44.PageInfo<CreateEESUpoolRouteArgs> page =
+      _i44.PageInfo<CreateEESUpoolRouteArgs>(name);
 }
 
 class CreateEESUpoolRouteArgs {
@@ -682,13 +695,13 @@ class CreateEESUpoolRouteArgs {
     required this.type,
   });
 
-  final _i44.Key? key;
+  final _i45.Key? key;
 
   final int? parentId;
 
-  final _i48.EESUpoolLevel? level;
+  final _i49.EESUpoolLevel? level;
 
-  final _i49.EESUpoolType type;
+  final _i50.EESUpoolType type;
 
   @override
   String toString() {
@@ -699,12 +712,12 @@ class CreateEESUpoolRouteArgs {
 /// generated route for
 /// [_i9.EESUpoolOrderViewScreen]
 class EESUpoolOrderViewRoute
-    extends _i43.PageRouteInfo<EESUpoolOrderViewRouteArgs> {
+    extends _i44.PageRouteInfo<EESUpoolOrderViewRouteArgs> {
   EESUpoolOrderViewRoute({
-    _i44.Key? key,
-    required _i50.EESUpool pool,
-    required _i51.EESUpoolOrder order,
-    List<_i43.PageRouteInfo>? children,
+    _i45.Key? key,
+    required _i51.EESUpool pool,
+    required _i52.EESUpoolOrder order,
+    List<_i44.PageRouteInfo>? children,
   }) : super(
           EESUpoolOrderViewRoute.name,
           args: EESUpoolOrderViewRouteArgs(
@@ -717,8 +730,8 @@ class EESUpoolOrderViewRoute
 
   static const String name = 'EESUpoolOrderViewRoute';
 
-  static const _i43.PageInfo<EESUpoolOrderViewRouteArgs> page =
-      _i43.PageInfo<EESUpoolOrderViewRouteArgs>(name);
+  static const _i44.PageInfo<EESUpoolOrderViewRouteArgs> page =
+      _i44.PageInfo<EESUpoolOrderViewRouteArgs>(name);
 }
 
 class EESUpoolOrderViewRouteArgs {
@@ -728,11 +741,11 @@ class EESUpoolOrderViewRouteArgs {
     required this.order,
   });
 
-  final _i44.Key? key;
+  final _i45.Key? key;
 
-  final _i50.EESUpool pool;
+  final _i51.EESUpool pool;
 
-  final _i51.EESUpoolOrder order;
+  final _i52.EESUpoolOrder order;
 
   @override
   String toString() {
@@ -742,11 +755,11 @@ class EESUpoolOrderViewRouteArgs {
 
 /// generated route for
 /// [_i10.EESUpoolSearchScreen]
-class EESUpoolSearchRoute extends _i43.PageRouteInfo<EESUpoolSearchRouteArgs> {
+class EESUpoolSearchRoute extends _i44.PageRouteInfo<EESUpoolSearchRouteArgs> {
   EESUpoolSearchRoute({
-    _i44.Key? key,
-    required _i49.EESUpoolType type,
-    List<_i43.PageRouteInfo>? children,
+    _i45.Key? key,
+    required _i50.EESUpoolType type,
+    List<_i44.PageRouteInfo>? children,
   }) : super(
           EESUpoolSearchRoute.name,
           args: EESUpoolSearchRouteArgs(
@@ -758,8 +771,8 @@ class EESUpoolSearchRoute extends _i43.PageRouteInfo<EESUpoolSearchRouteArgs> {
 
   static const String name = 'EESUpoolSearchRoute';
 
-  static const _i43.PageInfo<EESUpoolSearchRouteArgs> page =
-      _i43.PageInfo<EESUpoolSearchRouteArgs>(name);
+  static const _i44.PageInfo<EESUpoolSearchRouteArgs> page =
+      _i44.PageInfo<EESUpoolSearchRouteArgs>(name);
 }
 
 class EESUpoolSearchRouteArgs {
@@ -768,9 +781,9 @@ class EESUpoolSearchRouteArgs {
     required this.type,
   });
 
-  final _i44.Key? key;
+  final _i45.Key? key;
 
-  final _i49.EESUpoolType type;
+  final _i50.EESUpoolType type;
 
   @override
   String toString() {
@@ -780,12 +793,12 @@ class EESUpoolSearchRouteArgs {
 
 /// generated route for
 /// [_i11.EESUpoolViewScreen]
-class EESUpoolViewRoute extends _i43.PageRouteInfo<EESUpoolViewRouteArgs> {
+class EESUpoolViewRoute extends _i44.PageRouteInfo<EESUpoolViewRouteArgs> {
   EESUpoolViewRoute({
-    _i44.Key? key,
+    _i45.Key? key,
     int? poolId,
-    _i50.EESUpool? pool,
-    List<_i43.PageRouteInfo>? children,
+    _i51.EESUpool? pool,
+    List<_i44.PageRouteInfo>? children,
   }) : super(
           EESUpoolViewRoute.name,
           args: EESUpoolViewRouteArgs(
@@ -798,8 +811,8 @@ class EESUpoolViewRoute extends _i43.PageRouteInfo<EESUpoolViewRouteArgs> {
 
   static const String name = 'EESUpoolViewRoute';
 
-  static const _i43.PageInfo<EESUpoolViewRouteArgs> page =
-      _i43.PageInfo<EESUpoolViewRouteArgs>(name);
+  static const _i44.PageInfo<EESUpoolViewRouteArgs> page =
+      _i44.PageInfo<EESUpoolViewRouteArgs>(name);
 }
 
 class EESUpoolViewRouteArgs {
@@ -809,11 +822,11 @@ class EESUpoolViewRouteArgs {
     this.pool,
   });
 
-  final _i44.Key? key;
+  final _i45.Key? key;
 
   final int? poolId;
 
-  final _i50.EESUpool? pool;
+  final _i51.EESUpool? pool;
 
   @override
   String toString() {
@@ -823,12 +836,12 @@ class EESUpoolViewRouteArgs {
 
 /// generated route for
 /// [_i12.EditAddressScreen]
-class EditAddressRoute extends _i43.PageRouteInfo<EditAddressRouteArgs> {
+class EditAddressRoute extends _i44.PageRouteInfo<EditAddressRouteArgs> {
   EditAddressRoute({
-    _i44.Key? key,
-    _i52.Address? address,
+    _i45.Key? key,
+    _i53.Address? address,
     bool isPersonal = true,
-    List<_i43.PageRouteInfo>? children,
+    List<_i44.PageRouteInfo>? children,
   }) : super(
           EditAddressRoute.name,
           args: EditAddressRouteArgs(
@@ -841,8 +854,8 @@ class EditAddressRoute extends _i43.PageRouteInfo<EditAddressRouteArgs> {
 
   static const String name = 'EditAddressRoute';
 
-  static const _i43.PageInfo<EditAddressRouteArgs> page =
-      _i43.PageInfo<EditAddressRouteArgs>(name);
+  static const _i44.PageInfo<EditAddressRouteArgs> page =
+      _i44.PageInfo<EditAddressRouteArgs>(name);
 }
 
 class EditAddressRouteArgs {
@@ -852,9 +865,9 @@ class EditAddressRouteArgs {
     this.isPersonal = true,
   });
 
-  final _i44.Key? key;
+  final _i45.Key? key;
 
-  final _i52.Address? address;
+  final _i53.Address? address;
 
   final bool isPersonal;
 
@@ -867,12 +880,12 @@ class EditAddressRouteArgs {
 /// generated route for
 /// [_i13.EditApplicationScreen]
 class EditApplicationRoute
-    extends _i43.PageRouteInfo<EditApplicationRouteArgs> {
+    extends _i44.PageRouteInfo<EditApplicationRouteArgs> {
   EditApplicationRoute({
-    _i44.Key? key,
-    required _i53.PartnerApplication app,
-    required _i54.Partner partner,
-    List<_i43.PageRouteInfo>? children,
+    _i45.Key? key,
+    required _i54.PartnerApplication app,
+    required _i55.Partner partner,
+    List<_i44.PageRouteInfo>? children,
   }) : super(
           EditApplicationRoute.name,
           args: EditApplicationRouteArgs(
@@ -885,8 +898,8 @@ class EditApplicationRoute
 
   static const String name = 'EditApplicationRoute';
 
-  static const _i43.PageInfo<EditApplicationRouteArgs> page =
-      _i43.PageInfo<EditApplicationRouteArgs>(name);
+  static const _i44.PageInfo<EditApplicationRouteArgs> page =
+      _i44.PageInfo<EditApplicationRouteArgs>(name);
 }
 
 class EditApplicationRouteArgs {
@@ -896,11 +909,11 @@ class EditApplicationRouteArgs {
     required this.partner,
   });
 
-  final _i44.Key? key;
+  final _i45.Key? key;
 
-  final _i53.PartnerApplication app;
+  final _i54.PartnerApplication app;
 
-  final _i54.Partner partner;
+  final _i55.Partner partner;
 
   @override
   String toString() {
@@ -910,11 +923,11 @@ class EditApplicationRouteArgs {
 
 /// generated route for
 /// [_i14.EditProfileScreen]
-class EditProfileRoute extends _i43.PageRouteInfo<EditProfileRouteArgs> {
+class EditProfileRoute extends _i44.PageRouteInfo<EditProfileRouteArgs> {
   EditProfileRoute({
-    _i44.Key? key,
-    required _i55.Profile profile,
-    List<_i43.PageRouteInfo>? children,
+    _i45.Key? key,
+    required _i56.Profile profile,
+    List<_i44.PageRouteInfo>? children,
   }) : super(
           EditProfileRoute.name,
           args: EditProfileRouteArgs(
@@ -926,8 +939,8 @@ class EditProfileRoute extends _i43.PageRouteInfo<EditProfileRouteArgs> {
 
   static const String name = 'EditProfileRoute';
 
-  static const _i43.PageInfo<EditProfileRouteArgs> page =
-      _i43.PageInfo<EditProfileRouteArgs>(name);
+  static const _i44.PageInfo<EditProfileRouteArgs> page =
+      _i44.PageInfo<EditProfileRouteArgs>(name);
 }
 
 class EditProfileRouteArgs {
@@ -936,9 +949,9 @@ class EditProfileRouteArgs {
     required this.profile,
   });
 
-  final _i44.Key? key;
+  final _i45.Key? key;
 
-  final _i55.Profile profile;
+  final _i56.Profile profile;
 
   @override
   String toString() {
@@ -949,11 +962,11 @@ class EditProfileRouteArgs {
 /// generated route for
 /// [_i15.InstapayConfirmDetailsScreen]
 class InstapayConfirmDetailsRoute
-    extends _i43.PageRouteInfo<InstapayConfirmDetailsRouteArgs> {
+    extends _i44.PageRouteInfo<InstapayConfirmDetailsRouteArgs> {
   InstapayConfirmDetailsRoute({
-    _i44.Key? key,
-    required _i56.MerchantTransaction transaction,
-    List<_i43.PageRouteInfo>? children,
+    _i45.Key? key,
+    required _i57.MerchantTransaction transaction,
+    List<_i44.PageRouteInfo>? children,
   }) : super(
           InstapayConfirmDetailsRoute.name,
           args: InstapayConfirmDetailsRouteArgs(
@@ -965,8 +978,8 @@ class InstapayConfirmDetailsRoute
 
   static const String name = 'InstapayConfirmDetailsRoute';
 
-  static const _i43.PageInfo<InstapayConfirmDetailsRouteArgs> page =
-      _i43.PageInfo<InstapayConfirmDetailsRouteArgs>(name);
+  static const _i44.PageInfo<InstapayConfirmDetailsRouteArgs> page =
+      _i44.PageInfo<InstapayConfirmDetailsRouteArgs>(name);
 }
 
 class InstapayConfirmDetailsRouteArgs {
@@ -975,9 +988,9 @@ class InstapayConfirmDetailsRouteArgs {
     required this.transaction,
   });
 
-  final _i44.Key? key;
+  final _i45.Key? key;
 
-  final _i56.MerchantTransaction transaction;
+  final _i57.MerchantTransaction transaction;
 
   @override
   String toString() {
@@ -987,11 +1000,11 @@ class InstapayConfirmDetailsRouteArgs {
 
 /// generated route for
 /// [_i16.InstapayScreen]
-class InstapayRoute extends _i43.PageRouteInfo<InstapayRouteArgs> {
+class InstapayRoute extends _i44.PageRouteInfo<InstapayRouteArgs> {
   InstapayRoute({
-    _i44.Key? key,
-    required _i56.MerchantTransaction transaction,
-    List<_i43.PageRouteInfo>? children,
+    _i45.Key? key,
+    required _i57.MerchantTransaction transaction,
+    List<_i44.PageRouteInfo>? children,
   }) : super(
           InstapayRoute.name,
           args: InstapayRouteArgs(
@@ -1003,8 +1016,8 @@ class InstapayRoute extends _i43.PageRouteInfo<InstapayRouteArgs> {
 
   static const String name = 'InstapayRoute';
 
-  static const _i43.PageInfo<InstapayRouteArgs> page =
-      _i43.PageInfo<InstapayRouteArgs>(name);
+  static const _i44.PageInfo<InstapayRouteArgs> page =
+      _i44.PageInfo<InstapayRouteArgs>(name);
 }
 
 class InstapayRouteArgs {
@@ -1013,9 +1026,9 @@ class InstapayRouteArgs {
     required this.transaction,
   });
 
-  final _i44.Key? key;
+  final _i45.Key? key;
 
-  final _i56.MerchantTransaction transaction;
+  final _i57.MerchantTransaction transaction;
 
   @override
   String toString() {
@@ -1025,12 +1038,12 @@ class InstapayRouteArgs {
 
 /// generated route for
 /// [_i17.IssueViewScreen]
-class IssueViewRoute extends _i43.PageRouteInfo<IssueViewRouteArgs> {
+class IssueViewRoute extends _i44.PageRouteInfo<IssueViewRouteArgs> {
   IssueViewRoute({
-    _i44.Key? key,
-    required _i50.EESUpool pool,
-    required _i57.EESUpoolIssue issue,
-    List<_i43.PageRouteInfo>? children,
+    _i45.Key? key,
+    required _i51.EESUpool pool,
+    required _i58.EESUpoolIssue issue,
+    List<_i44.PageRouteInfo>? children,
   }) : super(
           IssueViewRoute.name,
           args: IssueViewRouteArgs(
@@ -1043,8 +1056,8 @@ class IssueViewRoute extends _i43.PageRouteInfo<IssueViewRouteArgs> {
 
   static const String name = 'IssueViewRoute';
 
-  static const _i43.PageInfo<IssueViewRouteArgs> page =
-      _i43.PageInfo<IssueViewRouteArgs>(name);
+  static const _i44.PageInfo<IssueViewRouteArgs> page =
+      _i44.PageInfo<IssueViewRouteArgs>(name);
 }
 
 class IssueViewRouteArgs {
@@ -1054,11 +1067,11 @@ class IssueViewRouteArgs {
     required this.issue,
   });
 
-  final _i44.Key? key;
+  final _i45.Key? key;
 
-  final _i50.EESUpool pool;
+  final _i51.EESUpool pool;
 
-  final _i57.EESUpoolIssue issue;
+  final _i58.EESUpoolIssue issue;
 
   @override
   String toString() {
@@ -1068,11 +1081,11 @@ class IssueViewRouteArgs {
 
 /// generated route for
 /// [_i18.KasipreneurScreen]
-class KasipreneurRoute extends _i43.PageRouteInfo<KasipreneurRouteArgs> {
+class KasipreneurRoute extends _i44.PageRouteInfo<KasipreneurRouteArgs> {
   KasipreneurRoute({
-    _i44.Key? key,
-    required _i58.EESUpreneur eesupreneur,
-    List<_i43.PageRouteInfo>? children,
+    _i45.Key? key,
+    required _i59.EESUpreneur eesupreneur,
+    List<_i44.PageRouteInfo>? children,
   }) : super(
           KasipreneurRoute.name,
           args: KasipreneurRouteArgs(
@@ -1084,8 +1097,8 @@ class KasipreneurRoute extends _i43.PageRouteInfo<KasipreneurRouteArgs> {
 
   static const String name = 'KasipreneurRoute';
 
-  static const _i43.PageInfo<KasipreneurRouteArgs> page =
-      _i43.PageInfo<KasipreneurRouteArgs>(name);
+  static const _i44.PageInfo<KasipreneurRouteArgs> page =
+      _i44.PageInfo<KasipreneurRouteArgs>(name);
 }
 
 class KasipreneurRouteArgs {
@@ -1094,9 +1107,9 @@ class KasipreneurRouteArgs {
     required this.eesupreneur,
   });
 
-  final _i44.Key? key;
+  final _i45.Key? key;
 
-  final _i58.EESUpreneur eesupreneur;
+  final _i59.EESUpreneur eesupreneur;
 
   @override
   String toString() {
@@ -1106,8 +1119,8 @@ class KasipreneurRouteArgs {
 
 /// generated route for
 /// [_i19.MediaFilePreviewUploaderScreen]
-class MediaFilePreviewUploaderRoute extends _i43.PageRouteInfo<void> {
-  const MediaFilePreviewUploaderRoute({List<_i43.PageRouteInfo>? children})
+class MediaFilePreviewUploaderRoute extends _i44.PageRouteInfo<void> {
+  const MediaFilePreviewUploaderRoute({List<_i44.PageRouteInfo>? children})
       : super(
           MediaFilePreviewUploaderRoute.name,
           initialChildren: children,
@@ -1115,18 +1128,18 @@ class MediaFilePreviewUploaderRoute extends _i43.PageRouteInfo<void> {
 
   static const String name = 'MediaFilePreviewUploaderRoute';
 
-  static const _i43.PageInfo<void> page = _i43.PageInfo<void>(name);
+  static const _i44.PageInfo<void> page = _i44.PageInfo<void>(name);
 }
 
 /// generated route for
 /// [_i20.OrderReceiverScreen]
-class OrderReceiverRoute extends _i43.PageRouteInfo<OrderReceiverRouteArgs> {
+class OrderReceiverRoute extends _i44.PageRouteInfo<OrderReceiverRouteArgs> {
   OrderReceiverRoute({
-    _i44.Key? key,
-    required _i51.EESUpoolOrder order,
-    required _i50.EESUpool pool,
+    _i45.Key? key,
+    required _i52.EESUpoolOrder order,
+    required _i51.EESUpool pool,
     required List<String> ids,
-    List<_i43.PageRouteInfo>? children,
+    List<_i44.PageRouteInfo>? children,
   }) : super(
           OrderReceiverRoute.name,
           args: OrderReceiverRouteArgs(
@@ -1140,8 +1153,8 @@ class OrderReceiverRoute extends _i43.PageRouteInfo<OrderReceiverRouteArgs> {
 
   static const String name = 'OrderReceiverRoute';
 
-  static const _i43.PageInfo<OrderReceiverRouteArgs> page =
-      _i43.PageInfo<OrderReceiverRouteArgs>(name);
+  static const _i44.PageInfo<OrderReceiverRouteArgs> page =
+      _i44.PageInfo<OrderReceiverRouteArgs>(name);
 }
 
 class OrderReceiverRouteArgs {
@@ -1152,11 +1165,11 @@ class OrderReceiverRouteArgs {
     required this.ids,
   });
 
-  final _i44.Key? key;
+  final _i45.Key? key;
 
-  final _i51.EESUpoolOrder order;
+  final _i52.EESUpoolOrder order;
 
-  final _i50.EESUpool pool;
+  final _i51.EESUpool pool;
 
   final List<String> ids;
 
@@ -1168,12 +1181,12 @@ class OrderReceiverRouteArgs {
 
 /// generated route for
 /// [_i21.OrderTrackingScreen]
-class OrderTrackingRoute extends _i43.PageRouteInfo<OrderTrackingRouteArgs> {
+class OrderTrackingRoute extends _i44.PageRouteInfo<OrderTrackingRouteArgs> {
   OrderTrackingRoute({
-    _i44.Key? key,
+    _i45.Key? key,
     required int id,
-    required _i59.OrderEditPrivilage privilage,
-    List<_i43.PageRouteInfo>? children,
+    required _i60.OrderEditPrivilage privilage,
+    List<_i44.PageRouteInfo>? children,
   }) : super(
           OrderTrackingRoute.name,
           args: OrderTrackingRouteArgs(
@@ -1186,8 +1199,8 @@ class OrderTrackingRoute extends _i43.PageRouteInfo<OrderTrackingRouteArgs> {
 
   static const String name = 'OrderTrackingRoute';
 
-  static const _i43.PageInfo<OrderTrackingRouteArgs> page =
-      _i43.PageInfo<OrderTrackingRouteArgs>(name);
+  static const _i44.PageInfo<OrderTrackingRouteArgs> page =
+      _i44.PageInfo<OrderTrackingRouteArgs>(name);
 }
 
 class OrderTrackingRouteArgs {
@@ -1197,11 +1210,11 @@ class OrderTrackingRouteArgs {
     required this.privilage,
   });
 
-  final _i44.Key? key;
+  final _i45.Key? key;
 
   final int id;
 
-  final _i59.OrderEditPrivilage privilage;
+  final _i60.OrderEditPrivilage privilage;
 
   @override
   String toString() {
@@ -1211,8 +1224,8 @@ class OrderTrackingRouteArgs {
 
 /// generated route for
 /// [_i22.OverviewScreen]
-class OverviewRoute extends _i43.PageRouteInfo<void> {
-  const OverviewRoute({List<_i43.PageRouteInfo>? children})
+class OverviewRoute extends _i44.PageRouteInfo<void> {
+  const OverviewRoute({List<_i44.PageRouteInfo>? children})
       : super(
           OverviewRoute.name,
           initialChildren: children,
@@ -1220,19 +1233,19 @@ class OverviewRoute extends _i43.PageRouteInfo<void> {
 
   static const String name = 'OverviewRoute';
 
-  static const _i43.PageInfo<void> page = _i43.PageInfo<void>(name);
+  static const _i44.PageInfo<void> page = _i44.PageInfo<void>(name);
 }
 
 /// generated route for
 /// [_i23.OzowScreen]
-class OzowRoute extends _i43.PageRouteInfo<OzowRouteArgs> {
+class OzowRoute extends _i44.PageRouteInfo<OzowRouteArgs> {
   OzowRoute({
-    _i44.Key? key,
+    _i45.Key? key,
     required int reference,
     required double amount,
     required String type,
     required String bankRef,
-    List<_i43.PageRouteInfo>? children,
+    List<_i44.PageRouteInfo>? children,
   }) : super(
           OzowRoute.name,
           args: OzowRouteArgs(
@@ -1247,8 +1260,8 @@ class OzowRoute extends _i43.PageRouteInfo<OzowRouteArgs> {
 
   static const String name = 'OzowRoute';
 
-  static const _i43.PageInfo<OzowRouteArgs> page =
-      _i43.PageInfo<OzowRouteArgs>(name);
+  static const _i44.PageInfo<OzowRouteArgs> page =
+      _i44.PageInfo<OzowRouteArgs>(name);
 }
 
 class OzowRouteArgs {
@@ -1260,7 +1273,7 @@ class OzowRouteArgs {
     required this.bankRef,
   });
 
-  final _i44.Key? key;
+  final _i45.Key? key;
 
   final int reference;
 
@@ -1278,11 +1291,11 @@ class OzowRouteArgs {
 
 /// generated route for
 /// [_i24.PartnerAppScreen]
-class PartnerAppRoute extends _i43.PageRouteInfo<PartnerAppRouteArgs> {
+class PartnerAppRoute extends _i44.PageRouteInfo<PartnerAppRouteArgs> {
   PartnerAppRoute({
-    _i44.Key? key,
-    required _i54.Partner partner,
-    List<_i43.PageRouteInfo>? children,
+    _i45.Key? key,
+    required _i55.Partner partner,
+    List<_i44.PageRouteInfo>? children,
   }) : super(
           PartnerAppRoute.name,
           args: PartnerAppRouteArgs(
@@ -1294,8 +1307,8 @@ class PartnerAppRoute extends _i43.PageRouteInfo<PartnerAppRouteArgs> {
 
   static const String name = 'PartnerAppRoute';
 
-  static const _i43.PageInfo<PartnerAppRouteArgs> page =
-      _i43.PageInfo<PartnerAppRouteArgs>(name);
+  static const _i44.PageInfo<PartnerAppRouteArgs> page =
+      _i44.PageInfo<PartnerAppRouteArgs>(name);
 }
 
 class PartnerAppRouteArgs {
@@ -1304,9 +1317,9 @@ class PartnerAppRouteArgs {
     required this.partner,
   });
 
-  final _i44.Key? key;
+  final _i45.Key? key;
 
-  final _i54.Partner partner;
+  final _i55.Partner partner;
 
   @override
   String toString() {
@@ -1316,11 +1329,11 @@ class PartnerAppRouteArgs {
 
 /// generated route for
 /// [_i25.PartnerScreen]
-class PartnerRoute extends _i43.PageRouteInfo<PartnerRouteArgs> {
+class PartnerRoute extends _i44.PageRouteInfo<PartnerRouteArgs> {
   PartnerRoute({
-    _i44.Key? key,
-    required _i60.UserRole role,
-    List<_i43.PageRouteInfo>? children,
+    _i45.Key? key,
+    required _i61.UserRole role,
+    List<_i44.PageRouteInfo>? children,
   }) : super(
           PartnerRoute.name,
           args: PartnerRouteArgs(
@@ -1332,8 +1345,8 @@ class PartnerRoute extends _i43.PageRouteInfo<PartnerRouteArgs> {
 
   static const String name = 'PartnerRoute';
 
-  static const _i43.PageInfo<PartnerRouteArgs> page =
-      _i43.PageInfo<PartnerRouteArgs>(name);
+  static const _i44.PageInfo<PartnerRouteArgs> page =
+      _i44.PageInfo<PartnerRouteArgs>(name);
 }
 
 class PartnerRouteArgs {
@@ -1342,9 +1355,9 @@ class PartnerRouteArgs {
     required this.role,
   });
 
-  final _i44.Key? key;
+  final _i45.Key? key;
 
-  final _i60.UserRole role;
+  final _i61.UserRole role;
 
   @override
   String toString() {
@@ -1354,11 +1367,11 @@ class PartnerRouteArgs {
 
 /// generated route for
 /// [_i26.PayoutScreen]
-class PayoutRoute extends _i43.PageRouteInfo<PayoutRouteArgs> {
+class PayoutRoute extends _i44.PageRouteInfo<PayoutRouteArgs> {
   PayoutRoute({
-    _i44.Key? key,
-    required _i61.Wallet wallet,
-    List<_i43.PageRouteInfo>? children,
+    _i45.Key? key,
+    required _i62.Wallet wallet,
+    List<_i44.PageRouteInfo>? children,
   }) : super(
           PayoutRoute.name,
           args: PayoutRouteArgs(
@@ -1370,8 +1383,8 @@ class PayoutRoute extends _i43.PageRouteInfo<PayoutRouteArgs> {
 
   static const String name = 'PayoutRoute';
 
-  static const _i43.PageInfo<PayoutRouteArgs> page =
-      _i43.PageInfo<PayoutRouteArgs>(name);
+  static const _i44.PageInfo<PayoutRouteArgs> page =
+      _i44.PageInfo<PayoutRouteArgs>(name);
 }
 
 class PayoutRouteArgs {
@@ -1380,9 +1393,9 @@ class PayoutRouteArgs {
     required this.wallet,
   });
 
-  final _i44.Key? key;
+  final _i45.Key? key;
 
-  final _i61.Wallet wallet;
+  final _i62.Wallet wallet;
 
   @override
   String toString() {
@@ -1392,8 +1405,8 @@ class PayoutRouteArgs {
 
 /// generated route for
 /// [_i27.ProductRequestScreen]
-class ProductRequestRoute extends _i43.PageRouteInfo<void> {
-  const ProductRequestRoute({List<_i43.PageRouteInfo>? children})
+class ProductRequestRoute extends _i44.PageRouteInfo<void> {
+  const ProductRequestRoute({List<_i44.PageRouteInfo>? children})
       : super(
           ProductRequestRoute.name,
           initialChildren: children,
@@ -1401,16 +1414,16 @@ class ProductRequestRoute extends _i43.PageRouteInfo<void> {
 
   static const String name = 'ProductRequestRoute';
 
-  static const _i43.PageInfo<void> page = _i43.PageInfo<void>(name);
+  static const _i44.PageInfo<void> page = _i44.PageInfo<void>(name);
 }
 
 /// generated route for
 /// [_i28.ProductViewScreen]
-class ProductViewRoute extends _i43.PageRouteInfo<ProductViewRouteArgs> {
+class ProductViewRoute extends _i44.PageRouteInfo<ProductViewRouteArgs> {
   ProductViewRoute({
-    _i44.Key? key,
+    _i45.Key? key,
     required int id,
-    List<_i43.PageRouteInfo>? children,
+    List<_i44.PageRouteInfo>? children,
   }) : super(
           ProductViewRoute.name,
           args: ProductViewRouteArgs(
@@ -1422,8 +1435,8 @@ class ProductViewRoute extends _i43.PageRouteInfo<ProductViewRouteArgs> {
 
   static const String name = 'ProductViewRoute';
 
-  static const _i43.PageInfo<ProductViewRouteArgs> page =
-      _i43.PageInfo<ProductViewRouteArgs>(name);
+  static const _i44.PageInfo<ProductViewRouteArgs> page =
+      _i44.PageInfo<ProductViewRouteArgs>(name);
 }
 
 class ProductViewRouteArgs {
@@ -1432,7 +1445,7 @@ class ProductViewRouteArgs {
     required this.id,
   });
 
-  final _i44.Key? key;
+  final _i45.Key? key;
 
   final int id;
 
@@ -1444,8 +1457,8 @@ class ProductViewRouteArgs {
 
 /// generated route for
 /// [_i29.RegisterScreen]
-class RegisterRoute extends _i43.PageRouteInfo<void> {
-  const RegisterRoute({List<_i43.PageRouteInfo>? children})
+class RegisterRoute extends _i44.PageRouteInfo<void> {
+  const RegisterRoute({List<_i44.PageRouteInfo>? children})
       : super(
           RegisterRoute.name,
           initialChildren: children,
@@ -1453,13 +1466,13 @@ class RegisterRoute extends _i43.PageRouteInfo<void> {
 
   static const String name = 'RegisterRoute';
 
-  static const _i43.PageInfo<void> page = _i43.PageInfo<void>(name);
+  static const _i44.PageInfo<void> page = _i44.PageInfo<void>(name);
 }
 
 /// generated route for
 /// [_i30.ResetPasswordScreen]
-class ResetPasswordRoute extends _i43.PageRouteInfo<void> {
-  const ResetPasswordRoute({List<_i43.PageRouteInfo>? children})
+class ResetPasswordRoute extends _i44.PageRouteInfo<void> {
+  const ResetPasswordRoute({List<_i44.PageRouteInfo>? children})
       : super(
           ResetPasswordRoute.name,
           initialChildren: children,
@@ -1467,16 +1480,16 @@ class ResetPasswordRoute extends _i43.PageRouteInfo<void> {
 
   static const String name = 'ResetPasswordRoute';
 
-  static const _i43.PageInfo<void> page = _i43.PageInfo<void>(name);
+  static const _i44.PageInfo<void> page = _i44.PageInfo<void>(name);
 }
 
 /// generated route for
 /// [_i31.ResponseScreen]
-class ResponseRoute extends _i43.PageRouteInfo<ResponseRouteArgs> {
+class ResponseRoute extends _i44.PageRouteInfo<ResponseRouteArgs> {
   ResponseRoute({
-    _i44.Key? key,
-    required _i62.Survey survey,
-    List<_i43.PageRouteInfo>? children,
+    _i45.Key? key,
+    required _i63.Survey survey,
+    List<_i44.PageRouteInfo>? children,
   }) : super(
           ResponseRoute.name,
           args: ResponseRouteArgs(
@@ -1488,8 +1501,8 @@ class ResponseRoute extends _i43.PageRouteInfo<ResponseRouteArgs> {
 
   static const String name = 'ResponseRoute';
 
-  static const _i43.PageInfo<ResponseRouteArgs> page =
-      _i43.PageInfo<ResponseRouteArgs>(name);
+  static const _i44.PageInfo<ResponseRouteArgs> page =
+      _i44.PageInfo<ResponseRouteArgs>(name);
 }
 
 class ResponseRouteArgs {
@@ -1498,9 +1511,9 @@ class ResponseRouteArgs {
     required this.survey,
   });
 
-  final _i44.Key? key;
+  final _i45.Key? key;
 
-  final _i62.Survey survey;
+  final _i63.Survey survey;
 
   @override
   String toString() {
@@ -1510,12 +1523,12 @@ class ResponseRouteArgs {
 
 /// generated route for
 /// [_i32.ReviewProductsScreen]
-class ReviewProductsRoute extends _i43.PageRouteInfo<ReviewProductsRouteArgs> {
+class ReviewProductsRoute extends _i44.PageRouteInfo<ReviewProductsRouteArgs> {
   ReviewProductsRoute({
-    _i44.Key? key,
-    required _i59.OrderEditPrivilage privilage,
-    required _i59.Order order,
-    List<_i43.PageRouteInfo>? children,
+    _i45.Key? key,
+    required _i60.OrderEditPrivilage privilage,
+    required _i60.Order order,
+    List<_i44.PageRouteInfo>? children,
   }) : super(
           ReviewProductsRoute.name,
           args: ReviewProductsRouteArgs(
@@ -1528,8 +1541,8 @@ class ReviewProductsRoute extends _i43.PageRouteInfo<ReviewProductsRouteArgs> {
 
   static const String name = 'ReviewProductsRoute';
 
-  static const _i43.PageInfo<ReviewProductsRouteArgs> page =
-      _i43.PageInfo<ReviewProductsRouteArgs>(name);
+  static const _i44.PageInfo<ReviewProductsRouteArgs> page =
+      _i44.PageInfo<ReviewProductsRouteArgs>(name);
 }
 
 class ReviewProductsRouteArgs {
@@ -1539,11 +1552,11 @@ class ReviewProductsRouteArgs {
     required this.order,
   });
 
-  final _i44.Key? key;
+  final _i45.Key? key;
 
-  final _i59.OrderEditPrivilage privilage;
+  final _i60.OrderEditPrivilage privilage;
 
-  final _i59.Order order;
+  final _i60.Order order;
 
   @override
   String toString() {
@@ -1553,8 +1566,8 @@ class ReviewProductsRouteArgs {
 
 /// generated route for
 /// [_i33.SettingsScreens]
-class SettingsRoutes extends _i43.PageRouteInfo<void> {
-  const SettingsRoutes({List<_i43.PageRouteInfo>? children})
+class SettingsRoutes extends _i44.PageRouteInfo<void> {
+  const SettingsRoutes({List<_i44.PageRouteInfo>? children})
       : super(
           SettingsRoutes.name,
           initialChildren: children,
@@ -1562,13 +1575,13 @@ class SettingsRoutes extends _i43.PageRouteInfo<void> {
 
   static const String name = 'SettingsRoutes';
 
-  static const _i43.PageInfo<void> page = _i43.PageInfo<void>(name);
+  static const _i44.PageInfo<void> page = _i44.PageInfo<void>(name);
 }
 
 /// generated route for
 /// [_i34.SignInScreen]
-class SignInRoute extends _i43.PageRouteInfo<void> {
-  const SignInRoute({List<_i43.PageRouteInfo>? children})
+class SignInRoute extends _i44.PageRouteInfo<void> {
+  const SignInRoute({List<_i44.PageRouteInfo>? children})
       : super(
           SignInRoute.name,
           initialChildren: children,
@@ -1576,13 +1589,13 @@ class SignInRoute extends _i43.PageRouteInfo<void> {
 
   static const String name = 'SignInRoute';
 
-  static const _i43.PageInfo<void> page = _i43.PageInfo<void>(name);
+  static const _i44.PageInfo<void> page = _i44.PageInfo<void>(name);
 }
 
 /// generated route for
 /// [_i35.StartUpScreen]
-class StartUpRoute extends _i43.PageRouteInfo<void> {
-  const StartUpRoute({List<_i43.PageRouteInfo>? children})
+class StartUpRoute extends _i44.PageRouteInfo<void> {
+  const StartUpRoute({List<_i44.PageRouteInfo>? children})
       : super(
           StartUpRoute.name,
           initialChildren: children,
@@ -1590,13 +1603,13 @@ class StartUpRoute extends _i43.PageRouteInfo<void> {
 
   static const String name = 'StartUpRoute';
 
-  static const _i43.PageInfo<void> page = _i43.PageInfo<void>(name);
+  static const _i44.PageInfo<void> page = _i44.PageInfo<void>(name);
 }
 
 /// generated route for
 /// [_i36.SupportScreen]
-class SupportRoute extends _i43.PageRouteInfo<void> {
-  const SupportRoute({List<_i43.PageRouteInfo>? children})
+class SupportRoute extends _i44.PageRouteInfo<void> {
+  const SupportRoute({List<_i44.PageRouteInfo>? children})
       : super(
           SupportRoute.name,
           initialChildren: children,
@@ -1604,13 +1617,13 @@ class SupportRoute extends _i43.PageRouteInfo<void> {
 
   static const String name = 'SupportRoute';
 
-  static const _i43.PageInfo<void> page = _i43.PageInfo<void>(name);
+  static const _i44.PageInfo<void> page = _i44.PageInfo<void>(name);
 }
 
 /// generated route for
 /// [_i37.SurveyScreen]
-class SurveyRoute extends _i43.PageRouteInfo<void> {
-  const SurveyRoute({List<_i43.PageRouteInfo>? children})
+class SurveyRoute extends _i44.PageRouteInfo<void> {
+  const SurveyRoute({List<_i44.PageRouteInfo>? children})
       : super(
           SurveyRoute.name,
           initialChildren: children,
@@ -1618,13 +1631,13 @@ class SurveyRoute extends _i43.PageRouteInfo<void> {
 
   static const String name = 'SurveyRoute';
 
-  static const _i43.PageInfo<void> page = _i43.PageInfo<void>(name);
+  static const _i44.PageInfo<void> page = _i44.PageInfo<void>(name);
 }
 
 /// generated route for
 /// [_i38.TermsOfServiceScreen]
-class TermsOfServiceRoute extends _i43.PageRouteInfo<void> {
-  const TermsOfServiceRoute({List<_i43.PageRouteInfo>? children})
+class TermsOfServiceRoute extends _i44.PageRouteInfo<void> {
+  const TermsOfServiceRoute({List<_i44.PageRouteInfo>? children})
       : super(
           TermsOfServiceRoute.name,
           initialChildren: children,
@@ -1632,16 +1645,54 @@ class TermsOfServiceRoute extends _i43.PageRouteInfo<void> {
 
   static const String name = 'TermsOfServiceRoute';
 
-  static const _i43.PageInfo<void> page = _i43.PageInfo<void>(name);
+  static const _i44.PageInfo<void> page = _i44.PageInfo<void>(name);
 }
 
 /// generated route for
-/// [_i39.TransferScreen]
-class TransferRoute extends _i43.PageRouteInfo<TransferRouteArgs> {
+/// [_i39.TransferMemberScreen]
+class TransferMemberRoute extends _i44.PageRouteInfo<TransferMemberRouteArgs> {
+  TransferMemberRoute({
+    _i45.Key? key,
+    required _i64.EESUpoolMember member,
+    List<_i44.PageRouteInfo>? children,
+  }) : super(
+          TransferMemberRoute.name,
+          args: TransferMemberRouteArgs(
+            key: key,
+            member: member,
+          ),
+          initialChildren: children,
+        );
+
+  static const String name = 'TransferMemberRoute';
+
+  static const _i44.PageInfo<TransferMemberRouteArgs> page =
+      _i44.PageInfo<TransferMemberRouteArgs>(name);
+}
+
+class TransferMemberRouteArgs {
+  const TransferMemberRouteArgs({
+    this.key,
+    required this.member,
+  });
+
+  final _i45.Key? key;
+
+  final _i64.EESUpoolMember member;
+
+  @override
+  String toString() {
+    return 'TransferMemberRouteArgs{key: $key, member: $member}';
+  }
+}
+
+/// generated route for
+/// [_i40.TransferScreen]
+class TransferRoute extends _i44.PageRouteInfo<TransferRouteArgs> {
   TransferRoute({
-    _i44.Key? key,
-    required _i61.Wallet wallet,
-    List<_i43.PageRouteInfo>? children,
+    _i45.Key? key,
+    required _i62.Wallet wallet,
+    List<_i44.PageRouteInfo>? children,
   }) : super(
           TransferRoute.name,
           args: TransferRouteArgs(
@@ -1653,8 +1704,8 @@ class TransferRoute extends _i43.PageRouteInfo<TransferRouteArgs> {
 
   static const String name = 'TransferRoute';
 
-  static const _i43.PageInfo<TransferRouteArgs> page =
-      _i43.PageInfo<TransferRouteArgs>(name);
+  static const _i44.PageInfo<TransferRouteArgs> page =
+      _i44.PageInfo<TransferRouteArgs>(name);
 }
 
 class TransferRouteArgs {
@@ -1663,9 +1714,9 @@ class TransferRouteArgs {
     required this.wallet,
   });
 
-  final _i44.Key? key;
+  final _i45.Key? key;
 
-  final _i61.Wallet wallet;
+  final _i62.Wallet wallet;
 
   @override
   String toString() {
@@ -1674,12 +1725,12 @@ class TransferRouteArgs {
 }
 
 /// generated route for
-/// [_i40.VoucherViewScreen]
-class VoucherViewRoute extends _i43.PageRouteInfo<VoucherViewRouteArgs> {
+/// [_i41.VoucherViewScreen]
+class VoucherViewRoute extends _i44.PageRouteInfo<VoucherViewRouteArgs> {
   VoucherViewRoute({
-    _i44.Key? key,
+    _i45.Key? key,
     required int voucherId,
-    List<_i43.PageRouteInfo>? children,
+    List<_i44.PageRouteInfo>? children,
   }) : super(
           VoucherViewRoute.name,
           args: VoucherViewRouteArgs(
@@ -1691,8 +1742,8 @@ class VoucherViewRoute extends _i43.PageRouteInfo<VoucherViewRouteArgs> {
 
   static const String name = 'VoucherViewRoute';
 
-  static const _i43.PageInfo<VoucherViewRouteArgs> page =
-      _i43.PageInfo<VoucherViewRouteArgs>(name);
+  static const _i44.PageInfo<VoucherViewRouteArgs> page =
+      _i44.PageInfo<VoucherViewRouteArgs>(name);
 }
 
 class VoucherViewRouteArgs {
@@ -1701,7 +1752,7 @@ class VoucherViewRouteArgs {
     required this.voucherId,
   });
 
-  final _i44.Key? key;
+  final _i45.Key? key;
 
   final int voucherId;
 
@@ -1712,12 +1763,12 @@ class VoucherViewRouteArgs {
 }
 
 /// generated route for
-/// [_i41.WalletViewScreen]
-class WalletViewRoute extends _i43.PageRouteInfo<WalletViewRouteArgs> {
+/// [_i42.WalletViewScreen]
+class WalletViewRoute extends _i44.PageRouteInfo<WalletViewRouteArgs> {
   WalletViewRoute({
-    _i44.Key? key,
+    _i45.Key? key,
     required int id,
-    List<_i43.PageRouteInfo>? children,
+    List<_i44.PageRouteInfo>? children,
   }) : super(
           WalletViewRoute.name,
           args: WalletViewRouteArgs(
@@ -1729,8 +1780,8 @@ class WalletViewRoute extends _i43.PageRouteInfo<WalletViewRouteArgs> {
 
   static const String name = 'WalletViewRoute';
 
-  static const _i43.PageInfo<WalletViewRouteArgs> page =
-      _i43.PageInfo<WalletViewRouteArgs>(name);
+  static const _i44.PageInfo<WalletViewRouteArgs> page =
+      _i44.PageInfo<WalletViewRouteArgs>(name);
 }
 
 class WalletViewRouteArgs {
@@ -1739,7 +1790,7 @@ class WalletViewRouteArgs {
     required this.id,
   });
 
-  final _i44.Key? key;
+  final _i45.Key? key;
 
   final int id;
 
@@ -1750,13 +1801,13 @@ class WalletViewRouteArgs {
 }
 
 /// generated route for
-/// [_i42.YocoPaymentScreen]
-class YocoPaymentRoute extends _i43.PageRouteInfo<YocoPaymentRouteArgs> {
+/// [_i43.YocoPaymentScreen]
+class YocoPaymentRoute extends _i44.PageRouteInfo<YocoPaymentRouteArgs> {
   YocoPaymentRoute({
-    _i44.Key? key,
+    _i45.Key? key,
     required int reference,
     required double amount,
-    List<_i43.PageRouteInfo>? children,
+    List<_i44.PageRouteInfo>? children,
   }) : super(
           YocoPaymentRoute.name,
           args: YocoPaymentRouteArgs(
@@ -1769,8 +1820,8 @@ class YocoPaymentRoute extends _i43.PageRouteInfo<YocoPaymentRouteArgs> {
 
   static const String name = 'YocoPaymentRoute';
 
-  static const _i43.PageInfo<YocoPaymentRouteArgs> page =
-      _i43.PageInfo<YocoPaymentRouteArgs>(name);
+  static const _i44.PageInfo<YocoPaymentRouteArgs> page =
+      _i44.PageInfo<YocoPaymentRouteArgs>(name);
 }
 
 class YocoPaymentRouteArgs {
@@ -1780,7 +1831,7 @@ class YocoPaymentRouteArgs {
     required this.amount,
   });
 
-  final _i44.Key? key;
+  final _i45.Key? key;
 
   final int reference;
 

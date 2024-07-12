@@ -41,7 +41,9 @@ class SignInScreen extends StatelessWidget {
             }
 
             if (state is Authenticated) {
-              context.router.replaceAll([const OverviewRoute()]);
+              if (context.router.current.name == SignInRoute.name) {
+                context.router.replaceAll([const OverviewRoute()]);
+              }
             }
           },
           child: BlocBuilder<AuthBloc, AuthBlocState>(

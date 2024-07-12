@@ -149,10 +149,8 @@ class MainApp extends StatelessWidget {
       child: MultiBlocProvider(
         providers: [
           BlocProvider(
-            create: (context) => AuthBloc(context.read<AuthRepository>())
-              ..add(
-                AppStarted(),
-              ),
+            create: (context) =>
+                AuthBloc(context.read<AuthRepository>())..add(AppStarted()),
           ),
           BlocProvider(
             create: (context) => ProfileBloc(

@@ -70,6 +70,22 @@ class EESUpoolRepository {
     return result;
   }
 
+  Future<List<EESUpool>> searchEESUpoolsDescendents2({
+    required String query,
+    required int poolId,
+    required int limit,
+  }) async {
+    final result = authRepository.executeFutureWithAuth((id) {
+      return dataSource.searchEESUpoolDescendants(
+        query: query,
+        poolId: poolId,
+        userId: id,
+        limit: limit,
+      );
+    });
+    return result.fold((l) => [], (r) => r);
+  }
+
   Future<Either<EESUpException, List<EESUpool>>> searchUserEESUpools({
     required String query,
     required EESUpoolType type,

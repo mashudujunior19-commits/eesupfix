@@ -1,5 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:ui/app_route.gr.dart';
+import 'package:ui/src/views/eesupools/ui/tabs/members/ui/transfer_member_screen.dart';
 
 @AutoRouterConfig()
 class AppRouter extends $AppRouter {
@@ -208,6 +209,11 @@ class AppRouter extends $AppRouter {
         ),
         CustomRoute(
           page: IssueViewRoute.page,
+          transitionsBuilder: TransitionsBuilders.slideLeftWithFade,
+          durationInMilliseconds: 300,
+        ),
+                CustomRoute(
+          page: TransferMemberRoute.page,
           transitionsBuilder: TransitionsBuilders.slideLeftWithFade,
           durationInMilliseconds: 300,
         ),
