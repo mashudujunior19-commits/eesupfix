@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ui/src/core/extensions/bg_image_deco_ext.dart';
 import 'package:ui/src/core/extensions/slide_in_animation_ext.dart';
 import 'package:ui/src/core/widgets/fullscreen_error_widget.dart';
-import 'package:ui/src/core/widgets/fullscreen_loading_shimmer.dart';
 import 'package:ui/src/views/notifications/bloc/notifications_bloc.dart';
 import 'package:ui/src/views/notifications/ui/notification_tile.dart';
 import 'package:flutter/material.dart';

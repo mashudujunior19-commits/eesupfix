@@ -248,10 +248,10 @@
       "languageVersion": "3.0"
     }
   ],
-  "generated": "2024-07-11T18:01:11.077545Z",
+  "generated": "2024-08-03T13:24:01.295473Z",
   "generator": "pub",
-  "generatorVersion": "3.4.3",
+  "generatorVersion": "3.4.4",
   "flutterRoot": "file:///Users/misomenze/Development/flutter",
-  "flutterVersion": "3.22.2",
+  "flutterVersion": "3.22.3",
   "pubCache": "file:///Users/misomenze/.pub-cache"
 }

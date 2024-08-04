@@ -33,7 +33,7 @@ class CreateEESUpoolScreen extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(
           leading: const BackButton(),
-          title: const Text('Create EESUpool'),
+          title: const Text('Create Kasipool'),
         ),
         body: ListView(
           padding: const EdgeInsets.only(
@@ -68,13 +68,13 @@ class CreateEESUpoolScreen extends StatelessWidget {
                 }, (id) {
                   if (id != null) {
                     context.snackBarSuccess(
-                        'EESUpool created, invite members to join');
+                        'Kasipool created, invite members to join');
                     context.showBottomSheetDialog(
                       child: InviteMembersDialog(poolId: id, isNewPool: true),
                     );
                   } else {
                     context.snackBarError(
-                      'EESUpool could not be created. Please try again',
+                      'Kasipool could not be created. Please try again',
                     );
                   }
                 });
@@ -104,12 +104,12 @@ class _PoolDetailsForm extends StatelessWidget {
           height: 15,
         ),
         const Text(
-          'EESUpools are a great way to save money and communicate with your community, friends and family. Create an EESUpool and invite your friends and family to join you.',
+          'Kasipools are a great way to save money and communicate with your community, friends and family. Create an Kasipool and invite your friends and family to join you.',
           textAlign: TextAlign.center,
         ),
         15.sH,
         const Text(
-          'Create a new EESUpool now',
+          'Create a new Kasipool now',
           textAlign: TextAlign.center,
         ),
         EESUpTextFormField(

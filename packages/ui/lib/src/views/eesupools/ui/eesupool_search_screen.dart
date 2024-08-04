@@ -5,6 +5,7 @@ import 'package:data/eesupools/models/eesupool_level.dart';
 import 'package:data/eesupools/models/eesupool_type.dart';
 import 'package:data/eesupools/repository/eesupool_members_repo.dart';
 import 'package:data/eesupools/repository/eesupool_repo.dart';
+import 'package:data/geolocation/models/address.dart';
 import 'package:data/utils/eesup_exception.dart';
 import 'package:either_dart/either.dart';
 import 'package:flutter/material.dart';
@@ -18,6 +19,8 @@ import 'package:ui/src/core/extensions/sizedbox_ext.dart';
 import 'package:ui/src/core/widgets/eesup_form_field.dart';
 import 'package:ui/src/core/widgets/fullscreen_error_widget.dart';
 import 'package:ui/src/core/widgets/fullscreen_loading_shimmer.dart';
+import 'package:ui/src/views/geolocation/ui/widgets/address_card.dart';
+import 'package:ui/src/views/geolocation/ui/widgets/select_address_popup_button.dart';
 
 @RoutePage()
 class EESUpoolSearchScreen extends StatefulWidget {
@@ -30,6 +33,7 @@ class EESUpoolSearchScreen extends StatefulWidget {
 
 class _EESUpoolSearchScreenState extends State<EESUpoolSearchScreen> {
   final _controller = TextEditingController();
+  Address? selectedAddress;
   @override
   Widget build(BuildContext context) {
     final repo = context.read<EESUpoolRepository>();
@@ -58,71 +62,117 @@ class _EESUpoolSearchScreenState extends State<EESUpoolSearchScreen> {
           width: context.width,
           height: context.height,
           decoration: context.bgImage,
-          child: () {
-            if (_controller.text.isEmpty) {
-              return FullScreenError(
-                isError: false,
-                exception: EESUpException(
-                  message: 'Search for EESUpool names or codes.',
-                ),
-              );
-            } else {
-              return FutureBuilder<Either<EESUpException, dynamic>>(
-                future: widget.type == EESUpoolType.trade
-                    ? repo.searchTradePools(
-                        _controller.text,
-                        50,
-                        23.00,
-                        23.00,
-                      )
-                    : repo.searchPoolsByType(
-                        _controller.text,
-                        widget.type,
-                        20,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(left: 15, top: 20),
+                    child: AddressSelctionPopUpButton(
+                      label: Row(
+                        //mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Icon(
+                            IconlyLight.location,
+                            size: 17,
+                            color: context.colorScheme.primary,
+                          ),
+                          5.sW,
+                          Text(
+                            'Select Address',
+                            style: context.textTheme.labelMedium?.copyWith(
+                              color: context.colorScheme.primary,
+                            ),
+                          ),
+                        ],
                       ),
-                builder: (context, snap) {
-                  if (snap.hasData) {
-                    final results = snap.data;
-                    return results?.fold((left) {
+                      onAddressSelected: (address) {
+                        if (address != null) {
+                          setState(() {
+                            selectedAddress = address;
+                          });
+                        }
+                      },
+                    ),
+                  ),
+                  if (selectedAddress != null)
+                    AddressCard(address: selectedAddress!, allowDelete: false)
+                ],
+              ),
+              () {
+                if (_controller.text.isEmpty) {
+                  return FullScreenError(
+                    isError: false,
+                    exception: EESUpException(
+                      message: 'Search for EESUpool names or codes.',
+                    ),
+                  );
+                } else {
+                  return Expanded(
+                    child: FutureBuilder<Either<EESUpException, dynamic>>(
+                      future: widget.type == EESUpoolType.trade &&
+                              selectedAddress != null
+                          ? repo.searchTradePools(
+                              _controller.text,
+                              50,
+                              selectedAddress!.latitude!,
+                              selectedAddress!.longitude!,
+                            )
+                          : repo.searchPoolsByType(
+                              _controller.text,
+                              widget.type,
+                              20,
+                            ),
+                      builder: (context, snap) {
+                        if (snap.hasData) {
+                          final results = snap.data;
+                          return results?.fold((left) {
+                                return FullScreenError(
+                                  isError: false,
+                                  exception: left,
+                                );
+                              }, (right) {
+                                final list = (right as List);
+                                return ListView.builder(
+                                  padding: const EdgeInsets.only(bottom: 500),
+                                  itemCount: list.length,
+                                  itemBuilder: (context, index) {
+                                    return _EESUpoolCard(
+                                      pool: list[index],
+                                      onRefresh: () {
+                                        setState(() {});
+                                      },
+                                    );
+                                  },
+                                );
+                              }) ??
+                              FullScreenError(
+                                isError: false,
+                                exception: EESUpException(
+                                  message:
+                                      'Search for EESUpool names or codes.',
+                                ),
+                              );
+                        } else if (snap.connectionState ==
+                            ConnectionState.waiting) {
+                          return const FullScreenLoadingShimmer();
+                        } else {
                           return FullScreenError(
                             isError: false,
-                            exception: left,
+                            exception: EESUpException(
+                              message: 'Search for EESUpool names or codes.',
+                            ),
                           );
-                        }, (right) {
-                          final list = (right as List);
-                          return ListView.builder(
-                            padding: const EdgeInsets.only(bottom: 500),
-                            itemCount: list.length,
-                            itemBuilder: (context, index) {
-                              return _EESUpoolCard(
-                                pool: list[index],
-                                onRefresh: () {
-                                  setState(() {});
-                                },
-                              );
-                            },
-                          );
-                        }) ??
-                        FullScreenError(
-                          isError: false,
-                          exception: EESUpException(
-                            message: 'Search for EESUpool names or codes.',
-                          ),
-                        );
-                  } else if (snap.connectionState == ConnectionState.waiting) {
-                    return const FullScreenLoadingShimmer();
-                  } else {
-                    return FullScreenError(
-                      isError: false,
-                      exception: EESUpException(
-                        message: 'Search for EESUpool names or codes.',
-                      ),
-                    );
-                  }
-                },
-              );
-            }
-          }(),
+                        }
+                      },
+                    ),
+                  );
+                }
+              }(),
+            ],
+          ),
         ),
       ),
     );
@@ -173,7 +223,7 @@ class _EESUpoolCard extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.only(top: 5),
                     child: Text(
-                      '${(pool['distance'] as double).toStringAsFixed(2)}'
+                      '${(double.parse(pool['distance'].toString())).toStringAsFixed(2)}'
                       ' km away',
                     ),
                   ),

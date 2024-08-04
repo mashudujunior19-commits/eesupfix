@@ -27,7 +27,7 @@ class _AnimatedReactionButtonState extends State<AnimatedReactionButton>
   Widget build(BuildContext context) {
     return IconButton(
       style: ButtonStyle(
-        padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
+        padding: WidgetStateProperty.all<EdgeInsetsGeometry>(
           const EdgeInsets.all(0),
         ),
       ),

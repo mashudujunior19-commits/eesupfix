@@ -13,7 +13,7 @@ class OrdersStatuesFilterDialog extends StatefulWidget {
 }
 
 class _OrdersStatuesFilterDialogState extends State<OrdersStatuesFilterDialog> {
-  List<OrderStatus> _selectedStatues = [];
+  final List<OrderStatus> _selectedStatues = [];
 
   @override
   void initState() {

@@ -23,6 +23,9 @@ scripts:
   test:
     exec: dart test
     description: Run tests
+  fix:
+    exec: dart fix --apply
+    description: Fix
 
   dependencies_upgrade:
     exec: flutter pub upgrade --major-versions

@@ -1,6 +1,5 @@
 // ignore_for_file: use_build_context_synchronously
 
-import 'package:data/eesupools/repository/eesupool_members_repo.dart';
 import 'package:data/eesupools/repository/eesupool_repo.dart';
 import 'package:data/notifications/repository/notification_repository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
