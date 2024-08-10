@@ -13,6 +13,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     on<ProfileFetched>((event, emit) async {
       emit(ProfileLoading());
       final results = await profileRepo.fetchSessionProfile();
+      print(results);
       results.fold((l) {}, (r) {
         if (r == null) {
           emit(

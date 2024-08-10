@@ -90,402 +90,6 @@ import 'package:ui/src/views/support/ui/support_screen.dart' as _i36;
 import 'package:ui/src/views/surveys/ui/response_screen.dart' as _i31;
 import 'package:ui/src/views/surveys/ui/survey_screen.dart' as _i37;
 
-abstract class $AppRouter extends _i44.RootStackRouter {
-  $AppRouter({super.navigatorKey});
-
-  @override
-  final Map<String, _i44.PageFactory> pagesMap = {
-    AddressBookRoute.name: (routeData) {
-      return _i44.AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: const _i1.AddressBookScreen(),
-      );
-    },
-    BasketViewRoute.name: (routeData) {
-      final args = routeData.argsAs<BasketViewRouteArgs>();
-      return _i44.AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: _i2.BasketViewScreen(
-          key: args.key,
-          basket: args.basket,
-        ),
-      );
-    },
-    BasketsListRoute.name: (routeData) {
-      return _i44.AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: const _i3.BasketsListScreen(),
-      );
-    },
-    BrowseShopRoute.name: (routeData) {
-      return _i44.AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: const _i4.BrowseShopScreen(),
-      );
-    },
-    CartRoute.name: (routeData) {
-      return _i44.AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: const _i5.CartScreen(),
-      );
-    },
-    CategoryRoute.name: (routeData) {
-      final args = routeData.argsAs<CategoryRouteArgs>();
-      return _i44.AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: _i6.CategoryScreen(
-          key: args.key,
-          category: args.category,
-        ),
-      );
-    },
-    CheckoutRoute.name: (routeData) {
-      final args = routeData.argsAs<CheckoutRouteArgs>();
-      return _i44.AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: _i7.CheckoutScreen(
-          key: args.key,
-          products: args.products,
-          total: args.total,
-        ),
-      );
-    },
-    CreateEESUpoolRoute.name: (routeData) {
-      final args = routeData.argsAs<CreateEESUpoolRouteArgs>();
-      return _i44.AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: _i8.CreateEESUpoolScreen(
-          key: args.key,
-          parentId: args.parentId,
-          level: args.level,
-          type: args.type,
-        ),
-      );
-    },
-    EESUpoolOrderViewRoute.name: (routeData) {
-      final args = routeData.argsAs<EESUpoolOrderViewRouteArgs>();
-      return _i44.AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: _i9.EESUpoolOrderViewScreen(
-          key: args.key,
-          pool: args.pool,
-          order: args.order,
-        ),
-      );
-    },
-    EESUpoolSearchRoute.name: (routeData) {
-      final args = routeData.argsAs<EESUpoolSearchRouteArgs>();
-      return _i44.AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: _i10.EESUpoolSearchScreen(
-          key: args.key,
-          type: args.type,
-        ),
-      );
-    },
-    EESUpoolViewRoute.name: (routeData) {
-      final args = routeData.argsAs<EESUpoolViewRouteArgs>(
-          orElse: () => const EESUpoolViewRouteArgs());
-      return _i44.AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: _i11.EESUpoolViewScreen(
-          key: args.key,
-          poolId: args.poolId,
-          pool: args.pool,
-        ),
-      );
-    },
-    EditAddressRoute.name: (routeData) {
-      final args = routeData.argsAs<EditAddressRouteArgs>(
-          orElse: () => const EditAddressRouteArgs());
-      return _i44.AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: _i12.EditAddressScreen(
-          key: args.key,
-          address: args.address,
-          isPersonal: args.isPersonal,
-        ),
-      );
-    },
-    EditApplicationRoute.name: (routeData) {
-      final args = routeData.argsAs<EditApplicationRouteArgs>();
-      return _i44.AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: _i13.EditApplicationScreen(
-          key: args.key,
-          app: args.app,
-          partner: args.partner,
-        ),
-      );
-    },
-    EditProfileRoute.name: (routeData) {
-      final args = routeData.argsAs<EditProfileRouteArgs>();
-      return _i44.AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: _i14.EditProfileScreen(
-          key: args.key,
-          profile: args.profile,
-        ),
-      );
-    },
-    InstapayConfirmDetailsRoute.name: (routeData) {
-      final args = routeData.argsAs<InstapayConfirmDetailsRouteArgs>();
-      return _i44.AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: _i15.InstapayConfirmDetailsScreen(
-          key: args.key,
-          transaction: args.transaction,
-        ),
-      );
-    },
-    InstapayRoute.name: (routeData) {
-      final args = routeData.argsAs<InstapayRouteArgs>();
-      return _i44.AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: _i16.InstapayScreen(
-          key: args.key,
-          transaction: args.transaction,
-        ),
-      );
-    },
-    IssueViewRoute.name: (routeData) {
-      final args = routeData.argsAs<IssueViewRouteArgs>();
-      return _i44.AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: _i17.IssueViewScreen(
-          key: args.key,
-          pool: args.pool,
-          issue: args.issue,
-        ),
-      );
-    },
-    KasipreneurRoute.name: (routeData) {
-      final args = routeData.argsAs<KasipreneurRouteArgs>();
-      return _i44.AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: _i18.KasipreneurScreen(
-          key: args.key,
-          eesupreneur: args.eesupreneur,
-        ),
-      );
-    },
-    MediaFilePreviewUploaderRoute.name: (routeData) {
-      return _i44.AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: const _i19.MediaFilePreviewUploaderScreen(),
-      );
-    },
-    OrderReceiverRoute.name: (routeData) {
-      final args = routeData.argsAs<OrderReceiverRouteArgs>();
-      return _i44.AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: _i20.OrderReceiverScreen(
-          key: args.key,
-          order: args.order,
-          pool: args.pool,
-          ids: args.ids,
-        ),
-      );
-    },
-    OrderTrackingRoute.name: (routeData) {
-      final args = routeData.argsAs<OrderTrackingRouteArgs>();
-      return _i44.AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: _i21.OrderTrackingScreen(
-          key: args.key,
-          id: args.id,
-          privilage: args.privilage,
-        ),
-      );
-    },
-    OverviewRoute.name: (routeData) {
-      return _i44.AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: const _i22.OverviewScreen(),
-      );
-    },
-    OzowRoute.name: (routeData) {
-      final args = routeData.argsAs<OzowRouteArgs>();
-      return _i44.AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: _i23.OzowScreen(
-          key: args.key,
-          reference: args.reference,
-          amount: args.amount,
-          type: args.type,
-          bankRef: args.bankRef,
-        ),
-      );
-    },
-    PartnerAppRoute.name: (routeData) {
-      final args = routeData.argsAs<PartnerAppRouteArgs>();
-      return _i44.AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: _i24.PartnerAppScreen(
-          key: args.key,
-          partner: args.partner,
-        ),
-      );
-    },
-    PartnerRoute.name: (routeData) {
-      final args = routeData.argsAs<PartnerRouteArgs>();
-      return _i44.AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: _i25.PartnerScreen(
-          key: args.key,
-          role: args.role,
-        ),
-      );
-    },
-    PayoutRoute.name: (routeData) {
-      final args = routeData.argsAs<PayoutRouteArgs>();
-      return _i44.AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: _i26.PayoutScreen(
-          key: args.key,
-          wallet: args.wallet,
-        ),
-      );
-    },
-    ProductRequestRoute.name: (routeData) {
-      return _i44.AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: const _i27.ProductRequestScreen(),
-      );
-    },
-    ProductViewRoute.name: (routeData) {
-      final args = routeData.argsAs<ProductViewRouteArgs>();
-      return _i44.AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: _i28.ProductViewScreen(
-          key: args.key,
-          id: args.id,
-        ),
-      );
-    },
-    RegisterRoute.name: (routeData) {
-      return _i44.AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: const _i29.RegisterScreen(),
-      );
-    },
-    ResetPasswordRoute.name: (routeData) {
-      return _i44.AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: const _i30.ResetPasswordScreen(),
-      );
-    },
-    ResponseRoute.name: (routeData) {
-      final args = routeData.argsAs<ResponseRouteArgs>();
-      return _i44.AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: _i31.ResponseScreen(
-          key: args.key,
-          survey: args.survey,
-        ),
-      );
-    },
-    ReviewProductsRoute.name: (routeData) {
-      final args = routeData.argsAs<ReviewProductsRouteArgs>();
-      return _i44.AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: _i32.ReviewProductsScreen(
-          key: args.key,
-          privilage: args.privilage,
-          order: args.order,
-        ),
-      );
-    },
-    SettingsRoutes.name: (routeData) {
-      return _i44.AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: const _i33.SettingsScreens(),
-      );
-    },
-    SignInRoute.name: (routeData) {
-      return _i44.AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: const _i34.SignInScreen(),
-      );
-    },
-    StartUpRoute.name: (routeData) {
-      return _i44.AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: const _i35.StartUpScreen(),
-      );
-    },
-    SupportRoute.name: (routeData) {
-      return _i44.AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: const _i36.SupportScreen(),
-      );
-    },
-    SurveyRoute.name: (routeData) {
-      return _i44.AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: const _i37.SurveyScreen(),
-      );
-    },
-    TermsOfServiceRoute.name: (routeData) {
-      return _i44.AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: const _i38.TermsOfServiceScreen(),
-      );
-    },
-    TransferMemberRoute.name: (routeData) {
-      final args = routeData.argsAs<TransferMemberRouteArgs>();
-      return _i44.AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: _i39.TransferMemberScreen(
-          key: args.key,
-          member: args.member,
-        ),
-      );
-    },
-    TransferRoute.name: (routeData) {
-      final args = routeData.argsAs<TransferRouteArgs>();
-      return _i44.AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: _i40.TransferScreen(
-          key: args.key,
-          wallet: args.wallet,
-        ),
-      );
-    },
-    VoucherViewRoute.name: (routeData) {
-      final args = routeData.argsAs<VoucherViewRouteArgs>();
-      return _i44.AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: _i41.VoucherViewScreen(
-          key: args.key,
-          voucherId: args.voucherId,
-        ),
-      );
-    },
-    WalletViewRoute.name: (routeData) {
-      final args = routeData.argsAs<WalletViewRouteArgs>();
-      return _i44.AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: _i42.WalletViewScreen(
-          key: args.key,
-          id: args.id,
-        ),
-      );
-    },
-    YocoPaymentRoute.name: (routeData) {
-      final args = routeData.argsAs<YocoPaymentRouteArgs>();
-      return _i44.AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: _i43.YocoPaymentScreen(
-          key: args.key,
-          reference: args.reference,
-          amount: args.amount,
-        ),
-      );
-    },
-  };
-}
-
 /// generated route for
 /// [_i1.AddressBookScreen]
 class AddressBookRoute extends _i44.PageRouteInfo<void> {
@@ -497,7 +101,12 @@ class AddressBookRoute extends _i44.PageRouteInfo<void> {
 
   static const String name = 'AddressBookRoute';
 
-  static const _i44.PageInfo<void> page = _i44.PageInfo<void>(name);
+  static _i44.PageInfo page = _i44.PageInfo(
+    name,
+    builder: (data) {
+      return const _i1.AddressBookScreen();
+    },
+  );
 }
 
 /// generated route for
@@ -518,8 +127,16 @@ class BasketViewRoute extends _i44.PageRouteInfo<BasketViewRouteArgs> {
 
   static const String name = 'BasketViewRoute';
 
-  static const _i44.PageInfo<BasketViewRouteArgs> page =
-      _i44.PageInfo<BasketViewRouteArgs>(name);
+  static _i44.PageInfo page = _i44.PageInfo(
+    name,
+    builder: (data) {
+      final args = data.argsAs<BasketViewRouteArgs>();
+      return _i2.BasketViewScreen(
+        key: args.key,
+        basket: args.basket,
+      );
+    },
+  );
 }
 
 class BasketViewRouteArgs {
@@ -549,7 +166,12 @@ class BasketsListRoute extends _i44.PageRouteInfo<void> {
 
   static const String name = 'BasketsListRoute';
 
-  static const _i44.PageInfo<void> page = _i44.PageInfo<void>(name);
+  static _i44.PageInfo page = _i44.PageInfo(
+    name,
+    builder: (data) {
+      return const _i3.BasketsListScreen();
+    },
+  );
 }
 
 /// generated route for
@@ -563,7 +185,12 @@ class BrowseShopRoute extends _i44.PageRouteInfo<void> {
 
   static const String name = 'BrowseShopRoute';
 
-  static const _i44.PageInfo<void> page = _i44.PageInfo<void>(name);
+  static _i44.PageInfo page = _i44.PageInfo(
+    name,
+    builder: (data) {
+      return const _i4.BrowseShopScreen();
+    },
+  );
 }
 
 /// generated route for
@@ -577,7 +204,12 @@ class CartRoute extends _i44.PageRouteInfo<void> {
 
   static const String name = 'CartRoute';
 
-  static const _i44.PageInfo<void> page = _i44.PageInfo<void>(name);
+  static _i44.PageInfo page = _i44.PageInfo(
+    name,
+    builder: (data) {
+      return const _i5.CartScreen();
+    },
+  );
 }
 
 /// generated route for
@@ -598,8 +230,16 @@ class CategoryRoute extends _i44.PageRouteInfo<CategoryRouteArgs> {
 
   static const String name = 'CategoryRoute';
 
-  static const _i44.PageInfo<CategoryRouteArgs> page =
-      _i44.PageInfo<CategoryRouteArgs>(name);
+  static _i44.PageInfo page = _i44.PageInfo(
+    name,
+    builder: (data) {
+      final args = data.argsAs<CategoryRouteArgs>();
+      return _i6.CategoryScreen(
+        key: args.key,
+        category: args.category,
+      );
+    },
+  );
 }
 
 class CategoryRouteArgs {
@@ -638,8 +278,17 @@ class CheckoutRoute extends _i44.PageRouteInfo<CheckoutRouteArgs> {
 
   static const String name = 'CheckoutRoute';
 
-  static const _i44.PageInfo<CheckoutRouteArgs> page =
-      _i44.PageInfo<CheckoutRouteArgs>(name);
+  static _i44.PageInfo page = _i44.PageInfo(
+    name,
+    builder: (data) {
+      final args = data.argsAs<CheckoutRouteArgs>();
+      return _i7.CheckoutScreen(
+        key: args.key,
+        products: args.products,
+        total: args.total,
+      );
+    },
+  );
 }
 
 class CheckoutRouteArgs {
@@ -683,8 +332,18 @@ class CreateEESUpoolRoute extends _i44.PageRouteInfo<CreateEESUpoolRouteArgs> {
 
   static const String name = 'CreateEESUpoolRoute';
 
-  static const _i44.PageInfo<CreateEESUpoolRouteArgs> page =
-      _i44.PageInfo<CreateEESUpoolRouteArgs>(name);
+  static _i44.PageInfo page = _i44.PageInfo(
+    name,
+    builder: (data) {
+      final args = data.argsAs<CreateEESUpoolRouteArgs>();
+      return _i8.CreateEESUpoolScreen(
+        key: args.key,
+        parentId: args.parentId,
+        level: args.level,
+        type: args.type,
+      );
+    },
+  );
 }
 
 class CreateEESUpoolRouteArgs {
@@ -730,8 +389,17 @@ class EESUpoolOrderViewRoute
 
   static const String name = 'EESUpoolOrderViewRoute';
 
-  static const _i44.PageInfo<EESUpoolOrderViewRouteArgs> page =
-      _i44.PageInfo<EESUpoolOrderViewRouteArgs>(name);
+  static _i44.PageInfo page = _i44.PageInfo(
+    name,
+    builder: (data) {
+      final args = data.argsAs<EESUpoolOrderViewRouteArgs>();
+      return _i9.EESUpoolOrderViewScreen(
+        key: args.key,
+        pool: args.pool,
+        order: args.order,
+      );
+    },
+  );
 }
 
 class EESUpoolOrderViewRouteArgs {
@@ -771,8 +439,16 @@ class EESUpoolSearchRoute extends _i44.PageRouteInfo<EESUpoolSearchRouteArgs> {
 
   static const String name = 'EESUpoolSearchRoute';
 
-  static const _i44.PageInfo<EESUpoolSearchRouteArgs> page =
-      _i44.PageInfo<EESUpoolSearchRouteArgs>(name);
+  static _i44.PageInfo page = _i44.PageInfo(
+    name,
+    builder: (data) {
+      final args = data.argsAs<EESUpoolSearchRouteArgs>();
+      return _i10.EESUpoolSearchScreen(
+        key: args.key,
+        type: args.type,
+      );
+    },
+  );
 }
 
 class EESUpoolSearchRouteArgs {
@@ -811,8 +487,18 @@ class EESUpoolViewRoute extends _i44.PageRouteInfo<EESUpoolViewRouteArgs> {
 
   static const String name = 'EESUpoolViewRoute';
 
-  static const _i44.PageInfo<EESUpoolViewRouteArgs> page =
-      _i44.PageInfo<EESUpoolViewRouteArgs>(name);
+  static _i44.PageInfo page = _i44.PageInfo(
+    name,
+    builder: (data) {
+      final args = data.argsAs<EESUpoolViewRouteArgs>(
+          orElse: () => const EESUpoolViewRouteArgs());
+      return _i11.EESUpoolViewScreen(
+        key: args.key,
+        poolId: args.poolId,
+        pool: args.pool,
+      );
+    },
+  );
 }
 
 class EESUpoolViewRouteArgs {
@@ -854,8 +540,18 @@ class EditAddressRoute extends _i44.PageRouteInfo<EditAddressRouteArgs> {
 
   static const String name = 'EditAddressRoute';
 
-  static const _i44.PageInfo<EditAddressRouteArgs> page =
-      _i44.PageInfo<EditAddressRouteArgs>(name);
+  static _i44.PageInfo page = _i44.PageInfo(
+    name,
+    builder: (data) {
+      final args = data.argsAs<EditAddressRouteArgs>(
+          orElse: () => const EditAddressRouteArgs());
+      return _i12.EditAddressScreen(
+        key: args.key,
+        address: args.address,
+        isPersonal: args.isPersonal,
+      );
+    },
+  );
 }
 
 class EditAddressRouteArgs {
@@ -898,8 +594,17 @@ class EditApplicationRoute
 
   static const String name = 'EditApplicationRoute';
 
-  static const _i44.PageInfo<EditApplicationRouteArgs> page =
-      _i44.PageInfo<EditApplicationRouteArgs>(name);
+  static _i44.PageInfo page = _i44.PageInfo(
+    name,
+    builder: (data) {
+      final args = data.argsAs<EditApplicationRouteArgs>();
+      return _i13.EditApplicationScreen(
+        key: args.key,
+        app: args.app,
+        partner: args.partner,
+      );
+    },
+  );
 }
 
 class EditApplicationRouteArgs {
@@ -939,8 +644,16 @@ class EditProfileRoute extends _i44.PageRouteInfo<EditProfileRouteArgs> {
 
   static const String name = 'EditProfileRoute';
 
-  static const _i44.PageInfo<EditProfileRouteArgs> page =
-      _i44.PageInfo<EditProfileRouteArgs>(name);
+  static _i44.PageInfo page = _i44.PageInfo(
+    name,
+    builder: (data) {
+      final args = data.argsAs<EditProfileRouteArgs>();
+      return _i14.EditProfileScreen(
+        key: args.key,
+        profile: args.profile,
+      );
+    },
+  );
 }
 
 class EditProfileRouteArgs {
@@ -978,8 +691,16 @@ class InstapayConfirmDetailsRoute
 
   static const String name = 'InstapayConfirmDetailsRoute';
 
-  static const _i44.PageInfo<InstapayConfirmDetailsRouteArgs> page =
-      _i44.PageInfo<InstapayConfirmDetailsRouteArgs>(name);
+  static _i44.PageInfo page = _i44.PageInfo(
+    name,
+    builder: (data) {
+      final args = data.argsAs<InstapayConfirmDetailsRouteArgs>();
+      return _i15.InstapayConfirmDetailsScreen(
+        key: args.key,
+        transaction: args.transaction,
+      );
+    },
+  );
 }
 
 class InstapayConfirmDetailsRouteArgs {
@@ -1016,8 +737,16 @@ class InstapayRoute extends _i44.PageRouteInfo<InstapayRouteArgs> {
 
   static const String name = 'InstapayRoute';
 
-  static const _i44.PageInfo<InstapayRouteArgs> page =
-      _i44.PageInfo<InstapayRouteArgs>(name);
+  static _i44.PageInfo page = _i44.PageInfo(
+    name,
+    builder: (data) {
+      final args = data.argsAs<InstapayRouteArgs>();
+      return _i16.InstapayScreen(
+        key: args.key,
+        transaction: args.transaction,
+      );
+    },
+  );
 }
 
 class InstapayRouteArgs {
@@ -1056,8 +785,17 @@ class IssueViewRoute extends _i44.PageRouteInfo<IssueViewRouteArgs> {
 
   static const String name = 'IssueViewRoute';
 
-  static const _i44.PageInfo<IssueViewRouteArgs> page =
-      _i44.PageInfo<IssueViewRouteArgs>(name);
+  static _i44.PageInfo page = _i44.PageInfo(
+    name,
+    builder: (data) {
+      final args = data.argsAs<IssueViewRouteArgs>();
+      return _i17.IssueViewScreen(
+        key: args.key,
+        pool: args.pool,
+        issue: args.issue,
+      );
+    },
+  );
 }
 
 class IssueViewRouteArgs {
@@ -1097,8 +835,16 @@ class KasipreneurRoute extends _i44.PageRouteInfo<KasipreneurRouteArgs> {
 
   static const String name = 'KasipreneurRoute';
 
-  static const _i44.PageInfo<KasipreneurRouteArgs> page =
-      _i44.PageInfo<KasipreneurRouteArgs>(name);
+  static _i44.PageInfo page = _i44.PageInfo(
+    name,
+    builder: (data) {
+      final args = data.argsAs<KasipreneurRouteArgs>();
+      return _i18.KasipreneurScreen(
+        key: args.key,
+        eesupreneur: args.eesupreneur,
+      );
+    },
+  );
 }
 
 class KasipreneurRouteArgs {
@@ -1128,7 +874,12 @@ class MediaFilePreviewUploaderRoute extends _i44.PageRouteInfo<void> {
 
   static const String name = 'MediaFilePreviewUploaderRoute';
 
-  static const _i44.PageInfo<void> page = _i44.PageInfo<void>(name);
+  static _i44.PageInfo page = _i44.PageInfo(
+    name,
+    builder: (data) {
+      return const _i19.MediaFilePreviewUploaderScreen();
+    },
+  );
 }
 
 /// generated route for
@@ -1153,8 +904,18 @@ class OrderReceiverRoute extends _i44.PageRouteInfo<OrderReceiverRouteArgs> {
 
   static const String name = 'OrderReceiverRoute';
 
-  static const _i44.PageInfo<OrderReceiverRouteArgs> page =
-      _i44.PageInfo<OrderReceiverRouteArgs>(name);
+  static _i44.PageInfo page = _i44.PageInfo(
+    name,
+    builder: (data) {
+      final args = data.argsAs<OrderReceiverRouteArgs>();
+      return _i20.OrderReceiverScreen(
+        key: args.key,
+        order: args.order,
+        pool: args.pool,
+        ids: args.ids,
+      );
+    },
+  );
 }
 
 class OrderReceiverRouteArgs {
@@ -1199,8 +960,17 @@ class OrderTrackingRoute extends _i44.PageRouteInfo<OrderTrackingRouteArgs> {
 
   static const String name = 'OrderTrackingRoute';
 
-  static const _i44.PageInfo<OrderTrackingRouteArgs> page =
-      _i44.PageInfo<OrderTrackingRouteArgs>(name);
+  static _i44.PageInfo page = _i44.PageInfo(
+    name,
+    builder: (data) {
+      final args = data.argsAs<OrderTrackingRouteArgs>();
+      return _i21.OrderTrackingScreen(
+        key: args.key,
+        id: args.id,
+        privilage: args.privilage,
+      );
+    },
+  );
 }
 
 class OrderTrackingRouteArgs {
@@ -1233,7 +1003,12 @@ class OverviewRoute extends _i44.PageRouteInfo<void> {
 
   static const String name = 'OverviewRoute';
 
-  static const _i44.PageInfo<void> page = _i44.PageInfo<void>(name);
+  static _i44.PageInfo page = _i44.PageInfo(
+    name,
+    builder: (data) {
+      return const _i22.OverviewScreen();
+    },
+  );
 }
 
 /// generated route for
@@ -1260,8 +1035,19 @@ class OzowRoute extends _i44.PageRouteInfo<OzowRouteArgs> {
 
   static const String name = 'OzowRoute';
 
-  static const _i44.PageInfo<OzowRouteArgs> page =
-      _i44.PageInfo<OzowRouteArgs>(name);
+  static _i44.PageInfo page = _i44.PageInfo(
+    name,
+    builder: (data) {
+      final args = data.argsAs<OzowRouteArgs>();
+      return _i23.OzowScreen(
+        key: args.key,
+        reference: args.reference,
+        amount: args.amount,
+        type: args.type,
+        bankRef: args.bankRef,
+      );
+    },
+  );
 }
 
 class OzowRouteArgs {
@@ -1307,8 +1093,16 @@ class PartnerAppRoute extends _i44.PageRouteInfo<PartnerAppRouteArgs> {
 
   static const String name = 'PartnerAppRoute';
 
-  static const _i44.PageInfo<PartnerAppRouteArgs> page =
-      _i44.PageInfo<PartnerAppRouteArgs>(name);
+  static _i44.PageInfo page = _i44.PageInfo(
+    name,
+    builder: (data) {
+      final args = data.argsAs<PartnerAppRouteArgs>();
+      return _i24.PartnerAppScreen(
+        key: args.key,
+        partner: args.partner,
+      );
+    },
+  );
 }
 
 class PartnerAppRouteArgs {
@@ -1345,8 +1139,16 @@ class PartnerRoute extends _i44.PageRouteInfo<PartnerRouteArgs> {
 
   static const String name = 'PartnerRoute';
 
-  static const _i44.PageInfo<PartnerRouteArgs> page =
-      _i44.PageInfo<PartnerRouteArgs>(name);
+  static _i44.PageInfo page = _i44.PageInfo(
+    name,
+    builder: (data) {
+      final args = data.argsAs<PartnerRouteArgs>();
+      return _i25.PartnerScreen(
+        key: args.key,
+        role: args.role,
+      );
+    },
+  );
 }
 
 class PartnerRouteArgs {
@@ -1383,8 +1185,16 @@ class PayoutRoute extends _i44.PageRouteInfo<PayoutRouteArgs> {
 
   static const String name = 'PayoutRoute';
 
-  static const _i44.PageInfo<PayoutRouteArgs> page =
-      _i44.PageInfo<PayoutRouteArgs>(name);
+  static _i44.PageInfo page = _i44.PageInfo(
+    name,
+    builder: (data) {
+      final args = data.argsAs<PayoutRouteArgs>();
+      return _i26.PayoutScreen(
+        key: args.key,
+        wallet: args.wallet,
+      );
+    },
+  );
 }
 
 class PayoutRouteArgs {
@@ -1414,7 +1224,12 @@ class ProductRequestRoute extends _i44.PageRouteInfo<void> {
 
   static const String name = 'ProductRequestRoute';
 
-  static const _i44.PageInfo<void> page = _i44.PageInfo<void>(name);
+  static _i44.PageInfo page = _i44.PageInfo(
+    name,
+    builder: (data) {
+      return const _i27.ProductRequestScreen();
+    },
+  );
 }
 
 /// generated route for
@@ -1435,8 +1250,16 @@ class ProductViewRoute extends _i44.PageRouteInfo<ProductViewRouteArgs> {
 
   static const String name = 'ProductViewRoute';
 
-  static const _i44.PageInfo<ProductViewRouteArgs> page =
-      _i44.PageInfo<ProductViewRouteArgs>(name);
+  static _i44.PageInfo page = _i44.PageInfo(
+    name,
+    builder: (data) {
+      final args = data.argsAs<ProductViewRouteArgs>();
+      return _i28.ProductViewScreen(
+        key: args.key,
+        id: args.id,
+      );
+    },
+  );
 }
 
 class ProductViewRouteArgs {
@@ -1466,7 +1289,12 @@ class RegisterRoute extends _i44.PageRouteInfo<void> {
 
   static const String name = 'RegisterRoute';
 
-  static const _i44.PageInfo<void> page = _i44.PageInfo<void>(name);
+  static _i44.PageInfo page = _i44.PageInfo(
+    name,
+    builder: (data) {
+      return const _i29.RegisterScreen();
+    },
+  );
 }
 
 /// generated route for
@@ -1480,7 +1308,12 @@ class ResetPasswordRoute extends _i44.PageRouteInfo<void> {
 
   static const String name = 'ResetPasswordRoute';
 
-  static const _i44.PageInfo<void> page = _i44.PageInfo<void>(name);
+  static _i44.PageInfo page = _i44.PageInfo(
+    name,
+    builder: (data) {
+      return const _i30.ResetPasswordScreen();
+    },
+  );
 }
 
 /// generated route for
@@ -1501,8 +1334,16 @@ class ResponseRoute extends _i44.PageRouteInfo<ResponseRouteArgs> {
 
   static const String name = 'ResponseRoute';
 
-  static const _i44.PageInfo<ResponseRouteArgs> page =
-      _i44.PageInfo<ResponseRouteArgs>(name);
+  static _i44.PageInfo page = _i44.PageInfo(
+    name,
+    builder: (data) {
+      final args = data.argsAs<ResponseRouteArgs>();
+      return _i31.ResponseScreen(
+        key: args.key,
+        survey: args.survey,
+      );
+    },
+  );
 }
 
 class ResponseRouteArgs {
@@ -1541,8 +1382,17 @@ class ReviewProductsRoute extends _i44.PageRouteInfo<ReviewProductsRouteArgs> {
 
   static const String name = 'ReviewProductsRoute';
 
-  static const _i44.PageInfo<ReviewProductsRouteArgs> page =
-      _i44.PageInfo<ReviewProductsRouteArgs>(name);
+  static _i44.PageInfo page = _i44.PageInfo(
+    name,
+    builder: (data) {
+      final args = data.argsAs<ReviewProductsRouteArgs>();
+      return _i32.ReviewProductsScreen(
+        key: args.key,
+        privilage: args.privilage,
+        order: args.order,
+      );
+    },
+  );
 }
 
 class ReviewProductsRouteArgs {
@@ -1575,7 +1425,12 @@ class SettingsRoutes extends _i44.PageRouteInfo<void> {
 
   static const String name = 'SettingsRoutes';
 
-  static const _i44.PageInfo<void> page = _i44.PageInfo<void>(name);
+  static _i44.PageInfo page = _i44.PageInfo(
+    name,
+    builder: (data) {
+      return const _i33.SettingsScreens();
+    },
+  );
 }
 
 /// generated route for
@@ -1589,7 +1444,12 @@ class SignInRoute extends _i44.PageRouteInfo<void> {
 
   static const String name = 'SignInRoute';
 
-  static const _i44.PageInfo<void> page = _i44.PageInfo<void>(name);
+  static _i44.PageInfo page = _i44.PageInfo(
+    name,
+    builder: (data) {
+      return const _i34.SignInScreen();
+    },
+  );
 }
 
 /// generated route for
@@ -1603,7 +1463,12 @@ class StartUpRoute extends _i44.PageRouteInfo<void> {
 
   static const String name = 'StartUpRoute';
 
-  static const _i44.PageInfo<void> page = _i44.PageInfo<void>(name);
+  static _i44.PageInfo page = _i44.PageInfo(
+    name,
+    builder: (data) {
+      return const _i35.StartUpScreen();
+    },
+  );
 }
 
 /// generated route for
@@ -1617,7 +1482,12 @@ class SupportRoute extends _i44.PageRouteInfo<void> {
 
   static const String name = 'SupportRoute';
 
-  static const _i44.PageInfo<void> page = _i44.PageInfo<void>(name);
+  static _i44.PageInfo page = _i44.PageInfo(
+    name,
+    builder: (data) {
+      return const _i36.SupportScreen();
+    },
+  );
 }
 
 /// generated route for
@@ -1631,7 +1501,12 @@ class SurveyRoute extends _i44.PageRouteInfo<void> {
 
   static const String name = 'SurveyRoute';
 
-  static const _i44.PageInfo<void> page = _i44.PageInfo<void>(name);
+  static _i44.PageInfo page = _i44.PageInfo(
+    name,
+    builder: (data) {
+      return const _i37.SurveyScreen();
+    },
+  );
 }
 
 /// generated route for
@@ -1645,7 +1520,12 @@ class TermsOfServiceRoute extends _i44.PageRouteInfo<void> {
 
   static const String name = 'TermsOfServiceRoute';
 
-  static const _i44.PageInfo<void> page = _i44.PageInfo<void>(name);
+  static _i44.PageInfo page = _i44.PageInfo(
+    name,
+    builder: (data) {
+      return const _i38.TermsOfServiceScreen();
+    },
+  );
 }
 
 /// generated route for
@@ -1666,8 +1546,16 @@ class TransferMemberRoute extends _i44.PageRouteInfo<TransferMemberRouteArgs> {
 
   static const String name = 'TransferMemberRoute';
 
-  static const _i44.PageInfo<TransferMemberRouteArgs> page =
-      _i44.PageInfo<TransferMemberRouteArgs>(name);
+  static _i44.PageInfo page = _i44.PageInfo(
+    name,
+    builder: (data) {
+      final args = data.argsAs<TransferMemberRouteArgs>();
+      return _i39.TransferMemberScreen(
+        key: args.key,
+        member: args.member,
+      );
+    },
+  );
 }
 
 class TransferMemberRouteArgs {
@@ -1704,8 +1592,16 @@ class TransferRoute extends _i44.PageRouteInfo<TransferRouteArgs> {
 
   static const String name = 'TransferRoute';
 
-  static const _i44.PageInfo<TransferRouteArgs> page =
-      _i44.PageInfo<TransferRouteArgs>(name);
+  static _i44.PageInfo page = _i44.PageInfo(
+    name,
+    builder: (data) {
+      final args = data.argsAs<TransferRouteArgs>();
+      return _i40.TransferScreen(
+        key: args.key,
+        wallet: args.wallet,
+      );
+    },
+  );
 }
 
 class TransferRouteArgs {
@@ -1742,8 +1638,16 @@ class VoucherViewRoute extends _i44.PageRouteInfo<VoucherViewRouteArgs> {
 
   static const String name = 'VoucherViewRoute';
 
-  static const _i44.PageInfo<VoucherViewRouteArgs> page =
-      _i44.PageInfo<VoucherViewRouteArgs>(name);
+  static _i44.PageInfo page = _i44.PageInfo(
+    name,
+    builder: (data) {
+      final args = data.argsAs<VoucherViewRouteArgs>();
+      return _i41.VoucherViewScreen(
+        key: args.key,
+        voucherId: args.voucherId,
+      );
+    },
+  );
 }
 
 class VoucherViewRouteArgs {
@@ -1780,8 +1684,16 @@ class WalletViewRoute extends _i44.PageRouteInfo<WalletViewRouteArgs> {
 
   static const String name = 'WalletViewRoute';
 
-  static const _i44.PageInfo<WalletViewRouteArgs> page =
-      _i44.PageInfo<WalletViewRouteArgs>(name);
+  static _i44.PageInfo page = _i44.PageInfo(
+    name,
+    builder: (data) {
+      final args = data.argsAs<WalletViewRouteArgs>();
+      return _i42.WalletViewScreen(
+        key: args.key,
+        id: args.id,
+      );
+    },
+  );
 }
 
 class WalletViewRouteArgs {
@@ -1820,8 +1732,17 @@ class YocoPaymentRoute extends _i44.PageRouteInfo<YocoPaymentRouteArgs> {
 
   static const String name = 'YocoPaymentRoute';
 
-  static const _i44.PageInfo<YocoPaymentRouteArgs> page =
-      _i44.PageInfo<YocoPaymentRouteArgs>(name);
+  static _i44.PageInfo page = _i44.PageInfo(
+    name,
+    builder: (data) {
+      final args = data.argsAs<YocoPaymentRouteArgs>();
+      return _i43.YocoPaymentScreen(
+        key: args.key,
+        reference: args.reference,
+        amount: args.amount,
+      );
+    },
+  );
 }
 
 class YocoPaymentRouteArgs {

@@ -92,8 +92,12 @@ mixin _$MerchantTransaction {
   String get sendboxUrl => throw _privateConstructorUsedError;
   String get secret => throw _privateConstructorUsedError;
 
+  /// Serializes this MerchantTransaction to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of MerchantTransaction
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $MerchantTransactionCopyWith<MerchantTransaction> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -153,6 +157,8 @@ class _$MerchantTransactionCopyWithImpl<$Res, $Val extends MerchantTransaction>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of MerchantTransaction
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -397,6 +403,8 @@ class __$$MerchantTransactionImplCopyWithImpl<$Res>
       $Res Function(_$MerchantTransactionImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of MerchantTransaction
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -816,7 +824,7 @@ class _$MerchantTransactionImpl implements _MerchantTransaction {
             (identical(other.secret, secret) || other.secret == secret));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hashAll([
         runtimeType,
@@ -858,7 +866,9 @@ class _$MerchantTransactionImpl implements _MerchantTransaction {
         secret
       ]);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of MerchantTransaction
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$MerchantTransactionImplCopyWith<_$MerchantTransactionImpl> get copyWith =>
@@ -1023,8 +1033,11 @@ abstract class _MerchantTransaction implements MerchantTransaction {
   String get sendboxUrl;
   @override
   String get secret;
+
+  /// Create a copy of MerchantTransaction
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$MerchantTransactionImplCopyWith<_$MerchantTransactionImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

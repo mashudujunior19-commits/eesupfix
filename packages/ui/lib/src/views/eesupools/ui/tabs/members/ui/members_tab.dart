@@ -32,6 +32,7 @@ class MembersTab extends StatelessWidget {
               ],
             ),
           ),
+          
           if (pool.role == EESUpoolMemberRole.admin)
             Container(
               height: 50,

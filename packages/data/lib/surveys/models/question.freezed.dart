@@ -76,8 +76,12 @@ mixin _$Question {
   @JsonKey(includeFromJson: false, includeToJson: false)
   String? get timePicked => throw _privateConstructorUsedError;
 
+  /// Serializes this Question to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of Question
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $QuestionCopyWith<Question> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -135,6 +139,8 @@ class _$QuestionCopyWithImpl<$Res, $Val extends Question>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of Question
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -333,6 +339,8 @@ class __$$QuestionImplCopyWithImpl<$Res>
       _$QuestionImpl _value, $Res Function(_$QuestionImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of Question
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -724,7 +732,7 @@ class _$QuestionImpl with DiagnosticableTreeMixin implements _Question {
                 other.timePicked == timePicked));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hashAll([
         runtimeType,
@@ -757,7 +765,9 @@ class _$QuestionImpl with DiagnosticableTreeMixin implements _Question {
         timePicked
       ]);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of Question
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$QuestionImplCopyWith<_$QuestionImpl> get copyWith =>
@@ -861,9 +871,9 @@ abstract class _Question implements Question {
   @override
   @JsonKey(name: 'media_file_type')
   String? get mediaFileType;
-  @override
 
   ///answering
+  @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   int? get sliderValue;
   @override
@@ -899,8 +909,11 @@ abstract class _Question implements Question {
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   String? get timePicked;
+
+  /// Create a copy of Question
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$QuestionImplCopyWith<_$QuestionImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

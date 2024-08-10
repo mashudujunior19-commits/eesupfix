@@ -41,12 +41,12 @@ class _ProductSubstitutionSettingsState
         ExpandedTile(
           theme: const ExpandedTileThemeData(
             headerColor: Colors.transparent,
-            headerRadius: 0,
+            //headerRadius: 0,
             headerPadding: EdgeInsets.only(right: 10),
             headerSplashColor: Colors.transparent,
             contentBackgroundColor: Colors.transparent,
             contentPadding: EdgeInsets.only(left: 15, right: 15),
-            contentRadius: 0,
+           // contentRadius: 0,
           ),
           controller: ExpandedTileController(isExpanded: false),
           title: Row(

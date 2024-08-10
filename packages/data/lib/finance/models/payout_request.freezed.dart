@@ -41,8 +41,12 @@ mixin _$PayoutRequest {
   @JsonKey(name: 'transaction_id', includeToJson: false)
   int? get transactionId => throw _privateConstructorUsedError;
 
+  /// Serializes this PayoutRequest to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of PayoutRequest
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $PayoutRequestCopyWith<PayoutRequest> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -78,6 +82,8 @@ class _$PayoutRequestCopyWithImpl<$Res, $Val extends PayoutRequest>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of PayoutRequest
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -173,6 +179,8 @@ class __$$PayoutRequestImplCopyWithImpl<$Res>
       _$PayoutRequestImpl _value, $Res Function(_$PayoutRequestImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of PayoutRequest
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -320,7 +328,7 @@ class _$PayoutRequestImpl implements _PayoutRequest {
                 other.transactionId == transactionId));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(
       runtimeType,
@@ -336,7 +344,9 @@ class _$PayoutRequestImpl implements _PayoutRequest {
       walletId,
       transactionId);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of PayoutRequest
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$PayoutRequestImplCopyWith<_$PayoutRequestImpl> get copyWith =>
@@ -401,8 +411,11 @@ abstract class _PayoutRequest implements PayoutRequest {
   @override
   @JsonKey(name: 'transaction_id', includeToJson: false)
   int? get transactionId;
+
+  /// Create a copy of PayoutRequest
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$PayoutRequestImplCopyWith<_$PayoutRequestImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

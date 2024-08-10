@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:data/auth/models/profile.dart';
 import 'package:data/auth/models/user_role.dart';
 import 'package:data/auth/repository/profile_repository.dart';
+import 'package:ui/src/core/extensions/context_alerts_ext.dart';
 import 'package:ui/src/views/auth/profile/bloc/edit_profile_bloc.dart';
 import 'package:ui/src/core/extensions/bg_image_deco_ext.dart';
 import 'package:ui/src/core/extensions/context_theme_ext.dart';
@@ -36,6 +37,13 @@ class EditProfileScreen extends StatelessWidget {
             if (state is ProfileSavingSuccess) {
               Navigator.of(context).pop();
             }
+
+            if (state is ProfileEditingError) {
+              context.snackBarError(state.error.message);
+              context.read<EditProfileBloc>().add(
+                    ProfileFormReset(state.profile),
+                  );
+            }
           },
           builder: (context, state) {
             return Scaffold(
@@ -50,6 +58,7 @@ class EditProfileScreen extends StatelessWidget {
                   width: context.width,
                   height: context.height,
                   child: () {
+                    print(state);
                     if (state is CurrentProfileForm) {
                       final profileForm = state.profile;
                       return ListView(

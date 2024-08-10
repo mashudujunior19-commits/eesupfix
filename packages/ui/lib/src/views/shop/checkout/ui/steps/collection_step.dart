@@ -3,6 +3,7 @@ import 'package:data/eesupools/models/eesupool_order.dart';
 import 'package:data/eesupools/repository/eesupool_repo.dart';
 import 'package:data/eesupreneur/data_source/eesupreneur_supabase_data_soruce.dart';
 import 'package:data/eesupreneur/models/eesupreneur.dart';
+import 'package:data/geolocation/models/address.dart';
 import 'package:data/partners/repository/eesupreneur_repository.dart';
 import 'package:ui/src/core/extensions/context_alerts_ext.dart';
 import 'package:ui/src/core/extensions/context_theme_ext.dart';
@@ -80,6 +81,7 @@ class CollectionStep extends StatelessWidget {
                               _OrdersTab(
                                 orders: orders,
                                 tabController: tabController,
+                                selectedAddress: selectedAddress,
                               ),
                             ],
                           ),
@@ -128,9 +130,11 @@ class _OrdersTab extends StatelessWidget {
   const _OrdersTab({
     required this.orders,
     required this.tabController,
+    required this.selectedAddress,
   });
   final List<EESUpoolOrder> orders;
   final TabController tabController;
+  final Address? selectedAddress;
 
   @override
   Widget build(BuildContext context) {
@@ -149,6 +153,7 @@ class _OrdersTab extends StatelessWidget {
                   return EESUpoolOrderCard(
                     order: order,
                     pool: null,
+                    selectedAddress: selectedAddress,
                     onTap: () {
                       context.read<CheckoutBloc>().add(
                             CollectionPointUpdated(null, order.id, null),

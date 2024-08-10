@@ -22,3 +22,9 @@ final class PhoneVerificationStarted extends EditProfileEvent {
   final Profile currentProfile;
   PhoneVerificationStarted(this.currentProfile);
 }
+
+
+final class ProfileFormReset extends EditProfileEvent {
+  final Profile currentProfile;
+  ProfileFormReset(this.currentProfile);
+}

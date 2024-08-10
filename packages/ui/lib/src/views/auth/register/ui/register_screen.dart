@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:data/auth/repository/auth_repository.dart';
 import 'package:loader_overlay/loader_overlay.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:ui/app_route.gr.dart';
 import 'package:ui/src/core/extensions/bottom_sheet_context_ext.dart';
 import 'package:ui/src/core/extensions/context_alerts_ext.dart';
 import 'package:ui/src/core/widgets/eesup_scaffold.dart';
@@ -15,6 +16,7 @@ import 'package:ui/src/views/auth/register/ui/select_account_type.dart';
 import 'package:ui/src/views/auth/register/ui/welcome_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:ui/src/views/auth/sign_in/bloc/auth_bloc.dart';
 import 'package:ui/src/views/auth/sign_in/ui/background_decoration.dart';
 
 @RoutePage()
@@ -41,109 +43,117 @@ class _RegisterScreenState extends State<RegisterScreen>
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => RegistrationBloc(context.read<AuthRepository>()),
-      child: BlocConsumer<RegistrationBloc, RegistrationFormState>(
-        builder: (context, state) {
-          return SafeArea(
-            child: EESUpScaffold(
-              body: BackgroundDecoration(
-                child: Scaffold(
-                  backgroundColor: Colors.transparent,
-                  appBar: AppBar(
-                    automaticallyImplyLeading: false,
+    return BlocListener<AuthBloc, AuthBlocState>(
+      listener: (context, state) {
+        if (state is Authenticated) {
+          context.router.pushAll([const OverviewRoute()]);
+        }
+      },
+      child: BlocProvider(
+        create: (context) => RegistrationBloc(context.read<AuthRepository>()),
+        child: BlocConsumer<RegistrationBloc, RegistrationFormState>(
+          builder: (context, state) {
+            return SafeArea(
+              child: EESUpScaffold(
+                body: BackgroundDecoration(
+                  child: Scaffold(
                     backgroundColor: Colors.transparent,
-                    //Hide Back button on the welcome tab
-                    leading: _tabController.index != 4
-                        ? BackButton(onPressed: () {
-                            if (_tabController.index == 0) {
-                              Navigator.of(context).pop();
-                            } else {
-                              _tabController
-                                  .animateTo(_tabController.index - 1);
-                            }
-                          })
-                        : null,
-                    title: _tabController.index != 4
-                        ? const Text('Sign up')
-                        : null,
-                  ),
-                  body: () {
-                    if (state is SignUpForm) {
-                      return TabBarView(
-                        physics: const NeverScrollableScrollPhysics(),
-                        controller: _tabController,
-                        children: [
-                          SelectAccountType(tabController: _tabController),
-                          if (state.isCorp)
-                            CorporateForm(
-                              tabController: _tabController,
+                    appBar: AppBar(
+                      automaticallyImplyLeading: false,
+                      backgroundColor: Colors.transparent,
+                      //Hide Back button on the welcome tab
+                      leading: _tabController.index != 4
+                          ? BackButton(onPressed: () {
+                              if (_tabController.index == 0) {
+                                Navigator.of(context).pop();
+                              } else {
+                                _tabController
+                                    .animateTo(_tabController.index - 1);
+                              }
+                            })
+                          : null,
+                      title: _tabController.index != 4
+                          ? const Text('Sign up')
+                          : null,
+                    ),
+                    body: () {
+                      ///print(state);
+                      if (state is SignUpForm) {
+                        return TabBarView(
+                          physics: const NeverScrollableScrollPhysics(),
+                          controller: _tabController,
+                          children: [
+                            SelectAccountType(tabController: _tabController),
+                            if (state.isCorp)
+                              CorporateForm(
+                                tabController: _tabController,
+                                form: state,
+                              )
+                            else
+                              IndividualForm(
+                                tabController: _tabController,
+                                form: state,
+                              ),
+                            CredentialsForm(
                               form: state,
-                            )
-                          else
-                            IndividualForm(
+                              tabController: _tabController,
+                            ),
+                            ReferralCodeForm(
                               tabController: _tabController,
                               form: state,
                             ),
-                          CredentialsForm(
-                            form: state,
-                            tabController: _tabController,
-                          ),
-                          ReferralCodeForm(
-                            tabController: _tabController,
-                            form: state,
-                          ),
-                          const WelcomeScreen(),
-                        ],
-                      );
-                    } else {
-                      return Container();
-                    }
-                  }(),
+                            const WelcomeScreen(),
+                          ],
+                        );
+                      } else {
+                        return Container();
+                      }
+                    }(),
+                  ),
                 ),
               ),
-            ),
-          );
-        },
-        listener: (BuildContext context, RegistrationFormState state) {
-          if (state is SignUpLoading) {
-            context.loaderOverlay.show();
-          } else {
-            context.loaderOverlay.hide();
-          }
+            );
+          },
+          listener: (BuildContext context, RegistrationFormState state) {
+            if (state is SignUpLoading) {
+              context.loaderOverlay.show();
+            } else {
+              context.loaderOverlay.hide();
+            }
 
-          if (state is FailedToSignUp) {
-            context.snackBarError(state.err.message);
-            context.read<RegistrationBloc>().add(
-                  SignUpRestarted(state.oldForm),
-                );
-          }
+            if (state is FailedToSignUp) {
+              context.snackBarError(state.err.message);
+              context.read<RegistrationBloc>().add(
+                    SignUpRestarted(state.oldForm),
+                  );
+            }
 
-          if (state is AwaitingOtpAuth) {
-            context
-                .showBottomSheetDialog(
-              child: OtpAuthDialog(
-                type: OtpType.signup,
-                email: state.oldForm.email,
-                phone: state.oldForm.phone,
-                isSignUp: true,
-              ),
-            )
-                .then((value) {
-              ///THIS RETURNS TRUE IF OTP AUTH IS SUCCESS
-              if (value == true) {
-                _tabController.animateTo(_tabController.index++);
-              } else {
-                ///ELSE IT IS RESTARTED
-                context.snackBarError('Otp verification failed');
+            if (state is AwaitingOtpAuth) {
+              context
+                  .showBottomSheetDialog(
+                child: OtpAuthDialog(
+                  type: OtpType.signup,
+                  email: state.oldForm.email,
+                  phone: state.oldForm.phone,
+                  isSignUp: true,
+                ),
+              )
+                  .then((value) {
+                ///THIS RETURNS TRUE IF OTP AUTH IS SUCCESS
+                if (value == true) {
+                  _tabController.animateTo(_tabController.index++);
+                } else {
+                  ///ELSE IT IS RESTARTED
+                  context.snackBarError('Otp verification failed');
 
-                context
-                    .read<RegistrationBloc>()
-                    .add(SignUpRestarted(state.oldForm));
-              }
-            });
-          }
-        },
+                  context
+                      .read<RegistrationBloc>()
+                      .add(SignUpRestarted(state.oldForm));
+                }
+              });
+            }
+          },
+        ),
       ),
     );
   }

@@ -8,8 +8,9 @@ final class EditProfileLoading extends EditProfileState {}
 final class ProfileSavingSuccess extends EditProfileState {}
 
 final class ProfileEditingError extends EditProfileState {
+  final Profile profile;
   final EESUpException error;
-  ProfileEditingError(this.error);
+  ProfileEditingError(this.profile,this.error);
 }
 
 final class CurrentProfileForm extends EditProfileState {

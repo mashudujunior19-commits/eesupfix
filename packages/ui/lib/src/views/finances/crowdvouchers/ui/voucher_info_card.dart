@@ -38,7 +38,7 @@ class VoucherInfoCard extends StatelessWidget {
           ExpandedTile(
             theme: const ExpandedTileThemeData(
               headerColor: Colors.transparent,
-              headerRadius: 0,
+             // headerRadius: 0,
               headerPadding: EdgeInsets.only(left: 5, right: 5),
               headerSplashColor: Colors.transparent,
               contentBackgroundColor: Colors.transparent,
@@ -48,7 +48,7 @@ class VoucherInfoCard extends StatelessWidget {
                 top: 10,
                 bottom: 10,
               ),
-              contentRadius: 0,
+             // contentRadius: 0,
             ),
             controller: ExpandedTileController(isExpanded: false),
             title: Column(

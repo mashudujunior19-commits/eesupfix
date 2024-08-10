@@ -177,12 +177,12 @@ class _OrderCardX extends StatelessWidget {
           child: ExpandedTile(
             theme: const ExpandedTileThemeData(
               headerColor: Colors.transparent,
-              headerRadius: 0,
+             // headerRadius: 0,
               headerPadding: EdgeInsets.all(0),
               headerSplashColor: Colors.transparent,
               contentBackgroundColor: Colors.transparent,
               contentPadding: EdgeInsets.all(0),
-              contentRadius: 0,
+            //  contentRadius: 0,
             ),
             controller: ExpandedTileController(isExpanded: true),
             title: Row(

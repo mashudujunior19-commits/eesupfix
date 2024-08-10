@@ -18,9 +18,14 @@ import 'package:data/utils/eesup_exception.dart';
 
 final shorebirdCodePush = ShorebirdCodePush();
 
-class MenuTab extends StatelessWidget {
+class MenuTab extends StatefulWidget {
   const MenuTab({super.key});
 
+  @override
+  State<MenuTab> createState() => _MenuTabState();
+}
+
+class _MenuTabState extends State<MenuTab> {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<ProfileBloc, ProfileState>(
@@ -28,6 +33,7 @@ class MenuTab extends StatelessWidget {
         ..add(ProfileFetched()),
       builder: (context, state) {
         if (state is ProfileLoaded) {
+          print(state);
           final profile = state.profile;
           return Column(
             children: [
@@ -36,6 +42,7 @@ class MenuTab extends StatelessWidget {
                   profile: profile,
                   onPop: () {
                     context.read<ProfileBloc>().add(ProfileFetched());
+                    setState(() {});
                   },
                 );
               }),

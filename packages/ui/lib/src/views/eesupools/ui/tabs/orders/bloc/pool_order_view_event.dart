@@ -12,3 +12,8 @@ final class PoolOrderIsReceived extends PoolOrderViewEvent {
   final DateTime now;
   PoolOrderIsReceived(this.now);
 }
+
+final class PoolOrderUpdated extends PoolOrderViewEvent {
+  final EESUpoolOrder order;
+  PoolOrderUpdated(this.order);
+}

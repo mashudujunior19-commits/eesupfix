@@ -27,6 +27,6 @@ scripts:
     exec: dart fix --apply
     description: Fix
 
-  dependencies_upgrade:
+  upgrade:
     exec: flutter pub upgrade --major-versions
     description: Run pub upgrade

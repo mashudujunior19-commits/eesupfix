@@ -1,0 +1,21 @@
+name: infra
+description: "A new Flutter package project."
+version: 0.0.1
+
+environment:
+  sdk: ^3.5.0
+  flutter: ">=1.17.0"
+
+dependencies:
+  email_validator: ^3.0.0
+  flutter:
+    sdk: flutter
+  get_it: ^7.7.0
+  supabase_flutter: ^2.5.11
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^4.0.0
+
+flutter:

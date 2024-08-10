@@ -33,13 +33,13 @@ class NotificationTile extends StatelessWidget {
       child: ExpandedTile(
         theme: const ExpandedTileThemeData(
           headerColor: Colors.white,
-          headerRadius: 0.0,
+       //   headerRadius: 0.0,
           headerPadding:
               EdgeInsets.only(left: 0, right: 5, bottom: 5.0, top: 5),
           headerSplashColor: Colors.white,
           contentBackgroundColor: Colors.white,
           contentPadding: EdgeInsets.zero,
-          contentRadius: 12.0,
+          //contentRadius: 12.0,
         ),
         trailing: const Icon(IconlyLight.arrowRight2, size: 17),
         controller: _controller,

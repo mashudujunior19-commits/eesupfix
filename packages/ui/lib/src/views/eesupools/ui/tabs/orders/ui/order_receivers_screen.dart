@@ -17,8 +17,9 @@ import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:data/utils/eesup_exception.dart';
 
 @RoutePage()
+// ignore: must_be_immutable
 class OrderReceiverScreen extends StatelessWidget {
-  const OrderReceiverScreen({
+  OrderReceiverScreen({
     super.key,
     required this.order,
     required this.pool,
@@ -27,6 +28,8 @@ class OrderReceiverScreen extends StatelessWidget {
   final EESUpool pool;
   final EESUpoolOrder order;
   final List<String> ids;
+
+  List<String> updatedIds = [];
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +42,11 @@ class OrderReceiverScreen extends StatelessWidget {
           return SafeArea(
             child: Scaffold(
               appBar: AppBar(
-                leading: const BackButton(),
+                leading: BackButton(
+                  onPressed: () {
+                    Navigator.of(context).pop(updatedIds);
+                  },
+                ),
                 title: const Text('ORDER RECEIVERS'),
                 actions: [
                   if (order.deliveredAt == null)
@@ -71,6 +78,7 @@ class OrderReceiverScreen extends StatelessWidget {
                       return const FullScreenLoadingShimmer();
                     } else if (state is OrderReceiversLoaded) {
                       final members = state.receivers;
+                      updatedIds = members.map((e) => e.memberId).toList();
                       return Column(
                         children: [
                           if (order.deliveredAt != null)
@@ -96,8 +104,12 @@ class OrderReceiverScreen extends StatelessWidget {
                                           onTap: () {
                                             context
                                                 .read<OrderReceiversBloc>()
-                                                .add(OrderReceiverRemoved(
-                                                    order.id, members[index]));
+                                                .add(
+                                                  OrderReceiverRemoved(
+                                                    order.id,
+                                                    members[index],
+                                                  ),
+                                                );
                                           },
                                           child: const Icon(
                                             IconlyLight.delete,

@@ -122,8 +122,8 @@ class _EESUpoolSearchScreenState extends State<EESUpoolSearchScreen> {
                             )
                           : repo.searchPoolsByType(
                               _controller.text,
-                              widget.type,
-                              20,
+                              EESUpoolType.kasi,
+                              50,
                             ),
                       builder: (context, snap) {
                         if (snap.hasData) {

@@ -25,7 +25,8 @@ class EditProfileBloc extends Bloc<EditProfileEvent, EditProfileState> {
 
     on<ProfileSaved>((event, emit) async {
       if (state is CurrentProfileForm) {
-        final profile = (state as CurrentProfileForm).profile;
+        final current = state as CurrentProfileForm;
+        final profile = current.profile;
 
         emit(EditProfileLoading());
         final results = await _repository.updateProfile(
@@ -34,13 +35,14 @@ class EditProfileBloc extends Bloc<EditProfileEvent, EditProfileState> {
         );
 
         results.fold((left) {
-          emit(ProfileEditingError(left));
+          emit(ProfileEditingError(profile, left));
         }, (right) {
           if (right) {
             emit(ProfileSavingSuccess());
           } else {
             emit(
               ProfileEditingError(
+                profile,
                 EESUpException(
                   message: 'Something went wrong, please try again later',
                 ),
@@ -49,6 +51,9 @@ class EditProfileBloc extends Bloc<EditProfileEvent, EditProfileState> {
           }
         });
       }
+    });
+    on<ProfileFormReset>((event, emit) {
+      emit(CurrentProfileForm(event.currentProfile));
     });
   }
 }

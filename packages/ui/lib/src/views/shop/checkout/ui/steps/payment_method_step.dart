@@ -204,12 +204,12 @@ class PaymentMethodStep extends StatelessWidget {
                               child: ExpandedTile(
                                 theme: const ExpandedTileThemeData(
                                   headerColor: Colors.transparent,
-                                  headerRadius: 0,
+                                 // headerRadius: 0,
                                   headerPadding: EdgeInsets.only(right: 10),
                                   headerSplashColor: Colors.transparent,
                                   contentBackgroundColor: Colors.transparent,
                                   contentPadding: EdgeInsets.all(0),
-                                  contentRadius: 0,
+                                  //contentRadius: 0,
                                 ),
                                 controller: ExpandedTileController(
                                   isExpanded: false,

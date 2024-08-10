@@ -8,8 +8,9 @@ import 'package:ui/src/core/extensions/context_theme_ext.dart';
 import 'package:ui/src/core/extensions/sizedbox_ext.dart';
 import 'package:ui/src/core/utils/date_formatter.dart';
 import 'package:ui/src/views/eesupools/ui/tabs/orders/bloc/pool_order_view_bloc.dart';
+import 'package:ui/src/views/eesupools/ui/tabs/orders/ui/create_order_dialog.dart';
+import 'package:ui/src/views/eesupools/ui/tabs/orders/ui/delivary_secret.dart';
 import 'package:ui/src/views/geolocation/ui/widgets/address_card.dart';
-import 'package:ui/src/views/orders/tracking/ui/confirm_order_collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
@@ -55,7 +56,7 @@ class OrderDetailsTab extends StatelessWidget {
                     padding: const EdgeInsets.only(
                         left: 5, right: 5, top: 2, bottom: 2),
                     decoration: BoxDecoration(
-                        color: order.closesAt.isBefore(DateTime.now())
+                        color: order.closesAt.isAfter(DateTime.now())
                             ? Colors.redAccent.withOpacity(.5)
                             : context.colorScheme.primary,
                         borderRadius: BorderRadius.circular(5)),
@@ -63,7 +64,7 @@ class OrderDetailsTab extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          order.closesAt.isBefore(DateTime.now())
+                          order.closesAt.isAfter(DateTime.now())
                               ? 'Closed'
                               : 'Open',
                           style: context.textTheme.labelMedium?.copyWith(
@@ -81,7 +82,7 @@ class OrderDetailsTab extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    order.closesAt.isBefore(DateTime.now())
+                    order.closesAt.isAfter(DateTime.now())
                         ? 'Closed on'
                         : 'Closes on',
                     style: context.textTheme.bodySmall?.copyWith(
@@ -171,7 +172,8 @@ class OrderDetailsTab extends StatelessWidget {
                     ),
                   ],
                 ),
-              if (pool.role == EESUpoolMemberRole.admin)
+              if (pool.role == EESUpoolMemberRole.admin &&
+                  order.secretPin != null)
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -181,49 +183,119 @@ class OrderDetailsTab extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          'Confirm delivery: ',
+                          'Delivery secret pin: ',
                           style: context.textTheme.labelMedium?.copyWith(
                             fontSize: 13,
                           ),
                         ),
-                        Transform.scale(
-                          scale: .7,
-                          child: Switch(
-                            value: order.deliveredAt != null,
-                            onChanged: (value) {
-                              if (order.deliveredAt == null) {
-                                context
-                                    .showBottomSheetDialog(
-                                        child: ConfirmOrderCollectionDialog(
-                                            pin: order.secretPin.toString(),
-                                            isEESUpoolOrder: true))
-                                    .then((value) {
-                                  if (value == true) {
-                                    context.read<PoolOrderViewBloc>().add(
-                                        PoolOrderIsReceived(DateTime.now()));
-                                  }
-                                });
-                              }
-                            },
-                          ),
-                        )
+                        DelivarySecret(secret: order.secretPin.toString())
+                        // Transform.scale(
+                        //   scale: .7,
+                        //   child: Switch(
+                        //     value: order.deliveredAt != null,
+                        //     onChanged: (value) {
+                        //       if (order.deliveredAt == null) {
+                        //         context
+                        //             .showBottomSheetDialog(
+                        //                 child: ConfirmOrderCollectionDialog(
+                        //                     pin: order.secretPin.toString(),
+                        //                     isEESUpoolOrder: true))
+                        //             .then((value) {
+                        //           if (value == true) {
+                        //             context.read<PoolOrderViewBloc>().add(
+                        //                 PoolOrderIsReceived(DateTime.now()));
+                        //           }
+                        //         });
+                        //       }
+                        //     },
+                        //   ),
+                        // )
                       ],
                     ),
                   ],
                 ),
+              if (pool.role == EESUpoolMemberRole.admin &&
+                  order.closesAt.isBefore(DateTime.now()))
+                Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Divider(thickness: .5),
+                    TextButton(
+                      onPressed: () {
+                        context
+                            .showBottomSheetDialog(
+                          child:
+                              CreatePoolOrderDialog(pool: pool, order: order),
+                        )
+                            .then((value) {
+                          if (value is EESUpoolOrder) {
+                            context.read<PoolOrderViewBloc>().add(
+                                  PoolOrderUpdated(value),
+                                );
+                          }
+                        });
+                      },
+                      child: const Text('Edit order'),
+                    ),
+                  ],
+                ),
+              if (pool.role == EESUpoolMemberRole.admin &&
+                  order.closesAt.isBefore(DateTime.now()))
+                Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Divider(thickness: .5),
+                    TextButton(
+                      onPressed: () {
+                        context.read<PoolOrderViewBloc>().add(
+                              PoolOrderUpdated(
+                                order.copyWith(
+                                  closesAt: DateTime.now().subtract(
+                                    const Duration(minutes: 1),
+                                  ),
+                                  scheduleFor: DateTime.now().add(
+                                    const Duration(days: 3),
+                                  ),
+                                ),
+                              ),
+                            );
+                      },
+                      child: const Text(
+                        'Close order',
+                        style: TextStyle(color: Colors.red),
+                      ),
+                    ),
+                  ],
+                )
             ],
           ),
         ),
-        if (order.receiversId != null)
+        if (pool.role == EESUpoolMemberRole.admin)
           InkWell(
             onTap: () {
-              context.router.push(
-                OrderReceiverRoute(
-                  order: order,
-                  ids: order.receiversId!,
-                  pool: pool,
-                ),
-              );
+              try {
+                context.router
+                    .push(
+                  OrderReceiverRoute(
+                    order: order,
+                    ids: order.receiversId ?? [],
+                    pool: pool,
+                  ),
+                )
+                    .then((value) {
+                  if (value is List<String>) {
+                    context.read<PoolOrderViewBloc>().add(
+                          PoolOrderUpdated(
+                            order.copyWith(receiversId: value),
+                          ),
+                        );
+                  }
+                });
+              } catch (e) {
+                print(e);
+              }
             },
             child: Container(
               margin: const EdgeInsets.only(left: 20, right: 20, top: 20),

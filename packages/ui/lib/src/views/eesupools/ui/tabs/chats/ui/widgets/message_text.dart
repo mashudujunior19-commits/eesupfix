@@ -4,7 +4,9 @@ import 'package:encrypt/encrypt.dart' as encrypt;
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_highlighted_text/flutter_highlighted_text.dart';
+import 'package:ui/src/core/extensions/bottom_sheet_context_ext.dart';
 import 'package:ui/src/core/extensions/context_theme_ext.dart';
+import 'package:ui/src/views/eesupools/ui/tabs/chats/ui/chat_hash_tag_view.dart';
 
 class MessageText extends StatelessWidget {
   const MessageText({
@@ -50,6 +52,13 @@ class MessageText extends StatelessWidget {
           decoration: TextDecoration.underline,
           fontSize: 16,
         ),
+        onTap: (p) {
+          FocusScope.of(context).unfocus();
+          context.showDialog(
+            margin: EdgeInsets.only(top: context.height * .1),
+            child: ChatHashTagView(pool: pool, tag: p),
+          );
+        },
       ),
     );
   }

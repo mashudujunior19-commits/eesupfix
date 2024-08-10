@@ -35,8 +35,12 @@ mixin _$VoucherLedger {
   @JsonKey(name: 'closing_balance')
   double get closingBalance => throw _privateConstructorUsedError;
 
+  /// Serializes this VoucherLedger to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of VoucherLedger
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $VoucherLedgerCopyWith<VoucherLedger> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -67,6 +71,8 @@ class _$VoucherLedgerCopyWithImpl<$Res, $Val extends VoucherLedger>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of VoucherLedger
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -137,6 +143,8 @@ class __$$VoucherLedgerImplCopyWithImpl<$Res>
       _$VoucherLedgerImpl _value, $Res Function(_$VoucherLedgerImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of VoucherLedger
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -243,12 +251,14 @@ class _$VoucherLedgerImpl implements _VoucherLedger {
                 other.closingBalance == closingBalance));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, voucherId, transactionId,
       createdAt, openingBalance, payout, profitShare, closingBalance);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of VoucherLedger
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$VoucherLedgerImplCopyWith<_$VoucherLedgerImpl> get copyWith =>
@@ -297,8 +307,11 @@ abstract class _VoucherLedger implements VoucherLedger {
   @override
   @JsonKey(name: 'closing_balance')
   double get closingBalance;
+
+  /// Create a copy of VoucherLedger
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$VoucherLedgerImplCopyWith<_$VoucherLedgerImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

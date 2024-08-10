@@ -1,6 +1,0 @@
-# melos_managed_dependency_overrides: data,instapay_flutter
-dependency_overrides:
-  data:
-    path: ../data
-  instapay_flutter:
-    path: ../instapay

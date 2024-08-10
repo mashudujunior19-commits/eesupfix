@@ -1,7 +1,10 @@
 import 'package:data/eesupools/models/eesupool.dart';
 import 'package:data/eesupools/models/eesupool_member.dart';
+import 'package:data/eesupools/repository/eesupool_members_repo.dart';
 import 'package:data/eesupools/repository/eesupool_repo.dart';
+import 'package:loader_overlay/loader_overlay.dart';
 import 'package:ui/src/core/extensions/bottom_sheet_context_ext.dart';
+import 'package:ui/src/core/extensions/context_alerts_ext.dart';
 import 'package:ui/src/core/extensions/context_theme_ext.dart';
 import 'package:ui/src/core/extensions/slide_in_animation_ext.dart';
 import 'package:ui/src/core/widgets/fullscreen_error_widget.dart';
@@ -30,20 +33,88 @@ class MembersListView extends StatelessWidget {
           } else if (state is MembersLoaded) {
             return Scaffold(
               backgroundColor: Colors.transparent,
-              floatingActionButton: pool.role == EESUpoolMemberRole.admin
-                  ? FloatingActionButton.small(
-                      backgroundColor: context.colorScheme.primary,
-                      child: const Icon(Icons.add, color: Colors.white),
-                      onPressed: () {
-                        context.showBottomSheetDialog(
-                          child: InviteMembersDialog(
-                            poolId: pool.eesupoolId!,
-                            isNewPool: false,
+              floatingActionButton: PopupMenuButton(
+                color: context.colorScheme.primary,
+                position: PopupMenuPosition.under,
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(5)),
+                child: Container(
+                  width: 50,
+                  height: 50,
+                  decoration: BoxDecoration(
+                    color: context.colorScheme.primary,
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: const Icon(
+                    Icons.add,
+                    color: Colors.white,
+                  ),
+                ),
+                itemBuilder: (context) {
+                  return [
+                    if (pool.role == EESUpoolMemberRole.admin)
+                      PopupMenuItem(
+                        child: const Text(
+                          'Invite members',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.normal,
                           ),
-                        );
+                        ),
+                        onTap: () {
+                          context.showBottomSheetDialog(
+                            child: InviteMembersDialog(
+                              poolId: pool.eesupoolId!,
+                              isNewPool: false,
+                            ),
+                          );
+                        },
+                      ),
+                    PopupMenuItem(
+                      child: const Text(
+                        'Leave Kasipool',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.normal,
+                        ),
+                      ),
+                      onTap: () async {
+                        // if (pool.role == EESUpoolMemberRole.admin) {
+                        //   context.snackBarError(
+                        //     'You need to remove or reassign your admin role to another member before you can leave this pool',
+                        //   );
+                        //   return;
+                        // }
+                        context.loaderOverlay.show();
+                        final res = await context
+                            .read<EESUpoolRepository>()
+                            .deleteEESUpoolMember(
+                              pool.eesupoolId!,
+                              pool.memberId!,
+                            );
+                        context.loaderOverlay.hide();
+                        print(res);
+                        res.fold((l) {
+                          context.snackBarError(
+                            'Failed to leave.',
+                          );
+                        }, (r) {
+                          if (r) {
+                            context.snackBarSuccess(
+                              'You have successfully left',
+                            );
+                            Navigator.of(context).pop();
+                          } else {
+                            context.snackBarError(
+                              'Failed to leave',
+                            );
+                          }
+                        });
                       },
-                    )
-                  : null,
+                    ),
+                  ];
+                },
+              ),
               body: ListView.builder(
                 itemCount: state.members.length,
                 itemBuilder: (context, index) {

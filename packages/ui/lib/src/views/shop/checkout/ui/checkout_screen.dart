@@ -1,9 +1,11 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:data/orders/models/order_product.dart';
 import 'package:data/orders/repository/order_repository.dart';
+import 'package:ui/app_route.gr.dart';
 import 'package:ui/src/core/extensions/bg_image_deco_ext.dart';
 import 'package:ui/src/core/extensions/context_theme_ext.dart';
 import 'package:ui/src/core/extensions/sizedbox_ext.dart';
+import 'package:ui/src/views/shop/cart/bloc/cart_bloc.dart';
 import 'package:ui/src/views/shop/checkout/bloc/checkout_bloc.dart';
 import 'package:ui/src/views/shop/checkout/ui/steps/address_selection_step.dart';
 import 'package:ui/src/views/shop/checkout/ui/steps/collection_step.dart';
@@ -58,7 +60,8 @@ class _CheckoutScreenState extends State<CheckoutScreen>
                 if (index > 0 && index != 4) {
                   _tabController.animateTo(index - 1);
                 } else if (index == 4) {
-                  Navigator.pop(context, true);
+                  context.read<CartBloc>().add(CartCleared());
+                  context.router.pushAll([const OverviewRoute()]);
                 } else {
                   Navigator.pop(context);
                 }

@@ -73,25 +73,29 @@ class _CreatePoolOrderDialogState extends State<CreatePoolOrderDialog> {
         actions: [
           TextButton(
             onPressed: () async {
-              context.loaderOverlay.show();
-              if (order != null) {
-                final results =
-                    await context.read<EESUpoolRepository>().createOrder(
-                          order!,
-                        );
-                context.loaderOverlay.hide();
-                results.fold((left) {
-                  context.snackBarError(left.message);
-                }, (right) {
-                  if (right) {
-                    context.snackBarSuccess('Order created');
-                    Navigator.of(context).pop(true);
-                  } else {
-                    context.snackBarError(
-                      'The order could not be created, Please try again.',
-                    );
-                  }
-                });
+              if (widget.order == null) {
+                context.loaderOverlay.show();
+                if (order != null) {
+                  final results =
+                      await context.read<EESUpoolRepository>().createOrder(
+                            order!,
+                          );
+                  context.loaderOverlay.hide();
+                  results.fold((left) {
+                    context.snackBarError(left.message);
+                  }, (right) {
+                    if (right) {
+                      context.snackBarSuccess('Order created');
+                      Navigator.of(context).pop(true);
+                    } else {
+                      context.snackBarError(
+                        'The order could not be created, Please try again.',
+                      );
+                    }
+                  });
+                }
+              } else {
+                Navigator.of(context).pop(order);
               }
             },
             child: const Text('Save'),
@@ -199,71 +203,73 @@ class _CreatePoolOrderDialogState extends State<CreatePoolOrderDialog> {
               margin: const EdgeInsets.all(0),
               allowDelete: false,
             ),
-          Row(
-            children: [
-              TextButton(
-                onPressed: () {
-                  context
-                      .showBottomSheetDialog(
-                          child: SelectMemberDialog(pool: widget.pool))
-                      .then((value) {
-                    if (value != null) {
-                      if (value is EESUpoolMember) {
-                        List<EESUpoolMember> current = [
-                          ...order?.receivers ?? []
-                        ];
-                        if (!current.contains(value)) {
-                          current.add(value);
-                          setState(() {
-                            order = order!.copyWith(
-                              receivers: current,
-                            );
-                          });
+          if (widget.order == null)
+            Row(
+              children: [
+                TextButton(
+                  onPressed: () {
+                    context
+                        .showBottomSheetDialog(
+                            child: SelectMemberDialog(pool: widget.pool))
+                        .then((value) {
+                      if (value != null) {
+                        if (value is EESUpoolMember) {
+                          List<EESUpoolMember> current = [
+                            ...order?.receivers ?? []
+                          ];
+                          if (!current.contains(value)) {
+                            current.add(value);
+                            setState(() {
+                              order = order!.copyWith(
+                                receivers: current,
+                              );
+                            });
+                          }
                         }
                       }
-                    }
-                  });
-                },
-                child: Row(
-                  children: [
-                    const Icon(IconlyLight.profile, size: 19),
-                    5.sW,
-                    const Text('Add receivers'),
-                  ],
-                ),
-              ),
-            ],
-          ),
-          for (var member in order?.receivers ?? [])
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                MemberCard(
-                  member: member,
-                  margin: const EdgeInsets.only(bottom: 10),
-                  pool: widget.pool,
-                  trailing: InkWell(
-                    onTap: () {
-                      if (order != null) {
-                        List<EESUpoolMember> members = [
-                          ...order?.receivers ?? []
-                        ];
-                        setState(() {
-                          members.remove(member);
-                          order = order?.copyWith(receivers: members);
-                        });
-                      }
-                    },
-                    child: const Icon(
-                      IconlyLight.delete,
-                      size: 20,
-                      color: Colors.red,
-                    ),
+                    });
+                  },
+                  child: Row(
+                    children: [
+                      const Icon(IconlyLight.profile, size: 19),
+                      5.sW,
+                      const Text('Add receivers'),
+                    ],
                   ),
                 ),
               ],
             ),
+          if (widget.order == null)
+            for (var member in order?.receivers ?? [])
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  MemberCard(
+                    member: member,
+                    margin: const EdgeInsets.only(bottom: 10),
+                    pool: widget.pool,
+                    trailing: InkWell(
+                      onTap: () {
+                        if (order != null) {
+                          List<EESUpoolMember> members = [
+                            ...order?.receivers ?? []
+                          ];
+                          setState(() {
+                            members.remove(member);
+                            order = order?.copyWith(receivers: members);
+                          });
+                        }
+                      },
+                      child: const Icon(
+                        IconlyLight.delete,
+                        size: 20,
+                        color: Colors.red,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
         ],
       ),
     );

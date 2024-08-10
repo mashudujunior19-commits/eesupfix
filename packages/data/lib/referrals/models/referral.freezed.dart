@@ -33,8 +33,12 @@ mixin _$Referral {
   @JsonKey(name: 'is_completed')
   bool get isCompleted => throw _privateConstructorUsedError;
 
+  /// Serializes this Referral to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of Referral
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $ReferralCopyWith<Referral> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -63,6 +67,8 @@ class _$ReferralCopyWithImpl<$Res, $Val extends Referral>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of Referral
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -127,6 +133,8 @@ class __$$ReferralImplCopyWithImpl<$Res>
       _$ReferralImpl _value, $Res Function(_$ReferralImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of Referral
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -223,12 +231,14 @@ class _$ReferralImpl implements _Referral {
                 other.isCompleted == isCompleted));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, referrerUserId, refereedUserId,
       refereedFullName, createdAt, transactionId, isCompleted);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of Referral
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$ReferralImplCopyWith<_$ReferralImpl> get copyWith =>
@@ -274,8 +284,11 @@ abstract class _Referral implements Referral {
   @override
   @JsonKey(name: 'is_completed')
   bool get isCompleted;
+
+  /// Create a copy of Referral
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$ReferralImplCopyWith<_$ReferralImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
