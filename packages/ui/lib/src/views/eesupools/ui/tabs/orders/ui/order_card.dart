@@ -29,9 +29,7 @@ class EESUpoolOrderCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final textTheme = theme.textTheme;
-    print(order.closesAt);
-    print(DateTime.now());
-    print(order.closesAt.isAfter(DateTime.now()));
+
     return InkWell(
       onTap: onTap ??
           () {
@@ -90,7 +88,7 @@ class EESUpoolOrderCard extends StatelessWidget {
                         padding: const EdgeInsets.only(
                             left: 5, right: 5, top: 2, bottom: 2),
                         decoration: BoxDecoration(
-                            color: order.closesAt.isAfter(DateTime.now())
+                            color: order.closesAt.isBefore(DateTime.now())
                                 ? Colors.redAccent.withOpacity(.5)
                                 : context.colorScheme.primary,
                             borderRadius: BorderRadius.circular(5)),
@@ -98,7 +96,7 @@ class EESUpoolOrderCard extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              order.closesAt.isBefore(DateTime.now()) == false
+                              order.closesAt.isBefore(DateTime.now())
                                   ? 'Closed'
                                   : 'Open',
                               style: textTheme.labelMedium?.copyWith(
@@ -116,7 +114,7 @@ class EESUpoolOrderCard extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        order.closesAt.isAfter(DateTime.now())
+                        order.closesAt.isBefore(DateTime.now())
                             ? 'Closed on'
                             : 'Closes on',
                         style: textTheme.bodySmall?.copyWith(

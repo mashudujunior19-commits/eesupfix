@@ -88,53 +88,55 @@ class _OrdersHistory extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        if (orders.isNotEmpty)
-          Padding(
-            padding: const EdgeInsets.only(left: 16, right: 16),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                const Text('History'),
-                Expanded(
-                  child: Container(
-                    margin: const EdgeInsets.only(left: 5),
-                    //  width: context.width * .75,
-                    height: .3,
-                    color: Colors.grey,
+    return Expanded(
+      child: Column(
+        children: [
+          if (orders.isNotEmpty)
+            Padding(
+              padding: const EdgeInsets.only(left: 16, right: 16),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const Text('History'),
+                  Expanded(
+                    child: Container(
+                      margin: const EdgeInsets.only(left: 5),
+                      //  width: context.width * .75,
+                      height: .3,
+                      color: Colors.grey,
+                    ),
                   ),
-                ),
-              ],
-            ),
-          ),
-        if (orders.isEmpty || orders.length == 1)
-          Padding(
-            padding: const EdgeInsets.only(top: 250),
-            child: FullScreenError(
-              isError: false,
-              exception: EESUpException(
-                message: 'There are no orders yet.',
+                ],
               ),
             ),
-          )
-        else
-          Expanded(
-            child: ListView.builder(
-              itemBuilder: (context, index) {
-                final o = orders[index];
-                if (o.id == openOrder?.id) {
-                  return 0.sW;
-                }
-                return EESUpoolOrderCard(
-                  order: o,
-                  pool: pool,
-                );
-              },
-              itemCount: orders.length,
+          if (orders.isEmpty || orders.length == 1)
+            Padding(
+              padding: const EdgeInsets.only(top: 250),
+              child: FullScreenError(
+                isError: false,
+                exception: EESUpException(
+                  message: 'There are no orders yet.',
+                ),
+              ),
+            )
+          else
+            Expanded(
+              child: ListView.builder(
+                itemBuilder: (context, index) {
+                  final o = orders[index];
+                  if (o.id == openOrder?.id) {
+                    return 0.sW;
+                  }
+                  return EESUpoolOrderCard(
+                    order: o,
+                    pool: pool,
+                  );
+                },
+                itemCount: orders.length,
+              ),
             ),
-          ),
-      ],
+        ],
+      ),
     );
   }
 }

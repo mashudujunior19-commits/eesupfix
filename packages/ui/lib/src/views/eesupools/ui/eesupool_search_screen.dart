@@ -65,48 +65,52 @@ class _EESUpoolSearchScreenState extends State<EESUpoolSearchScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(left: 15, top: 20),
-                    child: AddressSelctionPopUpButton(
-                      label: Row(
-                        //mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Icon(
-                            IconlyLight.location,
-                            size: 17,
-                            color: context.colorScheme.primary,
-                          ),
-                          5.sW,
-                          Text(
-                            'Select Address',
-                            style: context.textTheme.labelMedium?.copyWith(
+              if (widget.type == EESUpoolType.trade)
+                Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(left: 15, top: 20),
+                      child: AddressSelctionPopUpButton(
+                        label: Row(
+                          //mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Icon(
+                              IconlyLight.location,
+                              size: 17,
                               color: context.colorScheme.primary,
                             ),
-                          ),
-                        ],
+                            5.sW,
+                            Text(
+                              'Select Address',
+                              style: context.textTheme.labelMedium?.copyWith(
+                                color: context.colorScheme.primary,
+                              ),
+                            ),
+                          ],
+                        ),
+                        onAddressSelected: (address) {
+                          if (address != null) {
+                            setState(() {
+                              selectedAddress = address;
+                            });
+                          }
+                        },
                       ),
-                      onAddressSelected: (address) {
-                        if (address != null) {
-                          setState(() {
-                            selectedAddress = address;
-                          });
-                        }
-                      },
                     ),
-                  ),
-                  if (selectedAddress != null)
-                    AddressCard(address: selectedAddress!, allowDelete: false)
-                ],
-              ),
+                    if (selectedAddress != null)
+                      AddressCard(address: selectedAddress!, allowDelete: false)
+                  ],
+                ),
               () {
                 if (_controller.text.isEmpty) {
-                  return FullScreenError(
-                    isError: false,
-                    exception: EESUpException(
-                      message: 'Search for EESUpool names or codes.',
+                  return Padding(
+                    padding: const EdgeInsets.only(top: 150),
+                    child: FullScreenError(
+                      isError: false,
+                      exception: EESUpException(
+                        message: 'Search for EESUpool names or codes.',
+                      ),
                     ),
                   );
                 } else {
@@ -134,11 +138,14 @@ class _EESUpoolSearchScreenState extends State<EESUpoolSearchScreen> {
                                   exception: left,
                                 );
                               }, (right) {
+                                print(right);
                                 final list = (right as List);
+
                                 return ListView.builder(
                                   padding: const EdgeInsets.only(bottom: 500),
                                   itemCount: list.length,
                                   itemBuilder: (context, index) {
+                                    print(list[index]['type']);
                                     return _EESUpoolCard(
                                       pool: list[index],
                                       onRefresh: () {
@@ -148,21 +155,27 @@ class _EESUpoolSearchScreenState extends State<EESUpoolSearchScreen> {
                                   },
                                 );
                               }) ??
-                              FullScreenError(
-                                isError: false,
-                                exception: EESUpException(
-                                  message:
-                                      'Search for EESUpool names or codes.',
+                              Padding(
+                                padding: const EdgeInsets.only(top: 150),
+                                child: FullScreenError(
+                                  isError: false,
+                                  exception: EESUpException(
+                                    message:
+                                        'Search for EESUpool names or codes.',
+                                  ),
                                 ),
                               );
                         } else if (snap.connectionState ==
                             ConnectionState.waiting) {
                           return const FullScreenLoadingShimmer();
                         } else {
-                          return FullScreenError(
-                            isError: false,
-                            exception: EESUpException(
-                              message: 'Search for EESUpool names or codes.',
+                          return Padding(
+                            padding: const EdgeInsets.only(top: 150),
+                            child: FullScreenError(
+                              isError: false,
+                              exception: EESUpException(
+                                message: 'Search for EESUpool names or codes.',
+                              ),
                             ),
                           );
                         }

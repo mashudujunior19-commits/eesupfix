@@ -25,8 +25,9 @@ class PoolOrderViewBloc extends Bloc<PoolOrderViewEvent, PoolOrderViewState> {
       }
     });
 
-    on<PoolOrderUpdated>((event, emit) {
-      _repository.updateOrder(event.order);
+    on<PoolOrderUpdated>((event, emit) async {
+      final res = await _repository.updateOrder(event.order);
+      print(res.right);
       emit(PoolOrderViewCurrentState(event.order));
     });
   }

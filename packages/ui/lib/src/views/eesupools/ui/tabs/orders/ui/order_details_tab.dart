@@ -56,7 +56,7 @@ class OrderDetailsTab extends StatelessWidget {
                     padding: const EdgeInsets.only(
                         left: 5, right: 5, top: 2, bottom: 2),
                     decoration: BoxDecoration(
-                        color: order.closesAt.isAfter(DateTime.now())
+                        color: order.closesAt.isBefore(DateTime.now())
                             ? Colors.redAccent.withOpacity(.5)
                             : context.colorScheme.primary,
                         borderRadius: BorderRadius.circular(5)),
@@ -64,7 +64,7 @@ class OrderDetailsTab extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          order.closesAt.isAfter(DateTime.now())
+                          order.closesAt.isBefore(DateTime.now())
                               ? 'Closed'
                               : 'Open',
                           style: context.textTheme.labelMedium?.copyWith(
@@ -82,7 +82,7 @@ class OrderDetailsTab extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    order.closesAt.isAfter(DateTime.now())
+                    order.closesAt.isBefore(DateTime.now())
                         ? 'Closed on'
                         : 'Closes on',
                     style: context.textTheme.bodySmall?.copyWith(
@@ -189,33 +189,12 @@ class OrderDetailsTab extends StatelessWidget {
                           ),
                         ),
                         DelivarySecret(secret: order.secretPin.toString())
-                        // Transform.scale(
-                        //   scale: .7,
-                        //   child: Switch(
-                        //     value: order.deliveredAt != null,
-                        //     onChanged: (value) {
-                        //       if (order.deliveredAt == null) {
-                        //         context
-                        //             .showBottomSheetDialog(
-                        //                 child: ConfirmOrderCollectionDialog(
-                        //                     pin: order.secretPin.toString(),
-                        //                     isEESUpoolOrder: true))
-                        //             .then((value) {
-                        //           if (value == true) {
-                        //             context.read<PoolOrderViewBloc>().add(
-                        //                 PoolOrderIsReceived(DateTime.now()));
-                        //           }
-                        //         });
-                        //       }
-                        //     },
-                        //   ),
-                        // )
                       ],
                     ),
                   ],
                 ),
               if (pool.role == EESUpoolMemberRole.admin &&
-                  order.closesAt.isBefore(DateTime.now()))
+                  order.closesAt.isAfter(DateTime.now()))
                 Column(
                   mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -230,9 +209,9 @@ class OrderDetailsTab extends StatelessWidget {
                         )
                             .then((value) {
                           if (value is EESUpoolOrder) {
-                            context.read<PoolOrderViewBloc>().add(
-                                  PoolOrderUpdated(value),
-                                );
+                            context
+                                .read<PoolOrderViewBloc>()
+                                .add(PoolOrderUpdated(value));
                           }
                         });
                       },
@@ -241,7 +220,7 @@ class OrderDetailsTab extends StatelessWidget {
                   ],
                 ),
               if (pool.role == EESUpoolMemberRole.admin &&
-                  order.closesAt.isBefore(DateTime.now()))
+                  order.closesAt.isAfter(DateTime.now()))
                 Column(
                   mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -253,7 +232,7 @@ class OrderDetailsTab extends StatelessWidget {
                               PoolOrderUpdated(
                                 order.copyWith(
                                   closesAt: DateTime.now().subtract(
-                                    const Duration(minutes: 1),
+                                    const Duration(hours: 2),
                                   ),
                                   scheduleFor: DateTime.now().add(
                                     const Duration(days: 3),

@@ -181,9 +181,14 @@ class EESUpoolSupabaseImp implements EESUpoolDataSource {
   @override
   Future<List<ChatMessage>> getPoolMessagesByHashTags(
       int poolId, String hastTag, int limit) async {
-    final res = await client.schema('communities').rpc(
-        'get_eesupool_messages_by_hash_tag',
-        params: {'pool_id': poolId, 'limit_to': limit, 'hash_tag': hastTag});
+    print(hastTag.replaceAll("#", ""));
+    final res = await client
+        .schema('communities')
+        .rpc('get_eesupool_messages_by_hash_tag', params: {
+      'pool_id': poolId,
+      'limit_to': limit,
+      'hash_tag': hastTag.replaceAll("#", "")
+    });
 
     List<ChatMessage> list =
         (res as List).map((e) => ChatMessage.fromJson(e)).toList();
@@ -431,6 +436,7 @@ class EESUpoolSupabaseImp implements EESUpoolDataSource {
   @override
   Future<bool> updateEESUpoolOrder(EESUpoolOrder order) async {
     try {
+      print(order.toJson());
       await client
           .schema('communities')
           .from('eesupool_order')
@@ -438,6 +444,7 @@ class EESUpoolSupabaseImp implements EESUpoolDataSource {
           .eq('id', order.id);
       return true;
     } catch (e) {
+      print(e);
       return false;
     }
   }
