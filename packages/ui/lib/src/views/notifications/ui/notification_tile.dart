@@ -33,7 +33,7 @@ class NotificationTile extends StatelessWidget {
       child: ExpandedTile(
         theme: const ExpandedTileThemeData(
           headerColor: Colors.white,
-       //   headerRadius: 0.0,
+          //   headerRadius: 0.0,
           headerPadding:
               EdgeInsets.only(left: 0, right: 5, bottom: 5.0, top: 5),
           headerSplashColor: Colors.white,
@@ -86,7 +86,9 @@ class NotificationTile extends StatelessWidget {
                 ),
               ),
               if (notification.data != null &&
-                  notification.type == not.NotificationType.eesupoolInvite)
+                  (notification.type == not.NotificationType.eesupoolInvite ||
+                      notification.type ==
+                          not.NotificationType.eesupoolRequest))
                 Padding(
                   padding: const EdgeInsets.only(top: 10),
                   child: Row(
@@ -113,7 +115,10 @@ class NotificationTile extends StatelessWidget {
 
                           context.loaderOverlay.hide();
                         },
-                        child: const Text('Join'),
+                        child: Text(notification.type ==
+                                not.NotificationType.eesupoolInvite
+                            ? 'Join'
+                            : "Admit"),
                       ),
                       25.sW,
                       InkWell(

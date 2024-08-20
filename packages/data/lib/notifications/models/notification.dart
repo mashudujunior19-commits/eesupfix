@@ -40,6 +40,7 @@ enum NotificationType {
   order,
   eesupool,
   eesupoolInvite,
+  eesupoolRequest,
   other;
 
   factory NotificationType.from(String type) {
@@ -50,6 +51,8 @@ enum NotificationType {
         return NotificationType.eesupool;
       case 'eesupool_invite':
         return NotificationType.eesupoolInvite;
+      case 'eesupool_request':
+        return NotificationType.eesupoolRequest;
       default:
         return NotificationType.other;
     }
@@ -64,6 +67,8 @@ enum NotificationType {
         return 'eesupool';
       case NotificationType.eesupoolInvite:
         return 'eesupool_invite';
+      case NotificationType.eesupoolRequest:
+        return "eesupool_request";
       default:
         return 'other';
     }

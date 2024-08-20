@@ -41,6 +41,7 @@ class _ChatHashTagViewState extends State<ChatHashTagView> {
               messages = [...l];
             });
             return ListView(
+              reverse: true,
               children: [
                 const SizedBox(height: 50),
                 for (int index = 0; index < messages.length; index++)

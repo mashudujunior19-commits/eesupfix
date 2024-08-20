@@ -17,6 +17,7 @@ class NotificationSupabaseImpl implements NotificationDataSource {
       userId,
     );
     await for (final event in stream) {
+      print(event);
       final notifications = event.map((e) => Notification.fromJson(e)).toList();
       yield notifications;
     }

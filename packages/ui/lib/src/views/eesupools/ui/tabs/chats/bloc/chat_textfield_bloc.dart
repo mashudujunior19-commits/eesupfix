@@ -55,12 +55,13 @@ class ChatTextFieldBloc extends Bloc<ChatTextFieldEvent, ChatTextFieldState> {
 
     on<ChatMessageSent>((event, emit) async {
       final message = (state as ChatTextFieldCurrentState);
+
       emit(ChatLoading());
       final results = await _sendMessage(
         event.pool.memberId!,
         event.pool.eesupoolId!,
         event.text,
-        event.pool.chatTagsSuggestions ?? [],
+        event.pool.chatTags ?? [],
         event.pool.isCensored == true ? false : true,
         event.broadcastTo ?? [],
         message.files,
@@ -112,6 +113,8 @@ class ChatTextFieldBloc extends Bloc<ChatTextFieldEvent, ChatTextFieldState> {
       }
     }
 
+    print(newTags);
+
     final result = await _eeupoolsRepo.sendChatMessage(
       ChatMessage(
         id: 1,
@@ -142,6 +145,7 @@ class ChatTextFieldBloc extends Bloc<ChatTextFieldEvent, ChatTextFieldState> {
   }
 
   List<String> _findTagsInMessage(List<String> tags, String message) {
+    print(tags);
     List<String> foundTags = [];
 
     for (String tag in tags) {

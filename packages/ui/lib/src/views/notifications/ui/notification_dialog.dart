@@ -27,6 +27,7 @@ class NotificationsDialog extends StatelessWidget {
           builder: (context, state) {
             if (state is NotificationsStreaming) {
               final notifications = state.notifications;
+
               if (notifications.isEmpty) {
                 return FullScreenError(
                   isError: false,
