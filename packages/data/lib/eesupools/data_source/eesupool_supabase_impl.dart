@@ -141,7 +141,15 @@ class EESUpoolSupabaseImp implements EESUpoolDataSource {
 
   @override
   Future<void> sendChatMessage(ChatMessage message) async {
-    await client.schema('communities').from('message').insert(message.toJson());
+    try {
+      final response = await client
+          .schema('communities')
+          .from('message')
+          .insert(message.toJson());
+      print('response sent $response');
+    } catch (e) {
+      print(e);
+    }
   }
 
   @override

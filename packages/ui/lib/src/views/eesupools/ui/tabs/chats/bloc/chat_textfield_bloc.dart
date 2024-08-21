@@ -134,13 +134,31 @@ class ChatTextFieldBloc extends Bloc<ChatTextFieldEvent, ChatTextFieldState> {
     return result;
   }
 
+  // String _encrypt(String str) {
+  //   // Generate a key
+
+  //   final chatSecret = dotenv.get('CHAT_SECRET');
+  //   final key = encrypt.Key.fromBase16(dotenv.get('CHAT_SECRET'));
+  //   final iv = encrypt.IV.fromBase16(dotenv.get('CHAT_SECRET'));
+
+  //   final encrypter = encrypt.Encrypter(encrypt.AES(key));
+  //   // Encrypt the plain text
+  //   final encrypted = encrypter.encrypt(str, iv: iv);
+  //   return encrypted.base16;
+  // }
+
   String _encrypt(String str) {
-    // Generate a key
-    final key = encrypt.Key.fromBase16(dotenv.get('CHAT_SECRET'));
-    final iv = encrypt.IV.fromBase16(dotenv.get('CHAT_SECRET'));
+    final chatSecret = dotenv.get('CHAT_SECRET');
+
+    final keyHex = chatSecret.substring(0, 64);
+    final ivHex = chatSecret.substring(0, 32);
+
+    final key = encrypt.Key.fromBase16(keyHex);
+    final iv = encrypt.IV.fromBase16(ivHex);
+
     final encrypter = encrypt.Encrypter(encrypt.AES(key));
-    // Encrypt the plain text
     final encrypted = encrypter.encrypt(str, iv: iv);
+
     return encrypted.base16;
   }
 

@@ -108,6 +108,7 @@ extension EESUpoolChatsRepo on EESUpoolRepository {
   ) async {
     final result = await authRepository.executeFutureWithAuth((_) async {
       final result = await dataSource.sendChatMessage(chatMessage);
+      print('chat sent : $chatMessage');
       return result;
     });
 
