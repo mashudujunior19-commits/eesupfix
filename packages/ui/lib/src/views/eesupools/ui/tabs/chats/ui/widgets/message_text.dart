@@ -19,14 +19,30 @@ class MessageText extends StatelessWidget {
   final ChatMessage message;
   final EESUpool pool;
 
+  // String _decrypt(String str) {
+  //   // Generate a key
+  //   final key = encrypt.Key.fromBase16(dotenv.get('CHAT_SECRET'));
+  //   final iv = encrypt.IV.fromBase16(dotenv.get('CHAT_SECRET'));
+  //   final decrypter = encrypt.Encrypter(encrypt.AES(key));
+  //   // Encrypt the plain text
+  //   final res = decrypter.decrypt(encrypt.Encrypted.fromBase16(str), iv: iv);
+  //   return res;
+  // }
+
   String _decrypt(String str) {
-    // Generate a key
-    final key = encrypt.Key.fromBase16(dotenv.get('CHAT_SECRET'));
-    final iv = encrypt.IV.fromBase16(dotenv.get('CHAT_SECRET'));
+    final chatSecret = dotenv.get('CHAT_SECRET');
+
+    final keyHex = chatSecret.substring(0, 64);
+    final ivHex = chatSecret.substring(32);
+
+    final key = encrypt.Key.fromBase16(keyHex);
+    final iv = encrypt.IV.fromBase16(ivHex);
+
     final decrypter = encrypt.Encrypter(encrypt.AES(key));
-    // Encrypt the plain text
-    final res = decrypter.decrypt(encrypt.Encrypted.fromBase16(str), iv: iv);
-    return res;
+
+    final encrypted = encrypt.Encrypted.fromBase16(str);
+    final decrypted = decrypter.decrypt(encrypted, iv: iv);
+    return decrypted;
   }
 
   @override
