@@ -1,9 +1,8 @@
 name: eesup
 description: "A new Flutter project."
 publish_to: 'none'
-version: 16.6.5+205
+version: 16.6.6+206
 
-# latest producttion build version: 16.6.0+200
 
 environment:
   sdk: '>=3.4.1 <4.0.0'

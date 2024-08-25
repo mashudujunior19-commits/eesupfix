@@ -60,6 +60,7 @@ class MembersRequests extends StatelessWidget {
   }
 }
 
+// ignore: must_be_immutable
 class _InviteCard extends StatefulWidget {
   _InviteCard({required this.invite, required this.pool});
   final EESUpool pool;
@@ -69,9 +70,9 @@ class _InviteCard extends StatefulWidget {
 }
 
 class _InviteCardState extends State<_InviteCard> {
+  bool accepting = false;
   @override
   Widget build(BuildContext context) {
-    bool accepting = false;
     return Container(
       margin: const EdgeInsets.only(right: 15, left: 15, top: 15),
       decoration: BoxDecoration(
