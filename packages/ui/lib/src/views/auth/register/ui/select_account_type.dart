@@ -1,10 +1,11 @@
 import 'package:ui/src/core/extensions/context_theme_ext.dart';
 import 'package:ui/src/core/extensions/sizedbox_ext.dart';
 import 'package:ui/src/core/extensions/slide_in_animation_ext.dart';
-import 'package:ui/src/views/auth/register/bloc/registration_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:ui/src/views/auth/register/cubit/register_cubit.dart';
+import 'package:ui/src/views/auth/register/cubit/register_form.dart';
 
 class SelectAccountType extends StatelessWidget {
   const SelectAccountType({super.key, required this.tabController});
@@ -12,56 +13,55 @@ class SelectAccountType extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<RegistrationBloc, RegistrationFormState>(
+    return BlocBuilder<RegisterCubit, RegisterForm>(
       builder: (context, state) {
-        if (state is SignUpForm) {
-          return Center(
-            child: ListView(
-              padding: const EdgeInsets.only(left: 15, right: 15, top: 10),
-              children: [
-                25.sH,
-                Text(
-                  'Which account type would you like to create?',
-                  style: context.textTheme.labelMedium?.copyWith(fontSize: 18),
-                  textAlign: TextAlign.center,
-                ).animate().slideIn(0),
-                35.sH,
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    _AccountTypeButton(
-                      isSelected: false,
-                      lable: 'Individual',
-                      image: 'assets/images/man.png',
-                      comment: 'This is a normal company',
-                      onTap: () {
-                        context.read<RegistrationBloc>().add(
-                              AccountTypeUpdated(false),
-                            );
-                        tabController.animateTo(tabController.index + 1);
-                      },
-                    ).animate().slideIn(50),
-                    150.sW,
-                    _AccountTypeButton(
-                      isSelected: false,
-                      lable: 'Corporate',
-                      image: 'assets/images/enterprise.png',
-                      comment: 'This is a normal company',
-                      onTap: () {
-                        context.read<RegistrationBloc>().add(
-                              AccountTypeUpdated(true),
-                            );
-                        tabController.animateTo(tabController.index + 1);
-                      },
-                    ).animate().slideIn(100),
-                  ],
-                ),
-                35.sH,
-              ],
-            ),
-          );
-        }
-        return Container();
+        return Center(
+          child: ListView(
+            padding: const EdgeInsets.only(left: 15, right: 15, top: 10),
+            children: [
+              25.sH,
+              Text(
+                'Which account type would you like to create?',
+                style: context.textTheme.labelMedium?.copyWith(fontSize: 18),
+                textAlign: TextAlign.center,
+              ).animate().slideIn(0),
+              35.sH,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  _AccountTypeButton(
+                    isSelected: false,
+                    lable: 'Individual',
+                    image: 'assets/images/man.png',
+                    comment: 'This is a normal company',
+                    onTap: () {
+                      context.read<RegisterCubit>().updateForm(
+                            RegisterForm.initial().copyWith(isCorp: false),
+                          );
+
+                      tabController.animateTo(tabController.index + 1);
+                    },
+                  ).animate().slideIn(50),
+                  150.sW,
+                  _AccountTypeButton(
+                    isSelected: false,
+                    lable: 'Corporate',
+                    image: 'assets/images/enterprise.png',
+                    comment: 'This is a normal company',
+                    onTap: () {
+                      context.read<RegisterCubit>().updateForm(
+                            RegisterForm.initial().copyWith(isCorp: true),
+                          );
+
+                      tabController.animateTo(tabController.index + 1);
+                    },
+                  ).animate().slideIn(100),
+                ],
+              ),
+              35.sH,
+            ],
+          ),
+        );
       },
     );
   }

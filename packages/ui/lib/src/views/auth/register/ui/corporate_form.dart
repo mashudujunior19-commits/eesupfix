@@ -3,10 +3,12 @@ import 'package:ui/src/core/extensions/context_theme_ext.dart';
 import 'package:ui/src/core/extensions/sizedbox_ext.dart';
 import 'package:ui/src/core/extensions/slide_in_animation_ext.dart';
 import 'package:ui/src/core/widgets/eesup_form_field.dart';
-import 'package:ui/src/views/auth/register/bloc/registration_bloc.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:ui/src/views/auth/register/cubit/register_cubit.dart';
+import 'package:ui/src/views/auth/register/cubit/register_form.dart';
 
 class CorporateForm extends StatelessWidget {
   const CorporateForm({
@@ -14,12 +16,8 @@ class CorporateForm extends StatelessWidget {
     required this.tabController,
     required this.form,
   });
-  final SignUpForm form;
+  final RegisterForm form;
   final TabController tabController;
-  // final _corpNameController = TextEditingController();
-  // final _corpRegController = TextEditingController();
-  // final _npcRegController = TextEditingController();
-
   @override
   Widget build(BuildContext context) {
     return ListView(
@@ -40,12 +38,14 @@ class CorporateForm extends StatelessWidget {
             final v = value.isEmpty ? null : value;
 
             if (v != null) {
-              context.read<RegistrationBloc>().add(
-                    CorpFormUpdated(
-                      name: v,
-                      reg: form.corpReg,
+              context.read<RegisterCubit>().updateForm(
+                    form.copyWith(
+                      corpName: v,
+                      corpReg: form.corpReg,
                     ),
                   );
+
+              tabController.animateTo(tabController.index + 1);
             }
           },
         ).animate().slideIn(0),
@@ -56,8 +56,11 @@ class CorporateForm extends StatelessWidget {
             final v = value.isEmpty ? null : value;
 
             if (v != null) {
-              context.read<RegistrationBloc>().add(
-                    CorpFormUpdated(name: form.corpName, reg: v),
+              context.read<RegisterCubit>().updateForm(
+                    form.copyWith(
+                      corpName: v,
+                      corpReg: form.corpReg,
+                    ),
                   );
             }
           },

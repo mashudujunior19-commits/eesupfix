@@ -10,8 +10,9 @@ import 'package:ui/src/core/extensions/context_alerts_ext.dart';
 import 'package:ui/src/core/extensions/context_theme_ext.dart';
 import 'package:ui/src/core/extensions/sizedbox_ext.dart';
 import 'package:ui/src/core/widgets/eesup_form_field.dart';
-import 'package:ui/src/views/auth/register/bloc/registration_bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:ui/src/views/auth/register/cubit/register_cubit.dart';
+import 'package:ui/src/views/auth/register/cubit/register_form.dart';
 
 class ReferralCodeForm extends StatelessWidget {
   const ReferralCodeForm({
@@ -19,7 +20,7 @@ class ReferralCodeForm extends StatelessWidget {
     required this.form,
     required this.tabController,
   });
-  final SignUpForm form;
+  final RegisterForm form;
   final TabController tabController;
 
   @override
@@ -38,11 +39,8 @@ class ReferralCodeForm extends StatelessWidget {
               onChanged: (value) {
                 final code = int.tryParse(value);
 
-                context.read<RegistrationBloc>().add(
-                      ReferralCodeUpdated(
-                        code: code,
-                        acceptedTsAndCs: form.agreedToTcsAndCs,
-                      ),
+                context.read<RegisterCubit>().updateForm(
+                      form.copyWith(referralCode: code),
                     );
               },
             ),
@@ -54,11 +52,8 @@ class ReferralCodeForm extends StatelessWidget {
                   visualDensity: VisualDensity.compact,
                   value: form.agreedToTcsAndCs,
                   onChanged: (v) {
-                    context.read<RegistrationBloc>().add(
-                          ReferralCodeUpdated(
-                            code: form.referralCode,
-                            acceptedTsAndCs: v ?? false,
-                          ),
+                    context.read<RegisterCubit>().updateForm(
+                          form.copyWith(agreedToTcsAndCs: v ?? false),
                         );
                   },
                 ),
@@ -119,14 +114,13 @@ class ReferralCodeForm extends StatelessWidget {
                     return;
                   }
                 }
-
-                // print(form.toJson());
-
-                context.read<RegistrationBloc>().add(SignUpSubmited(form));
+                context.read<RegisterCubit>().submit();
               },
-              child: Text(form.referralCode != null
-                  ? 'Got it, Sign up'
-                  : 'No one, Sign up'),
+              child: Text(
+                form.referralCode != null
+                    ? 'Got it, Sign up'
+                    : 'No one, Sign up',
+              ),
             )
           ],
         ),

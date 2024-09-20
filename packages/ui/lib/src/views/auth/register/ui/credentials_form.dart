@@ -2,7 +2,9 @@ import 'package:email_validator/email_validator.dart';
 import 'package:loader_overlay/loader_overlay.dart';
 import 'package:ui/src/core/extensions/context_alerts_ext.dart';
 import 'package:ui/src/core/widgets/eesup_form_field.dart';
-import 'package:ui/src/views/auth/register/bloc/registration_bloc.dart';
+import 'package:ui/src/views/auth/register/cubit/register_cubit.dart';
+
+import 'package:ui/src/views/auth/register/cubit/register_form.dart';
 import 'package:ui/src/views/auth/register/ui/password_strength.dart';
 import 'package:ui/src/core/extensions/sizedbox_ext.dart';
 import 'package:ui/src/core/extensions/slide_in_animation_ext.dart';
@@ -18,7 +20,7 @@ class CredentialsForm extends StatelessWidget {
     required this.form,
     required this.tabController,
   });
-  final SignUpForm form;
+  final RegisterForm form;
   final TabController tabController;
   bool isValidPassword = false;
 
@@ -29,8 +31,8 @@ class CredentialsForm extends StatelessWidget {
       children: [
         EmailAndPhoneTabContainer(
           onEmailChanged: (email) {
-            context.read<RegistrationBloc>().add(
-                  CredentialsUpdated(
+            context.read<RegisterCubit>().updateForm(
+                  form.copyWith(
                     email: email,
                     phone: null,
                     password: form.password,
@@ -39,8 +41,8 @@ class CredentialsForm extends StatelessWidget {
                 );
           },
           onPhoneChanged: (phone) {
-            context.read<RegistrationBloc>().add(
-                  CredentialsUpdated(
+            context.read<RegisterCubit>().updateForm(
+                  form.copyWith(
                     email: null,
                     phone: phone,
                     password: form.password,
@@ -55,8 +57,9 @@ class CredentialsForm extends StatelessWidget {
           initialValue: form.password,
           onChanged: (value) {
             final v = value.isEmpty ? null : value;
-            context.read<RegistrationBloc>().add(
-                  CredentialsUpdated(
+
+            context.read<RegisterCubit>().updateForm(
+                  form.copyWith(
                     email: form.email,
                     phone: form.phone,
                     password: v,
@@ -78,8 +81,8 @@ class CredentialsForm extends StatelessWidget {
           label: 'Confirm Password',
           onChanged: (value) {
             final v = value.isEmpty ? null : value;
-            context.read<RegistrationBloc>().add(
-                  CredentialsUpdated(
+            context.read<RegisterCubit>().updateForm(
+                  form.copyWith(
                     email: form.email,
                     phone: form.phone,
                     password: form.password,
@@ -107,7 +110,7 @@ class CredentialsForm extends StatelessWidget {
                 return;
               }
               context.loaderOverlay.show();
-              final exists = await context.read<RegistrationBloc>().emailExists(
+              final exists = await context.read<RegisterCubit>().emailExists(
                     tempEmail,
                   );
               context.loaderOverlay.hide();
@@ -122,7 +125,7 @@ class CredentialsForm extends StatelessWidget {
 
             if (tempPhone.isNotEmpty) {
               context.loaderOverlay.show();
-              final exists = await context.read<RegistrationBloc>().phoneExists(
+              final exists = await context.read<RegisterCubit>().phoneExists(
                     tempEmail,
                   );
               context.loaderOverlay.hide();

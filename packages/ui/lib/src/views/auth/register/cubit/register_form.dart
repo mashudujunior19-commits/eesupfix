@@ -1,22 +1,12 @@
-part of 'registration_bloc.dart';
+import 'package:dart_mappable/dart_mappable.dart';
+import 'package:data/utils/validate_id_number.dart';
+import 'package:email_validator/email_validator.dart';
+import 'package:intl/intl.dart';
 
-@immutable
-sealed class RegistrationFormState {}
+part 'register_form.mapper.dart';
 
-final class AwaitingOtpAuth extends RegistrationFormState {
-  final SignUpForm oldForm;
-  AwaitingOtpAuth(this.oldForm);
-}
-
-final class FailedToSignUp extends RegistrationFormState {
-  final EESUpException err;
-  final SignUpForm oldForm;
-  FailedToSignUp(this.oldForm, this.err);
-}
-
-final class SignUpLoading extends RegistrationFormState {}
-
-final class SignUpForm extends RegistrationFormState {
+@MappableClass(generateMethods: GenerateMethods.equals | GenerateMethods.copy)
+class RegisterForm with RegisterFormMappable {
   final String? firstName;
   final String? lastName;
   final String? idNumber;
@@ -33,25 +23,40 @@ final class SignUpForm extends RegistrationFormState {
   final String? retypedPassword;
   final bool isRSACitizen;
   final bool isPasswordValid;
+  final bool isLoading;
+  final RegisterStatus status;
+  final String? errorMessage;
 
-  SignUpForm({
-    this.isCorp = false,
-    this.agreedToTcsAndCs = false,
-    this.isRSACitizen = true,
-    this.isPasswordValid = true,
+  RegisterForm({
+    this.firstName,
+    this.lastName,
+    this.idNumber,
+    this.dob,
     this.corpName,
     this.corpReg,
+    this.npcCorpReg,
     this.email,
     this.phone,
     this.referralCode,
     this.password,
     this.retypedPassword,
-    this.firstName,
-    this.lastName,
-    this.dob,
-    this.idNumber,
-    this.npcCorpReg,
+    this.errorMessage,
+    required this.isRSACitizen,
+    required this.isPasswordValid,
+    required this.isLoading,
+    required this.status,
+    required this.agreedToTcsAndCs,
+    required this.isCorp,
   });
+
+  factory RegisterForm.initial() => RegisterForm(
+        isCorp: false,
+        agreedToTcsAndCs: false,
+        isRSACitizen: true,
+        isPasswordValid: false,
+        isLoading: false,
+        status: RegisterStatus.init,
+      );
 
   // ignore: unused_element
   bool _isValidEmail() {
@@ -119,4 +124,11 @@ final class SignUpForm extends RegistrationFormState {
     if (str.isEmpty) return null;
     return str[0].toUpperCase() + str.substring(1);
   }
+}
+
+enum RegisterStatus {
+  awaitingOtp,
+  failed,
+  success,
+  init,
 }

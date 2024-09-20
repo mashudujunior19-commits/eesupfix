@@ -7,11 +7,12 @@ import 'package:ui/src/core/extensions/sizedbox_ext.dart';
 import 'package:ui/src/core/extensions/slide_in_animation_ext.dart';
 import 'package:ui/src/core/utils/date_formatter.dart';
 import 'package:ui/src/core/widgets/eesup_form_field.dart';
-import 'package:ui/src/views/auth/register/bloc/registration_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:omni_datetime_picker/omni_datetime_picker.dart';
+import 'package:ui/src/views/auth/register/cubit/register_cubit.dart';
+import 'package:ui/src/views/auth/register/cubit/register_form.dart';
 
 class IndividualForm extends StatelessWidget {
   const IndividualForm({
@@ -19,7 +20,7 @@ class IndividualForm extends StatelessWidget {
     required this.form,
     required this.tabController,
   });
-  final SignUpForm form;
+  final RegisterForm form;
   final TabController tabController;
 
   @override
@@ -32,8 +33,8 @@ class IndividualForm extends StatelessWidget {
           label: 'First Name',
           onChanged: (value) {
             final v = value.isEmpty ? null : value;
-            context.read<RegistrationBloc>().add(
-                  IndividualFormUpdated(
+            context.read<RegisterCubit>().updateForm(
+                  form.copyWith(
                     firstName: v,
                     lastName: form.lastName,
                     dob: form.dob,
@@ -48,8 +49,8 @@ class IndividualForm extends StatelessWidget {
           label: 'Last Name',
           onChanged: (value) {
             final v = value.isEmpty ? null : value;
-            context.read<RegistrationBloc>().add(
-                  IndividualFormUpdated(
+            context.read<RegisterCubit>().updateForm(
+                  form.copyWith(
                     firstName: form.firstName,
                     lastName: v,
                     dob: form.dob,
@@ -78,8 +79,8 @@ class IndividualForm extends StatelessWidget {
               Checkbox(
                 value: form.isRSACitizen,
                 onChanged: (v) {
-                  context.read<RegistrationBloc>().add(
-                        IndividualFormUpdated(
+                  context.read<RegisterCubit>().updateForm(
+                        form.copyWith(
                           firstName: form.firstName,
                           lastName: form.lastName,
                           dob: form.dob,
@@ -100,8 +101,8 @@ class IndividualForm extends StatelessWidget {
             initialValue: form.idNumber,
             onChanged: (value) {
               final v = value.isEmpty ? null : value;
-              context.read<RegistrationBloc>().add(
-                    IndividualFormUpdated(
+              context.read<RegisterCubit>().updateForm(
+                    form.copyWith(
                       firstName: form.firstName,
                       lastName: form.lastName,
                       dob: null,
@@ -134,8 +135,8 @@ class IndividualForm extends StatelessWidget {
                   const Duration(days: 18 * 365),
                 ),
               );
-              context.read<RegistrationBloc>().add(
-                    IndividualFormUpdated(
+              context.read<RegisterCubit>().updateForm(
+                    form.copyWith(
                       firstName: form.firstName,
                       lastName: form.lastName,
                       dob: dob,

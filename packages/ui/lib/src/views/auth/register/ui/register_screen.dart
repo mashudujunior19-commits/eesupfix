@@ -7,7 +7,8 @@ import 'package:ui/src/core/extensions/bottom_sheet_context_ext.dart';
 import 'package:ui/src/core/extensions/context_alerts_ext.dart';
 import 'package:ui/src/core/widgets/eesup_scaffold.dart';
 import 'package:ui/src/views/auth/otp_auth/ui/otp_auth_dialog.dart';
-import 'package:ui/src/views/auth/register/bloc/registration_bloc.dart';
+import 'package:ui/src/views/auth/register/cubit/register_cubit.dart';
+import 'package:ui/src/views/auth/register/cubit/register_form.dart';
 import 'package:ui/src/views/auth/register/ui/corporate_form.dart';
 import 'package:ui/src/views/auth/register/ui/credentials_form.dart';
 import 'package:ui/src/views/auth/register/ui/individual_form.dart';
@@ -50,8 +51,8 @@ class _RegisterScreenState extends State<RegisterScreen>
         }
       },
       child: BlocProvider(
-        create: (context) => RegistrationBloc(context.read<AuthRepository>()),
-        child: BlocConsumer<RegistrationBloc, RegistrationFormState>(
+        create: (context) => RegisterCubit(context.read<AuthRepository>()),
+        child: BlocConsumer<RegisterCubit, RegisterForm>(
           builder: (context, state) {
             return SafeArea(
               child: EESUpScaffold(
@@ -76,65 +77,55 @@ class _RegisterScreenState extends State<RegisterScreen>
                           ? const Text('Sign up')
                           : null,
                     ),
-                    body: () {
-                      ///print(state);
-                      if (state is SignUpForm) {
-                        return TabBarView(
-                          physics: const NeverScrollableScrollPhysics(),
-                          controller: _tabController,
-                          children: [
-                            SelectAccountType(tabController: _tabController),
-                            if (state.isCorp)
-                              CorporateForm(
-                                tabController: _tabController,
-                                form: state,
-                              )
-                            else
-                              IndividualForm(
-                                tabController: _tabController,
-                                form: state,
-                              ),
-                            CredentialsForm(
-                              form: state,
-                              tabController: _tabController,
-                            ),
-                            ReferralCodeForm(
-                              tabController: _tabController,
-                              form: state,
-                            ),
-                            const WelcomeScreen(),
-                          ],
-                        );
-                      } else {
-                        return Container();
-                      }
-                    }(),
+                    body: TabBarView(
+                      physics: const NeverScrollableScrollPhysics(),
+                      controller: _tabController,
+                      children: [
+                        SelectAccountType(tabController: _tabController),
+                        if (state.isCorp)
+                          CorporateForm(
+                            tabController: _tabController,
+                            form: state,
+                          )
+                        else
+                          IndividualForm(
+                            tabController: _tabController,
+                            form: state,
+                          ),
+                        CredentialsForm(
+                          form: state,
+                          tabController: _tabController,
+                        ),
+                        ReferralCodeForm(
+                          tabController: _tabController,
+                          form: state,
+                        ),
+                        const WelcomeScreen(),
+                      ],
+                    ),
                   ),
                 ),
               ),
             );
           },
-          listener: (BuildContext context, RegistrationFormState state) {
-            if (state is SignUpLoading) {
+          listener: (BuildContext context, RegisterForm state) {
+            if (state.isLoading) {
               context.loaderOverlay.show();
             } else {
               context.loaderOverlay.hide();
             }
 
-            if (state is FailedToSignUp) {
-              context.snackBarError(state.err.message);
-              context.read<RegistrationBloc>().add(
-                    SignUpRestarted(state.oldForm),
-                  );
+            if (state.status == RegisterStatus.failed) {
+              context.snackBarError(state.errorMessage?.toString() ?? "");
             }
 
-            if (state is AwaitingOtpAuth) {
+            if (state.status == RegisterStatus.awaitingOtp) {
               context
                   .showBottomSheetDialog(
                 child: OtpAuthDialog(
                   type: OtpType.signup,
-                  email: state.oldForm.email,
-                  phone: state.oldForm.phone,
+                  email: state.email,
+                  phone: state.phone,
                   isSignUp: true,
                 ),
               )
@@ -147,8 +138,8 @@ class _RegisterScreenState extends State<RegisterScreen>
                   context.snackBarError('Otp verification failed');
 
                   context
-                      .read<RegistrationBloc>()
-                      .add(SignUpRestarted(state.oldForm));
+                      .read<RegisterCubit>()
+                      .updateForm(RegisterForm.initial());
                 }
               });
             }
