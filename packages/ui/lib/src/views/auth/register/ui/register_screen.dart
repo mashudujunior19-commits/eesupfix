@@ -134,12 +134,7 @@ class _RegisterScreenState extends State<RegisterScreen>
                 if (value == true) {
                   _tabController.animateTo(_tabController.index++);
                 } else {
-                  ///ELSE IT IS RESTARTED
                   context.snackBarError('Otp verification failed');
-
-                  context
-                      .read<RegisterCubit>()
-                      .updateForm(RegisterForm.initial());
                 }
               });
             }

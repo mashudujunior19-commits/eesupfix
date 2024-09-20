@@ -44,8 +44,6 @@ class CorporateForm extends StatelessWidget {
                       corpReg: form.corpReg,
                     ),
                   );
-
-              tabController.animateTo(tabController.index + 1);
             }
           },
         ).animate().slideIn(0),

@@ -126,7 +126,7 @@ class CredentialsForm extends StatelessWidget {
             if (tempPhone.isNotEmpty) {
               context.loaderOverlay.show();
               final exists = await context.read<RegisterCubit>().phoneExists(
-                    tempEmail,
+                    tempPhone,
                   );
               context.loaderOverlay.hide();
               if (exists) {
