@@ -12,6 +12,8 @@ import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:flutter_expanded_tile/flutter_expanded_tile.dart';
 import 'package:data/notifications/models/notification.dart' as not;
 
+import '../bloc/notifications_bloc.dart';
+
 class NotificationTile extends StatelessWidget {
   NotificationTile({super.key, required this.notification});
   final not.Notification notification;
@@ -107,9 +109,8 @@ class NotificationTile extends StatelessWidget {
                           results.fold(
                             (l) => debugPrint(l.toString()),
                             (r) {
-                              context
-                                  .read<NotificationRepo>()
-                                  .deleteNotification(notification.id);
+                              context.read<NotificationsBloc>().add(
+                                  RemoveNotificationEvent(notification.id));
                             },
                           );
 
@@ -135,9 +136,8 @@ class NotificationTile extends StatelessWidget {
                           results.fold(
                             (l) => debugPrint(l.toString()),
                             (r) {
-                              context
-                                  .read<NotificationRepo>()
-                                  .deleteNotification(notification.id);
+                              context.read<NotificationsBloc>().add(
+                                  RemoveNotificationEvent(notification.id));
                             },
                           );
                           context.loaderOverlay.hide();
