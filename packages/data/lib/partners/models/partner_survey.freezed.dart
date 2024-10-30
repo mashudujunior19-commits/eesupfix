@@ -24,12 +24,8 @@ mixin _$PartnerSurvey {
   @JsonKey(name: 'survey_id')
   String get surveyId => throw _privateConstructorUsedError;
 
-  /// Serializes this PartnerSurvey to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-
-  /// Create a copy of PartnerSurvey
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   $PartnerSurveyCopyWith<PartnerSurvey> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -53,8 +49,6 @@ class _$PartnerSurveyCopyWithImpl<$Res, $Val extends PartnerSurvey>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
-  /// Create a copy of PartnerSurvey
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -93,8 +87,6 @@ class __$$PartnerSurveyImplCopyWithImpl<$Res>
       _$PartnerSurveyImpl _value, $Res Function(_$PartnerSurveyImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of PartnerSurvey
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -145,13 +137,11 @@ class _$PartnerSurveyImpl implements _PartnerSurvey {
                 other.surveyId == surveyId));
   }
 
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(runtimeType, index, surveyId);
 
-  /// Create a copy of PartnerSurvey
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
   _$$PartnerSurveyImplCopyWith<_$PartnerSurveyImpl> get copyWith =>
@@ -179,11 +169,8 @@ abstract class _PartnerSurvey implements PartnerSurvey {
   @override
   @JsonKey(name: 'survey_id')
   String get surveyId;
-
-  /// Create a copy of PartnerSurvey
-  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   _$$PartnerSurveyImplCopyWith<_$PartnerSurveyImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

@@ -9,6 +9,10 @@ import 'package:data/shopping/models/product_request.dart';
 import 'package:flutter/foundation.dart' as foundation;
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../models/hamper.dart';
+import '../models/hamper_product.dart';
+import '../models/mapped_product_hamper.dart';
+
 class ShoppingSupabaseImp implements ShoppingDataSource {
   final SupabaseClient _client;
   ShoppingSupabaseImp(this._client);
@@ -311,6 +315,177 @@ class ShoppingSupabaseImp implements ShoppingDataSource {
         print(e.toString());
       }
       return false;
+    }
+  }
+
+  @override
+  Future<List<Hamper>> fetchHampers(String userId) async {
+    try {
+      final response = await _client
+          .schema('inventory')
+          .from('hamper')
+          .select('*')
+          .order('created_at', ascending: false);
+
+      final List data = response as List;
+
+      final List<Hamper> hampers =
+          data.map((json) => Hamper.fromJson(json)).toList();
+
+      for (var hamper in hampers) {
+        hamper = hamper.copyWith(
+          productIds: await getProductIdsForHamper(hamper.id),
+          quantity: await getProductQuantitiesForHamper(hamper.id),
+        );
+      }
+      return hampers;
+    } catch (e) {
+      print('Error fetching hampers: $e');
+      return [];
+    }
+  }
+
+  Future<List<int>> getProductIdsForHamper(String hamperId) async {
+    try {
+      final response = await _client
+          .schema('inventory')
+          .from('hamper_product')
+          .select('product_id')
+          .eq('hamper_id', hamperId);
+
+      final List data = response as List;
+      return data.map((json) => json['product_id'] as int).toList();
+    } catch (e) {
+      print('Error fetching product IDs for hamper $hamperId: $e');
+      return [];
+    }
+  }
+
+  @override
+  Future<List<Product>> fetchHamperProducts(String hamperId) async {
+    try {
+      final response = await _client
+          .schema('inventory')
+          .from('hamper_product')
+          .select('product_id')
+          .eq('hamper_id', hamperId);
+      print('fetch hamper raw response : $response');
+
+      final List productIds =
+          (response as List).map((json) => json['product_id'] as int).toList();
+
+      final productResponse =
+          await _client.from('products').select('*').eq('id', productIds);
+
+      return (productResponse as List)
+          .map((json) => Product.fromJson(json))
+          .toList();
+    } catch (e) {
+      print('Error fetching hamper products for hamper $hamperId: $e');
+      return [];
+    }
+  }
+
+  @override
+  Future<List<HamperProductDetail>> fetchHamperProductDetails(
+      String hamperId) async {
+    try {
+      final response = await _client
+          .schema('inventory')
+          .from('hamper_product')
+          .select('*')
+          .eq('hamper_id', hamperId);
+      final hamperProducts = (response as List).map((json) {
+        return HamperProduct(
+          hamperId: hamperId,
+          productId: json['product_id'],
+          quantity: json['quantity'],
+          isFree: json['is_free'],
+        );
+      }).toList();
+
+      List<HamperProductDetail> hamperProductDetails = [];
+
+      for (var hamperProduct in hamperProducts) {
+        final productResponse = await _client
+            .schema('inventory')
+            .from('product')
+            .select('*')
+            .eq('id', hamperProduct.productId);
+
+        if (productResponse is List && productResponse.isNotEmpty) {
+          final product = Product.fromJson(productResponse
+              .first); // Get the first product since we expect one ID
+
+          // Step 4: Create HamperProductDetail object
+          hamperProductDetails.add(HamperProductDetail(
+            hamperId: hamperProduct.hamperId,
+            productId: hamperProduct.productId,
+            quantity: hamperProduct.quantity,
+            isFree: hamperProduct.isFree,
+            name: product.name,
+            brand: product.brand ?? '',
+            type: product.type ?? '',
+            imageUrl: product.imageUrl ?? '',
+            salePrice: product.salePrice,
+            costPrice: product.costPrice!,
+          ));
+        }
+      }
+      return hamperProductDetails;
+    } catch (e) {
+      print('Error fetching hamper products for hamper $hamperId: $e');
+      return [];
+    }
+  }
+
+  @override
+  Future<List<Hamper>> fetchHampersByImageUrl(String imgUrl) async {
+    try {
+      final response = await _client
+          .schema('inventory')
+          .from('hamper')
+          .select('*')
+          .eq('img_url', imgUrl)
+          .order('created_at', ascending: false);
+
+      final List data = response as List;
+
+      final List<Hamper> hampers =
+          data.map((json) => Hamper.fromJson(json)).toList();
+
+      for (var hamper in hampers) {
+        hamper = hamper.copyWith(
+          productIds: await getProductIdsForHamper(hamper.id),
+          quantity: await getProductQuantitiesForHamper(hamper.id),
+        );
+      }
+
+      return hampers;
+    } catch (e) {
+      print('Error fetching hampers: $e');
+      return [];
+    }
+  }
+
+  Future<Map<int, int>> getProductQuantitiesForHamper(String hamperId) async {
+    try {
+      final response = await _client
+          .schema('inventory')
+          .from('hamper_product')
+          .select('product_id, quantity')
+          .eq('hamper_id', hamperId);
+
+      final List data = response as List;
+
+      // Map each product ID to its quantity for the hamper
+      return {
+        for (var json in data)
+          json['product_id'] as int: json['quantity'] as int
+      };
+    } catch (e) {
+      print('Error fetching product quantities for hamper $hamperId: $e');
+      return {};
     }
   }
 }

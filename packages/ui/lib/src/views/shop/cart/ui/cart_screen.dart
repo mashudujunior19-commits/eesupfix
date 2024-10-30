@@ -1,6 +1,8 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:bootstrap_icons/bootstrap_icons.dart';
 import 'package:data/orders/models/order_product.dart';
+import 'package:data/shopping/models/hamper.dart';
+import 'package:data/shopping/models/product.dart';
 import 'package:ui/src/core/extensions/bg_image_deco_ext.dart';
 import 'package:ui/src/core/extensions/context_alerts_ext.dart';
 import 'package:ui/src/core/extensions/context_theme_ext.dart';
@@ -14,6 +16,8 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 
+import '../../hampers/bloc/hamper_bloc.dart';
+
 @RoutePage()
 class CartScreen extends StatelessWidget {
   const CartScreen({super.key});
@@ -23,6 +27,7 @@ class CartScreen extends StatelessWidget {
       child: BlocBuilder<CartBloc, CartState>(
         builder: (context, state) {
           final cart = (state as CurrentCart);
+          //_checkForMatchingHampers(context, cart.products);
           return Scaffold(
             appBar: AppBar(
               leading: const BackButton(),
@@ -84,6 +89,85 @@ class CartScreen extends StatelessWidget {
       ),
     );
   }
+
+  // void _checkForMatchingHampers(
+  //     BuildContext context, List<OrderProduct> cartProducts) {
+  //   final hamperState = context.read<HamperBloc>().state;
+
+  //   if (hamperState is HamperLoaded) {
+  //     final hampers = hamperState.hampers;
+
+  //     // Create an instance of HamperComparer
+  //     final comparer =
+  //         HamperComparer(cartProducts: cartProducts, hampers: hampers);
+
+  //     // Find matching hampers
+  //     final matchingHampers = comparer.findMatchingHampers();
+
+  //     // Show snackbar if matching hampers are found
+  //     if (matchingHampers.isNotEmpty) {
+  //       String hamperNames =
+  //           matchingHampers.map((hamper) => hamper.hamperName).join(', ');
+  //       context.snackBarInfo(
+  //           'Suggested Hampers: $hamperNames'); // Show suggestion in snackbar
+  //     }
+  //   }
+  // }
+}
+
+class HamperComparer {
+  final List<OrderProduct> cartProducts;
+  final List<Hamper> hampers;
+  final BuildContext context;
+
+  HamperComparer({
+    required this.cartProducts,
+    required this.hampers,
+    required this.context,
+  });
+
+  // Future<List<Hamper>> findMatchingHampers() async {
+  //   // This will hold the hampers that match the cart products
+  //   List<Hamper> matchingHampers = [];
+
+  //   for (final hamper in hampers) {
+  //     // Fetch hamper products to compare against cart products
+  //     final hamperProducts = await fetchHamperProducts(hamper.id);
+
+  //     // Check if all hamper products exist in the cart
+  //     if (areAllProductsInCart(hamperProducts, cartProducts)) {
+  //       matchingHampers.add(hamper);
+  //     }
+  //   }
+
+  //   return matchingHampers;
+  // }
+
+  // Future<List<Product>> fetchHamperProducts(String hamperId) async {
+  //   // Trigger the event to fetch products for the given hamper
+  //   context.read<HamperBloc>().add(FetchHamperProducts(hamperId));
+
+  //   // Listen for the state change
+  //   final state = context.read<HamperBloc>().state;
+  //   if (state is HamperProductLoaded) {
+  //     return state
+  //         .hamperProductDetails; // Assuming this is the correct property
+  //   }
+
+  //   // If there's an error or not loaded yet, return an empty list
+  //   return [];
+  // }
+
+  // bool areAllProductsInCart(
+  //     List<Product> hamperProducts, List<OrderProduct> cartProducts) {
+  //   // Create a set of product IDs in the cart for quick lookup
+  //   final cartProductIds =
+  //       cartProducts.map((product) => product.productId).toSet();
+
+  //   // Check if all hamper products are in the cart
+  //   return hamperProducts
+  //       .every((product) => cartProductIds.contains(product.id));
+  // }
 }
 
 class _CheckoutTotal extends StatelessWidget {

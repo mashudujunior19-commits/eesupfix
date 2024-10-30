@@ -54,12 +54,8 @@ mixin _$OrderProduct {
   @JsonKey(includeFromJson: false, includeToJson: false)
   bool get isExpanded => throw _privateConstructorUsedError;
 
-  /// Serializes this OrderProduct to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-
-  /// Create a copy of OrderProduct
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   $OrderProductCopyWith<OrderProduct> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -105,8 +101,6 @@ class _$OrderProductCopyWithImpl<$Res, $Val extends OrderProduct>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
-  /// Create a copy of OrderProduct
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -237,8 +231,6 @@ class __$$OrderProductImplCopyWithImpl<$Res>
       _$OrderProductImpl _value, $Res Function(_$OrderProductImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of OrderProduct
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -450,7 +442,7 @@ class _$OrderProductImpl implements _OrderProduct {
                 other.isExpanded == isExpanded));
   }
 
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(
       runtimeType,
@@ -471,9 +463,7 @@ class _$OrderProductImpl implements _OrderProduct {
       substituteVariant,
       isExpanded);
 
-  /// Create a copy of OrderProduct
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
   _$$OrderProductImplCopyWith<_$OrderProductImpl> get copyWith =>
@@ -567,11 +557,8 @@ abstract class _OrderProduct implements OrderProduct {
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   bool get isExpanded;
-
-  /// Create a copy of OrderProduct
-  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   _$$OrderProductImplCopyWith<_$OrderProductImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

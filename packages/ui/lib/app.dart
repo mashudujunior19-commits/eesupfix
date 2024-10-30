@@ -38,6 +38,7 @@ import 'package:ui/src/views/finances/wallets/bloc/wallets_bloc.dart';
 import 'package:ui/src/views/notifications/bloc/notifications_bloc.dart';
 import 'package:ui/src/views/shop/browsing/bloc/products_filter_bloc.dart';
 import 'package:ui/src/views/shop/cart/bloc/cart_bloc.dart';
+import 'package:ui/src/views/shop/hampers/bloc/hamper_bloc.dart';
 
 class MainApp extends StatelessWidget {
   MainApp({super.key});
@@ -125,6 +126,15 @@ class MainApp extends StatelessWidget {
     ),
   );
 
+  final _hamperRepo = RepositoryProvider(
+    create: (context) => ShoppingRepository(
+      ShoppingSupabaseImp(
+        GetIt.I.get<SupabaseClient>(),
+      ),
+      context.read<AuthRepository>(),
+    ),
+  );
+
   @override
   Widget build(BuildContext context) {
     ///get the correct theme based on the app type (eesup or my kasi)
@@ -144,7 +154,8 @@ class MainApp extends StatelessWidget {
         _paymentGatewayRepo,
         _partnerRepository,
         _surveysRepository,
-        _notificationRepo
+        _notificationRepo,
+        _hamperRepo
       ],
       child: MultiBlocProvider(
         providers: [
@@ -184,6 +195,11 @@ class MainApp extends StatelessWidget {
           ),
           BlocProvider(
             create: (context) => ProductsFilterBloc(),
+          ),
+          BlocProvider(
+            create: (context) => HamperBloc(
+              context.read<ShoppingRepository>(),
+            ),
           ),
         ],
 

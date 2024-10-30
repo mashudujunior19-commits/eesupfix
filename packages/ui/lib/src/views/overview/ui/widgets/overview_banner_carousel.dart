@@ -10,9 +10,11 @@ class OverviewBannerCarousel extends StatelessWidget {
     super.key,
     required this.interval,
     required this.banners,
+    required this.onBannerTap,
   });
   final Duration interval;
   final AdBanner banners;
+  final Function(String url) onBannerTap;
 
   @override
   Widget build(BuildContext context) {
@@ -30,15 +32,21 @@ class OverviewBannerCarousel extends StatelessWidget {
         slideIndicator: SequentialFillIndicator(),
       ),
       items: banners.content.map((banner) {
-        return Padding(
-          padding: const EdgeInsets.only(right: 5),
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(5),
-            child: CachedNetworkImage(
-              imageUrl: banner.url,
-              fit: BoxFit.fill,
-              placeholder: (context, url) => const LoadingShimmer(),
-              errorWidget: (context, url, error) => const LoadingShimmer(),
+        return GestureDetector(
+          onTap: () {
+            onBannerTap(banner.url);
+            print("Clicked on banner: ${banner.url}");
+          },
+          child: Padding(
+            padding: const EdgeInsets.only(right: 5),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(5),
+              child: CachedNetworkImage(
+                imageUrl: banner.url,
+                fit: BoxFit.fill,
+                placeholder: (context, url) => const LoadingShimmer(),
+                errorWidget: (context, url, error) => const LoadingShimmer(),
+              ),
             ),
           ),
         );

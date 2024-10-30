@@ -1,5 +1,7 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:data/auth/models/user_role.dart';
 import 'package:data/shopping/repository/shopping_repository.dart';
+import 'package:ui/app_route.gr.dart';
 import 'package:ui/src/core/env/app_type.dart';
 import 'package:ui/src/core/extensions/context_environment_ext.dart';
 import 'package:ui/src/views/notifications/ui/notification_button.dart';
@@ -164,12 +166,23 @@ class _OverviewItems extends StatelessWidget {
       delegate: SliverChildListDelegate(
         [
           OverviewCategories(categories: state.categories),
-          OverviewBannerCarousel(interval: 5.seconds, banners: state.topBanner),
+          OverviewBannerCarousel(
+            interval: 5.seconds,
+            banners: state.topBanner,
+            onBannerTap: (url) {
+              context.router.push(HamperImageViewRoute(imageUrl: url));
+            },
+          ),
           const ReferalCodeTile(),
           HoriProductSlider(label: '❤ For you', products: state.forYouProducts),
           10.sH,
           OverviewBannerCarousel(
-              interval: 10.seconds, banners: state.bottomBanner),
+            interval: 10.seconds,
+            banners: state.bottomBanner,
+            onBannerTap: (url) {
+              context.router.push(HamperImageViewRoute(imageUrl: url));
+            },
+          ),
           HoriProductSlider(
               label: '📊  Popular', products: state.popularProducts),
           150.sH,

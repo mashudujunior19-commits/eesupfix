@@ -6,6 +6,9 @@ import 'package:data/shopping/models/category.dart';
 import 'package:data/shopping/models/product.dart';
 import 'package:data/shopping/models/product_request.dart';
 
+import '../models/hamper.dart';
+import '../models/mapped_product_hamper.dart';
+
 abstract class ShoppingDataSource {
   ///Fetches all parent categories
   ///Those that have no parent
@@ -66,4 +69,9 @@ abstract class ShoppingDataSource {
     bool substituteBrand,
     bool substituteVariant,
   );
+//hamper functions
+  Future<List<Hamper>> fetchHampers(String userId);
+  Future<List<Product>> fetchHamperProducts(String hamperId);
+  Future<List<HamperProductDetail>> fetchHamperProductDetails(String hamperId);
+  Future<List<Hamper>> fetchHampersByImageUrl(String imgUrl);
 }

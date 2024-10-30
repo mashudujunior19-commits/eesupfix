@@ -30,12 +30,8 @@ mixin _$Choice {
   @JsonKey(includeFromJson: false, includeToJson: false)
   bool get isSelected => throw _privateConstructorUsedError;
 
-  /// Serializes this Choice to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-
-  /// Create a copy of Choice
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   $ChoiceCopyWith<Choice> get copyWith => throw _privateConstructorUsedError;
 }
 
@@ -63,8 +59,6 @@ class _$ChoiceCopyWithImpl<$Res, $Val extends Choice>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
-  /// Create a copy of Choice
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -118,8 +112,6 @@ class __$$ChoiceImplCopyWithImpl<$Res>
       _$ChoiceImpl _value, $Res Function(_$ChoiceImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of Choice
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -196,14 +188,12 @@ class _$ChoiceImpl implements _Choice {
                 other.isSelected == isSelected));
   }
 
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   @override
   int get hashCode =>
       Object.hash(runtimeType, choiceId, choice, isCorrect, isSelected);
 
-  /// Create a copy of Choice
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
   _$$ChoiceImplCopyWith<_$ChoiceImpl> get copyWith =>
@@ -241,11 +231,8 @@ abstract class _Choice implements Choice {
   @JsonKey(name: 'is_selected', includeFromJson: false)
   @JsonKey(includeFromJson: false, includeToJson: false)
   bool get isSelected;
-
-  /// Create a copy of Choice
-  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   _$$ChoiceImplCopyWith<_$ChoiceImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

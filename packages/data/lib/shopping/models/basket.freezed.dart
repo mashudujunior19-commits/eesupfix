@@ -26,12 +26,8 @@ mixin _$Basket {
   @BasketTypeConverter()
   BasketType? get type => throw _privateConstructorUsedError;
 
-  /// Serializes this Basket to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-
-  /// Create a copy of Basket
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   $BasketCopyWith<Basket> get copyWith => throw _privateConstructorUsedError;
 }
 
@@ -56,8 +52,6 @@ class _$BasketCopyWithImpl<$Res, $Val extends Basket>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
-  /// Create a copy of Basket
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -103,8 +97,6 @@ class __$$BasketImplCopyWithImpl<$Res>
       _$BasketImpl _value, $Res Function(_$BasketImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of Basket
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -164,13 +156,11 @@ class _$BasketImpl implements _Basket {
             (identical(other.type, type) || other.type == type));
   }
 
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(runtimeType, id, name, type);
 
-  /// Create a copy of Basket
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
   _$$BasketImplCopyWith<_$BasketImpl> get copyWith =>
@@ -200,11 +190,8 @@ abstract class _Basket implements Basket {
   @override
   @BasketTypeConverter()
   BasketType? get type;
-
-  /// Create a copy of Basket
-  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   _$$BasketImplCopyWith<_$BasketImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

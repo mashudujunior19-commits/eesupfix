@@ -19,9 +19,7 @@ mixin _$ProductFilter {
   int get limit => throw _privateConstructorUsedError;
   ProductSortEnums get sort => throw _privateConstructorUsedError;
 
-  /// Create a copy of ProductFilter
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   $ProductFilterCopyWith<ProductFilter> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -45,8 +43,6 @@ class _$ProductFilterCopyWithImpl<$Res, $Val extends ProductFilter>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
-  /// Create a copy of ProductFilter
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -85,8 +81,6 @@ class __$$ProductFilterImplCopyWithImpl<$Res>
       _$ProductFilterImpl _value, $Res Function(_$ProductFilterImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of ProductFilter
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -133,9 +127,7 @@ class _$ProductFilterImpl implements _ProductFilter {
   @override
   int get hashCode => Object.hash(runtimeType, limit, sort);
 
-  /// Create a copy of ProductFilter
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
   _$$ProductFilterImplCopyWith<_$ProductFilterImpl> get copyWith =>
@@ -151,11 +143,8 @@ abstract class _ProductFilter implements ProductFilter {
   int get limit;
   @override
   ProductSortEnums get sort;
-
-  /// Create a copy of ProductFilter
-  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   _$$ProductFilterImplCopyWith<_$ProductFilterImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

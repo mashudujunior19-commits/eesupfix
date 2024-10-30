@@ -24,12 +24,8 @@ mixin _$AdBanner {
   @AdContentConverter()
   List<AdContent> get content => throw _privateConstructorUsedError;
 
-  /// Serializes this AdBanner to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-
-  /// Create a copy of AdBanner
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   $AdBannerCopyWith<AdBanner> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -52,8 +48,6 @@ class _$AdBannerCopyWithImpl<$Res, $Val extends AdBanner>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
-  /// Create a copy of AdBanner
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -92,8 +86,6 @@ class __$$AdBannerImplCopyWithImpl<$Res>
       _$AdBannerImpl _value, $Res Function(_$AdBannerImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of AdBanner
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -149,14 +141,12 @@ class _$AdBannerImpl implements _AdBanner {
             const DeepCollectionEquality().equals(other._content, _content));
   }
 
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(
       runtimeType, id, const DeepCollectionEquality().hash(_content));
 
-  /// Create a copy of AdBanner
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
   _$$AdBannerImplCopyWith<_$AdBannerImpl> get copyWith =>
@@ -184,11 +174,8 @@ abstract class _AdBanner implements AdBanner {
   @override
   @AdContentConverter()
   List<AdContent> get content;
-
-  /// Create a copy of AdBanner
-  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   _$$AdBannerImplCopyWith<_$AdBannerImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -204,12 +191,8 @@ mixin _$AdContent {
   @JsonKey(name: 'order_number')
   int get orderNumber => throw _privateConstructorUsedError;
 
-  /// Serializes this AdContent to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-
-  /// Create a copy of AdContent
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   $AdContentCopyWith<AdContent> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -235,8 +218,6 @@ class _$AdContentCopyWithImpl<$Res, $Val extends AdContent>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
-  /// Create a copy of AdContent
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -283,8 +264,6 @@ class __$$AdContentImplCopyWithImpl<$Res>
       _$AdContentImpl _value, $Res Function(_$AdContentImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of AdContent
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -344,13 +323,11 @@ class _$AdContentImpl implements _AdContent {
                 other.orderNumber == orderNumber));
   }
 
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(runtimeType, url, type, orderNumber);
 
-  /// Create a copy of AdContent
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
   _$$AdContentImplCopyWith<_$AdContentImpl> get copyWith =>
@@ -381,11 +358,8 @@ abstract class _AdContent implements AdContent {
   @override
   @JsonKey(name: 'order_number')
   int get orderNumber;
-
-  /// Create a copy of AdContent
-  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   _$$AdContentImplCopyWith<_$AdContentImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
