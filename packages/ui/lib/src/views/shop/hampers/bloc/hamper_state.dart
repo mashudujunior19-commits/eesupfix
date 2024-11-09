@@ -8,10 +8,15 @@ final class HamperInitial extends HamperState {}
 class HamperLoading extends HamperState {}
 
 class HamperLoaded extends HamperState {
+  final Hamper hamper;
+  HamperLoaded(this.hamper);
+}
+
+class HampersLoaded extends HamperState {
   final List<Hamper> hampers;
   final List<Product>? products;
 
-  HamperLoaded(this.hampers, {this.products});
+  HampersLoaded(this.hampers, {this.products});
 }
 
 class HamperProductLoaded extends HamperState {
@@ -20,8 +25,49 @@ class HamperProductLoaded extends HamperState {
   HamperProductLoaded(this.hamperProductDetails);
 }
 
+// class HamperComparisonResult extends HamperState {
+//   final Hamper? matchingHamper;
+
+//   HamperComparisonResult(this.matchingHamper);
+// }
+
 class HamperError extends HamperState {
   final String message;
 
   HamperError(this.message);
+}
+
+class HamperComparisonSuccess extends HamperState {
+  final Hamper matchingHamper;
+
+  HamperComparisonSuccess(this.matchingHamper);
+}
+
+class HamperComparisonResultState extends HamperState {
+  final Product? hamperProduct;
+  final Hamper matchingHamper;
+  // final List<OrderProduct> nonMatchingProducts;
+
+  HamperComparisonResultState({
+    required this.hamperProduct,
+    required this.matchingHamper,
+    // required this.nonMatchingProducts,
+  });
+}
+
+class HamperAddedToCart extends HamperState {
+  final List<OrderProduct> updatedCartProducts;
+  HamperAddedToCart(this.updatedCartProducts);
+}
+
+class HamperComparisonFailure extends HamperState {}
+
+class HamperAsProductLoaded extends HamperState {
+  final Product hamperProduct;
+  HamperAsProductLoaded(this.hamperProduct);
+}
+
+class HamperIdLoaded extends HamperState {
+  final String hamperId;
+  HamperIdLoaded(this.hamperId);
 }

@@ -23,8 +23,6 @@ mixin _$Hamper {
   String get id => throw _privateConstructorUsedError;
   @JsonKey(name: 'code')
   String get hamperCode => throw _privateConstructorUsedError;
-  @JsonKey(name: 'name')
-  String get hamperName => throw _privateConstructorUsedError;
   String get type => throw _privateConstructorUsedError;
   double get value => throw _privateConstructorUsedError;
   @JsonKey(name: 'expiry_date')
@@ -34,6 +32,12 @@ mixin _$Hamper {
   List<int>? get productIds => throw _privateConstructorUsedError;
   @JsonKey(name: 'img_url')
   String? get imgUrl => throw _privateConstructorUsedError;
+  @JsonKey(name: 'hamper_gif_url1')
+  String? get gifUrl1 => throw _privateConstructorUsedError;
+  @JsonKey(name: 'hamper_gif_url2')
+  String? get gifUrl2 => throw _privateConstructorUsedError;
+  @JsonKey(name: 'customer_type')
+  String? get customerType => throw _privateConstructorUsedError;
   bool? get isFree => throw _privateConstructorUsedError;
   Map<int, int>? get quantity => throw _privateConstructorUsedError;
 
@@ -50,13 +54,15 @@ abstract class $HamperCopyWith<$Res> {
   $Res call(
       {String id,
       @JsonKey(name: 'code') String hamperCode,
-      @JsonKey(name: 'name') String hamperName,
       String type,
       double value,
       @JsonKey(name: 'expiry_date') DateTime expiryDate,
       @JsonKey(name: 'is_final') bool isFinal,
       List<int>? productIds,
       @JsonKey(name: 'img_url') String? imgUrl,
+      @JsonKey(name: 'hamper_gif_url1') String? gifUrl1,
+      @JsonKey(name: 'hamper_gif_url2') String? gifUrl2,
+      @JsonKey(name: 'customer_type') String? customerType,
       bool? isFree,
       Map<int, int>? quantity});
 }
@@ -76,13 +82,15 @@ class _$HamperCopyWithImpl<$Res, $Val extends Hamper>
   $Res call({
     Object? id = null,
     Object? hamperCode = null,
-    Object? hamperName = null,
     Object? type = null,
     Object? value = null,
     Object? expiryDate = null,
     Object? isFinal = null,
     Object? productIds = freezed,
     Object? imgUrl = freezed,
+    Object? gifUrl1 = freezed,
+    Object? gifUrl2 = freezed,
+    Object? customerType = freezed,
     Object? isFree = freezed,
     Object? quantity = freezed,
   }) {
@@ -94,10 +102,6 @@ class _$HamperCopyWithImpl<$Res, $Val extends Hamper>
       hamperCode: null == hamperCode
           ? _value.hamperCode
           : hamperCode // ignore: cast_nullable_to_non_nullable
-              as String,
-      hamperName: null == hamperName
-          ? _value.hamperName
-          : hamperName // ignore: cast_nullable_to_non_nullable
               as String,
       type: null == type
           ? _value.type
@@ -123,6 +127,18 @@ class _$HamperCopyWithImpl<$Res, $Val extends Hamper>
           ? _value.imgUrl
           : imgUrl // ignore: cast_nullable_to_non_nullable
               as String?,
+      gifUrl1: freezed == gifUrl1
+          ? _value.gifUrl1
+          : gifUrl1 // ignore: cast_nullable_to_non_nullable
+              as String?,
+      gifUrl2: freezed == gifUrl2
+          ? _value.gifUrl2
+          : gifUrl2 // ignore: cast_nullable_to_non_nullable
+              as String?,
+      customerType: freezed == customerType
+          ? _value.customerType
+          : customerType // ignore: cast_nullable_to_non_nullable
+              as String?,
       isFree: freezed == isFree
           ? _value.isFree
           : isFree // ignore: cast_nullable_to_non_nullable
@@ -145,13 +161,15 @@ abstract class _$$HamperImplCopyWith<$Res> implements $HamperCopyWith<$Res> {
   $Res call(
       {String id,
       @JsonKey(name: 'code') String hamperCode,
-      @JsonKey(name: 'name') String hamperName,
       String type,
       double value,
       @JsonKey(name: 'expiry_date') DateTime expiryDate,
       @JsonKey(name: 'is_final') bool isFinal,
       List<int>? productIds,
       @JsonKey(name: 'img_url') String? imgUrl,
+      @JsonKey(name: 'hamper_gif_url1') String? gifUrl1,
+      @JsonKey(name: 'hamper_gif_url2') String? gifUrl2,
+      @JsonKey(name: 'customer_type') String? customerType,
       bool? isFree,
       Map<int, int>? quantity});
 }
@@ -169,13 +187,15 @@ class __$$HamperImplCopyWithImpl<$Res>
   $Res call({
     Object? id = null,
     Object? hamperCode = null,
-    Object? hamperName = null,
     Object? type = null,
     Object? value = null,
     Object? expiryDate = null,
     Object? isFinal = null,
     Object? productIds = freezed,
     Object? imgUrl = freezed,
+    Object? gifUrl1 = freezed,
+    Object? gifUrl2 = freezed,
+    Object? customerType = freezed,
     Object? isFree = freezed,
     Object? quantity = freezed,
   }) {
@@ -187,10 +207,6 @@ class __$$HamperImplCopyWithImpl<$Res>
       hamperCode: null == hamperCode
           ? _value.hamperCode
           : hamperCode // ignore: cast_nullable_to_non_nullable
-              as String,
-      hamperName: null == hamperName
-          ? _value.hamperName
-          : hamperName // ignore: cast_nullable_to_non_nullable
               as String,
       type: null == type
           ? _value.type
@@ -216,6 +232,18 @@ class __$$HamperImplCopyWithImpl<$Res>
           ? _value.imgUrl
           : imgUrl // ignore: cast_nullable_to_non_nullable
               as String?,
+      gifUrl1: freezed == gifUrl1
+          ? _value.gifUrl1
+          : gifUrl1 // ignore: cast_nullable_to_non_nullable
+              as String?,
+      gifUrl2: freezed == gifUrl2
+          ? _value.gifUrl2
+          : gifUrl2 // ignore: cast_nullable_to_non_nullable
+              as String?,
+      customerType: freezed == customerType
+          ? _value.customerType
+          : customerType // ignore: cast_nullable_to_non_nullable
+              as String?,
       isFree: freezed == isFree
           ? _value.isFree
           : isFree // ignore: cast_nullable_to_non_nullable
@@ -234,13 +262,15 @@ class _$HamperImpl implements _Hamper {
   _$HamperImpl(
       {required this.id,
       @JsonKey(name: 'code') required this.hamperCode,
-      @JsonKey(name: 'name') required this.hamperName,
       required this.type,
       required this.value,
       @JsonKey(name: 'expiry_date') required this.expiryDate,
       @JsonKey(name: 'is_final') required this.isFinal,
       final List<int>? productIds,
       @JsonKey(name: 'img_url') this.imgUrl,
+      @JsonKey(name: 'hamper_gif_url1') this.gifUrl1,
+      @JsonKey(name: 'hamper_gif_url2') this.gifUrl2,
+      @JsonKey(name: 'customer_type') this.customerType,
       this.isFree,
       final Map<int, int>? quantity})
       : _productIds = productIds,
@@ -254,9 +284,6 @@ class _$HamperImpl implements _Hamper {
   @override
   @JsonKey(name: 'code')
   final String hamperCode;
-  @override
-  @JsonKey(name: 'name')
-  final String hamperName;
   @override
   final String type;
   @override
@@ -281,6 +308,15 @@ class _$HamperImpl implements _Hamper {
   @JsonKey(name: 'img_url')
   final String? imgUrl;
   @override
+  @JsonKey(name: 'hamper_gif_url1')
+  final String? gifUrl1;
+  @override
+  @JsonKey(name: 'hamper_gif_url2')
+  final String? gifUrl2;
+  @override
+  @JsonKey(name: 'customer_type')
+  final String? customerType;
+  @override
   final bool? isFree;
   final Map<int, int>? _quantity;
   @override
@@ -294,7 +330,7 @@ class _$HamperImpl implements _Hamper {
 
   @override
   String toString() {
-    return 'Hamper(id: $id, hamperCode: $hamperCode, hamperName: $hamperName, type: $type, value: $value, expiryDate: $expiryDate, isFinal: $isFinal, productIds: $productIds, imgUrl: $imgUrl, isFree: $isFree, quantity: $quantity)';
+    return 'Hamper(id: $id, hamperCode: $hamperCode, type: $type, value: $value, expiryDate: $expiryDate, isFinal: $isFinal, productIds: $productIds, imgUrl: $imgUrl, gifUrl1: $gifUrl1, gifUrl2: $gifUrl2, customerType: $customerType, isFree: $isFree, quantity: $quantity)';
   }
 
   @override
@@ -305,8 +341,6 @@ class _$HamperImpl implements _Hamper {
             (identical(other.id, id) || other.id == id) &&
             (identical(other.hamperCode, hamperCode) ||
                 other.hamperCode == hamperCode) &&
-            (identical(other.hamperName, hamperName) ||
-                other.hamperName == hamperName) &&
             (identical(other.type, type) || other.type == type) &&
             (identical(other.value, value) || other.value == value) &&
             (identical(other.expiryDate, expiryDate) ||
@@ -315,6 +349,10 @@ class _$HamperImpl implements _Hamper {
             const DeepCollectionEquality()
                 .equals(other._productIds, _productIds) &&
             (identical(other.imgUrl, imgUrl) || other.imgUrl == imgUrl) &&
+            (identical(other.gifUrl1, gifUrl1) || other.gifUrl1 == gifUrl1) &&
+            (identical(other.gifUrl2, gifUrl2) || other.gifUrl2 == gifUrl2) &&
+            (identical(other.customerType, customerType) ||
+                other.customerType == customerType) &&
             (identical(other.isFree, isFree) || other.isFree == isFree) &&
             const DeepCollectionEquality().equals(other._quantity, _quantity));
   }
@@ -325,13 +363,15 @@ class _$HamperImpl implements _Hamper {
       runtimeType,
       id,
       hamperCode,
-      hamperName,
       type,
       value,
       expiryDate,
       isFinal,
       const DeepCollectionEquality().hash(_productIds),
       imgUrl,
+      gifUrl1,
+      gifUrl2,
+      customerType,
       isFree,
       const DeepCollectionEquality().hash(_quantity));
 
@@ -353,13 +393,15 @@ abstract class _Hamper implements Hamper {
   factory _Hamper(
       {required final String id,
       @JsonKey(name: 'code') required final String hamperCode,
-      @JsonKey(name: 'name') required final String hamperName,
       required final String type,
       required final double value,
       @JsonKey(name: 'expiry_date') required final DateTime expiryDate,
       @JsonKey(name: 'is_final') required final bool isFinal,
       final List<int>? productIds,
       @JsonKey(name: 'img_url') final String? imgUrl,
+      @JsonKey(name: 'hamper_gif_url1') final String? gifUrl1,
+      @JsonKey(name: 'hamper_gif_url2') final String? gifUrl2,
+      @JsonKey(name: 'customer_type') final String? customerType,
       final bool? isFree,
       final Map<int, int>? quantity}) = _$HamperImpl;
 
@@ -370,9 +412,6 @@ abstract class _Hamper implements Hamper {
   @override
   @JsonKey(name: 'code')
   String get hamperCode;
-  @override
-  @JsonKey(name: 'name')
-  String get hamperName;
   @override
   String get type;
   @override
@@ -388,6 +427,15 @@ abstract class _Hamper implements Hamper {
   @override
   @JsonKey(name: 'img_url')
   String? get imgUrl;
+  @override
+  @JsonKey(name: 'hamper_gif_url1')
+  String? get gifUrl1;
+  @override
+  @JsonKey(name: 'hamper_gif_url2')
+  String? get gifUrl2;
+  @override
+  @JsonKey(name: 'customer_type')
+  String? get customerType;
   @override
   bool? get isFree;
   @override

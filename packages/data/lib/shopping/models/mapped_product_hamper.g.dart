@@ -19,6 +19,7 @@ _$HamperProductDetailImpl _$$HamperProductDetailImplFromJson(
       imageUrl: json['imageUrl'] as String,
       salePrice: (json['salePrice'] as num).toDouble(),
       costPrice: (json['costPrice'] as num).toDouble(),
+      product: Product.fromJson(json['product'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$$HamperProductDetailImplToJson(
@@ -34,4 +35,5 @@ Map<String, dynamic> _$$HamperProductDetailImplToJson(
       'imageUrl': instance.imageUrl,
       'salePrice': instance.salePrice,
       'costPrice': instance.costPrice,
+      'product': instance.product,
     };

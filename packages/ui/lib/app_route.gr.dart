@@ -84,8 +84,8 @@ import 'package:ui/src/views/shop/browsing/ui/category_screen.dart' as _i6;
 import 'package:ui/src/views/shop/browsing/ui/product_view_screen.dart' as _i31;
 import 'package:ui/src/views/shop/cart/ui/cart_screen.dart' as _i5;
 import 'package:ui/src/views/shop/checkout/ui/checkout_screen.dart' as _i7;
-import 'package:ui/src/views/shop/hampers/ui/hamper_image_view.dart' as _i15;
 import 'package:ui/src/views/shop/hampers/ui/hamper_list.dart' as _i17;
+import 'package:ui/src/views/shop/hampers/ui/hamper_stack.dart' as _i15;
 import 'package:ui/src/views/shop/hampers/ui/hamper_view.dart' as _i16;
 import 'package:ui/src/views/shop/product_request/product_request_screen.dart'
     as _i30;
@@ -198,10 +198,13 @@ class BrowseShopRoute extends _i47.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i5.CartScreen]
-class CartRoute extends _i47.PageRouteInfo<void> {
-  const CartRoute({List<_i47.PageRouteInfo>? children})
-      : super(
+class CartRoute extends _i47.PageRouteInfo<CartRouteArgs> {
+  CartRoute({
+    _i48.Key? key,
+    List<_i47.PageRouteInfo>? children,
+  }) : super(
           CartRoute.name,
+          args: CartRouteArgs(key: key),
           initialChildren: children,
         );
 
@@ -210,9 +213,22 @@ class CartRoute extends _i47.PageRouteInfo<void> {
   static _i47.PageInfo page = _i47.PageInfo(
     name,
     builder: (data) {
-      return const _i5.CartScreen();
+      final args =
+          data.argsAs<CartRouteArgs>(orElse: () => const CartRouteArgs());
+      return _i5.CartScreen(key: args.key);
     },
   );
+}
+
+class CartRouteArgs {
+  const CartRouteArgs({this.key});
+
+  final _i48.Key? key;
+
+  @override
+  String toString() {
+    return 'CartRouteArgs{key: $key}';
+  }
 }
 
 /// generated route for
@@ -676,49 +692,60 @@ class EditProfileRouteArgs {
 }
 
 /// generated route for
-/// [_i15.HamperImageViewPage]
-class HamperImageViewRoute
-    extends _i47.PageRouteInfo<HamperImageViewRouteArgs> {
-  HamperImageViewRoute({
+/// [_i15.HamperImageStack]
+class HamperImageStack extends _i47.PageRouteInfo<HamperImageStackArgs> {
+  HamperImageStack({
     _i48.Key? key,
-    required String imageUrl,
+    required String? imgUrl,
+    String? hamperGifUrl1,
+    String? hamperGifUrl2,
     List<_i47.PageRouteInfo>? children,
   }) : super(
-          HamperImageViewRoute.name,
-          args: HamperImageViewRouteArgs(
+          HamperImageStack.name,
+          args: HamperImageStackArgs(
             key: key,
-            imageUrl: imageUrl,
+            imgUrl: imgUrl,
+            hamperGifUrl1: hamperGifUrl1,
+            hamperGifUrl2: hamperGifUrl2,
           ),
           initialChildren: children,
         );
 
-  static const String name = 'HamperImageViewRoute';
+  static const String name = 'HamperImageStack';
 
   static _i47.PageInfo page = _i47.PageInfo(
     name,
     builder: (data) {
-      final args = data.argsAs<HamperImageViewRouteArgs>();
-      return _i15.HamperImageViewPage(
+      final args = data.argsAs<HamperImageStackArgs>();
+      return _i15.HamperImageStack(
         key: args.key,
-        imageUrl: args.imageUrl,
+        imgUrl: args.imgUrl,
+        hamperGifUrl1: args.hamperGifUrl1,
+        hamperGifUrl2: args.hamperGifUrl2,
       );
     },
   );
 }
 
-class HamperImageViewRouteArgs {
-  const HamperImageViewRouteArgs({
+class HamperImageStackArgs {
+  const HamperImageStackArgs({
     this.key,
-    required this.imageUrl,
+    required this.imgUrl,
+    this.hamperGifUrl1,
+    this.hamperGifUrl2,
   });
 
   final _i48.Key? key;
 
-  final String imageUrl;
+  final String? imgUrl;
+
+  final String? hamperGifUrl1;
+
+  final String? hamperGifUrl2;
 
   @override
   String toString() {
-    return 'HamperImageViewRouteArgs{key: $key, imageUrl: $imageUrl}';
+    return 'HamperImageStackArgs{key: $key, imgUrl: $imgUrl, hamperGifUrl1: $hamperGifUrl1, hamperGifUrl2: $hamperGifUrl2}';
   }
 }
 
@@ -727,13 +754,15 @@ class HamperImageViewRouteArgs {
 class HamperViewRoute extends _i47.PageRouteInfo<HamperViewRouteArgs> {
   HamperViewRoute({
     _i48.Key? key,
-    required String hamperId,
+    String? hamperId,
+    String? imageUrl,
     List<_i47.PageRouteInfo>? children,
   }) : super(
           HamperViewRoute.name,
           args: HamperViewRouteArgs(
             key: key,
             hamperId: hamperId,
+            imageUrl: imageUrl,
           ),
           initialChildren: children,
         );
@@ -743,10 +772,12 @@ class HamperViewRoute extends _i47.PageRouteInfo<HamperViewRouteArgs> {
   static _i47.PageInfo page = _i47.PageInfo(
     name,
     builder: (data) {
-      final args = data.argsAs<HamperViewRouteArgs>();
+      final args = data.argsAs<HamperViewRouteArgs>(
+          orElse: () => const HamperViewRouteArgs());
       return _i16.HamperViewPage(
         key: args.key,
         hamperId: args.hamperId,
+        imageUrl: args.imageUrl,
       );
     },
   );
@@ -755,16 +786,19 @@ class HamperViewRoute extends _i47.PageRouteInfo<HamperViewRouteArgs> {
 class HamperViewRouteArgs {
   const HamperViewRouteArgs({
     this.key,
-    required this.hamperId,
+    this.hamperId,
+    this.imageUrl,
   });
 
   final _i48.Key? key;
 
-  final String hamperId;
+  final String? hamperId;
+
+  final String? imageUrl;
 
   @override
   String toString() {
-    return 'HamperViewRouteArgs{key: $key, hamperId: $hamperId}';
+    return 'HamperViewRouteArgs{key: $key, hamperId: $hamperId, imageUrl: $imageUrl}';
   }
 }
 

@@ -62,6 +62,8 @@ mixin _$Product {
   String? get categoryName => throw _privateConstructorUsedError;
   @JsonKey(name: 'category_image_url')
   String? get categoryImageUrl => throw _privateConstructorUsedError;
+  @JsonKey(name: 'hamper_id')
+  String? get hamperId => throw _privateConstructorUsedError;
   bool get sellable => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -102,6 +104,7 @@ abstract class $ProductCopyWith<$Res> {
       ProductClass productClass,
       @JsonKey(name: 'category_name') String? categoryName,
       @JsonKey(name: 'category_image_url') String? categoryImageUrl,
+      @JsonKey(name: 'hamper_id') String? hamperId,
       bool sellable});
 }
 
@@ -143,6 +146,7 @@ class _$ProductCopyWithImpl<$Res, $Val extends Product>
     Object? productClass = null,
     Object? categoryName = freezed,
     Object? categoryImageUrl = freezed,
+    Object? hamperId = freezed,
     Object? sellable = null,
   }) {
     return _then(_value.copyWith(
@@ -246,6 +250,10 @@ class _$ProductCopyWithImpl<$Res, $Val extends Product>
           ? _value.categoryImageUrl
           : categoryImageUrl // ignore: cast_nullable_to_non_nullable
               as String?,
+      hamperId: freezed == hamperId
+          ? _value.hamperId
+          : hamperId // ignore: cast_nullable_to_non_nullable
+              as String?,
       sellable: null == sellable
           ? _value.sellable
           : sellable // ignore: cast_nullable_to_non_nullable
@@ -289,6 +297,7 @@ abstract class _$$ProductImplCopyWith<$Res> implements $ProductCopyWith<$Res> {
       ProductClass productClass,
       @JsonKey(name: 'category_name') String? categoryName,
       @JsonKey(name: 'category_image_url') String? categoryImageUrl,
+      @JsonKey(name: 'hamper_id') String? hamperId,
       bool sellable});
 }
 
@@ -328,6 +337,7 @@ class __$$ProductImplCopyWithImpl<$Res>
     Object? productClass = null,
     Object? categoryName = freezed,
     Object? categoryImageUrl = freezed,
+    Object? hamperId = freezed,
     Object? sellable = null,
   }) {
     return _then(_$ProductImpl(
@@ -431,6 +441,10 @@ class __$$ProductImplCopyWithImpl<$Res>
           ? _value.categoryImageUrl
           : categoryImageUrl // ignore: cast_nullable_to_non_nullable
               as String?,
+      hamperId: freezed == hamperId
+          ? _value.hamperId
+          : hamperId // ignore: cast_nullable_to_non_nullable
+              as String?,
       sellable: null == sellable
           ? _value.sellable
           : sellable // ignore: cast_nullable_to_non_nullable
@@ -470,6 +484,7 @@ class _$ProductImpl implements _Product {
       required this.productClass,
       @JsonKey(name: 'category_name') this.categoryName,
       @JsonKey(name: 'category_image_url') this.categoryImageUrl,
+      @JsonKey(name: 'hamper_id') this.hamperId,
       required this.sellable});
 
   factory _$ProductImpl.fromJson(Map<String, dynamic> json) =>
@@ -543,11 +558,14 @@ class _$ProductImpl implements _Product {
   @JsonKey(name: 'category_image_url')
   final String? categoryImageUrl;
   @override
+  @JsonKey(name: 'hamper_id')
+  final String? hamperId;
+  @override
   final bool sellable;
 
   @override
   String toString() {
-    return 'Product(id: $id, categoryId: $categoryId, name: $name, description: $description, imageUrl: $imageUrl, size: $size, brand: $brand, type: $type, uom: $uom, unitPackSize: $unitPackSize, flavour: $flavour, salePrice: $salePrice, costPrice: $costPrice, vaa: $vaa, vat: $vat, orderMax: $orderMax, childId: $childId, childBreakQty: $childBreakQty, barCode: $barCode, kitKatRef: $kitKatRef, vatClaimable: $vatClaimable, vatAble: $vatAble, productClass: $productClass, categoryName: $categoryName, categoryImageUrl: $categoryImageUrl, sellable: $sellable)';
+    return 'Product(id: $id, categoryId: $categoryId, name: $name, description: $description, imageUrl: $imageUrl, size: $size, brand: $brand, type: $type, uom: $uom, unitPackSize: $unitPackSize, flavour: $flavour, salePrice: $salePrice, costPrice: $costPrice, vaa: $vaa, vat: $vat, orderMax: $orderMax, childId: $childId, childBreakQty: $childBreakQty, barCode: $barCode, kitKatRef: $kitKatRef, vatClaimable: $vatClaimable, vatAble: $vatAble, productClass: $productClass, categoryName: $categoryName, categoryImageUrl: $categoryImageUrl, hamperId: $hamperId, sellable: $sellable)';
   }
 
   @override
@@ -593,6 +611,8 @@ class _$ProductImpl implements _Product {
                 other.categoryName == categoryName) &&
             (identical(other.categoryImageUrl, categoryImageUrl) ||
                 other.categoryImageUrl == categoryImageUrl) &&
+            (identical(other.hamperId, hamperId) ||
+                other.hamperId == hamperId) &&
             (identical(other.sellable, sellable) ||
                 other.sellable == sellable));
   }
@@ -626,6 +646,7 @@ class _$ProductImpl implements _Product {
         productClass,
         categoryName,
         categoryImageUrl,
+        hamperId,
         sellable
       ]);
 
@@ -672,6 +693,7 @@ abstract class _Product implements Product {
       required final ProductClass productClass,
       @JsonKey(name: 'category_name') final String? categoryName,
       @JsonKey(name: 'category_image_url') final String? categoryImageUrl,
+      @JsonKey(name: 'hamper_id') final String? hamperId,
       required final bool sellable}) = _$ProductImpl;
 
   factory _Product.fromJson(Map<String, dynamic> json) = _$ProductImpl.fromJson;
@@ -743,6 +765,9 @@ abstract class _Product implements Product {
   @override
   @JsonKey(name: 'category_image_url')
   String? get categoryImageUrl;
+  @override
+  @JsonKey(name: 'hamper_id')
+  String? get hamperId;
   @override
   bool get sellable;
   @override

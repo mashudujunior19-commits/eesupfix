@@ -7,6 +7,7 @@ import 'package:data/shopping/models/product.dart';
 import 'package:data/shopping/models/product_request.dart';
 
 import '../models/hamper.dart';
+import '../models/hamper_banner.dart';
 import '../models/mapped_product_hamper.dart';
 
 abstract class ShoppingDataSource {
@@ -73,5 +74,9 @@ abstract class ShoppingDataSource {
   Future<List<Hamper>> fetchHampers(String userId);
   Future<List<Product>> fetchHamperProducts(String hamperId);
   Future<List<HamperProductDetail>> fetchHamperProductDetails(String hamperId);
-  Future<List<Hamper>> fetchHampersByImageUrl(String imgUrl);
+  Future<Hamper?> fetchHampersByImageUrl(String imgUrl);
+  Future<Map<int, int>> getProductQuantitiesForHamper(String hamperId);
+  Future<HamperBanner> fetchHamperBanner(int id);
+  Future<Product?> fetchHamperProduct(String hamperId);
+  Future<Hamper> fetchHamperById(String hamperId);
 }

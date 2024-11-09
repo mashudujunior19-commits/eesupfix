@@ -1,65 +1,35 @@
-// class HamperComparer {
-//   final List<OrderProduct> cartProducts;
-//   final List<Hamper> hampers;
+import 'package:data/orders/models/order_product.dart';
+import 'package:data/shopping/models/hamper.dart';
 
-//   HamperComparer({required this.cartProducts, required this.hampers});
+class HamperComparer {
+  final List<OrderProduct> cartProducts;
+  final List<Hamper> hampers;
 
-//   List<Hamper> findMatchingHampers() {
-//     // This will hold the hampers that match the cart products
-//     List<Hamper> matchingHampers = [];
+  HamperComparer({required this.cartProducts, required this.hampers});
 
-//     for (final hamper in hampers) {
-//       // Fetch hamper products to compare against cart products
-//       final hamperProducts = fetchHamperProducts(hamper.id);
+  Hamper? findMatchingHamper() {
+    for (var hamper in hampers) {
+      print("Checking hamper: ${hamper.id}");
+      if (hamper.productIds == null || hamper.quantity == null) continue;
 
-//       // Check if all hamper products exist in the cart
-//       if (areAllProductsInCart(hamperProducts, cartProducts)) {
-//         matchingHampers.add(hamper);
-//       }
-//     }
+      final hamperProductIds = hamper.productIds!.toSet();
+      final hamperQuantities = hamper.quantity!;
+      bool allMatch = cartProducts.every((cartProduct) {
+        final productId = cartProduct.productId;
+        bool isMatching = hamperProductIds.contains(productId) &&
+            hamperQuantities[productId] == cartProduct.quantity;
+        print(
+            "Comparing productId $productId (cart) with hamper productIds: $hamperProductIds. Match: $isMatching");
+        return isMatching;
+      });
 
-//     return matchingHampers;
-//   }
-
-//   List<Product> fetchHamperProducts(String hamperId) {
-//     // You would replace this stub with the actual logic to fetch products for the hamper
-//     // This could be done using the HamperRepository
-//     return []; // Return a list of products for the given hamper
-//   }
-
-//   bool areAllProductsInCart(List<Product> hamperProducts, List<OrderProduct> cartProducts) {
-//     // Create a set of product IDs in the cart for quick lookup
-//     final cartProductIds = cartProducts.map((product) => product.productId).toSet();
-
-//     // Check if all hamper products are in the cart
-//     return hamperProducts.every((product) => cartProductIds.contains(product.id));
-//   }
-// }
-
-
-// void checkForMatchingHampers(BuildContext context) {
-//   final cartState = context.read<CartBloc>().state;
-//   final cartProducts = (cartState as CurrentCart).products;
-
-//   // Assuming you have a method in your HamperBloc to get the current hampers
-//   final hamperState = context.read<HamperBloc>().state;
-//   List<Hamper> hampers;
-
-//   if (hamperState is HamperLoaded) {
-//     hampers = hamperState.hampers;
-
-//     // Create an instance of HamperComparer
-//     final comparer = HamperComparer(cartProducts: cartProducts, hampers: hampers);
-
-//     // Find matching hampers
-//     final matchingHampers = comparer.findMatchingHampers();
-
-//     // Now you can use matchingHampers as needed (e.g., display them in the UI)
-//     if (matchingHampers.isNotEmpty) {
-//       // Do something with the matching hampers
-//       print('Matching hampers found: ${matchingHampers.length}');
-//     } else {
-//       print('No matching hampers found.');
-//     }
-//   }
-// }
+      if (allMatch) {
+        print("Match found with hamper ${hamper.id}");
+        return hamper;
+      } else {
+        print('no matching hamper found!!!');
+      }
+    }
+    return null;
+  }
+}

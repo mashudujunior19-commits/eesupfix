@@ -34,7 +34,7 @@ class HampersList extends StatelessWidget {
                 } else if (state is HamperError) {
                   return FullScreenError(
                       exception: EESUpException(message: state.message));
-                } else if (state is HamperLoaded) {
+                } else if (state is HampersLoaded) {
                   final hampers = state.hampers;
                   return ListView.builder(
                     padding: const EdgeInsets.only(bottom: 300),
@@ -81,7 +81,7 @@ class _HamperCard extends StatelessWidget {
         ),
         child: ListTile(
           contentPadding: const EdgeInsets.only(left: 10, right: 5),
-          title: Text('${hamper.hamperName} ${hamper.hamperCode}'),
+          title: Text(hamper.hamperCode),
           subtitle: Text(
             "Type: ${hamper.type} | Expires on: ${hamper.expiryDate.toLocal().toString().split(' ')[0]}",
             style: TextStyle(color: Colors.grey[700]),

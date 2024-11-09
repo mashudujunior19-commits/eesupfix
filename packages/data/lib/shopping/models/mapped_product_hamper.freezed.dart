@@ -30,6 +30,7 @@ mixin _$HamperProductDetail {
   String get imageUrl => throw _privateConstructorUsedError;
   double get salePrice => throw _privateConstructorUsedError;
   double get costPrice => throw _privateConstructorUsedError;
+  Product get product => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -53,7 +54,10 @@ abstract class $HamperProductDetailCopyWith<$Res> {
       String type,
       String imageUrl,
       double salePrice,
-      double costPrice});
+      double costPrice,
+      Product product});
+
+  $ProductCopyWith<$Res> get product;
 }
 
 /// @nodoc
@@ -79,6 +83,7 @@ class _$HamperProductDetailCopyWithImpl<$Res, $Val extends HamperProductDetail>
     Object? imageUrl = null,
     Object? salePrice = null,
     Object? costPrice = null,
+    Object? product = null,
   }) {
     return _then(_value.copyWith(
       hamperId: null == hamperId
@@ -121,7 +126,19 @@ class _$HamperProductDetailCopyWithImpl<$Res, $Val extends HamperProductDetail>
           ? _value.costPrice
           : costPrice // ignore: cast_nullable_to_non_nullable
               as double,
+      product: null == product
+          ? _value.product
+          : product // ignore: cast_nullable_to_non_nullable
+              as Product,
     ) as $Val);
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $ProductCopyWith<$Res> get product {
+    return $ProductCopyWith<$Res>(_value.product, (value) {
+      return _then(_value.copyWith(product: value) as $Val);
+    });
   }
 }
 
@@ -143,7 +160,11 @@ abstract class _$$HamperProductDetailImplCopyWith<$Res>
       String type,
       String imageUrl,
       double salePrice,
-      double costPrice});
+      double costPrice,
+      Product product});
+
+  @override
+  $ProductCopyWith<$Res> get product;
 }
 
 /// @nodoc
@@ -167,6 +188,7 @@ class __$$HamperProductDetailImplCopyWithImpl<$Res>
     Object? imageUrl = null,
     Object? salePrice = null,
     Object? costPrice = null,
+    Object? product = null,
   }) {
     return _then(_$HamperProductDetailImpl(
       hamperId: null == hamperId
@@ -209,6 +231,10 @@ class __$$HamperProductDetailImplCopyWithImpl<$Res>
           ? _value.costPrice
           : costPrice // ignore: cast_nullable_to_non_nullable
               as double,
+      product: null == product
+          ? _value.product
+          : product // ignore: cast_nullable_to_non_nullable
+              as Product,
     ));
   }
 }
@@ -226,7 +252,8 @@ class _$HamperProductDetailImpl implements _HamperProductDetail {
       required this.type,
       required this.imageUrl,
       required this.salePrice,
-      required this.costPrice});
+      required this.costPrice,
+      required this.product});
 
   factory _$HamperProductDetailImpl.fromJson(Map<String, dynamic> json) =>
       _$$HamperProductDetailImplFromJson(json);
@@ -251,10 +278,12 @@ class _$HamperProductDetailImpl implements _HamperProductDetail {
   final double salePrice;
   @override
   final double costPrice;
+  @override
+  final Product product;
 
   @override
   String toString() {
-    return 'HamperProductDetail(hamperId: $hamperId, productId: $productId, quantity: $quantity, isFree: $isFree, name: $name, brand: $brand, type: $type, imageUrl: $imageUrl, salePrice: $salePrice, costPrice: $costPrice)';
+    return 'HamperProductDetail(hamperId: $hamperId, productId: $productId, quantity: $quantity, isFree: $isFree, name: $name, brand: $brand, type: $type, imageUrl: $imageUrl, salePrice: $salePrice, costPrice: $costPrice, product: $product)';
   }
 
   @override
@@ -277,13 +306,14 @@ class _$HamperProductDetailImpl implements _HamperProductDetail {
             (identical(other.salePrice, salePrice) ||
                 other.salePrice == salePrice) &&
             (identical(other.costPrice, costPrice) ||
-                other.costPrice == costPrice));
+                other.costPrice == costPrice) &&
+            (identical(other.product, product) || other.product == product));
   }
 
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(runtimeType, hamperId, productId, quantity,
-      isFree, name, brand, type, imageUrl, salePrice, costPrice);
+      isFree, name, brand, type, imageUrl, salePrice, costPrice, product);
 
   @JsonKey(ignore: true)
   @override
@@ -311,7 +341,8 @@ abstract class _HamperProductDetail implements HamperProductDetail {
       required final String type,
       required final String imageUrl,
       required final double salePrice,
-      required final double costPrice}) = _$HamperProductDetailImpl;
+      required final double costPrice,
+      required final Product product}) = _$HamperProductDetailImpl;
 
   factory _HamperProductDetail.fromJson(Map<String, dynamic> json) =
       _$HamperProductDetailImpl.fromJson;
@@ -336,6 +367,8 @@ abstract class _HamperProductDetail implements HamperProductDetail {
   double get salePrice;
   @override
   double get costPrice;
+  @override
+  Product get product;
   @override
   @JsonKey(ignore: true)
   _$$HamperProductDetailImplCopyWith<_$HamperProductDetailImpl> get copyWith =>

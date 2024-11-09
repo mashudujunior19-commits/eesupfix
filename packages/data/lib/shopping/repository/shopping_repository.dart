@@ -8,6 +8,8 @@ import 'package:data/shopping/models/category.dart';
 import 'package:data/shopping/models/product.dart';
 import 'package:data/shopping/models/product_request.dart';
 
+import '../models/hamper_banner.dart';
+
 class ShoppingRepository {
   final ShoppingDataSource shoppingDataSrc;
   final AuthRepository authRepository;
@@ -107,6 +109,14 @@ class ShoppingRepository {
   Future<Either<EESUpException, AdBanner>> fetchAdBanner(int id) async {
     final result = await authRepository.executeFutureWithAuth((_) async {
       final ads = await shoppingDataSrc.fetchAdBanner(id);
+      return ads;
+    });
+    return result.fold((ex) => Left(ex), (ads) => Right(ads));
+  }
+
+  Future<Either<EESUpException, HamperBanner>> fetchHamperBanner(int id) async {
+    final result = await authRepository.executeFutureWithAuth((_) async {
+      final ads = await shoppingDataSrc.fetchHamperBanner(id);
       return ads;
     });
     return result.fold((ex) => Left(ex), (ads) => Right(ads));

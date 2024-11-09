@@ -19,7 +19,7 @@ import 'package:ui/src/views/shop/baskets/bloc/basket_list_bloc.dart';
 
 class BasketSelectionDialog extends StatelessWidget {
   const BasketSelectionDialog({super.key, required this.product});
-  final Product product;
+  final List<Product> product;
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +42,9 @@ class BasketSelectionDialog extends StatelessWidget {
             child: Text("Which basket?"),
           ),
           20.sH,
-          _ProductPreview(product: product),
+          ...product.map((product) => _ProductPreview(product: product)),
+
+          // _ProductPreview(product: product),
           20.sH,
           const Padding(
             padding: EdgeInsets.only(left: 20, right: 20),
@@ -62,7 +64,7 @@ class BasketSelectionDialog extends StatelessWidget {
                       baskets.length,
                       (index) => _BasketCard(
                         basket: baskets[index],
-                        productId: product.id,
+                        productId: product.first.id,
                       ).animate().slideIn(index * 50),
                     ),
                   );

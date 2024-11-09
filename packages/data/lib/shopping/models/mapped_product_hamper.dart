@@ -1,5 +1,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
+import 'product.dart';
+
 part 'mapped_product_hamper.freezed.dart';
 part 'mapped_product_hamper.g.dart';
 
@@ -16,6 +18,7 @@ class HamperProductDetail with _$HamperProductDetail {
     required String imageUrl,
     required double salePrice,
     required double costPrice,
+    required Product product,
   }) = _HamperProductDetail;
 
   factory HamperProductDetail.fromJson(Map<String, dynamic> json) =>

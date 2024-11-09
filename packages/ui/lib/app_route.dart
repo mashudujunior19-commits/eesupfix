@@ -226,10 +226,5 @@ class AppRouter extends RootStackRouter {
           transitionsBuilder: TransitionsBuilders.slideLeftWithFade,
           durationInMilliseconds: 300,
         ),
-        CustomRoute(
-          page: HamperImageViewRoute.page,
-          transitionsBuilder: TransitionsBuilders.slideLeftWithFade,
-          durationInMilliseconds: 300,
-        ),
       ];
 }

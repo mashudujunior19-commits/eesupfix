@@ -1,262 +1,196 @@
-// import 'package:auto_route/auto_route.dart';
-// import 'package:data/shopping/models/product.dart';
-// import 'package:data/shopping/repository/shopping_repository.dart';
-// import 'package:data/utils/eesup_exception.dart';
-// import 'package:flutter/material.dart';
-// import 'package:flutter_bloc/flutter_bloc.dart';
-// import 'package:data/shopping/models/hamper.dart';
-// import 'package:ui/src/core/widgets/fullscreen_error_widget.dart';
-// import 'package:ui/src/core/widgets/fullscreen_loading_shimmer.dart';
-// import '../bloc/hamper_bloc.dart';
-// import 'package:data/shopping/models/mapped_product_hamper.dart';
-
-// @RoutePage()
-// class HamperViewPage extends StatelessWidget {
-//   final String hamperId;
-
-//   const HamperViewPage({super.key, required this.hamperId});
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return BlocProvider(
-//       create: (context) => HamperBloc(context.read<ShoppingRepository>())
-//         ..add(FetchHampers())
-//         ..add(FetchHamperProducts(hamperId)),
-//       child: Scaffold(
-//         appBar: AppBar(
-//           title: const Text("Hamper Details"),
-//         ),
-//         body: BlocBuilder<HamperBloc, HamperState>(
-//           builder: (context, state) {
-//             if (state is HamperLoading) {
-//               return const FullScreenLoadingShimmer();
-//             } else if (state is HamperError) {
-//               return FullScreenError(
-//                 exception: EESUpException(
-//                   message: 'Something went wrong: ${state.message}',
-//                 ),
-//               );
-//             } else if (state is HamperLoaded) {
-//               final hamper = state.hampers.firstWhere((h) => h.id == hamperId);
-//               return _buildHamperDetails(context, hamper);
-//               // } else if (state is HamperProductLoaded) {
-//               //   final products = state.hamperProductDetails;
-//               //   return _buildProductList(context, products);
-//             } else {
-//               return const SizedBox.shrink();
-//             }
-//           },
-//         ),
-//       ),
-//     );
-//   }
-
-//   Widget _buildHamperDetails(BuildContext context, Hamper hamper) {
-//     final state = context.watch<HamperBloc>().state;
-//     // Initialize an empty list for products
-//     List<HamperProductDetail> products = [];
-
-//     // Check if the state is HamperProductLoaded
-//     if (state is HamperProductLoaded) {
-//       products = state.hamperProductDetails;
-//       print('HamperProductLoaded: Raw Products count: ${products.length}');
-//       for (var product in products) {
-//         print('Product: ${product.name}, Free: ${product.isFree}');
-//       }
-//     }
-//     return SingleChildScrollView(
-//       child: Column(
-//         crossAxisAlignment: CrossAxisAlignment.start,
-//         children: [
-//           Padding(
-//             padding: const EdgeInsets.all(16.0),
-//             child: Column(
-//               crossAxisAlignment: CrossAxisAlignment.start,
-//               children: [
-//                 Text('${hamper.hamperName} (${hamper.hamperCode})',
-//                     style: Theme.of(context).textTheme.headlineMedium),
-//                 Text("Type: ${hamper.type}"),
-//                 Text("Cost: ${hamper.value}"),
-//                 Text(
-//                     "Expires on: ${hamper.expiryDate.toLocal().toString().split(' ')[0]}"),
-//                 if (hamper.imgUrl != null)
-//                   Image.network(hamper.imgUrl!,
-//                       height: 150, width: double.infinity, fit: BoxFit.cover),
-//               ],
-//             ),
-//           ),
-//           const Divider(),
-//           Padding(
-//             padding: const EdgeInsets.all(16.0),
-//             child: Text("Products",
-//                 style: Theme.of(context).textTheme.headlineMedium),
-//           ),
-//           if (products.isNotEmpty)
-//             _buildProductList(context, products)
-//           else
-//             const Padding(
-//               padding: EdgeInsets.all(16.0),
-//               child: Text("No products available for this hamper."),
-//             ),
-//         ],
-//       ),
-//     );
-//   }
-
-//   Widget _buildProductList(
-//       BuildContext context, List<HamperProductDetail> products) {
-//     return ListView.builder(
-//       shrinkWrap: true,
-//       physics: const NeverScrollableScrollPhysics(),
-//       itemCount: products.length,
-//       itemBuilder: (context, index) {
-//         final productDetail = products[index];
-//         return _ProductItemCard(productDetail: productDetail);
-//       },
-//     );
-//   }
-// }
-
-// class _ProductItemCard extends StatelessWidget {
-//   final HamperProductDetail productDetail;
-
-//   const _ProductItemCard({required this.productDetail});
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Card(
-//       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-//       child: Padding(
-//         padding: const EdgeInsets.all(16.0),
-//         child: Row(
-//           children: [
-//             // CircleAvatar(
-//             //   backgroundImage: NetworkImage(productDetail.imageUrl.isNotEmpty
-//             //       ? productDetail.imageUrl
-//             //       : 'assets/images/no-photo.png'),
-//             //   radius: 30,
-//             // ),
-//             CircleAvatar(
-//               radius: 30,
-//               backgroundImage: productDetail.imageUrl.isNotEmpty
-//                   ? NetworkImage(productDetail.imageUrl)
-//                   : null,
-//               child: productDetail.imageUrl.isNotEmpty
-//                   ? null
-//                   : const Icon(
-//                       Icons.fastfood_outlined,
-//                       size: 30,
-//                       color: Colors.grey,
-//                     ),
-//             ),
-
-//             const SizedBox(width: 16),
-//             Expanded(
-//               child: Column(
-//                 crossAxisAlignment: CrossAxisAlignment.start,
-//                 children: [
-//                   Text(productDetail.name,
-//                       style: Theme.of(context).textTheme.bodyMedium),
-//                   Text("Price: R${productDetail.salePrice.toStringAsFixed(2)}"),
-//                   Text(
-//                     productDetail.isFree ? "Free" : "Paid",
-//                     style: TextStyle(
-//                       color: productDetail.isFree ? Colors.green : Colors.red,
-//                       fontWeight: FontWeight.bold,
-//                     ),
-//                   ),
-//                 ],
-//               ),
-//             ),
-//           ],
-//         ),
-//       ),
-//     );
-//   }
-// }
 import 'package:auto_route/auto_route.dart';
 import 'package:data/orders/models/order_product.dart';
 import 'package:data/shopping/models/mapped_product_hamper.dart';
+import 'package:data/shopping/models/product.dart';
 import 'package:data/shopping/repository/basket_repository.dart';
 import 'package:data/shopping/repository/shopping_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:data/shopping/models/hamper.dart';
 import 'package:data/utils/eesup_exception.dart';
+import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:ui/src/core/extensions/context_alerts_ext.dart';
 import 'package:ui/src/core/widgets/fullscreen_error_widget.dart';
 import 'package:ui/src/core/widgets/fullscreen_loading_shimmer.dart';
+import '../../baskets/ui/basket_selection_dialog.dart';
 import '../../cart/bloc/cart_bloc.dart';
 import '../bloc/hamper_bloc.dart';
 
 @RoutePage()
 class HamperViewPage extends StatefulWidget {
-  final String hamperId;
+  final String? hamperId;
+  final String? imageUrl;
 
-  const HamperViewPage({super.key, required this.hamperId});
+  const HamperViewPage({super.key, this.hamperId, this.imageUrl});
 
   @override
-  _HamperViewPageState createState() => _HamperViewPageState();
+  State<HamperViewPage> createState() => _HamperViewPageState();
 }
 
 class _HamperViewPageState extends State<HamperViewPage> {
   Hamper? selectedHamper;
   List<HamperProductDetail> products = [];
+  Product? hamperProduct;
 
   @override
   void initState() {
     super.initState();
-    final hamperBloc = context.read<HamperBloc>();
-    hamperBloc.add(FetchHampers());
-    hamperBloc.add(FetchHamperProducts(widget.hamperId));
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text("Hamper Details"),
-      ),
-      body: BlocListener<HamperBloc, HamperState>(
-        listener: (context, state) {
-          if (state is HamperLoaded) {
-            selectedHamper =
-                state.hampers.firstWhere((h) => h.id == widget.hamperId);
-          } else if (state is HamperProductLoaded) {
-            products = state.hamperProductDetails;
-          } else if (state is HamperError) {
-            // Handle error state here
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text('Error loading hamper: ${state.message}')),
-            );
-          }
-          // Trigger UI update once both hamper and products are loaded
-          if (selectedHamper != null && products.isNotEmpty) {
-            setState(() {});
-          }
-        },
-        child: BlocBuilder<HamperBloc, HamperState>(
-          builder: (context, state) {
-            if (state is HamperLoading) {
-              return const FullScreenLoadingShimmer();
+    return BlocProvider(
+      create: (context) {
+        final bloc = HamperBloc(context.read<ShoppingRepository>());
+        if (widget.hamperId != null) {
+          bloc.add(FetchHamperProducts(widget.hamperId!));
+          bloc.add(FetchHamper(widget.hamperId!));
+          bloc.add(FetchHamperAsProduct(widget.hamperId!));
+        } else if (widget.imageUrl != null) {
+          bloc.add(FetchHampersByImageUrl(widget.imageUrl!));
+        }
+        return bloc;
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          title: const Text("Hamper"),
+          //           actions: [
+          //   IconButton(
+          //     icon: const Icon(Icons.shopping_basket_outlined),
+          //     onPressed: _addAllToBasket,
+          //   ),
+          //   IconButton(
+          //     icon: const Icon(IconlyLight.buy, size: 25),
+          //     onPressed: _addHamperToCart(),
+          //   ),
+          // ],
+        ),
+        body: BlocListener<HamperBloc, HamperState>(
+          listener: (context, state) {
+            if (state is HamperLoaded) {
+              selectedHamper = state.hamper;
+            } else if (state is HamperProductLoaded) {
+              products = state.hamperProductDetails;
+            } else if (state is HamperAsProductLoaded) {
+              hamperProduct = state.hamperProduct;
+            } else if (state is HamperIdLoaded) {
+              final hamperId = state.hamperId;
+              context.read<HamperBloc>().add(FetchHamper(hamperId));
+              context.read<HamperBloc>().add(FetchHamperProducts(hamperId));
+              context.read<HamperBloc>().add(FetchHamperAsProduct(hamperId));
             } else if (state is HamperError) {
-              return FullScreenError(
-                exception: EESUpException(
-                  message: 'Something went wrong: ${state.message}',
-                ),
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                    content: Text('Error loading hamper: ${state.message}')),
               );
-            } else if (selectedHamper != null && products.isNotEmpty) {
-              return _buildHamperDetails(context, selectedHamper!, products);
             }
-            return const FullScreenLoadingShimmer();
+            if (selectedHamper != null &&
+                products.isNotEmpty &&
+                hamperProduct != null) setState(() {});
           },
+          child: BlocBuilder<HamperBloc, HamperState>(
+            builder: (context, state) {
+              if (state is HamperLoading) {
+                return const FullScreenLoadingShimmer();
+              } else if (state is HamperError) {
+                return FullScreenError(
+                  exception: EESUpException(
+                    message: 'Something went wrong: ${state.message}',
+                  ),
+                );
+              }
+              if (selectedHamper != null &&
+                  products.isNotEmpty &&
+                  hamperProduct != null) {
+                return _buildHamperDetails(
+                    context, selectedHamper!, products, hamperProduct!);
+                //  }
+              }
+              return const FullScreenLoadingShimmer();
+            },
+          ),
         ),
       ),
     );
   }
 
-  Widget _buildHamperDetails(
-      BuildContext context, Hamper hamper, List<HamperProductDetail> products) {
+  Future<void> _addAllToBasket() async {
+    List<Product> productList =
+        products.map((productDetail) => productDetail.product).toList();
+
+    final selectedBasketId = await showDialog<String>(
+      context: context,
+      builder: (BuildContext context) =>
+          BasketSelectionDialog(product: productList),
+    );
+
+    if (selectedBasketId != null) {
+      final shoppingRepo = context.read<ShoppingRepository>();
+      for (final product in products) {
+        shoppingRepo.addProductToBasket(selectedBasketId, product.productId);
+      }
+      context.snackBarSuccess('All items added to selected basket.');
+
+      final addToCart = await showDialog<bool>(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: const Text("Add to Cart"),
+            content: const Text(
+                "Would you like to add the entire hamper to the cart?"),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.of(context).pop(false),
+                child: const Text("No"),
+              ),
+              TextButton(
+                onPressed: () => Navigator.of(context).pop(true),
+                child: const Text("Yes"),
+              ),
+            ],
+          );
+        },
+      );
+
+      if (addToCart == true) {
+        if (selectedHamper != null) {
+          context.read<CartBloc>().add(
+                ProductAddedToCart(
+                  OrderProduct(
+                    productId: hamperProduct!.id,
+                    quantity: 1,
+                    price: hamperProduct!.salePrice,
+                    name: hamperProduct!.name,
+                    imageUrl: hamperProduct!.imageUrl,
+                  ),
+                ),
+              );
+          context.snackBarSuccess('Hamper added to cart');
+        }
+      }
+    }
+  }
+
+  // Function to handle adding a hamper product to the cart
+  Future<void> _addHamperToCart(Product hamperProduct) async {
+    if (selectedHamper != null) {
+      context.read<CartBloc>().add(
+            ProductAddedToCart(
+              OrderProduct(
+                productId: hamperProduct.id,
+                quantity: 1,
+                price: hamperProduct.salePrice,
+                name: hamperProduct.name,
+                imageUrl: hamperProduct.imageUrl,
+              ),
+            ),
+          );
+      context.snackBarSuccess('Hamper added to cart');
+    }
+  }
+
+  Widget _buildHamperDetails(BuildContext context, Hamper hamper,
+      List<HamperProductDetail> products, Product hamperProduct) {
     return SingleChildScrollView(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -265,35 +199,88 @@ class _HamperViewPageState extends State<HamperViewPage> {
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
               IconButton(
-                icon: const Icon(Icons.shopping_basket),
-                onPressed: () {
-                  // final repo = context.read<ShoppingRepository>();
+                icon: const Icon(Icons.shopping_basket_outlined),
+                onPressed: () async {
+                  List<Product> productList = products
+                      .map((productDetail) => productDetail.product)
+                      .toList();
 
-                  // for (final product in products) {
-                  //   repo.addProductToBasket(basketId, product.productId);
-                  // }
-                  // context.snackBarSuccess('All items added to basket.');
+                  final selectedBasketId = await showDialog<String>(
+                    context: context,
+                    builder: (BuildContext context) =>
+                        BasketSelectionDialog(product: productList),
+                  );
+
+                  if (selectedBasketId != null) {
+                    final shoppingRepo = context.read<ShoppingRepository>();
+                    for (final product in products) {
+                      shoppingRepo.addProductToBasket(
+                          selectedBasketId, product.productId);
+                    }
+                    context
+                        .snackBarSuccess('All items added to selected basket.');
+
+                    final addToCart = await showDialog<bool>(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          title: const Text("Add to Cart"),
+                          content: const Text(
+                              "Would you like to add the entire hamper to the cart?"),
+                          actions: [
+                            TextButton(
+                              onPressed: () => Navigator.of(context).pop(false),
+                              child: const Text("No"),
+                            ),
+                            TextButton(
+                              onPressed: () => Navigator.of(context).pop(true),
+                              child: const Text("Yes"),
+                            ),
+                          ],
+                        );
+                      },
+                    );
+
+                    if (addToCart == true) {
+                      if (selectedHamper != null) {
+                        context.read<CartBloc>().add(
+                              ProductAddedToCart(
+                                OrderProduct(
+                                  productId: hamperProduct.id,
+                                  quantity: 1,
+                                  price: hamperProduct.salePrice,
+                                  name: hamperProduct.name,
+                                  imageUrl: hamperProduct.imageUrl,
+                                ),
+                              ),
+                            );
+                        context.snackBarSuccess('Hamper added to cart');
+                      }
+                      context.snackBarSuccess('Hamper added to cart');
+                    }
+                  }
                 },
               ),
               IconButton(
-                icon: const Icon(Icons.shopping_cart),
-                onPressed: () {
-                  for (final p in products) {
+                icon: const Icon(
+                  IconlyLight.buy,
+                  size: 25,
+                ),
+                onPressed: () async {
+                  if (selectedHamper != null) {
                     context.read<CartBloc>().add(
                           ProductAddedToCart(
                             OrderProduct(
-                              productId: p.productId,
-                              quantity: p.quantity,
-                              //productClass: p.productClass,
-                              price: p.salePrice,
-                              name: p.name,
-                              imageUrl: p.imageUrl,
-                              //category: p.category,
+                              productId: hamperProduct.id,
+                              quantity: 1,
+                              price: hamperProduct.salePrice,
+                              name: hamperProduct.name,
+                              imageUrl: hamperProduct.imageUrl,
                             ),
                           ),
                         );
+                    context.snackBarSuccess('Hamper added to cart');
                   }
-                  context.snackBarSuccess('All items added to cart');
                 },
               ),
             ],
@@ -303,19 +290,28 @@ class _HamperViewPageState extends State<HamperViewPage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('${hamper.hamperName} (${hamper.hamperCode})',
+                Text(hamper.hamperCode,
                     style: Theme.of(context).textTheme.headlineMedium),
+                const SizedBox(height: 8),
                 Text("Type: ${hamper.type}"),
-                Text("Cost: ${hamper.value}"),
+                const SizedBox(height: 8),
+                Text("Hamper Value: ${hamper.value}"),
+                const SizedBox(height: 8),
                 Text(
                     "Expires on: ${hamper.expiryDate.toLocal().toString().split(' ')[0]}"),
+                const SizedBox(height: 10),
                 if (hamper.imgUrl != null && hamper.imgUrl!.isNotEmpty)
                   Image.network(
                     hamper.imgUrl!,
                     height: 150,
                     width: double.infinity,
                     fit: BoxFit.cover,
-                  ),
+                    errorBuilder: (context, error, stackTrace) {
+                      return _buildPlaceholderImage();
+                    },
+                  )
+                else
+                  _buildPlaceholderImage(),
               ],
             ),
           ),
@@ -341,6 +337,20 @@ class _HamperViewPageState extends State<HamperViewPage> {
         final product = products[index];
         return _ProductItemCard(productDetail: product);
       },
+    );
+  }
+
+  // Define the placeholder widget
+  Widget _buildPlaceholderImage() {
+    return Container(
+      height: 150,
+      width: double.infinity,
+      color: Colors.grey[300], // Background color for placeholder
+      child: const Icon(
+        Icons.image_not_supported_outlined,
+        size: 100,
+        color: Colors.grey, // Icon color
+      ),
     );
   }
 }
