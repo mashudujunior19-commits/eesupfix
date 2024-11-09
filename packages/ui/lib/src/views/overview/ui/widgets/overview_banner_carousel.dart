@@ -17,7 +17,7 @@ class OverviewBannerCarousel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FlutterCarousel(
-      options: CarouselOptions(
+      options: FlutterCarouselOptions(
         height: 200,
         showIndicator: false,
         autoPlay: true,

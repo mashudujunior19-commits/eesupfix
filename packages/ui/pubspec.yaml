@@ -15,13 +15,13 @@ dependencies:
       url: https://github.com/Miso-0/int_phone_text_field.git
       ref: main
   equatable: ^2.0.5
-  firebase_core: ^2.24.2
+  firebase_core: ^3.6.0
   flutter:
     sdk: flutter
   flutter_animate: ^4.5.0
   flutter_bloc: ^8.1.4
   flutter_dotenv: ^5.1.0
-  get_it: ^7.6.7
+  get_it: ^8.0.0
   onesignal_flutter: ^5.2.3
   sentry_flutter: ^8.6.0
   supabase_flutter: ^2.5.11
@@ -32,7 +32,7 @@ dependencies:
   bootstrap_icons: ^1.11.3
   flutter_iconly: ^1.0.2
   shimmer: ^3.0.0
-  flutter_carousel_widget: ^2.3.0
+  flutter_carousel_widget: ^3.1.0
   cached_network_image: ^3.3.1
   instapay_flutter:
     path: ../../packages/instapay
@@ -53,9 +53,9 @@ dependencies:
   flutter_ozow: ^1.1.7
   flutter_expanded_tile: ^0.4.0
   path_provider: ^2.1.2
-  syncfusion_flutter_sliders: ^26.2.8
+  syncfusion_flutter_sliders: ^27.1.53
   flutter_rating_bar: ^4.0.1
-  record: ^5.0.5
+  # record: ^5.1.2
   flutter_google_place_search: ^0.0.1
   flutter_highlighted_text: ^0.0.1
   visibility_detector: ^0.4.0+2
@@ -65,7 +65,7 @@ dependencies:
   printing: ^5.12.0
   readmore: ^3.0.0
   flutter_dialogs: ^3.0.0
-  syncfusion_flutter_pdf: ^26.2.8
+  syncfusion_flutter_pdf: ^27.1.53
   encrypt: ^5.0.3
   webview_flutter: ^4.7.0
   easy_debounce: ^2.0.3
@@ -78,10 +78,10 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_lints: ^4.0.0
+  flutter_lints: ^5.0.0
   build_runner: ^2.4.12
   auto_route_generator: ^9.0.0
-  flutter_launcher_icons: ^0.13.1
+  flutter_launcher_icons: ^0.14.1
   integration_test:
     sdk: flutter
   flutter_driver:

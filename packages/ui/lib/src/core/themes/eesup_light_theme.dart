@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 const _primaryGreen = Color.fromRGBO(48, 142, 88, 1);
-const _primaryBlue = Color(0xFF0D47A1);
+const _primaryBlue = Color.fromRGBO(13, 71, 161, 1);
 
 // ignore: non_constant_identifier_names
 final EESUpLightTheme = ThemeData(

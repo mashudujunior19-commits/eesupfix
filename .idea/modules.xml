@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/packages/data/melos_data.iml" filepath="$PROJECT_DIR$/packages/data/melos_data.iml" />
       <module fileurl="file://$PROJECT_DIR$/apps/eesup/melos_eesup.iml" filepath="$PROJECT_DIR$/apps/eesup/melos_eesup.iml" />
+      <module fileurl="file://$PROJECT_DIR$/packages/infra/melos_infra.iml" filepath="$PROJECT_DIR$/packages/infra/melos_infra.iml" />
       <module fileurl="file://$PROJECT_DIR$/packages/instapay/melos_instapay_flutter.iml" filepath="$PROJECT_DIR$/packages/instapay/melos_instapay_flutter.iml" />
       <module fileurl="file://$PROJECT_DIR$/apps/mykasi/melos_my_kasi_shop.iml" filepath="$PROJECT_DIR$/apps/mykasi/melos_my_kasi_shop.iml" />
       <module fileurl="file://$PROJECT_DIR$/packages/ui/melos_ui.iml" filepath="$PROJECT_DIR$/packages/ui/melos_ui.iml" />
