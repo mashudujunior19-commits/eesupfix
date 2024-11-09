@@ -1,4 +1,5 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:data/orders/models/order_product.dart';
 import 'package:data/shopping/models/product.dart';
 import 'package:data/shopping/repository/shopping_repository.dart';
@@ -188,12 +189,24 @@ class _HamperImageStackState extends State<HamperImageStack> {
                 Container(
                   height: 270,
                   width: MediaQuery.of(context).size.width,
-                  child: Image.network(
-                    widget.imgUrl!,
+                  // child: Image.network(
+                  //   widget.imgUrl!,
+                  //   fit: BoxFit.fill,
+                  //   errorBuilder: (context, error, stackTrace) {
+                  //     return Container(color: Colors.grey);
+                  //   },
+                  // ),
+
+                  child: CachedNetworkImage(
+                    imageUrl: widget.imgUrl!,
                     fit: BoxFit.fill,
-                    errorBuilder: (context, error, stackTrace) {
-                      return Container(color: Colors.grey);
-                    },
+                    placeholder: (context, url) => const Row(
+                      children: [
+                        CircularProgressIndicator(),
+                      ],
+                    ),
+                    errorWidget: (context, url, error) =>
+                        const Icon(Icons.error),
                   ),
                 )
               else
@@ -204,14 +217,13 @@ class _HamperImageStackState extends State<HamperImageStack> {
                 Positioned(
                   top: 10,
                   left: 10,
-                  child: Image.network(
-                    widget.hamperGifUrl1!,
+                  child: CachedNetworkImage(
+                    imageUrl: widget.hamperGifUrl1!,
                     height: 40,
                     width: 70,
                     fit: BoxFit.cover,
-                    errorBuilder: (context, error, stackTrace) {
-                      return Container();
-                    },
+                    errorWidget: (context, url, error) =>
+                        const SizedBox.shrink(),
                   ),
                 ),
 
@@ -220,14 +232,13 @@ class _HamperImageStackState extends State<HamperImageStack> {
                 Positioned(
                   bottom: 10,
                   right: 60,
-                  child: Image.network(
-                    widget.hamperGifUrl2!,
-                    height: 78,
+                  child: CachedNetworkImage(
+                    imageUrl: widget.hamperGifUrl1!,
+                    height: 40,
                     width: 70,
                     fit: BoxFit.cover,
-                    errorBuilder: (context, error, stackTrace) {
-                      return Container();
-                    },
+                    errorWidget: (context, url, error) =>
+                        const SizedBox.shrink(),
                   ),
                 ),
 

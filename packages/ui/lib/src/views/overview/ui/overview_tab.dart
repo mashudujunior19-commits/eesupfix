@@ -214,7 +214,7 @@ class OverviewTab extends StatelessWidget {
                 title: Image(
                   width: context.environment.app == AppType.eesup ? 80 : 45,
                   image: const AssetImage(
-                    'assets/images/logo.png',
+                    'assets/images/logo.png'
                   ),
                 ),
                 actions: const [CartButton()],

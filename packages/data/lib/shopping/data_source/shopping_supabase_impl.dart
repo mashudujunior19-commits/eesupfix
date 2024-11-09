@@ -486,16 +486,12 @@ class ShoppingSupabaseImp implements ShoppingDataSource {
 
       Hamper hamper = Hamper.fromJson(response);
 
-      if (hamper != null) {
-        final productIds = await getProductIdsForHamper(hamper.id);
-        final quantities = await getProductQuantitiesForHamper(hamper.id);
-        hamper = hamper.copyWith(
-          productIds: productIds,
-          quantity: quantities,
-        );
-      } else {
-        return null;
-      }
+      final productIds = await getProductIdsForHamper(hamper.id);
+      final quantities = await getProductQuantitiesForHamper(hamper.id);
+      hamper = hamper.copyWith(
+        productIds: productIds,
+        quantity: quantities,
+      );
 
       return hamper;
     } catch (e) {

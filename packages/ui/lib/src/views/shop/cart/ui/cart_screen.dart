@@ -218,36 +218,12 @@ class CartScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: BlocBuilder<CartBloc, CartState>(builder: (context, state) {
-        final cart = (state as CurrentCart);
+      child: BlocConsumer<CartBloc, CartState>(
+          listener: (context, cartState) {},
+          builder: (context, state) {
+            final cart = (state as CurrentCart);
 
-        return BlocListener<CartBloc, CartState>(
-          listener: (context, cartState) {
-            if (cartState is CurrentCart) {
-              print("Cart state updated, starting hamper comparison...");
-              context
-                  .read<HamperBloc>()
-                  .add(CompareCartWithHampers(cartState.products));
-            }
-          },
-          child: BlocListener<HamperBloc, HamperState>(
-            listener: (context, hamperState) {
-              if (hamperState is HamperComparisonResultState) {
-                hamperOrderProduct = hamperState.hamperProduct;
-                print("Hamper product: ${hamperState.hamperProduct}");
-                print("Matching hamper: ${hamperState.matchingHamper}");
-
-                hamperOrderProduct = hamperState.hamperProduct;
-
-                WidgetsBinding.instance.addPostFrameCallback((_) {
-                  _showHamperDialog(context, hamperOrderProduct!);
-                });
-
-                context.read<HamperBloc>().add(ResetHamperComparison());
-              }
-              _showHamperDialog(context, hamperOrderProduct!);
-            },
-            child: Scaffold(
+            return Scaffold(
               appBar: AppBar(
                 leading: const BackButton(),
                 title: const Text('Cart'),
@@ -289,10 +265,8 @@ class CartScreen extends StatelessWidget {
                       total: cart.totalAmount(),
                     )
                   : null,
-            ),
-          ),
-        );
-      }),
+            );
+          }),
     );
   }
 
@@ -323,7 +297,7 @@ class CartScreen extends StatelessWidget {
                         ),
                       ),
                     );
-                context.read<HamperBloc>().add(ResetHamperComparison());
+                //context.read<HamperBloc>().add(ResetHamperComparison());
                 Navigator.pop(context);
                 context
                     .snackBarSuccess('The hamper has been added to your cart!');

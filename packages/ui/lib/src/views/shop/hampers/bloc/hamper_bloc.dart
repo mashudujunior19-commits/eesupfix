@@ -66,6 +66,7 @@ class HamperBloc extends Bloc<HamperEvent, HamperState> {
       emit(HamperLoading());
 
       try {
+        final hampersResult = await _repository.fetchHampers();
         await hampersResult.fold(
           (error) async {
             if (!emit.isDone) {
