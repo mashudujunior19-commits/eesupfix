@@ -22,7 +22,7 @@ class OrderProduct with _$OrderProduct {
     @JsonKey(includeToJson: false, name: 'class', includeFromJson: true)
     ProductClass? productClass,
     required double price,
-    @JsonKey(includeFromJson: false,includeToJson: false) double? costPrice,
+    @JsonKey(includeFromJson: false, includeToJson: false) double? costPrice,
     required String name,
     required int quantity,
     @JsonKey(name: 'customer_accepted_qty') @Default(0) int customerAcceptedQty,

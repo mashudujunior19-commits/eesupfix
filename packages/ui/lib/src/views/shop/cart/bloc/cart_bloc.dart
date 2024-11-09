@@ -23,7 +23,7 @@ class CartBloc extends Bloc<CartEvent, CartState> {
         currentCart.add(
           OrderProduct(
             productId: product.productId,
-            quantity: 1,
+            quantity: product.quantity,
             productClass: product.productClass,
             price: product.price,
             name: product.name,

@@ -9,6 +9,7 @@ part 'notifications_state.dart';
 
 class NotificationsBloc extends Bloc<NotificationsEvent, NotificationsState> {
   final NotificationRepo _repo;
+  List<Notification> notifications = [];
   NotificationsBloc(this._repo) : super(NotificationsInitial()) {
     on<NotificationStreamStarted>((event, emit) async {
       final stream = _repo.streamNotifications();
@@ -16,9 +17,16 @@ class NotificationsBloc extends Bloc<NotificationsEvent, NotificationsState> {
         return results.fold((left) {
           return NotificationsError(left);
         }, (right) {
+          notifications = right;
           return NotificationsStreaming(right);
         });
       });
+    });
+    on<RemoveNotificationEvent>((event, emit) async {
+      await _repo.deleteNotification(event.notificationId);
+      notifications.removeWhere(
+          (notification) => notification.id == event.notificationId);
+      emit(NotificationsStreaming(notifications));
     });
   }
 }
