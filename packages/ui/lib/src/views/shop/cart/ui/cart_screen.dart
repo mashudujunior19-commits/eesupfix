@@ -217,56 +217,67 @@ class CartScreen extends StatelessWidget {
   Product? hamperOrderProduct;
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: BlocConsumer<CartBloc, CartState>(
-          listener: (context, cartState) {},
-          builder: (context, state) {
-            final cart = (state as CurrentCart);
+    return BlocListener<HamperBloc, HamperState>(
+      listener: (context, state) {
+        if (state is HamperAsProductLoaded) {
+          _showHamperDialog(context, state.hamperProduct);
+        }
+      },
+      child: SafeArea(
+        child: BlocConsumer<CartBloc, CartState>(
+            listener: (context, cartState) {},
+            builder: (context, state) {
+              context
+                  .read<HamperBloc>()
+                  .add(CompareCartWithHampers((state as CurrentCart).products));
+              final cart = state;
 
-            return Scaffold(
-              appBar: AppBar(
-                leading: const BackButton(),
-                title: const Text('Cart'),
-                actions: [
-                  if (cart.products.isNotEmpty)
-                    IconButton(
-                      icon: const Icon(IconlyLight.delete),
-                      onPressed: () {
-                        context.read<CartBloc>().add(CartCleared());
-                      },
-                    ),
-                  IconButton(
-                    icon: const Icon(BootstrapIcons.basket),
-                    onPressed: () {
-                      context.router.push(const BasketsListRoute());
-                    },
-                  ),
-                ],
-              ),
-              body: Container(
-                height: MediaQuery.sizeOf(context).height,
-                width: MediaQuery.sizeOf(context).width,
-                decoration: context.bgImage,
-                child: cart.products.isEmpty
-                    ? const _EmptyCartWidget()
-                    : ListView.builder(
-                        padding: const EdgeInsets.only(bottom: 300),
-                        itemCount: cart.products.length,
-                        itemBuilder: (context, index) {
-                          return CartProductCard(product: cart.products[index])
-                              .animate()
-                              .slideIn(index * 50);
+              return Scaffold(
+                appBar: AppBar(
+                  leading: const BackButton(),
+                  title: const Text('Cart'),
+                  actions: [
+                    if (cart.products.isNotEmpty)
+                      IconButton(
+                        icon: const Icon(IconlyLight.delete),
+                        onPressed: () {
+                          context.read<CartBloc>().add(CartCleared());
                         },
                       ),
-              ),
-              bottomNavigationBar: cart.products.isNotEmpty
-                  ? _CheckoutTotal(
-                      products: cart.products,
-                      total: cart.totalAmount(),
-                    )
-                  : null,
-            );
-          }),
+                    IconButton(
+                      icon: const Icon(BootstrapIcons.basket),
+                      onPressed: () {
+                        context.router.push(const BasketsListRoute());
+                      },
+                    ),
+                  ],
+                ),
+                body: Container(
+                  height: MediaQuery.sizeOf(context).height,
+                  width: MediaQuery.sizeOf(context).width,
+                  decoration: context.bgImage,
+                  child: cart.products.isEmpty
+                      ? const _EmptyCartWidget()
+                      : ListView.builder(
+                          padding: const EdgeInsets.only(bottom: 300),
+                          itemCount: cart.products.length,
+                          itemBuilder: (context, index) {
+                            return CartProductCard(
+                                    product: cart.products[index])
+                                .animate()
+                                .slideIn(index * 50);
+                          },
+                        ),
+                ),
+                bottomNavigationBar: cart.products.isNotEmpty
+                    ? _CheckoutTotal(
+                        products: cart.products,
+                        total: cart.totalAmount(),
+                      )
+                    : null,
+              );
+            }),
+      ),
     );
   }
 

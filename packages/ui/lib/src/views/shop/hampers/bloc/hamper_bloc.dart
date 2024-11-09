@@ -63,62 +63,55 @@ class HamperBloc extends Bloc<HamperEvent, HamperState> {
     });
 
     on<CompareCartWithHampers>((event, emit) async {
-      emit(HamperLoading());
-
       try {
-        final hampersResult = await _repository.fetchHampers();
-        await hampersResult.fold(
-          (error) async {
-            if (!emit.isDone) {
-              emit(HamperError('Error fetching hampers: ${error.message}'));
-            }
-          },
-          (hampers) async {
-            final comparer = HamperComparer(
-                cartProducts: event.cartProducts, hampers: hampers);
+        print(state is HampersLoaded);
+        if (state is HampersLoaded) {
+          final comparer = HamperComparer(
+            cartProducts: event.cartProducts,
+            hampers: (state as HampersLoaded).hampers,
+          );
 
-            if (!hasEmittedMatch) {
-              final matchingHamper = comparer.findMatchingHamper();
-              print('matching hamper : $matchingHamper');
+          if (!hasEmittedMatch) {
+            final matchingHamper = comparer.findMatchingHamper();
+            print('matching hamper : $matchingHamper');
 
-              if (matchingHamper != null) {
-                final hamperProductResult =
-                    await _repository.fetchHamperProduct(matchingHamper.id);
+            if (matchingHamper != null) {
+              final hamperProductResult =
+                  await _repository.fetchHamperProduct(matchingHamper.id);
 
-                await hamperProductResult.fold(
-                  (error) async {
+              await hamperProductResult.fold(
+                (error) async {
+                  if (!emit.isDone) {
+                    emit(HamperError(
+                        'Error fetching hamper product: ${error.message}'));
+                  }
+                },
+                (product) async {
+                  // If the product is not null, emit the comparison result state
+                  if (product != null) {
                     if (!emit.isDone) {
-                      emit(HamperError(
-                          'Error fetching hamper product: ${error.message}'));
+                      emit(HamperComparisonResultState(
+                        hamperProduct: product,
+                        matchingHamper: matchingHamper,
+                      ));
                     }
-                  },
-                  (product) async {
-                    // If the product is not null, emit the comparison result state
-                    if (product != null) {
-                      if (!emit.isDone) {
-                        emit(HamperComparisonResultState(
-                          hamperProduct: product,
-                          matchingHamper: matchingHamper,
-                        ));
-                      }
-                      hasEmittedMatch = true;
-                    } else {
-                      // If no product is found, emit the failure state
-                      if (!emit.isDone) {
-                        emit(HamperComparisonFailure());
-                      }
+                    hasEmittedMatch = true;
+                  } else {
+                    // If no product is found, emit the failure state
+                    if (!emit.isDone) {
+                      emit(HamperComparisonFailure());
                     }
-                  },
-                );
-              } else {
-                // If no matching hamper is found, emit the failure state
-                if (!emit.isDone) {
-                  emit(HamperComparisonFailure());
-                }
+                  }
+                },
+              );
+            } else {
+              // If no matching hamper is found, emit the failure state
+              if (!emit.isDone) {
+                emit(HamperComparisonFailure());
               }
             }
-          },
-        );
+          }
+        }
       } catch (e) {
         // Catch any unexpected errors and emit an error state
         if (!emit.isDone) {

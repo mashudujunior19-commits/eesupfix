@@ -2,7 +2,6 @@ import 'package:auto_route/auto_route.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:data/orders/models/order_product.dart';
 import 'package:data/shopping/models/product.dart';
-import 'package:data/shopping/repository/shopping_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
@@ -153,140 +152,131 @@ class _HamperImageStackState extends State<HamperImageStack> {
     print("Image URL: ${widget.imgUrl}");
     print("Hamper GIF 1 URL: ${widget.hamperGifUrl1}");
     print("Hamper GIF 2 URL: ${widget.hamperGifUrl2}");
-    return BlocProvider(
-      create: (context) {
-        final bloc = HamperBloc(context.read<ShoppingRepository>());
-        if (widget.imgUrl != null) {
-          bloc.add(FetchHampersByImageUrl(widget.imgUrl!));
-        }
-        return bloc;
-      },
-      child: Scaffold(
-        body: BlocListener<HamperBloc, HamperState>(
-          listener: (context, state) {
-            if (state is HamperIdLoaded) {
-              final hamperId = state.hamperId;
-              selectedHamperId = hamperId;
-              context.read<HamperBloc>().add(FetchHamper(hamperId));
-              context.read<HamperBloc>().add(FetchHamperProducts(hamperId));
-              context.read<HamperBloc>().add(FetchHamperAsProduct(hamperId));
-            }
-            if (state is HamperAsProductLoaded) {
-              hamperProduct = state.hamperProduct;
-            }
-            if (state is HamperError) {
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                    content: Text('Error loading hamper: ${state.message}')),
-              );
-            }
-          },
-          child: Stack(
-            alignment: Alignment.center,
-            children: [
-              // Base Image (Hamper Image)
-              if (widget.imgUrl != null && widget.imgUrl!.isNotEmpty)
-                Container(
-                  height: 270,
-                  width: MediaQuery.of(context).size.width,
-                  // child: Image.network(
-                  //   widget.imgUrl!,
-                  //   fit: BoxFit.fill,
-                  //   errorBuilder: (context, error, stackTrace) {
-                  //     return Container(color: Colors.grey);
-                  //   },
-                  // ),
-
-                  child: CachedNetworkImage(
-                    imageUrl: widget.imgUrl!,
-                    fit: BoxFit.fill,
-                    placeholder: (context, url) => const Row(
-                      children: [
-                        CircularProgressIndicator(),
-                      ],
-                    ),
-                    errorWidget: (context, url, error) =>
-                        const Icon(Icons.error),
+    return Scaffold(
+      body: BlocListener<HamperBloc, HamperState>(
+        listener: (context, state) {
+          if (state is HamperIdLoaded) {
+            final hamperId = state.hamperId;
+            selectedHamperId = hamperId;
+            context.read<HamperBloc>().add(FetchHamper(hamperId));
+            context.read<HamperBloc>().add(FetchHamperProducts(hamperId));
+            context.read<HamperBloc>().add(FetchHamperAsProduct(hamperId));
+          }
+          if (state is HamperAsProductLoaded) {
+            hamperProduct = state.hamperProduct;
+          }
+          if (state is HamperError) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                  content: Text('Error loading hamper: ${state.message}')),
+            );
+          }
+        },
+        child: Stack(
+          alignment: Alignment.center,
+          children: [
+            // Base Image (Hamper Image)
+            if (widget.imgUrl != null && widget.imgUrl!.isNotEmpty)
+              SizedBox(
+                height: 270,
+                width: MediaQuery.of(context).size.width,
+                // child: Image.network(
+                //   widget.imgUrl!,
+                //   fit: BoxFit.fill,
+                //   errorBuilder: (context, error, stackTrace) {
+                //     return Container(color: Colors.grey);
+                //   },
+                // ),
+    
+                child: CachedNetworkImage(
+                  imageUrl: widget.imgUrl!,
+                  fit: BoxFit.fill,
+                  placeholder: (context, url) => const Row(
+                    children: [
+                      CircularProgressIndicator(),
+                    ],
                   ),
-                )
-              else
-                Container(color: Colors.grey),
-
-              if (widget.hamperGifUrl1 != null &&
-                  widget.hamperGifUrl1!.isNotEmpty)
-                Positioned(
-                  top: 10,
-                  left: 10,
-                  child: CachedNetworkImage(
-                    imageUrl: widget.hamperGifUrl1!,
-                    height: 40,
-                    width: 70,
-                    fit: BoxFit.cover,
-                    errorWidget: (context, url, error) =>
-                        const SizedBox.shrink(),
-                  ),
+                  errorWidget: (context, url, error) =>
+                      const Icon(Icons.error),
                 ),
-
-              if (widget.hamperGifUrl2 != null &&
-                  widget.hamperGifUrl2!.isNotEmpty)
-                Positioned(
-                  bottom: 10,
-                  right: 60,
-                  child: CachedNetworkImage(
-                    imageUrl: widget.hamperGifUrl1!,
-                    height: 40,
-                    width: 70,
-                    fit: BoxFit.cover,
-                    errorWidget: (context, url, error) =>
-                        const SizedBox.shrink(),
-                  ),
+              )
+            else
+              Container(color: Colors.grey),
+    
+            if (widget.hamperGifUrl1 != null &&
+                widget.hamperGifUrl1!.isNotEmpty)
+              Positioned(
+                top: 10,
+                left: 10,
+                child: CachedNetworkImage(
+                  imageUrl: widget.hamperGifUrl1!,
+                  height: 40,
+                  width: 70,
+                  fit: BoxFit.cover,
+                  errorWidget: (context, url, error) =>
+                      const SizedBox.shrink(),
                 ),
-
-              // GestureDetector to fetch hamper by image URL on tap
+              ),
+    
+            if (widget.hamperGifUrl2 != null &&
+                widget.hamperGifUrl2!.isNotEmpty)
+              Positioned(
+                bottom: 10,
+                right: 60,
+                child: CachedNetworkImage(
+                  imageUrl: widget.hamperGifUrl1!,
+                  height: 40,
+                  width: 70,
+                  fit: BoxFit.cover,
+                  errorWidget: (context, url, error) =>
+                      const SizedBox.shrink(),
+                ),
+              ),
+    
+            // GestureDetector to fetch hamper by image URL on tap
+            Positioned(
+              top: 10,
+              right: 10,
+              child: GestureDetector(
+                onTap: () {
+                  // This action will trigger the FetchHampersByImageUrl event
+                  context
+                      .read<HamperBloc>()
+                      .add(FetchHampersByImageUrl(widget.imgUrl!));
+                },
+                child: const Icon(
+                  IconlyLight.buy,
+                  size: 25,
+                ),
+              ),
+            ),
+    
+            // Adding the IconButton for adding to the cart
+            if (selectedHamperId != null && hamperProduct != null)
               Positioned(
                 top: 10,
                 right: 10,
-                child: GestureDetector(
-                  onTap: () {
-                    // This action will trigger the FetchHampersByImageUrl event
-                    context
-                        .read<HamperBloc>()
-                        .add(FetchHampersByImageUrl(widget.imgUrl!));
+                child: IconButton(
+                  icon: const Icon(Icons.shopping_cart),
+                  onPressed: () {
+                    print("Adding hamper to cart...");
+                    context.read<CartBloc>().add(
+                          ProductAddedToCart(
+                            OrderProduct(
+                              productId: hamperProduct!.id,
+                              quantity: 1,
+                              price: hamperProduct!.salePrice,
+                              name: hamperProduct!.name,
+                              imageUrl: hamperProduct!.imageUrl,
+                              category: hamperProduct!.categoryName,
+                            ),
+                          ),
+                        );
+                    context.snackBarSuccess('Hamper added to cart');
                   },
-                  child: const Icon(
-                    IconlyLight.buy,
-                    size: 25,
-                  ),
                 ),
               ),
-
-              // Adding the IconButton for adding to the cart
-              if (selectedHamperId != null && hamperProduct != null)
-                Positioned(
-                  top: 10,
-                  right: 10,
-                  child: IconButton(
-                    icon: const Icon(Icons.shopping_cart),
-                    onPressed: () {
-                      print("Adding hamper to cart...");
-                      context.read<CartBloc>().add(
-                            ProductAddedToCart(
-                              OrderProduct(
-                                productId: hamperProduct!.id,
-                                quantity: 1,
-                                price: hamperProduct!.salePrice,
-                                name: hamperProduct!.name,
-                                imageUrl: hamperProduct!.imageUrl,
-                                category: hamperProduct!.categoryName,
-                              ),
-                            ),
-                          );
-                      context.snackBarSuccess('Hamper added to cart');
-                    },
-                  ),
-                ),
-            ],
-          ),
+          ],
         ),
       ),
     );

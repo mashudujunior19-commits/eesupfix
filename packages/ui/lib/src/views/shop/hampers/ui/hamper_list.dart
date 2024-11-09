@@ -24,7 +24,7 @@ class HampersList extends StatelessWidget {
             leading: const BackButton(),
             title: const Text('Hampers'),
           ),
-          body: Container(
+          body: SizedBox(
             width: double.infinity,
             height: double.infinity,
             child: BlocBuilder<HamperBloc, HamperState>(
