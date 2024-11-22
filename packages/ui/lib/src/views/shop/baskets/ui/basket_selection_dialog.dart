@@ -7,6 +7,7 @@ import 'package:data/utils/eesup_exception.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ui/app_route.gr.dart';
+import 'package:ui/src/core/extensions/context_alerts_ext.dart';
 import 'package:ui/src/core/extensions/context_theme_ext.dart';
 import 'package:ui/src/core/extensions/sizedbox_ext.dart';
 import 'package:ui/src/core/extensions/slide_in_animation_ext.dart';
@@ -64,7 +65,8 @@ class BasketSelectionDialog extends StatelessWidget {
                       baskets.length,
                       (index) => _BasketCard(
                         basket: baskets[index],
-                        productId: product.first.id,
+                        // productId: product.first.id,
+                        products: product,
                       ).animate().slideIn(index * 50),
                     ),
                   );
@@ -141,18 +143,98 @@ class _ProductPreview extends StatelessWidget {
   }
 }
 
+// class _BasketCard extends StatelessWidget {
+//   const _BasketCard({required this.basket, required this.productId});
+//   final Basket basket;
+//   final int productId;
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return InkWell(
+//       onTap: () {
+//         context.router.push(BasketViewRoute(basket: basket)).whenComplete(() {
+//           context.read<BasketListBloc>().add(BasketListsFetched());
+//         });
+//       },
+//       child: Container(
+//         margin: const EdgeInsets.only(right: 21, left: 19, bottom: 15),
+//         decoration: BoxDecoration(
+//           color: Colors.white,
+//           borderRadius: BorderRadius.circular(10),
+//           border: Border.all(
+//             color: Colors.grey.shade300,
+//             width: .5,
+//           ),
+//         ),
+//         child: ListTile(
+//           contentPadding: const EdgeInsets.only(left: 10, right: 5),
+//           leading: CircleAvatar(
+//             backgroundColor: context.colorScheme.primary.withOpacity(.1),
+//             child: Icon(
+//               BootstrapIcons.basket,
+//               color: context.colorScheme.primary,
+//               size: 20,
+//             ),
+//           ),
+//           title: Text(basket.name),
+//           subtitle: Text(
+//             basket.type?.name ?? 'Custom Basket',
+//             style: context.textTheme.labelSmall?.copyWith(
+//               color: context.colorScheme.primary,
+//             ),
+//           ),
+//           trailing: AnimatedReactionButton(
+//             onTap: () {
+//               // ref
+//               //     .read(shoppingRepoProvider)
+//               //     .addProductToBasket(
+//               //       basket.id,
+//               //       productId,
+//               //     )
+//               //     .then(
+//               //   (value) {
+//               //     value.fold((l) {
+//               //       showSnackBar(context: context, message: l.message);
+//               //     }, (r) {
+//               //       if (r) {
+//               //         showSnackBar(
+//               //           context: context,
+//               //           message: 'Added to basket',
+//               //         );
+//               //       } else {
+//               //         showSnackBar(
+//               //           context: context,
+//               //           message: 'Failed to add to basket',
+//               //           type: SnackBarType.error,
+//               //         );
+//               //       }
+//               //     });
+//               //   },
+//               // );
+//             },
+//             child: const Icon(
+//               IconlyLight.plus,
+//               size: 25,
+//             ),
+//           ),
+//         ),
+//       ),
+//     );
+//   }
+
 class _BasketCard extends StatelessWidget {
-  const _BasketCard({required this.basket, required this.productId});
+  const _BasketCard({required this.basket, required this.products});
   final Basket basket;
-  final int productId;
+  final List<Product> products;
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        context.router.push(BasketViewRoute(basket: basket)).whenComplete(() {
-          context.read<BasketListBloc>().add(BasketListsFetched());
-        });
+        context.read<BasketListBloc>().add(
+              AddProductsToBasket(basket.id, products),
+            );
+        context.snackBarSuccess('Hamper products added to basket');
       },
       child: Container(
         margin: const EdgeInsets.only(right: 21, left: 19, bottom: 15),
@@ -181,39 +263,9 @@ class _BasketCard extends StatelessWidget {
               color: context.colorScheme.primary,
             ),
           ),
-          trailing: AnimatedReactionButton(
-            onTap: () {
-              // ref
-              //     .read(shoppingRepoProvider)
-              //     .addProductToBasket(
-              //       basket.id,
-              //       productId,
-              //     )
-              //     .then(
-              //   (value) {
-              //     value.fold((l) {
-              //       showSnackBar(context: context, message: l.message);
-              //     }, (r) {
-              //       if (r) {
-              //         showSnackBar(
-              //           context: context,
-              //           message: 'Added to basket',
-              //         );
-              //       } else {
-              //         showSnackBar(
-              //           context: context,
-              //           message: 'Failed to add to basket',
-              //           type: SnackBarType.error,
-              //         );
-              //       }
-              //     });
-              //   },
-              // );
-            },
-            child: const Icon(
-              IconlyLight.plus,
-              size: 25,
-            ),
+          trailing: const Icon(
+            IconlyLight.plus,
+            size: 25,
           ),
         ),
       ),

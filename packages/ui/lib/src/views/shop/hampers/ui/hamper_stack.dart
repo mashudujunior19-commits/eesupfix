@@ -7,125 +7,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:ui/src/core/extensions/context_alerts_ext.dart';
 
+import '../../../../../app_route.gr.dart';
 import '../../cart/bloc/cart_bloc.dart';
 import '../bloc/hamper_bloc.dart';
 
-// @RoutePage()
-// class HamperImageStack extends StatefulWidget {
-//   final String? imgUrl;
-//   final String? hamperGifUrl1;
-//   final String? hamperGifUrl2;
-
-//   const HamperImageStack({
-//     super.key,
-//     required this.imgUrl,
-//     this.hamperGifUrl1,
-//     this.hamperGifUrl2,
-//   });
-
-//   @override
-//   State<HamperImageStack> createState() => _HamperImageStackState();
-// }
-
-// class _HamperImageStackState extends State<HamperImageStack> {
-//   @override
-//   Widget build(BuildContext context) {
-//     return BlocListener<HamperBloc, HamperState>(
-//       listener: (context, state) {
-//         if (state is HamperProductLoaded) {
-//           IconButton(
-//             icon: const Icon(Icons.shopping_cart),
-//             onPressed: () {
-//               for (final p in state.hamperProductDetails) {
-//                 context.read<CartBloc>().add(
-//                       ProductAddedToCart(
-//                         OrderProduct(
-//                           productId: p.productId,
-//                           quantity: p.quantity,
-//                           productClass: p.product.productClass,
-//                           price: p.salePrice,
-//                           name: p.name,
-//                           imageUrl: p.imageUrl,
-//                           category: p.product.categoryName,
-//                         ),
-//                       ),
-//                     );
-//               }
-//               context.snackBarSuccess('Hamper added to cart');
-//             },
-//           );
-//         } else if (state is HamperError) {
-//           // Show an error message
-//           ScaffoldMessenger.of(context).showSnackBar(
-//             SnackBar(content: Text(state.message)),
-//           );
-//         }
-//       },
-//       child: Stack(
-//         alignment: Alignment.center,
-//         children: [
-//           if (widget.imgUrl != null && widget.imgUrl!.isNotEmpty)
-//             Container(
-//               height: 270,
-//               width: 700,
-//               child: Image.network(
-//                 widget.imgUrl!,
-//                 fit: BoxFit.fill,
-//                 errorBuilder: (context, error, stackTrace) {
-//                   return Container(color: Colors.grey);
-//                 },
-//               ),
-//             )
-//           else
-//             Container(color: Colors.grey),
-//           if (widget.hamperGifUrl1 != null && widget.hamperGifUrl1!.isNotEmpty)
-//             Positioned(
-//               top: 14,
-//               left: 10,
-//               child: Image.network(
-//                 widget.hamperGifUrl1!,
-//                 height: 20,
-//                 width: 80,
-//                 fit: BoxFit.cover,
-//                 errorBuilder: (context, error, stackTrace) {
-//                   return Container();
-//                 },
-//               ),
-//             ),
-//           if (widget.hamperGifUrl2 != null && widget.hamperGifUrl2!.isNotEmpty)
-//             Positioned(
-//               bottom: 10,
-//               right: 145,
-//               child: Image.network(
-//                 widget.hamperGifUrl2!,
-//                 height: 88,
-//                 width: 80,
-//                 fit: BoxFit.cover,
-//                 errorBuilder: (context, error, stackTrace) {
-//                   return Container();
-//                 },
-//               ),
-//             ),
-//           Positioned(
-//             top: 10,
-//             right: 10,
-//             child: GestureDetector(
-//               onTap: () {
-//                 context
-//                     .read<HamperBloc>()
-//                     .add(FetchHamperProductsByImageUrl(widget.imgUrl!));
-//               },
-//               child: const Icon(
-//                 IconlyLight.buy,
-//                 size: 25,
-//               ),
-//             ),
-//           ),
-//         ],
-//       ),
-//     );
-//   }
-// }
 @RoutePage()
 class HamperImageStack extends StatefulWidget {
   final String? imgUrl;
@@ -149,9 +34,6 @@ class _HamperImageStackState extends State<HamperImageStack> {
 
   @override
   Widget build(BuildContext context) {
-    print("Image URL: ${widget.imgUrl}");
-    print("Hamper GIF 1 URL: ${widget.hamperGifUrl1}");
-    print("Hamper GIF 2 URL: ${widget.hamperGifUrl2}");
     return BlocProvider(
       create: (context) {
         final bloc = HamperBloc(context.read<ShoppingRepository>());
@@ -183,10 +65,9 @@ class _HamperImageStackState extends State<HamperImageStack> {
           child: Stack(
             alignment: Alignment.center,
             children: [
-              // Base Image (Hamper Image)
               if (widget.imgUrl != null && widget.imgUrl!.isNotEmpty)
                 Container(
-                  height: 270,
+                  height: MediaQuery.of(context).size.height,
                   width: MediaQuery.of(context).size.width,
                   child: Image.network(
                     widget.imgUrl!,
@@ -198,7 +79,6 @@ class _HamperImageStackState extends State<HamperImageStack> {
                 )
               else
                 Container(color: Colors.grey),
-
               if (widget.hamperGifUrl1 != null &&
                   widget.hamperGifUrl1!.isNotEmpty)
                 Positioned(
@@ -206,41 +86,40 @@ class _HamperImageStackState extends State<HamperImageStack> {
                   left: 10,
                   child: Image.network(
                     widget.hamperGifUrl1!,
-                    height: 40,
-                    width: 70,
-                    fit: BoxFit.cover,
+                    height: 50,
+                    width: 100,
+                    fit: BoxFit.contain,
                     errorBuilder: (context, error, stackTrace) {
                       return Container();
                     },
                   ),
                 ),
-
               if (widget.hamperGifUrl2 != null &&
                   widget.hamperGifUrl2!.isNotEmpty)
                 Positioned(
-                  bottom: 10,
-                  right: 60,
+                  bottom: 1,
+                  right: 50,
                   child: Image.network(
                     widget.hamperGifUrl2!,
-                    height: 78,
-                    width: 70,
-                    fit: BoxFit.cover,
+                    height: 75,
+                    width: 140,
+                    fit: BoxFit.contain,
                     errorBuilder: (context, error, stackTrace) {
                       return Container();
                     },
                   ),
                 ),
-
-              // GestureDetector to fetch hamper by image URL on tap
               Positioned(
                 top: 10,
                 right: 10,
                 child: GestureDetector(
                   onTap: () {
-                    // This action will trigger the FetchHampersByImageUrl event
+                    print("Gesture detected!");
                     context
                         .read<HamperBloc>()
                         .add(FetchHampersByImageUrl(widget.imgUrl!));
+                    context.router
+                        .push(HamperViewRoute(imageUrl: widget.imgUrl));
                   },
                   child: const Icon(
                     IconlyLight.buy,
@@ -248,8 +127,6 @@ class _HamperImageStackState extends State<HamperImageStack> {
                   ),
                 ),
               ),
-
-              // Adding the IconButton for adding to the cart
               if (selectedHamperId != null && hamperProduct != null)
                 Positioned(
                   top: 10,
@@ -257,7 +134,10 @@ class _HamperImageStackState extends State<HamperImageStack> {
                   child: IconButton(
                     icon: const Icon(Icons.shopping_cart),
                     onPressed: () {
-                      print("Adding hamper to cart...");
+                      print('icon pressed');
+                      context
+                          .read<HamperBloc>()
+                          .add(FetchHampersByImageUrl(widget.imgUrl!));
                       context.read<CartBloc>().add(
                             ProductAddedToCart(
                               OrderProduct(

@@ -31,10 +31,10 @@ class FetchHamperProductsByImageUrl extends HamperEvent {
   FetchHamperProductsByImageUrl(this.imageUrl);
 }
 
-class CompareCartWithHampers extends HamperEvent {
-  final List<OrderProduct> cartProducts;
-  CompareCartWithHampers(this.cartProducts);
-}
+// class CompareCartWithHampers extends HamperEvent {
+//   final List<OrderProduct> cartProducts;
+//   CompareCartWithHampers(this.cartProducts);
+// }
 
 class AddHamperToCart extends HamperEvent {
   final String hamperId;

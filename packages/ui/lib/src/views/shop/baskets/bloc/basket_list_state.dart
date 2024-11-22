@@ -16,3 +16,8 @@ final class BasketListLoaded extends BasketListState {
   final List<Basket> baskets;
   BasketListLoaded(this.baskets);
 }
+
+class BasketListSuccess extends BasketListState {
+  final String message;
+  BasketListSuccess(this.message);
+}

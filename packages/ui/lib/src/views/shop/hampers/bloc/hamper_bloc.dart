@@ -6,7 +6,6 @@ import 'package:data/shopping/models/mapped_product_hamper.dart';
 import 'package:data/shopping/repository/hamper_repository.dart';
 import 'package:data/shopping/repository/shopping_repository.dart';
 import 'package:meta/meta.dart';
-import 'package:ui/src/views/shop/hampers/ui/compare_hamper_to_cart.dart';
 
 part 'hamper_event.dart';
 part 'hamper_state.dart';
@@ -62,111 +61,45 @@ class HamperBloc extends Bloc<HamperEvent, HamperState> {
       );
     });
 
-    on<CompareCartWithHampers>((event, emit) async {
-      emit(HamperLoading());
+    //  on<CompareCartWithHampers>((event, emit) async {
+    //     emit(HamperLoading());
 
-      try {
-        await hampersResult.fold(
-          (error) async {
-            if (!emit.isDone) {
-              emit(HamperError('Error fetching hampers: ${error.message}'));
-            }
-          },
-          (hampers) async {
-            final comparer = HamperComparer(
-                cartProducts: event.cartProducts, hampers: hampers);
+    //     final hampersResult = await _repository.fetchHampers();
+    //     hampersResult.fold((error) {
+    //       emit(HamperError('Error fetching hampers: ${error.message}'));
+    //     }, (hampers) async {
+    //       final comparer = HamperComparer(
+    //         cartProducts: event.cartProducts,
+    //         hampers: hampers,
+    //       );
+    //       if (!hasEmittedMatch) {
+    //         final matchingHamper = comparer.findMatchingHamper();
+    //         print('matching hamper : $matchingHamper');
 
-            if (!hasEmittedMatch) {
-              final matchingHamper = comparer.findMatchingHamper();
-              print('matching hamper : $matchingHamper');
+    //         if (matchingHamper != null) {
+    //           final hamperProductResult =
+    //               await _repository.fetchHamperProduct(matchingHamper.id);
 
-              if (matchingHamper != null) {
-                final hamperProductResult =
-                    await _repository.fetchHamperProduct(matchingHamper.id);
-
-                await hamperProductResult.fold(
-                  (error) async {
-                    if (!emit.isDone) {
-                      emit(HamperError(
-                          'Error fetching hamper product: ${error.message}'));
-                    }
-                  },
-                  (product) async {
-                    // If the product is not null, emit the comparison result state
-                    if (product != null) {
-                      if (!emit.isDone) {
-                        emit(HamperComparisonResultState(
-                          hamperProduct: product,
-                          matchingHamper: matchingHamper,
-                        ));
-                      }
-                      hasEmittedMatch = true;
-                    } else {
-                      // If no product is found, emit the failure state
-                      if (!emit.isDone) {
-                        emit(HamperComparisonFailure());
-                      }
-                    }
-                  },
-                );
-              } else {
-                // If no matching hamper is found, emit the failure state
-                if (!emit.isDone) {
-                  emit(HamperComparisonFailure());
-                }
-              }
-            }
-          },
-        );
-      } catch (e) {
-        // Catch any unexpected errors and emit an error state
-        if (!emit.isDone) {
-          emit(HamperError('Unexpected error: $e'));
-        }
-      }
-    });
-
-    // on<CompareCartWithHampers>((event, emit) async {
-    //   emit(HamperLoading());
-
-    //   final hampersResult = await _repository.fetchHampers();
-    //   hampersResult.fold((error) {
-    //     emit(HamperError('Error fetching hampers: ${error.message}'));
-    //   }, (hampers) async {
-    //     final comparer = HamperComparer(
-    //       cartProducts: event.cartProducts,
-    //       hampers: hampers,
-    //     );
-    //     if (!hasEmittedMatch) {
-    //       final matchingHamper = comparer.findMatchingHamper();
-    //       print('matching hamper : $matchingHamper');
-
-    //       if (matchingHamper != null) {
-    //         final hamperProductResult =
-    //             await _repository.fetchHamperProduct(matchingHamper.id);
-
-    //         hamperProductResult.fold(
-    //           (error) {
-    //             emit(HamperError(
-    //                 'Error fetching hamper product: ${error.message}'));
-    //           },
-    //           (product) async {
-    //             if (product != null) {
-    //               print("Emitting HamperComparisonResultState");
-    //               emit(HamperComparisonResultState(
-    //                   hamperProduct: product, matchingHamper: matchingHamper));
-    //               hasEmittedMatch = true;
-    //             } else {
-    //               emit(HamperComparisonFailure());
-    //             }
-    //           },
-    //         );
-    //       } else {
-    //         emit(HamperComparisonFailure());
+    //           hamperProductResult.fold(
+    //             (error) {
+    //               emit(HamperError(
+    //                   'Error fetching hamper product: ${error.message}'));
+    //             },
+    //             (product) {
+    //               if (product != null) {
+    //                 emit(HamperComparisonResultState(hamperProduct: product));
+    //                 hasEmittedMatch = true;
+    //               } else {
+    //                 emit(HamperComparisonFailure());
+    //               }
+    //             },
+    //           );
+    //         } else {
+    //           emit(HamperComparisonFailure());
+    //         }
     //       }
-    //     }
+    //     });
     //   });
-    // });
     on<ResetHamperComparison>((event, emit) {
       hasEmittedMatch = false;
       emit(HamperInitial());

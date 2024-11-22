@@ -53,17 +53,20 @@ class _HamperViewPageState extends State<HamperViewPage> {
       },
       child: Scaffold(
         appBar: AppBar(
-          title: const Text("Hamper"),
-          //           actions: [
-          //   IconButton(
-          //     icon: const Icon(Icons.shopping_basket_outlined),
-          //     onPressed: _addAllToBasket,
-          //   ),
-          //   IconButton(
-          //     icon: const Icon(IconlyLight.buy, size: 25),
-          //     onPressed: _addHamperToCart(),
-          //   ),
-          // ],
+          // title: Text(selectedHamper!.hamperCode),
+          title: const Text('Hamper'),
+          actions: [
+            IconButton(
+              icon: const Icon(Icons.shopping_basket_outlined),
+              onPressed: _addAllToBasket,
+            ),
+            IconButton(
+              icon: const Icon(IconlyLight.buy, size: 25),
+              onPressed: hamperProduct != null
+                  ? () => _addHamperToCart(hamperProduct!)
+                  : null,
+            ),
+          ],
         ),
         body: BlocListener<HamperBloc, HamperState>(
           listener: (context, state) {
@@ -80,8 +83,9 @@ class _HamperViewPageState extends State<HamperViewPage> {
               context.read<HamperBloc>().add(FetchHamperAsProduct(hamperId));
             } else if (state is HamperError) {
               ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                    content: Text('Error loading hamper: ${state.message}')),
+                const SnackBar(
+                    content:
+                        Text('Error loading hamper, please reload the page')),
               );
             }
             if (selectedHamper != null &&
@@ -95,7 +99,7 @@ class _HamperViewPageState extends State<HamperViewPage> {
               } else if (state is HamperError) {
                 return FullScreenError(
                   exception: EESUpException(
-                    message: 'Something went wrong: ${state.message}',
+                    message: 'Something went wrong',
                   ),
                 );
               }
@@ -104,7 +108,6 @@ class _HamperViewPageState extends State<HamperViewPage> {
                   hamperProduct != null) {
                 return _buildHamperDetails(
                     context, selectedHamper!, products, hamperProduct!);
-                //  }
               }
               return const FullScreenLoadingShimmer();
             },
@@ -171,7 +174,6 @@ class _HamperViewPageState extends State<HamperViewPage> {
     }
   }
 
-  // Function to handle adding a hamper product to the cart
   Future<void> _addHamperToCart(Product hamperProduct) async {
     if (selectedHamper != null) {
       context.read<CartBloc>().add(
@@ -195,96 +197,6 @@ class _HamperViewPageState extends State<HamperViewPage> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              IconButton(
-                icon: const Icon(Icons.shopping_basket_outlined),
-                onPressed: () async {
-                  List<Product> productList = products
-                      .map((productDetail) => productDetail.product)
-                      .toList();
-
-                  final selectedBasketId = await showDialog<String>(
-                    context: context,
-                    builder: (BuildContext context) =>
-                        BasketSelectionDialog(product: productList),
-                  );
-
-                  if (selectedBasketId != null) {
-                    final shoppingRepo = context.read<ShoppingRepository>();
-                    for (final product in products) {
-                      shoppingRepo.addProductToBasket(
-                          selectedBasketId, product.productId);
-                    }
-                    context
-                        .snackBarSuccess('All items added to selected basket.');
-
-                    final addToCart = await showDialog<bool>(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return AlertDialog(
-                          title: const Text("Add to Cart"),
-                          content: const Text(
-                              "Would you like to add the entire hamper to the cart?"),
-                          actions: [
-                            TextButton(
-                              onPressed: () => Navigator.of(context).pop(false),
-                              child: const Text("No"),
-                            ),
-                            TextButton(
-                              onPressed: () => Navigator.of(context).pop(true),
-                              child: const Text("Yes"),
-                            ),
-                          ],
-                        );
-                      },
-                    );
-
-                    if (addToCart == true) {
-                      if (selectedHamper != null) {
-                        context.read<CartBloc>().add(
-                              ProductAddedToCart(
-                                OrderProduct(
-                                  productId: hamperProduct.id,
-                                  quantity: 1,
-                                  price: hamperProduct.salePrice,
-                                  name: hamperProduct.name,
-                                  imageUrl: hamperProduct.imageUrl,
-                                ),
-                              ),
-                            );
-                        context.snackBarSuccess('Hamper added to cart');
-                      }
-                      context.snackBarSuccess('Hamper added to cart');
-                    }
-                  }
-                },
-              ),
-              IconButton(
-                icon: const Icon(
-                  IconlyLight.buy,
-                  size: 25,
-                ),
-                onPressed: () async {
-                  if (selectedHamper != null) {
-                    context.read<CartBloc>().add(
-                          ProductAddedToCart(
-                            OrderProduct(
-                              productId: hamperProduct.id,
-                              quantity: 1,
-                              price: hamperProduct.salePrice,
-                              name: hamperProduct.name,
-                              imageUrl: hamperProduct.imageUrl,
-                            ),
-                          ),
-                        );
-                    context.snackBarSuccess('Hamper added to cart');
-                  }
-                },
-              ),
-            ],
-          ),
           Padding(
             padding: const EdgeInsets.all(16.0),
             child: Column(
@@ -298,7 +210,7 @@ class _HamperViewPageState extends State<HamperViewPage> {
                 Text("Hamper Value: ${hamper.value}"),
                 const SizedBox(height: 8),
                 Text(
-                    "Expires on: ${hamper.expiryDate.toLocal().toString().split(' ')[0]}"),
+                    "Expiry date: ${hamper.expiryDate.toLocal().toString().split(' ')[0]}"),
                 const SizedBox(height: 10),
                 if (hamper.imgUrl != null && hamper.imgUrl!.isNotEmpty)
                   Image.network(
@@ -329,13 +241,15 @@ class _HamperViewPageState extends State<HamperViewPage> {
 
   Widget _buildProductList(
       BuildContext context, List<HamperProductDetail> products) {
+    final sortedProducts = products
+      ..sort((a, b) => (b.isFree ? 1 : 0).compareTo(a.isFree ? 1 : 0));
+
     return ListView.builder(
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
       itemCount: products.length,
       itemBuilder: (context, index) {
-        final product = products[index];
-        return _ProductItemCard(productDetail: product);
+        return _ProductItemCard(productDetail: sortedProducts[index]);
       },
     );
   }
@@ -389,13 +303,14 @@ class _ProductItemCard extends StatelessWidget {
                   Text(productDetail.name,
                       style: Theme.of(context).textTheme.bodyMedium),
                   Text("Price: R${productDetail.salePrice.toStringAsFixed(2)}"),
-                  Text(
-                    productDetail.isFree ? "Free" : "Paid",
-                    style: TextStyle(
-                      color: productDetail.isFree ? Colors.green : Colors.red,
-                      fontWeight: FontWeight.bold,
+                  if (productDetail.isFree)
+                    const Text(
+                      "Free",
+                      style: TextStyle(
+                        color: Colors.green,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
-                  ),
                 ],
               ),
             ),
@@ -405,3 +320,55 @@ class _ProductItemCard extends StatelessWidget {
     );
   }
 }
+
+
+// class _ProductItemCard extends StatelessWidget {
+//   final HamperProductDetail productDetail;
+
+//   const _ProductItemCard({required this.productDetail});
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Card(
+//       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+//       child: Padding(
+//         padding: const EdgeInsets.all(16.0),
+//         child: Row(
+//           children: [
+//             CircleAvatar(
+//               radius: 30,
+//               backgroundImage: productDetail.imageUrl.isNotEmpty
+//                   ? NetworkImage(productDetail.imageUrl)
+//                   : null,
+//               child: productDetail.imageUrl.isNotEmpty
+//                   ? null
+//                   : const Icon(
+//                       Icons.fastfood_outlined,
+//                       size: 30,
+//                       color: Colors.grey,
+//                     ),
+//             ),
+//             const SizedBox(width: 16),
+//             Expanded(
+//               child: Column(
+//                 crossAxisAlignment: CrossAxisAlignment.start,
+//                 children: [
+//                   Text(productDetail.name,
+//                       style: Theme.of(context).textTheme.bodyMedium),
+//                   Text("Price: R${productDetail.salePrice.toStringAsFixed(2)}"),
+//                   Text(
+//                     productDetail.isFree ? "Free" : "Paid",
+//                     style: TextStyle(
+//                       color: productDetail.isFree ? Colors.green : Colors.red,
+//                       fontWeight: FontWeight.bold,
+//                     ),
+//                   ),
+//                 ],
+//               ),
+//             ),
+//           ],
+//         ),
+//       ),
+//     );
+//   }
+//}

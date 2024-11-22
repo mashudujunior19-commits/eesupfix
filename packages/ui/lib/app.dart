@@ -189,7 +189,9 @@ class MainApp extends StatelessWidget {
               ),
             ),
           ),
-          BlocProvider(create: (context) => CartBloc()),
+          BlocProvider(
+              create: (context) =>
+                  CartBloc(context.read<ShoppingRepository>())),
           BlocProvider(
             create: (context) => WalletsBloc(context.read<WalletsRepository>()),
           ),
@@ -198,7 +200,7 @@ class MainApp extends StatelessWidget {
           ),
           BlocProvider(
             create: (context) => HamperBloc(
-              context.read<ShoppingRepository>()..add(LoadHampers()),
+              context.read<ShoppingRepository>(),
             ),
           ),
         ],
