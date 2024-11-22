@@ -41,6 +41,13 @@
             "request": "launch",
             "cwd": "apps\\my_kasi_shop",
             "program": "lib\\main_test.dart"
+        },
+        {
+            "name": "Flutter (lib\\main.dart)",
+            "type": "dart",
+            "request": "launch",
+            "cwd": "apps\\eesup",
+            "program": "lib\\main.dart"
         }
     ]
 }

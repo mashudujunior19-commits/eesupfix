@@ -34,6 +34,7 @@ _$ProductImpl _$$ProductImplFromJson(Map<String, dynamic> json) =>
           const ProductClassConverter().fromJson(json['class'] as String),
       categoryName: json['category_name'] as String?,
       categoryImageUrl: json['category_image_url'] as String?,
+      hamperId: json['hamper_id'] as String?,
       sellable: json['sellable'] as bool,
     );
 
@@ -64,5 +65,6 @@ Map<String, dynamic> _$$ProductImplToJson(_$ProductImpl instance) =>
       'class': const ProductClassConverter().toJson(instance.productClass),
       'category_name': instance.categoryName,
       'category_image_url': instance.categoryImageUrl,
+      'hamper_id': instance.hamperId,
       'sellable': instance.sellable,
     };

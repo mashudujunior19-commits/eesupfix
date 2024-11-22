@@ -15,7 +15,7 @@ class CartButton extends StatelessWidget {
       builder: (context, state) {
         return IconButton(
           onPressed: () {
-            context.router.push(const CartRoute());
+            context.router.push(CartRoute());
           },
           icon: Badge(
             backgroundColor: context.colorScheme.primary,
