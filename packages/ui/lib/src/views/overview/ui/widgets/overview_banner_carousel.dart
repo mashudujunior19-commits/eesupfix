@@ -110,12 +110,9 @@
 
 import 'package:data/shopping/models/hamper_banner.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_animate/flutter_animate.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_carousel_widget/flutter_carousel_widget.dart';
 import 'package:shimmer/shimmer.dart';
 
-import '../../../shop/hampers/bloc/hamper_bloc.dart';
 import '../../../shop/hampers/ui/hamper_stack.dart';
 
 class OverviewBannerCarousel extends StatelessWidget {
@@ -149,9 +146,9 @@ class OverviewBannerCarousel extends StatelessWidget {
         return GestureDetector(
           onTap: () {
             onBannerTap(hamperBanner.baseImage);
-            context
-                .read<HamperBloc>()
-                .add(FetchHamperProductsByImageUrl(hamperBanner.baseImage));
+            // context
+            //     .read<HamperBloc>()
+            //     .add(FetchHamperProductsByImageUrl(hamperBanner.baseImage));
           },
           child: Padding(
             padding: const EdgeInsets.only(right: 5),
