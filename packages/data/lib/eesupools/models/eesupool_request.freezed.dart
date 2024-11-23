@@ -39,12 +39,8 @@ mixin _$EESUpoolRequest {
   @UserRoleConverter()
   UserRole get role => throw _privateConstructorUsedError;
 
-  /// Serializes this EESUpoolRequest to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-
-  /// Create a copy of EESUpoolRequest
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   $EESUpoolRequestCopyWith<EESUpoolRequest> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -77,8 +73,6 @@ class _$EESUpoolRequestCopyWithImpl<$Res, $Val extends EESUpoolRequest>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
-  /// Create a copy of EESUpoolRequest
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -161,8 +155,6 @@ class __$$EESUpoolRequestImplCopyWithImpl<$Res>
       _$EESUpoolRequestImpl _value, $Res Function(_$EESUpoolRequestImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of EESUpoolRequest
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -288,14 +280,12 @@ class _$EESUpoolRequestImpl implements _EESUpoolRequest {
             (identical(other.role, role) || other.role == role));
   }
 
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(runtimeType, userId, createdAt, eesupoolId,
       type, status, eesupoolName, fullName, corporateName, role);
 
-  /// Create a copy of EESUpoolRequest
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
   _$$EESUpoolRequestImplCopyWith<_$EESUpoolRequestImpl> get copyWith =>
@@ -353,11 +343,8 @@ abstract class _EESUpoolRequest implements EESUpoolRequest {
   @override
   @UserRoleConverter()
   UserRole get role;
-
-  /// Create a copy of EESUpoolRequest
-  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   _$$EESUpoolRequestImplCopyWith<_$EESUpoolRequestImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

@@ -30,12 +30,8 @@ mixin _$ChatMessageReaction {
   String get memberName => throw _privateConstructorUsedError;
   bool get liked => throw _privateConstructorUsedError;
 
-  /// Serializes this ChatMessageReaction to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-
-  /// Create a copy of ChatMessageReaction
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   $ChatMessageReactionCopyWith<ChatMessageReaction> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -65,8 +61,6 @@ class _$ChatMessageReactionCopyWithImpl<$Res, $Val extends ChatMessageReaction>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
-  /// Create a copy of ChatMessageReaction
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -126,8 +120,6 @@ class __$$ChatMessageReactionImplCopyWithImpl<$Res>
       $Res Function(_$ChatMessageReactionImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of ChatMessageReaction
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -213,14 +205,12 @@ class _$ChatMessageReactionImpl implements _ChatMessageReaction {
             (identical(other.liked, liked) || other.liked == liked));
   }
 
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(
       runtimeType, messageId, memberId, createdAt, memberName, liked);
 
-  /// Create a copy of ChatMessageReaction
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
   _$$ChatMessageReactionImplCopyWith<_$ChatMessageReactionImpl> get copyWith =>
@@ -262,11 +252,8 @@ abstract class _ChatMessageReaction implements ChatMessageReaction {
   String get memberName;
   @override
   bool get liked;
-
-  /// Create a copy of ChatMessageReaction
-  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   _$$ChatMessageReactionImplCopyWith<_$ChatMessageReactionImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

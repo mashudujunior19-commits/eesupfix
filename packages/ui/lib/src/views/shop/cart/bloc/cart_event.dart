@@ -38,3 +38,9 @@ final class ProductSettingsExpanded extends CartEvent {
   final bool isExpanded;
   ProductSettingsExpanded(this.id, this.isExpanded);
 }
+
+class CompareCartWithHampers extends CartEvent {
+  final List<OrderProduct> cartProducts;
+
+  CompareCartWithHampers({required this.cartProducts});
+}

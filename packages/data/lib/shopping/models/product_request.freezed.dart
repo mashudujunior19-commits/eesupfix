@@ -35,12 +35,8 @@ mixin _$ProductRequest {
   String? get variant => throw _privateConstructorUsedError;
   int? get quantity => throw _privateConstructorUsedError;
 
-  /// Serializes this ProductRequest to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-
-  /// Create a copy of ProductRequest
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   $ProductRequestCopyWith<ProductRequest> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -73,8 +69,6 @@ class _$ProductRequestCopyWithImpl<$Res, $Val extends ProductRequest>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
-  /// Create a copy of ProductRequest
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -157,8 +151,6 @@ class __$$ProductRequestImplCopyWithImpl<$Res>
       _$ProductRequestImpl _value, $Res Function(_$ProductRequestImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of ProductRequest
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -279,14 +271,12 @@ class _$ProductRequestImpl implements _ProductRequest {
                 other.quantity == quantity));
   }
 
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(runtimeType, id, userId, createdAt, productId,
       packSize, type, brand, variant, quantity);
 
-  /// Create a copy of ProductRequest
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
   _$$ProductRequestImplCopyWith<_$ProductRequestImpl> get copyWith =>
@@ -340,11 +330,8 @@ abstract class _ProductRequest implements ProductRequest {
   String? get variant;
   @override
   int? get quantity;
-
-  /// Create a copy of ProductRequest
-  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   _$$ProductRequestImplCopyWith<_$ProductRequestImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

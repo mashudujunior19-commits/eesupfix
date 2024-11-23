@@ -162,7 +162,7 @@ class _ProductInformation extends StatelessWidget {
                       onTap: () {
                         context.showBottomSheetDialog(
                           child: BasketSelectionDialog(
-                            product: product,
+                            product: [product],
                           ),
                         );
                       },

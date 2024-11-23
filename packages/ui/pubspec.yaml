@@ -32,8 +32,8 @@ dependencies:
   bootstrap_icons: ^1.11.3
   flutter_iconly: ^1.0.2
   shimmer: ^3.0.0
-  flutter_carousel_widget: ^3.1.0
-  cached_network_image: ^3.3.1
+  flutter_carousel_widget: ^2.3.0
+  cached_network_image: ^3.4.1
   instapay_flutter:
     path: ../../packages/instapay
   tab_indicator_styler: ^2.0.0

@@ -29,12 +29,8 @@ mixin _$DaySchedule {
   @JsonKey(name: 'is_closed')
   bool get isClosed => throw _privateConstructorUsedError;
 
-  /// Serializes this DaySchedule to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-
-  /// Create a copy of DaySchedule
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   $DayScheduleCopyWith<DaySchedule> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -63,8 +59,6 @@ class _$DayScheduleCopyWithImpl<$Res, $Val extends DaySchedule>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
-  /// Create a copy of DaySchedule
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -123,8 +117,6 @@ class __$$DayScheduleImplCopyWithImpl<$Res>
       _$DayScheduleImpl _value, $Res Function(_$DayScheduleImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of DaySchedule
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -206,14 +198,12 @@ class _$DayScheduleImpl implements _DaySchedule {
                 other.isClosed == isClosed));
   }
 
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   @override
   int get hashCode =>
       Object.hash(runtimeType, day, index, openTime, closeTime, isClosed);
 
-  /// Create a copy of DaySchedule
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
   _$$DayScheduleImplCopyWith<_$DayScheduleImpl> get copyWith =>
@@ -252,11 +242,8 @@ abstract class _DaySchedule implements DaySchedule {
   @override
   @JsonKey(name: 'is_closed')
   bool get isClosed;
-
-  /// Create a copy of DaySchedule
-  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   _$$DayScheduleImplCopyWith<_$DayScheduleImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

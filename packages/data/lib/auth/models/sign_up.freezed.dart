@@ -32,9 +32,7 @@ mixin _$SignUp {
   bool get isRSACitizen => throw _privateConstructorUsedError;
   DateTime? get dob => throw _privateConstructorUsedError;
 
-  /// Create a copy of SignUp
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   $SignUpCopyWith<SignUp> get copyWith => throw _privateConstructorUsedError;
 }
 
@@ -71,8 +69,6 @@ class _$SignUpCopyWithImpl<$Res, $Val extends SignUp>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
-  /// Create a copy of SignUp
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -190,8 +186,6 @@ class __$$SignUpImplCopyWithImpl<$Res>
       _$SignUpImpl _value, $Res Function(_$SignUpImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of SignUp
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -381,9 +375,7 @@ class _$SignUpImpl implements _SignUp {
       isRSACitizen,
       dob);
 
-  /// Create a copy of SignUp
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
   _$$SignUpImplCopyWith<_$SignUpImpl> get copyWith =>
@@ -438,11 +430,8 @@ abstract class _SignUp implements SignUp {
   bool get isRSACitizen;
   @override
   DateTime? get dob;
-
-  /// Create a copy of SignUp
-  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   _$$SignUpImplCopyWith<_$SignUpImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

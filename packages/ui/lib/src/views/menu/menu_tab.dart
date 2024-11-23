@@ -98,13 +98,13 @@ class _MenuTabState extends State<MenuTab> {
                         context.router.push(const ProductRequestRoute());
                       },
                     ),
-                    // _MenuButton(
-                    //   label: 'Settings',
-                    //   icon: IconlyLight.setting,
-                    //   onTap: () {
-                    //     context.router.push(const SettingsRoutes());
-                    //   },
-                    // ),
+                    _MenuButton(
+                      label: 'Hampers',
+                      icon: BootstrapIcons.basket2,
+                      onTap: () {
+                        context.router.push(const HampersList());
+                      },
+                    ),
                     // _MenuButton(
                     //   isVisible: false,
                     //   label: 'Support',

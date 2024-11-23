@@ -74,12 +74,8 @@ mixin _$Order {
   @JsonKey(includeToJson: false)
   Address? get address => throw _privateConstructorUsedError;
 
-  /// Serializes this Order to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-
-  /// Create a copy of Order
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   $OrderCopyWith<Order> get copyWith => throw _privateConstructorUsedError;
 }
 
@@ -131,8 +127,6 @@ class _$OrderCopyWithImpl<$Res, $Val extends Order>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
-  /// Create a copy of Order
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -261,8 +255,6 @@ class _$OrderCopyWithImpl<$Res, $Val extends Order>
     ) as $Val);
   }
 
-  /// Create a copy of Order
-  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $AddressCopyWith<$Res>? get address {
@@ -325,8 +317,6 @@ class __$$OrderImplCopyWithImpl<$Res>
       _$OrderImpl _value, $Res Function(_$OrderImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of Order
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -643,7 +633,7 @@ class _$OrderImpl implements _Order {
             (identical(other.address, address) || other.address == address));
   }
 
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hashAll([
         runtimeType,
@@ -673,9 +663,7 @@ class _$OrderImpl implements _Order {
         address
       ]);
 
-  /// Create a copy of Order
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
   _$$OrderImplCopyWith<_$OrderImpl> get copyWith =>
@@ -793,22 +781,18 @@ abstract class _Order implements Order {
   @override
   @OrderStatusConverter()
   @JsonKey(includeToJson: false)
-  OrderStatus
-      get status; // @EESUpreneurConverter() @JsonKey(includeToJson: false) EESUpreneur? eesupreneur,
+  OrderStatus get status;
+  @override // @EESUpreneurConverter() @JsonKey(includeToJson: false) EESUpreneur? eesupreneur,
 // @EESUpoolConverter() @JsonKey(includeToJson: false) EESUpool? eesupool,
 // @ProfileConverter() @JsonKey(includeToJson: false) Profile? customer,
-  @override
   @OrderProductConverter()
   List<OrderProduct> get products;
   @override
   @AddressConverter()
   @JsonKey(includeToJson: false)
   Address? get address;
-
-  /// Create a copy of Order
-  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   _$$OrderImplCopyWith<_$OrderImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

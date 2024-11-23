@@ -35,6 +35,7 @@ class Product with _$Product {
     required ProductClass productClass,
     @JsonKey(name: 'category_name') String? categoryName,
     @JsonKey(name: 'category_image_url') String? categoryImageUrl,
+    @JsonKey(name: 'hamper_id') String? hamperId,
     required bool sellable,
   }) = _Product;
 

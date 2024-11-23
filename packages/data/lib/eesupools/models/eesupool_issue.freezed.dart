@@ -51,12 +51,8 @@ mixin _$EESUpoolIssue {
   @JsonKey(name: 'offender_member', includeToJson: false)
   EESUpoolMember? get offender => throw _privateConstructorUsedError;
 
-  /// Serializes this EESUpoolIssue to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-
-  /// Create a copy of EESUpoolIssue
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   $EESUpoolIssueCopyWith<EESUpoolIssue> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -105,8 +101,6 @@ class _$EESUpoolIssueCopyWithImpl<$Res, $Val extends EESUpoolIssue>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
-  /// Create a copy of EESUpoolIssue
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -180,8 +174,6 @@ class _$EESUpoolIssueCopyWithImpl<$Res, $Val extends EESUpoolIssue>
     ) as $Val);
   }
 
-  /// Create a copy of EESUpoolIssue
-  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $ChatMessageCopyWith<$Res>? get chatMessage {
@@ -194,8 +186,6 @@ class _$EESUpoolIssueCopyWithImpl<$Res, $Val extends EESUpoolIssue>
     });
   }
 
-  /// Create a copy of EESUpoolIssue
-  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $EESUpoolMemberCopyWith<$Res>? get reporter {
@@ -208,8 +198,6 @@ class _$EESUpoolIssueCopyWithImpl<$Res, $Val extends EESUpoolIssue>
     });
   }
 
-  /// Create a copy of EESUpoolIssue
-  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $EESUpoolMemberCopyWith<$Res>? get offender {
@@ -270,8 +258,6 @@ class __$$EESUpoolIssueImplCopyWithImpl<$Res>
       _$EESUpoolIssueImpl _value, $Res Function(_$EESUpoolIssueImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of EESUpoolIssue
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -488,7 +474,7 @@ class _$EESUpoolIssueImpl
                 other.offender == offender));
   }
 
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(
       runtimeType,
@@ -506,9 +492,7 @@ class _$EESUpoolIssueImpl
       reporter,
       offender);
 
-  /// Create a copy of EESUpoolIssue
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
   _$$EESUpoolIssueImplCopyWith<_$EESUpoolIssueImpl> get copyWith =>
@@ -594,11 +578,8 @@ abstract class _EESUpoolIssue implements EESUpoolIssue {
   @EESUpoolMemberConverter()
   @JsonKey(name: 'offender_member', includeToJson: false)
   EESUpoolMember? get offender;
-
-  /// Create a copy of EESUpoolIssue
-  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   _$$EESUpoolIssueImplCopyWith<_$EESUpoolIssueImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

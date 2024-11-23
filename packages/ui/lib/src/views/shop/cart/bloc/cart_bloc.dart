@@ -1,12 +1,21 @@
 import 'package:bloc/bloc.dart';
 import 'package:data/orders/models/order_product.dart';
+import 'package:data/shopping/models/hamper_product.dart';
+import 'package:data/shopping/models/product.dart';
+import 'package:data/shopping/repository/shopping_repository.dart';
 import 'package:meta/meta.dart';
+import 'package:data/shopping/repository/hamper_repository.dart';
+
+import '../../hampers/ui/compare_hamper_to_cart.dart';
 
 part 'cart_event.dart';
 part 'cart_state.dart';
 
 class CartBloc extends Bloc<CartEvent, CartState> {
-  CartBloc() : super(CurrentCart(const [])) {
+  final ShoppingRepository _repository;
+  bool hasEmittedMatch = false;
+
+  CartBloc(this._repository) : super(CurrentCart(const [])) {
     on<ProductAddedToCart>((event, emit) {
       var currentCart = [...(state as CurrentCart).products];
       var product = event.product;
@@ -96,6 +105,93 @@ class CartBloc extends Bloc<CartEvent, CartState> {
 
     on<CartCleared>((event, emit) {
       emit(CurrentCart(const []));
+    });
+
+    // on<CompareCartWithHampers>((event, emit) async {
+    //   emit(HamperComparisonLoading());
+
+    //   final hampersResult = await _repository.fetchHampers();
+    //   hampersResult.fold(
+    //     (error) {
+    //       emit(HamperComparisonError(
+    //           'Error fetching hampers: ${error.message}'));
+    //     },
+    //     (hampers) async {
+    //       final comparer = HamperComparer(
+    //         cartProducts: event.cartProducts,
+    //         hampers: hampers,
+    //       );
+
+    //       if (!hasEmittedMatch) {
+    //         final matchingHamper = comparer.findMatchingHamper();
+
+    //         if (matchingHamper != null) {
+    //           final hamperProductResult =
+    //               await _repository.fetchHamperProduct(matchingHamper.id);
+
+    //           hamperProductResult.fold(
+    //             (error) {
+    //               emit(HamperComparisonError(
+    //                   'Error fetching hamper product: ${error.message}'));
+    //             },
+    //             (product) {
+    //               if (product != null) {
+    //                 emit(HamperComparisonResultState(hamperProduct: product));
+    //                 hasEmittedMatch = true;
+    //               } else {
+    //                 emit(
+    //                     HamperComparisonError('Error fetching hamper product'));
+    //               }
+    //             },
+    //           );
+    //         } else {
+    //           emit(HamperComparisonError('Error fetching hamper product'));
+    //         }
+    //       }
+    //     },
+    //   );
+    // });
+    on<CompareCartWithHampers>((event, emit) async {
+      // Start loading state immediately
+      emit(HamperComparisonLoading());
+
+      // Fetch hampers from repository
+      final hampersResult = await _repository.fetchHampers();
+
+      hampersResult.fold(
+        (error) => emit(HamperComparisonError('Error: ${error.message}')),
+        (hampers) async {
+          final comparer = HamperComparer(
+            cartProducts: event.cartProducts,
+            hampers: hampers,
+          );
+
+          // Find matching hamper
+          final matchingHamper = comparer.findMatchingHamper();
+
+          if (matchingHamper != null) {
+            // Fetch the matching hamper product
+            final hamperProductResult =
+                await _repository.fetchHamperProduct(matchingHamper.id);
+
+            hamperProductResult.fold(
+              (error) => emit(HamperComparisonError('Error: ${error.message}')),
+              (product) {
+                if (product != null) {
+                  // Emit the hamper comparison result if found
+                  emit(HamperComparisonResultState(hamperProduct: product));
+                } else {
+                  // Emit error if no hamper product is found
+                  emit(HamperComparisonError('Error fetching hamper product'));
+                }
+              },
+            );
+          } else {
+            // Emit error if no matching hamper is found
+            emit(HamperComparisonError('No matching hampers found.'));
+          }
+        },
+      );
     });
   }
 }

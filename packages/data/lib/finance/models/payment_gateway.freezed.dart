@@ -26,12 +26,8 @@ mixin _$PaymentGateway {
   bool get isActive => throw _privateConstructorUsedError;
   double get fee => throw _privateConstructorUsedError;
 
-  /// Serializes this PaymentGateway to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-
-  /// Create a copy of PaymentGateway
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   $PaymentGatewayCopyWith<PaymentGateway> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -58,8 +54,6 @@ class _$PaymentGatewayCopyWithImpl<$Res, $Val extends PaymentGateway>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
-  /// Create a copy of PaymentGateway
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -106,8 +100,6 @@ class __$$PaymentGatewayImplCopyWithImpl<$Res>
       _$PaymentGatewayImpl _value, $Res Function(_$PaymentGatewayImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of PaymentGateway
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -168,13 +160,11 @@ class _$PaymentGatewayImpl implements _PaymentGateway {
             (identical(other.fee, fee) || other.fee == fee));
   }
 
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(runtimeType, id, isActive, fee);
 
-  /// Create a copy of PaymentGateway
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
   _$$PaymentGatewayImplCopyWith<_$PaymentGatewayImpl> get copyWith =>
@@ -206,11 +196,8 @@ abstract class _PaymentGateway implements PaymentGateway {
   bool get isActive;
   @override
   double get fee;
-
-  /// Create a copy of PaymentGateway
-  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   _$$PaymentGatewayImplCopyWith<_$PaymentGatewayImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

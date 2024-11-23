@@ -37,6 +37,13 @@ class OrderProduct with _$OrderProduct {
     bool isExpanded,
   }) = _OrderProduct;
 
+  factory OrderProduct.empty() => OrderProduct(
+        productId: 0,
+        name: '',
+        price: 0.0,
+        quantity: 0,
+      );
+
   factory OrderProduct.fromJson(Map<String, dynamic> json) =>
       _$OrderProductFromJson(json);
 }

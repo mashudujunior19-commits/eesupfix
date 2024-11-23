@@ -32,3 +32,17 @@ final class CurrentCart extends CartState {
     return total;
   }
 }
+
+class HamperComparisonLoading extends CartState {}
+
+class HamperComparisonError extends CartState {
+  final String message;
+
+  HamperComparisonError(this.message);
+}
+
+class HamperComparisonResultState extends CartState {
+  final Product hamperProduct;
+
+  HamperComparisonResultState({required this.hamperProduct});
+}

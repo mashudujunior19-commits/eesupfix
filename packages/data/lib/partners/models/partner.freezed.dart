@@ -32,12 +32,8 @@ mixin _$Partner {
   @JsonKey(name: 'max_apps')
   int get maxApps => throw _privateConstructorUsedError;
 
-  /// Serializes this Partner to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-
-  /// Create a copy of Partner
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   $PartnerCopyWith<Partner> get copyWith => throw _privateConstructorUsedError;
 }
 
@@ -66,8 +62,6 @@ class _$PartnerCopyWithImpl<$Res, $Val extends Partner>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
-  /// Create a copy of Partner
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -137,8 +131,6 @@ class __$$PartnerImplCopyWithImpl<$Res>
       _$PartnerImpl _value, $Res Function(_$PartnerImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of Partner
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -245,7 +237,7 @@ class _$PartnerImpl implements _Partner {
             (identical(other.maxApps, maxApps) || other.maxApps == maxApps));
   }
 
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(
       runtimeType,
@@ -257,9 +249,7 @@ class _$PartnerImpl implements _Partner {
       isOpen,
       maxApps);
 
-  /// Create a copy of Partner
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
   _$$PartnerImplCopyWith<_$PartnerImpl> get copyWith =>
@@ -303,11 +293,8 @@ abstract class _Partner implements Partner {
   @override
   @JsonKey(name: 'max_apps')
   int get maxApps;
-
-  /// Create a copy of Partner
-  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   _$$PartnerImplCopyWith<_$PartnerImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

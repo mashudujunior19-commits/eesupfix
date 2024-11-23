@@ -56,12 +56,8 @@ mixin _$Survey {
   bool? get passed => throw _privateConstructorUsedError;
   int? get score => throw _privateConstructorUsedError;
 
-  /// Serializes this Survey to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-
-  /// Create a copy of Survey
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   $SurveyCopyWith<Survey> get copyWith => throw _privateConstructorUsedError;
 }
 
@@ -107,8 +103,6 @@ class _$SurveyCopyWithImpl<$Res, $Val extends Survey>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
-  /// Create a copy of Survey
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -222,8 +216,6 @@ class _$SurveyCopyWithImpl<$Res, $Val extends Survey>
     ) as $Val);
   }
 
-  /// Create a copy of Survey
-  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $SurveyCopyWith<$Res>? get preSurvey {
@@ -280,8 +272,6 @@ class __$$SurveyImplCopyWithImpl<$Res>
       _$SurveyImpl _value, $Res Function(_$SurveyImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of Survey
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -564,7 +554,7 @@ class _$SurveyImpl with DiagnosticableTreeMixin implements _Survey {
             (identical(other.score, score) || other.score == score));
   }
 
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hashAll([
         runtimeType,
@@ -591,9 +581,7 @@ class _$SurveyImpl with DiagnosticableTreeMixin implements _Survey {
         score
       ]);
 
-  /// Create a copy of Survey
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
   _$$SurveyImplCopyWith<_$SurveyImpl> get copyWith =>
@@ -690,11 +678,8 @@ abstract class _Survey implements Survey {
   bool? get passed;
   @override
   int? get score;
-
-  /// Create a copy of Survey
-  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   _$$SurveyImplCopyWith<_$SurveyImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
