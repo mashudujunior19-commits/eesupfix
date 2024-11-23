@@ -201,9 +201,6 @@ class MainApp extends StatelessWidget {
           BlocProvider(
             create: (context) => HamperBloc(context.read<ShoppingRepository>())
               ..add(FetchHampers()),
-            create: (context) => HamperBloc(
-              context.read<ShoppingRepository>(),
-            ),
           ),
         ],
 
