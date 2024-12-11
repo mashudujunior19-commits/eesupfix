@@ -86,10 +86,18 @@ class CartScreen extends StatelessWidget {
                 },
               ),
       ),
+      // bottomNavigationBar: products.isNotEmpty
+      //     ? _CheckoutTotal(
+      //         products: products,
+      //         total: products.fold(0, (sum, product) => sum + product.price),
+      //       )
+      //     : null,
+
       bottomNavigationBar: products.isNotEmpty
           ? _CheckoutTotal(
               products: products,
-              total: products.fold(0, (sum, product) => sum + product.price),
+              total: products.fold(0.0,
+                  (sum, product) => sum + (product.price * product.quantity)),
             )
           : null,
     );

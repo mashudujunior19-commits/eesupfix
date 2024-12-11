@@ -107,50 +107,6 @@ class CartBloc extends Bloc<CartEvent, CartState> {
       emit(CurrentCart(const []));
     });
 
-    // on<CompareCartWithHampers>((event, emit) async {
-    //   emit(HamperComparisonLoading());
-
-    //   final hampersResult = await _repository.fetchHampers();
-    //   hampersResult.fold(
-    //     (error) {
-    //       emit(HamperComparisonError(
-    //           'Error fetching hampers: ${error.message}'));
-    //     },
-    //     (hampers) async {
-    //       final comparer = HamperComparer(
-    //         cartProducts: event.cartProducts,
-    //         hampers: hampers,
-    //       );
-
-    //       if (!hasEmittedMatch) {
-    //         final matchingHamper = comparer.findMatchingHamper();
-
-    //         if (matchingHamper != null) {
-    //           final hamperProductResult =
-    //               await _repository.fetchHamperProduct(matchingHamper.id);
-
-    //           hamperProductResult.fold(
-    //             (error) {
-    //               emit(HamperComparisonError(
-    //                   'Error fetching hamper product: ${error.message}'));
-    //             },
-    //             (product) {
-    //               if (product != null) {
-    //                 emit(HamperComparisonResultState(hamperProduct: product));
-    //                 hasEmittedMatch = true;
-    //               } else {
-    //                 emit(
-    //                     HamperComparisonError('Error fetching hamper product'));
-    //               }
-    //             },
-    //           );
-    //         } else {
-    //           emit(HamperComparisonError('Error fetching hamper product'));
-    //         }
-    //       }
-    //     },
-    //   );
-    // });
     on<CompareCartWithHampers>((event, emit) async {
       // Start loading state immediately
       emit(HamperComparisonLoading());

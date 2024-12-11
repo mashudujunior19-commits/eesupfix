@@ -312,13 +312,27 @@ class _BasketProductCard extends StatelessWidget {
                           children: [
                             IconButton(
                               onPressed: () {
-                                context.read<BasketViewBloc>().add(
-                                      BasketProductChanged(
-                                        basketProduct.copyWith(
-                                          quantity: basketProduct.quantity - 1,
+                                //   context.read<BasketViewBloc>().add(
+                                //         BasketProductChanged(
+                                //           basketProduct.copyWith(
+                                //             quantity: basketProduct.quantity - 1,
+                                //           ),
+                                //         ),
+                                //       );
+                                // },
+                                if (basketProduct.quantity > 1) {
+                                  context.read<BasketViewBloc>().add(
+                                        BasketProductChanged(
+                                          basketProduct.copyWith(
+                                            quantity:
+                                                basketProduct.quantity - 1,
+                                          ),
                                         ),
-                                      ),
-                                    );
+                                      );
+                                } else {
+                                  context.snackBarError(
+                                      'Quantity cannot be less than 1, Swipe left to remove product.');
+                                }
                               },
                               icon: ClipRRect(
                                 borderRadius: BorderRadius.circular(8),
