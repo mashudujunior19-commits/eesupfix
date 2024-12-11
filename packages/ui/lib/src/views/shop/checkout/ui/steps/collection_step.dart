@@ -222,7 +222,7 @@ class _TabBar extends StatelessWidget {
         ),
         tabs: const [
           Tab(text: 'Kasipreneurs'),
-          Tab(text: 'EESUpools'),
+          Tab(text: 'Kasipools'),
         ],
       ),
     );

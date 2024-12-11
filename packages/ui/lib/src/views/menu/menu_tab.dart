@@ -15,6 +15,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:data/utils/eesup_exception.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 
 final shorebirdCodePush = ShorebirdCodePush();
 
@@ -26,6 +27,22 @@ class MenuTab extends StatefulWidget {
 }
 
 class _MenuTabState extends State<MenuTab> {
+  String appVersion = '';
+
+  @override
+  void initState() {
+    super.initState();
+    _getAppVersion();
+  }
+
+  // Function to fetch app version
+  Future<void> _getAppVersion() async {
+    PackageInfo packageInfo = await PackageInfo.fromPlatform();
+    setState(() {
+      appVersion = packageInfo.version;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<ProfileBloc, ProfileState>(
@@ -128,6 +145,16 @@ class _MenuTabState extends State<MenuTab> {
                 onTap: () {
                   context.read<AuthBloc>().add(SignOutPressed());
                 },
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 10.0),
+                child: Text(
+                  'App Version: $appVersion',
+                  style: TextStyle(
+                    fontSize: 14,
+                    color: Colors.grey,
+                  ),
+                ),
               ),
               // FutureBuilder(
               //     future: shorebirdCodePush.currentPatchNumber(),
