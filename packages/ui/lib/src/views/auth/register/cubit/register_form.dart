@@ -88,15 +88,41 @@ class RegisterForm with RegisterFormMappable {
     return age >= 18;
   }
 
+  // DateTime _extractDateOfBirth(String idNumber) {
+  //   // Extract the date of birth from the ID number
+  //   String year = idNumber.substring(0, 2);
+  //   String month = idNumber.substring(2, 4);
+  //   String day = idNumber.substring(4, 6);
+  //   // Construct the date of birth string in the format yyyy-mm-dd
+  //   String d = '$year-$month-$day';
+  //   final date = DateFormat('yy-MM-dd').parse(d);
+  //   return date;
+  // }
   DateTime _extractDateOfBirth(String idNumber) {
-    // Extract the date of birth from the ID number
     String year = idNumber.substring(0, 2);
     String month = idNumber.substring(2, 4);
     String day = idNumber.substring(4, 6);
-    // Construct the date of birth string in the format yyyy-mm-dd
-    String d = '$year-$month-$day';
-    final date = DateFormat('yy-MM-dd').parse(d);
-    return date;
+
+    // Infer the century based on the year
+    int currentYear = DateTime.now().year % 100;
+    int century = int.parse(year) <= currentYear ? 2000 : 1900;
+
+    // Combine the inferred year, month, and day
+    String fullYear = (century + int.parse(year)).toString();
+    return DateTime(int.parse(fullYear), int.parse(month), int.parse(day));
+  }
+
+  int _calculateAge(DateTime birthDate) {
+    DateTime today = DateTime.now();
+    int age = today.year - birthDate.year;
+
+    // Adjust for birthdays not yet occurred this year
+    if (today.month < birthDate.month ||
+        (today.month == birthDate.month && today.day < birthDate.day)) {
+      age--;
+    }
+
+    return age;
   }
 
   Map<String, dynamic> toJson() {

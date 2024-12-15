@@ -57,10 +57,10 @@ class _HamperImageStackState extends State<HamperImageStack> {
               hamperProduct = state.hamperProduct;
             }
             if (state is HamperError) {
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                    content: Text('Error loading hamper: ${state.message}')),
-              );
+              // ScaffoldMessenger.of(context).showSnackBar(
+              //   SnackBar(
+              //       content: Text('Error loading hamper: ${state.message}')),
+              // );
             }
           },
           child: Stack(
