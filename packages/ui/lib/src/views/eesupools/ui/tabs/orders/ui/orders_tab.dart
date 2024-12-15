@@ -109,7 +109,7 @@ class _OrdersHistory extends StatelessWidget {
                 ],
               ),
             ),
-          if (orders.isEmpty || orders.length == 1)
+          if (orders.isEmpty)
             Padding(
               padding: const EdgeInsets.only(top: 250),
               child: FullScreenError(
