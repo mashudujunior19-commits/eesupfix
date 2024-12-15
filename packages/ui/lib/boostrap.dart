@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:ui/app.dart';
 import 'package:ui/config.dart';
-import 'package:ui/src/core/env/flavor_type.dart';
+import 'package:ui/src/core/env/environment.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
@@ -14,7 +14,7 @@ Future<void> bootstrap({required Flavor environment}) async {
 
   final env = environment.type;
 
-  if (env == FlavorType.development || env == FlavorType.test) {
+  if (env == Environment.development || env == Environment.test) {
     runApp(MainApp());
   } else {
     FlutterError.onError = (details) {

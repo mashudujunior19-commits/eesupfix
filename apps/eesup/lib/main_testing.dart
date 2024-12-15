@@ -4,7 +4,7 @@ import 'package:ui/ui.dart';
 Future<void> main() async {
   return bootstrap(
     environment: Flavor(
-      type: FlavorType.test,
+      type: Environment.test,
       app: AppType.eesup,
     ),
   );

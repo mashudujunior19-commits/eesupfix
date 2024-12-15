@@ -1,53 +1,26 @@
 {
     "configurations": [
         {
-            "name": "EESUp(DEV)",
+            "name": "EESUp DEV",
             "type": "dart",
             "request": "launch",
-            "cwd": "apps\\eesup",
-            "program": "lib\\main_dev.dart"
+            "cwd": "apps/eesup_v2",
+            "program": "lib/main.dart",
+            "args": [
+                "--dart-define",
+                "ENV=dev"
+            ]
         },
         {
-            "name": "EESUp(PROD)",
+            "name": "EESUp PROD",
             "type": "dart",
             "request": "launch",
-            "cwd": "apps\\eesup",
-            "program": "lib\\main.dart"
-        },
-        {
-            "name": "EESUp(TEST)",
-            "type": "dart",
-            "request": "launch",
-            "cwd": "apps\\eesup",
-            "program": "lib\\main_test.dart"
-        },
-        {
-            "name": "MyKasi(DEV)",
-            "type": "dart",
-            "request": "launch",
-            "cwd": "apps\\my_kasi_shop",
-            "program": "lib\\main_dev.dart"
-        },
-        {
-            "name": "MyKasi(PROD)",
-            "type": "dart",
-            "request": "launch",
-            "cwd": "apps\\my_kasi_shop",
-            "program": "lib\\main.dart"
-        },
-        {
-            "name": "MyKasi(TEST)",
-            "type": "dart",
-            "request": "launch",
-            "cwd": "apps\\my_kasi_shop",
-            "program": "lib\\main_test.dart"
-        },
-        {
-            "name": "Flutter (lib\\main.dart)",
-            "type": "dart",
-            "request": "launch",
-            "cwd": "apps\\eesup",
-            "program": "lib\\main.dart"
+            "cwd": "apps/eesup_v2",
+            "program": "lib/main.dart",
+            "args": [
+                "--dart-define",
+                "ENV=prod"
+            ]
         }
     ]
 }

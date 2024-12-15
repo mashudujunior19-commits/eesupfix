@@ -14,13 +14,13 @@ mykasi_app_path ="../eesup-frontend/apps/my_kasi_shop/lib/"
 
 # ... (paths)
 
-def check_flavors(app_path, flavor_regex="FlavorType.production"):
+def check_flavors(app_path, flavor_regex="Environment.production"):
     """Checks if the main.dart file in the given app_path is configured for a specific flavor.
 
     Args:
         app_path (str): Path to the directory containing the main.dart file.
         flavor_regex (str, optional): Regular expression to match the desired flavor. 
-                                      Defaults to "FlavorType.production".
+                                      Defaults to "Environment.production".
 
     Returns:
         bool: True if the flavor is found, False otherwise.

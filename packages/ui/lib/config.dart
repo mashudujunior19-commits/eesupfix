@@ -1,5 +1,5 @@
 import 'package:ui/src/core/env/app_type.dart';
-import 'package:ui/src/core/env/flavor_type.dart';
+import 'package:ui/src/core/env/environment.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get_it/get_it.dart';
@@ -16,9 +16,9 @@ class AppConfig {
   ///
   Future<void> loadEnv() async {
     final env = environment.type;
-    if (env == FlavorType.development || env == FlavorType.test) {
+    if (env == Environment.development || env == Environment.test) {
       await dotenv.load(fileName: ".dev.env");
-    } else if (env == FlavorType.production) {
+    } else if (env == Environment.production) {
       await dotenv.load(fileName: ".env");
     }
   }
@@ -37,7 +37,7 @@ class AppConfig {
 
         // authOptions: FlutterAuthClientOptions(
         //   localStorage:
-        //       env == FlavorType.test ? const EmptyLocalStorage() : null,
+        //       env == Environment.test ? const EmptyLocalStorage() : null,
         // ),
         );
 
@@ -60,14 +60,14 @@ class AppConfig {
 
   void setUpSentry(FlutterErrorDetails details) {
     final env = environment.type;
-    if (env != FlavorType.production) {
+    if (env != Environment.production) {
       Sentry.captureException(details.exception, stackTrace: details.stack);
     }
   }
 }
 
 class Flavor {
-  final FlavorType type;
+  final Environment type;
   final AppType app;
   Flavor({required this.type, required this.app});
 }

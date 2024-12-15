@@ -1,5 +1,5 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:ui/src/core/env/flavor_type.dart';
+import 'package:ui/src/core/env/environment.dart';
 import 'package:ui/src/core/widgets/fullscreen_error_widget.dart';
 import 'package:ui/src/core/extensions/context_environment_ext.dart';
 import 'package:ui/src/core/extensions/slide_in_animation_ext.dart';
@@ -78,7 +78,7 @@ class _OzowScreenState extends State<OzowScreen> {
             siteCode: siteCode,
             bankRef: widget.bankRef,
             amount: widget.amount,
-            isTest: context.environment.type == FlavorType.development,
+            isTest: context.environment.type == Environment.development,
             optional2: eesupKey,
             optional3: widget.type,
             notifyUrl: '$eesupApiUrl/payments/ozow/notify',
