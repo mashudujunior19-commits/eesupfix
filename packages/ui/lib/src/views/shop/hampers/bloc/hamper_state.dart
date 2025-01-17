@@ -31,6 +31,7 @@ class HamperError extends HamperState {
   HamperError(this.message);
 }
 
+class HamperNotFound extends HamperState {}
 // class HamperComparisonSuccess extends HamperState {
 //   final Hamper matchingHamper;
 

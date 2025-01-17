@@ -23,13 +23,30 @@ extension HamperRepository on ShoppingRepository {
     return result.fold((ex) => Left(ex), (products) => Right(products));
   }
 
-  Future<Either<EESUpException, Hamper>> fetchHampersByImageUrl(
+  // Future<Either<EESUpException, Hamper>> fetchHampersByImageUrl(
+  //     String imgUrl) async {
+  //   final result = await authRepository.executeFutureWithAuth((_) async {
+  //     final hampers = await shoppingDataSrc.fetchHampersByImageUrl(imgUrl);
+  //     return hampers;
+  //   });
+  //   return result.fold((ex) => Left(ex), (hampers) => Right(hampers!));
+  // }
+  Future<Either<EESUpException, Hamper?>> fetchHampersByImageUrl(
       String imgUrl) async {
     final result = await authRepository.executeFutureWithAuth((_) async {
-      final hampers = await shoppingDataSrc.fetchHampersByImageUrl(imgUrl);
-      return hampers;
+      final hamper = await shoppingDataSrc.fetchHampersByImageUrl(imgUrl);
+      return hamper; // This could be null
     });
-    return result.fold((ex) => Left(ex), (hampers) => Right(hampers!));
+
+    return result.fold(
+      (ex) => Left(ex),
+      (hamper) {
+        if (hamper == null) {
+          return Right(null); // Handle the null case explicitly
+        }
+        return Right(hamper);
+      },
+    );
   }
 
   Future<Either<EESUpException, List<HamperProductDetail>>>

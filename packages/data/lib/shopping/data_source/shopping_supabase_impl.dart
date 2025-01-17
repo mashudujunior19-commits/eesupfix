@@ -480,7 +480,6 @@ class ShoppingSupabaseImp implements ShoppingDataSource {
           .maybeSingle();
 
       if (response == null || response.isEmpty) {
-        print("No hamper found for the given image URL.");
         return null;
       }
 
@@ -495,7 +494,6 @@ class ShoppingSupabaseImp implements ShoppingDataSource {
 
       return hamper;
     } catch (e) {
-      print('hamper by url error :$e');
       return null;
     }
   }
