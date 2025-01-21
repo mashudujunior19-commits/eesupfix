@@ -1,6 +1,10 @@
 import 'package:data/orders/models/order.dart';
+import 'package:data/orders/models/order_product.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:ui/src/core/extensions/sizedbox_ext.dart';
 import 'package:flutter/material.dart';
+import 'package:ui/src/views/shop/cart/bloc/cart_bloc.dart';
 
 class OrdProducts extends StatelessWidget {
   const OrdProducts({super.key, required this.order});
@@ -29,6 +33,39 @@ class OrdProducts extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text('Items', style: textTheme.labelMedium),
+              IconButton(
+                onPressed: () {
+                  for (var product in order.products) {
+                    context.read<CartBloc>().add(
+                          ProductAddedToCart(
+                            OrderProduct(
+                              productId: product.productId,
+                              quantity: product.quantity,
+                              price: product.price,
+                              name: product.name,
+                              imageUrl: product.imageUrl,
+                            ),
+                          ),
+                        );
+                  }
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text(
+                        '${order.products.length} products added to the cart!',
+                      ),
+                      duration: const Duration(seconds: 2),
+                    ),
+                  );
+                },
+                // icon: Icon(
+                //   Icons.shopping_cart_outlined,
+                //   color: colorScheme.primary,
+                // ),
+                icon: Icon(
+                  IconlyLight.buy,
+                  size: 25,
+                ),
+              ),
             ],
           ),
           10.sH,

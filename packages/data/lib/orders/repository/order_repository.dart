@@ -6,6 +6,8 @@ import 'package:either_dart/either.dart';
 import 'package:data/orders/models/order.dart';
 import 'package:data/orders/data_source/orders_data_source.dart';
 
+import '../models/order_product.dart';
+
 class OrderRepository {
   final OrdersDataSource _ordersDataSource;
   final AuthRepository _authRepository;
@@ -114,6 +116,28 @@ class OrderRepository {
   ) async {
     final result = await _authRepository.executeFutureWithAuth((_) async {
       final response = await _ordersDataSource.fetchOrderTickets(orderId);
+      return response;
+    });
+    return result;
+  }
+
+  Future<Either<EESUpException, List<OrderProduct>>> fetchOrderProducts(
+    int orderId,
+  ) async {
+    final result = await _authRepository.executeFutureWithAuth((_) async {
+      final response = await _ordersDataSource.fetchOrderProducts(orderId);
+      return response;
+    });
+    return result;
+  }
+
+  Future<Either<EESUpException, bool>> updateOrderStatus(
+    int orderId,
+    OrderStatus status,
+  ) async {
+    final result = await _authRepository.executeFutureWithAuth((_) async {
+      final response =
+          await _ordersDataSource.updateOrderStatus(orderId, status);
       return response;
     });
     return result;

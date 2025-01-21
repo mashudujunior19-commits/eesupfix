@@ -7,6 +7,8 @@ import 'package:data/orders/models/order_ticket.dart';
 import 'package:flutter/foundation.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../models/order_product.dart';
+
 class OrdersSupabaseImpl implements OrdersDataSource {
   final SupabaseClient _client;
 
@@ -72,6 +74,31 @@ class OrdersSupabaseImpl implements OrdersDataSource {
 
     final orders = (response as List).map((e) => Order.fromJson(e)).toList();
     return orders;
+  }
+
+  @override
+  Future<List<OrderProduct>> fetchOrderProducts(int orderId) async {
+    try {
+      // Query the `sales.order_product` table for the given `order_id`
+      final response = await _client
+          .schema('sales')
+          .from('order_product')
+          .select()
+          .eq('order_id', orderId);
+
+      // Map the response to a list of `OrderProduct` objects
+      final orderProducts = (response as List)
+          .map((e) => OrderProduct.fromJson(e as Map<String, dynamic>))
+          .toList();
+
+      return orderProducts;
+    } catch (e) {
+      // Log the error for debugging and rethrow
+      if (kDebugMode) {
+        print('Error fetching order products: $e');
+      }
+      throw Exception('Failed to fetch order products');
+    }
   }
 
   @override
@@ -219,5 +246,55 @@ class OrdersSupabaseImpl implements OrdersDataSource {
         .order('id', ascending: false)
         .single();
     return Order.fromJson(response);
+  }
+
+  // @override
+  // Future<bool> updateOrderStatus(int orderId, OrderStatus status) async {
+  //   try {
+  //     final data = {
+  //       'status': status.toString(),
+  //       'cancelled_at': status == OrderStatus.cancelled
+  //           ? DateTime.now().toIso8601String()
+  //           : null,
+  //     };
+
+  //     final result = await _client
+  //         .schema('sales')
+  //         .from('order')
+  //         .update(data)
+  //         .eq('id', orderId)
+  //         .single();
+
+  //     return false;
+  //   } catch (e) {
+  //     if (kDebugMode) {
+  //       print('Error updating order status: $e');
+  //     }
+  //     return false;
+  //   }
+  // }
+  @override
+  Future<bool> updateOrderStatus(int orderId, OrderStatus status) async {
+    try {
+      final data = {
+        'status': status.toString(),
+        'cancelled_at': status == OrderStatus.cancelled
+            ? DateTime.now().toIso8601String()
+            : null,
+      };
+      final result = await _client
+          .schema('sales')
+          .from('order')
+          .update(data)
+          .eq('id', orderId)
+          .select()
+          .maybeSingle();
+      return result != null;
+    } catch (e) {
+      if (kDebugMode) {
+        print('Error updating order status: $e');
+      }
+      return false;
+    }
   }
 }

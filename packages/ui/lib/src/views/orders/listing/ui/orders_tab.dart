@@ -79,8 +79,10 @@ class OrdersTab extends StatelessWidget {
                           itemCount: orders.length,
                           itemBuilder: (context, index) {
                             final order = orders[index];
+                            final products = order.products ?? [];
                             return OrderCard(
                               order: order,
+                              products: products,
                               privilege: OrderEditPrivilage.owner,
                             ).animate().slideIn(index * 50);
                           },
