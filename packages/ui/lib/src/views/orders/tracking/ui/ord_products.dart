@@ -35,32 +35,16 @@ class OrdProducts extends StatelessWidget {
               Text('Items', style: textTheme.labelMedium),
               IconButton(
                 onPressed: () {
-                  for (var product in order.products) {
-                    context.read<CartBloc>().add(
-                          ProductAddedToCart(
-                            OrderProduct(
-                              productId: product.productId,
-                              quantity: product.quantity,
-                              price: product.price,
-                              name: product.name,
-                              imageUrl: product.imageUrl,
-                            ),
-                          ),
-                        );
+                  final cartBloc = context.read<CartBloc>();
+                  final cartState = cartBloc.state;
+
+                  if (cartState is CurrentCart &&
+                      cartState.products.isNotEmpty) {
+                    _showCartConfirmationDialog(context, cartBloc);
+                  } else {
+                    _addProductsToCart(context, cartBloc);
                   }
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      content: Text(
-                        '${order.products.length} products added to the cart!',
-                      ),
-                      duration: const Duration(seconds: 2),
-                    ),
-                  );
                 },
-                // icon: Icon(
-                //   Icons.shopping_cart_outlined,
-                //   color: colorScheme.primary,
-                // ),
                 icon: Icon(
                   IconlyLight.buy,
                   size: 25,
@@ -114,6 +98,69 @@ class OrdProducts extends StatelessWidget {
             ),
           ),
         ],
+      ),
+    );
+  }
+
+  void _showCartConfirmationDialog(BuildContext context, CartBloc cartBloc) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Cart contains products'),
+          content: const Text(
+            'Would you like to add these new products to the existing cart or clear the cart and create a new one?',
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context);
+                _addProductsToCart(context, cartBloc);
+              },
+              child: const Text('Add to Existing Cart'),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context);
+                cartBloc.add(CartCleared());
+                _addProductsToCart(context, cartBloc);
+              },
+              child: const Text('Clear and Create New Cart'),
+            ),
+            // TextButton(
+            //   onPressed: () {
+            //     Navigator.pop(context);
+            //   },
+            //   child: const Text('Cancel'),
+            // ),
+          ],
+        );
+      },
+    );
+  }
+
+  void _addProductsToCart(BuildContext context, CartBloc cartBloc) {
+    for (var product in order.products) {
+      cartBloc.add(
+        ProductAddedToCart(
+          OrderProduct(
+            productId: product.productId,
+            quantity: product.quantity,
+            price: product.price,
+            name: product.name,
+            imageUrl: product.imageUrl,
+          ),
+        ),
+      );
+    }
+
+    // Show confirmation snackbar
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(
+          '${order.products.length} products added to the cart!',
+        ),
+        duration: const Duration(seconds: 2),
       ),
     );
   }
