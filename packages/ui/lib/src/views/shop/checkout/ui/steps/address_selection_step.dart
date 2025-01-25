@@ -12,6 +12,7 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 
+@RoutePage()
 class AddressSelectionStep extends StatelessWidget {
   const AddressSelectionStep({super.key, required this.tabController});
   final TabController tabController;

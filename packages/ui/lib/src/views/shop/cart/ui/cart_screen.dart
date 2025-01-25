@@ -15,12 +15,10 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 
-import '../../hampers/bloc/hamper_bloc.dart';
-
 @RoutePage()
 class CartScreen extends StatelessWidget {
-  CartScreen({super.key});
-
+  CartScreen({super.key, this.orderProducts});
+  final List<OrderProduct>? orderProducts;
   Product? hamperOrderProduct;
 
   @override
@@ -29,7 +27,12 @@ class CartScreen extends StatelessWidget {
       child: BlocBuilder<CartBloc, CartState>(
         builder: (context, state) {
           if (state is CurrentCart) {
-            return _buildCartUI(context, state.products);
+            if (orderProducts != null) {
+              return _buildCartUI(context, orderProducts!);
+            } else {
+              return _buildCartUI(context, state.products);
+            }
+            // return _buildCartUI(context, state.products);
           } else if (state is HamperComparisonLoading) {
             // Show a loading indicator during hamper comparison
             return const Center(child: CircularProgressIndicator());

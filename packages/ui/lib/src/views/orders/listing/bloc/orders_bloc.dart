@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:data/orders/models/order.dart';
+import 'package:data/orders/models/order_product.dart';
 import 'package:data/orders/repository/order_repository.dart';
 import 'package:meta/meta.dart';
 import 'package:data/utils/eesup_exception.dart';
@@ -28,6 +29,16 @@ class OrdersBloc extends Bloc<OrdersEvent, OrdersState> {
             return OrdersLoaded(r);
           });
         },
+      );
+    });
+
+    on<OrderProductsFetched>((event, emit) async {
+      emit(OrdersLoading());
+      final result = await _orderRepo.fetchOrderProducts(event.orderId);
+
+      result.fold(
+        (l) => emit(OrdersError(l)),
+        (orderProducts) => emit(OrderProductsLoaded(orderProducts)),
       );
     });
   }

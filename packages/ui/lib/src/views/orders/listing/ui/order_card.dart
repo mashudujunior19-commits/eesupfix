@@ -1,5 +1,8 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:data/orders/models/order.dart';
+import 'package:data/orders/models/order_product.dart';
+import 'package:data/orders/repository/order_repository.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ui/app_route.gr.dart';
 import 'package:ui/src/core/extensions/context_theme_ext.dart';
 import 'package:ui/src/core/extensions/sizedbox_ext.dart';
@@ -12,12 +15,14 @@ class OrderCard extends StatelessWidget {
     required this.order,
     this.onTap,
     required this.privilege,
+    this.products,
     this.bottomChildren = const [],
   });
   final Order order;
   final OrderEditPrivilage privilege;
   final void Function()? onTap;
   final List<Widget> bottomChildren;
+  final List<OrderProduct>? products;
 
   double totalAmount() {
     double total = 0;
@@ -48,9 +53,74 @@ class OrderCard extends StatelessWidget {
     return InkWell(
       onTap: onTap ??
           () {
-            context.router.push(
-              OrderTrackingRoute(id: order.id!, privilage: privilege),
-            );
+            if (order.status == OrderStatus.pending) {
+              showDialog(
+                context: context,
+                builder: (dialogContext) {
+                  return AlertDialog(
+                    title: Text('Order Pending'),
+                    content: Text('What is next:'),
+                    actions: [
+                      TextButton(
+                        onPressed: () async {
+                          Navigator.pop(dialogContext);
+                          // _cancelOrder();
+                          final result = await context
+                              .read<OrderRepository>()
+                              .updateOrderStatus(
+                                order.id!,
+                                OrderStatus
+                                    .cancelled, // Assuming "canceled" is a valid status in OrderStatus
+                              );
+
+                          result.fold(
+                            (exception) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                    content:
+                                        Text('Error: ${exception.message}')),
+                              );
+                            },
+                            (success) {
+                              if (success) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                      content: Text('Order has been canceled')),
+                                );
+                                Navigator.pop(dialogContext);
+                              } else {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                      content:
+                                          Text('Failed to cancel the order')),
+                                );
+                              }
+                            },
+                          );
+                        },
+                        child: Text(
+                          'Cancel',
+                          style: TextStyle(color: Colors.red),
+                        ),
+                      ),
+                      TextButton(
+                        onPressed: () {
+                          Navigator.pop(dialogContext);
+                          context.router.push(
+                            CartRoute(orderProducts: products),
+                          );
+                        },
+                        child: Text('Pay'),
+                      ),
+                    ],
+                  );
+                },
+              );
+            } else {
+              context.router.push(
+                OrderTrackingRoute(id: order.id!, privilage: privilege),
+              );
+            }
           },
       splashColor: Colors.transparent,
       child: Container(

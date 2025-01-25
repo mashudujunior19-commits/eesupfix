@@ -3,6 +3,8 @@ import 'dart:io';
 import 'package:data/orders/models/order.dart';
 import 'package:data/orders/models/order_ticket.dart';
 
+import '../models/order_product.dart';
+
 abstract class OrdersDataSource {
   ///Create an order and returns the order id and the outstanding amount
   ///if any
@@ -47,4 +49,8 @@ abstract class OrdersDataSource {
   Future<bool> saveOrderTicket(OrderTicket ticket);
 
   Future<List<OrderTicket>> fetchOrderTickets(int orderId);
+
+  Future<List<OrderProduct>> fetchOrderProducts(int orderId);
+
+  Future<bool> updateOrderStatus(int orderId, OrderStatus status);
 }

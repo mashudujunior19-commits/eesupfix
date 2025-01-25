@@ -14,3 +14,13 @@ final class OrdersError extends OrdersState {
   final EESUpException exception;
   OrdersError(this.exception);
 }
+
+class OrderProductsLoaded extends OrdersState {
+  final List<OrderProduct> orderProducts;
+  OrderProductsLoaded(this.orderProducts);
+}
+
+class OrderProductsError extends OrdersState {
+  final EESUpException exception;
+  OrderProductsError(this.exception);
+}
