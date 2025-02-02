@@ -61,8 +61,12 @@ mixin _$EESUpoolOrder {
   @JsonKey(name: 'current_amount', includeToJson: false)
   double get currentAmount => throw _privateConstructorUsedError;
 
+  /// Serializes this EESUpoolOrder to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of EESUpoolOrder
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $EESUpoolOrderCopyWith<EESUpoolOrder> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -110,6 +114,8 @@ class _$EESUpoolOrderCopyWithImpl<$Res, $Val extends EESUpoolOrder>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of EESUpoolOrder
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -208,6 +214,8 @@ class _$EESUpoolOrderCopyWithImpl<$Res, $Val extends EESUpoolOrder>
     ) as $Val);
   }
 
+  /// Create a copy of EESUpoolOrder
+  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $AddressCopyWith<$Res>? get address {
@@ -265,6 +273,8 @@ class __$$EESUpoolOrderImplCopyWithImpl<$Res>
       _$EESUpoolOrderImpl _value, $Res Function(_$EESUpoolOrderImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of EESUpoolOrder
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -515,7 +525,7 @@ class _$EESUpoolOrderImpl implements _EESUpoolOrder {
                 other.currentAmount == currentAmount));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(
       runtimeType,
@@ -538,7 +548,9 @@ class _$EESUpoolOrderImpl implements _EESUpoolOrder {
       ordersCount,
       currentAmount);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of EESUpoolOrder
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$EESUpoolOrderImplCopyWith<_$EESUpoolOrderImpl> get copyWith =>
@@ -620,9 +632,9 @@ abstract class _EESUpoolOrder implements EESUpoolOrder {
   @override
   @JsonKey(name: 'receivers')
   List<String>? get receiversId;
-  @override
 
   ///other
+  @override
   @JsonKey(name: 'eesupool_name', includeToJson: false)
   String? get eesupoolName;
   @override
@@ -639,8 +651,11 @@ abstract class _EESUpoolOrder implements EESUpoolOrder {
   @override
   @JsonKey(name: 'current_amount', includeToJson: false)
   double get currentAmount;
+
+  /// Create a copy of EESUpoolOrder
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$EESUpoolOrderImplCopyWith<_$EESUpoolOrderImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -665,8 +680,12 @@ mixin _$MemberOrderAssignment {
   @OrderEditPrivilageConverter()
   OrderEditPrivilage? get privilage => throw _privateConstructorUsedError;
 
+  /// Serializes this MemberOrderAssignment to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of MemberOrderAssignment
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $MemberOrderAssignmentCopyWith<MemberOrderAssignment> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -697,6 +716,8 @@ class _$MemberOrderAssignmentCopyWithImpl<$Res,
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of MemberOrderAssignment
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -763,6 +784,8 @@ class __$$MemberOrderAssignmentImplCopyWithImpl<$Res>
       $Res Function(_$MemberOrderAssignmentImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of MemberOrderAssignment
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -858,12 +881,14 @@ class _$MemberOrderAssignmentImpl implements _MemberOrderAssignment {
                 other.privilage == privilage));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, orderId, eesupoolOrderId,
       memberId, fullName, corpName, privilage);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of MemberOrderAssignment
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$MemberOrderAssignmentImplCopyWith<_$MemberOrderAssignmentImpl>
@@ -909,8 +934,11 @@ abstract class _MemberOrderAssignment implements MemberOrderAssignment {
   @override
   @OrderEditPrivilageConverter()
   OrderEditPrivilage? get privilage;
+
+  /// Create a copy of MemberOrderAssignment
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$MemberOrderAssignmentImplCopyWith<_$MemberOrderAssignmentImpl>
       get copyWith => throw _privateConstructorUsedError;
 }

@@ -60,8 +60,12 @@ mixin _$Profile {
   @JsonKey(name: 'is_verified', includeToJson: false)
   bool get isVerified => throw _privateConstructorUsedError;
 
+  /// Serializes this Profile to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of Profile
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $ProfileCopyWith<Profile> get copyWith => throw _privateConstructorUsedError;
 }
 
@@ -102,6 +106,8 @@ class _$ProfileCopyWithImpl<$Res, $Val extends Profile>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of Profile
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -243,6 +249,8 @@ class __$$ProfileImplCopyWithImpl<$Res>
       _$ProfileImpl _value, $Res Function(_$ProfileImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of Profile
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -478,7 +486,7 @@ class _$ProfileImpl implements _Profile {
                 other.isVerified == isVerified));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hashAll([
         runtimeType,
@@ -503,7 +511,9 @@ class _$ProfileImpl implements _Profile {
         isVerified
       ]);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of Profile
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$ProfileImplCopyWith<_$ProfileImpl> get copyWith =>
@@ -606,8 +616,11 @@ abstract class _Profile implements Profile {
   @override
   @JsonKey(name: 'is_verified', includeToJson: false)
   bool get isVerified;
+
+  /// Create a copy of Profile
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$ProfileImplCopyWith<_$ProfileImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

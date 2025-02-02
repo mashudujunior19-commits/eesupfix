@@ -22,6 +22,10 @@ class OrderDetailsTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      context.read<PoolOrderViewBloc>().add(FetchEESUpoolSettings());
+    });
+
     return ListView(
       children: [
         Container(
@@ -219,6 +223,39 @@ class OrderDetailsTab extends StatelessWidget {
                     ),
                   ],
                 ),
+              //       if (pool.role == EESUpoolMemberRole.admin &&
+              //           order.closesAt.isAfter(DateTime.now()))
+              //         Column(
+              //           mainAxisSize: MainAxisSize.min,
+              //           crossAxisAlignment: CrossAxisAlignment.start,
+              //           children: [
+              //             const Divider(thickness: .5),
+              //             TextButton(
+              //               onPressed: () {
+              //                 context.read<PoolOrderViewBloc>().add(
+              //                       PoolOrderUpdated(
+              //                         order.copyWith(
+              //                           closesAt: DateTime.now().subtract(
+              //                             const Duration(hours: 2),
+              //                           ),
+              //                           scheduleFor: DateTime.now().add(
+              //                             const Duration(days: 3),
+              //                           ),
+              //                         ),
+              //                       ),
+              //                     );
+              //               },
+              //               child: const Text(
+              //                 'Close order',
+              //                 style: TextStyle(color: Colors.red),
+              //               ),
+              //             ),
+              //           ],
+              //         )
+              //     ],
+              //   ),
+              // ),
+
               if (pool.role == EESUpoolMemberRole.admin &&
                   order.closesAt.isAfter(DateTime.now()))
                 Column(
@@ -228,18 +265,63 @@ class OrderDetailsTab extends StatelessWidget {
                     const Divider(thickness: .5),
                     TextButton(
                       onPressed: () {
-                        context.read<PoolOrderViewBloc>().add(
-                              PoolOrderUpdated(
-                                order.copyWith(
-                                  closesAt: DateTime.now().subtract(
-                                    const Duration(hours: 2),
+                        final state = context.read<PoolOrderViewBloc>().state;
+
+                        if (state is EESUpoolSettingsLoaded) {
+                          final settings = state.settings;
+
+                          if (order.currentAmount <
+                              (settings.minimumOrderValue as num)) {
+                            // Show options to extend or cancel
+                            showDialog(
+                              context: context,
+                              builder: (context) => AlertDialog(
+                                title: const Text("Order Below Minimum"),
+                                content: const Text(
+                                    "Would you like to extend the order by 24 hours or cancel it?"),
+                                actions: [
+                                  TextButton(
+                                    onPressed: () {
+                                      context
+                                          .read<PoolOrderViewBloc>()
+                                          .add(ExtendOrderDeadline(order));
+                                      Navigator.pop(context);
+                                    },
+                                    child: const Text("Extend"),
                                   ),
-                                  scheduleFor: DateTime.now().add(
-                                    const Duration(days: 3),
+                                  TextButton(
+                                    onPressed: () {
+                                      context.read<PoolOrderViewBloc>().add(
+                                          CancelOrder(
+                                              order.id, order.eesupoolId));
+                                      Navigator.pop(context);
+                                    },
+                                    child: const Text("Cancel"),
                                   ),
-                                ),
+                                ],
                               ),
                             );
+                          } else {
+                            // Close order normally if above minimum value
+                            context.read<PoolOrderViewBloc>().add(
+                                  PoolOrderUpdated(
+                                    order.copyWith(
+                                      closesAt: DateTime.now().subtract(
+                                        const Duration(hours: 2),
+                                      ),
+                                      scheduleFor: DateTime.now().add(
+                                        const Duration(days: 3),
+                                      ),
+                                    ),
+                                  ),
+                                );
+                          }
+                        } else {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                                content: Text("Settings not loaded yet.")),
+                          );
+                        }
                       },
                       child: const Text(
                         'Close order',
@@ -247,10 +329,12 @@ class OrderDetailsTab extends StatelessWidget {
                       ),
                     ),
                   ],
-                )
+                ),
             ],
           ),
         ),
+
+        ////
         if (pool.role == EESUpoolMemberRole.admin)
           InkWell(
             onTap: () {

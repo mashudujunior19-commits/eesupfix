@@ -29,8 +29,12 @@ mixin _$SurveyResponse {
   @QuestionAnswerConverter()
   List<QuestionAnswer> get answers => throw _privateConstructorUsedError;
 
+  /// Serializes this SurveyResponse to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of SurveyResponse
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $SurveyResponseCopyWith<SurveyResponse> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -59,6 +63,8 @@ class _$SurveyResponseCopyWithImpl<$Res, $Val extends SurveyResponse>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of SurveyResponse
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -117,6 +123,8 @@ class __$$SurveyResponseImplCopyWithImpl<$Res>
       _$SurveyResponseImpl _value, $Res Function(_$SurveyResponseImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of SurveyResponse
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -202,12 +210,14 @@ class _$SurveyResponseImpl implements _SurveyResponse {
             const DeepCollectionEquality().equals(other._answers, _answers));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, userId, surveyId, score, passed,
       const DeepCollectionEquality().hash(_answers));
 
-  @JsonKey(ignore: true)
+  /// Create a copy of SurveyResponse
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$SurveyResponseImplCopyWith<_$SurveyResponseImpl> get copyWith =>
@@ -247,8 +257,11 @@ abstract class _SurveyResponse implements SurveyResponse {
   @override
   @QuestionAnswerConverter()
   List<QuestionAnswer> get answers;
+
+  /// Create a copy of SurveyResponse
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$SurveyResponseImplCopyWith<_$SurveyResponseImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -280,8 +293,12 @@ mixin _$QuestionAnswer {
   String? get date => throw _privateConstructorUsedError;
   String? get time => throw _privateConstructorUsedError;
 
+  /// Serializes this QuestionAnswer to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of QuestionAnswer
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $QuestionAnswerCopyWith<QuestionAnswer> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -315,6 +332,8 @@ class _$QuestionAnswerCopyWithImpl<$Res, $Val extends QuestionAnswer>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of QuestionAnswer
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -403,6 +422,8 @@ class __$$QuestionAnswerImplCopyWithImpl<$Res>
       _$QuestionAnswerImpl _value, $Res Function(_$QuestionAnswerImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of QuestionAnswer
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -559,7 +580,7 @@ class _$QuestionAnswerImpl implements _QuestionAnswer {
             (identical(other.time, time) || other.time == time));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(
       runtimeType,
@@ -574,7 +595,9 @@ class _$QuestionAnswerImpl implements _QuestionAnswer {
       date,
       time);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of QuestionAnswer
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$QuestionAnswerImplCopyWith<_$QuestionAnswerImpl> get copyWith =>
@@ -637,8 +660,11 @@ abstract class _QuestionAnswer implements QuestionAnswer {
   String? get date;
   @override
   String? get time;
+
+  /// Create a copy of QuestionAnswer
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$QuestionAnswerImplCopyWith<_$QuestionAnswerImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

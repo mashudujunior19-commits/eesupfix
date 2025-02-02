@@ -14,6 +14,8 @@ import 'package:data/orders/models/order_product.dart';
 import 'package:flutter/foundation.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../models/eesupool_settings.dart';
+
 class EESUpoolSupabaseImp implements EESUpoolDataSource {
   final SupabaseClient client;
   EESUpoolSupabaseImp({required this.client});
@@ -697,5 +699,118 @@ class EESUpoolSupabaseImp implements EESUpoolDataSource {
       'ord_id': orderId,
     });
     return (res as List).map((e) => OrderProduct.fromJson(e)).toList();
+  }
+
+  @override
+  Future<EESUpoolSettings?> getEesupoolSettings(String userId) async {
+    try {
+      final result = await client.schema('communities').rpc(
+        'get_eesupool_info',
+        params: {'user_uuid': userId},
+      );
+
+      print('Raw result: $result'); // Print raw result to understand structure
+
+      if (result is List && result.isNotEmpty) {
+        print('Raw result list: $result');
+        result.forEach((entry) {
+          print('Entry: $entry'); // Check each entry for issues
+        });
+
+        // Find the first valid entry with a non-null user_count
+        final filteredResult = result.firstWhere(
+          (entry) => entry['user_count'] != null,
+          orElse: () => result.first, // Default to first if none found
+        );
+
+        print('Filtered result: $filteredResult'); // Check filtered result
+
+        // Explicitly handle the user_count value to ensure it's always a number
+        var userCountValue = filteredResult['user_count'];
+
+        if (userCountValue == null || userCountValue == 0) {
+          userCountValue = 0.0; // Default to 0.0 if it's null or 0
+        } else {
+          // Ensure it's cast to double if necessary
+          userCountValue = (userCountValue as num).toDouble();
+        }
+
+        filteredResult['user_count'] = userCountValue;
+
+        print('user_count type: ${filteredResult['user_count']}');
+        print('user_count value: ${filteredResult['user_count']}');
+
+        print('settings: $filteredResult');
+        EESUpoolSettings settings = EESUpoolSettings.fromJson(filteredResult);
+        print('EESUpoolSettings: $settings'); // Print created settings object
+
+        return settings;
+      } else {
+        print('No settings found');
+        return null;
+      }
+    } catch (e) {
+      if (kDebugMode) {
+        print("Error fetching EESUpoolSettings: $e");
+      }
+      return null;
+    }
+  }
+
+  // @override
+  // Future<EESUpoolSettings?> getEesupoolSettings(String userId) async {
+  //   try {
+  //     final result = await client.schema('communities').rpc(
+  //       'get_eesupool_info',
+  //       params: {'user_uuid': userId},
+  //     );
+  //     print('Raw result: $result');
+  //     if (result is List && result.isNotEmpty) {
+  //       final filteredResult = result.firstWhere(
+  //         (entry) => entry['user_count'] != null,
+  //         orElse: () => result.first,
+  //       );
+
+  //       print('settings: $filteredResult');
+  //       return EESUpoolSettings.fromJson(filteredResult);
+  //     } else {
+  //       print('No settings found');
+  //       return null;
+  //     }
+  //   } catch (e) {
+  //     if (kDebugMode) {
+  //       print("Error fetching EESUpoolSettings: $e");
+  //     }
+  //     return null;
+  //   }
+  // }
+
+  @override
+  Future<bool> updateMemberCount(int poolId, String userId, num count) async {
+    try {
+      await client.schema('communities').rpc('update_member_count', params: {
+        'p_eesupool_id': poolId,
+        'p_user_id': userId,
+        'p_count': count,
+      });
+      return true;
+    } catch (e) {
+      print('Error updating member count: $e');
+      return false;
+    }
+  }
+
+  @override
+  Future<bool> removeAdmin(int poolId, String userId) async {
+    try {
+      await client.schema('communities').rpc('remove_admin', params: {
+        'p_eesupool_id': poolId,
+        'p_user_id': userId,
+      });
+      return true;
+    } catch (e) {
+      print('Error removing admin: $e');
+      return false;
+    }
   }
 }

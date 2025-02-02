@@ -44,8 +44,12 @@ mixin _$EESUpoolEvent {
   @MediaFileConverter()
   List<MediaFile>? get attachments => throw _privateConstructorUsedError;
 
+  /// Serializes this EESUpoolEvent to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of EESUpoolEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $EESUpoolEventCopyWith<EESUpoolEvent> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -82,6 +86,8 @@ class _$EESUpoolEventCopyWithImpl<$Res, $Val extends EESUpoolEvent>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of EESUpoolEvent
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -178,6 +184,8 @@ class __$$EESUpoolEventImplCopyWithImpl<$Res>
       _$EESUpoolEventImpl _value, $Res Function(_$EESUpoolEventImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of EESUpoolEvent
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -345,7 +353,7 @@ class _$EESUpoolEventImpl implements _EESUpoolEvent {
                 .equals(other._attachments, _attachments));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(
       runtimeType,
@@ -361,7 +369,9 @@ class _$EESUpoolEventImpl implements _EESUpoolEvent {
       remoteUrl,
       const DeepCollectionEquality().hash(_attachments));
 
-  @JsonKey(ignore: true)
+  /// Create a copy of EESUpoolEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$EESUpoolEventImplCopyWith<_$EESUpoolEventImpl> get copyWith =>
@@ -430,8 +440,11 @@ abstract class _EESUpoolEvent implements EESUpoolEvent {
   @override
   @MediaFileConverter()
   List<MediaFile>? get attachments;
+
+  /// Create a copy of EESUpoolEvent
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$EESUpoolEventImplCopyWith<_$EESUpoolEventImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

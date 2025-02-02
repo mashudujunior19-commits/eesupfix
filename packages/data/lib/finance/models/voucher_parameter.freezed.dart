@@ -31,8 +31,12 @@ mixin _$VoucherParameter {
   @JsonKey(name: 'minimum_value')
   double get minimumValue => throw _privateConstructorUsedError;
 
+  /// Serializes this VoucherParameter to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of VoucherParameter
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $VoucherParameterCopyWith<VoucherParameter> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -61,6 +65,8 @@ class _$VoucherParameterCopyWithImpl<$Res, $Val extends VoucherParameter>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of VoucherParameter
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -119,6 +125,8 @@ class __$$VoucherParameterImplCopyWithImpl<$Res>
       $Res Function(_$VoucherParameterImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of VoucherParameter
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -202,12 +210,14 @@ class _$VoucherParameterImpl implements _VoucherParameter {
                 other.minimumValue == minimumValue));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode =>
       Object.hash(runtimeType, id, createdAt, period, interest, minimumValue);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of VoucherParameter
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$VoucherParameterImplCopyWith<_$VoucherParameterImpl> get copyWith =>
@@ -249,8 +259,11 @@ abstract class _VoucherParameter implements VoucherParameter {
   @override
   @JsonKey(name: 'minimum_value')
   double get minimumValue;
+
+  /// Create a copy of VoucherParameter
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$VoucherParameterImplCopyWith<_$VoucherParameterImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

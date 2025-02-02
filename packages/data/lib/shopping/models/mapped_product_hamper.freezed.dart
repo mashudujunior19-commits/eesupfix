@@ -32,8 +32,12 @@ mixin _$HamperProductDetail {
   double get costPrice => throw _privateConstructorUsedError;
   Product get product => throw _privateConstructorUsedError;
 
+  /// Serializes this HamperProductDetail to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of HamperProductDetail
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $HamperProductDetailCopyWith<HamperProductDetail> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -70,6 +74,8 @@ class _$HamperProductDetailCopyWithImpl<$Res, $Val extends HamperProductDetail>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of HamperProductDetail
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -133,6 +139,8 @@ class _$HamperProductDetailCopyWithImpl<$Res, $Val extends HamperProductDetail>
     ) as $Val);
   }
 
+  /// Create a copy of HamperProductDetail
+  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $ProductCopyWith<$Res> get product {
@@ -175,6 +183,8 @@ class __$$HamperProductDetailImplCopyWithImpl<$Res>
       $Res Function(_$HamperProductDetailImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of HamperProductDetail
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -310,12 +320,14 @@ class _$HamperProductDetailImpl implements _HamperProductDetail {
             (identical(other.product, product) || other.product == product));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, hamperId, productId, quantity,
       isFree, name, brand, type, imageUrl, salePrice, costPrice, product);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of HamperProductDetail
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$HamperProductDetailImplCopyWith<_$HamperProductDetailImpl> get copyWith =>
@@ -369,8 +381,11 @@ abstract class _HamperProductDetail implements HamperProductDetail {
   double get costPrice;
   @override
   Product get product;
+
+  /// Create a copy of HamperProductDetail
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$HamperProductDetailImplCopyWith<_$HamperProductDetailImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

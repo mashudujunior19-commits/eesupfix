@@ -12,6 +12,8 @@ import 'package:data/eesupools/models/eesupool_request.dart';
 import 'package:data/eesupools/models/eesupool_type.dart';
 import 'package:data/orders/models/order_product.dart';
 
+import '../models/eesupool_settings.dart';
+
 abstract class EESUpoolDataSource {
   ///Creates a new EESUpool, returns the id of the created EESUpool
   ///
@@ -139,6 +141,9 @@ abstract class EESUpoolDataSource {
   Future<List<EESUpoolOrder>> fetchUserOpenEESUpoolOrders(String userId);
   Future<bool> createEESUpoolOrder(EESUpoolOrder order);
   Future<bool> updateEESUpoolOrder(EESUpoolOrder order);
+  Future<EESUpoolSettings?> getEesupoolSettings(String userId);
+  Future<bool> removeAdmin(int poolId, String userId);
+  Future<bool> updateMemberCount(int poolId, String userId, num count);
 
   Future<EESUpoolOrder?> fetchEESUpoolOpenOrder(int poolId);
 

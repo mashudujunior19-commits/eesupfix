@@ -43,8 +43,12 @@ mixin _$EESUpreneur {
   @JsonKey(includeToJson: false)
   double? get distance => throw _privateConstructorUsedError;
 
+  /// Serializes this EESUpreneur to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of EESUpreneur
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $EESUpreneurCopyWith<EESUpreneur> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -81,6 +85,8 @@ class _$EESUpreneurCopyWithImpl<$Res, $Val extends EESUpreneur>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of EESUpreneur
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -144,6 +150,8 @@ class _$EESUpreneurCopyWithImpl<$Res, $Val extends EESUpreneur>
     ) as $Val);
   }
 
+  /// Create a copy of EESUpreneur
+  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $AddressCopyWith<$Res>? get address {
@@ -190,6 +198,8 @@ class __$$EESUpreneurImplCopyWithImpl<$Res>
       _$EESUpreneurImpl _value, $Res Function(_$EESUpreneurImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of EESUpreneur
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -337,12 +347,14 @@ class _$EESUpreneurImpl implements _EESUpreneur {
                 other.distance == distance));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, id, ownerName, name, description,
       ownerId, createdAt, deliveryFee, isHidden, isActive, address, distance);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of EESUpreneur
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$EESUpreneurImplCopyWith<_$EESUpreneurImpl> get copyWith =>
@@ -401,16 +413,20 @@ abstract class _EESUpreneur implements EESUpreneur {
   bool? get isHidden;
   @override
   @JsonKey(name: 'is_active')
-  bool? get isActive;
-  @override //@JsonKey(name: 'schedule') required List<DaySchedule> daySchedule,
+  bool?
+      get isActive; //@JsonKey(name: 'schedule') required List<DaySchedule> daySchedule,
+  @override
   @JsonKey(includeToJson: false)
   @AddressConverter()
   Address? get address;
   @override
   @JsonKey(includeToJson: false)
   double? get distance;
+
+  /// Create a copy of EESUpreneur
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$EESUpreneurImplCopyWith<_$EESUpreneurImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

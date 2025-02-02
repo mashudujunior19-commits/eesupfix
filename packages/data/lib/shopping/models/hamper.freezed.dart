@@ -41,8 +41,12 @@ mixin _$Hamper {
   bool? get isFree => throw _privateConstructorUsedError;
   Map<int, int>? get quantity => throw _privateConstructorUsedError;
 
+  /// Serializes this Hamper to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of Hamper
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $HamperCopyWith<Hamper> get copyWith => throw _privateConstructorUsedError;
 }
 
@@ -77,6 +81,8 @@ class _$HamperCopyWithImpl<$Res, $Val extends Hamper>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of Hamper
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -182,6 +188,8 @@ class __$$HamperImplCopyWithImpl<$Res>
       _$HamperImpl _value, $Res Function(_$HamperImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of Hamper
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -357,7 +365,7 @@ class _$HamperImpl implements _Hamper {
             const DeepCollectionEquality().equals(other._quantity, _quantity));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(
       runtimeType,
@@ -375,7 +383,9 @@ class _$HamperImpl implements _Hamper {
       isFree,
       const DeepCollectionEquality().hash(_quantity));
 
-  @JsonKey(ignore: true)
+  /// Create a copy of Hamper
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$HamperImplCopyWith<_$HamperImpl> get copyWith =>
@@ -440,8 +450,11 @@ abstract class _Hamper implements Hamper {
   bool? get isFree;
   @override
   Map<int, int>? get quantity;
+
+  /// Create a copy of Hamper
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$HamperImplCopyWith<_$HamperImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

@@ -40,8 +40,12 @@ mixin _$BasketProduct {
   ProductClass get productClass => throw _privateConstructorUsedError;
   bool get sellable => throw _privateConstructorUsedError;
 
+  /// Serializes this BasketProduct to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of BasketProduct
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $BasketProductCopyWith<BasketProduct> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -79,6 +83,8 @@ class _$BasketProductCopyWithImpl<$Res, $Val extends BasketProduct>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of BasketProduct
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -181,6 +187,8 @@ class __$$BasketProductImplCopyWithImpl<$Res>
       _$BasketProductImpl _value, $Res Function(_$BasketProductImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of BasketProduct
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -337,7 +345,7 @@ class _$BasketProductImpl implements _BasketProduct {
                 other.sellable == sellable));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(
       runtimeType,
@@ -354,7 +362,9 @@ class _$BasketProductImpl implements _BasketProduct {
       productClass,
       sellable);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of BasketProduct
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$BasketProductImplCopyWith<_$BasketProductImpl> get copyWith =>
@@ -419,8 +429,11 @@ abstract class _BasketProduct implements BasketProduct {
   ProductClass get productClass;
   @override
   bool get sellable;
+
+  /// Create a copy of BasketProduct
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$BasketProductImplCopyWith<_$BasketProductImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
