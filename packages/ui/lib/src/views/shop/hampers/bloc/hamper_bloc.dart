@@ -47,19 +47,7 @@ class HamperBloc extends Bloc<HamperEvent, HamperState> {
         },
       );
     });
-    // on<FetchHampersByImageUrl>((event, emit) async {
-    //   emit(HamperLoading());
-    //   final result = await _repository.fetchHampersByImageUrl(event.imageUrl);
-    //   result.fold(
-    //     (error) {
-    //       emit(HamperError(
-    //           'Error fetching hampers by image URL: ${error.message}'));
-    //     },
-    //     (hamper) async {
-    //       emit(HamperIdLoaded(hamper.id));
-    //     },
-    //   );
-    // });
+
     on<FetchHampersByImageUrl>((event, emit) async {
       emit(HamperLoading());
 
@@ -85,17 +73,7 @@ class HamperBloc extends Bloc<HamperEvent, HamperState> {
       hasEmittedMatch = false;
       emit(HamperInitial());
     });
-    // on<FetchHamperProductsByImageUrl>((event, emit) async {
-    //   emit(HamperLoading());
-    //   final result = await _repository.fetchHampersByImageUrl(event.imageUrl);
 
-    //   result.fold(
-    //     (error) => emit(HamperError('Error fetching hamper: ${error.message}')),
-    //     (hampers) {
-    //       add(FetchHamperProducts(hampers.id));
-    //     },
-    //   );
-    // });
     on<FetchHamperProductsByImageUrl>((event, emit) async {
       emit(HamperLoading());
 
