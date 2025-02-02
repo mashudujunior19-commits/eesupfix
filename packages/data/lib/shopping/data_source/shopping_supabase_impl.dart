@@ -338,6 +338,7 @@ class ShoppingSupabaseImp implements ShoppingDataSource {
           .from('hamper')
           .select('*')
           .eq('is_final', true)
+          .gte('expiry_date', DateTime.now().toIso8601String())
           .order('created_at', ascending: false);
 
       final List data = response as List;
