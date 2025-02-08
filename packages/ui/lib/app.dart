@@ -31,6 +31,7 @@ import 'package:get_it/get_it.dart';
 import 'package:loader_overlay/loader_overlay.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:ui/src/views/auth/profile/bloc/edit_profile_bloc.dart';
 import 'package:ui/src/views/auth/profile/bloc/profile_bloc.dart';
 import 'package:ui/src/views/auth/sign_in/bloc/auth_bloc.dart';
 import 'package:ui/src/views/finances/allocations/bloc/profit_allocation_bloc.dart';
@@ -154,6 +155,11 @@ class MainApp extends StatelessWidget {
           ),
           BlocProvider(
             create: (context) => ProfileBloc(
+              context.read<ProfileRepository>(),
+            ),
+          ),
+          BlocProvider(
+            create: (context) => EditProfileBloc(
               context.read<ProfileRepository>(),
             ),
           ),

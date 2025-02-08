@@ -91,4 +91,34 @@ class ProfileRepository {
       return result;
     }
   }
+
+  Future<Either<EESUpException, bool>> checkIdNumber() async {
+    final result = await _authRepository.executeFutureWithAuth((id) async {
+      Profile? profile = await _profileDataSource.fetchProfile(id);
+      if (profile == null ||
+          profile.rsaIdNumber == null ||
+          profile.rsaIdNumber!.isEmpty) {
+        return false;
+      }
+      return true;
+    });
+
+    return result.fold(
+      (l) => Left(
+          EESUpException(message: 'Error fetching or checking ID number.')),
+      (r) => Right(r),
+    );
+  }
+
+  Future<Either<EESUpException, bool>> checkIfHasAddress() async {
+    final result = await _authRepository.executeFutureWithAuth((id) async {
+      final hasAddress = await _profileDataSource.checkIfhasAddress(id);
+      return hasAddress;
+    });
+
+    return result.fold(
+      (l) => Left(EESUpException(message: 'Error checking address status.')),
+      (r) => Right(r),
+    );
+  }
 }

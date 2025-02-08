@@ -20,6 +20,38 @@ class ProfileSupabaseImpl implements ProfileDataSource {
   }
 
   @override
+  Future<bool> checkIdNumber(String id) async {
+    Profile? profile = await fetchProfile(id);
+    if (profile == null) {
+      return false;
+    }
+    if ((profile.rsaIdNumber == null || profile.rsaIdNumber!.isEmpty) ||
+        profile.foreigner == false ||
+        profile.foreigner == null) {
+      return false;
+    }
+    return true;
+  }
+
+  @override
+  Future<bool> checkIfhasAddress(String id) async {
+    try {
+      final response = await _client
+          .schema('geolocations')
+          .from('address')
+          .select('user_id')
+          .eq('user_id', id)
+          .limit(1);
+      return response.isNotEmpty;
+    } catch (e) {
+      if (kDebugMode) {
+        print('check address error : $e');
+      }
+      return false;
+    }
+  }
+
+  @override
   Future<bool> deactivateAccount(String id) async {
     try {
       await _client

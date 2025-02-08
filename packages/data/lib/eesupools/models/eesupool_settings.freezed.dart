@@ -32,8 +32,8 @@ mixin _$EESUpoolSettings {
   String? get dailyClosingOrderTime => throw _privateConstructorUsedError;
   @JsonKey(name: 'eesupool_id')
   int get eesupoolId => throw _privateConstructorUsedError;
-  @JsonKey(name: 'user_count', fromJson: _userCountFromJson)
-  num get userCount => throw _privateConstructorUsedError;
+  @JsonKey(name: 'user_count')
+  num? get userCount => throw _privateConstructorUsedError;
 
   /// Serializes this EESUpoolSettings to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -58,8 +58,7 @@ abstract class $EESUpoolSettingsCopyWith<$Res> {
       @JsonKey(name: 'admin_order_count') int? adminOrderCount,
       @JsonKey(name: 'daily_closing_order_time') String? dailyClosingOrderTime,
       @JsonKey(name: 'eesupool_id') int eesupoolId,
-      @JsonKey(name: 'user_count', fromJson: _userCountFromJson)
-      num userCount});
+      @JsonKey(name: 'user_count') num? userCount});
 }
 
 /// @nodoc
@@ -83,7 +82,7 @@ class _$EESUpoolSettingsCopyWithImpl<$Res, $Val extends EESUpoolSettings>
     Object? adminOrderCount = freezed,
     Object? dailyClosingOrderTime = freezed,
     Object? eesupoolId = null,
-    Object? userCount = null,
+    Object? userCount = freezed,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -110,10 +109,10 @@ class _$EESUpoolSettingsCopyWithImpl<$Res, $Val extends EESUpoolSettings>
           ? _value.eesupoolId
           : eesupoolId // ignore: cast_nullable_to_non_nullable
               as int,
-      userCount: null == userCount
+      userCount: freezed == userCount
           ? _value.userCount
           : userCount // ignore: cast_nullable_to_non_nullable
-              as num,
+              as num?,
     ) as $Val);
   }
 }
@@ -133,8 +132,7 @@ abstract class _$$EESUpoolSettingsImplCopyWith<$Res>
       @JsonKey(name: 'admin_order_count') int? adminOrderCount,
       @JsonKey(name: 'daily_closing_order_time') String? dailyClosingOrderTime,
       @JsonKey(name: 'eesupool_id') int eesupoolId,
-      @JsonKey(name: 'user_count', fromJson: _userCountFromJson)
-      num userCount});
+      @JsonKey(name: 'user_count') num? userCount});
 }
 
 /// @nodoc
@@ -156,7 +154,7 @@ class __$$EESUpoolSettingsImplCopyWithImpl<$Res>
     Object? adminOrderCount = freezed,
     Object? dailyClosingOrderTime = freezed,
     Object? eesupoolId = null,
-    Object? userCount = null,
+    Object? userCount = freezed,
   }) {
     return _then(_$EESUpoolSettingsImpl(
       id: null == id
@@ -183,10 +181,10 @@ class __$$EESUpoolSettingsImplCopyWithImpl<$Res>
           ? _value.eesupoolId
           : eesupoolId // ignore: cast_nullable_to_non_nullable
               as int,
-      userCount: null == userCount
+      userCount: freezed == userCount
           ? _value.userCount
           : userCount // ignore: cast_nullable_to_non_nullable
-              as num,
+              as num?,
     ));
   }
 }
@@ -201,8 +199,7 @@ class _$EESUpoolSettingsImpl extends _EESUpoolSettings {
       @JsonKey(name: 'admin_order_count') this.adminOrderCount,
       @JsonKey(name: 'daily_closing_order_time') this.dailyClosingOrderTime,
       @JsonKey(name: 'eesupool_id') required this.eesupoolId,
-      @JsonKey(name: 'user_count', fromJson: _userCountFromJson)
-      required this.userCount})
+      @JsonKey(name: 'user_count') this.userCount})
       : super._();
 
   factory _$EESUpoolSettingsImpl.fromJson(Map<String, dynamic> json) =>
@@ -227,8 +224,8 @@ class _$EESUpoolSettingsImpl extends _EESUpoolSettings {
   @JsonKey(name: 'eesupool_id')
   final int eesupoolId;
   @override
-  @JsonKey(name: 'user_count', fromJson: _userCountFromJson)
-  final num userCount;
+  @JsonKey(name: 'user_count')
+  final num? userCount;
 
   @override
   String toString() {
@@ -279,15 +276,15 @@ class _$EESUpoolSettingsImpl extends _EESUpoolSettings {
 
 abstract class _EESUpoolSettings extends EESUpoolSettings {
   const factory _EESUpoolSettings(
-      {@JsonKey(includeToJson: false) required final int id,
-      @JsonKey(name: 'created_at') required final DateTime createdAt,
-      @JsonKey(name: 'minimum_order_value') final double? minimumOrderValue,
-      @JsonKey(name: 'admin_order_count') final int? adminOrderCount,
-      @JsonKey(name: 'daily_closing_order_time')
-      final String? dailyClosingOrderTime,
-      @JsonKey(name: 'eesupool_id') required final int eesupoolId,
-      @JsonKey(name: 'user_count', fromJson: _userCountFromJson)
-      required final num userCount}) = _$EESUpoolSettingsImpl;
+          {@JsonKey(includeToJson: false) required final int id,
+          @JsonKey(name: 'created_at') required final DateTime createdAt,
+          @JsonKey(name: 'minimum_order_value') final double? minimumOrderValue,
+          @JsonKey(name: 'admin_order_count') final int? adminOrderCount,
+          @JsonKey(name: 'daily_closing_order_time')
+          final String? dailyClosingOrderTime,
+          @JsonKey(name: 'eesupool_id') required final int eesupoolId,
+          @JsonKey(name: 'user_count') final num? userCount}) =
+      _$EESUpoolSettingsImpl;
   const _EESUpoolSettings._() : super._();
 
   factory _EESUpoolSettings.fromJson(Map<String, dynamic> json) =
@@ -312,8 +309,8 @@ abstract class _EESUpoolSettings extends EESUpoolSettings {
   @JsonKey(name: 'eesupool_id')
   int get eesupoolId;
   @override
-  @JsonKey(name: 'user_count', fromJson: _userCountFromJson)
-  num get userCount;
+  @JsonKey(name: 'user_count')
+  num? get userCount;
 
   /// Create a copy of EESUpoolSettings
   /// with the given fields replaced by the non-null parameter values.

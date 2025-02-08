@@ -15,7 +15,7 @@ _$EESUpoolSettingsImpl _$$EESUpoolSettingsImplFromJson(
       adminOrderCount: (json['admin_order_count'] as num?)?.toInt(),
       dailyClosingOrderTime: json['daily_closing_order_time'] as String?,
       eesupoolId: (json['eesupool_id'] as num).toInt(),
-      userCount: json['user_count'] as num,
+      userCount: json['user_count'] as num?,
     );
 
 Map<String, dynamic> _$$EESUpoolSettingsImplToJson(

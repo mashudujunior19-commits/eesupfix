@@ -11,4 +11,8 @@ abstract class ProfileDataSource {
   Future<bool> changeEmail(String email);
 
   Future<bool> updateProfile(Profile profile);
+
+  Future<bool> checkIdNumber(String id);
+
+  Future<bool> checkIfhasAddress(String id);
 }

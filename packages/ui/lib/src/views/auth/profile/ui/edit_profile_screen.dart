@@ -58,7 +58,6 @@ class EditProfileScreen extends StatelessWidget {
                   width: context.width,
                   height: context.height,
                   child: () {
-                    print(state);
                     if (state is CurrentProfileForm) {
                       final profileForm = state.profile;
                       return ListView(
