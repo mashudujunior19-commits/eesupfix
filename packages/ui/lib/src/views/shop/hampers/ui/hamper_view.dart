@@ -207,20 +207,25 @@ class _HamperViewPageState extends State<HamperViewPage> {
                 const SizedBox(height: 8),
                 Text("Type: ${hamper.type}"),
                 const SizedBox(height: 8),
-                Text("Hamper Value: ${hamper.value}"),
+                Text("Hamper Value: ${hamper.value.toStringAsFixed(2)}"),
                 const SizedBox(height: 8),
                 Text(
                     "Expiry date: ${hamper.expiryDate.toLocal().toString().split(' ')[0]}"),
                 const SizedBox(height: 10),
                 if (hamper.imgUrl != null && hamper.imgUrl!.isNotEmpty)
-                  Image.network(
-                    hamper.imgUrl!,
-                    height: 150,
-                    width: double.infinity,
-                    fit: BoxFit.cover,
-                    errorBuilder: (context, error, stackTrace) {
-                      return _buildPlaceholderImage();
-                    },
+                  // Image.network(
+                  //   hamper.imgUrl!,
+                  //   height: 150,
+                  //   width: double.infinity,
+                  //   fit: BoxFit.cover,
+                  //   errorBuilder: (context, error, stackTrace) {
+                  //     return _buildPlaceholderImage();
+                  //   },
+                  // )
+                  buildImageStack(
+                    hamper.imgUrl,
+                    hamper.gifUrl1,
+                    hamper.gifUrl2,
                   )
                 else
                   _buildPlaceholderImage(),
@@ -239,10 +244,121 @@ class _HamperViewPageState extends State<HamperViewPage> {
     );
   }
 
+  Widget buildImageStack(
+      String? imgUrl, String? hamperGifUrl1, String? hamperGifUrl2) {
+    return Container(
+      width: double.infinity,
+      child: Stack(
+        children: [
+          // Full Background Image
+          if (imgUrl != null && imgUrl.isNotEmpty)
+            Positioned.fill(
+              child: Image.network(
+                imgUrl,
+                fit: BoxFit.contain, // Ensure full image is shown
+                errorBuilder: (context, error, stackTrace) {
+                  return Container(color: Colors.grey);
+                },
+              ),
+            )
+          else
+            Positioned.fill(child: Container(color: Colors.grey)),
+
+          // Top GIF
+          if (hamperGifUrl1 != null && hamperGifUrl1.isNotEmpty)
+            Positioned(
+              top: 10,
+              left: 10,
+              child: Image.network(
+                hamperGifUrl1,
+                height: 50,
+                width: 100,
+                fit: BoxFit.contain,
+              ),
+            ),
+
+          // Bottom GIF
+          if (hamperGifUrl2 != null && hamperGifUrl2.isNotEmpty)
+            Positioned(
+              bottom: 0, // Position at the bottom
+              right: 20,
+              child: Image.network(
+                hamperGifUrl2,
+                height: 75,
+                width: 140,
+                fit: BoxFit.contain,
+              ),
+            ),
+        ],
+      ),
+    );
+  }
+
+  // Widget buildImageStack(
+  //     String? imgUrl, String? hamperGifUrl1, String? hamperGifUrl2) {
+  //   return SizedBox(
+  //     height: 180, // Ensures the Stack respects height constraints
+  //     width: double.infinity,
+  //     child: Stack(
+  //       children: [
+  //         if (imgUrl != null && imgUrl.isNotEmpty)
+  //           Positioned.fill(
+  //             child: Image.network(
+  //               imgUrl,
+  //               fit: BoxFit.cover,
+  //               errorBuilder: (context, error, stackTrace) {
+  //                 return Container(color: Colors.grey);
+  //               },
+  //             ),
+  //           )
+  //         else
+  //           Positioned.fill(child: Container(color: Colors.grey)),
+  //         if (hamperGifUrl1 != null && hamperGifUrl1.isNotEmpty)
+  //           Positioned(
+  //             top: 2,
+  //             left: 10,
+  //             child: Image.network(
+  //               hamperGifUrl1,
+  //               height: 40,
+  //               width: 90,
+  //               fit: BoxFit.contain,
+  //               errorBuilder: (context, error, stackTrace) {
+  //                 return Container();
+  //               },
+  //             ),
+  //           ),
+
+  //         // Bottom GIF - Adjusted to be closer to the bottom-right corner
+  //         if (hamperGifUrl2 != null && hamperGifUrl2.isNotEmpty)
+  //           Positioned(
+  //             bottom: 2,
+  //             right: 15,
+  //             child: Image.network(
+  //               hamperGifUrl2,
+  //               height: 70,
+  //               width: 130,
+  //               fit: BoxFit.contain,
+  //               errorBuilder: (context, error, stackTrace) {
+  //                 return Container();
+  //               },
+  //             ),
+  //           ),
+  //       ],
+  //     ),
+  //   );
+  // }
+
   Widget _buildProductList(
       BuildContext context, List<HamperProductDetail> products) {
     final sortedProducts = products
-      ..sort((a, b) => (b.isFree ? 1 : 0).compareTo(a.isFree ? 1 : 0));
+      ..sort((a, b) {
+        int freeComparison = (b.isFree ? 1 : 0).compareTo(a.isFree ? 1 : 0);
+        if (freeComparison != 0) {
+          return freeComparison;
+        }
+
+        return a.name.toLowerCase().compareTo(b.name.toLowerCase());
+      });
 
     return ListView.builder(
       shrinkWrap: true,
@@ -254,16 +370,15 @@ class _HamperViewPageState extends State<HamperViewPage> {
     );
   }
 
-  // Define the placeholder widget
   Widget _buildPlaceholderImage() {
     return Container(
       height: 150,
       width: double.infinity,
-      color: Colors.grey[300], // Background color for placeholder
+      color: Colors.grey[300],
       child: const Icon(
         Icons.image_not_supported_outlined,
         size: 100,
-        color: Colors.grey, // Icon color
+        color: Colors.grey,
       ),
     );
   }
@@ -302,7 +417,9 @@ class _ProductItemCard extends StatelessWidget {
                 children: [
                   Text(productDetail.name,
                       style: Theme.of(context).textTheme.bodyMedium),
-                  Text("Price: R${productDetail.salePrice.toStringAsFixed(2)}"),
+                  Text(
+                      "Price: R${productDetail.salePrice.toStringAsFixed(2)}                       (${productDetail.quantity})"),
+                  // Text("Quantity: ${productDetail.quantity}"),
                   if (productDetail.isFree)
                     const Text(
                       "Free",
@@ -320,55 +437,3 @@ class _ProductItemCard extends StatelessWidget {
     );
   }
 }
-
-
-// class _ProductItemCard extends StatelessWidget {
-//   final HamperProductDetail productDetail;
-
-//   const _ProductItemCard({required this.productDetail});
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Card(
-//       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-//       child: Padding(
-//         padding: const EdgeInsets.all(16.0),
-//         child: Row(
-//           children: [
-//             CircleAvatar(
-//               radius: 30,
-//               backgroundImage: productDetail.imageUrl.isNotEmpty
-//                   ? NetworkImage(productDetail.imageUrl)
-//                   : null,
-//               child: productDetail.imageUrl.isNotEmpty
-//                   ? null
-//                   : const Icon(
-//                       Icons.fastfood_outlined,
-//                       size: 30,
-//                       color: Colors.grey,
-//                     ),
-//             ),
-//             const SizedBox(width: 16),
-//             Expanded(
-//               child: Column(
-//                 crossAxisAlignment: CrossAxisAlignment.start,
-//                 children: [
-//                   Text(productDetail.name,
-//                       style: Theme.of(context).textTheme.bodyMedium),
-//                   Text("Price: R${productDetail.salePrice.toStringAsFixed(2)}"),
-//                   Text(
-//                     productDetail.isFree ? "Free" : "Paid",
-//                     style: TextStyle(
-//                       color: productDetail.isFree ? Colors.green : Colors.red,
-//                       fontWeight: FontWeight.bold,
-//                     ),
-//                   ),
-//                 ],
-//               ),
-//             ),
-//           ],
-//         ),
-//       ),
-//     );
-//   }
-//}

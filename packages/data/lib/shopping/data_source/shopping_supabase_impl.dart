@@ -338,6 +338,7 @@ class ShoppingSupabaseImp implements ShoppingDataSource {
           .from('hamper')
           .select('*')
           .eq('is_final', true)
+          .gte('expiry_date', DateTime.now().toIso8601String())
           .order('created_at', ascending: false);
 
       final List data = response as List;
@@ -480,7 +481,6 @@ class ShoppingSupabaseImp implements ShoppingDataSource {
           .maybeSingle();
 
       if (response == null || response.isEmpty) {
-        print("No hamper found for the given image URL.");
         return null;
       }
 
@@ -495,7 +495,6 @@ class ShoppingSupabaseImp implements ShoppingDataSource {
 
       return hamper;
     } catch (e) {
-      print('hamper by url error :$e');
       return null;
     }
   }
