@@ -1,7 +1,7 @@
 name: eesup
 description: "A new Flutter project."
 publish_to: 'none'
-version: 16.6.19+220
+version: 16.6.21+222
 
 
 environment:
@@ -11,6 +11,7 @@ dependencies:
   flutter:
     sdk: flutter
   google_fonts: ^6.2.1
+  in_app_update: ^4.2.3
   ui:
     path: ../../packages/ui
 

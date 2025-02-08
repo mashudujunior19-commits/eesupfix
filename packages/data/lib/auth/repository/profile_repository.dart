@@ -121,4 +121,14 @@ class ProfileRepository {
       (r) => Right(r),
     );
   }
+
+  Future<Either<EESUpException, Map<String, dynamic>?>>
+      checkCurrentAppVersion() async {
+    try {
+      final version = await _profileDataSource.checkCurrentAppVersion();
+      return Right(version);
+    } catch (e) {
+      return Left(EESUpException(message: 'Error checking app version: $e'));
+    }
+  }
 }

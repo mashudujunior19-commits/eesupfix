@@ -15,4 +15,6 @@ abstract class ProfileDataSource {
   Future<bool> checkIdNumber(String id);
 
   Future<bool> checkIfhasAddress(String id);
+
+  Future<Map<String, dynamic>?> checkCurrentAppVersion();
 }

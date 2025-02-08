@@ -34,15 +34,52 @@ class ProfileSupabaseImpl implements ProfileDataSource {
   }
 
   @override
+  Future<Map<String, dynamic>?> checkCurrentAppVersion() async {
+    try {
+      final response = await _client
+          .schema('public')
+          .from('version_control')
+          .select(
+              'version_number, build_number') // Select both version_number and build_number
+          .eq('is_live', false) // Adjust this filter as necessary
+          .limit(1)
+          .single();
+
+      return response as Map<String,
+          dynamic>?; // Return both version number and build number
+    } catch (e) {
+      debugPrint('Error fetching latest app version: $e');
+      return null;
+    }
+  }
+
+// final response = await _client
+//     .schema('public')
+//     .from('version_control')
+//     .select('*')
+//     .eq('is_live', false)
+//     .limit(1)
+//     .single();
+
+// final versionControl = VersionControl.fromJson(response);
+
+  @override
   Future<bool> checkIfhasAddress(String id) async {
     try {
       final response = await _client
           .schema('geolocations')
           .from('address')
-          .select('user_id')
+          .select('user_id, is_primary')
           .eq('user_id', id)
-          .limit(1);
-      return response.isNotEmpty;
+          .limit(1); // Only fetch one record
+
+      if (response.isNotEmpty) {
+        // Check if the address is marked as primary
+        final address = response.first;
+        return address['is_primary'] == true;
+      }
+
+      return false; // No address found
     } catch (e) {
       if (kDebugMode) {
         print('check address error : $e');

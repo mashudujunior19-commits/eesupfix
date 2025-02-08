@@ -57,19 +57,16 @@ class EditProfileBloc extends Bloc<EditProfileEvent, EditProfileState> {
     });
 
     on<CheckIfHasAddress>((event, emit) async {
-      print('CheckIfHasAddress event triggered');
       emit(EditProfileLoading());
 
       final result = await _repository.checkIfHasAddress();
 
       result.fold(
         (left) {
-          print('Error : $left');
           emit(AddressCheckError(left));
         },
         (hasAddress) {
           if (hasAddress) {
-            print('Has address: $hasAddress');
             emit(ProfileSavingSuccess());
           } else {
             emit(AddressMissingState());

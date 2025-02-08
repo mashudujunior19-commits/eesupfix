@@ -31,7 +31,7 @@ class EditAddressScreen extends StatefulWidget {
 class _EditAddressScreenState extends State<EditAddressScreen> {
   String type = 'Residential';
   String province = 'Province';
-  bool isPrimary = false;
+  bool isPrimary = true;
   var provinces = [
     'Gauteng',
     'KwaZulu-Natal',

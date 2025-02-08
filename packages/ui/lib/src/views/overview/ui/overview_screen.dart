@@ -1,5 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:ui/app_route.gr.dart';
 import 'package:ui/src/core/extensions/bg_image_deco_ext.dart';
 import 'package:ui/src/core/widgets/eesup_scaffold.dart';
@@ -13,6 +14,9 @@ import 'package:flutter/material.dart';
 import '../../../core/widgets/fullscreen_loading_shimmer.dart';
 import '../../auth/profile/bloc/edit_profile_bloc.dart';
 import '../../auth/profile/bloc/profile_bloc.dart';
+import '../../auth/profile/bloc/version_control_bloc.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:in_app_update/in_app_update.dart';
 
 @RoutePage()
 class OverviewScreen extends StatefulWidget {
@@ -25,6 +29,8 @@ class OverviewScreen extends StatefulWidget {
 class _OverviewScreenState extends State<OverviewScreen>
     with SingleTickerProviderStateMixin {
   late final TabController _tabController;
+  String? appVersion;
+  String? appBuildNumber;
 
   @override
   void initState() {
@@ -38,7 +44,61 @@ class _OverviewScreenState extends State<OverviewScreen>
 
     context.read<ProfileBloc>().add(ProfileFetched());
     context.read<EditProfileBloc>().add(CheckIfHasAddress());
+    _checkForUpdate();
   }
+
+  // Future<void> _checkForUpdate() async {
+  //   try {
+  //     // Check for updates
+  //     final updateInfo = await InAppUpdate.checkForUpdate();
+  //     if (updateInfo.updateAvailability == UpdateAvailability.updateAvailable) {
+  //       // If update is available, perform the update immediately
+  //       _promptForUpdate();
+  //     }
+  //   } catch (e) {
+  //     debugPrint('Error checking for update: $e');
+  //   }
+  // }
+
+  // Perform the update
+  // Future<void> _promptForUpdate() async {
+  //   try {
+  //     await InAppUpdate.performImmediateUpdate();
+  //   } catch (e) {
+  //     debugPrint('Error during in-app update: $e');
+  //   }
+  // }
+
+  // Future<void> _getAppVersion() async {
+  //   PackageInfo packageInfo = await PackageInfo.fromPlatform();
+  //   setState(() {
+  //     appVersion = packageInfo.version;
+  //     appBuildNumber = packageInfo.buildNumber;
+  //   });
+
+  //   if (appVersion != null && appBuildNumber != null) {
+  //     context.read<VersionControlBloc>().add(CheckAppVersion(
+  //           currentVersion: appVersion!,
+  //           currentBuildNumber: int.parse(appBuildNumber!),
+  //         ));
+  //   }
+  // }
+
+  // Future<void> launch(Uri url) async {
+  //   if (await canLaunchUrl(url)) {
+  //     await launch(url);
+  //   } else {
+  //     throw 'Could not launch $url';
+  //   }
+  // }
+
+  // Future<void> _launchURL(Uri url) async {
+  //   if (await canLaunchUrl(url)) {
+  //     await launch(url);
+  //   } else {
+  //     throw 'Could not launch $url';
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -57,9 +117,9 @@ class _OverviewScreenState extends State<OverviewScreen>
                       showDialog(
                         context: context,
                         builder: (context) => AlertDialog(
-                          title: const Text('Update Your RSA ID'),
-                          content: const Text(
-                              'You do not have an RSA ID registered.'),
+                          title: const Text('Update your RSA ID'),
+                          content:
+                              const Text('Your RSA ID unlocks more benefits.'),
                           actions: [
                             TextButton(
                               onPressed: () {
@@ -68,7 +128,7 @@ class _OverviewScreenState extends State<OverviewScreen>
                                   EditProfileRoute(profile: state.profile),
                                 );
                               },
-                              child: const Text('Update RSA ID'),
+                              child: const Text('Enter ID'),
                             ),
                             TextButton(
                               onPressed: () {
@@ -93,7 +153,21 @@ class _OverviewScreenState extends State<OverviewScreen>
                                   borderRadius: BorderRadius.circular(8),
                                 ),
                               ),
-                              child: const Text('Foreigner'),
+                              child: const Text('Non-SA'),
+                            ),
+                            TextButton(
+                              onPressed: () {
+                                Navigator.pop(context);
+                              },
+                              style: TextButton.styleFrom(
+                                foregroundColor: Colors.grey,
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 16, vertical: 8),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                              ),
+                              child: const Text('Add later'),
                             ),
                           ],
                         ),
@@ -111,9 +185,9 @@ class _OverviewScreenState extends State<OverviewScreen>
                   showDialog(
                     context: context,
                     builder: (context) => AlertDialog(
-                      title: const Text('Add Your Address'),
+                      title: const Text('Update your primary address'),
                       content: const Text(
-                          'You do not have an address registered. Would you like to add it now?'),
+                          'You do not have a verified primary address. Would you like to add it now?'),
                       actions: [
                         TextButton(
                           onPressed: () {
@@ -122,6 +196,20 @@ class _OverviewScreenState extends State<OverviewScreen>
                           },
                           child: const Text('Add Address'),
                         ),
+                        TextButton(
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                          style: TextButton.styleFrom(
+                            foregroundColor: Colors.grey,
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 16, vertical: 8),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                          ),
+                          child: const Text('Add later'),
+                        ),
                       ],
                     ),
                   );
@@ -129,6 +217,58 @@ class _OverviewScreenState extends State<OverviewScreen>
               }
             },
           ),
+//
+
+//
+          // BlocListener<VersionControlBloc, VersionControlState>(
+          //   listener: (context, state) {
+          //     if (state is VersionOutdated) {
+          //       WidgetsBinding.instance.addPostFrameCallback((_) {
+          //         showDialog(
+          //           context: context,
+          //           builder: (context) => AlertDialog(
+          //             title: const Text('Update Available'),
+          //             content: const Text(
+          //                 'A new version of the app is available. Please update to the latest version.'),
+          //             actions: [
+          //               TextButton(
+          //                 onPressed: () async {
+          //                   Uri appUri = Uri.parse(
+          //                       "https://play.google.com/store/apps/details?id=com.eesup.mobile");
+
+          //                   // Simply try to launch the URI. Let the system handle it.
+          //                   try {
+          //                     await _launchURL(appUri);
+          //                   } catch (error) {
+          //                     debugPrint("Error launching URL: $error");
+          //                   }
+
+          //                   Navigator.pop(context);
+          //                 },
+          //                 child: const Text('Update Now'),
+          //               ),
+          //               TextButton(
+          //                 onPressed: () {
+          //                   Navigator.pop(context);
+          //                 },
+          //                 style: TextButton.styleFrom(
+          //                   foregroundColor: Colors.red,
+          //                   padding: const EdgeInsets.symmetric(
+          //                       horizontal: 16, vertical: 8),
+          //                   shape: RoundedRectangleBorder(
+          //                     borderRadius: BorderRadius.circular(8),
+          //                   ),
+          //                 ),
+          //                 child: const Text('Later'),
+          //               ),
+          //             ],
+          //           ),
+          //         );
+          //       });
+          //     }
+          //   },
+          // ),
+//
         ],
         child: BlocBuilder<ProfileBloc, ProfileState>(
           builder: (context, state) {
@@ -158,6 +298,59 @@ class _OverviewScreenState extends State<OverviewScreen>
             return Container();
           },
         ),
+      ),
+    );
+  }
+
+  ///
+  Future<void> _checkForUpdate() async {
+    try {
+      // Check for updates using the InAppUpdate package
+      final updateInfo = await InAppUpdate.checkForUpdate();
+
+      if (updateInfo.updateAvailability == UpdateAvailability.updateAvailable) {
+        // If update is available, show a dialog to prompt the user
+        _showUpdateDialog(context);
+      }
+    } catch (e) {
+      debugPrint('Error checking for update: $e');
+    }
+  }
+
+  void _showUpdateDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Update Available'),
+        content: const Text(
+            'A new version of the app is available. Please update to the latest version.'),
+        actions: [
+          TextButton(
+            onPressed: () async {
+              try {
+                await InAppUpdate.performImmediateUpdate();
+                Navigator.pop(context);
+              } catch (e) {
+                debugPrint('Error during in-app update: $e');
+                Navigator.pop(context); // Close the dialog
+              }
+            },
+            child: const Text('Update Now'),
+          ),
+          TextButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            style: TextButton.styleFrom(
+              foregroundColor: Colors.red,
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(8),
+              ),
+            ),
+            child: const Text('Later'),
+          ),
+        ],
       ),
     );
   }
