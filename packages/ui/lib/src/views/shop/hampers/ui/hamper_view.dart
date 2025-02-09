@@ -1,3 +1,4 @@
+// ignore_for_file: unnecessary_null_comparison
 import 'package:auto_route/auto_route.dart';
 import 'package:data/orders/models/order_product.dart';
 import 'package:data/shopping/models/mapped_product_hamper.dart';

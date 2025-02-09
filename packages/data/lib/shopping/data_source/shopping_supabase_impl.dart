@@ -1,3 +1,4 @@
+// ignore_for_file: unnecessary_null_comparison
 import 'package:data/auth/models/user_role.dart';
 import 'package:data/shopping/data_source/shopping_data_source.dart';
 import 'package:data/shopping/models/ad_banner.dart';
