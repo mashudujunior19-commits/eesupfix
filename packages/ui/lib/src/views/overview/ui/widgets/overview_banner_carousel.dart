@@ -129,6 +129,10 @@ class OverviewBannerCarousel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (hamperBanner == null) {
+      return const Center(child: CircularProgressIndicator());
+    }
+
     return FlutterCarousel(
       options: CarouselOptions(
         height: 270,
@@ -142,20 +146,20 @@ class OverviewBannerCarousel extends StatelessWidget {
         pauseAutoPlayOnManualNavigate: true,
         slideIndicator: SequentialFillIndicator(),
       ),
-      items: hamperBanner!.content.map((hamperBanner) {
+      items: hamperBanner!.content.map((hamperContent) {
+        print('Rendering hamper content: $hamperContent');
         return GestureDetector(
           onTap: () {
-            onBannerTap(hamperBanner.baseImage);
-            // context
-            //     .read<HamperBloc>()
-            //     .add(FetchHamperProductsByImageUrl(hamperBanner.baseImage));
+            onBannerTap(hamperContent.baseImage);
           },
           child: Padding(
             padding: const EdgeInsets.only(right: 5),
             child: HamperImageStack(
-              imgUrl: hamperBanner.baseImage,
-              hamperGifUrl1: hamperBanner.gif1,
-              hamperGifUrl2: hamperBanner.gif2,
+              imgUrl: hamperContent.baseImage,
+              hamperGifUrl1: hamperContent.gif1,
+              hamperGifUrl2: hamperContent.gif2,
+              hamperCode: hamperBanner!.hamperCode,
+              hamperPrice: hamperBanner!.value,
             ),
           ),
         );

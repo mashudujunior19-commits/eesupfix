@@ -225,14 +225,22 @@ class ShoppingSupabaseImp implements ShoppingDataSource {
     return AdBanner.fromJson(response);
   }
 
+  // @override
+  // Future<HamperBanner> fetchHamperBanner(int id) async {
+  //   final response = await _client
+  //       .schema('engagements')
+  //       .from('banner')
+  //       .select()
+  //       .eq('id', id)
+  //       .single();
+  //   return HamperBanner.fromJson(response);
+  // }
   @override
   Future<HamperBanner> fetchHamperBanner(int id) async {
     final response = await _client
         .schema('engagements')
-        .from('banner')
-        .select()
-        .eq('id', id)
-        .single();
+        .rpc('get_hamper_banner_details', params: {'banner_id': id}).single();
+    print('raw res : $response');
     return HamperBanner.fromJson(response);
   }
 
