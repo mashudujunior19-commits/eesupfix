@@ -183,7 +183,7 @@ class HamperImageStack extends StatefulWidget {
   final String? imgUrl;
   final String? hamperCode;
   final double? hamperPrice;
-  final String? profitpercentage;
+  final double? profitpercentage;
   final String? hamperGifUrl1;
   final String? hamperGifUrl2;
 
@@ -228,6 +228,10 @@ class _HamperImageStackState extends State<HamperImageStack> {
             if (state is HamperAsProductLoaded) {
               hamperProduct = state.hamperProduct;
             }
+            if (state is HamperError) {
+              // Handle error state
+              context.snackBarError('Error occurred while loading hamper.');
+            }
           },
           child: Stack(
             alignment: Alignment.center,
@@ -240,7 +244,10 @@ class _HamperImageStackState extends State<HamperImageStack> {
                     widget.imgUrl!,
                     fit: BoxFit.fill,
                     errorBuilder: (context, error, stackTrace) {
-                      return Container(color: Colors.grey);
+                      return Center(
+                        child: Text('Failed to load image',
+                            style: TextStyle(color: Colors.red)),
+                      );
                     },
                   ),
                 )
@@ -253,23 +260,22 @@ class _HamperImageStackState extends State<HamperImageStack> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     if (widget.hamperCode != null)
-                      // Text(
-                      //   hamperCode!,
-                      //   style: GoogleFonts.lemon(
-                      //     fontSize: 28,
-                      //     fontWeight: FontWeight.bold,
-                      //     color: Colors.green,
-                      //   ),
-                      // ),
-                      if (widget.hamperCode != null &&
-                          widget.hamperPrice != null)
-                        Text(
-                          '${widget.hamperCode} ${widget.hamperPrice}',
-                          style: GoogleFonts.lemon(
-                            fontSize: 22,
-                            color: Color(0xFFFF0000),
-                          ),
+                      Text(
+                        widget.hamperCode!,
+                        style: GoogleFonts.lemon(
+                          fontSize: 28,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.green,
                         ),
+                      ),
+                    if (widget.hamperCode != null && widget.hamperPrice != null)
+                      Text(
+                        '${widget.hamperCode} ${widget.hamperPrice ?? 0.0}',
+                        style: GoogleFonts.lemon(
+                          fontSize: 22,
+                          color: Color(0xFFFF0000),
+                        ),
+                      ),
                   ],
                 ),
               ),
@@ -310,8 +316,7 @@ class _HamperImageStackState extends State<HamperImageStack> {
                     },
                   ),
                 ),
-              if (widget.profitpercentage != null &&
-                  widget.profitpercentage!.isNotEmpty)
+              if (widget.profitpercentage != null)
                 Positioned(
                   bottom: 20,
                   right: 20,
@@ -320,7 +325,9 @@ class _HamperImageStackState extends State<HamperImageStack> {
                       print('Profit allocations clicked');
                     },
                     child: Text(
-                      widget.profitpercentage!,
+                      widget.profitpercentage != null
+                          ? '${widget.profitpercentage}'
+                          : 'No Profit Data',
                       style: GoogleFonts.poppins(
                         fontSize: 18,
                         fontWeight: FontWeight.w600,

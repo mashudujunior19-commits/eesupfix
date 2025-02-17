@@ -760,7 +760,7 @@ class HamperImageStack extends _i48.PageRouteInfo<HamperImageStackArgs> {
     required String? imgUrl,
     String? hamperCode,
     double? hamperPrice,
-    String? profitpercentage,
+    double? profitpercentage,
     String? hamperGifUrl1,
     String? hamperGifUrl2,
     List<_i48.PageRouteInfo>? children,
@@ -816,7 +816,7 @@ class HamperImageStackArgs {
 
   final double? hamperPrice;
 
-  final String? profitpercentage;
+  final double? profitpercentage;
 
   final String? hamperGifUrl1;
 

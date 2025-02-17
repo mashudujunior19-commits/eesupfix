@@ -14,32 +14,19 @@ class HamperBanner with _$HamperBanner {
     @JsonKey(name: 'profit_allocation_id') required int profitAllocationId,
   }) = _HamperBanner;
 
-  // factory HamperBanner.fromJson(Map<String, dynamic> json) => HamperBanner(
-
-  //       id: json['id'] as int,
-  //       content: (json['content'] as List<dynamic>?)
-  //               ?.map((e) => HamperContent.fromJson(e as Map<String, dynamic>))
-  //               .toList() ??
-  //           [],
-  //       hamperCode: json['hamper_details']['code'] as String? ?? '',
-  //       profitPercentage:
-  //           (json['hamper_details']['profit_percentage'] as num?)?.toDouble() ??
-  //               0.0,
-  //       value: (json['hamper_details']['value'] as num?)?.toDouble() ?? 0.0,
-  //       profitAllocationId:
-  //           json['hamper_details']['profit_allocation_id'] as int? ?? 0,
-  //     );
   factory HamperBanner.fromJson(Map<String, dynamic> json) {
     print("Raw JSON inside fromJson: $json");
 
     final hamperDetails = json['hamper_details'] as Map<String, dynamic>? ?? {};
     print("Extracted hamperDetails: $hamperDetails");
 
-    print(
-        "profit_percentage before parsing: ${hamperDetails['profit_percentage']}");
-    print("value before parsing: ${hamperDetails['value']}");
-    print(
-        "profit_allocation_id before parsing: ${hamperDetails['profit_allocation_id']}");
+    final profitPercentage = hamperDetails['profit_percentage'];
+    final value = hamperDetails['value'];
+    final profitAllocationId = hamperDetails['profit_allocation_id'];
+
+    print("profit_percentage before parsing: $profitPercentage");
+    print("value before parsing: $value");
+    print("profit_allocation_id before parsing: $profitAllocationId");
 
     return HamperBanner(
       id: json['id'] as int,
@@ -49,10 +36,11 @@ class HamperBanner with _$HamperBanner {
           }).toList() ??
           [],
       hamperCode: hamperDetails['code'] as String? ?? '',
-      profitPercentage:
-          (hamperDetails['profit_percentage'] as num?)?.toDouble() ?? 0.0,
-      value: (hamperDetails['value'] as num?)?.toDouble() ?? 0.0,
-      profitAllocationId: (hamperDetails['profit_allocation_id'] as int?) ?? 0,
+      profitPercentage: profitPercentage != null
+          ? (profitPercentage is num ? profitPercentage.toDouble() : 0.0)
+          : 0.0,
+      value: value != null ? (value is num ? value.toDouble() : 0.0) : 0.0,
+      profitAllocationId: profitAllocationId ?? 0,
     );
   }
 }
