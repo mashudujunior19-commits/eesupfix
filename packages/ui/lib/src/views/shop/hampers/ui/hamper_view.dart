@@ -1,4 +1,6 @@
+// ignore_for_file: unnecessary_null_comparison
 import 'package:auto_route/auto_route.dart';
+import 'package:data/finance/models/profit_allocation.dart';
 import 'package:data/orders/models/order_product.dart';
 import 'package:data/shopping/models/mapped_product_hamper.dart';
 import 'package:data/shopping/models/product.dart';
@@ -31,7 +33,7 @@ class _HamperViewPageState extends State<HamperViewPage> {
   Hamper? selectedHamper;
   List<HamperProductDetail> products = [];
   Product? hamperProduct;
-
+  ProfitAllocation? allocations;
   @override
   void initState() {
     super.initState();
@@ -53,8 +55,8 @@ class _HamperViewPageState extends State<HamperViewPage> {
       },
       child: Scaffold(
         appBar: AppBar(
-          // title: Text(selectedHamper!.hamperCode),
-          title: const Text('Hamper'),
+          //  title: Text('Hamper : ${selectedHamper!.hamperCode}'),
+          title: Text('Hamper'),
           actions: [
             IconButton(
               icon: const Icon(Icons.shopping_basket_outlined),
@@ -72,6 +74,17 @@ class _HamperViewPageState extends State<HamperViewPage> {
           listener: (context, state) {
             if (state is HamperLoaded) {
               selectedHamper = state.hamper;
+
+              final profitAllocationId = selectedHamper?.profitAllocationId;
+              if (profitAllocationId != null) {
+                print(
+                    " Dispatching FetchProfitAllocations for ID: $profitAllocationId");
+                context
+                    .read<HamperBloc>()
+                    .add(FetchProfitAllocations(profitAllocationId));
+              }
+            } else if (state is AllocationLoaded) {
+              allocations = state.allocations;
             } else if (state is HamperProductLoaded) {
               products = state.hamperProductDetails;
             } else if (state is HamperAsProductLoaded) {
@@ -85,7 +98,7 @@ class _HamperViewPageState extends State<HamperViewPage> {
               ScaffoldMessenger.of(context).showSnackBar(
                 const SnackBar(
                     content:
-                        Text('Error loading hamper, please reload the page')),
+                        Text('Something went wrong, please reload the page')),
               );
             }
             if (selectedHamper != null &&
@@ -105,9 +118,10 @@ class _HamperViewPageState extends State<HamperViewPage> {
               }
               if (selectedHamper != null &&
                   products.isNotEmpty &&
-                  hamperProduct != null) {
-                return _buildHamperDetails(
-                    context, selectedHamper!, products, hamperProduct!);
+                  hamperProduct != null &&
+                  allocations != null) {
+                return _buildHamperDetails(context, selectedHamper!, products,
+                    hamperProduct!, allocations!);
               }
               return const FullScreenLoadingShimmer();
             },
@@ -191,55 +205,75 @@ class _HamperViewPageState extends State<HamperViewPage> {
     }
   }
 
-  Widget _buildHamperDetails(BuildContext context, Hamper hamper,
-      List<HamperProductDetail> products, Product hamperProduct) {
-    return SingleChildScrollView(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(hamper.hamperCode,
-                    style: Theme.of(context).textTheme.headlineMedium),
-                const SizedBox(height: 8),
-                Text("Type: ${hamper.type}"),
-                const SizedBox(height: 8),
-                Text("Hamper Value: ${hamper.value.toStringAsFixed(2)}"),
-                const SizedBox(height: 8),
-                Text(
-                    "Expiry date: ${hamper.expiryDate.toLocal().toString().split(' ')[0]}"),
-                const SizedBox(height: 10),
-                if (hamper.imgUrl != null && hamper.imgUrl!.isNotEmpty)
-                  // Image.network(
-                  //   hamper.imgUrl!,
-                  //   height: 150,
-                  //   width: double.infinity,
-                  //   fit: BoxFit.cover,
-                  //   errorBuilder: (context, error, stackTrace) {
-                  //     return _buildPlaceholderImage();
-                  //   },
-                  // )
-                  buildImageStack(
-                    hamper.imgUrl,
-                    hamper.gifUrl1,
-                    hamper.gifUrl2,
-                  )
-                else
-                  _buildPlaceholderImage(),
-              ],
+  Widget _buildHamperDetails(
+      BuildContext context,
+      Hamper hamper,
+      List<HamperProductDetail> products,
+      Product hamperProduct,
+      ProfitAllocation allocations) {
+    return DefaultTabController(
+      length: 2,
+      child: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(hamper.hamperCode,
+                      style: Theme.of(context).textTheme.headlineMedium),
+                  const SizedBox(height: 8),
+                  Text("Type: ${hamper.type}"),
+                  const SizedBox(height: 8),
+                  Text("Hamper Value: ${hamper.value.toStringAsFixed(2)}"),
+                  const SizedBox(height: 8),
+                  Text(
+                      "Expiry date: ${hamper.expiryDate.toLocal().toString().split(' ')[0]}"),
+                  const SizedBox(height: 10),
+                  if (hamper.imgUrl != null && hamper.imgUrl!.isNotEmpty)
+                    buildImageStack(
+                      hamper.imgUrl,
+                      hamper.gifUrl1,
+                      hamper.gifUrl2,
+                    )
+                  else
+                    _buildPlaceholderImage(),
+                ],
+              ),
             ),
-          ),
-          const Divider(),
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Text("Products",
-                style: Theme.of(context).textTheme.headlineMedium),
-          ),
-          _buildProductList(context, products),
-        ],
+            const Divider(),
+            Container(
+              color: Colors.grey[100],
+              child: TabBar(
+                labelColor: Colors.black,
+                indicatorColor: Theme.of(context).primaryColor,
+                tabs: const [
+                  Tab(text: "Products"),
+                  Tab(text: "Allocations"),
+                ],
+              ),
+            ),
+            SizedBox(
+              height: 400,
+              child: TabBarView(
+                children: [
+                  SingleChildScrollView(
+                    child: _buildProductList(context, products),
+                  ),
+                  SingleChildScrollView(
+                    child: _buildAllocationsView(
+                      context,
+                      allocations,
+                      hamper.value,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -248,6 +282,7 @@ class _HamperViewPageState extends State<HamperViewPage> {
       String? imgUrl, String? hamperGifUrl1, String? hamperGifUrl2) {
     return Container(
       width: double.infinity,
+      height: 180,
       child: Stack(
         children: [
           // Full Background Image
@@ -294,60 +329,6 @@ class _HamperViewPageState extends State<HamperViewPage> {
     );
   }
 
-  // Widget buildImageStack(
-  //     String? imgUrl, String? hamperGifUrl1, String? hamperGifUrl2) {
-  //   return SizedBox(
-  //     height: 180, // Ensures the Stack respects height constraints
-  //     width: double.infinity,
-  //     child: Stack(
-  //       children: [
-  //         if (imgUrl != null && imgUrl.isNotEmpty)
-  //           Positioned.fill(
-  //             child: Image.network(
-  //               imgUrl,
-  //               fit: BoxFit.cover,
-  //               errorBuilder: (context, error, stackTrace) {
-  //                 return Container(color: Colors.grey);
-  //               },
-  //             ),
-  //           )
-  //         else
-  //           Positioned.fill(child: Container(color: Colors.grey)),
-  //         if (hamperGifUrl1 != null && hamperGifUrl1.isNotEmpty)
-  //           Positioned(
-  //             top: 2,
-  //             left: 10,
-  //             child: Image.network(
-  //               hamperGifUrl1,
-  //               height: 40,
-  //               width: 90,
-  //               fit: BoxFit.contain,
-  //               errorBuilder: (context, error, stackTrace) {
-  //                 return Container();
-  //               },
-  //             ),
-  //           ),
-
-  //         // Bottom GIF - Adjusted to be closer to the bottom-right corner
-  //         if (hamperGifUrl2 != null && hamperGifUrl2.isNotEmpty)
-  //           Positioned(
-  //             bottom: 2,
-  //             right: 15,
-  //             child: Image.network(
-  //               hamperGifUrl2,
-  //               height: 70,
-  //               width: 130,
-  //               fit: BoxFit.contain,
-  //               errorBuilder: (context, error, stackTrace) {
-  //                 return Container();
-  //               },
-  //             ),
-  //           ),
-  //       ],
-  //     ),
-  //   );
-  // }
-
   Widget _buildProductList(
       BuildContext context, List<HamperProductDetail> products) {
     final sortedProducts = products
@@ -379,6 +360,16 @@ class _HamperViewPageState extends State<HamperViewPage> {
         Icons.image_not_supported_outlined,
         size: 100,
         color: Colors.grey,
+      ),
+    );
+  }
+
+  Widget _buildAllocationsView(
+      BuildContext context, ProfitAllocation allocation, double hamperValue) {
+    return SingleChildScrollView(
+      child: _AllocationItemCard(
+        allocation: allocation,
+        value: hamperValue,
       ),
     );
   }
@@ -419,7 +410,6 @@ class _ProductItemCard extends StatelessWidget {
                       style: Theme.of(context).textTheme.bodyMedium),
                   Text(
                       "Price: R${productDetail.salePrice.toStringAsFixed(2)}                       (${productDetail.quantity})"),
-                  // Text("Quantity: ${productDetail.quantity}"),
                   if (productDetail.isFree)
                     const Text(
                       "Free",
@@ -437,3 +427,88 @@ class _ProductItemCard extends StatelessWidget {
     );
   }
 }
+
+class _AllocationItemCard extends StatelessWidget {
+  final ProfitAllocation allocation;
+  final double value;
+
+  const _AllocationItemCard({required this.allocation, required this.value});
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+                "Income Allocation: R${((allocation.cia / 100) * value).floor()}"),
+            SizedBox(
+              height: 10,
+            ),
+            Text(
+                "Wealth Allocation: R${((allocation.cwa / 100) * value).floor()}"),
+            SizedBox(
+              height: 10,
+            ),
+            Text(
+                "EESUpreneur Income Allocation: R${((allocation.eia / 100) * value).floor()}"),
+            SizedBox(
+              height: 10,
+            ),
+            Text(
+                "Customer Referral Commission: R${((allocation.crc / 100) * value).floor()}"),
+            SizedBox(
+              height: 10,
+            ),
+            Text(
+                "Customer Social Allocation: R${((allocation.csa / 100) * value).floor()}"),
+            SizedBox(
+              height: 10,
+            ),
+            Text(
+                "Distribution Admin Allocation: R${((allocation.daa / 100) * value).floor()}"),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+// class _AllocationItemCard extends StatelessWidget {
+//   final ProfitAllocation allocation;
+//   final double value;
+
+//   const _AllocationItemCard({required this.allocation, required this.value});
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Column(
+//       children: [
+//         _buildSingleCard("Income Allocation", (allocation.cia / 100) * value),
+//         _buildSingleCard("Wealth Allocation", (allocation.cwa / 100) * value),
+//         _buildSingleCard(
+//             "EESUpreneur Income Allocation", (allocation.eia / 100) * value),
+//         _buildSingleCard(
+//             "Customer Referral Commission", (allocation.crc / 100) * value),
+//         _buildSingleCard(
+//             "Customer Social Allocation", (allocation.csa / 100) * value),
+//         _buildSingleCard(
+//             "Distribution Admin Allocation", (allocation.daa / 100) * value),
+//         // _buildSingleCard("CFV", (allocation.cfv / 100) * value),
+//       ],
+//     );
+//   }
+
+//   Widget _buildSingleCard(String label, double amount) {
+//     return Card(
+//       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+//       child: Padding(
+//         padding: const EdgeInsets.all(16.0),
+//         child: Text("$label: R${amount.floor()}"),
+//       ),
+//     );
+//   }
+// }

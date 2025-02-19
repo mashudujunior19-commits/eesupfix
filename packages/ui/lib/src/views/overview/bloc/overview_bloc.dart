@@ -68,6 +68,7 @@ import 'package:bloc/bloc.dart';
 import 'package:data/auth/models/user_role.dart';
 import 'package:data/shopping/models/category.dart';
 import 'package:data/shopping/models/hamper_banner.dart';
+import 'package:data/shopping/models/hamper_banner_details.dart';
 import 'package:data/shopping/models/product.dart';
 import 'package:data/shopping/repository/shopping_repository.dart';
 import 'package:data/utils/eesup_exception.dart';
@@ -86,8 +87,11 @@ class OverviewBloc extends Bloc<OverviewEvent, OverviewState> {
       late List<Product> popularProducts;
       late List<Product> essentialProducts;
 
-      late HamperBanner topBanner;
-      late HamperBanner bottomBanner;
+      // late HamperBanner topBanner;
+      // late HamperBanner bottomBanner;
+
+      late List<HamperBannerDetail> topBanner;
+      late List<HamperBannerDetail> bottomBanner;
 
       final cats = await _shoppingRepository.fetchCategories();
       cats.fold((ex) => emit(OverviewError(ex)), (c) => categories = c);
@@ -108,11 +112,13 @@ class OverviewBloc extends Bloc<OverviewEvent, OverviewState> {
       essential.fold(
           (ex) => emit(OverviewError(ex)), (p) => essentialProducts = p);
 
-      final top = await _shoppingRepository.fetchHamperBanner(3);
+      //final top = await _shoppingRepository.fetchHamperBanner(3);
+      final top = await _shoppingRepository.fetchHamperBannerDetails(3);
 
       top.fold((ex) => emit(OverviewError(ex)), (d) => topBanner = d);
 
-      final bottom = await _shoppingRepository.fetchHamperBanner(3);
+      // final bottom = await _shoppingRepository.fetchHamperBanner(3);
+      final bottom = await _shoppingRepository.fetchHamperBannerDetails(3);
       bottom.fold((ex) => emit(OverviewError(ex)), (d) => bottomBanner = d);
 
       emit(

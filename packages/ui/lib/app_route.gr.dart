@@ -758,6 +758,9 @@ class HamperImageStack extends _i48.PageRouteInfo<HamperImageStackArgs> {
   HamperImageStack({
     _i49.Key? key,
     required String? imgUrl,
+    String? hamperCode,
+    double? hamperPrice,
+    double? profitpercentage,
     String? hamperGifUrl1,
     String? hamperGifUrl2,
     List<_i48.PageRouteInfo>? children,
@@ -766,6 +769,9 @@ class HamperImageStack extends _i48.PageRouteInfo<HamperImageStackArgs> {
           args: HamperImageStackArgs(
             key: key,
             imgUrl: imgUrl,
+            hamperCode: hamperCode,
+            hamperPrice: hamperPrice,
+            profitpercentage: profitpercentage,
             hamperGifUrl1: hamperGifUrl1,
             hamperGifUrl2: hamperGifUrl2,
           ),
@@ -781,6 +787,9 @@ class HamperImageStack extends _i48.PageRouteInfo<HamperImageStackArgs> {
       return _i16.HamperImageStack(
         key: args.key,
         imgUrl: args.imgUrl,
+        hamperCode: args.hamperCode,
+        hamperPrice: args.hamperPrice,
+        profitpercentage: args.profitpercentage,
         hamperGifUrl1: args.hamperGifUrl1,
         hamperGifUrl2: args.hamperGifUrl2,
       );
@@ -792,6 +801,9 @@ class HamperImageStackArgs {
   const HamperImageStackArgs({
     this.key,
     required this.imgUrl,
+    this.hamperCode,
+    this.hamperPrice,
+    this.profitpercentage,
     this.hamperGifUrl1,
     this.hamperGifUrl2,
   });
@@ -800,13 +812,19 @@ class HamperImageStackArgs {
 
   final String? imgUrl;
 
+  final String? hamperCode;
+
+  final double? hamperPrice;
+
+  final double? profitpercentage;
+
   final String? hamperGifUrl1;
 
   final String? hamperGifUrl2;
 
   @override
   String toString() {
-    return 'HamperImageStackArgs{key: $key, imgUrl: $imgUrl, hamperGifUrl1: $hamperGifUrl1, hamperGifUrl2: $hamperGifUrl2}';
+    return 'HamperImageStackArgs{key: $key, imgUrl: $imgUrl, hamperCode: $hamperCode, hamperPrice: $hamperPrice, profitpercentage: $profitpercentage, hamperGifUrl1: $hamperGifUrl1, hamperGifUrl2: $hamperGifUrl2}';
   }
 }
 

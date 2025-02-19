@@ -8,7 +8,9 @@ import 'package:data/shopping/models/category.dart';
 import 'package:data/shopping/models/product.dart';
 import 'package:data/shopping/models/product_request.dart';
 
+import '../../finance/models/profit_allocation.dart';
 import '../models/hamper_banner.dart';
+import '../models/hamper_banner_details.dart';
 
 class ShoppingRepository {
   final ShoppingDataSource shoppingDataSrc;
@@ -122,6 +124,15 @@ class ShoppingRepository {
     return result.fold((ex) => Left(ex), (ads) => Right(ads));
   }
 
+  Future<Either<EESUpException, List<HamperBannerDetail>>>
+      fetchHamperBannerDetails(int id) async {
+    final result = await authRepository.executeFutureWithAuth((_) async {
+      final ads = await shoppingDataSrc.fetchHamperBannerDetails(id);
+      return ads;
+    });
+    return result.fold((ex) => Left(ex), (ads) => Right(ads));
+  }
+
   Future<Either<EESUpException, bool>> createRequest(
       ProductRequest request) async {
     final result = await authRepository.executeFutureWithAuth((id) async {
@@ -147,5 +158,14 @@ class ShoppingRepository {
       return success;
     });
     return result.fold((ex) => Left(ex), (success) => Right(success));
+  }
+
+  Future<Either<EESUpException, ProfitAllocation>> fetchProfitAllocationById(
+      int id) async {
+    final result = await authRepository.executeFutureWithAuth((_) async {
+      final ads = await shoppingDataSrc.fetchProfitAllocationById(id);
+      return ads;
+    });
+    return result.fold((ex) => Left(ex), (ads) => Right(ads));
   }
 }

@@ -43,8 +43,8 @@ final class OverviewContentsLoaded extends OverviewState {
   final List<Product> popularProducts;
   final List<Product> essentialProducts;
 
-  final HamperBanner topBanner;
-  final HamperBanner bottomBanner;
+  final List<HamperBannerDetail> topBanner;
+  final List<HamperBannerDetail> bottomBanner;
 
   OverviewContentsLoaded({
     required this.categories,

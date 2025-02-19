@@ -1,4 +1,6 @@
+// ignore_for_file: unnecessary_null_comparison
 import 'package:data/auth/models/user_role.dart';
+import 'package:data/finance/models/profit_allocation.dart';
 import 'package:data/shopping/data_source/shopping_data_source.dart';
 import 'package:data/shopping/models/ad_banner.dart';
 import 'package:data/shopping/models/basket.dart';
@@ -11,6 +13,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../models/hamper.dart';
 import '../models/hamper_banner.dart';
+import '../models/hamper_banner_details.dart';
 import '../models/hamper_product.dart';
 import '../models/mapped_product_hamper.dart';
 
@@ -236,6 +239,37 @@ class ShoppingSupabaseImp implements ShoppingDataSource {
   }
 
   @override
+  Future<List<HamperBannerDetail>> fetchHamperBannerDetails(int id) async {
+    try {
+      final response = await _client
+          .schema('engagements')
+          .rpc('get_hamper_banner_details', params: {'banner_id': id});
+
+      if (response != null && response is List) {
+        final List<dynamic> rawHamperData = response;
+
+        if (rawHamperData.isNotEmpty) {
+          List<HamperBannerDetail> hampers = rawHamperData.map((item) {
+            if (item is Map<String, dynamic>) {
+              return HamperBannerDetail.fromJson(item);
+            } else {
+              throw Exception('Invalid item format in hamper details');
+            }
+          }).toList();
+
+          return hampers;
+        } else {
+          throw Exception('Hamper banner details are empty');
+        }
+      } else {
+        throw Exception('Unexpected response structure: $response');
+      }
+    } catch (e) {
+      throw Exception('An error occurred while fetching hamper banner details');
+    }
+  }
+
+  @override
   Future<bool> createProductRequest(ProductRequest request) async {
     try {
       await _client
@@ -338,7 +372,7 @@ class ShoppingSupabaseImp implements ShoppingDataSource {
           .from('hamper')
           .select('*')
           .eq('is_final', true)
-          .gte('expiry_date', DateTime.now().toIso8601String())
+          // .gte('expiry_date', DateTime.now().toIso8601String())
           .order('created_at', ascending: false);
 
       final List data = response as List;
@@ -534,6 +568,25 @@ class ShoppingSupabaseImp implements ShoppingDataSource {
       }
     } catch (e) {
       return null;
+    }
+  }
+
+  @override
+  Future<ProfitAllocation> fetchProfitAllocationById(int id) async {
+    try {
+      final response = await _client
+          .schema('finances')
+          .from('profit_allocation')
+          .select('*')
+          .eq('id', id)
+          .single();
+
+      final Map<String, dynamic> data = response;
+
+      final profitAllocation = ProfitAllocation.fromJson(data);
+      return profitAllocation;
+    } catch (e) {
+      throw Exception('Failed to fetch profit Allocation: $e');
     }
   }
 }

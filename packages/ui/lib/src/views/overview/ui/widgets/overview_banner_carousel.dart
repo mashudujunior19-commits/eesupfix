@@ -109,11 +109,65 @@
 // }
 
 import 'package:data/shopping/models/hamper_banner.dart';
+import 'package:data/shopping/models/hamper_banner_details.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_carousel_widget/flutter_carousel_widget.dart';
 import 'package:shimmer/shimmer.dart';
 
 import '../../../shop/hampers/ui/hamper_stack.dart';
+
+// class OverviewBannerCarousel extends StatelessWidget {
+//   const OverviewBannerCarousel({
+//     super.key,
+//     required this.interval,
+//     this.hamperBanner,
+//     required this.onBannerTap,
+//   });
+
+//   final Duration interval;
+//   final List<HamperBannerDetail?>? hamperBanner;
+//   final Function(String url) onBannerTap;
+
+//   @override
+//   Widget build(BuildContext context) {
+//     if (hamperBanner == null) {
+//       return const Center(child: CircularProgressIndicator());
+//     }
+
+//     return FlutterCarousel(
+//       options: CarouselOptions(
+//         height: 270,
+//         showIndicator: false,
+//         autoPlay: true,
+//         enableInfiniteScroll: true,
+//         autoPlayCurve: Curves.fastOutSlowIn,
+//         autoPlayInterval: interval,
+//         autoPlayAnimationDuration: const Duration(seconds: 1),
+//         pauseAutoPlayOnTouch: true,
+//         pauseAutoPlayOnManualNavigate: true,
+//         slideIndicator: SequentialFillIndicator(),
+//       ),
+//       items: hamperBanner!.content.map((hamperContent) {
+//         print('Rendering hamper content: $hamperContent');
+//         return GestureDetector(
+//           onTap: () {
+//             onBannerTap(hamperContent.baseImage);
+//           },
+//           child: Padding(
+//             padding: const EdgeInsets.only(right: 5),
+//             child: HamperImageStack(
+//               imgUrl: hamperContent.baseImage,
+//               hamperGifUrl1: hamperContent.gif1,
+//               hamperGifUrl2: hamperContent.gif2,
+//               hamperCode: hamperBanner!.hamperCode,
+//               hamperPrice: hamperBanner!.value,
+//             ),
+//           ),
+//         );
+//       }).toList(),
+//     );
+//   }
+// }
 
 class OverviewBannerCarousel extends StatelessWidget {
   const OverviewBannerCarousel({
@@ -124,11 +178,15 @@ class OverviewBannerCarousel extends StatelessWidget {
   });
 
   final Duration interval;
-  final HamperBanner? hamperBanner;
+  final List<HamperBannerDetail>? hamperBanner;
   final Function(String url) onBannerTap;
 
   @override
   Widget build(BuildContext context) {
+    if (hamperBanner == null || hamperBanner!.isEmpty) {
+      return const Center(child: CircularProgressIndicator());
+    }
+
     return FlutterCarousel(
       options: CarouselOptions(
         height: 270,
@@ -142,20 +200,21 @@ class OverviewBannerCarousel extends StatelessWidget {
         pauseAutoPlayOnManualNavigate: true,
         slideIndicator: SequentialFillIndicator(),
       ),
-      items: hamperBanner!.content.map((hamperBanner) {
+      items: hamperBanner!.map((hamperContent) {
+        print('Rendering hamper content: $hamperContent');
         return GestureDetector(
           onTap: () {
-            onBannerTap(hamperBanner.baseImage);
-            // context
-            //     .read<HamperBloc>()
-            //     .add(FetchHamperProductsByImageUrl(hamperBanner.baseImage));
+            onBannerTap(hamperContent.baseImage);
           },
           child: Padding(
             padding: const EdgeInsets.only(right: 5),
             child: HamperImageStack(
-              imgUrl: hamperBanner.baseImage,
-              hamperGifUrl1: hamperBanner.gif1,
-              hamperGifUrl2: hamperBanner.gif2,
+              imgUrl: hamperContent.baseImage,
+              hamperGifUrl1: hamperContent.gif1,
+              hamperGifUrl2: hamperContent.gif2,
+              hamperCode: hamperContent.code,
+              hamperPrice: hamperContent.value,
+              profitpercentage: hamperContent.profitPercentage,
             ),
           ),
         );

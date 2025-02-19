@@ -1,3 +1,4 @@
+// ignore_for_file: unnecessary_null_comparison
 import 'package:auto_route/auto_route.dart';
 import 'package:data/auth/models/user_role.dart';
 import 'package:data/shopping/repository/shopping_repository.dart';
@@ -213,9 +214,7 @@ class OverviewTab extends StatelessWidget {
                 leading: const NotificationButton(),
                 title: Image(
                   width: context.environment.app == AppType.eesup ? 80 : 45,
-                  image: const AssetImage(
-                    'assets/images/logo.png'
-                  ),
+                  image: const AssetImage('assets/images/logo.png'),
                 ),
                 actions: const [CartButton()],
                 flexibleSpace: const SearchProductsButton(),

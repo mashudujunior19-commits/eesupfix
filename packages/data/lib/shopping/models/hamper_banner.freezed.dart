@@ -24,8 +24,12 @@ mixin _$HamperBanner {
   @HamperContentConverter()
   List<HamperContent> get content => throw _privateConstructorUsedError;
 
+  /// Serializes this HamperBanner to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of HamperBanner
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $HamperBannerCopyWith<HamperBanner> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -49,6 +53,8 @@ class _$HamperBannerCopyWithImpl<$Res, $Val extends HamperBanner>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of HamperBanner
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -87,6 +93,8 @@ class __$$HamperBannerImplCopyWithImpl<$Res>
       _$HamperBannerImpl _value, $Res Function(_$HamperBannerImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of HamperBanner
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -142,12 +150,14 @@ class _$HamperBannerImpl implements _HamperBanner {
             const DeepCollectionEquality().equals(other._content, _content));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(
       runtimeType, id, const DeepCollectionEquality().hash(_content));
 
-  @JsonKey(ignore: true)
+  /// Create a copy of HamperBanner
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$HamperBannerImplCopyWith<_$HamperBannerImpl> get copyWith =>
@@ -175,8 +185,11 @@ abstract class _HamperBanner implements HamperBanner {
   @override
   @HamperContentConverter()
   List<HamperContent> get content;
+
+  /// Create a copy of HamperBanner
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$HamperBannerImplCopyWith<_$HamperBannerImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -195,8 +208,12 @@ mixin _$HamperContent {
   String get gif1 => throw _privateConstructorUsedError;
   String get gif2 => throw _privateConstructorUsedError;
 
+  /// Serializes this HamperContent to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of HamperContent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $HamperContentCopyWith<HamperContent> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -225,6 +242,8 @@ class _$HamperContentCopyWithImpl<$Res, $Val extends HamperContent>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of HamperContent
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -283,6 +302,8 @@ class __$$HamperContentImplCopyWithImpl<$Res>
       _$HamperContentImpl _value, $Res Function(_$HamperContentImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of HamperContent
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -362,12 +383,14 @@ class _$HamperContentImpl implements _HamperContent {
             (identical(other.gif2, gif2) || other.gif2 == gif2));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode =>
       Object.hash(runtimeType, type, orderNumber, baseImage, gif1, gif2);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of HamperContent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$HamperContentImplCopyWith<_$HamperContentImpl> get copyWith =>
@@ -404,8 +427,11 @@ abstract class _HamperContent implements HamperContent {
   String get gif1;
   @override
   String get gif2;
+
+  /// Create a copy of HamperContent
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$HamperContentImplCopyWith<_$HamperContentImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

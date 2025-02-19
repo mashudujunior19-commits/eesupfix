@@ -32,11 +32,12 @@ class HamperError extends HamperState {
 }
 
 class HamperNotFound extends HamperState {}
-// class HamperComparisonSuccess extends HamperState {
-//   final Hamper matchingHamper;
 
-//   HamperComparisonSuccess(this.matchingHamper);
-// }
+class AllocationLoaded extends HamperState {
+  final ProfitAllocation allocations;
+
+  AllocationLoaded(this.allocations);
+}
 
 // class HamperComparisonResultState extends HamperState {
 //   final Product? hamperProduct;

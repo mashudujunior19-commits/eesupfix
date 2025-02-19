@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import 'package:data/finance/models/profit_allocation.dart';
 import 'package:data/orders/models/order_product.dart';
 import 'package:data/shopping/models/hamper.dart';
 import 'package:data/shopping/models/product.dart';
@@ -110,6 +111,16 @@ class HamperBloc extends Bloc<HamperEvent, HamperState> {
       } catch (e) {
         emit(HamperError('Failed to fetch products: $e'));
       }
+    });
+    on<FetchProfitAllocations>((event, emit) async {
+      emit(HamperLoading());
+      final result =
+          await _repository.fetchProfitAllocationById(event.profitAllocationId);
+      result.fold(
+        (error) =>
+            emit(HamperError('Error fetching allocations: ${error.message}')),
+        (allocations) => emit(AllocationLoaded(allocations)),
+      );
     });
   }
 }
