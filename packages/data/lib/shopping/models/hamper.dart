@@ -17,6 +17,7 @@ class Hamper with _$Hamper {
     List<int>? productIds,
     @JsonKey(name: 'img_url') String? imgUrl,
     @JsonKey(name: 'hamper_gif_url1') String? gifUrl1,
+    @JsonKey(name: 'profit_allocation_id') int? profitAllocationId,
     @JsonKey(name: 'hamper_gif_url2') String? gifUrl2,
     @JsonKey(name: 'customer_type') String? customerType,
     bool? isFree,

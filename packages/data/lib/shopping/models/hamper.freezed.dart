@@ -34,6 +34,8 @@ mixin _$Hamper {
   String? get imgUrl => throw _privateConstructorUsedError;
   @JsonKey(name: 'hamper_gif_url1')
   String? get gifUrl1 => throw _privateConstructorUsedError;
+  @JsonKey(name: 'profit_allocation_id')
+  int? get profitAllocationId => throw _privateConstructorUsedError;
   @JsonKey(name: 'hamper_gif_url2')
   String? get gifUrl2 => throw _privateConstructorUsedError;
   @JsonKey(name: 'customer_type')
@@ -41,8 +43,12 @@ mixin _$Hamper {
   bool? get isFree => throw _privateConstructorUsedError;
   Map<int, int>? get quantity => throw _privateConstructorUsedError;
 
+  /// Serializes this Hamper to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of Hamper
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $HamperCopyWith<Hamper> get copyWith => throw _privateConstructorUsedError;
 }
 
@@ -61,6 +67,7 @@ abstract class $HamperCopyWith<$Res> {
       List<int>? productIds,
       @JsonKey(name: 'img_url') String? imgUrl,
       @JsonKey(name: 'hamper_gif_url1') String? gifUrl1,
+      @JsonKey(name: 'profit_allocation_id') int? profitAllocationId,
       @JsonKey(name: 'hamper_gif_url2') String? gifUrl2,
       @JsonKey(name: 'customer_type') String? customerType,
       bool? isFree,
@@ -77,6 +84,8 @@ class _$HamperCopyWithImpl<$Res, $Val extends Hamper>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of Hamper
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -89,6 +98,7 @@ class _$HamperCopyWithImpl<$Res, $Val extends Hamper>
     Object? productIds = freezed,
     Object? imgUrl = freezed,
     Object? gifUrl1 = freezed,
+    Object? profitAllocationId = freezed,
     Object? gifUrl2 = freezed,
     Object? customerType = freezed,
     Object? isFree = freezed,
@@ -131,6 +141,10 @@ class _$HamperCopyWithImpl<$Res, $Val extends Hamper>
           ? _value.gifUrl1
           : gifUrl1 // ignore: cast_nullable_to_non_nullable
               as String?,
+      profitAllocationId: freezed == profitAllocationId
+          ? _value.profitAllocationId
+          : profitAllocationId // ignore: cast_nullable_to_non_nullable
+              as int?,
       gifUrl2: freezed == gifUrl2
           ? _value.gifUrl2
           : gifUrl2 // ignore: cast_nullable_to_non_nullable
@@ -168,6 +182,7 @@ abstract class _$$HamperImplCopyWith<$Res> implements $HamperCopyWith<$Res> {
       List<int>? productIds,
       @JsonKey(name: 'img_url') String? imgUrl,
       @JsonKey(name: 'hamper_gif_url1') String? gifUrl1,
+      @JsonKey(name: 'profit_allocation_id') int? profitAllocationId,
       @JsonKey(name: 'hamper_gif_url2') String? gifUrl2,
       @JsonKey(name: 'customer_type') String? customerType,
       bool? isFree,
@@ -182,6 +197,8 @@ class __$$HamperImplCopyWithImpl<$Res>
       _$HamperImpl _value, $Res Function(_$HamperImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of Hamper
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -194,6 +211,7 @@ class __$$HamperImplCopyWithImpl<$Res>
     Object? productIds = freezed,
     Object? imgUrl = freezed,
     Object? gifUrl1 = freezed,
+    Object? profitAllocationId = freezed,
     Object? gifUrl2 = freezed,
     Object? customerType = freezed,
     Object? isFree = freezed,
@@ -236,6 +254,10 @@ class __$$HamperImplCopyWithImpl<$Res>
           ? _value.gifUrl1
           : gifUrl1 // ignore: cast_nullable_to_non_nullable
               as String?,
+      profitAllocationId: freezed == profitAllocationId
+          ? _value.profitAllocationId
+          : profitAllocationId // ignore: cast_nullable_to_non_nullable
+              as int?,
       gifUrl2: freezed == gifUrl2
           ? _value.gifUrl2
           : gifUrl2 // ignore: cast_nullable_to_non_nullable
@@ -269,6 +291,7 @@ class _$HamperImpl implements _Hamper {
       final List<int>? productIds,
       @JsonKey(name: 'img_url') this.imgUrl,
       @JsonKey(name: 'hamper_gif_url1') this.gifUrl1,
+      @JsonKey(name: 'profit_allocation_id') this.profitAllocationId,
       @JsonKey(name: 'hamper_gif_url2') this.gifUrl2,
       @JsonKey(name: 'customer_type') this.customerType,
       this.isFree,
@@ -311,6 +334,9 @@ class _$HamperImpl implements _Hamper {
   @JsonKey(name: 'hamper_gif_url1')
   final String? gifUrl1;
   @override
+  @JsonKey(name: 'profit_allocation_id')
+  final int? profitAllocationId;
+  @override
   @JsonKey(name: 'hamper_gif_url2')
   final String? gifUrl2;
   @override
@@ -330,7 +356,7 @@ class _$HamperImpl implements _Hamper {
 
   @override
   String toString() {
-    return 'Hamper(id: $id, hamperCode: $hamperCode, type: $type, value: $value, expiryDate: $expiryDate, isFinal: $isFinal, productIds: $productIds, imgUrl: $imgUrl, gifUrl1: $gifUrl1, gifUrl2: $gifUrl2, customerType: $customerType, isFree: $isFree, quantity: $quantity)';
+    return 'Hamper(id: $id, hamperCode: $hamperCode, type: $type, value: $value, expiryDate: $expiryDate, isFinal: $isFinal, productIds: $productIds, imgUrl: $imgUrl, gifUrl1: $gifUrl1, profitAllocationId: $profitAllocationId, gifUrl2: $gifUrl2, customerType: $customerType, isFree: $isFree, quantity: $quantity)';
   }
 
   @override
@@ -350,6 +376,8 @@ class _$HamperImpl implements _Hamper {
                 .equals(other._productIds, _productIds) &&
             (identical(other.imgUrl, imgUrl) || other.imgUrl == imgUrl) &&
             (identical(other.gifUrl1, gifUrl1) || other.gifUrl1 == gifUrl1) &&
+            (identical(other.profitAllocationId, profitAllocationId) ||
+                other.profitAllocationId == profitAllocationId) &&
             (identical(other.gifUrl2, gifUrl2) || other.gifUrl2 == gifUrl2) &&
             (identical(other.customerType, customerType) ||
                 other.customerType == customerType) &&
@@ -357,7 +385,7 @@ class _$HamperImpl implements _Hamper {
             const DeepCollectionEquality().equals(other._quantity, _quantity));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(
       runtimeType,
@@ -370,12 +398,15 @@ class _$HamperImpl implements _Hamper {
       const DeepCollectionEquality().hash(_productIds),
       imgUrl,
       gifUrl1,
+      profitAllocationId,
       gifUrl2,
       customerType,
       isFree,
       const DeepCollectionEquality().hash(_quantity));
 
-  @JsonKey(ignore: true)
+  /// Create a copy of Hamper
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$HamperImplCopyWith<_$HamperImpl> get copyWith =>
@@ -400,6 +431,7 @@ abstract class _Hamper implements Hamper {
       final List<int>? productIds,
       @JsonKey(name: 'img_url') final String? imgUrl,
       @JsonKey(name: 'hamper_gif_url1') final String? gifUrl1,
+      @JsonKey(name: 'profit_allocation_id') final int? profitAllocationId,
       @JsonKey(name: 'hamper_gif_url2') final String? gifUrl2,
       @JsonKey(name: 'customer_type') final String? customerType,
       final bool? isFree,
@@ -431,6 +463,9 @@ abstract class _Hamper implements Hamper {
   @JsonKey(name: 'hamper_gif_url1')
   String? get gifUrl1;
   @override
+  @JsonKey(name: 'profit_allocation_id')
+  int? get profitAllocationId;
+  @override
   @JsonKey(name: 'hamper_gif_url2')
   String? get gifUrl2;
   @override
@@ -440,8 +475,11 @@ abstract class _Hamper implements Hamper {
   bool? get isFree;
   @override
   Map<int, int>? get quantity;
+
+  /// Create a copy of Hamper
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$HamperImplCopyWith<_$HamperImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

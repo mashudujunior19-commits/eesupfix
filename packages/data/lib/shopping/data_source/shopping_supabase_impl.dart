@@ -1,5 +1,6 @@
 // ignore_for_file: unnecessary_null_comparison
 import 'package:data/auth/models/user_role.dart';
+import 'package:data/finance/models/profit_allocation.dart';
 import 'package:data/shopping/data_source/shopping_data_source.dart';
 import 'package:data/shopping/models/ad_banner.dart';
 import 'package:data/shopping/models/basket.dart';
@@ -371,7 +372,7 @@ class ShoppingSupabaseImp implements ShoppingDataSource {
           .from('hamper')
           .select('*')
           .eq('is_final', true)
-          .gte('expiry_date', DateTime.now().toIso8601String())
+          // .gte('expiry_date', DateTime.now().toIso8601String())
           .order('created_at', ascending: false);
 
       final List data = response as List;
@@ -567,6 +568,25 @@ class ShoppingSupabaseImp implements ShoppingDataSource {
       }
     } catch (e) {
       return null;
+    }
+  }
+
+  @override
+  Future<ProfitAllocation> fetchProfitAllocationById(int id) async {
+    try {
+      final response = await _client
+          .schema('finances')
+          .from('profit_allocation')
+          .select('*')
+          .eq('id', id)
+          .single();
+
+      final Map<String, dynamic> data = response;
+
+      final profitAllocation = ProfitAllocation.fromJson(data);
+      return profitAllocation;
+    } catch (e) {
+      throw Exception('Failed to fetch profit Allocation: $e');
     }
   }
 }

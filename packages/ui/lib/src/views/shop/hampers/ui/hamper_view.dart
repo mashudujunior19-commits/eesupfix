@@ -1,5 +1,6 @@
 // ignore_for_file: unnecessary_null_comparison
 import 'package:auto_route/auto_route.dart';
+import 'package:data/finance/models/profit_allocation.dart';
 import 'package:data/orders/models/order_product.dart';
 import 'package:data/shopping/models/mapped_product_hamper.dart';
 import 'package:data/shopping/models/product.dart';
@@ -32,7 +33,7 @@ class _HamperViewPageState extends State<HamperViewPage> {
   Hamper? selectedHamper;
   List<HamperProductDetail> products = [];
   Product? hamperProduct;
-
+  ProfitAllocation? allocations;
   @override
   void initState() {
     super.initState();
@@ -54,8 +55,8 @@ class _HamperViewPageState extends State<HamperViewPage> {
       },
       child: Scaffold(
         appBar: AppBar(
-          // title: Text(selectedHamper!.hamperCode),
-          title: const Text('Hamper'),
+          //  title: Text('Hamper : ${selectedHamper!.hamperCode}'),
+          title: Text('Hamper'),
           actions: [
             IconButton(
               icon: const Icon(Icons.shopping_basket_outlined),
@@ -73,6 +74,17 @@ class _HamperViewPageState extends State<HamperViewPage> {
           listener: (context, state) {
             if (state is HamperLoaded) {
               selectedHamper = state.hamper;
+
+              final profitAllocationId = selectedHamper?.profitAllocationId;
+              if (profitAllocationId != null) {
+                print(
+                    " Dispatching FetchProfitAllocations for ID: $profitAllocationId");
+                context
+                    .read<HamperBloc>()
+                    .add(FetchProfitAllocations(profitAllocationId));
+              }
+            } else if (state is AllocationLoaded) {
+              allocations = state.allocations;
             } else if (state is HamperProductLoaded) {
               products = state.hamperProductDetails;
             } else if (state is HamperAsProductLoaded) {
@@ -106,9 +118,10 @@ class _HamperViewPageState extends State<HamperViewPage> {
               }
               if (selectedHamper != null &&
                   products.isNotEmpty &&
-                  hamperProduct != null) {
-                return _buildHamperDetails(
-                    context, selectedHamper!, products, hamperProduct!);
+                  hamperProduct != null &&
+                  allocations != null) {
+                return _buildHamperDetails(context, selectedHamper!, products,
+                    hamperProduct!, allocations!);
               }
               return const FullScreenLoadingShimmer();
             },
@@ -192,8 +205,12 @@ class _HamperViewPageState extends State<HamperViewPage> {
     }
   }
 
-  Widget _buildHamperDetails(BuildContext context, Hamper hamper,
-      List<HamperProductDetail> products, Product hamperProduct) {
+  Widget _buildHamperDetails(
+      BuildContext context,
+      Hamper hamper,
+      List<HamperProductDetail> products,
+      Product hamperProduct,
+      ProfitAllocation allocations) {
     return DefaultTabController(
       length: 2,
       child: SingleChildScrollView(
@@ -246,7 +263,11 @@ class _HamperViewPageState extends State<HamperViewPage> {
                     child: _buildProductList(context, products),
                   ),
                   SingleChildScrollView(
-                    child: _buildProductList(context, products),
+                    child: _buildAllocationsView(
+                      context,
+                      allocations,
+                      hamper.value,
+                    ),
                   ),
                 ],
               ),
@@ -343,22 +364,15 @@ class _HamperViewPageState extends State<HamperViewPage> {
     );
   }
 
-  // Widget _buildAllocationsView(Product hamperProduct) {
-  //   return ListView.builder(
-  //     padding: const EdgeInsets.all(16),
-  //     itemCount: hamperProduct.allocations.length,
-  //     itemBuilder: (context, index) {
-  //       final allocation = hamperProduct.allocations[index];
-  //       return Card(
-  //         margin: const EdgeInsets.symmetric(vertical: 8),
-  //         child: ListTile(
-  //           title: Text(allocation.recipientName),
-  //           subtitle: Text("Allocated: ${allocation.quantity}"),
-  //         ),
-  //       );
-  //     },
-  //   );
-  // }
+  Widget _buildAllocationsView(
+      BuildContext context, ProfitAllocation allocation, double hamperValue) {
+    return SingleChildScrollView(
+      child: _AllocationItemCard(
+        allocation: allocation,
+        value: hamperValue,
+      ),
+    );
+  }
 }
 
 class _ProductItemCard extends StatelessWidget {
@@ -413,3 +427,88 @@ class _ProductItemCard extends StatelessWidget {
     );
   }
 }
+
+class _AllocationItemCard extends StatelessWidget {
+  final ProfitAllocation allocation;
+  final double value;
+
+  const _AllocationItemCard({required this.allocation, required this.value});
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+                "Income Allocation: R${((allocation.cia / 100) * value).floor()}"),
+            SizedBox(
+              height: 10,
+            ),
+            Text(
+                "Wealth Allocation: R${((allocation.cwa / 100) * value).floor()}"),
+            SizedBox(
+              height: 10,
+            ),
+            Text(
+                "EESUpreneur Income Allocation: R${((allocation.eia / 100) * value).floor()}"),
+            SizedBox(
+              height: 10,
+            ),
+            Text(
+                "Customer Referral Commission: R${((allocation.crc / 100) * value).floor()}"),
+            SizedBox(
+              height: 10,
+            ),
+            Text(
+                "Customer Social Allocation: R${((allocation.csa / 100) * value).floor()}"),
+            SizedBox(
+              height: 10,
+            ),
+            Text(
+                "Distribution Admin Allocation: R${((allocation.daa / 100) * value).floor()}"),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+// class _AllocationItemCard extends StatelessWidget {
+//   final ProfitAllocation allocation;
+//   final double value;
+
+//   const _AllocationItemCard({required this.allocation, required this.value});
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Column(
+//       children: [
+//         _buildSingleCard("Income Allocation", (allocation.cia / 100) * value),
+//         _buildSingleCard("Wealth Allocation", (allocation.cwa / 100) * value),
+//         _buildSingleCard(
+//             "EESUpreneur Income Allocation", (allocation.eia / 100) * value),
+//         _buildSingleCard(
+//             "Customer Referral Commission", (allocation.crc / 100) * value),
+//         _buildSingleCard(
+//             "Customer Social Allocation", (allocation.csa / 100) * value),
+//         _buildSingleCard(
+//             "Distribution Admin Allocation", (allocation.daa / 100) * value),
+//         // _buildSingleCard("CFV", (allocation.cfv / 100) * value),
+//       ],
+//     );
+//   }
+
+//   Widget _buildSingleCard(String label, double amount) {
+//     return Card(
+//       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+//       child: Padding(
+//         padding: const EdgeInsets.all(16.0),
+//         child: Text("$label: R${amount.floor()}"),
+//       ),
+//     );
+//   }
+// }
