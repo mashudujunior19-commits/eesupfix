@@ -14,17 +14,18 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
+HamperBanner _$HamperBannerFromJson(Map<String, dynamic> json) {
+  return _HamperBanner.fromJson(json);
+}
+
 /// @nodoc
 mixin _$HamperBanner {
   int get id => throw _privateConstructorUsedError;
   @HamperContentConverter()
   List<HamperContent> get content => throw _privateConstructorUsedError;
-  String get hamperCode => throw _privateConstructorUsedError;
-  @JsonKey(name: 'profit_percentage')
-  double get profitPercentage => throw _privateConstructorUsedError;
-  double get value => throw _privateConstructorUsedError;
-  @JsonKey(name: 'profit_allocation_id')
-  int get profitAllocationId => throw _privateConstructorUsedError;
+
+  /// Serializes this HamperBanner to a JSON map.
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
 
   /// Create a copy of HamperBanner
   /// with the given fields replaced by the non-null parameter values.
@@ -39,13 +40,7 @@ abstract class $HamperBannerCopyWith<$Res> {
           HamperBanner value, $Res Function(HamperBanner) then) =
       _$HamperBannerCopyWithImpl<$Res, HamperBanner>;
   @useResult
-  $Res call(
-      {int id,
-      @HamperContentConverter() List<HamperContent> content,
-      String hamperCode,
-      @JsonKey(name: 'profit_percentage') double profitPercentage,
-      double value,
-      @JsonKey(name: 'profit_allocation_id') int profitAllocationId});
+  $Res call({int id, @HamperContentConverter() List<HamperContent> content});
 }
 
 /// @nodoc
@@ -65,10 +60,6 @@ class _$HamperBannerCopyWithImpl<$Res, $Val extends HamperBanner>
   $Res call({
     Object? id = null,
     Object? content = null,
-    Object? hamperCode = null,
-    Object? profitPercentage = null,
-    Object? value = null,
-    Object? profitAllocationId = null,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -79,22 +70,6 @@ class _$HamperBannerCopyWithImpl<$Res, $Val extends HamperBanner>
           ? _value.content
           : content // ignore: cast_nullable_to_non_nullable
               as List<HamperContent>,
-      hamperCode: null == hamperCode
-          ? _value.hamperCode
-          : hamperCode // ignore: cast_nullable_to_non_nullable
-              as String,
-      profitPercentage: null == profitPercentage
-          ? _value.profitPercentage
-          : profitPercentage // ignore: cast_nullable_to_non_nullable
-              as double,
-      value: null == value
-          ? _value.value
-          : value // ignore: cast_nullable_to_non_nullable
-              as double,
-      profitAllocationId: null == profitAllocationId
-          ? _value.profitAllocationId
-          : profitAllocationId // ignore: cast_nullable_to_non_nullable
-              as int,
     ) as $Val);
   }
 }
@@ -107,13 +82,7 @@ abstract class _$$HamperBannerImplCopyWith<$Res>
       __$$HamperBannerImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call(
-      {int id,
-      @HamperContentConverter() List<HamperContent> content,
-      String hamperCode,
-      @JsonKey(name: 'profit_percentage') double profitPercentage,
-      double value,
-      @JsonKey(name: 'profit_allocation_id') int profitAllocationId});
+  $Res call({int id, @HamperContentConverter() List<HamperContent> content});
 }
 
 /// @nodoc
@@ -131,10 +100,6 @@ class __$$HamperBannerImplCopyWithImpl<$Res>
   $Res call({
     Object? id = null,
     Object? content = null,
-    Object? hamperCode = null,
-    Object? profitPercentage = null,
-    Object? value = null,
-    Object? profitAllocationId = null,
   }) {
     return _then(_$HamperBannerImpl(
       id: null == id
@@ -145,37 +110,20 @@ class __$$HamperBannerImplCopyWithImpl<$Res>
           ? _value._content
           : content // ignore: cast_nullable_to_non_nullable
               as List<HamperContent>,
-      hamperCode: null == hamperCode
-          ? _value.hamperCode
-          : hamperCode // ignore: cast_nullable_to_non_nullable
-              as String,
-      profitPercentage: null == profitPercentage
-          ? _value.profitPercentage
-          : profitPercentage // ignore: cast_nullable_to_non_nullable
-              as double,
-      value: null == value
-          ? _value.value
-          : value // ignore: cast_nullable_to_non_nullable
-              as double,
-      profitAllocationId: null == profitAllocationId
-          ? _value.profitAllocationId
-          : profitAllocationId // ignore: cast_nullable_to_non_nullable
-              as int,
     ));
   }
 }
 
 /// @nodoc
-
+@JsonSerializable()
 class _$HamperBannerImpl implements _HamperBanner {
   const _$HamperBannerImpl(
       {required this.id,
-      @HamperContentConverter() required final List<HamperContent> content,
-      required this.hamperCode,
-      @JsonKey(name: 'profit_percentage') required this.profitPercentage,
-      required this.value,
-      @JsonKey(name: 'profit_allocation_id') required this.profitAllocationId})
+      @HamperContentConverter() required final List<HamperContent> content})
       : _content = content;
+
+  factory _$HamperBannerImpl.fromJson(Map<String, dynamic> json) =>
+      _$$HamperBannerImplFromJson(json);
 
   @override
   final int id;
@@ -189,19 +137,8 @@ class _$HamperBannerImpl implements _HamperBanner {
   }
 
   @override
-  final String hamperCode;
-  @override
-  @JsonKey(name: 'profit_percentage')
-  final double profitPercentage;
-  @override
-  final double value;
-  @override
-  @JsonKey(name: 'profit_allocation_id')
-  final int profitAllocationId;
-
-  @override
   String toString() {
-    return 'HamperBanner(id: $id, content: $content, hamperCode: $hamperCode, profitPercentage: $profitPercentage, value: $value, profitAllocationId: $profitAllocationId)';
+    return 'HamperBanner(id: $id, content: $content)';
   }
 
   @override
@@ -210,25 +147,13 @@ class _$HamperBannerImpl implements _HamperBanner {
         (other.runtimeType == runtimeType &&
             other is _$HamperBannerImpl &&
             (identical(other.id, id) || other.id == id) &&
-            const DeepCollectionEquality().equals(other._content, _content) &&
-            (identical(other.hamperCode, hamperCode) ||
-                other.hamperCode == hamperCode) &&
-            (identical(other.profitPercentage, profitPercentage) ||
-                other.profitPercentage == profitPercentage) &&
-            (identical(other.value, value) || other.value == value) &&
-            (identical(other.profitAllocationId, profitAllocationId) ||
-                other.profitAllocationId == profitAllocationId));
+            const DeepCollectionEquality().equals(other._content, _content));
   }
 
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(
-      runtimeType,
-      id,
-      const DeepCollectionEquality().hash(_content),
-      hamperCode,
-      profitPercentage,
-      value,
-      profitAllocationId);
+      runtimeType, id, const DeepCollectionEquality().hash(_content));
 
   /// Create a copy of HamperBanner
   /// with the given fields replaced by the non-null parameter values.
@@ -237,34 +162,29 @@ class _$HamperBannerImpl implements _HamperBanner {
   @pragma('vm:prefer-inline')
   _$$HamperBannerImplCopyWith<_$HamperBannerImpl> get copyWith =>
       __$$HamperBannerImplCopyWithImpl<_$HamperBannerImpl>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$HamperBannerImplToJson(
+      this,
+    );
+  }
 }
 
 abstract class _HamperBanner implements HamperBanner {
   const factory _HamperBanner(
       {required final int id,
-      @HamperContentConverter() required final List<HamperContent> content,
-      required final String hamperCode,
-      @JsonKey(name: 'profit_percentage')
-      required final double profitPercentage,
-      required final double value,
-      @JsonKey(name: 'profit_allocation_id')
-      required final int profitAllocationId}) = _$HamperBannerImpl;
+      @HamperContentConverter()
+      required final List<HamperContent> content}) = _$HamperBannerImpl;
+
+  factory _HamperBanner.fromJson(Map<String, dynamic> json) =
+      _$HamperBannerImpl.fromJson;
 
   @override
   int get id;
   @override
   @HamperContentConverter()
   List<HamperContent> get content;
-  @override
-  String get hamperCode;
-  @override
-  @JsonKey(name: 'profit_percentage')
-  double get profitPercentage;
-  @override
-  double get value;
-  @override
-  @JsonKey(name: 'profit_allocation_id')
-  int get profitAllocationId;
 
   /// Create a copy of HamperBanner
   /// with the given fields replaced by the non-null parameter values.
@@ -280,11 +200,13 @@ HamperContent _$HamperContentFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$HamperContent {
+  String get type => throw _privateConstructorUsedError;
+  @JsonKey(name: 'order_number')
   int get orderNumber => throw _privateConstructorUsedError;
+  @JsonKey(name: 'base_image')
   String get baseImage => throw _privateConstructorUsedError;
   String get gif1 => throw _privateConstructorUsedError;
   String get gif2 => throw _privateConstructorUsedError;
-  String get type => throw _privateConstructorUsedError;
 
   /// Serializes this HamperContent to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -303,11 +225,11 @@ abstract class $HamperContentCopyWith<$Res> {
       _$HamperContentCopyWithImpl<$Res, HamperContent>;
   @useResult
   $Res call(
-      {int orderNumber,
-      String baseImage,
+      {String type,
+      @JsonKey(name: 'order_number') int orderNumber,
+      @JsonKey(name: 'base_image') String baseImage,
       String gif1,
-      String gif2,
-      String type});
+      String gif2});
 }
 
 /// @nodoc
@@ -325,13 +247,17 @@ class _$HamperContentCopyWithImpl<$Res, $Val extends HamperContent>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? type = null,
     Object? orderNumber = null,
     Object? baseImage = null,
     Object? gif1 = null,
     Object? gif2 = null,
-    Object? type = null,
   }) {
     return _then(_value.copyWith(
+      type: null == type
+          ? _value.type
+          : type // ignore: cast_nullable_to_non_nullable
+              as String,
       orderNumber: null == orderNumber
           ? _value.orderNumber
           : orderNumber // ignore: cast_nullable_to_non_nullable
@@ -348,10 +274,6 @@ class _$HamperContentCopyWithImpl<$Res, $Val extends HamperContent>
           ? _value.gif2
           : gif2 // ignore: cast_nullable_to_non_nullable
               as String,
-      type: null == type
-          ? _value.type
-          : type // ignore: cast_nullable_to_non_nullable
-              as String,
     ) as $Val);
   }
 }
@@ -365,11 +287,11 @@ abstract class _$$HamperContentImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {int orderNumber,
-      String baseImage,
+      {String type,
+      @JsonKey(name: 'order_number') int orderNumber,
+      @JsonKey(name: 'base_image') String baseImage,
       String gif1,
-      String gif2,
-      String type});
+      String gif2});
 }
 
 /// @nodoc
@@ -385,13 +307,17 @@ class __$$HamperContentImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? type = null,
     Object? orderNumber = null,
     Object? baseImage = null,
     Object? gif1 = null,
     Object? gif2 = null,
-    Object? type = null,
   }) {
     return _then(_$HamperContentImpl(
+      type: null == type
+          ? _value.type
+          : type // ignore: cast_nullable_to_non_nullable
+              as String,
       orderNumber: null == orderNumber
           ? _value.orderNumber
           : orderNumber // ignore: cast_nullable_to_non_nullable
@@ -408,10 +334,6 @@ class __$$HamperContentImplCopyWithImpl<$Res>
           ? _value.gif2
           : gif2 // ignore: cast_nullable_to_non_nullable
               as String,
-      type: null == type
-          ? _value.type
-          : type // ignore: cast_nullable_to_non_nullable
-              as String,
     ));
   }
 }
@@ -420,29 +342,31 @@ class __$$HamperContentImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$HamperContentImpl implements _HamperContent {
   const _$HamperContentImpl(
-      {required this.orderNumber,
-      required this.baseImage,
+      {required this.type,
+      @JsonKey(name: 'order_number') required this.orderNumber,
+      @JsonKey(name: 'base_image') required this.baseImage,
       required this.gif1,
-      required this.gif2,
-      required this.type});
+      required this.gif2});
 
   factory _$HamperContentImpl.fromJson(Map<String, dynamic> json) =>
       _$$HamperContentImplFromJson(json);
 
   @override
+  final String type;
+  @override
+  @JsonKey(name: 'order_number')
   final int orderNumber;
   @override
+  @JsonKey(name: 'base_image')
   final String baseImage;
   @override
   final String gif1;
   @override
   final String gif2;
-  @override
-  final String type;
 
   @override
   String toString() {
-    return 'HamperContent(orderNumber: $orderNumber, baseImage: $baseImage, gif1: $gif1, gif2: $gif2, type: $type)';
+    return 'HamperContent(type: $type, orderNumber: $orderNumber, baseImage: $baseImage, gif1: $gif1, gif2: $gif2)';
   }
 
   @override
@@ -450,19 +374,19 @@ class _$HamperContentImpl implements _HamperContent {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$HamperContentImpl &&
+            (identical(other.type, type) || other.type == type) &&
             (identical(other.orderNumber, orderNumber) ||
                 other.orderNumber == orderNumber) &&
             (identical(other.baseImage, baseImage) ||
                 other.baseImage == baseImage) &&
             (identical(other.gif1, gif1) || other.gif1 == gif1) &&
-            (identical(other.gif2, gif2) || other.gif2 == gif2) &&
-            (identical(other.type, type) || other.type == type));
+            (identical(other.gif2, gif2) || other.gif2 == gif2));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode =>
-      Object.hash(runtimeType, orderNumber, baseImage, gif1, gif2, type);
+      Object.hash(runtimeType, type, orderNumber, baseImage, gif1, gif2);
 
   /// Create a copy of HamperContent
   /// with the given fields replaced by the non-null parameter values.
@@ -482,25 +406,27 @@ class _$HamperContentImpl implements _HamperContent {
 
 abstract class _HamperContent implements HamperContent {
   const factory _HamperContent(
-      {required final int orderNumber,
-      required final String baseImage,
+      {required final String type,
+      @JsonKey(name: 'order_number') required final int orderNumber,
+      @JsonKey(name: 'base_image') required final String baseImage,
       required final String gif1,
-      required final String gif2,
-      required final String type}) = _$HamperContentImpl;
+      required final String gif2}) = _$HamperContentImpl;
 
   factory _HamperContent.fromJson(Map<String, dynamic> json) =
       _$HamperContentImpl.fromJson;
 
   @override
+  String get type;
+  @override
+  @JsonKey(name: 'order_number')
   int get orderNumber;
   @override
+  @JsonKey(name: 'base_image')
   String get baseImage;
   @override
   String get gif1;
   @override
   String get gif2;
-  @override
-  String get type;
 
   /// Create a copy of HamperContent
   /// with the given fields replaced by the non-null parameter values.

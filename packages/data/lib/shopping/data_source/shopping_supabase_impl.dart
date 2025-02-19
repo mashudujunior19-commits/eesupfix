@@ -12,6 +12,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../models/hamper.dart';
 import '../models/hamper_banner.dart';
+import '../models/hamper_banner_details.dart';
 import '../models/hamper_product.dart';
 import '../models/mapped_product_hamper.dart';
 
@@ -225,88 +226,46 @@ class ShoppingSupabaseImp implements ShoppingDataSource {
     return AdBanner.fromJson(response);
   }
 
-  // @override
-  // Future<HamperBanner> fetchHamperBanner(int id) async {
-  //   final response = await _client
-  //       .schema('engagements')
-  //       .from('banner')
-  //       .select()
-  //       .eq('id', id)
-  //       .single();
-  //   return HamperBanner.fromJson(response);
-  // }
-  // @override
-  // Future<HamperBanner> fetchHamperBanner(int id) async {
-  //   final response = await _client
-  //       .schema('engagements')
-  //       .rpc('get_hamper_banner_details', params: {'banner_id': id}).single();
-  //   print('raw res : $response');
-  //   return HamperBanner.fromJson(response);
-  // }
   @override
   Future<HamperBanner> fetchHamperBanner(int id) async {
-    // Fetch banner content
-    final contentResponse = await _client
+    final response = await _client
         .schema('engagements')
         .from('banner')
         .select()
         .eq('id', id)
         .single();
+    return HamperBanner.fromJson(response);
+  }
 
-    print("Fetched contentResponse: $contentResponse");
+  @override
+  Future<List<HamperBannerDetail>> fetchHamperBannerDetails(int id) async {
+    try {
+      final response = await _client
+          .schema('engagements')
+          .rpc('get_hamper_banner_details', params: {'banner_id': id});
 
-    final baseImage = contentResponse['base_image'];
+      if (response != null && response is List) {
+        final List<dynamic> rawHamperData = response;
 
-    // Check if base_image is available, if not, we won't query the hamper table
-    if (baseImage == null || baseImage.isEmpty) {
-      print("base_image is null or empty, using content details only");
+        if (rawHamperData.isNotEmpty) {
+          List<HamperBannerDetail> hampers = rawHamperData.map((item) {
+            if (item is Map<String, dynamic>) {
+              return HamperBannerDetail.fromJson(item);
+            } else {
+              throw Exception('Invalid item format in hamper details');
+            }
+          }).toList();
 
-      // Return HamperBanner using only contentResponse
-      final content = (contentResponse['content'] as List<dynamic>)
-          .map((e) => HamperContent.fromJson(e as Map<String, dynamic>))
-          .toList();
-
-      return HamperBanner(
-        id: contentResponse['id'],
-        content: content,
-        hamperCode: contentResponse['hamper_code'] ??
-            '', // Assuming 'hamper_code' is part of the contentResponse
-        profitPercentage: 0.0, // Default or you can set another logic here
-        value: 0.0, // Default or set another value
-        profitAllocationId: 0, // Default or set another value
-      );
+          return hampers;
+        } else {
+          throw Exception('Hamper banner details are empty');
+        }
+      } else {
+        throw Exception('Unexpected response structure: $response');
+      }
+    } catch (e) {
+      throw Exception('An error occurred while fetching hamper banner details');
     }
-
-    // If base_image is available, proceed with querying hamper details
-    print("Fetching hamper details for image URL: $baseImage");
-    final hamperDetailsResponse = await _client
-        .schema('inventory')
-        .from('hamper')
-        .select()
-        .eq('img_url', baseImage)
-        .single();
-
-    print("Fetched hamperDetailsResponse: $hamperDetailsResponse");
-
-    // Combine the data manually
-    final content = (contentResponse['content'] as List<dynamic>)
-        .map((e) => HamperContent.fromJson(e as Map<String, dynamic>))
-        .toList();
-
-    final hamperDetails = hamperDetailsResponse['hamper_details'];
-    return HamperBanner(
-      id: contentResponse['id'],
-      content: content,
-      hamperCode: hamperDetails['code'] ?? '',
-      profitPercentage: (hamperDetails['profit_percentage'] != null &&
-              hamperDetails['profit_percentage'] is num)
-          ? (hamperDetails['profit_percentage'] as num).toDouble()
-          : 0.0,
-      value: (hamperDetails['value'] != null && hamperDetails['value'] is num)
-          ? (hamperDetails['value'] as num).toDouble()
-          : 0.0,
-      profitAllocationId: hamperDetails['profit_allocation_id'] ?? 0,
-    );
   }
 
   @override

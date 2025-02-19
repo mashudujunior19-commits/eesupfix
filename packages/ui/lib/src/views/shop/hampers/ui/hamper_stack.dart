@@ -259,15 +259,6 @@ class _HamperImageStackState extends State<HamperImageStack> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    if (widget.hamperCode != null)
-                      Text(
-                        widget.hamperCode!,
-                        style: GoogleFonts.lemon(
-                          fontSize: 28,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.green,
-                        ),
-                      ),
                     if (widget.hamperCode != null && widget.hamperPrice != null)
                       Text(
                         '${widget.hamperCode} ${widget.hamperPrice ?? 0.0}',
@@ -316,7 +307,8 @@ class _HamperImageStackState extends State<HamperImageStack> {
                     },
                   ),
                 ),
-              if (widget.profitpercentage != null)
+              if (widget.profitpercentage != null &&
+                  (widget.profitpercentage! > 0.0))
                 Positioned(
                   bottom: 20,
                   right: 20,
@@ -325,9 +317,7 @@ class _HamperImageStackState extends State<HamperImageStack> {
                       print('Profit allocations clicked');
                     },
                     child: Text(
-                      widget.profitpercentage != null
-                          ? '${widget.profitpercentage}'
-                          : 'No Profit Data',
+                      '${widget.profitpercentage!.toStringAsFixed(2)}% Profit',
                       style: GoogleFonts.poppins(
                         fontSize: 18,
                         fontWeight: FontWeight.w600,
