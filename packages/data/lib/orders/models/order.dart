@@ -126,7 +126,7 @@ enum OrderStatus {
   placed,
   packaged,
   ready,
-  collected,
+  dispatched,
   cancelled;
 
   factory OrderStatus.fromJson(String status) {
@@ -139,8 +139,8 @@ enum OrderStatus {
         return OrderStatus.packaged;
       case 'Ready':
         return OrderStatus.ready;
-      case 'Collected':
-        return OrderStatus.collected;
+      case 'Dispatched':
+        return OrderStatus.dispatched;
       case 'Cancelled':
         return OrderStatus.cancelled;
       default:
@@ -159,8 +159,8 @@ enum OrderStatus {
         return 'Packaged';
       case OrderStatus.ready:
         return 'Ready';
-      case OrderStatus.collected:
-        return 'Collected';
+      case OrderStatus.dispatched:
+        return 'Dispatched';
       case OrderStatus.cancelled:
         return 'Cancelled';
       default:

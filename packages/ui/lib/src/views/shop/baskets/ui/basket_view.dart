@@ -120,37 +120,37 @@ class _CopyingButtons extends StatelessWidget {
         children: [
           GestureDetector(
             onTap: () {
+              // Print the sellable status of all products in products list
+              print("Checking sellable status for all products:");
               for (final p in products) {
-                context.read<CartBloc>().add(
-                      ProductAddedToCart(
-                        OrderProduct(
-                          productId: p.productId,
-                          quantity: p.quantity,
-                          productClass: p.productClass,
-                          price: p.price,
-                          name: p.name,
-                          imageUrl: p.imageUrl,
-                          category: p.category,
-                        ),
-                      ),
-                    );
+                print("${p.name} sellable: ${p.sellable}");
               }
-              context.snackBarSuccess('Items copied');
-            },
-            child: Container(
-              padding: const EdgeInsets.all(5),
-              decoration: BoxDecoration(
-                border: Border.all(width: .5),
-                borderRadius: BorderRadius.circular(7),
-              ),
-              child: const Text('Copy all to Cart'),
-            ),
-          ),
-          15.sW,
-          if (selectedProdcuts.isNotEmpty)
-            GestureDetector(
-              onTap: () {
-                for (final p in selectedProdcuts) {
+
+              // Check if any product in 'products' list is non-sellable
+              final nonSellableProduct =
+                  products.where((p) => p.sellable == false).toList();
+
+              if (nonSellableProduct.isNotEmpty) {
+                // Show dialog if there's any non-sellable product
+                final productName = nonSellableProduct.first.name;
+                showDialog(
+                  context: context,
+                  builder: (context) => AlertDialog(
+                    title: const Text("Item Not Sellable"),
+                    content: Text('$productName is not sellable'),
+                    actions: [
+                      TextButton(
+                        onPressed: () {
+                          Navigator.pop(context); // Close dialog
+                        },
+                        child: const Text("OK"),
+                      ),
+                    ],
+                  ),
+                );
+              } else {
+                // Proceed to copy all sellable products to the cart
+                for (final p in products) {
                   context.read<CartBloc>().add(
                         ProductAddedToCart(
                           OrderProduct(
@@ -166,6 +166,68 @@ class _CopyingButtons extends StatelessWidget {
                       );
                 }
                 context.snackBarSuccess('Items copied');
+              }
+            },
+            child: Container(
+              padding: const EdgeInsets.all(5),
+              decoration: BoxDecoration(
+                border: Border.all(width: .5),
+                borderRadius: BorderRadius.circular(7),
+              ),
+              child: const Text('Copy all to Cart'),
+            ),
+          ),
+          15.sW,
+          if (selectedProdcuts.isNotEmpty)
+            GestureDetector(
+              onTap: () {
+                // Print the sellable status of all selected products
+                print("Checking sellable status for selected products:");
+                for (final p in selectedProdcuts) {
+                  print("${p.name} sellable: ${p.sellable}");
+                }
+
+                // Check if any selected product is non-sellable
+                final nonSellableProduct =
+                    selectedProdcuts.where((p) => p.sellable == false).toList();
+
+                if (nonSellableProduct.isNotEmpty) {
+                  // Show dialog if there's any non-sellable product
+                  final productName = nonSellableProduct.first.name;
+                  showDialog(
+                    context: context,
+                    builder: (context) => AlertDialog(
+                      title: const Text("Item Not Sellable"),
+                      content: Text('$productName is not sellable'),
+                      actions: [
+                        TextButton(
+                          onPressed: () {
+                            Navigator.pop(context); // Close dialog
+                          },
+                          child: const Text("OK"),
+                        ),
+                      ],
+                    ),
+                  );
+                } else {
+                  // Proceed to copy selected sellable products to the cart
+                  for (final p in selectedProdcuts) {
+                    context.read<CartBloc>().add(
+                          ProductAddedToCart(
+                            OrderProduct(
+                              productId: p.productId,
+                              quantity: p.quantity,
+                              productClass: p.productClass,
+                              price: p.price,
+                              name: p.name,
+                              imageUrl: p.imageUrl,
+                              category: p.category,
+                            ),
+                          ),
+                        );
+                  }
+                  context.snackBarSuccess('Items copied');
+                }
               },
               child: Container(
                 padding: const EdgeInsets.all(5),
@@ -183,6 +245,87 @@ class _CopyingButtons extends StatelessWidget {
     );
   }
 }
+
+// class _CopyingButtons extends StatelessWidget {
+//   const _CopyingButtons({
+//     required this.selectedProdcuts,
+//     required this.products,
+//   });
+
+//   final List<BasketProduct> selectedProdcuts;
+//   final List<BasketProduct> products;
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Padding(
+//       padding: const EdgeInsets.only(left: 20, right: 20),
+//       child: Row(
+//         children: [
+//           GestureDetector(
+//             onTap: () {
+//               for (final p in products) {
+//                 context.read<CartBloc>().add(
+//                       ProductAddedToCart(
+//                         OrderProduct(
+//                           productId: p.productId,
+//                           quantity: p.quantity,
+//                           productClass: p.productClass,
+//                           price: p.price,
+//                           name: p.name,
+//                           imageUrl: p.imageUrl,
+//                           category: p.category,
+//                         ),
+//                       ),
+//                     );
+//               }
+//               context.snackBarSuccess('Items copied');
+//             },
+//             child: Container(
+//               padding: const EdgeInsets.all(5),
+//               decoration: BoxDecoration(
+//                 border: Border.all(width: .5),
+//                 borderRadius: BorderRadius.circular(7),
+//               ),
+//               child: const Text('Copy all to Cart'),
+//             ),
+//           ),
+//           15.sW,
+//           if (selectedProdcuts.isNotEmpty)
+//             GestureDetector(
+//               onTap: () {
+//                 for (final p in selectedProdcuts) {
+//                   context.read<CartBloc>().add(
+//                         ProductAddedToCart(
+//                           OrderProduct(
+//                             productId: p.productId,
+//                             quantity: p.quantity,
+//                             productClass: p.productClass,
+//                             price: p.price,
+//                             name: p.name,
+//                             imageUrl: p.imageUrl,
+//                             category: p.category,
+//                           ),
+//                         ),
+//                       );
+//                 }
+//                 context.snackBarSuccess('Items copied');
+//               },
+//               child: Container(
+//                 padding: const EdgeInsets.all(5),
+//                 decoration: BoxDecoration(
+//                   border: Border.all(width: .5),
+//                   borderRadius: BorderRadius.circular(7),
+//                 ),
+//                 child: const Text(
+//                   'Copy Selected to Cart',
+//                 ),
+//               ),
+//             ),
+//         ],
+//       ),
+//     );
+//   }
+// }
 
 class _AddProdactButton extends StatelessWidget {
   const _AddProdactButton({required this.basket});

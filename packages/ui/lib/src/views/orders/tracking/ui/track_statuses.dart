@@ -140,7 +140,7 @@ class TrackStatuses extends StatelessWidget {
                 }
               }
             },
-            label: 'Ready for collection',
+            label: 'Ready for dispatching',
             icon: MdiIcons.packageVariantClosedCheck,
             isVisible: order.cancelledAt == null,
             canEdit: order.packagedAt != null &&
@@ -148,7 +148,7 @@ class TrackStatuses extends StatelessWidget {
                 hasPrevilage(OrderEditPrivilage.collector),
           ),
           StatusTile(
-            status: OrderStatus.collected,
+            status: OrderStatus.dispatched,
             date: order.collectedAt,
             onChanged: (status) {},
             label: () {
@@ -159,7 +159,7 @@ class TrackStatuses extends StatelessWidget {
                   order.status == OrderStatus.ready) {
                 return 'Tap to Confirm collection';
               } else {
-                return 'Collected';
+                return 'Dispatched';
               }
             }(),
             isLast: true,
@@ -178,7 +178,7 @@ class TrackStatuses extends StatelessWidget {
                     context.read<OrderTrackingBloc>().add(
                           OrderStatusUpdated(
                             order.copyWith(
-                              status: OrderStatus.collected,
+                              status: OrderStatus.dispatched,
                               collectedAt: DateTime.now(),
                             ),
                           ),
@@ -196,7 +196,7 @@ class TrackStatuses extends StatelessWidget {
                     context.read<OrderTrackingBloc>().add(
                           OrderStatusUpdated(
                             order.copyWith(
-                              status: OrderStatus.collected,
+                              status: OrderStatus.dispatched,
                               collectedAt: DateTime.now(),
                             ),
                           ),
