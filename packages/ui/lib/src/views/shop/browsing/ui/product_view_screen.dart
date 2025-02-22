@@ -153,7 +153,8 @@ class _ProductInformation extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text('R${product.salePrice.toStringAsFixed(2)}'),
+              if (product.sellable)
+                Text('R${product.salePrice.toStringAsFixed(2)}'),
               Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [

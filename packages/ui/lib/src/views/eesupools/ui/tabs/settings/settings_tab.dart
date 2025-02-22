@@ -199,6 +199,20 @@ class SettingsTab extends StatelessWidget {
                 },
               ),
               EESUpTextFormField(
+                label: 'Recieving fee(%)',
+                maxLines: 1,
+                initialValue: pool.receivingFee?.toStringAsFixed(2),
+                onChanged: (value) {
+                  context.read<EESUpoolViewBloc>().add(
+                        EESUpoolPercentagesUpdated(
+                          pool.copyWith(
+                            receivingFee: double.tryParse(value),
+                          ),
+                        ),
+                      );
+                },
+              ),
+              EESUpTextFormField(
                 label: 'Packaging fee(%)',
                 maxLines: 1,
                 initialValue: pool.packagingFee?.toStringAsFixed(2),
@@ -221,20 +235,6 @@ class SettingsTab extends StatelessWidget {
                         EESUpoolPercentagesUpdated(
                           pool.copyWith(
                             collectionFee: double.tryParse(value),
-                          ),
-                        ),
-                      );
-                },
-              ),
-              EESUpTextFormField(
-                label: 'Recieving fee(%)',
-                maxLines: 1,
-                initialValue: pool.receivingFee?.toStringAsFixed(2),
-                onChanged: (value) {
-                  context.read<EESUpoolViewBloc>().add(
-                        EESUpoolPercentagesUpdated(
-                          pool.copyWith(
-                            receivingFee: double.tryParse(value),
                           ),
                         ),
                       );
