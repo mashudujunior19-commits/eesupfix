@@ -70,8 +70,12 @@ mixin _$EESUpool {
   @JsonKey(includeToJson: false)
   Address? get address => throw _privateConstructorUsedError;
 
+  /// Serializes this EESUpool to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of EESUpool
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $EESUpoolCopyWith<EESUpool> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -125,6 +129,8 @@ class _$EESUpoolCopyWithImpl<$Res, $Val extends EESUpool>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of EESUpool
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -253,6 +259,8 @@ class _$EESUpoolCopyWithImpl<$Res, $Val extends EESUpool>
     ) as $Val);
   }
 
+  /// Create a copy of EESUpool
+  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $AddressCopyWith<$Res>? get address {
@@ -317,6 +325,8 @@ class __$$EESUpoolImplCopyWithImpl<$Res>
       _$EESUpoolImpl _value, $Res Function(_$EESUpoolImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of EESUpool
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -629,7 +639,7 @@ class _$EESUpoolImpl implements _EESUpool {
             (identical(other.address, address) || other.address == address));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hashAll([
         runtimeType,
@@ -659,7 +669,9 @@ class _$EESUpoolImpl implements _EESUpool {
         address
       ]);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of EESUpool
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$EESUpoolImplCopyWith<_$EESUpoolImpl> get copyWith =>
@@ -788,8 +800,11 @@ abstract class _EESUpool implements EESUpool {
   @AddressConverter()
   @JsonKey(includeToJson: false)
   Address? get address;
+
+  /// Create a copy of EESUpool
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$EESUpoolImplCopyWith<_$EESUpoolImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

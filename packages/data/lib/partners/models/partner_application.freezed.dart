@@ -34,8 +34,12 @@ mixin _$PartnerApplication {
   List<PartnerSurveyResponse> get surveyResponses =>
       throw _privateConstructorUsedError;
 
+  /// Serializes this PartnerApplication to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of PartnerApplication
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $PartnerApplicationCopyWith<PartnerApplication> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -67,6 +71,8 @@ class _$PartnerApplicationCopyWithImpl<$Res, $Val extends PartnerApplication>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of PartnerApplication
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -133,6 +139,8 @@ class __$$PartnerApplicationImplCopyWithImpl<$Res>
       $Res Function(_$PartnerApplicationImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of PartnerApplication
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -250,12 +258,14 @@ class _$PartnerApplicationImpl
                 .equals(other._surveyResponses, _surveyResponses));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, id, partnerId, userId, createdAt,
       approvedAt, const DeepCollectionEquality().hash(_surveyResponses));
 
-  @JsonKey(ignore: true)
+  /// Create a copy of PartnerApplication
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$PartnerApplicationImplCopyWith<_$PartnerApplicationImpl> get copyWith =>
@@ -303,8 +313,11 @@ abstract class _PartnerApplication implements PartnerApplication {
   @PartnerSurveyResponseConverter()
   @JsonKey(name: 'survey_responses')
   List<PartnerSurveyResponse> get surveyResponses;
+
+  /// Create a copy of PartnerApplication
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$PartnerApplicationImplCopyWith<_$PartnerApplicationImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

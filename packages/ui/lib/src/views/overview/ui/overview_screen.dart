@@ -1,4 +1,7 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:package_info_plus/package_info_plus.dart';
+import 'package:ui/app_route.gr.dart';
 import 'package:ui/src/core/extensions/bg_image_deco_ext.dart';
 import 'package:ui/src/core/widgets/eesup_scaffold.dart';
 import 'package:ui/src/views/eesupools/ui/my_kasi_tab.dart';
@@ -7,6 +10,13 @@ import 'package:ui/src/views/overview/ui/my_kasi_shop.dart';
 import 'package:ui/src/views/overview/ui/widgets/bottom_tab_bar.dart';
 import 'package:ui/src/views/overview/ui/overview_tab.dart';
 import 'package:flutter/material.dart';
+
+import '../../../core/widgets/fullscreen_loading_shimmer.dart';
+import '../../auth/profile/bloc/edit_profile_bloc.dart';
+import '../../auth/profile/bloc/profile_bloc.dart';
+import '../../auth/profile/bloc/version_control_bloc.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:in_app_update/in_app_update.dart';
 
 @RoutePage()
 class OverviewScreen extends StatefulWidget {
@@ -19,6 +29,8 @@ class OverviewScreen extends StatefulWidget {
 class _OverviewScreenState extends State<OverviewScreen>
     with SingleTickerProviderStateMixin {
   late final TabController _tabController;
+  String? appVersion;
+  String? appBuildNumber;
 
   @override
   void initState() {
@@ -29,28 +41,533 @@ class _OverviewScreenState extends State<OverviewScreen>
         setState(() {});
       }
     });
+
+    context.read<ProfileBloc>().add(ProfileFetched());
+    context.read<EditProfileBloc>().add(CheckIfHasAddress());
+    _checkForUpdate();
   }
+
+  // Future<void> _checkForUpdate() async {
+  //   try {
+  //     // Check for updates
+  //     final updateInfo = await InAppUpdate.checkForUpdate();
+  //     if (updateInfo.updateAvailability == UpdateAvailability.updateAvailable) {
+  //       // If update is available, perform the update immediately
+  //       _promptForUpdate();
+  //     }
+  //   } catch (e) {
+  //     debugPrint('Error checking for update: $e');
+  //   }
+  // }
+
+  // Perform the update
+  // Future<void> _promptForUpdate() async {
+  //   try {
+  //     await InAppUpdate.performImmediateUpdate();
+  //   } catch (e) {
+  //     debugPrint('Error during in-app update: $e');
+  //   }
+  // }
+
+  // Future<void> _getAppVersion() async {
+  //   PackageInfo packageInfo = await PackageInfo.fromPlatform();
+  //   setState(() {
+  //     appVersion = packageInfo.version;
+  //     appBuildNumber = packageInfo.buildNumber;
+  //   });
+
+  //   if (appVersion != null && appBuildNumber != null) {
+  //     context.read<VersionControlBloc>().add(CheckAppVersion(
+  //           currentVersion: appVersion!,
+  //           currentBuildNumber: int.parse(appBuildNumber!),
+  //         ));
+  //   }
+  // }
+
+  // Future<void> launch(Uri url) async {
+  //   if (await canLaunchUrl(url)) {
+  //     await launch(url);
+  //   } else {
+  //     throw 'Could not launch $url';
+  //   }
+  // }
+
+  // Future<void> _launchURL(Uri url) async {
+  //   if (await canLaunchUrl(url)) {
+  //     await launch(url);
+  //   } else {
+  //     throw 'Could not launch $url';
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       key: const Key('shop_overview_screen'),
-      child: Container(
-        decoration: context.bgImage,
-        child: EESUpScaffold(
-          backgroundColor: Colors.transparent,
-          bottomNavigationBar: BottomTabBar(tabController: _tabController),
-          body: TabBarView(
-            controller: _tabController,
-            children: const [
-              OverviewTab(),
-              MyKasiTab(),
-              MyKasiShop(),
-              MenuTab(),
-            ],
+      child: MultiBlocListener(
+        listeners: [
+          BlocListener<ProfileBloc, ProfileState>(
+            listener: (context, state) {
+              if (state is ProfileLoaded) {
+                if (state.profile.rsaIdNumber == null ||
+                    state.profile.rsaIdNumber!.isEmpty) {
+                  if (state.profile.foreigner == false ||
+                      state.profile.foreigner == null) {
+                    WidgetsBinding.instance.addPostFrameCallback((_) {
+                      showDialog(
+                        context: context,
+                        builder: (context) => AlertDialog(
+                          title: const Text('Update your RSA ID'),
+                          content:
+                              const Text('Your RSA ID unlocks more benefits.'),
+                          actions: [
+                            TextButton(
+                              onPressed: () {
+                                Navigator.pop(context);
+                                context.router.push(
+                                  EditProfileRoute(profile: state.profile),
+                                );
+                              },
+                              child: const Text('Enter ID'),
+                            ),
+                            TextButton(
+                              onPressed: () {
+                                final editProfileBloc =
+                                    context.read<EditProfileBloc>();
+                                final updatedProfile =
+                                    state.profile.copyWith(foreigner: true);
+
+                                editProfileBloc
+                                    .add(ProfileEdited(updatedProfile));
+                                editProfileBloc.add(
+                                    ProfileSaved(state.profile.rsaIdNumber));
+
+                                Navigator.pop(context);
+                              },
+                              style: TextButton.styleFrom(
+                                foregroundColor: Colors.red,
+                                // backgroundColor: Colors.blue,
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 16, vertical: 8),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                              ),
+                              child: const Text('Non-SA'),
+                            ),
+                            TextButton(
+                              onPressed: () {
+                                Navigator.pop(context);
+                              },
+                              style: TextButton.styleFrom(
+                                foregroundColor: Colors.grey,
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 16, vertical: 8),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                              ),
+                              child: const Text('Add later'),
+                            ),
+                          ],
+                        ),
+                      );
+                    });
+                  }
+                }
+              }
+            },
           ),
+          BlocListener<EditProfileBloc, EditProfileState>(
+            listener: (context, state) {
+              if (state is AddressMissingState) {
+                WidgetsBinding.instance.addPostFrameCallback((_) {
+                  showDialog(
+                    context: context,
+                    builder: (context) => AlertDialog(
+                      title: const Text('Update your primary address'),
+                      content: const Text(
+                          'You do not have a verified primary address. Would you like to add it now?'),
+                      actions: [
+                        TextButton(
+                          onPressed: () {
+                            Navigator.pop(context);
+                            context.router.push(EditAddressRoute());
+                          },
+                          child: const Text('Add Address'),
+                        ),
+                        TextButton(
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                          style: TextButton.styleFrom(
+                            foregroundColor: Colors.grey,
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 16, vertical: 8),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                          ),
+                          child: const Text('Add later'),
+                        ),
+                      ],
+                    ),
+                  );
+                });
+              }
+            },
+          ),
+//
+
+//
+          // BlocListener<VersionControlBloc, VersionControlState>(
+          //   listener: (context, state) {
+          //     if (state is VersionOutdated) {
+          //       WidgetsBinding.instance.addPostFrameCallback((_) {
+          //         showDialog(
+          //           context: context,
+          //           builder: (context) => AlertDialog(
+          //             title: const Text('Update Available'),
+          //             content: const Text(
+          //                 'A new version of the app is available. Please update to the latest version.'),
+          //             actions: [
+          //               TextButton(
+          //                 onPressed: () async {
+          //                   Uri appUri = Uri.parse(
+          //                       "https://play.google.com/store/apps/details?id=com.eesup.mobile");
+
+          //                   // Simply try to launch the URI. Let the system handle it.
+          //                   try {
+          //                     await _launchURL(appUri);
+          //                   } catch (error) {
+          //                     debugPrint("Error launching URL: $error");
+          //                   }
+
+          //                   Navigator.pop(context);
+          //                 },
+          //                 child: const Text('Update Now'),
+          //               ),
+          //               TextButton(
+          //                 onPressed: () {
+          //                   Navigator.pop(context);
+          //                 },
+          //                 style: TextButton.styleFrom(
+          //                   foregroundColor: Colors.red,
+          //                   padding: const EdgeInsets.symmetric(
+          //                       horizontal: 16, vertical: 8),
+          //                   shape: RoundedRectangleBorder(
+          //                     borderRadius: BorderRadius.circular(8),
+          //                   ),
+          //                 ),
+          //                 child: const Text('Later'),
+          //               ),
+          //             ],
+          //           ),
+          //         );
+          //       });
+          //     }
+          //   },
+          // ),
+//
+        ],
+        child: BlocBuilder<ProfileBloc, ProfileState>(
+          builder: (context, state) {
+            if (state is ProfileLoading) {
+              return const FullScreenLoadingShimmer();
+            } else if (state is ProfileLoaded) {
+              return Container(
+                decoration: context.bgImage,
+                child: EESUpScaffold(
+                  backgroundColor: Colors.transparent,
+                  bottomNavigationBar:
+                      BottomTabBar(tabController: _tabController),
+                  body: TabBarView(
+                    controller: _tabController,
+                    children: const [
+                      OverviewTab(),
+                      MyKasiTab(),
+                      MyKasiShop(),
+                      MenuTab(),
+                    ],
+                  ),
+                ),
+              );
+            } else if (state is ProfileError) {
+              return Center(child: Text(state.ex.message));
+            }
+            return Container();
+          },
         ),
       ),
     );
   }
+
+  ///
+  Future<void> _checkForUpdate() async {
+    try {
+      // Check for updates using the InAppUpdate package
+      final updateInfo = await InAppUpdate.checkForUpdate();
+
+      if (updateInfo.updateAvailability == UpdateAvailability.updateAvailable) {
+        // If update is available, show a dialog to prompt the user
+        _showUpdateDialog(context);
+      }
+    } catch (e) {
+      debugPrint('Error checking for update: $e');
+    }
+  }
+
+  void _showUpdateDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Update Available'),
+        content: const Text(
+            'A new version of the app is available. Please update to the latest version.'),
+        actions: [
+          TextButton(
+            onPressed: () async {
+              try {
+                await InAppUpdate.performImmediateUpdate();
+                Navigator.pop(context);
+              } catch (e) {
+                debugPrint('Error during in-app update: $e');
+                Navigator.pop(context); // Close the dialog
+              }
+            },
+            child: const Text('Update Now'),
+          ),
+          TextButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            style: TextButton.styleFrom(
+              foregroundColor: Colors.red,
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(8),
+              ),
+            ),
+            child: const Text('Later'),
+          ),
+        ],
+      ),
+    );
+  }
 }
+
+// @RoutePage()
+// class OverviewScreen extends StatefulWidget {
+//   const OverviewScreen({super.key});
+
+//   @override
+//   State<OverviewScreen> createState() => _OverviewScreenState();
+// }
+
+// class _OverviewScreenState extends State<OverviewScreen>
+//     with SingleTickerProviderStateMixin {
+//   late final TabController _tabController;
+
+//   @override
+//   void initState() {
+//     super.initState();
+//     _tabController = TabController(length: 4, vsync: this, initialIndex: 0);
+//     _tabController.addListener(() {
+//       if (_tabController.indexIsChanging) {
+//         setState(() {});
+//       }
+//     });
+//     context.read<ProfileBloc>().add(ProfileFetched());
+//     context.read<EditProfileBloc>().add(CheckIfHasAddress());
+//   }
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return SafeArea(
+//       key: const Key('shop_overview_screen'),
+//       child: BlocListener<ProfileBloc, ProfileState>(
+//         listener: (context, state) {
+//           if (state is ProfileLoaded) {
+//             print('first state: $state');
+//             if (state.profile.rsaIdNumber == null ||
+//                 state.profile.rsaIdNumber!.isEmpty) {
+//               if (state.profile.foreigner == false ||
+//                   state.profile.foreigner == null) {
+//                 WidgetsBinding.instance.addPostFrameCallback((_) {
+//                   showDialog(
+//                     context: context,
+//                     builder: (context) => AlertDialog(
+//                       title: const Text('Update Your RSA ID'),
+//                       content:
+//                           const Text('You do not have an RSA ID registered.'),
+//                       actions: [
+//                         TextButton(
+//                           onPressed: () {
+//                             Navigator.pop(context);
+//                             context.router
+//                                 .push(EditProfileRoute(profile: state.profile));
+//                           },
+//                           child: const Text('Update RSA ID'),
+//                         ),
+//                         TextButton(
+//                           onPressed: () {
+//                             final editProfileBloc =
+//                                 context.read<EditProfileBloc>();
+//                             final updatedProfile =
+//                                 state.profile.copyWith(foreigner: true);
+
+//                             editProfileBloc.add(ProfileEdited(updatedProfile));
+
+//                             editProfileBloc
+//                                 .add(ProfileSaved(state.profile.rsaIdNumber));
+
+//                             Navigator.pop(context);
+//                           },
+//                           child: const Text('Foreigner'),
+//                         ),
+//                       ],
+//                     ),
+//                   );
+//                 });
+//               }
+//             } else {
+//               // print('CheckIfHasAddress event triggered');
+//               // final profileBloc = context.read<EditProfileBloc>();
+//               // profileBloc.add(CheckIfHasAddress());
+
+//               // if (state is AddressMissingState) {
+//               //   print('AddressMissingState received');
+//               //   print('state : $state');
+//               //   WidgetsBinding.instance.addPostFrameCallback((_) {
+//               //     showDialog(
+//               //       context: context,
+//               //       builder: (context) => AlertDialog(
+//               //         title: const Text('Add Your Address'),
+//               //         content: const Text(
+//               //             'You do not have an address registered. Would you like to add it now?'),
+//               //         actions: [
+//               //           TextButton(
+//               //             onPressed: () {
+//               //               Navigator.pop(context);
+//               //               context.router.push(EditAddressRoute());
+//               //             },
+//               //             child: const Text('Add Address'),
+//               //           ),
+//               //         ],
+//               //       ),
+//               //     );
+//               //   });
+//               // }
+//             }
+//           }
+
+//           ///
+
+//           BlocListener<EditProfileBloc, EditProfileState>(
+//               listener: (context, state) {
+//             print('EditProfileBloc state: ${state.runtimeType}');
+//             if (state is AddressMissingState) {
+//               print(' AddressMissingState received');
+//               WidgetsBinding.instance.addPostFrameCallback((_) {
+//                 showDialog(
+//                   context: context,
+//                   builder: (context) => AlertDialog(
+//                     title: const Text('Add Your Address'),
+//                     content: const Text(
+//                         'You do not have an address registered. Would you like to add it now?'),
+//                     actions: [
+//                       TextButton(
+//                         onPressed: () {
+//                           Navigator.pop(context);
+//                           context.router.push(EditAddressRoute());
+//                         },
+//                         child: const Text('Add Address'),
+//                       ),
+//                     ],
+//                   ),
+//                 );
+//               });
+//             }
+//           });
+
+//           ///
+//         },
+//         child: BlocBuilder<ProfileBloc, ProfileState>(
+//           builder: (context, state) {
+//             if (state is ProfileLoading) {
+//               return const FullScreenLoadingShimmer();
+//             } else if (state is ProfileLoaded) {
+//               return Container(
+//                 decoration: context.bgImage,
+//                 child: EESUpScaffold(
+//                   backgroundColor: Colors.transparent,
+//                   bottomNavigationBar:
+//                       BottomTabBar(tabController: _tabController),
+//                   body: TabBarView(
+//                     controller: _tabController,
+//                     children: const [
+//                       OverviewTab(),
+//                       MyKasiTab(),
+//                       MyKasiShop(),
+//                       MenuTab(),
+//                     ],
+//                   ),
+//                 ),
+//               );
+//             } else if (state is ProfileError) {
+//               return Center(child: Text(state.ex.message));
+//             }
+//             return Container();
+//           },
+//         ),
+//       ),
+//     );
+//   }
+// }
+
+// @RoutePage()
+// class OverviewScreen extends StatefulWidget {
+//   const OverviewScreen({super.key});
+
+//   @override
+//   State<OverviewScreen> createState() => _OverviewScreenState();
+// }
+
+// class _OverviewScreenState extends State<OverviewScreen>
+//     with SingleTickerProviderStateMixin {
+//   late final TabController _tabController;
+
+//   @override
+//   void initState() {
+//     super.initState();
+//     _tabController = TabController(length: 4, vsync: this, initialIndex: 0);
+//     _tabController.addListener(() {
+//       if (_tabController.indexIsChanging) {
+//         setState(() {});
+//       }
+//     });
+//   }
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return SafeArea(
+//       key: const Key('shop_overview_screen'),
+//       child: Container(
+//         decoration: context.bgImage,
+//         child: EESUpScaffold(
+//           backgroundColor: Colors.transparent,
+//           bottomNavigationBar: BottomTabBar(tabController: _tabController),
+//           body: TabBarView(
+//             controller: _tabController,
+//             children: const [
+//               OverviewTab(),
+//               MyKasiTab(),
+//               MyKasiShop(),
+//               MenuTab(),
+//             ],
+//           ),
+//         ),
+//       ),
+//     );
+//   }
+// }

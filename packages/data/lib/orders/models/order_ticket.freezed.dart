@@ -45,8 +45,12 @@ mixin _$OrderTicket {
   @TicketResolutionTypeConverter()
   TicketResolutionType get resolution => throw _privateConstructorUsedError;
 
+  /// Serializes this OrderTicket to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of OrderTicket
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $OrderTicketCopyWith<OrderTicket> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -83,6 +87,8 @@ class _$OrderTicketCopyWithImpl<$Res, $Val extends OrderTicket>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of OrderTicket
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -184,6 +190,8 @@ class __$$OrderTicketImplCopyWithImpl<$Res>
       _$OrderTicketImpl _value, $Res Function(_$OrderTicketImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of OrderTicket
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -358,7 +366,7 @@ class _$OrderTicketImpl implements _OrderTicket {
                 other.resolution == resolution));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(
       runtimeType,
@@ -375,7 +383,9 @@ class _$OrderTicketImpl implements _OrderTicket {
       eesupConfirmedAt,
       resolution);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of OrderTicket
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$OrderTicketImplCopyWith<_$OrderTicketImpl> get copyWith =>
@@ -446,8 +456,11 @@ abstract class _OrderTicket implements OrderTicket {
   @override
   @TicketResolutionTypeConverter()
   TicketResolutionType get resolution;
+
+  /// Create a copy of OrderTicket
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$OrderTicketImplCopyWith<_$OrderTicketImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

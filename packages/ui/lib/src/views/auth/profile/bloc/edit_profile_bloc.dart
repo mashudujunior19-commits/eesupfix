@@ -55,5 +55,24 @@ class EditProfileBloc extends Bloc<EditProfileEvent, EditProfileState> {
     on<ProfileFormReset>((event, emit) {
       emit(CurrentProfileForm(event.currentProfile));
     });
+
+    on<CheckIfHasAddress>((event, emit) async {
+      emit(EditProfileLoading());
+
+      final result = await _repository.checkIfHasAddress();
+
+      result.fold(
+        (left) {
+          emit(AddressCheckError(left));
+        },
+        (hasAddress) {
+          if (hasAddress) {
+            emit(ProfileSavingSuccess());
+          } else {
+            emit(AddressMissingState());
+          }
+        },
+      );
+    });
   }
 }

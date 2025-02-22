@@ -29,8 +29,12 @@ mixin _$ProfitAllocation {
   int get id => throw _privateConstructorUsedError;
   double get cfv => throw _privateConstructorUsedError;
 
+  /// Serializes this ProfitAllocation to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of ProfitAllocation
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $ProfitAllocationCopyWith<ProfitAllocation> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -62,6 +66,8 @@ class _$ProfitAllocationCopyWithImpl<$Res, $Val extends ProfitAllocation>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of ProfitAllocation
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -138,6 +144,8 @@ class __$$ProfitAllocationImplCopyWithImpl<$Res>
       $Res Function(_$ProfitAllocationImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of ProfitAllocation
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -240,12 +248,14 @@ class _$ProfitAllocationImpl implements _ProfitAllocation {
             (identical(other.cfv, cfv) || other.cfv == cfv));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode =>
       Object.hash(runtimeType, cia, cwa, eia, crc, csa, daa, id, cfv);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of ProfitAllocation
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$ProfitAllocationImplCopyWith<_$ProfitAllocationImpl> get copyWith =>
@@ -290,8 +300,11 @@ abstract class _ProfitAllocation implements ProfitAllocation {
   int get id;
   @override
   double get cfv;
+
+  /// Create a copy of ProfitAllocation
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$ProfitAllocationImplCopyWith<_$ProfitAllocationImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

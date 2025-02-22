@@ -10,7 +10,7 @@ final class ProfileSavingSuccess extends EditProfileState {}
 final class ProfileEditingError extends EditProfileState {
   final Profile profile;
   final EESUpException error;
-  ProfileEditingError(this.profile,this.error);
+  ProfileEditingError(this.profile, this.error);
 }
 
 final class CurrentProfileForm extends EditProfileState {
@@ -34,4 +34,11 @@ final class CurrentProfileForm extends EditProfileState {
     }
     return false;
   }
+}
+
+class AddressMissingState extends EditProfileState {}
+
+class AddressCheckError extends EditProfileState {
+  final EESUpException error;
+  AddressCheckError(this.error);
 }

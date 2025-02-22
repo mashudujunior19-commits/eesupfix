@@ -36,8 +36,12 @@ mixin _$EESUpoolMember {
   @JsonKey(name: "created_at", includeToJson: false)
   DateTime get createdAt => throw _privateConstructorUsedError;
 
+  /// Serializes this EESUpoolMember to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of EESUpoolMember
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $EESUpoolMemberCopyWith<EESUpoolMember> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -70,6 +74,8 @@ class _$EESUpoolMemberCopyWithImpl<$Res, $Val extends EESUpoolMember>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of EESUpoolMember
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -142,6 +148,8 @@ class __$$EESUpoolMemberImplCopyWithImpl<$Res>
       _$EESUpoolMemberImpl _value, $Res Function(_$EESUpoolMemberImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of EESUpoolMember
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -249,12 +257,14 @@ class _$EESUpoolMemberImpl implements _EESUpoolMember {
                 other.createdAt == createdAt));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, memberId, eesupoolId, userId,
       role, isCensored, fullName, createdAt);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of EESUpoolMember
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$EESUpoolMemberImplCopyWith<_$EESUpoolMemberImpl> get copyWith =>
@@ -309,8 +319,11 @@ abstract class _EESUpoolMember implements EESUpoolMember {
   @override
   @JsonKey(name: "created_at", includeToJson: false)
   DateTime get createdAt;
+
+  /// Create a copy of EESUpoolMember
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$EESUpoolMemberImplCopyWith<_$EESUpoolMemberImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

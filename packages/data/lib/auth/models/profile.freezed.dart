@@ -59,6 +59,8 @@ mixin _$Profile {
   int? get referralCode => throw _privateConstructorUsedError;
   @JsonKey(name: 'is_verified', includeToJson: false)
   bool get isVerified => throw _privateConstructorUsedError;
+  @JsonKey(name: 'foreigner', includeToJson: true)
+  bool? get foreigner => throw _privateConstructorUsedError;
 
   /// Serializes this Profile to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -93,7 +95,8 @@ abstract class $ProfileCopyWith<$Res> {
       @JsonKey(name: 'is_approved', includeToJson: false) bool? isApproved,
       @JsonKey(name: 'created_at', includeToJson: false) DateTime? createdAt,
       @JsonKey(name: 'referral_code', includeToJson: false) int? referralCode,
-      @JsonKey(name: 'is_verified', includeToJson: false) bool isVerified});
+      @JsonKey(name: 'is_verified', includeToJson: false) bool isVerified,
+      @JsonKey(name: 'foreigner', includeToJson: true) bool? foreigner});
 }
 
 /// @nodoc
@@ -130,6 +133,7 @@ class _$ProfileCopyWithImpl<$Res, $Val extends Profile>
     Object? createdAt = freezed,
     Object? referralCode = freezed,
     Object? isVerified = null,
+    Object? foreigner = freezed,
   }) {
     return _then(_value.copyWith(
       userId: null == userId
@@ -208,6 +212,10 @@ class _$ProfileCopyWithImpl<$Res, $Val extends Profile>
           ? _value.isVerified
           : isVerified // ignore: cast_nullable_to_non_nullable
               as bool,
+      foreigner: freezed == foreigner
+          ? _value.foreigner
+          : foreigner // ignore: cast_nullable_to_non_nullable
+              as bool?,
     ) as $Val);
   }
 }
@@ -238,7 +246,8 @@ abstract class _$$ProfileImplCopyWith<$Res> implements $ProfileCopyWith<$Res> {
       @JsonKey(name: 'is_approved', includeToJson: false) bool? isApproved,
       @JsonKey(name: 'created_at', includeToJson: false) DateTime? createdAt,
       @JsonKey(name: 'referral_code', includeToJson: false) int? referralCode,
-      @JsonKey(name: 'is_verified', includeToJson: false) bool isVerified});
+      @JsonKey(name: 'is_verified', includeToJson: false) bool isVerified,
+      @JsonKey(name: 'foreigner', includeToJson: true) bool? foreigner});
 }
 
 /// @nodoc
@@ -273,6 +282,7 @@ class __$$ProfileImplCopyWithImpl<$Res>
     Object? createdAt = freezed,
     Object? referralCode = freezed,
     Object? isVerified = null,
+    Object? foreigner = freezed,
   }) {
     return _then(_$ProfileImpl(
       userId: null == userId
@@ -351,6 +361,10 @@ class __$$ProfileImplCopyWithImpl<$Res>
           ? _value.isVerified
           : isVerified // ignore: cast_nullable_to_non_nullable
               as bool,
+      foreigner: freezed == foreigner
+          ? _value.foreigner
+          : foreigner // ignore: cast_nullable_to_non_nullable
+              as bool?,
     ));
   }
 }
@@ -378,7 +392,8 @@ class _$ProfileImpl implements _Profile {
       @JsonKey(name: 'created_at', includeToJson: false) this.createdAt,
       @JsonKey(name: 'referral_code', includeToJson: false) this.referralCode,
       @JsonKey(name: 'is_verified', includeToJson: false)
-      required this.isVerified});
+      required this.isVerified,
+      @JsonKey(name: 'foreigner', includeToJson: true) this.foreigner});
 
   factory _$ProfileImpl.fromJson(Map<String, dynamic> json) =>
       _$$ProfileImplFromJson(json);
@@ -441,10 +456,13 @@ class _$ProfileImpl implements _Profile {
   @override
   @JsonKey(name: 'is_verified', includeToJson: false)
   final bool isVerified;
+  @override
+  @JsonKey(name: 'foreigner', includeToJson: true)
+  final bool? foreigner;
 
   @override
   String toString() {
-    return 'Profile(userId: $userId, rsaIdNumber: $rsaIdNumber, firstName: $firstName, lastName: $lastName, email: $email, phone: $phone, isActive: $isActive, deactivatedOn: $deactivatedOn, acceptedTsAndCs: $acceptedTsAndCs, role: $role, corpName: $corpName, npcReg: $npcReg, corpReg: $corpReg, corpAddressId: $corpAddressId, corpVatNo: $corpVatNo, isApproved: $isApproved, createdAt: $createdAt, referralCode: $referralCode, isVerified: $isVerified)';
+    return 'Profile(userId: $userId, rsaIdNumber: $rsaIdNumber, firstName: $firstName, lastName: $lastName, email: $email, phone: $phone, isActive: $isActive, deactivatedOn: $deactivatedOn, acceptedTsAndCs: $acceptedTsAndCs, role: $role, corpName: $corpName, npcReg: $npcReg, corpReg: $corpReg, corpAddressId: $corpAddressId, corpVatNo: $corpVatNo, isApproved: $isApproved, createdAt: $createdAt, referralCode: $referralCode, isVerified: $isVerified, foreigner: $foreigner)';
   }
 
   @override
@@ -483,7 +501,9 @@ class _$ProfileImpl implements _Profile {
             (identical(other.referralCode, referralCode) ||
                 other.referralCode == referralCode) &&
             (identical(other.isVerified, isVerified) ||
-                other.isVerified == isVerified));
+                other.isVerified == isVerified) &&
+            (identical(other.foreigner, foreigner) ||
+                other.foreigner == foreigner));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -508,7 +528,8 @@ class _$ProfileImpl implements _Profile {
         isApproved,
         createdAt,
         referralCode,
-        isVerified
+        isVerified,
+        foreigner
       ]);
 
   /// Create a copy of Profile
@@ -554,7 +575,9 @@ abstract class _Profile implements Profile {
       @JsonKey(name: 'referral_code', includeToJson: false)
       final int? referralCode,
       @JsonKey(name: 'is_verified', includeToJson: false)
-      required final bool isVerified}) = _$ProfileImpl;
+      required final bool isVerified,
+      @JsonKey(name: 'foreigner', includeToJson: true)
+      final bool? foreigner}) = _$ProfileImpl;
 
   factory _Profile.fromJson(Map<String, dynamic> json) = _$ProfileImpl.fromJson;
 
@@ -620,7 +643,7 @@ abstract class _Profile implements Profile {
   /// Create a copy of Profile
   /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   _$$ProfileImplCopyWith<_$ProfileImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

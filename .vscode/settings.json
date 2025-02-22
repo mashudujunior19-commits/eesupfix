@@ -19,5 +19,6 @@
             "command": "cd apps/eesup/lib/ && flutter run -t main_dev.dart",
         },
         ]
-    }
+    },
+    "terminal.integrated.useWslProfiles": true
 }

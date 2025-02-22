@@ -23,8 +23,9 @@ final class PhoneVerificationStarted extends EditProfileEvent {
   PhoneVerificationStarted(this.currentProfile);
 }
 
-
 final class ProfileFormReset extends EditProfileEvent {
   final Profile currentProfile;
   ProfileFormReset(this.currentProfile);
 }
+
+class CheckIfHasAddress extends EditProfileEvent {}

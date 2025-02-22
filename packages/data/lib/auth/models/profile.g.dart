@@ -31,6 +31,7 @@ _$ProfileImpl _$$ProfileImplFromJson(Map<String, dynamic> json) =>
           : DateTime.parse(json['created_at'] as String),
       referralCode: (json['referral_code'] as num?)?.toInt(),
       isVerified: json['is_verified'] as bool,
+      foreigner: json['foreigner'] as bool?,
     );
 
 Map<String, dynamic> _$$ProfileImplToJson(_$ProfileImpl instance) =>
@@ -46,4 +47,5 @@ Map<String, dynamic> _$$ProfileImplToJson(_$ProfileImpl instance) =>
       'corp_reg': instance.corpReg,
       'corp_address_id': instance.corpAddressId,
       'corp_vat_no': instance.corpVatNo,
+      'foreigner': instance.foreigner,
     };

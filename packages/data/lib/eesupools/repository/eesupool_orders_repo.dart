@@ -2,6 +2,7 @@ import 'package:data/orders/models/order_product.dart';
 import 'package:data/utils/eesup_exception.dart';
 import 'package:either_dart/either.dart';
 import 'package:data/eesupools/models/eesupool_order.dart';
+import '../models/eesupool_settings.dart';
 import 'eesupool_repo.dart';
 
 extension EESUpoolOrdersRepo on EESUpoolRepository {
@@ -79,6 +80,45 @@ extension EESUpoolOrdersRepo on EESUpoolRepository {
     final result = await authRepository.executeFutureWithAuth((_) {
       return dataSource.fetchPoolOrderProducts(orderId);
     });
+    return result.fold(
+      (l) => Left(l),
+      (r) => Right(r),
+    );
+  }
+
+  Future<Either<EESUpException, EESUpoolSettings?>>
+      fetchEESUpoolSettings() async {
+    final result = await authRepository.executeFutureWithAuth((id) {
+      return dataSource.getEesupoolSettings(id);
+    });
+
+    return result.fold(
+      (l) => Left(l),
+      (r) => Right(r),
+    );
+  }
+
+  Future<Either<EESUpException, bool>> updateMemberCount(
+    int poolId,
+    num count,
+  ) async {
+    final result = await authRepository.executeFutureWithAuth((id) {
+      return dataSource.updateMemberCount(poolId, id, count);
+    });
+
+    return result.fold(
+      (l) => Left(l),
+      (r) => Right(r),
+    );
+  }
+
+  Future<Either<EESUpException, bool>> removeAdmin(
+    int poolId,
+  ) async {
+    final result = await authRepository.executeFutureWithAuth((id) {
+      return dataSource.removeAdmin(poolId, id);
+    });
+
     return result.fold(
       (l) => Left(l),
       (r) => Right(r),

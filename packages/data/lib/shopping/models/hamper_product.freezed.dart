@@ -28,8 +28,12 @@ mixin _$HamperProduct {
   @JsonKey(name: 'is_free')
   bool get isFree => throw _privateConstructorUsedError;
 
+  /// Serializes this HamperProduct to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of HamperProduct
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $HamperProductCopyWith<HamperProduct> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -57,6 +61,8 @@ class _$HamperProductCopyWithImpl<$Res, $Val extends HamperProduct>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of HamperProduct
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -109,6 +115,8 @@ class __$$HamperProductImplCopyWithImpl<$Res>
       _$HamperProductImpl _value, $Res Function(_$HamperProductImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of HamperProduct
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -181,12 +189,14 @@ class _$HamperProductImpl implements _HamperProduct {
             (identical(other.isFree, isFree) || other.isFree == isFree));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode =>
       Object.hash(runtimeType, hamperId, productId, quantity, isFree);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of HamperProduct
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$HamperProductImplCopyWith<_$HamperProductImpl> get copyWith =>
@@ -222,8 +232,11 @@ abstract class _HamperProduct implements HamperProduct {
   @override
   @JsonKey(name: 'is_free')
   bool get isFree;
+
+  /// Create a copy of HamperProduct
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$HamperProductImplCopyWith<_$HamperProductImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

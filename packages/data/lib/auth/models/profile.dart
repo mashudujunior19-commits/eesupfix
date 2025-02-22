@@ -30,6 +30,7 @@ class Profile with _$Profile {
     @JsonKey(name: 'referral_code', includeToJson: false) int? referralCode,
     @JsonKey(name: 'is_verified', includeToJson: false)
     required bool isVerified,
+    @JsonKey(name: 'foreigner', includeToJson: true) bool? foreigner,
   }) = _Profile;
 
   factory Profile.fromJson(Map<String, dynamic> json) =>
