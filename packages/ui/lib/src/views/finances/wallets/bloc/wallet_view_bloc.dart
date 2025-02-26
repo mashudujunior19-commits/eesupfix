@@ -12,13 +12,42 @@ part 'wallet_view_state.dart';
 class WalletViewBloc extends Bloc<WalletViewEvent, WalletViewState> {
   final WalletsRepository _walletsRepository;
   WalletViewBloc(this._walletsRepository) : super(WalletViewInitial()) {
+    //   on<WalletViewFetched>((event, emit) async {
+    //     emit(WalletViewInitial());
+    //     late final List<Transaction> transactions;
+    //     late final Wallet wallet;
+
+    //     final walletResult = await _walletsRepository.fetchWalletById(event.id);
+
+    //     walletResult.fold((l) {
+    //       emit(WalletViewError(l));
+    //       return;
+    //     }, (r) {
+    //       wallet = r;
+    //     });
+
+    //     final transResult = await _walletsRepository.fetchWalletTransactions(
+    //       event.id,
+    //     );
+
+    //     transResult.fold((l) {
+    //       emit(WalletViewError(l));
+    //       return;
+    //     }, (r) {
+    //       transactions = r;
+    //       //transactions.sort((a, b) => a.id.compareTo(b.id));
+    //     });
+    //     emit(WalletViewLoaded(wallet, transactions));
+    //   });
+
     on<WalletViewFetched>((event, emit) async {
       emit(WalletViewInitial());
-      late final List<Transaction> transactions;
+
       late final Wallet wallet;
+      late final List<Transaction> transactions;
+      late final WalletBalance balance;
 
       final walletResult = await _walletsRepository.fetchWalletById(event.id);
-
       walletResult.fold((l) {
         emit(WalletViewError(l));
         return;
@@ -26,31 +55,38 @@ class WalletViewBloc extends Bloc<WalletViewEvent, WalletViewState> {
         wallet = r;
       });
 
-      final transResult = await _walletsRepository.fetchWalletTransactions(
-        event.id,
-      );
-
+      final transResult =
+          await _walletsRepository.fetchWalletTransactions(event.id);
       transResult.fold((l) {
         emit(WalletViewError(l));
         return;
       }, (r) {
         transactions = r;
-        //transactions.sort((a, b) => a.id.compareTo(b.id));
       });
-      emit(WalletViewLoaded(wallet, transactions));
-    });
 
-    on<WalletBalancesFetched>((event, emit) async {
-      emit(WalletViewInitial());
-
-      final balanceResult = await _walletsRepository.fetchWalletBalances();
-
+      final balanceResult =
+          await _walletsRepository.fetchWalletBalances(wallet.description);
       balanceResult.fold((l) {
         emit(WalletViewError(l));
         return;
-      }, (balances) {
-        emit(WalletBalancesLoaded(balances));
+      }, (r) {
+        balance = r;
       });
+
+      emit(WalletViewLoaded(wallet, transactions, balance));
     });
+
+    // on<WalletBalancesFetched>((event, emit) async {
+    //   emit(WalletViewInitial());
+
+    //   final balanceResult = await _walletsRepository.fetchWalletBalances();
+
+    //   balanceResult.fold((l) {
+    //     emit(WalletViewError(l));
+    //     return;
+    //   }, (balances) {
+    //     emit(WalletBalancesLoaded(balances));
+    //   });
+    // });
   }
 }

@@ -131,18 +131,30 @@ class WalletSupabaseImpl implements WalletDataSource {
   }
 
   @override
-  Future<List<WalletBalance>> fetchWalletBalances(String userId) async {
+  Future<WalletBalance?> fetchWalletBalances(
+      String userId, String walletType) async {
     try {
-      final results = await _client
-          .schema('finances')
-          .rpc('get_wallet_balances_by_user', params: {'user_uuid': userId});
+      print('user id : $userId');
+      print('wallet type : $walletType');
 
-      return (results as List).map((e) => WalletBalance.fromJson(e)).toList();
+      final expectedWalletType = walletType.toLowerCase();
+      print('lower case type : $expectedWalletType');
+      final results = await _client.schema('finances').rpc(
+        'get_wallet_balance_by_type',
+        params: {'user_uuid': userId, 'wallet_type_param': expectedWalletType},
+      );
+      print('raw response : $results');
+
+      if (results.isNotEmpty) {
+        return WalletBalance.fromJson(results.first);
+      } else {
+        return null; // No balance found
+      }
     } catch (e) {
       if (kDebugMode) {
-        print("Error fetching wallet balances: $e");
+        print("Error fetching wallet balance: $e");
       }
-      return [];
+      return null; // Return null instead of an empty list
     }
   }
 }

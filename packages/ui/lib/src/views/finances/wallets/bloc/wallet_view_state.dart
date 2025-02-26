@@ -13,7 +13,8 @@ final class WalletViewError extends WalletViewState {
 final class WalletViewLoaded extends WalletViewState {
   final Wallet wallet;
   final List<Transaction> transactions;
-  WalletViewLoaded(this.wallet, this.transactions);
+  final WalletBalance balance;
+  WalletViewLoaded(this.wallet, this.transactions, this.balance);
 }
 
 class WalletBalancesLoaded extends WalletViewState {

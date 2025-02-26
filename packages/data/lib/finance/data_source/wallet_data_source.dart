@@ -27,5 +27,5 @@ abstract class WalletDataSource {
 
   Future<bool> createPayoutRequest(PayoutRequest request);
 
-  Future<List<WalletBalance>> fetchWalletBalances(String userId);
+  Future<WalletBalance?> fetchWalletBalances(String userId, String walletType);
 }

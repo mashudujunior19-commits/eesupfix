@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:bootstrap_icons/bootstrap_icons.dart';
 import 'package:data/finance/models/wallet.dart';
+import 'package:data/finance/models/wallet_balance.dart';
 import 'package:data/finance/repository/wallets_repository.dart';
 import 'package:ui/app_route.gr.dart';
 import 'package:ui/src/core/extensions/bg_image_deco_ext.dart';
@@ -34,19 +35,96 @@ class WalletViewScreen extends StatelessWidget {
             height: context.height,
             child: BlocBuilder<WalletViewBloc, WalletViewState>(
               builder: (context, state) {
+                // if (state is WalletViewLoaded) {
+
+                //   final wallet = state.wallet;
+                //   final transactions = state.transactions;
+                //   return Column(
+                //     children: [
+                //       Container(
+                //         width: context.width,
+                //         color: Colors.white,
+                //         padding: const EdgeInsets.only(
+                //           left: 5,
+                //           right: 15,
+                //           top: 5,
+                //         ),
+                //         child: Row(
+                //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                //           children: [
+                //             const BackButton(),
+                //             Column(
+                //               crossAxisAlignment: CrossAxisAlignment.end,
+                //               mainAxisSize: MainAxisSize.min,
+                //               children: [
+                //                 10.sH,
+                //                 Text(
+                //                   '${wallet.description} wallet',
+                //                   style: context.textTheme.labelMedium,
+                //                 ),
+                //                 Text(
+                //                   '${wallet.id}',
+                //                   style: context.textTheme.bodySmall?.copyWith(
+                //                     fontSize: 12,
+                //                   ),
+                //                 ),
+                //               ],
+                //             )
+                //           ],
+                //         ),
+                //       ),
+                //       Expanded(
+                //         child: ListView(
+                //           children: [
+                //             Container(
+                //               margin: const EdgeInsets.only(bottom: 10),
+                //               padding: const EdgeInsets.only(
+                //                 left: 20,
+                //                 right: 20,
+                //                 top: 15,
+                //                 bottom: 15,
+                //               ),
+                //               width: double.infinity,
+                //               color: Colors.white,
+                //               child: Row(
+                //                 mainAxisAlignment:
+                //                     MainAxisAlignment.spaceBetween,
+                //                 children: [
+                //                   _BalanceCard(wallet: wallet),
+                //                   _Transact(wallet: wallet)
+                //                 ],
+                //               ),
+                //             ).animate().slideIn(0),
+                //             Padding(
+                //               padding: const EdgeInsets.only(left: 20),
+                //               child: Text(
+                //                 'Activity',
+                //                 style: context.textTheme.labelMedium,
+                //                 textAlign: TextAlign.start,
+                //               ),
+                //             ),
+                //             for (int i = 0; i < transactions.length; i++)
+                //               TransactionCard(transaction: transactions[i])
+                //                   .animate()
+                //                   .slideIn(i * 50),
+                //             300.sH,
+                //           ],
+                //         ),
+                //       ),
+                //     ],
+                //   );
+                // }
                 if (state is WalletViewLoaded) {
                   final wallet = state.wallet;
                   final transactions = state.transactions;
+                  final balance = state.balance;
                   return Column(
                     children: [
                       Container(
                         width: context.width,
                         color: Colors.white,
-                        padding: const EdgeInsets.only(
-                          left: 5,
-                          right: 15,
-                          top: 5,
-                        ),
+                        padding:
+                            const EdgeInsets.only(left: 5, right: 15, top: 5),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
@@ -56,16 +134,11 @@ class WalletViewScreen extends StatelessWidget {
                               mainAxisSize: MainAxisSize.min,
                               children: [
                                 10.sH,
-                                Text(
-                                  '${wallet.description} wallet',
-                                  style: context.textTheme.labelMedium,
-                                ),
-                                Text(
-                                  '${wallet.id}',
-                                  style: context.textTheme.bodySmall?.copyWith(
-                                    fontSize: 12,
-                                  ),
-                                ),
+                                Text('${wallet.description} wallet',
+                                    style: context.textTheme.labelMedium),
+                                Text('${wallet.id}',
+                                    style: context.textTheme.bodySmall
+                                        ?.copyWith(fontSize: 12)),
                               ],
                             )
                           ],
@@ -76,19 +149,15 @@ class WalletViewScreen extends StatelessWidget {
                           children: [
                             Container(
                               margin: const EdgeInsets.only(bottom: 10),
-                              padding: const EdgeInsets.only(
-                                left: 20,
-                                right: 20,
-                                top: 15,
-                                bottom: 15,
-                              ),
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 20, vertical: 15),
                               width: double.infinity,
                               color: Colors.white,
                               child: Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
-                                  _BalanceCard(wallet: wallet),
+                                  _BalanceCard(balance: balance),
                                   _Transact(wallet: wallet)
                                 ],
                               ),
@@ -203,9 +272,58 @@ class _Transact extends StatelessWidget {
   }
 }
 
+// class _BalanceCard extends StatelessWidget {
+//   const _BalanceCard({required this.wallet});
+//   final Wallet wallet;
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Column(
+//       mainAxisSize: MainAxisSize.min,
+//       crossAxisAlignment: CrossAxisAlignment.start,
+//       children: [
+//         Text(
+//           "Total balance",
+//           style: context.textTheme.labelMedium!.copyWith(
+//             fontWeight: FontWeight.w600,
+//             fontSize: 16,
+//           ),
+//         ),
+//         const SizedBox(height: 5),
+//         Text(
+//           wallet.balance < 0
+//               ? '- R${wallet.balance.toStringAsFixed(2).substring(1)}'
+//               : 'R${wallet.balance.toStringAsFixed(2)}',
+//           style: context.textTheme.labelLarge!.copyWith(
+//             fontWeight: FontWeight.w600,
+//             fontSize: 25,
+//           ),
+//         ),
+//         Text(
+//           "Available balance",
+//           style: context.textTheme.labelMedium!.copyWith(
+//             fontWeight: FontWeight.w600,
+//             fontSize: 16,
+//           ),
+//         ),
+//         const SizedBox(height: 5),
+//         Text(
+//           wallet.balance < 0
+//               ? '- R${wallet.balance.toStringAsFixed(2).substring(1)}'
+//               : 'R${wallet.balance.toStringAsFixed(2)}',
+//           style: context.textTheme.labelLarge!.copyWith(
+//             fontWeight: FontWeight.w600,
+//             fontSize: 25,
+//           ),
+//         ),
+//       ],
+//     );
+//   }
+// }
+
 class _BalanceCard extends StatelessWidget {
-  const _BalanceCard({required this.wallet});
-  final Wallet wallet;
+  const _BalanceCard({required this.balance});
+  final WalletBalance balance;
 
   @override
   Widget build(BuildContext context) {
@@ -222,9 +340,9 @@ class _BalanceCard extends StatelessWidget {
         ),
         const SizedBox(height: 5),
         Text(
-          wallet.balance < 0
-              ? '- R${wallet.balance.toStringAsFixed(2).substring(1)}'
-              : 'R${wallet.balance.toStringAsFixed(2)}',
+          balance.totalBalance < 0
+              ? '- R${balance.totalBalance.toStringAsFixed(2).substring(1)}'
+              : 'R${balance.totalBalance.toStringAsFixed(2)}',
           style: context.textTheme.labelLarge!.copyWith(
             fontWeight: FontWeight.w600,
             fontSize: 25,
@@ -239,9 +357,9 @@ class _BalanceCard extends StatelessWidget {
         ),
         const SizedBox(height: 5),
         Text(
-          wallet.balance < 0
-              ? '- R${wallet.balance.toStringAsFixed(2).substring(1)}'
-              : 'R${wallet.balance.toStringAsFixed(2)}',
+          balance.availableBalance < 0
+              ? '- R${balance.availableBalance.toStringAsFixed(2).substring(1)}'
+              : 'R${balance.availableBalance.toStringAsFixed(2)}',
           style: context.textTheme.labelLarge!.copyWith(
             fontWeight: FontWeight.w600,
             fontSize: 25,

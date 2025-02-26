@@ -117,12 +117,27 @@ class WalletsRepository {
     return results;
   }
 
-  Future<Either<EESUpException, List<WalletBalance>>>
-      fetchWalletBalances() async {
-    final result = await _authRepo.executeFutureWithAuth((id) async {
-      final wallets = await _dataSource.fetchWalletBalances(id);
-      return wallets;
-    });
-    return result;
+  Future<Either<EESUpException, WalletBalance>> fetchWalletBalances(
+      String walletType) async {
+    try {
+      final result = await _authRepo.executeFutureWithAuth((id) async {
+        return await _dataSource.fetchWalletBalances(id, walletType);
+      });
+
+      // Ensure the result is not null before wrapping it in Right
+      return result.fold(
+        (failure) => Left(failure), // If Left, propagate the error
+        (walletBalance) {
+          if (walletBalance != null) {
+            return Right(walletBalance);
+          } else {
+            return Left(EESUpException(message: "Wallet balance not found."));
+          }
+        },
+      );
+    } catch (e) {
+      return Left(
+          EESUpException(message: "Failed to fetch wallet balance: $e"));
+    }
   }
 }

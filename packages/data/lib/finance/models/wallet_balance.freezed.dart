@@ -14,19 +14,12 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
-WalletBalance _$WalletBalanceFromJson(Map<String, dynamic> json) {
-  return _WalletBalance.fromJson(json);
-}
-
 /// @nodoc
 mixin _$WalletBalance {
   int get walletId => throw _privateConstructorUsedError;
   String get walletType => throw _privateConstructorUsedError;
-  double get availableBalance => throw _privateConstructorUsedError;
-  double get totalBalance => throw _privateConstructorUsedError;
-
-  /// Serializes this WalletBalance to a JSON map.
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  double? get availableBalance => throw _privateConstructorUsedError;
+  double? get totalBalance => throw _privateConstructorUsedError;
 
   /// Create a copy of WalletBalance
   /// with the given fields replaced by the non-null parameter values.
@@ -44,8 +37,8 @@ abstract class $WalletBalanceCopyWith<$Res> {
   $Res call(
       {int walletId,
       String walletType,
-      double availableBalance,
-      double totalBalance});
+      double? availableBalance,
+      double? totalBalance});
 }
 
 /// @nodoc
@@ -65,8 +58,8 @@ class _$WalletBalanceCopyWithImpl<$Res, $Val extends WalletBalance>
   $Res call({
     Object? walletId = null,
     Object? walletType = null,
-    Object? availableBalance = null,
-    Object? totalBalance = null,
+    Object? availableBalance = freezed,
+    Object? totalBalance = freezed,
   }) {
     return _then(_value.copyWith(
       walletId: null == walletId
@@ -77,14 +70,14 @@ class _$WalletBalanceCopyWithImpl<$Res, $Val extends WalletBalance>
           ? _value.walletType
           : walletType // ignore: cast_nullable_to_non_nullable
               as String,
-      availableBalance: null == availableBalance
+      availableBalance: freezed == availableBalance
           ? _value.availableBalance
           : availableBalance // ignore: cast_nullable_to_non_nullable
-              as double,
-      totalBalance: null == totalBalance
+              as double?,
+      totalBalance: freezed == totalBalance
           ? _value.totalBalance
           : totalBalance // ignore: cast_nullable_to_non_nullable
-              as double,
+              as double?,
     ) as $Val);
   }
 }
@@ -100,8 +93,8 @@ abstract class _$$WalletBalanceImplCopyWith<$Res>
   $Res call(
       {int walletId,
       String walletType,
-      double availableBalance,
-      double totalBalance});
+      double? availableBalance,
+      double? totalBalance});
 }
 
 /// @nodoc
@@ -119,8 +112,8 @@ class __$$WalletBalanceImplCopyWithImpl<$Res>
   $Res call({
     Object? walletId = null,
     Object? walletType = null,
-    Object? availableBalance = null,
-    Object? totalBalance = null,
+    Object? availableBalance = freezed,
+    Object? totalBalance = freezed,
   }) {
     return _then(_$WalletBalanceImpl(
       walletId: null == walletId
@@ -131,20 +124,20 @@ class __$$WalletBalanceImplCopyWithImpl<$Res>
           ? _value.walletType
           : walletType // ignore: cast_nullable_to_non_nullable
               as String,
-      availableBalance: null == availableBalance
+      availableBalance: freezed == availableBalance
           ? _value.availableBalance
           : availableBalance // ignore: cast_nullable_to_non_nullable
-              as double,
-      totalBalance: null == totalBalance
+              as double?,
+      totalBalance: freezed == totalBalance
           ? _value.totalBalance
           : totalBalance // ignore: cast_nullable_to_non_nullable
-              as double,
+              as double?,
     ));
   }
 }
 
 /// @nodoc
-@JsonSerializable()
+
 class _$WalletBalanceImpl implements _WalletBalance {
   const _$WalletBalanceImpl(
       {required this.walletId,
@@ -152,17 +145,14 @@ class _$WalletBalanceImpl implements _WalletBalance {
       required this.availableBalance,
       required this.totalBalance});
 
-  factory _$WalletBalanceImpl.fromJson(Map<String, dynamic> json) =>
-      _$$WalletBalanceImplFromJson(json);
-
   @override
   final int walletId;
   @override
   final String walletType;
   @override
-  final double availableBalance;
+  final double? availableBalance;
   @override
-  final double totalBalance;
+  final double? totalBalance;
 
   @override
   String toString() {
@@ -184,7 +174,6 @@ class _$WalletBalanceImpl implements _WalletBalance {
                 other.totalBalance == totalBalance));
   }
 
-  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(
       runtimeType, walletId, walletType, availableBalance, totalBalance);
@@ -196,33 +185,23 @@ class _$WalletBalanceImpl implements _WalletBalance {
   @pragma('vm:prefer-inline')
   _$$WalletBalanceImplCopyWith<_$WalletBalanceImpl> get copyWith =>
       __$$WalletBalanceImplCopyWithImpl<_$WalletBalanceImpl>(this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$WalletBalanceImplToJson(
-      this,
-    );
-  }
 }
 
 abstract class _WalletBalance implements WalletBalance {
   const factory _WalletBalance(
       {required final int walletId,
       required final String walletType,
-      required final double availableBalance,
-      required final double totalBalance}) = _$WalletBalanceImpl;
-
-  factory _WalletBalance.fromJson(Map<String, dynamic> json) =
-      _$WalletBalanceImpl.fromJson;
+      required final double? availableBalance,
+      required final double? totalBalance}) = _$WalletBalanceImpl;
 
   @override
   int get walletId;
   @override
   String get walletType;
   @override
-  double get availableBalance;
+  double? get availableBalance;
   @override
-  double get totalBalance;
+  double? get totalBalance;
 
   /// Create a copy of WalletBalance
   /// with the given fields replaced by the non-null parameter values.
