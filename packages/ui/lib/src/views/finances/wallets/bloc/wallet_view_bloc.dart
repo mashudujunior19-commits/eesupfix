@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:data/finance/models/transaction.dart';
 import 'package:data/finance/models/wallet.dart';
+import 'package:data/finance/models/wallet_balance.dart';
 import 'package:data/finance/repository/wallets_repository.dart';
 import 'package:meta/meta.dart';
 import 'package:data/utils/eesup_exception.dart';
@@ -37,6 +38,19 @@ class WalletViewBloc extends Bloc<WalletViewEvent, WalletViewState> {
         //transactions.sort((a, b) => a.id.compareTo(b.id));
       });
       emit(WalletViewLoaded(wallet, transactions));
+    });
+
+    on<WalletBalancesFetched>((event, emit) async {
+      emit(WalletViewInitial());
+
+      final balanceResult = await _walletsRepository.fetchWalletBalances();
+
+      balanceResult.fold((l) {
+        emit(WalletViewError(l));
+        return;
+      }, (balances) {
+        emit(WalletBalancesLoaded(balances));
+      });
     });
   }
 }

@@ -15,3 +15,8 @@ final class WalletViewLoaded extends WalletViewState {
   final List<Transaction> transactions;
   WalletViewLoaded(this.wallet, this.transactions);
 }
+
+class WalletBalancesLoaded extends WalletViewState {
+  final List<WalletBalance> balances;
+  WalletBalancesLoaded(this.balances);
+}

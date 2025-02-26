@@ -214,7 +214,24 @@ class _BalanceCard extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          "Your balance",
+          "Total balance",
+          style: context.textTheme.labelMedium!.copyWith(
+            fontWeight: FontWeight.w600,
+            fontSize: 16,
+          ),
+        ),
+        const SizedBox(height: 5),
+        Text(
+          wallet.balance < 0
+              ? '- R${wallet.balance.toStringAsFixed(2).substring(1)}'
+              : 'R${wallet.balance.toStringAsFixed(2)}',
+          style: context.textTheme.labelLarge!.copyWith(
+            fontWeight: FontWeight.w600,
+            fontSize: 25,
+          ),
+        ),
+        Text(
+          "Available balance",
           style: context.textTheme.labelMedium!.copyWith(
             fontWeight: FontWeight.w600,
             fontSize: 16,

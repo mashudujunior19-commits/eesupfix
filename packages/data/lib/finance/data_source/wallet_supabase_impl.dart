@@ -8,6 +8,8 @@ import 'package:data/finance/models/wallet.dart';
 import 'package:flutter/foundation.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../models/wallet_balance.dart';
+
 class WalletSupabaseImpl implements WalletDataSource {
   final SupabaseClient _client;
 
@@ -125,6 +127,22 @@ class WalletSupabaseImpl implements WalletDataSource {
         print(e);
       }
       return false;
+    }
+  }
+
+  @override
+  Future<List<WalletBalance>> fetchWalletBalances(String userId) async {
+    try {
+      final results = await _client
+          .schema('finances')
+          .rpc('get_wallet_balances_by_user', params: {'user_uuid': userId});
+
+      return (results as List).map((e) => WalletBalance.fromJson(e)).toList();
+    } catch (e) {
+      if (kDebugMode) {
+        print("Error fetching wallet balances: $e");
+      }
+      return [];
     }
   }
 }

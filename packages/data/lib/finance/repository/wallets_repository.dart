@@ -8,6 +8,8 @@ import 'package:data/finance/models/transaction.dart';
 import 'package:data/finance/models/wallet.dart';
 import 'package:data/finance/data_source/wallet_data_source.dart';
 
+import '../models/wallet_balance.dart';
+
 class WalletsRepository {
   final AuthRepository _authRepo;
   final WalletDataSource _dataSource;
@@ -107,11 +109,20 @@ class WalletsRepository {
 
   Future<Either<EESUpException, bool>> createPayoutRequest(
     PayoutRequest request,
-  ) async {   
+  ) async {
     final results = await _authRepo.executeFutureWithAuth((_) async {
       final found = await _dataSource.createPayoutRequest(request);
       return found;
     });
     return results;
+  }
+
+  Future<Either<EESUpException, List<WalletBalance>>>
+      fetchWalletBalances() async {
+    final result = await _authRepo.executeFutureWithAuth((id) async {
+      final wallets = await _dataSource.fetchWalletBalances(id);
+      return wallets;
+    });
+    return result;
   }
 }
