@@ -7,3 +7,5 @@ final class WalletViewFetched extends WalletViewEvent {
   final int id;
   WalletViewFetched(this.id);
 }
+
+class WalletBalancesFetched extends WalletViewEvent {}

@@ -639,11 +639,14 @@ abstract class _Profile implements Profile {
   @override
   @JsonKey(name: 'is_verified', includeToJson: false)
   bool get isVerified;
+  @override
+  @JsonKey(name: 'foreigner', includeToJson: true)
+  bool? get foreigner;
 
   /// Create a copy of Profile
   /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$ProfileImplCopyWith<_$ProfileImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

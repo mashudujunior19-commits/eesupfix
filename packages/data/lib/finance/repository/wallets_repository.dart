@@ -8,6 +8,8 @@ import 'package:data/finance/models/transaction.dart';
 import 'package:data/finance/models/wallet.dart';
 import 'package:data/finance/data_source/wallet_data_source.dart';
 
+import '../models/wallet_balance.dart';
+
 class WalletsRepository {
   final AuthRepository _authRepo;
   final WalletDataSource _dataSource;
@@ -57,6 +59,18 @@ class WalletsRepository {
     return results;
   }
 
+  // Future<Either<EESUpException, List<dynamic>>> searchTransferBeneficiary(
+  //   String query,
+  // ) async {
+  //   if (query.isEmpty) {
+  //     return Left(EESUpException(message: 'Type to search for beneficiary'));
+  //   }
+  //   final results = await _authRepo.executeFutureWithAuth((id) async {
+  //     final found = await _dataSource.searchTransferBeneficiary(query);
+  //     return found.where((e) => e['user_id'] != id).toList();
+  //   });
+  //   return results;
+  // }
   Future<Either<EESUpException, List<dynamic>>> searchTransferBeneficiary(
     String query,
   ) async {
@@ -65,7 +79,7 @@ class WalletsRepository {
     }
     final results = await _authRepo.executeFutureWithAuth((id) async {
       final found = await _dataSource.searchTransferBeneficiary(query);
-      return found.where((e) => e['user_id'] != id).toList();
+      return found;
     });
     return results;
   }
@@ -107,11 +121,35 @@ class WalletsRepository {
 
   Future<Either<EESUpException, bool>> createPayoutRequest(
     PayoutRequest request,
-  ) async {   
+  ) async {
     final results = await _authRepo.executeFutureWithAuth((_) async {
       final found = await _dataSource.createPayoutRequest(request);
       return found;
     });
     return results;
+  }
+
+  Future<Either<EESUpException, WalletBalance>> fetchWalletBalances(
+      String walletType) async {
+    try {
+      final result = await _authRepo.executeFutureWithAuth((id) async {
+        return await _dataSource.fetchWalletBalances(id, walletType);
+      });
+
+      // Ensure the result is not null before wrapping it in Right
+      return result.fold(
+        (failure) => Left(failure), // If Left, propagate the error
+        (walletBalance) {
+          if (walletBalance != null) {
+            return Right(walletBalance);
+          } else {
+            return Left(EESUpException(message: "Wallet balance not found."));
+          }
+        },
+      );
+    } catch (e) {
+      return Left(
+          EESUpException(message: "Failed to fetch wallet balance: $e"));
+    }
   }
 }

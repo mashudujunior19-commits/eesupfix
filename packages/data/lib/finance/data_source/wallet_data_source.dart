@@ -5,6 +5,8 @@ import 'package:data/finance/models/profit_allocation.dart';
 import 'package:data/finance/models/transaction.dart';
 import 'package:data/finance/models/wallet.dart';
 
+import '../models/wallet_balance.dart';
+
 abstract class WalletDataSource {
   Future<List<Wallet>> fetchWallets(String id);
   Future<Wallet> fetchWalletById(String userId, int id);
@@ -24,4 +26,6 @@ abstract class WalletDataSource {
   Future<ProfitAllocation> fetchProfitAllocation(UserRole role);
 
   Future<bool> createPayoutRequest(PayoutRequest request);
+
+  Future<WalletBalance?> fetchWalletBalances(String userId, String walletType);
 }

@@ -8,6 +8,8 @@ import 'package:data/finance/models/wallet.dart';
 import 'package:flutter/foundation.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../models/wallet_balance.dart';
+
 class WalletSupabaseImpl implements WalletDataSource {
   final SupabaseClient _client;
 
@@ -125,6 +127,28 @@ class WalletSupabaseImpl implements WalletDataSource {
         print(e);
       }
       return false;
+    }
+  }
+
+  @override
+  Future<WalletBalance?> fetchWalletBalances(
+      String userId, String walletType) async {
+    try {
+      final expectedWalletType = walletType.toLowerCase();
+      final results = await _client.schema('finances').rpc(
+        'get_wallet_balance_by_type',
+        params: {'user_uuid': userId, 'wallet_type_param': expectedWalletType},
+      );
+      if (results.isNotEmpty) {
+        return WalletBalance.fromJson(results.first);
+      } else {
+        return null; // No balance found
+      }
+    } catch (e) {
+      if (kDebugMode) {
+        print("Error fetching wallet balance: $e");
+      }
+      return null; // Return null instead of an empty list
     }
   }
 }
