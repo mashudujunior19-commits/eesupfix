@@ -26,6 +26,33 @@ class _TransferScreenState extends State<TransferScreen> {
   final _myRefController = TextEditingController();
   final _beneficiaryRefController = TextEditingController();
   dynamic _beneficiary;
+  String _selectedRecipientType =
+      'Beneficiary'; // Track whether the user selects "Beneficiary" or "Wallet"
+  Wallet? _selectedWallet;
+
+  List<Wallet> _availableWallets = [];
+
+  @override
+  void initState() {
+    super.initState();
+    _fetchAvailableWallets();
+  }
+
+  Future<void> _fetchAvailableWallets() async {
+    // Fetch the wallets for the user
+    final results = await context.read<WalletsRepository>().fetchWallets();
+    results.fold(
+      (l) {
+        // Handle errors here, maybe show a Snackbar
+        context.snackBarError(l.message);
+      },
+      (wallets) {
+        setState(() {
+          _availableWallets = wallets;
+        });
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -52,28 +79,65 @@ class _TransferScreenState extends State<TransferScreen> {
                         '${widget.wallet.description} - R${widget.wallet.balance.toStringAsFixed(2)}',
                   ),
                 ),
-                EESUpTextFormField(
-                  label: 'To',
-                  readOnly: true,
-                  isRequired: true,
-                  onTap: () {
-                    context
-                        .showBottomSheetDialog(
-                            child: const SearchTransferBeneficiaryDialog())
-                        .then((value) {
-                      if (value != null) {
-                        _beneficiary = value;
-                        setState(() {});
+                // New Dropdown for selecting between Beneficiary or Wallet
+                DropdownButtonFormField<String>(
+                  value: _selectedRecipientType,
+                  items: [
+                    DropdownMenuItem(
+                      child: Text('Beneficiary'),
+                      value: 'Beneficiary',
+                    ),
+                    DropdownMenuItem(
+                      child: Text('Wallet'),
+                      value: 'Wallet',
+                    ),
+                  ],
+                  onChanged: (value) {
+                    setState(() {
+                      _selectedRecipientType = value ?? 'Beneficiary';
+                      if (_selectedRecipientType == 'Beneficiary') {
+                        _selectedWallet = null;
                       }
                     });
                   },
-                  hintText: 'Search beneficiary..',
-                  controller: TextEditingController(
-                    text: _beneficiary == null
-                        ? null
-                        : '${_beneficiary?['full_name'] ?? '~'} -> ${_beneficiary['description']} wallet',
-                  ),
+                  decoration: const InputDecoration(labelText: 'To'),
                 ),
+                // If "Wallet" is selected, show wallet selection
+                if (_selectedRecipientType == 'Wallet')
+                  EESUpTextFormField(
+                    label: 'Select Wallet',
+                    readOnly: true,
+                    hintText: 'Choose a wallet...',
+                    controller: TextEditingController(
+                      text: _selectedWallet?.description ?? 'Select a wallet',
+                    ),
+                    onTap: () {
+                      _showWalletSelector(context);
+                    },
+                  ),
+                if (_selectedRecipientType == 'Beneficiary')
+                  EESUpTextFormField(
+                    label: 'To',
+                    readOnly: true,
+                    isRequired: true,
+                    onTap: () {
+                      context
+                          .showBottomSheetDialog(
+                              child: const SearchTransferBeneficiaryDialog())
+                          .then((value) {
+                        if (value != null) {
+                          _beneficiary = value;
+                          setState(() {});
+                        }
+                      });
+                    },
+                    hintText: 'Search beneficiary..',
+                    controller: TextEditingController(
+                      text: _beneficiary == null
+                          ? null
+                          : '${_beneficiary?['full_name'] ?? '~'} -> ${_beneficiary['description']} wallet',
+                    ),
+                  ),
                 EESUpTextFormField(
                   label: 'My Reference',
                   hintText: 'My reference',
@@ -98,8 +162,15 @@ class _TransferScreenState extends State<TransferScreen> {
                 const SizedBox(height: 15),
                 ElevatedButton(
                   onPressed: () {
-                    if (_beneficiary == null) {
+                    if (_selectedRecipientType == 'Beneficiary' &&
+                        _beneficiary == null) {
                       context.snackBarError('Please select a beneficiary');
+                      return;
+                    }
+
+                    if (_selectedRecipientType == 'Wallet' &&
+                        _selectedWallet == null) {
+                      context.snackBarError('Please select a wallet');
                       return;
                     }
 
@@ -121,28 +192,24 @@ class _TransferScreenState extends State<TransferScreen> {
 
                     final amount = double.tryParse(_amountController.text);
 
-                    if (amount == null) {
+                    if (amount == null || amount < 1) {
                       context.snackBarError('Please enter a valid amount');
                       return;
                     }
 
-                    if (amount < 1) {
-                      context.snackBarError('Please enter a valid amount');
-                      return;
-                    }
+                    final toWalletId = _selectedRecipientType == 'Wallet'
+                        ? _selectedWallet!.id
+                        : _beneficiary['wallet_id'];
 
-                    final toWallet = _beneficiary['wallet_id'];
-
-                    if (toWallet == null) {
-                      context
-                          .snackBarError('Please select a beneficiary wallet');
+                    if (toWalletId == null) {
+                      context.snackBarError('Please select a valid recipient');
                       return;
                     }
 
                     context.showAlertDialog(
                         'Confirm transfer',
                         'Are you sure you want to transfer R${amount.toStringAsFixed(2)} '
-                            'to ${_beneficiary['full_name']}?',
+                            'to ${_selectedRecipientType == 'Wallet' ? _selectedWallet!.description : _beneficiary['full_name']}?',
                         onNegative: () {},
                         negativeColor:
                             context.colorScheme.primary.withOpacity(.5),
@@ -154,7 +221,7 @@ class _TransferScreenState extends State<TransferScreen> {
                           .read<WalletsRepository>()
                           .transferFundsWalletToWallet(
                             fromWalletId: widget.wallet.id,
-                            toWalletId: toWallet,
+                            toWalletId: toWalletId,
                             amount: amount,
                             toRef: _beneficiaryRefController.text,
                             fromRef: _myRefController.text,
@@ -182,4 +249,194 @@ class _TransferScreenState extends State<TransferScreen> {
       ),
     );
   }
+
+  void _showWalletSelector(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      builder: (context) {
+        return ListView.builder(
+          itemCount: _availableWallets.length,
+          itemBuilder: (context, index) {
+            final wallet = _availableWallets[index];
+            return ListTile(
+              title: Text(wallet.description),
+              onTap: () {
+                setState(() {
+                  _selectedWallet = wallet;
+                });
+                Navigator.pop(context);
+              },
+            );
+          },
+        );
+      },
+    );
+  }
 }
+
+
+
+// class _TransferScreenState extends State<TransferScreen> {
+//   final _amountController = TextEditingController();
+//   final _myRefController = TextEditingController();
+//   final _beneficiaryRefController = TextEditingController();
+//   dynamic _beneficiary;
+
+
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return SafeArea(
+//       child: Scaffold(
+//         appBar: AppBar(
+//           leading: const BackButton(),
+//           centerTitle: true,
+//           title: const Text('Transfer'),
+//         ),
+//         body: Container(
+//           decoration: context.bgImage,
+//           child: Container(
+//             color: Colors.white.withOpacity(.5),
+//             child: ListView(
+//               padding: const EdgeInsets.only(left: 25, right: 25, bottom: 200),
+//               children: [
+//                 EESUpTextFormField(
+//                   label: 'From',
+//                   readOnly: false,
+//                   type: TextInputType.number,
+//                   controller: TextEditingController(
+//                     text:
+//                         '${widget.wallet.description} - R${widget.wallet.balance.toStringAsFixed(2)}',
+//                   ),
+//                 ),
+//                 EESUpTextFormField(
+//                   label: 'To',
+//                   readOnly: true,
+//                   isRequired: true,
+//                   onTap: () {
+//                     context
+//                         .showBottomSheetDialog(
+//                             child: const SearchTransferBeneficiaryDialog())
+//                         .then((value) {
+//                       if (value != null) {
+//                         _beneficiary = value;
+//                         setState(() {});
+//                       }
+//                     });
+//                   },
+//                   hintText: 'Search beneficiary..',
+//                   controller: TextEditingController(
+//                     text: _beneficiary == null
+//                         ? null
+//                         : '${_beneficiary?['full_name'] ?? '~'} -> ${_beneficiary['description']} wallet',
+//                   ),
+//                 ),
+//                 EESUpTextFormField(
+//                   label: 'My Reference',
+//                   hintText: 'My reference',
+//                   type: TextInputType.text,
+//                   controller: _myRefController,
+//                   isRequired: true,
+//                 ),
+//                 EESUpTextFormField(
+//                   label: 'Beneficiary Reference',
+//                   hintText: 'Beneficiary reference',
+//                   type: TextInputType.text,
+//                   controller: _beneficiaryRefController,
+//                   isRequired: true,
+//                 ),
+//                 EESUpTextFormField(
+//                   label: 'Amount',
+//                   hintText: '50.00',
+//                   type: TextInputType.number,
+//                   controller: _amountController,
+//                   isRequired: true,
+//                 ),
+//                 const SizedBox(height: 15),
+//                 ElevatedButton(
+//                   onPressed: () {
+//                     if (_beneficiary == null) {
+//                       context.snackBarError('Please select a beneficiary');
+//                       return;
+//                     }
+
+//                     if (_myRefController.text.isEmpty) {
+//                       context.snackBarError('Please enter your reference');
+//                       return;
+//                     }
+
+//                     if (_beneficiaryRefController.text.isEmpty) {
+//                       context
+//                           .snackBarError('Please enter beneficiary reference');
+//                       return;
+//                     }
+
+//                     if (_amountController.text.isEmpty) {
+//                       context.snackBarError('Please enter an amount');
+//                       return;
+//                     }
+
+//                     final amount = double.tryParse(_amountController.text);
+
+//                     if (amount == null) {
+//                       context.snackBarError('Please enter a valid amount');
+//                       return;
+//                     }
+
+//                     if (amount < 1) {
+//                       context.snackBarError('Please enter a valid amount');
+//                       return;
+//                     }
+
+//                     final toWallet = _beneficiary['wallet_id'];
+
+//                     if (toWallet == null) {
+//                       context
+//                           .snackBarError('Please select a beneficiary wallet');
+//                       return;
+//                     }
+
+//                     context.showAlertDialog(
+//                         'Confirm transfer',
+//                         'Are you sure you want to transfer R${amount.toStringAsFixed(2)} '
+//                             'to ${_beneficiary['full_name']}?',
+//                         onNegative: () {},
+//                         negativeColor:
+//                             context.colorScheme.primary.withOpacity(.5),
+//                         positiveColor: context.colorScheme.primary,
+//                         positiveText: 'Transfer',
+//                         negativeText: 'Cancel', onPositive: () async {
+//                       context.loaderOverlay.show();
+//                       final results = await context
+//                           .read<WalletsRepository>()
+//                           .transferFundsWalletToWallet(
+//                             fromWalletId: widget.wallet.id,
+//                             toWalletId: toWallet,
+//                             amount: amount,
+//                             toRef: _beneficiaryRefController.text,
+//                             fromRef: _myRefController.text,
+//                           );
+//                       context.loaderOverlay.hide();
+
+//                       results.fold((l) {
+//                         context.snackBarError(l.message);
+//                       }, (r) {
+//                         if (r != null) {
+//                           context.snackBarSuccess('Transfer successful');
+//                           Navigator.pop(context);
+//                         } else {
+//                           context.snackBarError('Transfer failed');
+//                         }
+//                       });
+//                     });
+//                   },
+//                   child: const Text('Transfer'),
+//                 )
+//               ],
+//             ),
+//           ),
+//         ),
+//       ),
+//     );
+//   }
+// }

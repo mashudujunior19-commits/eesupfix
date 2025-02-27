@@ -59,6 +59,18 @@ class WalletsRepository {
     return results;
   }
 
+  // Future<Either<EESUpException, List<dynamic>>> searchTransferBeneficiary(
+  //   String query,
+  // ) async {
+  //   if (query.isEmpty) {
+  //     return Left(EESUpException(message: 'Type to search for beneficiary'));
+  //   }
+  //   final results = await _authRepo.executeFutureWithAuth((id) async {
+  //     final found = await _dataSource.searchTransferBeneficiary(query);
+  //     return found.where((e) => e['user_id'] != id).toList();
+  //   });
+  //   return results;
+  // }
   Future<Either<EESUpException, List<dynamic>>> searchTransferBeneficiary(
     String query,
   ) async {
@@ -67,7 +79,7 @@ class WalletsRepository {
     }
     final results = await _authRepo.executeFutureWithAuth((id) async {
       final found = await _dataSource.searchTransferBeneficiary(query);
-      return found.where((e) => e['user_id'] != id).toList();
+      return found;
     });
     return results;
   }
