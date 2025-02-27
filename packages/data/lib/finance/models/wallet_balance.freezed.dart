@@ -14,12 +14,19 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
+WalletBalance _$WalletBalanceFromJson(Map<String, dynamic> json) {
+  return _WalletBalance.fromJson(json);
+}
+
 /// @nodoc
 mixin _$WalletBalance {
   int get walletId => throw _privateConstructorUsedError;
   String get walletType => throw _privateConstructorUsedError;
   double? get availableBalance => throw _privateConstructorUsedError;
   double? get totalBalance => throw _privateConstructorUsedError;
+
+  /// Serializes this WalletBalance to a JSON map.
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
 
   /// Create a copy of WalletBalance
   /// with the given fields replaced by the non-null parameter values.
@@ -137,13 +144,16 @@ class __$$WalletBalanceImplCopyWithImpl<$Res>
 }
 
 /// @nodoc
-
+@JsonSerializable()
 class _$WalletBalanceImpl implements _WalletBalance {
   const _$WalletBalanceImpl(
       {required this.walletId,
       required this.walletType,
       required this.availableBalance,
       required this.totalBalance});
+
+  factory _$WalletBalanceImpl.fromJson(Map<String, dynamic> json) =>
+      _$$WalletBalanceImplFromJson(json);
 
   @override
   final int walletId;
@@ -174,6 +184,7 @@ class _$WalletBalanceImpl implements _WalletBalance {
                 other.totalBalance == totalBalance));
   }
 
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(
       runtimeType, walletId, walletType, availableBalance, totalBalance);
@@ -185,6 +196,13 @@ class _$WalletBalanceImpl implements _WalletBalance {
   @pragma('vm:prefer-inline')
   _$$WalletBalanceImplCopyWith<_$WalletBalanceImpl> get copyWith =>
       __$$WalletBalanceImplCopyWithImpl<_$WalletBalanceImpl>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$WalletBalanceImplToJson(
+      this,
+    );
+  }
 }
 
 abstract class _WalletBalance implements WalletBalance {
@@ -193,6 +211,9 @@ abstract class _WalletBalance implements WalletBalance {
       required final String walletType,
       required final double? availableBalance,
       required final double? totalBalance}) = _$WalletBalanceImpl;
+
+  factory _WalletBalance.fromJson(Map<String, dynamic> json) =
+      _$WalletBalanceImpl.fromJson;
 
   @override
   int get walletId;

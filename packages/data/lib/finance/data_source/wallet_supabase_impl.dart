@@ -134,17 +134,11 @@ class WalletSupabaseImpl implements WalletDataSource {
   Future<WalletBalance?> fetchWalletBalances(
       String userId, String walletType) async {
     try {
-      print('user id : $userId');
-      print('wallet type : $walletType');
-
       final expectedWalletType = walletType.toLowerCase();
-      print('lower case type : $expectedWalletType');
       final results = await _client.schema('finances').rpc(
         'get_wallet_balance_by_type',
         params: {'user_uuid': userId, 'wallet_type_param': expectedWalletType},
       );
-      print('raw response : $results');
-
       if (results.isNotEmpty) {
         return WalletBalance.fromJson(results.first);
       } else {

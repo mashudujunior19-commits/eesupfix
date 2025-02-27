@@ -340,12 +340,13 @@ class _BalanceCard extends StatelessWidget {
         ),
         const SizedBox(height: 5),
         Text(
-          balance.totalBalance < 0
-              ? '- R${balance.totalBalance.toStringAsFixed(2).substring(1)}'
-              : 'R${balance.totalBalance.toStringAsFixed(2)}',
+          balance.totalBalance! < 0
+              ? '- R${balance.totalBalance!.toStringAsFixed(2).substring(1)}'
+              : 'R${balance.totalBalance!.toStringAsFixed(2)}',
           style: context.textTheme.labelLarge!.copyWith(
             fontWeight: FontWeight.w600,
             fontSize: 25,
+            color: balance.totalBalance! < 0 ? Colors.red : Colors.black,
           ),
         ),
         Text(
@@ -357,9 +358,9 @@ class _BalanceCard extends StatelessWidget {
         ),
         const SizedBox(height: 5),
         Text(
-          balance.availableBalance < 0
-              ? '- R${balance.availableBalance.toStringAsFixed(2).substring(1)}'
-              : 'R${balance.availableBalance.toStringAsFixed(2)}',
+          balance.availableBalance! < 0
+              ? '- R${balance.availableBalance!.toStringAsFixed(2).substring(1)}'
+              : 'R${balance.availableBalance!.toStringAsFixed(2)}',
           style: context.textTheme.labelLarge!.copyWith(
             fontWeight: FontWeight.w600,
             fontSize: 25,

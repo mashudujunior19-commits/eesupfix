@@ -13,9 +13,12 @@ class WalletBalance with _$WalletBalance {
   }) = _WalletBalance;
 
   factory WalletBalance.fromJson(Map<String, dynamic> json) {
-    return _$WalletBalanceFromJson(json).copyWith(
-      availableBalance: json['available_balance'] ?? 0.0,
-      totalBalance: json['total_balance'] ?? 0.0,
-    );
+    return _$WalletBalanceFromJson({
+      'walletId': json['wallet_id'] as int,
+      'walletType': json['wallet_type'] as String,
+      'availableBalance':
+          (json['available_balance'] as num?)?.toDouble() ?? 0.0,
+      'totalBalance': (json['total_balance'] as num?)?.toDouble() ?? 0.0,
+    });
   }
 }
