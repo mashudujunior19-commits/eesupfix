@@ -26,8 +26,7 @@ class _TransferScreenState extends State<TransferScreen> {
   final _myRefController = TextEditingController();
   final _beneficiaryRefController = TextEditingController();
   dynamic _beneficiary;
-  String _selectedRecipientType =
-      'Beneficiary'; // Track whether the user selects "Beneficiary" or "Wallet"
+  String _selectedRecipientType = 'Beneficiary';
   Wallet? _selectedWallet;
 
   List<Wallet> _availableWallets = [];
@@ -39,11 +38,9 @@ class _TransferScreenState extends State<TransferScreen> {
   }
 
   Future<void> _fetchAvailableWallets() async {
-    // Fetch the wallets for the user
     final results = await context.read<WalletsRepository>().fetchWallets();
     results.fold(
       (l) {
-        // Handle errors here, maybe show a Snackbar
         context.snackBarError(l.message);
       },
       (wallets) {
@@ -52,6 +49,15 @@ class _TransferScreenState extends State<TransferScreen> {
         });
       },
     );
+  }
+
+  // Check if the selected wallet is from Wealth/Social
+  void _checkTransferAvailability() {
+    if (widget.wallet.description == 'Wealth' ||
+        widget.wallet.description == 'Social') {
+      context
+          .snackBarError('Wallet transfers are not allowed from this wallet');
+    }
   }
 
   @override
@@ -70,26 +76,17 @@ class _TransferScreenState extends State<TransferScreen> {
             child: ListView(
               padding: const EdgeInsets.only(left: 25, right: 25, bottom: 200),
               children: [
-                EESUpTextFormField(
-                  label: 'From',
-                  readOnly: false,
-                  type: TextInputType.number,
-                  controller: TextEditingController(
-                    text:
-                        '${widget.wallet.description} - R${widget.wallet.balance.toStringAsFixed(2)}',
-                  ),
-                ),
-                // New Dropdown for selecting between Beneficiary or Wallet
+                // Show only one "To" field after selection
                 DropdownButtonFormField<String>(
                   value: _selectedRecipientType,
                   items: [
                     DropdownMenuItem(
-                      child: Text('Beneficiary'),
                       value: 'Beneficiary',
+                      child: Text('Beneficiary'),
                     ),
                     DropdownMenuItem(
-                      child: Text('Wallet'),
                       value: 'Wallet',
+                      child: Text('Wallet'),
                     ),
                   ],
                   onChanged: (value) {
@@ -100,9 +97,10 @@ class _TransferScreenState extends State<TransferScreen> {
                       }
                     });
                   },
-                  decoration: const InputDecoration(labelText: 'To'),
+                  decoration:
+                      const InputDecoration(labelText: 'Recipient Type'),
                 ),
-                // If "Wallet" is selected, show wallet selection
+                // Show Beneficiary or Wallet selection based on recipient type
                 if (_selectedRecipientType == 'Wallet')
                   EESUpTextFormField(
                     label: 'Select Wallet',
@@ -162,6 +160,14 @@ class _TransferScreenState extends State<TransferScreen> {
                 const SizedBox(height: 15),
                 ElevatedButton(
                   onPressed: () {
+                    // Check if wallet transfers are allowed
+                    if (widget.wallet.description == 'Wealth' ||
+                        widget.wallet.description == 'Social') {
+                      _checkTransferAvailability();
+                      return;
+                    }
+
+                    // Validate if the user has selected a beneficiary or wallet
                     if (_selectedRecipientType == 'Beneficiary' &&
                         _beneficiary == null) {
                       context.snackBarError('Please select a beneficiary');
@@ -196,7 +202,10 @@ class _TransferScreenState extends State<TransferScreen> {
                       context.snackBarError('Please enter a valid amount');
                       return;
                     }
-
+                    if (amount > widget.wallet.balance) {
+                      context.snackBarError('Insufficient funds!!!');
+                      return;
+                    }
                     final toWalletId = _selectedRecipientType == 'Wallet'
                         ? _selectedWallet!.id
                         : _beneficiary['wallet_id'];
@@ -250,29 +259,38 @@ class _TransferScreenState extends State<TransferScreen> {
     );
   }
 
-  void _showWalletSelector(BuildContext context) {
-    showModalBottomSheet(
+  // Method to show wallet selector
+  Future<void> _showWalletSelector(BuildContext context) async {
+    final selected = await showDialog<Wallet>(
       context: context,
       builder: (context) {
-        return ListView.builder(
-          itemCount: _availableWallets.length,
-          itemBuilder: (context, index) {
-            final wallet = _availableWallets[index];
-            return ListTile(
-              title: Text(wallet.description),
-              onTap: () {
-                setState(() {
-                  _selectedWallet = wallet;
-                });
-                Navigator.pop(context);
-              },
-            );
-          },
+        return AlertDialog(
+          title: const Text('Select Wallet'),
+          content: SingleChildScrollView(
+            child: Column(
+              children: _availableWallets
+                  .map((wallet) => ListTile(
+                        title: Text(wallet.description),
+                        subtitle: Text(
+                            'Balance: R${wallet.balance.toStringAsFixed(2)}'),
+                        onTap: () {
+                          Navigator.pop(context, wallet);
+                        },
+                      ))
+                  .toList(),
+            ),
+          ),
         );
       },
     );
+    if (selected != null) {
+      setState(() {
+        _selectedWallet = selected;
+      });
+    }
   }
 }
+
 
 
 
