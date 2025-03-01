@@ -74,8 +74,6 @@ class QuestionBody extends StatelessWidget {
         return TimePicker(question: question);
       case QuestionType.dateTime:
         return DateTimePicker(question: question);
-      default:
-        return Container();
     }
   }
 }

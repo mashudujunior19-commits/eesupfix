@@ -105,51 +105,6 @@ class CartScreen extends StatelessWidget {
           : null,
     );
   }
-
-  void _showHamperDialog(BuildContext context, Product hamperProduct) {
-    showDialog(
-      context: context,
-      builder: (context) {
-        return AlertDialog(
-          title: Text(
-            'Hamper Match Found!',
-            style: context.textTheme.bodyMedium,
-          ),
-          content: Text(
-            'Would you like to add the hamper to your cart?',
-            style: context.textTheme.bodyMedium,
-          ),
-          actions: [
-            TextButton(
-              onPressed: () {
-                context.read<CartBloc>().add(
-                      ProductAddedToCart(
-                        OrderProduct(
-                          productId: hamperProduct.id,
-                          quantity: 1,
-                          price: hamperProduct.salePrice,
-                          name: hamperProduct.name,
-                          imageUrl: hamperProduct.imageUrl,
-                        ),
-                      ),
-                    );
-                Navigator.pop(context);
-                context
-                    .snackBarSuccess('The hamper has been added to your cart!');
-              },
-              child: const Text('Add to Cart'),
-            ),
-            TextButton(
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              child: const Text('Cancel'),
-            ),
-          ],
-        );
-      },
-    );
-  }
 }
 
 class _CheckoutTotal extends StatelessWidget {

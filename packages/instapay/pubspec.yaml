@@ -10,7 +10,7 @@ dependencies:
   flutter:
     sdk: flutter
   freezed_annotation: ^3.0.0
-  webview_flutter: ^4.7.0
+  webview_flutter: ^4.10.0
 
 dev_dependencies:
   flutter_test:

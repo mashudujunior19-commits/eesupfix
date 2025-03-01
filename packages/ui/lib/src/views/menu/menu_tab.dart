@@ -187,7 +187,6 @@ class _MenuButton extends StatelessWidget {
     required this.label,
     required this.icon,
     required this.onTap,
-   
   });
 
   final String label;
@@ -238,23 +237,17 @@ class _MenuButton extends StatelessWidget {
 
 class _MenuButtonTile extends StatelessWidget {
   const _MenuButtonTile({
-    required this.label,
     this.icon,
-    required this.onTap,
     this.showBorder = true,
-    this.imagePath,
-    this.counter,
+    required this.label,
+    required this.onTap,
     required this.isVisible,
-    this.size,
   });
-  final String? imagePath;
   final String label;
   final IconData? icon;
   final VoidCallback? onTap;
-  final int? counter;
   final bool isVisible;
   final bool showBorder;
-  final double? size;
 
   @override
   Widget build(BuildContext context) {
@@ -278,24 +271,14 @@ class _MenuButtonTile extends StatelessWidget {
         padding: const EdgeInsets.only(left: 15, right: 15),
         child: Row(
           children: [
-            if (imagePath != null)
-              Padding(
-                padding: const EdgeInsets.only(bottom: 2),
-                child: Image.asset(
-                  imagePath!,
-                  width: size ?? 22,
-                  height: size ?? 21,
-                ),
-              )
-            else
-              Padding(
-                padding: const EdgeInsets.only(bottom: 2),
-                child: Icon(
-                  icon,
-                  color: Colors.black,
-                  size: 22,
-                ),
+            Padding(
+              padding: const EdgeInsets.only(bottom: 2),
+              child: Icon(
+                icon,
+                color: Colors.black,
+                size: 22,
               ),
+            ),
             Expanded(
               child: Container(
                 margin: const EdgeInsets.only(left: 15),

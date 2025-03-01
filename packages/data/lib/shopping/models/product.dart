@@ -89,8 +89,6 @@ enum ProductClass {
         return 'Airtime';
       case ProductClass.mobileData:
         return 'Mobile-data';
-      default:
-        return 'Food';
     }
   }
 }

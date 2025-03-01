@@ -53,11 +53,7 @@ enum EESUpoolLevel {
         return 'Kasi';
       case EESUpoolLevel.Street:
         return 'Street';
-      default:
-        throw Exception(
-          'Unknown EESUpoolLevel: $this',
-        );
-    }
+      }
   }
 
   EESUpoolLevel? get child => {
@@ -97,11 +93,7 @@ enum EESUpoolLevel {
         return [EESUpoolLevel.Street];
       case EESUpoolLevel.Street:
         return [];
-      default:
-        throw Exception(
-          'Unknown EESUpoolLevel: $this',
-        );
-    }
+      }
   }
 
   // List<EESUpoolLevel> get higherLevels => {

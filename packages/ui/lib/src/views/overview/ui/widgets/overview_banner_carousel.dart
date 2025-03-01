@@ -188,7 +188,7 @@ class OverviewBannerCarousel extends StatelessWidget {
 
     return FlutterCarousel(
       options: FlutterCarouselOptions(
-        height: 270,
+        height: 150,
         showIndicator: false,
         autoPlay: true,
         enableInfiniteScroll: true,

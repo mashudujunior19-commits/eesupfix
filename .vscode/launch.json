@@ -1,26 +1,20 @@
 {
     "configurations": [
         {
-            "name": "EESUp DEV",
+            "name": "Release",
             "type": "dart",
             "request": "launch",
-            "cwd": "apps/eesup_v2",
-            "program": "lib/main.dart",
-            "args": [
-                "--dart-define",
-                "ENV=dev"
-            ]
+            "cwd": "app",
+            "noDebug": true,
+            "program": "lib/main.dart"
         },
         {
-            "name": "EESUp PROD",
+            "name": "Dev",
             "type": "dart",
             "request": "launch",
-            "cwd": "apps/eesup_v2",
-            "program": "lib/main.dart",
-            "args": [
-                "--dart-define",
-                "ENV=prod"
-            ]
+            "noDebug": true,
+            "cwd": "app",
+            "program": "lib/main_development.dart"
         }
     ]
 }

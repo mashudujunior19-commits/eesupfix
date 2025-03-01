@@ -31,9 +31,7 @@ enum UserRole {
         return 'Driver';
       case UserRole.Spaza:
         return 'Spaza';
-      default:
-        throw Exception('Unknown role: $this');
-    }
+      }
   }
 
   factory UserRole.fromStr(String role) {

@@ -136,8 +136,6 @@ enum QuestionType {
         return 'Time';
       case QuestionType.dateTime:
         return 'Date & Time';
-      default:
-        return 'Multiple Choice';
     }
   }
 }

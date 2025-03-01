@@ -110,20 +110,6 @@ class RegisterForm with RegisterFormMappable {
     String fullYear = (century + int.parse(year)).toString();
     return DateTime(int.parse(fullYear), int.parse(month), int.parse(day));
   }
-
-  int _calculateAge(DateTime birthDate) {
-    DateTime today = DateTime.now();
-    int age = today.year - birthDate.year;
-
-    // Adjust for birthdays not yet occurred this year
-    if (today.month < birthDate.month ||
-        (today.month == birthDate.month && today.day < birthDate.day)) {
-      age--;
-    }
-
-    return age;
-  }
-
   Map<String, dynamic> toJson() {
     if (isCorp) {
       return {

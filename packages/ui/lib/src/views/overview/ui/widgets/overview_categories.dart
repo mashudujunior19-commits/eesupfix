@@ -3,7 +3,6 @@ import 'package:data/shopping/models/category.dart';
 import 'package:ui/src/core/extensions/context_theme_ext.dart';
 import 'package:ui/app_route.gr.dart';
 import 'package:flutter/material.dart';
-import 'package:shimmer/shimmer.dart';
 
 class OverviewCategories extends StatelessWidget {
   const OverviewCategories({super.key, required this.categories});
@@ -51,39 +50,6 @@ class OverviewCategories extends StatelessWidget {
               ),
             ),
           ],
-        ),
-      ),
-    );
-  }
-}
-
-class _LoadingShimmer extends StatelessWidget {
-  const _LoadingShimmer();
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(left: 15, right: 15),
-      child: Shimmer.fromColors(
-        baseColor: Colors.grey.shade300.withOpacity(.5),
-        highlightColor: Colors.white,
-        child: SingleChildScrollView(
-          scrollDirection: Axis.horizontal,
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: List.generate(
-              5,
-              (index) => Container(
-                width: 100,
-                height: 20,
-                margin: const EdgeInsets.only(right: 10),
-                decoration: BoxDecoration(
-                  color: Colors.grey[300],
-                  borderRadius: BorderRadius.circular(10),
-                ),
-              ),
-            ),
-          ),
         ),
       ),
     );

@@ -63,8 +63,6 @@ enum TicketResolutionType {
         return 'We will refund the money for these products, into your retail wallet.';
       case TicketResolutionType.reorder:
         return 'We will reorder the products for you. and a new order will be created.';
-      default:
-        return 'Unknown';
     }
   }
 
@@ -75,8 +73,6 @@ enum TicketResolutionType {
         return 'Refund';
       case TicketResolutionType.reorder:
         return 'Reorder';
-      default:
-        return 'Unknown';
     }
   }
 }

@@ -26,8 +26,6 @@ enum PaymentMethod {
         return 'Split-Instapay';
       case PaymentMethod.splitYoco:
         return 'Split-Yoco';
-      default:
-        return 'Retail wallet';
     }
   }
 

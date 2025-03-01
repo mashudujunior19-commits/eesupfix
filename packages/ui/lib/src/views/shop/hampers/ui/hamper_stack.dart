@@ -237,11 +237,11 @@ class _HamperImageStackState extends State<HamperImageStack> {
             children: [
               if (widget.imgUrl != null && widget.imgUrl!.isNotEmpty)
                 SizedBox(
-                  height: MediaQuery.of(context).size.height,
+                 
                   width: MediaQuery.of(context).size.width,
                   child: Image.network(
                     widget.imgUrl!,
-                    fit: BoxFit.fill,
+                    fit: BoxFit.contain,
                     errorBuilder: (context, error, stackTrace) {
                       return Center(
                         child: Text('Failed to load image',

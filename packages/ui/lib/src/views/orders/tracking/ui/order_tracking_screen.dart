@@ -16,7 +16,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 @RoutePage()
 class OrderTrackingScreen extends StatelessWidget {
   const OrderTrackingScreen(
-      {super.key, required this.id, required this.privilage});
+      {
+    super.key,
+    required this.id,
+    required this.privilage,
+  });
   final OrderEditPrivilage privilage;
   final int id;
 

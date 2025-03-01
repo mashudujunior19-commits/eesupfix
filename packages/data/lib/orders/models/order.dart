@@ -163,8 +163,6 @@ enum OrderStatus {
         return 'Dispatched';
       case OrderStatus.cancelled:
         return 'Cancelled';
-      default:
-        return 'Pending';
     }
   }
 }

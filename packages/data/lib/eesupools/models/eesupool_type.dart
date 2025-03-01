@@ -28,8 +28,6 @@ enum EESUpoolType {
         return 'Kasi';
       case EESUpoolType.interestGroup:
         return 'Interest Group';
-      default:
-        return 'Trade';
     }
   }
 
