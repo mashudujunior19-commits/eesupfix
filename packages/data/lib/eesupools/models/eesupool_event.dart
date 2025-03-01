@@ -8,7 +8,7 @@ part 'eesupool_event.freezed.dart';
 part 'eesupool_event.g.dart';
 
 @freezed
-class EESUpoolEvent with _$EESUpoolEvent {
+abstract class EESUpoolEvent with _$EESUpoolEvent {
   const factory EESUpoolEvent({
     @JsonKey(includeToJson: false) required String id,
     @JsonKey(name: 'eesupool_id') required int eesupoolId,

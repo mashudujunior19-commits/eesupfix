@@ -164,7 +164,6 @@
 // }
 
 import 'package:auto_route/auto_route.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:data/orders/models/order_product.dart';
 import 'package:data/shopping/models/product.dart';
 import 'package:data/shopping/repository/shopping_repository.dart';
@@ -237,7 +236,7 @@ class _HamperImageStackState extends State<HamperImageStack> {
             alignment: Alignment.center,
             children: [
               if (widget.imgUrl != null && widget.imgUrl!.isNotEmpty)
-                Container(
+                SizedBox(
                   height: MediaQuery.of(context).size.height,
                   width: MediaQuery.of(context).size.width,
                   child: Image.network(

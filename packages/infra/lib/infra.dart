@@ -1,4 +1,4 @@
-library infra;
+library;
 
 export 'package:email_validator/email_validator.dart';
 export 'package:get_it/get_it.dart';

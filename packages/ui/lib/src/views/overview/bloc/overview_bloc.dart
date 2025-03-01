@@ -67,7 +67,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:data/auth/models/user_role.dart';
 import 'package:data/shopping/models/category.dart';
-import 'package:data/shopping/models/hamper_banner.dart';
 import 'package:data/shopping/models/hamper_banner_details.dart';
 import 'package:data/shopping/models/product.dart';
 import 'package:data/shopping/repository/shopping_repository.dart';

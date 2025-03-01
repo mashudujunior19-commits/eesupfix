@@ -8,7 +8,7 @@ part 'eesupool_order.freezed.dart';
 part 'eesupool_order.g.dart';
 
 @freezed
-class EESUpoolOrder with _$EESUpoolOrder {
+abstract class EESUpoolOrder with _$EESUpoolOrder {
   const factory EESUpoolOrder({
     @JsonKey(includeToJson: false) required int id,
     @JsonKey(name: 'eesupool_id') required int eesupoolId,
@@ -43,7 +43,7 @@ class EESUpoolOrder with _$EESUpoolOrder {
 }
 
 @freezed
-class MemberOrderAssignment with _$MemberOrderAssignment {
+abstract class MemberOrderAssignment with _$MemberOrderAssignment {
   const factory MemberOrderAssignment({
     @JsonKey(name: 'order_id') required int orderId,
     @JsonKey(name: 'eesupool_ord_id') required int eesupoolOrderId,

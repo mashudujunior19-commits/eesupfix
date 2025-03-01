@@ -103,7 +103,9 @@ class _HamperViewPageState extends State<HamperViewPage> {
             }
             if (selectedHamper != null &&
                 products.isNotEmpty &&
-                hamperProduct != null) setState(() {});
+                hamperProduct != null) {
+              setState(() {});
+            }
           },
           child: BlocBuilder<HamperBloc, HamperState>(
             builder: (context, state) {
@@ -280,7 +282,7 @@ class _HamperViewPageState extends State<HamperViewPage> {
 
   Widget buildImageStack(
       String? imgUrl, String? hamperGifUrl1, String? hamperGifUrl2) {
-    return Container(
+    return SizedBox(
       width: double.infinity,
       height: 180,
       child: Stack(

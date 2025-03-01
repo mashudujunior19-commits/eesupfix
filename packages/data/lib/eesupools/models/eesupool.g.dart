@@ -6,8 +6,7 @@ part of 'eesupool.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$EESUpoolImpl _$$EESUpoolImplFromJson(Map<String, dynamic> json) =>
-    _$EESUpoolImpl(
+_EESUpool _$EESUpoolFromJson(Map<String, dynamic> json) => _EESUpool(
       eesupoolId: (json['eesupool_id'] as num?)?.toInt(),
       name: json['name'] as String,
       description: json['description'] as String?,
@@ -41,8 +40,7 @@ _$EESUpoolImpl _$$EESUpoolImplFromJson(Map<String, dynamic> json) =>
           json['address'], const AddressConverter().fromJson),
     );
 
-Map<String, dynamic> _$$EESUpoolImplToJson(_$EESUpoolImpl instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$EESUpoolToJson(_EESUpool instance) => <String, dynamic>{
       'name': instance.name,
       'description': instance.description,
       'admin_fee': instance.adminFee,

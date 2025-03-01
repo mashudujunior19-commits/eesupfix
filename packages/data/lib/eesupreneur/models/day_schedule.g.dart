@@ -6,8 +6,7 @@ part of 'day_schedule.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$DayScheduleImpl _$$DayScheduleImplFromJson(Map<String, dynamic> json) =>
-    _$DayScheduleImpl(
+_DaySchedule _$DayScheduleFromJson(Map<String, dynamic> json) => _DaySchedule(
       day: json['day'] as String,
       index: (json['index'] as num).toInt(),
       openTime: json['open'] as String,
@@ -15,7 +14,7 @@ _$DayScheduleImpl _$$DayScheduleImplFromJson(Map<String, dynamic> json) =>
       isClosed: json['is_closed'] as bool,
     );
 
-Map<String, dynamic> _$$DayScheduleImplToJson(_$DayScheduleImpl instance) =>
+Map<String, dynamic> _$DayScheduleToJson(_DaySchedule instance) =>
     <String, dynamic>{
       'day': instance.day,
       'index': instance.index,

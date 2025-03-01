@@ -6,7 +6,7 @@ part 'chat_message_reaction.freezed.dart';
 part 'chat_message_reaction.g.dart';
 
 @freezed
-class ChatMessageReaction with _$ChatMessageReaction {
+abstract class ChatMessageReaction with _$ChatMessageReaction {
   const factory ChatMessageReaction({
     @JsonKey(name: 'message_id') required int messageId,
     @JsonKey(name: 'member_id') required String memberId,

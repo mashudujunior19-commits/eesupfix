@@ -10,7 +10,7 @@ part 'order.freezed.dart';
 part 'order.g.dart';
 
 @freezed
-class Order with _$Order {
+abstract class Order with _$Order {
   const factory Order({
     int? id,
     @JsonKey(name: 'customer_id') required String customerId,

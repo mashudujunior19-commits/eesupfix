@@ -1,3 +1,4 @@
+// dart format width=80
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
@@ -9,105 +10,64 @@ part of 'voucher_parameter.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// dart format off
 T _$identity<T>(T value) => value;
-
-final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
-
-VoucherParameter _$VoucherParameterFromJson(Map<String, dynamic> json) {
-  return _VoucherParameter.fromJson(json);
-}
 
 /// @nodoc
 mixin _$VoucherParameter {
   @JsonKey(name: 'id')
-  String get id => throw _privateConstructorUsedError;
+  String get id;
   @JsonKey(name: 'created_at')
-  DateTime? get createdAt => throw _privateConstructorUsedError;
+  DateTime? get createdAt;
   @JsonKey(name: 'period')
-  int get period => throw _privateConstructorUsedError;
+  int get period;
   @JsonKey(name: 'interest')
-  double get interest => throw _privateConstructorUsedError;
+  double get interest;
   @JsonKey(name: 'minimum_value')
-  double get minimumValue => throw _privateConstructorUsedError;
-
-  /// Serializes this VoucherParameter to a JSON map.
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  double get minimumValue;
 
   /// Create a copy of VoucherParameter
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  $VoucherParameterCopyWith<VoucherParameter> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class $VoucherParameterCopyWith<$Res> {
-  factory $VoucherParameterCopyWith(
-          VoucherParameter value, $Res Function(VoucherParameter) then) =
-      _$VoucherParameterCopyWithImpl<$Res, VoucherParameter>;
-  @useResult
-  $Res call(
-      {@JsonKey(name: 'id') String id,
-      @JsonKey(name: 'created_at') DateTime? createdAt,
-      @JsonKey(name: 'period') int period,
-      @JsonKey(name: 'interest') double interest,
-      @JsonKey(name: 'minimum_value') double minimumValue});
-}
-
-/// @nodoc
-class _$VoucherParameterCopyWithImpl<$Res, $Val extends VoucherParameter>
-    implements $VoucherParameterCopyWith<$Res> {
-  _$VoucherParameterCopyWithImpl(this._value, this._then);
-
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
-
-  /// Create a copy of VoucherParameter
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
+  $VoucherParameterCopyWith<VoucherParameter> get copyWith =>
+      _$VoucherParameterCopyWithImpl<VoucherParameter>(
+          this as VoucherParameter, _$identity);
+
+  /// Serializes this VoucherParameter to a JSON map.
+  Map<String, dynamic> toJson();
+
   @override
-  $Res call({
-    Object? id = null,
-    Object? createdAt = freezed,
-    Object? period = null,
-    Object? interest = null,
-    Object? minimumValue = null,
-  }) {
-    return _then(_value.copyWith(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as String,
-      createdAt: freezed == createdAt
-          ? _value.createdAt
-          : createdAt // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
-      period: null == period
-          ? _value.period
-          : period // ignore: cast_nullable_to_non_nullable
-              as int,
-      interest: null == interest
-          ? _value.interest
-          : interest // ignore: cast_nullable_to_non_nullable
-              as double,
-      minimumValue: null == minimumValue
-          ? _value.minimumValue
-          : minimumValue // ignore: cast_nullable_to_non_nullable
-              as double,
-    ) as $Val);
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is VoucherParameter &&
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.createdAt, createdAt) ||
+                other.createdAt == createdAt) &&
+            (identical(other.period, period) || other.period == period) &&
+            (identical(other.interest, interest) ||
+                other.interest == interest) &&
+            (identical(other.minimumValue, minimumValue) ||
+                other.minimumValue == minimumValue));
+  }
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  int get hashCode =>
+      Object.hash(runtimeType, id, createdAt, period, interest, minimumValue);
+
+  @override
+  String toString() {
+    return 'VoucherParameter(id: $id, createdAt: $createdAt, period: $period, interest: $interest, minimumValue: $minimumValue)';
   }
 }
 
 /// @nodoc
-abstract class _$$VoucherParameterImplCopyWith<$Res>
-    implements $VoucherParameterCopyWith<$Res> {
-  factory _$$VoucherParameterImplCopyWith(_$VoucherParameterImpl value,
-          $Res Function(_$VoucherParameterImpl) then) =
-      __$$VoucherParameterImplCopyWithImpl<$Res>;
-  @override
+abstract mixin class $VoucherParameterCopyWith<$Res> {
+  factory $VoucherParameterCopyWith(
+          VoucherParameter value, $Res Function(VoucherParameter) _then) =
+      _$VoucherParameterCopyWithImpl;
   @useResult
   $Res call(
       {@JsonKey(name: 'id') String id,
@@ -118,12 +78,12 @@ abstract class _$$VoucherParameterImplCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$VoucherParameterImplCopyWithImpl<$Res>
-    extends _$VoucherParameterCopyWithImpl<$Res, _$VoucherParameterImpl>
-    implements _$$VoucherParameterImplCopyWith<$Res> {
-  __$$VoucherParameterImplCopyWithImpl(_$VoucherParameterImpl _value,
-      $Res Function(_$VoucherParameterImpl) _then)
-      : super(_value, _then);
+class _$VoucherParameterCopyWithImpl<$Res>
+    implements $VoucherParameterCopyWith<$Res> {
+  _$VoucherParameterCopyWithImpl(this._self, this._then);
+
+  final VoucherParameter _self;
+  final $Res Function(VoucherParameter) _then;
 
   /// Create a copy of VoucherParameter
   /// with the given fields replaced by the non-null parameter values.
@@ -136,25 +96,25 @@ class __$$VoucherParameterImplCopyWithImpl<$Res>
     Object? interest = null,
     Object? minimumValue = null,
   }) {
-    return _then(_$VoucherParameterImpl(
+    return _then(_self.copyWith(
       id: null == id
-          ? _value.id
+          ? _self.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
       createdAt: freezed == createdAt
-          ? _value.createdAt
+          ? _self.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
               as DateTime?,
       period: null == period
-          ? _value.period
+          ? _self.period
           : period // ignore: cast_nullable_to_non_nullable
               as int,
       interest: null == interest
-          ? _value.interest
+          ? _self.interest
           : interest // ignore: cast_nullable_to_non_nullable
               as double,
       minimumValue: null == minimumValue
-          ? _value.minimumValue
+          ? _self.minimumValue
           : minimumValue // ignore: cast_nullable_to_non_nullable
               as double,
     ));
@@ -163,16 +123,15 @@ class __$$VoucherParameterImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$VoucherParameterImpl implements _VoucherParameter {
-  const _$VoucherParameterImpl(
+class _VoucherParameter implements VoucherParameter {
+  const _VoucherParameter(
       {@JsonKey(name: 'id') required this.id,
       @JsonKey(name: 'created_at') this.createdAt,
       @JsonKey(name: 'period') required this.period,
       @JsonKey(name: 'interest') required this.interest,
       @JsonKey(name: 'minimum_value') required this.minimumValue});
-
-  factory _$VoucherParameterImpl.fromJson(Map<String, dynamic> json) =>
-      _$$VoucherParameterImplFromJson(json);
+  factory _VoucherParameter.fromJson(Map<String, dynamic> json) =>
+      _$VoucherParameterFromJson(json);
 
   @override
   @JsonKey(name: 'id')
@@ -190,16 +149,26 @@ class _$VoucherParameterImpl implements _VoucherParameter {
   @JsonKey(name: 'minimum_value')
   final double minimumValue;
 
+  /// Create a copy of VoucherParameter
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  String toString() {
-    return 'VoucherParameter(id: $id, createdAt: $createdAt, period: $period, interest: $interest, minimumValue: $minimumValue)';
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  _$VoucherParameterCopyWith<_VoucherParameter> get copyWith =>
+      __$VoucherParameterCopyWithImpl<_VoucherParameter>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$VoucherParameterToJson(
+      this,
+    );
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$VoucherParameterImpl &&
+            other is _VoucherParameter &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.createdAt, createdAt) ||
                 other.createdAt == createdAt) &&
@@ -215,55 +184,70 @@ class _$VoucherParameterImpl implements _VoucherParameter {
   int get hashCode =>
       Object.hash(runtimeType, id, createdAt, period, interest, minimumValue);
 
-  /// Create a copy of VoucherParameter
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  @pragma('vm:prefer-inline')
-  _$$VoucherParameterImplCopyWith<_$VoucherParameterImpl> get copyWith =>
-      __$$VoucherParameterImplCopyWithImpl<_$VoucherParameterImpl>(
-          this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$VoucherParameterImplToJson(
-      this,
-    );
+  String toString() {
+    return 'VoucherParameter(id: $id, createdAt: $createdAt, period: $period, interest: $interest, minimumValue: $minimumValue)';
   }
 }
 
-abstract class _VoucherParameter implements VoucherParameter {
-  const factory _VoucherParameter(
-          {@JsonKey(name: 'id') required final String id,
-          @JsonKey(name: 'created_at') final DateTime? createdAt,
-          @JsonKey(name: 'period') required final int period,
-          @JsonKey(name: 'interest') required final double interest,
-          @JsonKey(name: 'minimum_value') required final double minimumValue}) =
-      _$VoucherParameterImpl;
+/// @nodoc
+abstract mixin class _$VoucherParameterCopyWith<$Res>
+    implements $VoucherParameterCopyWith<$Res> {
+  factory _$VoucherParameterCopyWith(
+          _VoucherParameter value, $Res Function(_VoucherParameter) _then) =
+      __$VoucherParameterCopyWithImpl;
+  @override
+  @useResult
+  $Res call(
+      {@JsonKey(name: 'id') String id,
+      @JsonKey(name: 'created_at') DateTime? createdAt,
+      @JsonKey(name: 'period') int period,
+      @JsonKey(name: 'interest') double interest,
+      @JsonKey(name: 'minimum_value') double minimumValue});
+}
 
-  factory _VoucherParameter.fromJson(Map<String, dynamic> json) =
-      _$VoucherParameterImpl.fromJson;
+/// @nodoc
+class __$VoucherParameterCopyWithImpl<$Res>
+    implements _$VoucherParameterCopyWith<$Res> {
+  __$VoucherParameterCopyWithImpl(this._self, this._then);
 
-  @override
-  @JsonKey(name: 'id')
-  String get id;
-  @override
-  @JsonKey(name: 'created_at')
-  DateTime? get createdAt;
-  @override
-  @JsonKey(name: 'period')
-  int get period;
-  @override
-  @JsonKey(name: 'interest')
-  double get interest;
-  @override
-  @JsonKey(name: 'minimum_value')
-  double get minimumValue;
+  final _VoucherParameter _self;
+  final $Res Function(_VoucherParameter) _then;
 
   /// Create a copy of VoucherParameter
   /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$VoucherParameterImplCopyWith<_$VoucherParameterImpl> get copyWith =>
-      throw _privateConstructorUsedError;
+  @pragma('vm:prefer-inline')
+  $Res call({
+    Object? id = null,
+    Object? createdAt = freezed,
+    Object? period = null,
+    Object? interest = null,
+    Object? minimumValue = null,
+  }) {
+    return _then(_VoucherParameter(
+      id: null == id
+          ? _self.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
+      createdAt: freezed == createdAt
+          ? _self.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      period: null == period
+          ? _self.period
+          : period // ignore: cast_nullable_to_non_nullable
+              as int,
+      interest: null == interest
+          ? _self.interest
+          : interest // ignore: cast_nullable_to_non_nullable
+              as double,
+      minimumValue: null == minimumValue
+          ? _self.minimumValue
+          : minimumValue // ignore: cast_nullable_to_non_nullable
+              as double,
+    ));
+  }
 }
+
+// dart format on

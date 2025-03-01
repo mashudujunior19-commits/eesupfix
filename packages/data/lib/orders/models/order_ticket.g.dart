@@ -6,8 +6,7 @@ part of 'order_ticket.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$OrderTicketImpl _$$OrderTicketImplFromJson(Map<String, dynamic> json) =>
-    _$OrderTicketImpl(
+_OrderTicket _$OrderTicketFromJson(Map<String, dynamic> json) => _OrderTicket(
       id: (json['id'] as num?)?.toInt(),
       orderId: (json['order_id'] as num).toInt(),
       createdAt: DateTime.parse(json['created_at'] as String),
@@ -34,7 +33,7 @@ _$OrderTicketImpl _$$OrderTicketImplFromJson(Map<String, dynamic> json) =>
           .fromJson(json['resolution'] as String),
     );
 
-Map<String, dynamic> _$$OrderTicketImplToJson(_$OrderTicketImpl instance) =>
+Map<String, dynamic> _$OrderTicketToJson(_OrderTicket instance) =>
     <String, dynamic>{
       'order_id': instance.orderId,
       'created_at': instance.createdAt.toIso8601String(),

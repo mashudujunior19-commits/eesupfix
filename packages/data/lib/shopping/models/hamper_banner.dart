@@ -6,7 +6,7 @@ part 'hamper_banner.freezed.dart';
 part 'hamper_banner.g.dart';
 
 @freezed
-class HamperBanner with _$HamperBanner {
+abstract class HamperBanner with _$HamperBanner {
   const factory HamperBanner({
     required int id,
     @HamperContentConverter() required List<HamperContent> content,
@@ -32,7 +32,7 @@ class HamperContentConverter
 }
 
 @freezed
-class HamperContent with _$HamperContent {
+abstract class HamperContent with _$HamperContent {
   const factory HamperContent({
     required String type,
     @JsonKey(name: 'order_number') required int orderNumber,

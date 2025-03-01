@@ -6,7 +6,7 @@ part 'basket.freezed.dart';
 part 'basket.g.dart';
 
 @freezed
-class Basket with _$Basket {
+abstract class Basket with _$Basket {
   const factory Basket({
     @JsonKey(includeToJson: false) required String id,
     required String name,

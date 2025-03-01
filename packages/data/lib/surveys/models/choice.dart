@@ -6,7 +6,7 @@ part 'choice.freezed.dart';
 part 'choice.g.dart';
 
 @freezed
-class Choice with _$Choice {
+abstract class Choice with _$Choice {
   const factory Choice({
     @JsonKey(name: 'option_id') required int choiceId,
     @JsonKey(name: 'option') required String choice,

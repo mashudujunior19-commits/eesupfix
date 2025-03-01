@@ -116,11 +116,7 @@ class AppRouter extends RootStackRouter {
           transitionsBuilder: TransitionsBuilders.slideLeftWithFade,
           durationInMilliseconds: 300,
         ),
-        CustomRoute(
-          page: OrderTrackingRoute.page,
-          transitionsBuilder: TransitionsBuilders.slideLeftWithFade,
-          durationInMilliseconds: 300,
-        ),
+    
         CustomRoute(
           page: BasketViewRoute.page,
           transitionsBuilder: TransitionsBuilders.slideLeftWithFade,
@@ -151,11 +147,7 @@ class AppRouter extends RootStackRouter {
           transitionsBuilder: TransitionsBuilders.slideLeftWithFade,
           durationInMilliseconds: 300,
         ),
-        CustomRoute(
-          page: ResponseRoute.page,
-          transitionsBuilder: TransitionsBuilders.slideLeftWithFade,
-          durationInMilliseconds: 300,
-        ),
+    
         CustomRoute(
           page: OrderReceiverRoute.page,
           transitionsBuilder: TransitionsBuilders.slideLeftWithFade,

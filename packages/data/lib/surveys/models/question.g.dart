@@ -6,8 +6,7 @@ part of 'question.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$QuestionImpl _$$QuestionImplFromJson(Map<String, dynamic> json) =>
-    _$QuestionImpl(
+_Question _$QuestionFromJson(Map<String, dynamic> json) => _Question(
       questionId: (json['question_id'] as num).toInt(),
       question: json['question'] as String,
       type: const QuestionTypeConverter().fromJson(json['type'] as String),
@@ -29,8 +28,7 @@ _$QuestionImpl _$$QuestionImplFromJson(Map<String, dynamic> json) =>
       mediaFileType: json['media_file_type'] as String?,
     );
 
-Map<String, dynamic> _$$QuestionImplToJson(_$QuestionImpl instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$QuestionToJson(_Question instance) => <String, dynamic>{
       'question_id': instance.questionId,
       'question': instance.question,
       'type': const QuestionTypeConverter().toJson(instance.type),

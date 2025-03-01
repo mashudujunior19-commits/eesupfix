@@ -6,7 +6,7 @@ part 'referral.freezed.dart';
 part 'referral.g.dart';
 
 @freezed
-class Referral with _$Referral {
+abstract class Referral with _$Referral {
   const factory Referral({
     @JsonKey(name: 'referrer_user_id') required String referrerUserId,
     @JsonKey(name: 'refereed_user_id') required String refereedUserId,

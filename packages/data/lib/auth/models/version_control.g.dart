@@ -6,8 +6,8 @@ part of 'version_control.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$VersionControlImpl _$$VersionControlImplFromJson(Map<String, dynamic> json) =>
-    _$VersionControlImpl(
+_VersionControl _$VersionControlFromJson(Map<String, dynamic> json) =>
+    _VersionControl(
       id: (json['id'] as num).toInt(),
       createdAt: DateTime.parse(json['createdAt'] as String),
       versionNumber: json['versionNumber'] as String?,
@@ -18,8 +18,7 @@ _$VersionControlImpl _$$VersionControlImplFromJson(Map<String, dynamic> json) =>
       huaweiUrl: json['huaweiUrl'] as String?,
     );
 
-Map<String, dynamic> _$$VersionControlImplToJson(
-        _$VersionControlImpl instance) =>
+Map<String, dynamic> _$VersionControlToJson(_VersionControl instance) =>
     <String, dynamic>{
       'id': instance.id,
       'createdAt': instance.createdAt.toIso8601String(),

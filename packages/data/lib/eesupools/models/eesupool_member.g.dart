@@ -6,8 +6,8 @@ part of 'eesupool_member.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$EESUpoolMemberImpl _$$EESUpoolMemberImplFromJson(Map<String, dynamic> json) =>
-    _$EESUpoolMemberImpl(
+_EESUpoolMember _$EESUpoolMemberFromJson(Map<String, dynamic> json) =>
+    _EESUpoolMember(
       memberId: json['member_id'] as String,
       eesupoolId: (json['eesupool_id'] as num).toInt(),
       userId: json['user_id'] as String,
@@ -18,8 +18,7 @@ _$EESUpoolMemberImpl _$$EESUpoolMemberImplFromJson(Map<String, dynamic> json) =>
       createdAt: DateTime.parse(json['created_at'] as String),
     );
 
-Map<String, dynamic> _$$EESUpoolMemberImplToJson(
-        _$EESUpoolMemberImpl instance) =>
+Map<String, dynamic> _$EESUpoolMemberToJson(_EESUpoolMember instance) =>
     <String, dynamic>{
       'eesupool_id': instance.eesupoolId,
       'user_id': instance.userId,

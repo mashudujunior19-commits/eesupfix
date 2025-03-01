@@ -6,7 +6,7 @@ part 'eesupreneur.freezed.dart';
 part 'eesupreneur.g.dart';
 
 @freezed
-class EESUpreneur with _$EESUpreneur {
+abstract class EESUpreneur with _$EESUpreneur {
   const factory EESUpreneur({
     @JsonKey(includeToJson: false) required String id,
     @JsonKey(name: 'owner_name', includeToJson: false) String? ownerName,

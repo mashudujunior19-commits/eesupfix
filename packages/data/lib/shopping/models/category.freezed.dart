@@ -1,3 +1,4 @@
+// dart format width=80
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
@@ -9,192 +10,35 @@ part of 'category.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// dart format off
 T _$identity<T>(T value) => value;
-
-final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
-
-Category _$CategoryFromJson(Map<String, dynamic> json) {
-  return _Category.fromJson(json);
-}
 
 /// @nodoc
 mixin _$Category {
-  int get id => throw _privateConstructorUsedError;
-  int? get products => throw _privateConstructorUsedError;
+  int get id;
+  int? get products;
   @JsonKey(name: 'name')
-  String get name => throw _privateConstructorUsedError;
+  String get name;
   @JsonKey(name: 'parent_id')
-  int? get parentId => throw _privateConstructorUsedError;
+  int? get parentId;
   @JsonKey(name: 'image_url')
-  String? get imageUrl => throw _privateConstructorUsedError;
-
-  /// Serializes this Category to a JSON map.
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  String? get imageUrl;
 
   /// Create a copy of Category
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
   $CategoryCopyWith<Category> get copyWith =>
-      throw _privateConstructorUsedError;
-}
+      _$CategoryCopyWithImpl<Category>(this as Category, _$identity);
 
-/// @nodoc
-abstract class $CategoryCopyWith<$Res> {
-  factory $CategoryCopyWith(Category value, $Res Function(Category) then) =
-      _$CategoryCopyWithImpl<$Res, Category>;
-  @useResult
-  $Res call(
-      {int id,
-      int? products,
-      @JsonKey(name: 'name') String name,
-      @JsonKey(name: 'parent_id') int? parentId,
-      @JsonKey(name: 'image_url') String? imageUrl});
-}
-
-/// @nodoc
-class _$CategoryCopyWithImpl<$Res, $Val extends Category>
-    implements $CategoryCopyWith<$Res> {
-  _$CategoryCopyWithImpl(this._value, this._then);
-
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
-
-  /// Create a copy of Category
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? id = null,
-    Object? products = freezed,
-    Object? name = null,
-    Object? parentId = freezed,
-    Object? imageUrl = freezed,
-  }) {
-    return _then(_value.copyWith(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as int,
-      products: freezed == products
-          ? _value.products
-          : products // ignore: cast_nullable_to_non_nullable
-              as int?,
-      name: null == name
-          ? _value.name
-          : name // ignore: cast_nullable_to_non_nullable
-              as String,
-      parentId: freezed == parentId
-          ? _value.parentId
-          : parentId // ignore: cast_nullable_to_non_nullable
-              as int?,
-      imageUrl: freezed == imageUrl
-          ? _value.imageUrl
-          : imageUrl // ignore: cast_nullable_to_non_nullable
-              as String?,
-    ) as $Val);
-  }
-}
-
-/// @nodoc
-abstract class _$$CategoryImplCopyWith<$Res>
-    implements $CategoryCopyWith<$Res> {
-  factory _$$CategoryImplCopyWith(
-          _$CategoryImpl value, $Res Function(_$CategoryImpl) then) =
-      __$$CategoryImplCopyWithImpl<$Res>;
-  @override
-  @useResult
-  $Res call(
-      {int id,
-      int? products,
-      @JsonKey(name: 'name') String name,
-      @JsonKey(name: 'parent_id') int? parentId,
-      @JsonKey(name: 'image_url') String? imageUrl});
-}
-
-/// @nodoc
-class __$$CategoryImplCopyWithImpl<$Res>
-    extends _$CategoryCopyWithImpl<$Res, _$CategoryImpl>
-    implements _$$CategoryImplCopyWith<$Res> {
-  __$$CategoryImplCopyWithImpl(
-      _$CategoryImpl _value, $Res Function(_$CategoryImpl) _then)
-      : super(_value, _then);
-
-  /// Create a copy of Category
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? id = null,
-    Object? products = freezed,
-    Object? name = null,
-    Object? parentId = freezed,
-    Object? imageUrl = freezed,
-  }) {
-    return _then(_$CategoryImpl(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as int,
-      products: freezed == products
-          ? _value.products
-          : products // ignore: cast_nullable_to_non_nullable
-              as int?,
-      name: null == name
-          ? _value.name
-          : name // ignore: cast_nullable_to_non_nullable
-              as String,
-      parentId: freezed == parentId
-          ? _value.parentId
-          : parentId // ignore: cast_nullable_to_non_nullable
-              as int?,
-      imageUrl: freezed == imageUrl
-          ? _value.imageUrl
-          : imageUrl // ignore: cast_nullable_to_non_nullable
-              as String?,
-    ));
-  }
-}
-
-/// @nodoc
-@JsonSerializable()
-class _$CategoryImpl implements _Category {
-  _$CategoryImpl(
-      {required this.id,
-      this.products,
-      @JsonKey(name: 'name') required this.name,
-      @JsonKey(name: 'parent_id') this.parentId,
-      @JsonKey(name: 'image_url') this.imageUrl});
-
-  factory _$CategoryImpl.fromJson(Map<String, dynamic> json) =>
-      _$$CategoryImplFromJson(json);
-
-  @override
-  final int id;
-  @override
-  final int? products;
-  @override
-  @JsonKey(name: 'name')
-  final String name;
-  @override
-  @JsonKey(name: 'parent_id')
-  final int? parentId;
-  @override
-  @JsonKey(name: 'image_url')
-  final String? imageUrl;
-
-  @override
-  String toString() {
-    return 'Category(id: $id, products: $products, name: $name, parentId: $parentId, imageUrl: $imageUrl)';
-  }
+  /// Serializes this Category to a JSON map.
+  Map<String, dynamic> toJson();
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$CategoryImpl &&
+            other is Category &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.products, products) ||
                 other.products == products) &&
@@ -210,51 +54,191 @@ class _$CategoryImpl implements _Category {
   int get hashCode =>
       Object.hash(runtimeType, id, products, name, parentId, imageUrl);
 
-  /// Create a copy of Category
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  @pragma('vm:prefer-inline')
-  _$$CategoryImplCopyWith<_$CategoryImpl> get copyWith =>
-      __$$CategoryImplCopyWithImpl<_$CategoryImpl>(this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$CategoryImplToJson(
-      this,
-    );
+  String toString() {
+    return 'Category(id: $id, products: $products, name: $name, parentId: $parentId, imageUrl: $imageUrl)';
   }
 }
 
-abstract class _Category implements Category {
-  factory _Category(
-      {required final int id,
-      final int? products,
-      @JsonKey(name: 'name') required final String name,
-      @JsonKey(name: 'parent_id') final int? parentId,
-      @JsonKey(name: 'image_url') final String? imageUrl}) = _$CategoryImpl;
+/// @nodoc
+abstract mixin class $CategoryCopyWith<$Res> {
+  factory $CategoryCopyWith(Category value, $Res Function(Category) _then) =
+      _$CategoryCopyWithImpl;
+  @useResult
+  $Res call(
+      {int id,
+      int? products,
+      @JsonKey(name: 'name') String name,
+      @JsonKey(name: 'parent_id') int? parentId,
+      @JsonKey(name: 'image_url') String? imageUrl});
+}
 
-  factory _Category.fromJson(Map<String, dynamic> json) =
-      _$CategoryImpl.fromJson;
+/// @nodoc
+class _$CategoryCopyWithImpl<$Res> implements $CategoryCopyWith<$Res> {
+  _$CategoryCopyWithImpl(this._self, this._then);
+
+  final Category _self;
+  final $Res Function(Category) _then;
+
+  /// Create a copy of Category
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? id = null,
+    Object? products = freezed,
+    Object? name = null,
+    Object? parentId = freezed,
+    Object? imageUrl = freezed,
+  }) {
+    return _then(_self.copyWith(
+      id: null == id
+          ? _self.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int,
+      products: freezed == products
+          ? _self.products
+          : products // ignore: cast_nullable_to_non_nullable
+              as int?,
+      name: null == name
+          ? _self.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String,
+      parentId: freezed == parentId
+          ? _self.parentId
+          : parentId // ignore: cast_nullable_to_non_nullable
+              as int?,
+      imageUrl: freezed == imageUrl
+          ? _self.imageUrl
+          : imageUrl // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _Category implements Category {
+  _Category(
+      {required this.id,
+      this.products,
+      @JsonKey(name: 'name') required this.name,
+      @JsonKey(name: 'parent_id') this.parentId,
+      @JsonKey(name: 'image_url') this.imageUrl});
+  factory _Category.fromJson(Map<String, dynamic> json) =>
+      _$CategoryFromJson(json);
 
   @override
-  int get id;
+  final int id;
   @override
-  int? get products;
+  final int? products;
   @override
   @JsonKey(name: 'name')
-  String get name;
+  final String name;
   @override
   @JsonKey(name: 'parent_id')
-  int? get parentId;
+  final int? parentId;
   @override
   @JsonKey(name: 'image_url')
-  String? get imageUrl;
+  final String? imageUrl;
 
   /// Create a copy of Category
   /// with the given fields replaced by the non-null parameter values.
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$CategoryImplCopyWith<_$CategoryImpl> get copyWith =>
-      throw _privateConstructorUsedError;
+  @pragma('vm:prefer-inline')
+  _$CategoryCopyWith<_Category> get copyWith =>
+      __$CategoryCopyWithImpl<_Category>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$CategoryToJson(
+      this,
+    );
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _Category &&
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.products, products) ||
+                other.products == products) &&
+            (identical(other.name, name) || other.name == name) &&
+            (identical(other.parentId, parentId) ||
+                other.parentId == parentId) &&
+            (identical(other.imageUrl, imageUrl) ||
+                other.imageUrl == imageUrl));
+  }
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  int get hashCode =>
+      Object.hash(runtimeType, id, products, name, parentId, imageUrl);
+
+  @override
+  String toString() {
+    return 'Category(id: $id, products: $products, name: $name, parentId: $parentId, imageUrl: $imageUrl)';
+  }
 }
+
+/// @nodoc
+abstract mixin class _$CategoryCopyWith<$Res>
+    implements $CategoryCopyWith<$Res> {
+  factory _$CategoryCopyWith(_Category value, $Res Function(_Category) _then) =
+      __$CategoryCopyWithImpl;
+  @override
+  @useResult
+  $Res call(
+      {int id,
+      int? products,
+      @JsonKey(name: 'name') String name,
+      @JsonKey(name: 'parent_id') int? parentId,
+      @JsonKey(name: 'image_url') String? imageUrl});
+}
+
+/// @nodoc
+class __$CategoryCopyWithImpl<$Res> implements _$CategoryCopyWith<$Res> {
+  __$CategoryCopyWithImpl(this._self, this._then);
+
+  final _Category _self;
+  final $Res Function(_Category) _then;
+
+  /// Create a copy of Category
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $Res call({
+    Object? id = null,
+    Object? products = freezed,
+    Object? name = null,
+    Object? parentId = freezed,
+    Object? imageUrl = freezed,
+  }) {
+    return _then(_Category(
+      id: null == id
+          ? _self.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int,
+      products: freezed == products
+          ? _self.products
+          : products // ignore: cast_nullable_to_non_nullable
+              as int?,
+      name: null == name
+          ? _self.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String,
+      parentId: freezed == parentId
+          ? _self.parentId
+          : parentId // ignore: cast_nullable_to_non_nullable
+              as int?,
+      imageUrl: freezed == imageUrl
+          ? _self.imageUrl
+          : imageUrl // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ));
+  }
+}
+
+// dart format on

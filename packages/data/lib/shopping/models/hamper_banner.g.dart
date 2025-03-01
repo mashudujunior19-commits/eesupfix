@@ -6,8 +6,8 @@ part of 'hamper_banner.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$HamperBannerImpl _$$HamperBannerImplFromJson(Map<String, dynamic> json) =>
-    _$HamperBannerImpl(
+_HamperBanner _$HamperBannerFromJson(Map<String, dynamic> json) =>
+    _HamperBanner(
       id: (json['id'] as num).toInt(),
       content: (json['content'] as List<dynamic>)
           .map((e) => const HamperContentConverter()
@@ -15,15 +15,15 @@ _$HamperBannerImpl _$$HamperBannerImplFromJson(Map<String, dynamic> json) =>
           .toList(),
     );
 
-Map<String, dynamic> _$$HamperBannerImplToJson(_$HamperBannerImpl instance) =>
+Map<String, dynamic> _$HamperBannerToJson(_HamperBanner instance) =>
     <String, dynamic>{
       'id': instance.id,
       'content':
           instance.content.map(const HamperContentConverter().toJson).toList(),
     };
 
-_$HamperContentImpl _$$HamperContentImplFromJson(Map<String, dynamic> json) =>
-    _$HamperContentImpl(
+_HamperContent _$HamperContentFromJson(Map<String, dynamic> json) =>
+    _HamperContent(
       type: json['type'] as String,
       orderNumber: (json['order_number'] as num).toInt(),
       baseImage: json['base_image'] as String,
@@ -31,7 +31,7 @@ _$HamperContentImpl _$$HamperContentImplFromJson(Map<String, dynamic> json) =>
       gif2: json['gif2'] as String,
     );
 
-Map<String, dynamic> _$$HamperContentImplToJson(_$HamperContentImpl instance) =>
+Map<String, dynamic> _$HamperContentToJson(_HamperContent instance) =>
     <String, dynamic>{
       'type': instance.type,
       'order_number': instance.orderNumber,

@@ -7,7 +7,7 @@ part 'order_ticket.freezed.dart';
 part 'order_ticket.g.dart';
 
 @freezed
-class OrderTicket with _$OrderTicket {
+abstract class OrderTicket with _$OrderTicket {
   const factory OrderTicket({
     @JsonKey(includeToJson: false) int? id,
     @JsonKey(name: 'order_id') required int orderId,

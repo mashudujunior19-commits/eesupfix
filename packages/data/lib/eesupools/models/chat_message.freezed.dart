@@ -1,3 +1,4 @@
+// dart format width=80
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
@@ -9,70 +10,123 @@ part of 'chat_message.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// dart format off
 T _$identity<T>(T value) => value;
-
-final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
-
-ChatMessage _$ChatMessageFromJson(Map<String, dynamic> json) {
-  return _ChatMessage.fromJson(json);
-}
 
 /// @nodoc
 mixin _$ChatMessage {
   @JsonKey(includeToJson: false)
-  int get id => throw _privateConstructorUsedError;
+  int get id;
   @JsonKey(name: 'eesupool_id')
-  int get eesupoolId => throw _privateConstructorUsedError;
+  int get eesupoolId;
   @JsonKey(name: 'author_id')
-  String get authorId => throw _privateConstructorUsedError;
+  String get authorId;
   @JsonKey(name: 'created_at', includeToJson: true)
-  DateTime get createdAt => throw _privateConstructorUsedError;
+  DateTime get createdAt;
   @JsonKey(name: 'author_full_name', includeToJson: false)
-  String? get authorName => throw _privateConstructorUsedError;
+  String? get authorName;
   @JsonKey(name: 'content')
-  String? get content => throw _privateConstructorUsedError;
+  String? get content;
   @JsonKey(name: 'reply_on_id')
-  int? get replyOnId => throw _privateConstructorUsedError;
+  int? get replyOnId;
   @JsonKey(name: 'attachments')
   @MediaFileConverter()
-  List<MediaFile>? get media => throw _privateConstructorUsedError;
+  List<MediaFile>? get media;
   @JsonKey(includeFromJson: false, includeToJson: false)
-  List<File> get localFiles => throw _privateConstructorUsedError;
+  List<File> get localFiles;
   @ChatMessageConverter()
   @JsonKey(name: 'reply_message', includeToJson: false)
-  ChatMessage? get reply => throw _privateConstructorUsedError;
+  ChatMessage? get reply;
   @ChatMessageReactionConverter()
   @JsonKey(name: 'reactions', includeToJson: false)
-  List<ChatMessageReaction>? get reactions =>
-      throw _privateConstructorUsedError;
+  List<ChatMessageReaction>? get reactions;
   @JsonKey(name: 'hash_tags')
-  List<String>? get hashTags => throw _privateConstructorUsedError;
+  List<String>? get hashTags;
   @JsonKey(name: 'is_approved')
-  bool get isApproved => throw _privateConstructorUsedError;
+  bool get isApproved;
   @JsonKey(name: 'is_deleted', includeToJson: false)
-  bool get isDeleted => throw _privateConstructorUsedError;
+  bool get isDeleted;
   @EESUpoolLevelConverter()
   @JsonKey(name: 'broadcast_to')
-  List<EESUpoolLevel>? get broadcastTo => throw _privateConstructorUsedError;
+  List<EESUpoolLevel>? get broadcastTo;
   @JsonKey(name: 'message_seens', includeToJson: false)
-  List<String> get messageSeens => throw _privateConstructorUsedError;
-
-  /// Serializes this ChatMessage to a JSON map.
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  List<String> get messageSeens;
 
   /// Create a copy of ChatMessage
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
   $ChatMessageCopyWith<ChatMessage> get copyWith =>
-      throw _privateConstructorUsedError;
+      _$ChatMessageCopyWithImpl<ChatMessage>(this as ChatMessage, _$identity);
+
+  /// Serializes this ChatMessage to a JSON map.
+  Map<String, dynamic> toJson();
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is ChatMessage &&
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.eesupoolId, eesupoolId) ||
+                other.eesupoolId == eesupoolId) &&
+            (identical(other.authorId, authorId) ||
+                other.authorId == authorId) &&
+            (identical(other.createdAt, createdAt) ||
+                other.createdAt == createdAt) &&
+            (identical(other.authorName, authorName) ||
+                other.authorName == authorName) &&
+            (identical(other.content, content) || other.content == content) &&
+            (identical(other.replyOnId, replyOnId) ||
+                other.replyOnId == replyOnId) &&
+            const DeepCollectionEquality().equals(other.media, media) &&
+            const DeepCollectionEquality()
+                .equals(other.localFiles, localFiles) &&
+            (identical(other.reply, reply) || other.reply == reply) &&
+            const DeepCollectionEquality().equals(other.reactions, reactions) &&
+            const DeepCollectionEquality().equals(other.hashTags, hashTags) &&
+            (identical(other.isApproved, isApproved) ||
+                other.isApproved == isApproved) &&
+            (identical(other.isDeleted, isDeleted) ||
+                other.isDeleted == isDeleted) &&
+            const DeepCollectionEquality()
+                .equals(other.broadcastTo, broadcastTo) &&
+            const DeepCollectionEquality()
+                .equals(other.messageSeens, messageSeens));
+  }
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  int get hashCode => Object.hash(
+      runtimeType,
+      id,
+      eesupoolId,
+      authorId,
+      createdAt,
+      authorName,
+      content,
+      replyOnId,
+      const DeepCollectionEquality().hash(media),
+      const DeepCollectionEquality().hash(localFiles),
+      reply,
+      const DeepCollectionEquality().hash(reactions),
+      const DeepCollectionEquality().hash(hashTags),
+      isApproved,
+      isDeleted,
+      const DeepCollectionEquality().hash(broadcastTo),
+      const DeepCollectionEquality().hash(messageSeens));
+
+  @override
+  String toString() {
+    return 'ChatMessage(id: $id, eesupoolId: $eesupoolId, authorId: $authorId, createdAt: $createdAt, authorName: $authorName, content: $content, replyOnId: $replyOnId, media: $media, localFiles: $localFiles, reply: $reply, reactions: $reactions, hashTags: $hashTags, isApproved: $isApproved, isDeleted: $isDeleted, broadcastTo: $broadcastTo, messageSeens: $messageSeens)';
+  }
 }
 
 /// @nodoc
-abstract class $ChatMessageCopyWith<$Res> {
+abstract mixin class $ChatMessageCopyWith<$Res> {
   factory $ChatMessageCopyWith(
-          ChatMessage value, $Res Function(ChatMessage) then) =
-      _$ChatMessageCopyWithImpl<$Res, ChatMessage>;
+          ChatMessage value, $Res Function(ChatMessage) _then) =
+      _$ChatMessageCopyWithImpl;
   @useResult
   $Res call(
       {@JsonKey(includeToJson: false) int id,
@@ -107,14 +161,11 @@ abstract class $ChatMessageCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$ChatMessageCopyWithImpl<$Res, $Val extends ChatMessage>
-    implements $ChatMessageCopyWith<$Res> {
-  _$ChatMessageCopyWithImpl(this._value, this._then);
+class _$ChatMessageCopyWithImpl<$Res> implements $ChatMessageCopyWith<$Res> {
+  _$ChatMessageCopyWithImpl(this._self, this._then);
 
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
+  final ChatMessage _self;
+  final $Res Function(ChatMessage) _then;
 
   /// Create a copy of ChatMessage
   /// with the given fields replaced by the non-null parameter values.
@@ -138,72 +189,72 @@ class _$ChatMessageCopyWithImpl<$Res, $Val extends ChatMessage>
     Object? broadcastTo = freezed,
     Object? messageSeens = null,
   }) {
-    return _then(_value.copyWith(
+    return _then(_self.copyWith(
       id: null == id
-          ? _value.id
+          ? _self.id
           : id // ignore: cast_nullable_to_non_nullable
               as int,
       eesupoolId: null == eesupoolId
-          ? _value.eesupoolId
+          ? _self.eesupoolId
           : eesupoolId // ignore: cast_nullable_to_non_nullable
               as int,
       authorId: null == authorId
-          ? _value.authorId
+          ? _self.authorId
           : authorId // ignore: cast_nullable_to_non_nullable
               as String,
       createdAt: null == createdAt
-          ? _value.createdAt
+          ? _self.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
               as DateTime,
       authorName: freezed == authorName
-          ? _value.authorName
+          ? _self.authorName
           : authorName // ignore: cast_nullable_to_non_nullable
               as String?,
       content: freezed == content
-          ? _value.content
+          ? _self.content
           : content // ignore: cast_nullable_to_non_nullable
               as String?,
       replyOnId: freezed == replyOnId
-          ? _value.replyOnId
+          ? _self.replyOnId
           : replyOnId // ignore: cast_nullable_to_non_nullable
               as int?,
       media: freezed == media
-          ? _value.media
+          ? _self.media
           : media // ignore: cast_nullable_to_non_nullable
               as List<MediaFile>?,
       localFiles: null == localFiles
-          ? _value.localFiles
+          ? _self.localFiles
           : localFiles // ignore: cast_nullable_to_non_nullable
               as List<File>,
       reply: freezed == reply
-          ? _value.reply
+          ? _self.reply
           : reply // ignore: cast_nullable_to_non_nullable
               as ChatMessage?,
       reactions: freezed == reactions
-          ? _value.reactions
+          ? _self.reactions
           : reactions // ignore: cast_nullable_to_non_nullable
               as List<ChatMessageReaction>?,
       hashTags: freezed == hashTags
-          ? _value.hashTags
+          ? _self.hashTags
           : hashTags // ignore: cast_nullable_to_non_nullable
               as List<String>?,
       isApproved: null == isApproved
-          ? _value.isApproved
+          ? _self.isApproved
           : isApproved // ignore: cast_nullable_to_non_nullable
               as bool,
       isDeleted: null == isDeleted
-          ? _value.isDeleted
+          ? _self.isDeleted
           : isDeleted // ignore: cast_nullable_to_non_nullable
               as bool,
       broadcastTo: freezed == broadcastTo
-          ? _value.broadcastTo
+          ? _self.broadcastTo
           : broadcastTo // ignore: cast_nullable_to_non_nullable
               as List<EESUpoolLevel>?,
       messageSeens: null == messageSeens
-          ? _value.messageSeens
+          ? _self.messageSeens
           : messageSeens // ignore: cast_nullable_to_non_nullable
               as List<String>,
-    ) as $Val);
+    ));
   }
 
   /// Create a copy of ChatMessage
@@ -211,160 +262,20 @@ class _$ChatMessageCopyWithImpl<$Res, $Val extends ChatMessage>
   @override
   @pragma('vm:prefer-inline')
   $ChatMessageCopyWith<$Res>? get reply {
-    if (_value.reply == null) {
+    if (_self.reply == null) {
       return null;
     }
 
-    return $ChatMessageCopyWith<$Res>(_value.reply!, (value) {
-      return _then(_value.copyWith(reply: value) as $Val);
+    return $ChatMessageCopyWith<$Res>(_self.reply!, (value) {
+      return _then(_self.copyWith(reply: value));
     });
   }
 }
 
 /// @nodoc
-abstract class _$$ChatMessageImplCopyWith<$Res>
-    implements $ChatMessageCopyWith<$Res> {
-  factory _$$ChatMessageImplCopyWith(
-          _$ChatMessageImpl value, $Res Function(_$ChatMessageImpl) then) =
-      __$$ChatMessageImplCopyWithImpl<$Res>;
-  @override
-  @useResult
-  $Res call(
-      {@JsonKey(includeToJson: false) int id,
-      @JsonKey(name: 'eesupool_id') int eesupoolId,
-      @JsonKey(name: 'author_id') String authorId,
-      @JsonKey(name: 'created_at', includeToJson: true) DateTime createdAt,
-      @JsonKey(name: 'author_full_name', includeToJson: false)
-      String? authorName,
-      @JsonKey(name: 'content') String? content,
-      @JsonKey(name: 'reply_on_id') int? replyOnId,
-      @JsonKey(name: 'attachments')
-      @MediaFileConverter()
-      List<MediaFile>? media,
-      @JsonKey(includeFromJson: false, includeToJson: false)
-      List<File> localFiles,
-      @ChatMessageConverter()
-      @JsonKey(name: 'reply_message', includeToJson: false)
-      ChatMessage? reply,
-      @ChatMessageReactionConverter()
-      @JsonKey(name: 'reactions', includeToJson: false)
-      List<ChatMessageReaction>? reactions,
-      @JsonKey(name: 'hash_tags') List<String>? hashTags,
-      @JsonKey(name: 'is_approved') bool isApproved,
-      @JsonKey(name: 'is_deleted', includeToJson: false) bool isDeleted,
-      @EESUpoolLevelConverter()
-      @JsonKey(name: 'broadcast_to')
-      List<EESUpoolLevel>? broadcastTo,
-      @JsonKey(name: 'message_seens', includeToJson: false)
-      List<String> messageSeens});
-
-  @override
-  $ChatMessageCopyWith<$Res>? get reply;
-}
-
-/// @nodoc
-class __$$ChatMessageImplCopyWithImpl<$Res>
-    extends _$ChatMessageCopyWithImpl<$Res, _$ChatMessageImpl>
-    implements _$$ChatMessageImplCopyWith<$Res> {
-  __$$ChatMessageImplCopyWithImpl(
-      _$ChatMessageImpl _value, $Res Function(_$ChatMessageImpl) _then)
-      : super(_value, _then);
-
-  /// Create a copy of ChatMessage
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? id = null,
-    Object? eesupoolId = null,
-    Object? authorId = null,
-    Object? createdAt = null,
-    Object? authorName = freezed,
-    Object? content = freezed,
-    Object? replyOnId = freezed,
-    Object? media = freezed,
-    Object? localFiles = null,
-    Object? reply = freezed,
-    Object? reactions = freezed,
-    Object? hashTags = freezed,
-    Object? isApproved = null,
-    Object? isDeleted = null,
-    Object? broadcastTo = freezed,
-    Object? messageSeens = null,
-  }) {
-    return _then(_$ChatMessageImpl(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as int,
-      eesupoolId: null == eesupoolId
-          ? _value.eesupoolId
-          : eesupoolId // ignore: cast_nullable_to_non_nullable
-              as int,
-      authorId: null == authorId
-          ? _value.authorId
-          : authorId // ignore: cast_nullable_to_non_nullable
-              as String,
-      createdAt: null == createdAt
-          ? _value.createdAt
-          : createdAt // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      authorName: freezed == authorName
-          ? _value.authorName
-          : authorName // ignore: cast_nullable_to_non_nullable
-              as String?,
-      content: freezed == content
-          ? _value.content
-          : content // ignore: cast_nullable_to_non_nullable
-              as String?,
-      replyOnId: freezed == replyOnId
-          ? _value.replyOnId
-          : replyOnId // ignore: cast_nullable_to_non_nullable
-              as int?,
-      media: freezed == media
-          ? _value._media
-          : media // ignore: cast_nullable_to_non_nullable
-              as List<MediaFile>?,
-      localFiles: null == localFiles
-          ? _value._localFiles
-          : localFiles // ignore: cast_nullable_to_non_nullable
-              as List<File>,
-      reply: freezed == reply
-          ? _value.reply
-          : reply // ignore: cast_nullable_to_non_nullable
-              as ChatMessage?,
-      reactions: freezed == reactions
-          ? _value._reactions
-          : reactions // ignore: cast_nullable_to_non_nullable
-              as List<ChatMessageReaction>?,
-      hashTags: freezed == hashTags
-          ? _value._hashTags
-          : hashTags // ignore: cast_nullable_to_non_nullable
-              as List<String>?,
-      isApproved: null == isApproved
-          ? _value.isApproved
-          : isApproved // ignore: cast_nullable_to_non_nullable
-              as bool,
-      isDeleted: null == isDeleted
-          ? _value.isDeleted
-          : isDeleted // ignore: cast_nullable_to_non_nullable
-              as bool,
-      broadcastTo: freezed == broadcastTo
-          ? _value._broadcastTo
-          : broadcastTo // ignore: cast_nullable_to_non_nullable
-              as List<EESUpoolLevel>?,
-      messageSeens: null == messageSeens
-          ? _value._messageSeens
-          : messageSeens // ignore: cast_nullable_to_non_nullable
-              as List<String>,
-    ));
-  }
-}
-
-/// @nodoc
 @JsonSerializable()
-class _$ChatMessageImpl implements _ChatMessage {
-  const _$ChatMessageImpl(
+class _ChatMessage implements ChatMessage {
+  const _ChatMessage(
       {@JsonKey(includeToJson: false) required this.id,
       @JsonKey(name: 'eesupool_id') required this.eesupoolId,
       @JsonKey(name: 'author_id') required this.authorId,
@@ -398,9 +309,8 @@ class _$ChatMessageImpl implements _ChatMessage {
         _hashTags = hashTags,
         _broadcastTo = broadcastTo,
         _messageSeens = messageSeens;
-
-  factory _$ChatMessageImpl.fromJson(Map<String, dynamic> json) =>
-      _$$ChatMessageImplFromJson(json);
+  factory _ChatMessage.fromJson(Map<String, dynamic> json) =>
+      _$ChatMessageFromJson(json);
 
   @override
   @JsonKey(includeToJson: false)
@@ -498,16 +408,26 @@ class _$ChatMessageImpl implements _ChatMessage {
     return EqualUnmodifiableListView(_messageSeens);
   }
 
+  /// Create a copy of ChatMessage
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  String toString() {
-    return 'ChatMessage(id: $id, eesupoolId: $eesupoolId, authorId: $authorId, createdAt: $createdAt, authorName: $authorName, content: $content, replyOnId: $replyOnId, media: $media, localFiles: $localFiles, reply: $reply, reactions: $reactions, hashTags: $hashTags, isApproved: $isApproved, isDeleted: $isDeleted, broadcastTo: $broadcastTo, messageSeens: $messageSeens)';
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  _$ChatMessageCopyWith<_ChatMessage> get copyWith =>
+      __$ChatMessageCopyWithImpl<_ChatMessage>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$ChatMessageToJson(
+      this,
+    );
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$ChatMessageImpl &&
+            other is _ChatMessage &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.eesupoolId, eesupoolId) ||
                 other.eesupoolId == eesupoolId) &&
@@ -558,114 +478,163 @@ class _$ChatMessageImpl implements _ChatMessage {
       const DeepCollectionEquality().hash(_broadcastTo),
       const DeepCollectionEquality().hash(_messageSeens));
 
-  /// Create a copy of ChatMessage
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  @pragma('vm:prefer-inline')
-  _$$ChatMessageImplCopyWith<_$ChatMessageImpl> get copyWith =>
-      __$$ChatMessageImplCopyWithImpl<_$ChatMessageImpl>(this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$ChatMessageImplToJson(
-      this,
-    );
+  String toString() {
+    return 'ChatMessage(id: $id, eesupoolId: $eesupoolId, authorId: $authorId, createdAt: $createdAt, authorName: $authorName, content: $content, replyOnId: $replyOnId, media: $media, localFiles: $localFiles, reply: $reply, reactions: $reactions, hashTags: $hashTags, isApproved: $isApproved, isDeleted: $isDeleted, broadcastTo: $broadcastTo, messageSeens: $messageSeens)';
   }
 }
 
-abstract class _ChatMessage implements ChatMessage {
-  const factory _ChatMessage(
-      {@JsonKey(includeToJson: false) required final int id,
-      @JsonKey(name: 'eesupool_id') required final int eesupoolId,
-      @JsonKey(name: 'author_id') required final String authorId,
-      @JsonKey(name: 'created_at', includeToJson: true)
-      required final DateTime createdAt,
+/// @nodoc
+abstract mixin class _$ChatMessageCopyWith<$Res>
+    implements $ChatMessageCopyWith<$Res> {
+  factory _$ChatMessageCopyWith(
+          _ChatMessage value, $Res Function(_ChatMessage) _then) =
+      __$ChatMessageCopyWithImpl;
+  @override
+  @useResult
+  $Res call(
+      {@JsonKey(includeToJson: false) int id,
+      @JsonKey(name: 'eesupool_id') int eesupoolId,
+      @JsonKey(name: 'author_id') String authorId,
+      @JsonKey(name: 'created_at', includeToJson: true) DateTime createdAt,
       @JsonKey(name: 'author_full_name', includeToJson: false)
-      final String? authorName,
-      @JsonKey(name: 'content') final String? content,
-      @JsonKey(name: 'reply_on_id') final int? replyOnId,
+      String? authorName,
+      @JsonKey(name: 'content') String? content,
+      @JsonKey(name: 'reply_on_id') int? replyOnId,
       @JsonKey(name: 'attachments')
       @MediaFileConverter()
-      final List<MediaFile>? media,
+      List<MediaFile>? media,
       @JsonKey(includeFromJson: false, includeToJson: false)
-      final List<File> localFiles,
+      List<File> localFiles,
       @ChatMessageConverter()
       @JsonKey(name: 'reply_message', includeToJson: false)
-      final ChatMessage? reply,
+      ChatMessage? reply,
       @ChatMessageReactionConverter()
       @JsonKey(name: 'reactions', includeToJson: false)
-      final List<ChatMessageReaction>? reactions,
-      @JsonKey(name: 'hash_tags') final List<String>? hashTags,
-      @JsonKey(name: 'is_approved') required final bool isApproved,
-      @JsonKey(name: 'is_deleted', includeToJson: false)
-      required final bool isDeleted,
+      List<ChatMessageReaction>? reactions,
+      @JsonKey(name: 'hash_tags') List<String>? hashTags,
+      @JsonKey(name: 'is_approved') bool isApproved,
+      @JsonKey(name: 'is_deleted', includeToJson: false) bool isDeleted,
       @EESUpoolLevelConverter()
       @JsonKey(name: 'broadcast_to')
-      final List<EESUpoolLevel>? broadcastTo,
+      List<EESUpoolLevel>? broadcastTo,
       @JsonKey(name: 'message_seens', includeToJson: false)
-      final List<String> messageSeens}) = _$ChatMessageImpl;
-
-  factory _ChatMessage.fromJson(Map<String, dynamic> json) =
-      _$ChatMessageImpl.fromJson;
+      List<String> messageSeens});
 
   @override
-  @JsonKey(includeToJson: false)
-  int get id;
-  @override
-  @JsonKey(name: 'eesupool_id')
-  int get eesupoolId;
-  @override
-  @JsonKey(name: 'author_id')
-  String get authorId;
-  @override
-  @JsonKey(name: 'created_at', includeToJson: true)
-  DateTime get createdAt;
-  @override
-  @JsonKey(name: 'author_full_name', includeToJson: false)
-  String? get authorName;
-  @override
-  @JsonKey(name: 'content')
-  String? get content;
-  @override
-  @JsonKey(name: 'reply_on_id')
-  int? get replyOnId;
-  @override
-  @JsonKey(name: 'attachments')
-  @MediaFileConverter()
-  List<MediaFile>? get media;
-  @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  List<File> get localFiles;
-  @override
-  @ChatMessageConverter()
-  @JsonKey(name: 'reply_message', includeToJson: false)
-  ChatMessage? get reply;
-  @override
-  @ChatMessageReactionConverter()
-  @JsonKey(name: 'reactions', includeToJson: false)
-  List<ChatMessageReaction>? get reactions;
-  @override
-  @JsonKey(name: 'hash_tags')
-  List<String>? get hashTags;
-  @override
-  @JsonKey(name: 'is_approved')
-  bool get isApproved;
-  @override
-  @JsonKey(name: 'is_deleted', includeToJson: false)
-  bool get isDeleted;
-  @override
-  @EESUpoolLevelConverter()
-  @JsonKey(name: 'broadcast_to')
-  List<EESUpoolLevel>? get broadcastTo;
-  @override
-  @JsonKey(name: 'message_seens', includeToJson: false)
-  List<String> get messageSeens;
+  $ChatMessageCopyWith<$Res>? get reply;
+}
+
+/// @nodoc
+class __$ChatMessageCopyWithImpl<$Res> implements _$ChatMessageCopyWith<$Res> {
+  __$ChatMessageCopyWithImpl(this._self, this._then);
+
+  final _ChatMessage _self;
+  final $Res Function(_ChatMessage) _then;
 
   /// Create a copy of ChatMessage
   /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$ChatMessageImplCopyWith<_$ChatMessageImpl> get copyWith =>
-      throw _privateConstructorUsedError;
+  @pragma('vm:prefer-inline')
+  $Res call({
+    Object? id = null,
+    Object? eesupoolId = null,
+    Object? authorId = null,
+    Object? createdAt = null,
+    Object? authorName = freezed,
+    Object? content = freezed,
+    Object? replyOnId = freezed,
+    Object? media = freezed,
+    Object? localFiles = null,
+    Object? reply = freezed,
+    Object? reactions = freezed,
+    Object? hashTags = freezed,
+    Object? isApproved = null,
+    Object? isDeleted = null,
+    Object? broadcastTo = freezed,
+    Object? messageSeens = null,
+  }) {
+    return _then(_ChatMessage(
+      id: null == id
+          ? _self.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int,
+      eesupoolId: null == eesupoolId
+          ? _self.eesupoolId
+          : eesupoolId // ignore: cast_nullable_to_non_nullable
+              as int,
+      authorId: null == authorId
+          ? _self.authorId
+          : authorId // ignore: cast_nullable_to_non_nullable
+              as String,
+      createdAt: null == createdAt
+          ? _self.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as DateTime,
+      authorName: freezed == authorName
+          ? _self.authorName
+          : authorName // ignore: cast_nullable_to_non_nullable
+              as String?,
+      content: freezed == content
+          ? _self.content
+          : content // ignore: cast_nullable_to_non_nullable
+              as String?,
+      replyOnId: freezed == replyOnId
+          ? _self.replyOnId
+          : replyOnId // ignore: cast_nullable_to_non_nullable
+              as int?,
+      media: freezed == media
+          ? _self._media
+          : media // ignore: cast_nullable_to_non_nullable
+              as List<MediaFile>?,
+      localFiles: null == localFiles
+          ? _self._localFiles
+          : localFiles // ignore: cast_nullable_to_non_nullable
+              as List<File>,
+      reply: freezed == reply
+          ? _self.reply
+          : reply // ignore: cast_nullable_to_non_nullable
+              as ChatMessage?,
+      reactions: freezed == reactions
+          ? _self._reactions
+          : reactions // ignore: cast_nullable_to_non_nullable
+              as List<ChatMessageReaction>?,
+      hashTags: freezed == hashTags
+          ? _self._hashTags
+          : hashTags // ignore: cast_nullable_to_non_nullable
+              as List<String>?,
+      isApproved: null == isApproved
+          ? _self.isApproved
+          : isApproved // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isDeleted: null == isDeleted
+          ? _self.isDeleted
+          : isDeleted // ignore: cast_nullable_to_non_nullable
+              as bool,
+      broadcastTo: freezed == broadcastTo
+          ? _self._broadcastTo
+          : broadcastTo // ignore: cast_nullable_to_non_nullable
+              as List<EESUpoolLevel>?,
+      messageSeens: null == messageSeens
+          ? _self._messageSeens
+          : messageSeens // ignore: cast_nullable_to_non_nullable
+              as List<String>,
+    ));
+  }
+
+  /// Create a copy of ChatMessage
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $ChatMessageCopyWith<$Res>? get reply {
+    if (_self.reply == null) {
+      return null;
+    }
+
+    return $ChatMessageCopyWith<$Res>(_self.reply!, (value) {
+      return _then(_self.copyWith(reply: value));
+    });
+  }
 }
+
+// dart format on

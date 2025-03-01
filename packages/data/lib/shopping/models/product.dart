@@ -6,7 +6,7 @@ part 'product.freezed.dart';
 part 'product.g.dart';
 
 @freezed
-class Product with _$Product {
+abstract class Product with _$Product {
   factory Product({
     required int id,
     @JsonKey(name: 'category_id') int? categoryId,

@@ -2,7 +2,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:bootstrap_icons/bootstrap_icons.dart';
 import 'package:data/auth/repository/profile_repository.dart';
-import 'package:shorebird_code_push/shorebird_code_push.dart';
 import 'package:ui/src/views/auth/profile/bloc/profile_bloc.dart';
 import 'package:ui/src/views/auth/sign_in/bloc/auth_bloc.dart';
 import 'package:ui/src/core/extensions/context_theme_ext.dart';
@@ -16,8 +15,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:data/utils/eesup_exception.dart';
 import 'package:package_info_plus/package_info_plus.dart';
-
-final shorebirdCodePush = ShorebirdCodePush();
 
 class MenuTab extends StatefulWidget {
   const MenuTab({super.key});
@@ -145,6 +142,7 @@ class _MenuTabState extends State<MenuTab> {
                 onTap: () {
                   context.read<AuthBloc>().add(SignOutPressed());
                 },
+                isVisible: true,
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 10.0),
@@ -186,19 +184,19 @@ class _MenuTabState extends State<MenuTab> {
 
 class _MenuButton extends StatelessWidget {
   const _MenuButton({
-    this.isVisible = true,
     required this.label,
     required this.icon,
     required this.onTap,
+   
   });
-  final bool isVisible;
+
   final String label;
   final IconData icon;
   final void Function()? onTap;
 
   @override
   Widget build(BuildContext context) {
-    if (!isVisible) return const SizedBox.shrink();
+    // if (!isVisible) return const SizedBox.shrink();
     final textTheme = Theme.of(context).textTheme;
     return InkWell(
       onTap: onTap,
@@ -240,14 +238,13 @@ class _MenuButton extends StatelessWidget {
 
 class _MenuButtonTile extends StatelessWidget {
   const _MenuButtonTile({
-    super.key,
     required this.label,
     this.icon,
     required this.onTap,
-    this.counter,
-    this.isVisible = true,
     this.showBorder = true,
     this.imagePath,
+    this.counter,
+    required this.isVisible,
     this.size,
   });
   final String? imagePath;

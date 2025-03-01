@@ -1,3 +1,4 @@
+// dart format width=80
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
@@ -9,142 +10,77 @@ part of 'voucher.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// dart format off
 T _$identity<T>(T value) => value;
-
-final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
-
-Voucher _$VoucherFromJson(Map<String, dynamic> json) {
-  return _Voucher.fromJson(json);
-}
 
 /// @nodoc
 mixin _$Voucher {
   @JsonKey(name: 'user_id')
-  String? get userId => throw _privateConstructorUsedError;
+  String? get userId;
   @JsonKey(name: 'parameter_id')
-  String get parameterId => throw _privateConstructorUsedError;
+  String get parameterId;
   @JsonKey(name: 'created_at')
-  DateTime get createdAt => throw _privateConstructorUsedError;
+  DateTime get createdAt;
   @JsonKey(name: 'balance')
-  double get balance => throw _privateConstructorUsedError;
+  double get balance;
   @JsonKey(name: 'value')
-  double get value => throw _privateConstructorUsedError;
+  double get value;
   @JsonKey(name: 'id')
-  int? get id => throw _privateConstructorUsedError;
+  int? get id;
   @VoucherCycleConverter()
   @JsonKey(name: 'cycle')
-  VoucherCycle get cycle => throw _privateConstructorUsedError;
-  int get period => throw _privateConstructorUsedError;
+  VoucherCycle get cycle;
+  int get period;
   @JsonKey(name: 'end_date')
-  DateTime get endDate => throw _privateConstructorUsedError;
+  DateTime get endDate;
   @JsonKey(name: 'confirmed_at')
-  DateTime? get confirmedAt => throw _privateConstructorUsedError;
-
-  /// Serializes this Voucher to a JSON map.
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  DateTime? get confirmedAt;
 
   /// Create a copy of Voucher
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  $VoucherCopyWith<Voucher> get copyWith => throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class $VoucherCopyWith<$Res> {
-  factory $VoucherCopyWith(Voucher value, $Res Function(Voucher) then) =
-      _$VoucherCopyWithImpl<$Res, Voucher>;
-  @useResult
-  $Res call(
-      {@JsonKey(name: 'user_id') String? userId,
-      @JsonKey(name: 'parameter_id') String parameterId,
-      @JsonKey(name: 'created_at') DateTime createdAt,
-      @JsonKey(name: 'balance') double balance,
-      @JsonKey(name: 'value') double value,
-      @JsonKey(name: 'id') int? id,
-      @VoucherCycleConverter() @JsonKey(name: 'cycle') VoucherCycle cycle,
-      int period,
-      @JsonKey(name: 'end_date') DateTime endDate,
-      @JsonKey(name: 'confirmed_at') DateTime? confirmedAt});
-}
-
-/// @nodoc
-class _$VoucherCopyWithImpl<$Res, $Val extends Voucher>
-    implements $VoucherCopyWith<$Res> {
-  _$VoucherCopyWithImpl(this._value, this._then);
-
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
-
-  /// Create a copy of Voucher
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
+  $VoucherCopyWith<Voucher> get copyWith =>
+      _$VoucherCopyWithImpl<Voucher>(this as Voucher, _$identity);
+
+  /// Serializes this Voucher to a JSON map.
+  Map<String, dynamic> toJson();
+
   @override
-  $Res call({
-    Object? userId = freezed,
-    Object? parameterId = null,
-    Object? createdAt = null,
-    Object? balance = null,
-    Object? value = null,
-    Object? id = freezed,
-    Object? cycle = null,
-    Object? period = null,
-    Object? endDate = null,
-    Object? confirmedAt = freezed,
-  }) {
-    return _then(_value.copyWith(
-      userId: freezed == userId
-          ? _value.userId
-          : userId // ignore: cast_nullable_to_non_nullable
-              as String?,
-      parameterId: null == parameterId
-          ? _value.parameterId
-          : parameterId // ignore: cast_nullable_to_non_nullable
-              as String,
-      createdAt: null == createdAt
-          ? _value.createdAt
-          : createdAt // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      balance: null == balance
-          ? _value.balance
-          : balance // ignore: cast_nullable_to_non_nullable
-              as double,
-      value: null == value
-          ? _value.value
-          : value // ignore: cast_nullable_to_non_nullable
-              as double,
-      id: freezed == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as int?,
-      cycle: null == cycle
-          ? _value.cycle
-          : cycle // ignore: cast_nullable_to_non_nullable
-              as VoucherCycle,
-      period: null == period
-          ? _value.period
-          : period // ignore: cast_nullable_to_non_nullable
-              as int,
-      endDate: null == endDate
-          ? _value.endDate
-          : endDate // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      confirmedAt: freezed == confirmedAt
-          ? _value.confirmedAt
-          : confirmedAt // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
-    ) as $Val);
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is Voucher &&
+            (identical(other.userId, userId) || other.userId == userId) &&
+            (identical(other.parameterId, parameterId) ||
+                other.parameterId == parameterId) &&
+            (identical(other.createdAt, createdAt) ||
+                other.createdAt == createdAt) &&
+            (identical(other.balance, balance) || other.balance == balance) &&
+            (identical(other.value, value) || other.value == value) &&
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.cycle, cycle) || other.cycle == cycle) &&
+            (identical(other.period, period) || other.period == period) &&
+            (identical(other.endDate, endDate) || other.endDate == endDate) &&
+            (identical(other.confirmedAt, confirmedAt) ||
+                other.confirmedAt == confirmedAt));
+  }
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  int get hashCode => Object.hash(runtimeType, userId, parameterId, createdAt,
+      balance, value, id, cycle, period, endDate, confirmedAt);
+
+  @override
+  String toString() {
+    return 'Voucher(userId: $userId, parameterId: $parameterId, createdAt: $createdAt, balance: $balance, value: $value, id: $id, cycle: $cycle, period: $period, endDate: $endDate, confirmedAt: $confirmedAt)';
   }
 }
 
 /// @nodoc
-abstract class _$$VoucherImplCopyWith<$Res> implements $VoucherCopyWith<$Res> {
-  factory _$$VoucherImplCopyWith(
-          _$VoucherImpl value, $Res Function(_$VoucherImpl) then) =
-      __$$VoucherImplCopyWithImpl<$Res>;
-  @override
+abstract mixin class $VoucherCopyWith<$Res> {
+  factory $VoucherCopyWith(Voucher value, $Res Function(Voucher) _then) =
+      _$VoucherCopyWithImpl;
   @useResult
   $Res call(
       {@JsonKey(name: 'user_id') String? userId,
@@ -160,12 +96,11 @@ abstract class _$$VoucherImplCopyWith<$Res> implements $VoucherCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$VoucherImplCopyWithImpl<$Res>
-    extends _$VoucherCopyWithImpl<$Res, _$VoucherImpl>
-    implements _$$VoucherImplCopyWith<$Res> {
-  __$$VoucherImplCopyWithImpl(
-      _$VoucherImpl _value, $Res Function(_$VoucherImpl) _then)
-      : super(_value, _then);
+class _$VoucherCopyWithImpl<$Res> implements $VoucherCopyWith<$Res> {
+  _$VoucherCopyWithImpl(this._self, this._then);
+
+  final Voucher _self;
+  final $Res Function(Voucher) _then;
 
   /// Create a copy of Voucher
   /// with the given fields replaced by the non-null parameter values.
@@ -183,45 +118,45 @@ class __$$VoucherImplCopyWithImpl<$Res>
     Object? endDate = null,
     Object? confirmedAt = freezed,
   }) {
-    return _then(_$VoucherImpl(
+    return _then(_self.copyWith(
       userId: freezed == userId
-          ? _value.userId
+          ? _self.userId
           : userId // ignore: cast_nullable_to_non_nullable
               as String?,
       parameterId: null == parameterId
-          ? _value.parameterId
+          ? _self.parameterId
           : parameterId // ignore: cast_nullable_to_non_nullable
               as String,
       createdAt: null == createdAt
-          ? _value.createdAt
+          ? _self.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
               as DateTime,
       balance: null == balance
-          ? _value.balance
+          ? _self.balance
           : balance // ignore: cast_nullable_to_non_nullable
               as double,
       value: null == value
-          ? _value.value
+          ? _self.value
           : value // ignore: cast_nullable_to_non_nullable
               as double,
       id: freezed == id
-          ? _value.id
+          ? _self.id
           : id // ignore: cast_nullable_to_non_nullable
               as int?,
       cycle: null == cycle
-          ? _value.cycle
+          ? _self.cycle
           : cycle // ignore: cast_nullable_to_non_nullable
               as VoucherCycle,
       period: null == period
-          ? _value.period
+          ? _self.period
           : period // ignore: cast_nullable_to_non_nullable
               as int,
       endDate: null == endDate
-          ? _value.endDate
+          ? _self.endDate
           : endDate // ignore: cast_nullable_to_non_nullable
               as DateTime,
       confirmedAt: freezed == confirmedAt
-          ? _value.confirmedAt
+          ? _self.confirmedAt
           : confirmedAt // ignore: cast_nullable_to_non_nullable
               as DateTime?,
     ));
@@ -230,8 +165,8 @@ class __$$VoucherImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$VoucherImpl implements _Voucher {
-  const _$VoucherImpl(
+class _Voucher implements Voucher {
+  const _Voucher(
       {@JsonKey(name: 'user_id') this.userId,
       @JsonKey(name: 'parameter_id') required this.parameterId,
       @JsonKey(name: 'created_at') required this.createdAt,
@@ -242,9 +177,8 @@ class _$VoucherImpl implements _Voucher {
       required this.period,
       @JsonKey(name: 'end_date') required this.endDate,
       @JsonKey(name: 'confirmed_at') this.confirmedAt});
-
-  factory _$VoucherImpl.fromJson(Map<String, dynamic> json) =>
-      _$$VoucherImplFromJson(json);
+  factory _Voucher.fromJson(Map<String, dynamic> json) =>
+      _$VoucherFromJson(json);
 
   @override
   @JsonKey(name: 'user_id')
@@ -277,16 +211,26 @@ class _$VoucherImpl implements _Voucher {
   @JsonKey(name: 'confirmed_at')
   final DateTime? confirmedAt;
 
+  /// Create a copy of Voucher
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  String toString() {
-    return 'Voucher(userId: $userId, parameterId: $parameterId, createdAt: $createdAt, balance: $balance, value: $value, id: $id, cycle: $cycle, period: $period, endDate: $endDate, confirmedAt: $confirmedAt)';
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  _$VoucherCopyWith<_Voucher> get copyWith =>
+      __$VoucherCopyWithImpl<_Voucher>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$VoucherToJson(
+      this,
+    );
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$VoucherImpl &&
+            other is _Voucher &&
             (identical(other.userId, userId) || other.userId == userId) &&
             (identical(other.parameterId, parameterId) ||
                 other.parameterId == parameterId) &&
@@ -307,75 +251,97 @@ class _$VoucherImpl implements _Voucher {
   int get hashCode => Object.hash(runtimeType, userId, parameterId, createdAt,
       balance, value, id, cycle, period, endDate, confirmedAt);
 
-  /// Create a copy of Voucher
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  @pragma('vm:prefer-inline')
-  _$$VoucherImplCopyWith<_$VoucherImpl> get copyWith =>
-      __$$VoucherImplCopyWithImpl<_$VoucherImpl>(this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$VoucherImplToJson(
-      this,
-    );
+  String toString() {
+    return 'Voucher(userId: $userId, parameterId: $parameterId, createdAt: $createdAt, balance: $balance, value: $value, id: $id, cycle: $cycle, period: $period, endDate: $endDate, confirmedAt: $confirmedAt)';
   }
 }
 
-abstract class _Voucher implements Voucher {
-  const factory _Voucher(
-          {@JsonKey(name: 'user_id') final String? userId,
-          @JsonKey(name: 'parameter_id') required final String parameterId,
-          @JsonKey(name: 'created_at') required final DateTime createdAt,
-          @JsonKey(name: 'balance') required final double balance,
-          @JsonKey(name: 'value') required final double value,
-          @JsonKey(name: 'id') final int? id,
-          @VoucherCycleConverter()
-          @JsonKey(name: 'cycle')
-          required final VoucherCycle cycle,
-          required final int period,
-          @JsonKey(name: 'end_date') required final DateTime endDate,
-          @JsonKey(name: 'confirmed_at') final DateTime? confirmedAt}) =
-      _$VoucherImpl;
+/// @nodoc
+abstract mixin class _$VoucherCopyWith<$Res> implements $VoucherCopyWith<$Res> {
+  factory _$VoucherCopyWith(_Voucher value, $Res Function(_Voucher) _then) =
+      __$VoucherCopyWithImpl;
+  @override
+  @useResult
+  $Res call(
+      {@JsonKey(name: 'user_id') String? userId,
+      @JsonKey(name: 'parameter_id') String parameterId,
+      @JsonKey(name: 'created_at') DateTime createdAt,
+      @JsonKey(name: 'balance') double balance,
+      @JsonKey(name: 'value') double value,
+      @JsonKey(name: 'id') int? id,
+      @VoucherCycleConverter() @JsonKey(name: 'cycle') VoucherCycle cycle,
+      int period,
+      @JsonKey(name: 'end_date') DateTime endDate,
+      @JsonKey(name: 'confirmed_at') DateTime? confirmedAt});
+}
 
-  factory _Voucher.fromJson(Map<String, dynamic> json) = _$VoucherImpl.fromJson;
+/// @nodoc
+class __$VoucherCopyWithImpl<$Res> implements _$VoucherCopyWith<$Res> {
+  __$VoucherCopyWithImpl(this._self, this._then);
 
-  @override
-  @JsonKey(name: 'user_id')
-  String? get userId;
-  @override
-  @JsonKey(name: 'parameter_id')
-  String get parameterId;
-  @override
-  @JsonKey(name: 'created_at')
-  DateTime get createdAt;
-  @override
-  @JsonKey(name: 'balance')
-  double get balance;
-  @override
-  @JsonKey(name: 'value')
-  double get value;
-  @override
-  @JsonKey(name: 'id')
-  int? get id;
-  @override
-  @VoucherCycleConverter()
-  @JsonKey(name: 'cycle')
-  VoucherCycle get cycle;
-  @override
-  int get period;
-  @override
-  @JsonKey(name: 'end_date')
-  DateTime get endDate;
-  @override
-  @JsonKey(name: 'confirmed_at')
-  DateTime? get confirmedAt;
+  final _Voucher _self;
+  final $Res Function(_Voucher) _then;
 
   /// Create a copy of Voucher
   /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$VoucherImplCopyWith<_$VoucherImpl> get copyWith =>
-      throw _privateConstructorUsedError;
+  @pragma('vm:prefer-inline')
+  $Res call({
+    Object? userId = freezed,
+    Object? parameterId = null,
+    Object? createdAt = null,
+    Object? balance = null,
+    Object? value = null,
+    Object? id = freezed,
+    Object? cycle = null,
+    Object? period = null,
+    Object? endDate = null,
+    Object? confirmedAt = freezed,
+  }) {
+    return _then(_Voucher(
+      userId: freezed == userId
+          ? _self.userId
+          : userId // ignore: cast_nullable_to_non_nullable
+              as String?,
+      parameterId: null == parameterId
+          ? _self.parameterId
+          : parameterId // ignore: cast_nullable_to_non_nullable
+              as String,
+      createdAt: null == createdAt
+          ? _self.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as DateTime,
+      balance: null == balance
+          ? _self.balance
+          : balance // ignore: cast_nullable_to_non_nullable
+              as double,
+      value: null == value
+          ? _self.value
+          : value // ignore: cast_nullable_to_non_nullable
+              as double,
+      id: freezed == id
+          ? _self.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int?,
+      cycle: null == cycle
+          ? _self.cycle
+          : cycle // ignore: cast_nullable_to_non_nullable
+              as VoucherCycle,
+      period: null == period
+          ? _self.period
+          : period // ignore: cast_nullable_to_non_nullable
+              as int,
+      endDate: null == endDate
+          ? _self.endDate
+          : endDate // ignore: cast_nullable_to_non_nullable
+              as DateTime,
+      confirmedAt: freezed == confirmedAt
+          ? _self.confirmedAt
+          : confirmedAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+    ));
+  }
 }
+
+// dart format on

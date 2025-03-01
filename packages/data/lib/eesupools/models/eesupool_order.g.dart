@@ -6,8 +6,8 @@ part of 'eesupool_order.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$EESUpoolOrderImpl _$$EESUpoolOrderImplFromJson(Map<String, dynamic> json) =>
-    _$EESUpoolOrderImpl(
+_EESUpoolOrder _$EESUpoolOrderFromJson(Map<String, dynamic> json) =>
+    _EESUpoolOrder(
       id: (json['id'] as num).toInt(),
       eesupoolId: (json['eesupool_id'] as num).toInt(),
       createdAt: DateTime.parse(json['created_at'] as String),
@@ -32,7 +32,7 @@ _$EESUpoolOrderImpl _$$EESUpoolOrderImplFromJson(Map<String, dynamic> json) =>
       currentAmount: (json['current_amount'] as num?)?.toDouble() ?? 0.00,
     );
 
-Map<String, dynamic> _$$EESUpoolOrderImplToJson(_$EESUpoolOrderImpl instance) =>
+Map<String, dynamic> _$EESUpoolOrderToJson(_EESUpoolOrder instance) =>
     <String, dynamic>{
       'eesupool_id': instance.eesupoolId,
       'created_at': instance.createdAt.toIso8601String(),
@@ -54,9 +54,9 @@ Value? _$JsonConverterFromJson<Json, Value>(
 ) =>
     json == null ? null : fromJson(json as Json);
 
-_$MemberOrderAssignmentImpl _$$MemberOrderAssignmentImplFromJson(
+_MemberOrderAssignment _$MemberOrderAssignmentFromJson(
         Map<String, dynamic> json) =>
-    _$MemberOrderAssignmentImpl(
+    _MemberOrderAssignment(
       orderId: (json['order_id'] as num).toInt(),
       eesupoolOrderId: (json['eesupool_ord_id'] as num).toInt(),
       memberId: json['member_id'] as String,
@@ -66,8 +66,8 @@ _$MemberOrderAssignmentImpl _$$MemberOrderAssignmentImplFromJson(
           json['privilage'], const OrderEditPrivilageConverter().fromJson),
     );
 
-Map<String, dynamic> _$$MemberOrderAssignmentImplToJson(
-        _$MemberOrderAssignmentImpl instance) =>
+Map<String, dynamic> _$MemberOrderAssignmentToJson(
+        _MemberOrderAssignment instance) =>
     <String, dynamic>{
       'order_id': instance.orderId,
       'eesupool_ord_id': instance.eesupoolOrderId,

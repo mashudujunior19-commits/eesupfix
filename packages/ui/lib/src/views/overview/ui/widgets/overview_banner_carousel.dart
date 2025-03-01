@@ -108,7 +108,6 @@
 //   }
 // }
 
-import 'package:data/shopping/models/hamper_banner.dart';
 import 'package:data/shopping/models/hamper_banner_details.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_carousel_widget/flutter_carousel_widget.dart';
@@ -188,7 +187,7 @@ class OverviewBannerCarousel extends StatelessWidget {
     }
 
     return FlutterCarousel(
-      options: CarouselOptions(
+      options: FlutterCarouselOptions(
         height: 270,
         showIndicator: false,
         autoPlay: true,
@@ -201,7 +200,7 @@ class OverviewBannerCarousel extends StatelessWidget {
         slideIndicator: SequentialFillIndicator(),
       ),
       items: hamperBanner!.map((hamperContent) {
-        print('Rendering hamper content: $hamperContent');
+      
         return GestureDetector(
           onTap: () {
             onBannerTap(hamperContent.baseImage);

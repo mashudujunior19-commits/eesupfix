@@ -4,7 +4,7 @@ part 'profit_allocation.freezed.dart';
 part 'profit_allocation.g.dart';
 
 @freezed
-class ProfitAllocation with _$ProfitAllocation {
+abstract class ProfitAllocation with _$ProfitAllocation {
   const factory ProfitAllocation({
     required double cia,
     required double cwa,

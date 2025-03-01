@@ -1,3 +1,4 @@
+// dart format width=80
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
@@ -9,85 +10,51 @@ part of 'basket.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// dart format off
 T _$identity<T>(T value) => value;
-
-final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
-
-Basket _$BasketFromJson(Map<String, dynamic> json) {
-  return _Basket.fromJson(json);
-}
 
 /// @nodoc
 mixin _$Basket {
   @JsonKey(includeToJson: false)
-  String get id => throw _privateConstructorUsedError;
-  String get name => throw _privateConstructorUsedError;
+  String get id;
+  String get name;
   @BasketTypeConverter()
-  BasketType? get type => throw _privateConstructorUsedError;
-
-  /// Serializes this Basket to a JSON map.
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  BasketType? get type;
 
   /// Create a copy of Basket
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  $BasketCopyWith<Basket> get copyWith => throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class $BasketCopyWith<$Res> {
-  factory $BasketCopyWith(Basket value, $Res Function(Basket) then) =
-      _$BasketCopyWithImpl<$Res, Basket>;
-  @useResult
-  $Res call(
-      {@JsonKey(includeToJson: false) String id,
-      String name,
-      @BasketTypeConverter() BasketType? type});
-}
-
-/// @nodoc
-class _$BasketCopyWithImpl<$Res, $Val extends Basket>
-    implements $BasketCopyWith<$Res> {
-  _$BasketCopyWithImpl(this._value, this._then);
-
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
-
-  /// Create a copy of Basket
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
+  $BasketCopyWith<Basket> get copyWith =>
+      _$BasketCopyWithImpl<Basket>(this as Basket, _$identity);
+
+  /// Serializes this Basket to a JSON map.
+  Map<String, dynamic> toJson();
+
   @override
-  $Res call({
-    Object? id = null,
-    Object? name = null,
-    Object? type = freezed,
-  }) {
-    return _then(_value.copyWith(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as String,
-      name: null == name
-          ? _value.name
-          : name // ignore: cast_nullable_to_non_nullable
-              as String,
-      type: freezed == type
-          ? _value.type
-          : type // ignore: cast_nullable_to_non_nullable
-              as BasketType?,
-    ) as $Val);
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is Basket &&
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.name, name) || other.name == name) &&
+            (identical(other.type, type) || other.type == type));
+  }
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  int get hashCode => Object.hash(runtimeType, id, name, type);
+
+  @override
+  String toString() {
+    return 'Basket(id: $id, name: $name, type: $type)';
   }
 }
 
 /// @nodoc
-abstract class _$$BasketImplCopyWith<$Res> implements $BasketCopyWith<$Res> {
-  factory _$$BasketImplCopyWith(
-          _$BasketImpl value, $Res Function(_$BasketImpl) then) =
-      __$$BasketImplCopyWithImpl<$Res>;
-  @override
+abstract mixin class $BasketCopyWith<$Res> {
+  factory $BasketCopyWith(Basket value, $Res Function(Basket) _then) =
+      _$BasketCopyWithImpl;
   @useResult
   $Res call(
       {@JsonKey(includeToJson: false) String id,
@@ -96,12 +63,11 @@ abstract class _$$BasketImplCopyWith<$Res> implements $BasketCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$BasketImplCopyWithImpl<$Res>
-    extends _$BasketCopyWithImpl<$Res, _$BasketImpl>
-    implements _$$BasketImplCopyWith<$Res> {
-  __$$BasketImplCopyWithImpl(
-      _$BasketImpl _value, $Res Function(_$BasketImpl) _then)
-      : super(_value, _then);
+class _$BasketCopyWithImpl<$Res> implements $BasketCopyWith<$Res> {
+  _$BasketCopyWithImpl(this._self, this._then);
+
+  final Basket _self;
+  final $Res Function(Basket) _then;
 
   /// Create a copy of Basket
   /// with the given fields replaced by the non-null parameter values.
@@ -112,17 +78,17 @@ class __$$BasketImplCopyWithImpl<$Res>
     Object? name = null,
     Object? type = freezed,
   }) {
-    return _then(_$BasketImpl(
+    return _then(_self.copyWith(
       id: null == id
-          ? _value.id
+          ? _self.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
       name: null == name
-          ? _value.name
+          ? _self.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
       type: freezed == type
-          ? _value.type
+          ? _self.type
           : type // ignore: cast_nullable_to_non_nullable
               as BasketType?,
     ));
@@ -131,14 +97,12 @@ class __$$BasketImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$BasketImpl implements _Basket {
-  const _$BasketImpl(
+class _Basket implements Basket {
+  const _Basket(
       {@JsonKey(includeToJson: false) required this.id,
       required this.name,
       @BasketTypeConverter() this.type});
-
-  factory _$BasketImpl.fromJson(Map<String, dynamic> json) =>
-      _$$BasketImplFromJson(json);
+  factory _Basket.fromJson(Map<String, dynamic> json) => _$BasketFromJson(json);
 
   @override
   @JsonKey(includeToJson: false)
@@ -149,16 +113,26 @@ class _$BasketImpl implements _Basket {
   @BasketTypeConverter()
   final BasketType? type;
 
+  /// Create a copy of Basket
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  String toString() {
-    return 'Basket(id: $id, name: $name, type: $type)';
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  _$BasketCopyWith<_Basket> get copyWith =>
+      __$BasketCopyWithImpl<_Basket>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$BasketToJson(
+      this,
+    );
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$BasketImpl &&
+            other is _Basket &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.type, type) || other.type == type));
@@ -168,43 +142,55 @@ class _$BasketImpl implements _Basket {
   @override
   int get hashCode => Object.hash(runtimeType, id, name, type);
 
-  /// Create a copy of Basket
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  @pragma('vm:prefer-inline')
-  _$$BasketImplCopyWith<_$BasketImpl> get copyWith =>
-      __$$BasketImplCopyWithImpl<_$BasketImpl>(this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$BasketImplToJson(
-      this,
-    );
+  String toString() {
+    return 'Basket(id: $id, name: $name, type: $type)';
   }
 }
 
-abstract class _Basket implements Basket {
-  const factory _Basket(
-      {@JsonKey(includeToJson: false) required final String id,
-      required final String name,
-      @BasketTypeConverter() final BasketType? type}) = _$BasketImpl;
+/// @nodoc
+abstract mixin class _$BasketCopyWith<$Res> implements $BasketCopyWith<$Res> {
+  factory _$BasketCopyWith(_Basket value, $Res Function(_Basket) _then) =
+      __$BasketCopyWithImpl;
+  @override
+  @useResult
+  $Res call(
+      {@JsonKey(includeToJson: false) String id,
+      String name,
+      @BasketTypeConverter() BasketType? type});
+}
 
-  factory _Basket.fromJson(Map<String, dynamic> json) = _$BasketImpl.fromJson;
+/// @nodoc
+class __$BasketCopyWithImpl<$Res> implements _$BasketCopyWith<$Res> {
+  __$BasketCopyWithImpl(this._self, this._then);
 
-  @override
-  @JsonKey(includeToJson: false)
-  String get id;
-  @override
-  String get name;
-  @override
-  @BasketTypeConverter()
-  BasketType? get type;
+  final _Basket _self;
+  final $Res Function(_Basket) _then;
 
   /// Create a copy of Basket
   /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$BasketImplCopyWith<_$BasketImpl> get copyWith =>
-      throw _privateConstructorUsedError;
+  @pragma('vm:prefer-inline')
+  $Res call({
+    Object? id = null,
+    Object? name = null,
+    Object? type = freezed,
+  }) {
+    return _then(_Basket(
+      id: null == id
+          ? _self.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
+      name: null == name
+          ? _self.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String,
+      type: freezed == type
+          ? _self.type
+          : type // ignore: cast_nullable_to_non_nullable
+              as BasketType?,
+    ));
+  }
 }
+
+// dart format on

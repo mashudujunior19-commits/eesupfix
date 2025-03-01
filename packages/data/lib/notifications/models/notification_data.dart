@@ -6,7 +6,7 @@ part 'notification_data.freezed.dart';
 part 'notification_data.g.dart';
 
 @freezed
-class NotificationData with _$NotificationData {
+abstract class NotificationData with _$NotificationData {
   const factory NotificationData({
     @JsonKey(name: 'user_id') String? userId,
     @JsonKey(name: 'eesupool_id') int? eesupoolId,

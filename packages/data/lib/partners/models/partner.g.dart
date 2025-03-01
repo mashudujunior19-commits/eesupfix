@@ -6,8 +6,7 @@ part of 'partner.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$PartnerImpl _$$PartnerImplFromJson(Map<String, dynamic> json) =>
-    _$PartnerImpl(
+_Partner _$PartnerFromJson(Map<String, dynamic> json) => _Partner(
       id: json['id'] as String,
       title: json['title'] as String,
       description: json['description'] as String,
@@ -22,8 +21,7 @@ _$PartnerImpl _$$PartnerImplFromJson(Map<String, dynamic> json) =>
       maxApps: (json['max_apps'] as num).toInt(),
     );
 
-Map<String, dynamic> _$$PartnerImplToJson(_$PartnerImpl instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$PartnerToJson(_Partner instance) => <String, dynamic>{
       'id': instance.id,
       'title': instance.title,
       'description': instance.description,

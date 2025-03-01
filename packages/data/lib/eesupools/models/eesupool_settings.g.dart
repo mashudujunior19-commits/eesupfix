@@ -6,9 +6,8 @@ part of 'eesupool_settings.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$EESUpoolSettingsImpl _$$EESUpoolSettingsImplFromJson(
-        Map<String, dynamic> json) =>
-    _$EESUpoolSettingsImpl(
+_EESUpoolSettings _$EESUpoolSettingsFromJson(Map<String, dynamic> json) =>
+    _EESUpoolSettings(
       id: (json['id'] as num).toInt(),
       createdAt: DateTime.parse(json['created_at'] as String),
       minimumOrderValue: (json['minimum_order_value'] as num?)?.toDouble(),
@@ -18,8 +17,7 @@ _$EESUpoolSettingsImpl _$$EESUpoolSettingsImplFromJson(
       userCount: json['user_count'] as num?,
     );
 
-Map<String, dynamic> _$$EESUpoolSettingsImplToJson(
-        _$EESUpoolSettingsImpl instance) =>
+Map<String, dynamic> _$EESUpoolSettingsToJson(_EESUpoolSettings instance) =>
     <String, dynamic>{
       'created_at': instance.createdAt.toIso8601String(),
       'minimum_order_value': instance.minimumOrderValue,

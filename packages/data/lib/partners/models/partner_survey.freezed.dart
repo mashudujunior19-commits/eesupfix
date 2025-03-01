@@ -1,3 +1,4 @@
+// dart format width=80
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
@@ -9,137 +10,31 @@ part of 'partner_survey.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// dart format off
 T _$identity<T>(T value) => value;
-
-final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
-
-PartnerSurvey _$PartnerSurveyFromJson(Map<String, dynamic> json) {
-  return _PartnerSurvey.fromJson(json);
-}
 
 /// @nodoc
 mixin _$PartnerSurvey {
-  int get index => throw _privateConstructorUsedError;
+  int get index;
   @JsonKey(name: 'survey_id')
-  String get surveyId => throw _privateConstructorUsedError;
-
-  /// Serializes this PartnerSurvey to a JSON map.
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  String get surveyId;
 
   /// Create a copy of PartnerSurvey
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
   $PartnerSurveyCopyWith<PartnerSurvey> get copyWith =>
-      throw _privateConstructorUsedError;
-}
+      _$PartnerSurveyCopyWithImpl<PartnerSurvey>(
+          this as PartnerSurvey, _$identity);
 
-/// @nodoc
-abstract class $PartnerSurveyCopyWith<$Res> {
-  factory $PartnerSurveyCopyWith(
-          PartnerSurvey value, $Res Function(PartnerSurvey) then) =
-      _$PartnerSurveyCopyWithImpl<$Res, PartnerSurvey>;
-  @useResult
-  $Res call({int index, @JsonKey(name: 'survey_id') String surveyId});
-}
-
-/// @nodoc
-class _$PartnerSurveyCopyWithImpl<$Res, $Val extends PartnerSurvey>
-    implements $PartnerSurveyCopyWith<$Res> {
-  _$PartnerSurveyCopyWithImpl(this._value, this._then);
-
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
-
-  /// Create a copy of PartnerSurvey
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? index = null,
-    Object? surveyId = null,
-  }) {
-    return _then(_value.copyWith(
-      index: null == index
-          ? _value.index
-          : index // ignore: cast_nullable_to_non_nullable
-              as int,
-      surveyId: null == surveyId
-          ? _value.surveyId
-          : surveyId // ignore: cast_nullable_to_non_nullable
-              as String,
-    ) as $Val);
-  }
-}
-
-/// @nodoc
-abstract class _$$PartnerSurveyImplCopyWith<$Res>
-    implements $PartnerSurveyCopyWith<$Res> {
-  factory _$$PartnerSurveyImplCopyWith(
-          _$PartnerSurveyImpl value, $Res Function(_$PartnerSurveyImpl) then) =
-      __$$PartnerSurveyImplCopyWithImpl<$Res>;
-  @override
-  @useResult
-  $Res call({int index, @JsonKey(name: 'survey_id') String surveyId});
-}
-
-/// @nodoc
-class __$$PartnerSurveyImplCopyWithImpl<$Res>
-    extends _$PartnerSurveyCopyWithImpl<$Res, _$PartnerSurveyImpl>
-    implements _$$PartnerSurveyImplCopyWith<$Res> {
-  __$$PartnerSurveyImplCopyWithImpl(
-      _$PartnerSurveyImpl _value, $Res Function(_$PartnerSurveyImpl) _then)
-      : super(_value, _then);
-
-  /// Create a copy of PartnerSurvey
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? index = null,
-    Object? surveyId = null,
-  }) {
-    return _then(_$PartnerSurveyImpl(
-      index: null == index
-          ? _value.index
-          : index // ignore: cast_nullable_to_non_nullable
-              as int,
-      surveyId: null == surveyId
-          ? _value.surveyId
-          : surveyId // ignore: cast_nullable_to_non_nullable
-              as String,
-    ));
-  }
-}
-
-/// @nodoc
-@JsonSerializable()
-class _$PartnerSurveyImpl implements _PartnerSurvey {
-  const _$PartnerSurveyImpl(
-      {required this.index,
-      @JsonKey(name: 'survey_id') required this.surveyId});
-
-  factory _$PartnerSurveyImpl.fromJson(Map<String, dynamic> json) =>
-      _$$PartnerSurveyImplFromJson(json);
-
-  @override
-  final int index;
-  @override
-  @JsonKey(name: 'survey_id')
-  final String surveyId;
-
-  @override
-  String toString() {
-    return 'PartnerSurvey(index: $index, surveyId: $surveyId)';
-  }
+  /// Serializes this PartnerSurvey to a JSON map.
+  Map<String, dynamic> toJson();
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$PartnerSurveyImpl &&
+            other is PartnerSurvey &&
             (identical(other.index, index) || other.index == index) &&
             (identical(other.surveyId, surveyId) ||
                 other.surveyId == surveyId));
@@ -149,41 +44,138 @@ class _$PartnerSurveyImpl implements _PartnerSurvey {
   @override
   int get hashCode => Object.hash(runtimeType, index, surveyId);
 
-  /// Create a copy of PartnerSurvey
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  @pragma('vm:prefer-inline')
-  _$$PartnerSurveyImplCopyWith<_$PartnerSurveyImpl> get copyWith =>
-      __$$PartnerSurveyImplCopyWithImpl<_$PartnerSurveyImpl>(this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$PartnerSurveyImplToJson(
-      this,
-    );
+  String toString() {
+    return 'PartnerSurvey(index: $index, surveyId: $surveyId)';
   }
 }
 
-abstract class _PartnerSurvey implements PartnerSurvey {
-  const factory _PartnerSurvey(
-          {required final int index,
-          @JsonKey(name: 'survey_id') required final String surveyId}) =
-      _$PartnerSurveyImpl;
+/// @nodoc
+abstract mixin class $PartnerSurveyCopyWith<$Res> {
+  factory $PartnerSurveyCopyWith(
+          PartnerSurvey value, $Res Function(PartnerSurvey) _then) =
+      _$PartnerSurveyCopyWithImpl;
+  @useResult
+  $Res call({int index, @JsonKey(name: 'survey_id') String surveyId});
+}
 
-  factory _PartnerSurvey.fromJson(Map<String, dynamic> json) =
-      _$PartnerSurveyImpl.fromJson;
+/// @nodoc
+class _$PartnerSurveyCopyWithImpl<$Res>
+    implements $PartnerSurveyCopyWith<$Res> {
+  _$PartnerSurveyCopyWithImpl(this._self, this._then);
+
+  final PartnerSurvey _self;
+  final $Res Function(PartnerSurvey) _then;
+
+  /// Create a copy of PartnerSurvey
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? index = null,
+    Object? surveyId = null,
+  }) {
+    return _then(_self.copyWith(
+      index: null == index
+          ? _self.index
+          : index // ignore: cast_nullable_to_non_nullable
+              as int,
+      surveyId: null == surveyId
+          ? _self.surveyId
+          : surveyId // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _PartnerSurvey implements PartnerSurvey {
+  const _PartnerSurvey(
+      {required this.index,
+      @JsonKey(name: 'survey_id') required this.surveyId});
+  factory _PartnerSurvey.fromJson(Map<String, dynamic> json) =>
+      _$PartnerSurveyFromJson(json);
 
   @override
-  int get index;
+  final int index;
   @override
   @JsonKey(name: 'survey_id')
-  String get surveyId;
+  final String surveyId;
 
   /// Create a copy of PartnerSurvey
   /// with the given fields replaced by the non-null parameter values.
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$PartnerSurveyImplCopyWith<_$PartnerSurveyImpl> get copyWith =>
-      throw _privateConstructorUsedError;
+  @pragma('vm:prefer-inline')
+  _$PartnerSurveyCopyWith<_PartnerSurvey> get copyWith =>
+      __$PartnerSurveyCopyWithImpl<_PartnerSurvey>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$PartnerSurveyToJson(
+      this,
+    );
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _PartnerSurvey &&
+            (identical(other.index, index) || other.index == index) &&
+            (identical(other.surveyId, surveyId) ||
+                other.surveyId == surveyId));
+  }
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  int get hashCode => Object.hash(runtimeType, index, surveyId);
+
+  @override
+  String toString() {
+    return 'PartnerSurvey(index: $index, surveyId: $surveyId)';
+  }
 }
+
+/// @nodoc
+abstract mixin class _$PartnerSurveyCopyWith<$Res>
+    implements $PartnerSurveyCopyWith<$Res> {
+  factory _$PartnerSurveyCopyWith(
+          _PartnerSurvey value, $Res Function(_PartnerSurvey) _then) =
+      __$PartnerSurveyCopyWithImpl;
+  @override
+  @useResult
+  $Res call({int index, @JsonKey(name: 'survey_id') String surveyId});
+}
+
+/// @nodoc
+class __$PartnerSurveyCopyWithImpl<$Res>
+    implements _$PartnerSurveyCopyWith<$Res> {
+  __$PartnerSurveyCopyWithImpl(this._self, this._then);
+
+  final _PartnerSurvey _self;
+  final $Res Function(_PartnerSurvey) _then;
+
+  /// Create a copy of PartnerSurvey
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $Res call({
+    Object? index = null,
+    Object? surveyId = null,
+  }) {
+    return _then(_PartnerSurvey(
+      index: null == index
+          ? _self.index
+          : index // ignore: cast_nullable_to_non_nullable
+              as int,
+      surveyId: null == surveyId
+          ? _self.surveyId
+          : surveyId // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+// dart format on

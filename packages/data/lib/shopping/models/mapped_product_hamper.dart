@@ -6,7 +6,7 @@ part 'mapped_product_hamper.freezed.dart';
 part 'mapped_product_hamper.g.dart';
 
 @freezed
-class HamperProductDetail with _$HamperProductDetail {
+abstract class HamperProductDetail with _$HamperProductDetail {
   factory HamperProductDetail({
     required String hamperId,
     required int productId,

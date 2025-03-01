@@ -6,7 +6,7 @@ part 'ad_banner.freezed.dart';
 part 'ad_banner.g.dart';
 
 @freezed
-class AdBanner with _$AdBanner {
+abstract class AdBanner with _$AdBanner {
   const factory AdBanner({
     required int id,
     @AdContentConverter() required List<AdContent> content,
@@ -32,7 +32,7 @@ class AdContentConverter
 }
 
 @freezed
-class AdContent with _$AdContent {
+abstract class AdContent with _$AdContent {
   const factory AdContent({
     required String url,
     required String type,

@@ -6,7 +6,7 @@ part 'product_request.freezed.dart';
 part 'product_request.g.dart';
 
 @freezed
-class ProductRequest with _$ProductRequest {
+abstract class ProductRequest with _$ProductRequest {
   const factory ProductRequest({
     @JsonKey(includeToJson: false) required int id,
     @JsonKey(name: 'user_id') required String userId,

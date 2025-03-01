@@ -6,9 +6,8 @@ part of 'eesupool_request.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$EESUpoolRequestImpl _$$EESUpoolRequestImplFromJson(
-        Map<String, dynamic> json) =>
-    _$EESUpoolRequestImpl(
+_EESUpoolRequest _$EESUpoolRequestFromJson(Map<String, dynamic> json) =>
+    _EESUpoolRequest(
       userId: json['user_id'] as String,
       createdAt: DateTime.parse(json['created_at'] as String),
       eesupoolId: (json['eesupool_id'] as num).toInt(),
@@ -20,8 +19,7 @@ _$EESUpoolRequestImpl _$$EESUpoolRequestImplFromJson(
       role: const UserRoleConverter().fromJson(json['role'] as String),
     );
 
-Map<String, dynamic> _$$EESUpoolRequestImplToJson(
-        _$EESUpoolRequestImpl instance) =>
+Map<String, dynamic> _$EESUpoolRequestToJson(_EESUpoolRequest instance) =>
     <String, dynamic>{
       'user_id': instance.userId,
       'created_at': instance.createdAt.toIso8601String(),

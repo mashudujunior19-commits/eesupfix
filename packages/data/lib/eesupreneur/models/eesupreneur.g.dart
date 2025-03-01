@@ -6,8 +6,7 @@ part of 'eesupreneur.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$EESUpreneurImpl _$$EESUpreneurImplFromJson(Map<String, dynamic> json) =>
-    _$EESUpreneurImpl(
+_EESUpreneur _$EESUpreneurFromJson(Map<String, dynamic> json) => _EESUpreneur(
       id: json['id'] as String,
       ownerName: json['owner_name'] as String?,
       name: json['name'] as String,
@@ -24,7 +23,7 @@ _$EESUpreneurImpl _$$EESUpreneurImplFromJson(Map<String, dynamic> json) =>
       distance: (json['distance'] as num?)?.toDouble(),
     );
 
-Map<String, dynamic> _$$EESUpreneurImplToJson(_$EESUpreneurImpl instance) =>
+Map<String, dynamic> _$EESUpreneurToJson(_EESUpreneur instance) =>
     <String, dynamic>{
       'name': instance.name,
       'description': instance.description,

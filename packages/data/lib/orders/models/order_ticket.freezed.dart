@@ -1,3 +1,4 @@
+// dart format width=80
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
@@ -9,162 +10,102 @@ part of 'order_ticket.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// dart format off
 T _$identity<T>(T value) => value;
-
-final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
-
-OrderTicket _$OrderTicketFromJson(Map<String, dynamic> json) {
-  return _OrderTicket.fromJson(json);
-}
 
 /// @nodoc
 mixin _$OrderTicket {
   @JsonKey(includeToJson: false)
-  int? get id => throw _privateConstructorUsedError;
+  int? get id;
   @JsonKey(name: 'order_id')
-  int get orderId => throw _privateConstructorUsedError;
+  int get orderId;
   @JsonKey(name: 'created_at')
-  DateTime get createdAt => throw _privateConstructorUsedError;
+  DateTime get createdAt;
   @JsonKey(name: 'customer_comment')
-  String? get customerComment => throw _privateConstructorUsedError;
+  String? get customerComment;
   @JsonKey(name: 'eesupreneur_comment')
-  String? get eesupreneurComment => throw _privateConstructorUsedError;
+  String? get eesupreneurComment;
   @JsonKey(name: 'items_missing')
-  bool get itemsMissing => throw _privateConstructorUsedError;
+  bool get itemsMissing;
   @OrderProductConverter()
-  List<OrderProduct> get products => throw _privateConstructorUsedError;
+  List<OrderProduct> get products;
   @MediaFileConverter()
-  List<MediaFile> get attachments => throw _privateConstructorUsedError;
+  List<MediaFile> get attachments;
   @JsonKey(name: 'eesupreneur_confirmed_at')
-  DateTime? get eesupreneurConfirmedAt => throw _privateConstructorUsedError;
+  DateTime? get eesupreneurConfirmedAt;
   @JsonKey(name: 'customer_confirmed_at')
-  DateTime? get customerConfirmedAt => throw _privateConstructorUsedError;
+  DateTime? get customerConfirmedAt;
   @JsonKey(name: 'eesup_confirmed_at')
-  DateTime? get eesupConfirmedAt => throw _privateConstructorUsedError;
+  DateTime? get eesupConfirmedAt;
   @TicketResolutionTypeConverter()
-  TicketResolutionType get resolution => throw _privateConstructorUsedError;
-
-  /// Serializes this OrderTicket to a JSON map.
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  TicketResolutionType get resolution;
 
   /// Create a copy of OrderTicket
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  $OrderTicketCopyWith<OrderTicket> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class $OrderTicketCopyWith<$Res> {
-  factory $OrderTicketCopyWith(
-          OrderTicket value, $Res Function(OrderTicket) then) =
-      _$OrderTicketCopyWithImpl<$Res, OrderTicket>;
-  @useResult
-  $Res call(
-      {@JsonKey(includeToJson: false) int? id,
-      @JsonKey(name: 'order_id') int orderId,
-      @JsonKey(name: 'created_at') DateTime createdAt,
-      @JsonKey(name: 'customer_comment') String? customerComment,
-      @JsonKey(name: 'eesupreneur_comment') String? eesupreneurComment,
-      @JsonKey(name: 'items_missing') bool itemsMissing,
-      @OrderProductConverter() List<OrderProduct> products,
-      @MediaFileConverter() List<MediaFile> attachments,
-      @JsonKey(name: 'eesupreneur_confirmed_at')
-      DateTime? eesupreneurConfirmedAt,
-      @JsonKey(name: 'customer_confirmed_at') DateTime? customerConfirmedAt,
-      @JsonKey(name: 'eesup_confirmed_at') DateTime? eesupConfirmedAt,
-      @TicketResolutionTypeConverter() TicketResolutionType resolution});
-}
-
-/// @nodoc
-class _$OrderTicketCopyWithImpl<$Res, $Val extends OrderTicket>
-    implements $OrderTicketCopyWith<$Res> {
-  _$OrderTicketCopyWithImpl(this._value, this._then);
-
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
-
-  /// Create a copy of OrderTicket
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
+  $OrderTicketCopyWith<OrderTicket> get copyWith =>
+      _$OrderTicketCopyWithImpl<OrderTicket>(this as OrderTicket, _$identity);
+
+  /// Serializes this OrderTicket to a JSON map.
+  Map<String, dynamic> toJson();
+
   @override
-  $Res call({
-    Object? id = freezed,
-    Object? orderId = null,
-    Object? createdAt = null,
-    Object? customerComment = freezed,
-    Object? eesupreneurComment = freezed,
-    Object? itemsMissing = null,
-    Object? products = null,
-    Object? attachments = null,
-    Object? eesupreneurConfirmedAt = freezed,
-    Object? customerConfirmedAt = freezed,
-    Object? eesupConfirmedAt = freezed,
-    Object? resolution = null,
-  }) {
-    return _then(_value.copyWith(
-      id: freezed == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as int?,
-      orderId: null == orderId
-          ? _value.orderId
-          : orderId // ignore: cast_nullable_to_non_nullable
-              as int,
-      createdAt: null == createdAt
-          ? _value.createdAt
-          : createdAt // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      customerComment: freezed == customerComment
-          ? _value.customerComment
-          : customerComment // ignore: cast_nullable_to_non_nullable
-              as String?,
-      eesupreneurComment: freezed == eesupreneurComment
-          ? _value.eesupreneurComment
-          : eesupreneurComment // ignore: cast_nullable_to_non_nullable
-              as String?,
-      itemsMissing: null == itemsMissing
-          ? _value.itemsMissing
-          : itemsMissing // ignore: cast_nullable_to_non_nullable
-              as bool,
-      products: null == products
-          ? _value.products
-          : products // ignore: cast_nullable_to_non_nullable
-              as List<OrderProduct>,
-      attachments: null == attachments
-          ? _value.attachments
-          : attachments // ignore: cast_nullable_to_non_nullable
-              as List<MediaFile>,
-      eesupreneurConfirmedAt: freezed == eesupreneurConfirmedAt
-          ? _value.eesupreneurConfirmedAt
-          : eesupreneurConfirmedAt // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
-      customerConfirmedAt: freezed == customerConfirmedAt
-          ? _value.customerConfirmedAt
-          : customerConfirmedAt // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
-      eesupConfirmedAt: freezed == eesupConfirmedAt
-          ? _value.eesupConfirmedAt
-          : eesupConfirmedAt // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
-      resolution: null == resolution
-          ? _value.resolution
-          : resolution // ignore: cast_nullable_to_non_nullable
-              as TicketResolutionType,
-    ) as $Val);
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is OrderTicket &&
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.orderId, orderId) || other.orderId == orderId) &&
+            (identical(other.createdAt, createdAt) ||
+                other.createdAt == createdAt) &&
+            (identical(other.customerComment, customerComment) ||
+                other.customerComment == customerComment) &&
+            (identical(other.eesupreneurComment, eesupreneurComment) ||
+                other.eesupreneurComment == eesupreneurComment) &&
+            (identical(other.itemsMissing, itemsMissing) ||
+                other.itemsMissing == itemsMissing) &&
+            const DeepCollectionEquality().equals(other.products, products) &&
+            const DeepCollectionEquality()
+                .equals(other.attachments, attachments) &&
+            (identical(other.eesupreneurConfirmedAt, eesupreneurConfirmedAt) ||
+                other.eesupreneurConfirmedAt == eesupreneurConfirmedAt) &&
+            (identical(other.customerConfirmedAt, customerConfirmedAt) ||
+                other.customerConfirmedAt == customerConfirmedAt) &&
+            (identical(other.eesupConfirmedAt, eesupConfirmedAt) ||
+                other.eesupConfirmedAt == eesupConfirmedAt) &&
+            (identical(other.resolution, resolution) ||
+                other.resolution == resolution));
+  }
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  int get hashCode => Object.hash(
+      runtimeType,
+      id,
+      orderId,
+      createdAt,
+      customerComment,
+      eesupreneurComment,
+      itemsMissing,
+      const DeepCollectionEquality().hash(products),
+      const DeepCollectionEquality().hash(attachments),
+      eesupreneurConfirmedAt,
+      customerConfirmedAt,
+      eesupConfirmedAt,
+      resolution);
+
+  @override
+  String toString() {
+    return 'OrderTicket(id: $id, orderId: $orderId, createdAt: $createdAt, customerComment: $customerComment, eesupreneurComment: $eesupreneurComment, itemsMissing: $itemsMissing, products: $products, attachments: $attachments, eesupreneurConfirmedAt: $eesupreneurConfirmedAt, customerConfirmedAt: $customerConfirmedAt, eesupConfirmedAt: $eesupConfirmedAt, resolution: $resolution)';
   }
 }
 
 /// @nodoc
-abstract class _$$OrderTicketImplCopyWith<$Res>
-    implements $OrderTicketCopyWith<$Res> {
-  factory _$$OrderTicketImplCopyWith(
-          _$OrderTicketImpl value, $Res Function(_$OrderTicketImpl) then) =
-      __$$OrderTicketImplCopyWithImpl<$Res>;
-  @override
+abstract mixin class $OrderTicketCopyWith<$Res> {
+  factory $OrderTicketCopyWith(
+          OrderTicket value, $Res Function(OrderTicket) _then) =
+      _$OrderTicketCopyWithImpl;
   @useResult
   $Res call(
       {@JsonKey(includeToJson: false) int? id,
@@ -183,12 +124,11 @@ abstract class _$$OrderTicketImplCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$OrderTicketImplCopyWithImpl<$Res>
-    extends _$OrderTicketCopyWithImpl<$Res, _$OrderTicketImpl>
-    implements _$$OrderTicketImplCopyWith<$Res> {
-  __$$OrderTicketImplCopyWithImpl(
-      _$OrderTicketImpl _value, $Res Function(_$OrderTicketImpl) _then)
-      : super(_value, _then);
+class _$OrderTicketCopyWithImpl<$Res> implements $OrderTicketCopyWith<$Res> {
+  _$OrderTicketCopyWithImpl(this._self, this._then);
+
+  final OrderTicket _self;
+  final $Res Function(OrderTicket) _then;
 
   /// Create a copy of OrderTicket
   /// with the given fields replaced by the non-null parameter values.
@@ -208,53 +148,53 @@ class __$$OrderTicketImplCopyWithImpl<$Res>
     Object? eesupConfirmedAt = freezed,
     Object? resolution = null,
   }) {
-    return _then(_$OrderTicketImpl(
+    return _then(_self.copyWith(
       id: freezed == id
-          ? _value.id
+          ? _self.id
           : id // ignore: cast_nullable_to_non_nullable
               as int?,
       orderId: null == orderId
-          ? _value.orderId
+          ? _self.orderId
           : orderId // ignore: cast_nullable_to_non_nullable
               as int,
       createdAt: null == createdAt
-          ? _value.createdAt
+          ? _self.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
               as DateTime,
       customerComment: freezed == customerComment
-          ? _value.customerComment
+          ? _self.customerComment
           : customerComment // ignore: cast_nullable_to_non_nullable
               as String?,
       eesupreneurComment: freezed == eesupreneurComment
-          ? _value.eesupreneurComment
+          ? _self.eesupreneurComment
           : eesupreneurComment // ignore: cast_nullable_to_non_nullable
               as String?,
       itemsMissing: null == itemsMissing
-          ? _value.itemsMissing
+          ? _self.itemsMissing
           : itemsMissing // ignore: cast_nullable_to_non_nullable
               as bool,
       products: null == products
-          ? _value._products
+          ? _self.products
           : products // ignore: cast_nullable_to_non_nullable
               as List<OrderProduct>,
       attachments: null == attachments
-          ? _value._attachments
+          ? _self.attachments
           : attachments // ignore: cast_nullable_to_non_nullable
               as List<MediaFile>,
       eesupreneurConfirmedAt: freezed == eesupreneurConfirmedAt
-          ? _value.eesupreneurConfirmedAt
+          ? _self.eesupreneurConfirmedAt
           : eesupreneurConfirmedAt // ignore: cast_nullable_to_non_nullable
               as DateTime?,
       customerConfirmedAt: freezed == customerConfirmedAt
-          ? _value.customerConfirmedAt
+          ? _self.customerConfirmedAt
           : customerConfirmedAt // ignore: cast_nullable_to_non_nullable
               as DateTime?,
       eesupConfirmedAt: freezed == eesupConfirmedAt
-          ? _value.eesupConfirmedAt
+          ? _self.eesupConfirmedAt
           : eesupConfirmedAt // ignore: cast_nullable_to_non_nullable
               as DateTime?,
       resolution: null == resolution
-          ? _value.resolution
+          ? _self.resolution
           : resolution // ignore: cast_nullable_to_non_nullable
               as TicketResolutionType,
     ));
@@ -263,8 +203,8 @@ class __$$OrderTicketImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$OrderTicketImpl implements _OrderTicket {
-  const _$OrderTicketImpl(
+class _OrderTicket implements OrderTicket {
+  const _OrderTicket(
       {@JsonKey(includeToJson: false) this.id,
       @JsonKey(name: 'order_id') required this.orderId,
       @JsonKey(name: 'created_at') required this.createdAt,
@@ -279,9 +219,8 @@ class _$OrderTicketImpl implements _OrderTicket {
       @TicketResolutionTypeConverter() required this.resolution})
       : _products = products,
         _attachments = attachments;
-
-  factory _$OrderTicketImpl.fromJson(Map<String, dynamic> json) =>
-      _$$OrderTicketImplFromJson(json);
+  factory _OrderTicket.fromJson(Map<String, dynamic> json) =>
+      _$OrderTicketFromJson(json);
 
   @override
   @JsonKey(includeToJson: false)
@@ -333,16 +272,26 @@ class _$OrderTicketImpl implements _OrderTicket {
   @TicketResolutionTypeConverter()
   final TicketResolutionType resolution;
 
+  /// Create a copy of OrderTicket
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  String toString() {
-    return 'OrderTicket(id: $id, orderId: $orderId, createdAt: $createdAt, customerComment: $customerComment, eesupreneurComment: $eesupreneurComment, itemsMissing: $itemsMissing, products: $products, attachments: $attachments, eesupreneurConfirmedAt: $eesupreneurConfirmedAt, customerConfirmedAt: $customerConfirmedAt, eesupConfirmedAt: $eesupConfirmedAt, resolution: $resolution)';
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  _$OrderTicketCopyWith<_OrderTicket> get copyWith =>
+      __$OrderTicketCopyWithImpl<_OrderTicket>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$OrderTicketToJson(
+      this,
+    );
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$OrderTicketImpl &&
+            other is _OrderTicket &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.orderId, orderId) || other.orderId == orderId) &&
             (identical(other.createdAt, createdAt) ||
@@ -383,84 +332,112 @@ class _$OrderTicketImpl implements _OrderTicket {
       eesupConfirmedAt,
       resolution);
 
-  /// Create a copy of OrderTicket
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  @pragma('vm:prefer-inline')
-  _$$OrderTicketImplCopyWith<_$OrderTicketImpl> get copyWith =>
-      __$$OrderTicketImplCopyWithImpl<_$OrderTicketImpl>(this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$OrderTicketImplToJson(
-      this,
-    );
+  String toString() {
+    return 'OrderTicket(id: $id, orderId: $orderId, createdAt: $createdAt, customerComment: $customerComment, eesupreneurComment: $eesupreneurComment, itemsMissing: $itemsMissing, products: $products, attachments: $attachments, eesupreneurConfirmedAt: $eesupreneurConfirmedAt, customerConfirmedAt: $customerConfirmedAt, eesupConfirmedAt: $eesupConfirmedAt, resolution: $resolution)';
   }
 }
 
-abstract class _OrderTicket implements OrderTicket {
-  const factory _OrderTicket(
-      {@JsonKey(includeToJson: false) final int? id,
-      @JsonKey(name: 'order_id') required final int orderId,
-      @JsonKey(name: 'created_at') required final DateTime createdAt,
-      @JsonKey(name: 'customer_comment') final String? customerComment,
-      @JsonKey(name: 'eesupreneur_comment') final String? eesupreneurComment,
-      @JsonKey(name: 'items_missing') required final bool itemsMissing,
-      @OrderProductConverter() required final List<OrderProduct> products,
-      @MediaFileConverter() final List<MediaFile> attachments,
+/// @nodoc
+abstract mixin class _$OrderTicketCopyWith<$Res>
+    implements $OrderTicketCopyWith<$Res> {
+  factory _$OrderTicketCopyWith(
+          _OrderTicket value, $Res Function(_OrderTicket) _then) =
+      __$OrderTicketCopyWithImpl;
+  @override
+  @useResult
+  $Res call(
+      {@JsonKey(includeToJson: false) int? id,
+      @JsonKey(name: 'order_id') int orderId,
+      @JsonKey(name: 'created_at') DateTime createdAt,
+      @JsonKey(name: 'customer_comment') String? customerComment,
+      @JsonKey(name: 'eesupreneur_comment') String? eesupreneurComment,
+      @JsonKey(name: 'items_missing') bool itemsMissing,
+      @OrderProductConverter() List<OrderProduct> products,
+      @MediaFileConverter() List<MediaFile> attachments,
       @JsonKey(name: 'eesupreneur_confirmed_at')
-      final DateTime? eesupreneurConfirmedAt,
-      @JsonKey(name: 'customer_confirmed_at')
-      final DateTime? customerConfirmedAt,
-      @JsonKey(name: 'eesup_confirmed_at') final DateTime? eesupConfirmedAt,
-      @TicketResolutionTypeConverter()
-      required final TicketResolutionType resolution}) = _$OrderTicketImpl;
+      DateTime? eesupreneurConfirmedAt,
+      @JsonKey(name: 'customer_confirmed_at') DateTime? customerConfirmedAt,
+      @JsonKey(name: 'eesup_confirmed_at') DateTime? eesupConfirmedAt,
+      @TicketResolutionTypeConverter() TicketResolutionType resolution});
+}
 
-  factory _OrderTicket.fromJson(Map<String, dynamic> json) =
-      _$OrderTicketImpl.fromJson;
+/// @nodoc
+class __$OrderTicketCopyWithImpl<$Res> implements _$OrderTicketCopyWith<$Res> {
+  __$OrderTicketCopyWithImpl(this._self, this._then);
 
-  @override
-  @JsonKey(includeToJson: false)
-  int? get id;
-  @override
-  @JsonKey(name: 'order_id')
-  int get orderId;
-  @override
-  @JsonKey(name: 'created_at')
-  DateTime get createdAt;
-  @override
-  @JsonKey(name: 'customer_comment')
-  String? get customerComment;
-  @override
-  @JsonKey(name: 'eesupreneur_comment')
-  String? get eesupreneurComment;
-  @override
-  @JsonKey(name: 'items_missing')
-  bool get itemsMissing;
-  @override
-  @OrderProductConverter()
-  List<OrderProduct> get products;
-  @override
-  @MediaFileConverter()
-  List<MediaFile> get attachments;
-  @override
-  @JsonKey(name: 'eesupreneur_confirmed_at')
-  DateTime? get eesupreneurConfirmedAt;
-  @override
-  @JsonKey(name: 'customer_confirmed_at')
-  DateTime? get customerConfirmedAt;
-  @override
-  @JsonKey(name: 'eesup_confirmed_at')
-  DateTime? get eesupConfirmedAt;
-  @override
-  @TicketResolutionTypeConverter()
-  TicketResolutionType get resolution;
+  final _OrderTicket _self;
+  final $Res Function(_OrderTicket) _then;
 
   /// Create a copy of OrderTicket
   /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$OrderTicketImplCopyWith<_$OrderTicketImpl> get copyWith =>
-      throw _privateConstructorUsedError;
+  @pragma('vm:prefer-inline')
+  $Res call({
+    Object? id = freezed,
+    Object? orderId = null,
+    Object? createdAt = null,
+    Object? customerComment = freezed,
+    Object? eesupreneurComment = freezed,
+    Object? itemsMissing = null,
+    Object? products = null,
+    Object? attachments = null,
+    Object? eesupreneurConfirmedAt = freezed,
+    Object? customerConfirmedAt = freezed,
+    Object? eesupConfirmedAt = freezed,
+    Object? resolution = null,
+  }) {
+    return _then(_OrderTicket(
+      id: freezed == id
+          ? _self.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int?,
+      orderId: null == orderId
+          ? _self.orderId
+          : orderId // ignore: cast_nullable_to_non_nullable
+              as int,
+      createdAt: null == createdAt
+          ? _self.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as DateTime,
+      customerComment: freezed == customerComment
+          ? _self.customerComment
+          : customerComment // ignore: cast_nullable_to_non_nullable
+              as String?,
+      eesupreneurComment: freezed == eesupreneurComment
+          ? _self.eesupreneurComment
+          : eesupreneurComment // ignore: cast_nullable_to_non_nullable
+              as String?,
+      itemsMissing: null == itemsMissing
+          ? _self.itemsMissing
+          : itemsMissing // ignore: cast_nullable_to_non_nullable
+              as bool,
+      products: null == products
+          ? _self._products
+          : products // ignore: cast_nullable_to_non_nullable
+              as List<OrderProduct>,
+      attachments: null == attachments
+          ? _self._attachments
+          : attachments // ignore: cast_nullable_to_non_nullable
+              as List<MediaFile>,
+      eesupreneurConfirmedAt: freezed == eesupreneurConfirmedAt
+          ? _self.eesupreneurConfirmedAt
+          : eesupreneurConfirmedAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      customerConfirmedAt: freezed == customerConfirmedAt
+          ? _self.customerConfirmedAt
+          : customerConfirmedAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      eesupConfirmedAt: freezed == eesupConfirmedAt
+          ? _self.eesupConfirmedAt
+          : eesupConfirmedAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      resolution: null == resolution
+          ? _self.resolution
+          : resolution // ignore: cast_nullable_to_non_nullable
+              as TicketResolutionType,
+    ));
+  }
 }
+
+// dart format on

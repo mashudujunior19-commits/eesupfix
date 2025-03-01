@@ -1,7 +1,6 @@
 import 'package:dart_mappable/dart_mappable.dart';
 import 'package:data/utils/validate_id_number.dart';
 import 'package:email_validator/email_validator.dart';
-import 'package:intl/intl.dart';
 
 part 'register_form.mapper.dart';
 

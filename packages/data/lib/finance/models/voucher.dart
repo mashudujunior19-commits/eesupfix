@@ -7,7 +7,7 @@ part 'voucher.freezed.dart';
 part 'voucher.g.dart';
 
 @freezed
-class Voucher with _$Voucher {
+abstract class Voucher with _$Voucher {
   const factory Voucher({
     @JsonKey(name: 'user_id') String? userId,
     @JsonKey(name: 'parameter_id') required String parameterId,

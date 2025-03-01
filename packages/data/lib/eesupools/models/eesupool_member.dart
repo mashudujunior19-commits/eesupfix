@@ -4,7 +4,7 @@ part 'eesupool_member.freezed.dart';
 part 'eesupool_member.g.dart';
 
 @freezed
-class EESUpoolMember with _$EESUpoolMember {
+abstract class EESUpoolMember with _$EESUpoolMember {
   const factory EESUpoolMember({
     @JsonKey(name: "member_id", includeToJson: false) required String memberId,
     @JsonKey(name: "eesupool_id") required int eesupoolId,

@@ -6,7 +6,7 @@ part 'address.freezed.dart';
 part 'address.g.dart';
 
 @freezed
-class Address with _$Address {
+abstract class Address with _$Address {
   factory Address({
     @JsonKey(includeToJson: false) int? id,
     @JsonKey(name: 'area_id') int? areaId,

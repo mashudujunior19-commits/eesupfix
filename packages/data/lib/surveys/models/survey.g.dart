@@ -6,7 +6,7 @@ part of 'survey.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$SurveyImpl _$$SurveyImplFromJson(Map<String, dynamic> json) => _$SurveyImpl(
+_Survey _$SurveyFromJson(Map<String, dynamic> json) => _Survey(
       id: json['id'] as String,
       createdAt: DateTime.parse(json['created_at'] as String),
       questions: (json['questions'] as List<dynamic>)
@@ -36,8 +36,7 @@ _$SurveyImpl _$$SurveyImplFromJson(Map<String, dynamic> json) => _$SurveyImpl(
       score: (json['score'] as num?)?.toInt(),
     );
 
-Map<String, dynamic> _$$SurveyImplToJson(_$SurveyImpl instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$SurveyToJson(_Survey instance) => <String, dynamic>{
       'id': instance.id,
       'created_at': instance.createdAt.toIso8601String(),
       'questions':

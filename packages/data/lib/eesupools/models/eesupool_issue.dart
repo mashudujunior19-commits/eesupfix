@@ -9,7 +9,7 @@ part 'eesupool_issue.freezed.dart';
 part 'eesupool_issue.g.dart';
 
 @freezed
-class EESUpoolIssue with _$EESUpoolIssue {
+abstract class EESUpoolIssue with _$EESUpoolIssue {
   const factory EESUpoolIssue({
     @JsonKey(includeToJson: false, name: 'issue_id') required String id,
     @JsonKey(name: 'eesupool_id') required int eesupoolId,

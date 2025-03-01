@@ -1,3 +1,4 @@
+// dart format width=80
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
@@ -9,137 +10,78 @@ part of 'eesupool_request.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// dart format off
 T _$identity<T>(T value) => value;
-
-final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
-
-EESUpoolRequest _$EESUpoolRequestFromJson(Map<String, dynamic> json) {
-  return _EESUpoolRequest.fromJson(json);
-}
 
 /// @nodoc
 mixin _$EESUpoolRequest {
   @JsonKey(name: 'user_id')
-  String get userId => throw _privateConstructorUsedError;
+  String get userId;
   @JsonKey(name: 'created_at')
-  DateTime get createdAt => throw _privateConstructorUsedError;
+  DateTime get createdAt;
   @JsonKey(name: 'eesupool_id')
-  int get eesupoolId => throw _privateConstructorUsedError;
+  int get eesupoolId;
   @JsonKey(name: 'request_type')
-  String get type => throw _privateConstructorUsedError;
+  String get type;
   @JsonKey(name: 'status')
-  String get status => throw _privateConstructorUsedError;
+  String get status;
   @JsonKey(name: 'eesupool_name')
-  String? get eesupoolName => throw _privateConstructorUsedError;
+  String? get eesupoolName;
   @JsonKey(name: 'full_name')
-  String? get fullName => throw _privateConstructorUsedError;
+  String? get fullName;
   @JsonKey(name: 'corporate_name')
-  String? get corporateName => throw _privateConstructorUsedError;
+  String? get corporateName;
   @UserRoleConverter()
-  UserRole get role => throw _privateConstructorUsedError;
-
-  /// Serializes this EESUpoolRequest to a JSON map.
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  UserRole get role;
 
   /// Create a copy of EESUpoolRequest
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  $EESUpoolRequestCopyWith<EESUpoolRequest> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class $EESUpoolRequestCopyWith<$Res> {
-  factory $EESUpoolRequestCopyWith(
-          EESUpoolRequest value, $Res Function(EESUpoolRequest) then) =
-      _$EESUpoolRequestCopyWithImpl<$Res, EESUpoolRequest>;
-  @useResult
-  $Res call(
-      {@JsonKey(name: 'user_id') String userId,
-      @JsonKey(name: 'created_at') DateTime createdAt,
-      @JsonKey(name: 'eesupool_id') int eesupoolId,
-      @JsonKey(name: 'request_type') String type,
-      @JsonKey(name: 'status') String status,
-      @JsonKey(name: 'eesupool_name') String? eesupoolName,
-      @JsonKey(name: 'full_name') String? fullName,
-      @JsonKey(name: 'corporate_name') String? corporateName,
-      @UserRoleConverter() UserRole role});
-}
-
-/// @nodoc
-class _$EESUpoolRequestCopyWithImpl<$Res, $Val extends EESUpoolRequest>
-    implements $EESUpoolRequestCopyWith<$Res> {
-  _$EESUpoolRequestCopyWithImpl(this._value, this._then);
-
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
-
-  /// Create a copy of EESUpoolRequest
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
+  $EESUpoolRequestCopyWith<EESUpoolRequest> get copyWith =>
+      _$EESUpoolRequestCopyWithImpl<EESUpoolRequest>(
+          this as EESUpoolRequest, _$identity);
+
+  /// Serializes this EESUpoolRequest to a JSON map.
+  Map<String, dynamic> toJson();
+
   @override
-  $Res call({
-    Object? userId = null,
-    Object? createdAt = null,
-    Object? eesupoolId = null,
-    Object? type = null,
-    Object? status = null,
-    Object? eesupoolName = freezed,
-    Object? fullName = freezed,
-    Object? corporateName = freezed,
-    Object? role = null,
-  }) {
-    return _then(_value.copyWith(
-      userId: null == userId
-          ? _value.userId
-          : userId // ignore: cast_nullable_to_non_nullable
-              as String,
-      createdAt: null == createdAt
-          ? _value.createdAt
-          : createdAt // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      eesupoolId: null == eesupoolId
-          ? _value.eesupoolId
-          : eesupoolId // ignore: cast_nullable_to_non_nullable
-              as int,
-      type: null == type
-          ? _value.type
-          : type // ignore: cast_nullable_to_non_nullable
-              as String,
-      status: null == status
-          ? _value.status
-          : status // ignore: cast_nullable_to_non_nullable
-              as String,
-      eesupoolName: freezed == eesupoolName
-          ? _value.eesupoolName
-          : eesupoolName // ignore: cast_nullable_to_non_nullable
-              as String?,
-      fullName: freezed == fullName
-          ? _value.fullName
-          : fullName // ignore: cast_nullable_to_non_nullable
-              as String?,
-      corporateName: freezed == corporateName
-          ? _value.corporateName
-          : corporateName // ignore: cast_nullable_to_non_nullable
-              as String?,
-      role: null == role
-          ? _value.role
-          : role // ignore: cast_nullable_to_non_nullable
-              as UserRole,
-    ) as $Val);
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is EESUpoolRequest &&
+            (identical(other.userId, userId) || other.userId == userId) &&
+            (identical(other.createdAt, createdAt) ||
+                other.createdAt == createdAt) &&
+            (identical(other.eesupoolId, eesupoolId) ||
+                other.eesupoolId == eesupoolId) &&
+            (identical(other.type, type) || other.type == type) &&
+            (identical(other.status, status) || other.status == status) &&
+            (identical(other.eesupoolName, eesupoolName) ||
+                other.eesupoolName == eesupoolName) &&
+            (identical(other.fullName, fullName) ||
+                other.fullName == fullName) &&
+            (identical(other.corporateName, corporateName) ||
+                other.corporateName == corporateName) &&
+            (identical(other.role, role) || other.role == role));
+  }
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  int get hashCode => Object.hash(runtimeType, userId, createdAt, eesupoolId,
+      type, status, eesupoolName, fullName, corporateName, role);
+
+  @override
+  String toString() {
+    return 'EESUpoolRequest(userId: $userId, createdAt: $createdAt, eesupoolId: $eesupoolId, type: $type, status: $status, eesupoolName: $eesupoolName, fullName: $fullName, corporateName: $corporateName, role: $role)';
   }
 }
 
 /// @nodoc
-abstract class _$$EESUpoolRequestImplCopyWith<$Res>
-    implements $EESUpoolRequestCopyWith<$Res> {
-  factory _$$EESUpoolRequestImplCopyWith(_$EESUpoolRequestImpl value,
-          $Res Function(_$EESUpoolRequestImpl) then) =
-      __$$EESUpoolRequestImplCopyWithImpl<$Res>;
-  @override
+abstract mixin class $EESUpoolRequestCopyWith<$Res> {
+  factory $EESUpoolRequestCopyWith(
+          EESUpoolRequest value, $Res Function(EESUpoolRequest) _then) =
+      _$EESUpoolRequestCopyWithImpl;
   @useResult
   $Res call(
       {@JsonKey(name: 'user_id') String userId,
@@ -154,12 +96,12 @@ abstract class _$$EESUpoolRequestImplCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$EESUpoolRequestImplCopyWithImpl<$Res>
-    extends _$EESUpoolRequestCopyWithImpl<$Res, _$EESUpoolRequestImpl>
-    implements _$$EESUpoolRequestImplCopyWith<$Res> {
-  __$$EESUpoolRequestImplCopyWithImpl(
-      _$EESUpoolRequestImpl _value, $Res Function(_$EESUpoolRequestImpl) _then)
-      : super(_value, _then);
+class _$EESUpoolRequestCopyWithImpl<$Res>
+    implements $EESUpoolRequestCopyWith<$Res> {
+  _$EESUpoolRequestCopyWithImpl(this._self, this._then);
+
+  final EESUpoolRequest _self;
+  final $Res Function(EESUpoolRequest) _then;
 
   /// Create a copy of EESUpoolRequest
   /// with the given fields replaced by the non-null parameter values.
@@ -176,41 +118,41 @@ class __$$EESUpoolRequestImplCopyWithImpl<$Res>
     Object? corporateName = freezed,
     Object? role = null,
   }) {
-    return _then(_$EESUpoolRequestImpl(
+    return _then(_self.copyWith(
       userId: null == userId
-          ? _value.userId
+          ? _self.userId
           : userId // ignore: cast_nullable_to_non_nullable
               as String,
       createdAt: null == createdAt
-          ? _value.createdAt
+          ? _self.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
               as DateTime,
       eesupoolId: null == eesupoolId
-          ? _value.eesupoolId
+          ? _self.eesupoolId
           : eesupoolId // ignore: cast_nullable_to_non_nullable
               as int,
       type: null == type
-          ? _value.type
+          ? _self.type
           : type // ignore: cast_nullable_to_non_nullable
               as String,
       status: null == status
-          ? _value.status
+          ? _self.status
           : status // ignore: cast_nullable_to_non_nullable
               as String,
       eesupoolName: freezed == eesupoolName
-          ? _value.eesupoolName
+          ? _self.eesupoolName
           : eesupoolName // ignore: cast_nullable_to_non_nullable
               as String?,
       fullName: freezed == fullName
-          ? _value.fullName
+          ? _self.fullName
           : fullName // ignore: cast_nullable_to_non_nullable
               as String?,
       corporateName: freezed == corporateName
-          ? _value.corporateName
+          ? _self.corporateName
           : corporateName // ignore: cast_nullable_to_non_nullable
               as String?,
       role: null == role
-          ? _value.role
+          ? _self.role
           : role // ignore: cast_nullable_to_non_nullable
               as UserRole,
     ));
@@ -219,8 +161,8 @@ class __$$EESUpoolRequestImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$EESUpoolRequestImpl implements _EESUpoolRequest {
-  _$EESUpoolRequestImpl(
+class _EESUpoolRequest implements EESUpoolRequest {
+  _EESUpoolRequest(
       {@JsonKey(name: 'user_id') required this.userId,
       @JsonKey(name: 'created_at') required this.createdAt,
       @JsonKey(name: 'eesupool_id') required this.eesupoolId,
@@ -230,9 +172,8 @@ class _$EESUpoolRequestImpl implements _EESUpoolRequest {
       @JsonKey(name: 'full_name') this.fullName,
       @JsonKey(name: 'corporate_name') this.corporateName,
       @UserRoleConverter() required this.role});
-
-  factory _$EESUpoolRequestImpl.fromJson(Map<String, dynamic> json) =>
-      _$$EESUpoolRequestImplFromJson(json);
+  factory _EESUpoolRequest.fromJson(Map<String, dynamic> json) =>
+      _$EESUpoolRequestFromJson(json);
 
   @override
   @JsonKey(name: 'user_id')
@@ -262,16 +203,26 @@ class _$EESUpoolRequestImpl implements _EESUpoolRequest {
   @UserRoleConverter()
   final UserRole role;
 
+  /// Create a copy of EESUpoolRequest
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  String toString() {
-    return 'EESUpoolRequest(userId: $userId, createdAt: $createdAt, eesupoolId: $eesupoolId, type: $type, status: $status, eesupoolName: $eesupoolName, fullName: $fullName, corporateName: $corporateName, role: $role)';
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  _$EESUpoolRequestCopyWith<_EESUpoolRequest> get copyWith =>
+      __$EESUpoolRequestCopyWithImpl<_EESUpoolRequest>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$EESUpoolRequestToJson(
+      this,
+    );
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$EESUpoolRequestImpl &&
+            other is _EESUpoolRequest &&
             (identical(other.userId, userId) || other.userId == userId) &&
             (identical(other.createdAt, createdAt) ||
                 other.createdAt == createdAt) &&
@@ -293,71 +244,94 @@ class _$EESUpoolRequestImpl implements _EESUpoolRequest {
   int get hashCode => Object.hash(runtimeType, userId, createdAt, eesupoolId,
       type, status, eesupoolName, fullName, corporateName, role);
 
-  /// Create a copy of EESUpoolRequest
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  @pragma('vm:prefer-inline')
-  _$$EESUpoolRequestImplCopyWith<_$EESUpoolRequestImpl> get copyWith =>
-      __$$EESUpoolRequestImplCopyWithImpl<_$EESUpoolRequestImpl>(
-          this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$EESUpoolRequestImplToJson(
-      this,
-    );
+  String toString() {
+    return 'EESUpoolRequest(userId: $userId, createdAt: $createdAt, eesupoolId: $eesupoolId, type: $type, status: $status, eesupoolName: $eesupoolName, fullName: $fullName, corporateName: $corporateName, role: $role)';
   }
 }
 
-abstract class _EESUpoolRequest implements EESUpoolRequest {
-  factory _EESUpoolRequest(
-          {@JsonKey(name: 'user_id') required final String userId,
-          @JsonKey(name: 'created_at') required final DateTime createdAt,
-          @JsonKey(name: 'eesupool_id') required final int eesupoolId,
-          @JsonKey(name: 'request_type') required final String type,
-          @JsonKey(name: 'status') required final String status,
-          @JsonKey(name: 'eesupool_name') final String? eesupoolName,
-          @JsonKey(name: 'full_name') final String? fullName,
-          @JsonKey(name: 'corporate_name') final String? corporateName,
-          @UserRoleConverter() required final UserRole role}) =
-      _$EESUpoolRequestImpl;
+/// @nodoc
+abstract mixin class _$EESUpoolRequestCopyWith<$Res>
+    implements $EESUpoolRequestCopyWith<$Res> {
+  factory _$EESUpoolRequestCopyWith(
+          _EESUpoolRequest value, $Res Function(_EESUpoolRequest) _then) =
+      __$EESUpoolRequestCopyWithImpl;
+  @override
+  @useResult
+  $Res call(
+      {@JsonKey(name: 'user_id') String userId,
+      @JsonKey(name: 'created_at') DateTime createdAt,
+      @JsonKey(name: 'eesupool_id') int eesupoolId,
+      @JsonKey(name: 'request_type') String type,
+      @JsonKey(name: 'status') String status,
+      @JsonKey(name: 'eesupool_name') String? eesupoolName,
+      @JsonKey(name: 'full_name') String? fullName,
+      @JsonKey(name: 'corporate_name') String? corporateName,
+      @UserRoleConverter() UserRole role});
+}
 
-  factory _EESUpoolRequest.fromJson(Map<String, dynamic> json) =
-      _$EESUpoolRequestImpl.fromJson;
+/// @nodoc
+class __$EESUpoolRequestCopyWithImpl<$Res>
+    implements _$EESUpoolRequestCopyWith<$Res> {
+  __$EESUpoolRequestCopyWithImpl(this._self, this._then);
 
-  @override
-  @JsonKey(name: 'user_id')
-  String get userId;
-  @override
-  @JsonKey(name: 'created_at')
-  DateTime get createdAt;
-  @override
-  @JsonKey(name: 'eesupool_id')
-  int get eesupoolId;
-  @override
-  @JsonKey(name: 'request_type')
-  String get type;
-  @override
-  @JsonKey(name: 'status')
-  String get status;
-  @override
-  @JsonKey(name: 'eesupool_name')
-  String? get eesupoolName;
-  @override
-  @JsonKey(name: 'full_name')
-  String? get fullName;
-  @override
-  @JsonKey(name: 'corporate_name')
-  String? get corporateName;
-  @override
-  @UserRoleConverter()
-  UserRole get role;
+  final _EESUpoolRequest _self;
+  final $Res Function(_EESUpoolRequest) _then;
 
   /// Create a copy of EESUpoolRequest
   /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$EESUpoolRequestImplCopyWith<_$EESUpoolRequestImpl> get copyWith =>
-      throw _privateConstructorUsedError;
+  @pragma('vm:prefer-inline')
+  $Res call({
+    Object? userId = null,
+    Object? createdAt = null,
+    Object? eesupoolId = null,
+    Object? type = null,
+    Object? status = null,
+    Object? eesupoolName = freezed,
+    Object? fullName = freezed,
+    Object? corporateName = freezed,
+    Object? role = null,
+  }) {
+    return _then(_EESUpoolRequest(
+      userId: null == userId
+          ? _self.userId
+          : userId // ignore: cast_nullable_to_non_nullable
+              as String,
+      createdAt: null == createdAt
+          ? _self.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as DateTime,
+      eesupoolId: null == eesupoolId
+          ? _self.eesupoolId
+          : eesupoolId // ignore: cast_nullable_to_non_nullable
+              as int,
+      type: null == type
+          ? _self.type
+          : type // ignore: cast_nullable_to_non_nullable
+              as String,
+      status: null == status
+          ? _self.status
+          : status // ignore: cast_nullable_to_non_nullable
+              as String,
+      eesupoolName: freezed == eesupoolName
+          ? _self.eesupoolName
+          : eesupoolName // ignore: cast_nullable_to_non_nullable
+              as String?,
+      fullName: freezed == fullName
+          ? _self.fullName
+          : fullName // ignore: cast_nullable_to_non_nullable
+              as String?,
+      corporateName: freezed == corporateName
+          ? _self.corporateName
+          : corporateName // ignore: cast_nullable_to_non_nullable
+              as String?,
+      role: null == role
+          ? _self.role
+          : role // ignore: cast_nullable_to_non_nullable
+              as UserRole,
+    ));
+  }
 }
+
+// dart format on

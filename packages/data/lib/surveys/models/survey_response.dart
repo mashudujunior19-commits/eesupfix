@@ -8,7 +8,7 @@ part 'survey_response.freezed.dart';
 part 'survey_response.g.dart';
 
 @freezed
-class SurveyResponse with _$SurveyResponse {
+abstract class SurveyResponse with _$SurveyResponse {
   const factory SurveyResponse({
     @JsonKey(name: 'user_id') required String userId,
     @JsonKey(name: 'survey_id') required String surveyId,
@@ -37,7 +37,7 @@ class QuestionAnswerConverter
 }
 
 @freezed
-class QuestionAnswer with _$QuestionAnswer {
+abstract class QuestionAnswer with _$QuestionAnswer {
   const factory QuestionAnswer({
     @JsonKey(name: 'question_id') required int questionId,
     @JsonKey(name: 'slider_value') int? sliderValue,

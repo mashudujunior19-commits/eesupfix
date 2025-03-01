@@ -11,7 +11,7 @@ part 'chat_message.freezed.dart';
 part 'chat_message.g.dart';
 
 @freezed
-class ChatMessage with _$ChatMessage {
+abstract class ChatMessage with _$ChatMessage {
   const factory ChatMessage({
     @JsonKey(includeToJson: false) required int id,
     @JsonKey(name: 'eesupool_id') required int eesupoolId,

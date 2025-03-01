@@ -7,7 +7,7 @@ part 'partner.freezed.dart';
 part 'partner.g.dart';
 
 @freezed
-class Partner with _$Partner {
+abstract class Partner with _$Partner {
   const factory Partner({
     required String id,
     required String title,

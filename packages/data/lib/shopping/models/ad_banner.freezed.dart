@@ -1,3 +1,4 @@
+// dart format width=80
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
@@ -9,88 +10,59 @@ part of 'ad_banner.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// dart format off
 T _$identity<T>(T value) => value;
-
-final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
-
-AdBanner _$AdBannerFromJson(Map<String, dynamic> json) {
-  return _AdBanner.fromJson(json);
-}
 
 /// @nodoc
 mixin _$AdBanner {
-  int get id => throw _privateConstructorUsedError;
+  int get id;
   @AdContentConverter()
-  List<AdContent> get content => throw _privateConstructorUsedError;
-
-  /// Serializes this AdBanner to a JSON map.
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  List<AdContent> get content;
 
   /// Create a copy of AdBanner
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  $AdBannerCopyWith<AdBanner> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class $AdBannerCopyWith<$Res> {
-  factory $AdBannerCopyWith(AdBanner value, $Res Function(AdBanner) then) =
-      _$AdBannerCopyWithImpl<$Res, AdBanner>;
-  @useResult
-  $Res call({int id, @AdContentConverter() List<AdContent> content});
-}
-
-/// @nodoc
-class _$AdBannerCopyWithImpl<$Res, $Val extends AdBanner>
-    implements $AdBannerCopyWith<$Res> {
-  _$AdBannerCopyWithImpl(this._value, this._then);
-
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
-
-  /// Create a copy of AdBanner
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
+  $AdBannerCopyWith<AdBanner> get copyWith =>
+      _$AdBannerCopyWithImpl<AdBanner>(this as AdBanner, _$identity);
+
+  /// Serializes this AdBanner to a JSON map.
+  Map<String, dynamic> toJson();
+
   @override
-  $Res call({
-    Object? id = null,
-    Object? content = null,
-  }) {
-    return _then(_value.copyWith(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as int,
-      content: null == content
-          ? _value.content
-          : content // ignore: cast_nullable_to_non_nullable
-              as List<AdContent>,
-    ) as $Val);
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is AdBanner &&
+            (identical(other.id, id) || other.id == id) &&
+            const DeepCollectionEquality().equals(other.content, content));
+  }
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  int get hashCode => Object.hash(
+      runtimeType, id, const DeepCollectionEquality().hash(content));
+
+  @override
+  String toString() {
+    return 'AdBanner(id: $id, content: $content)';
   }
 }
 
 /// @nodoc
-abstract class _$$AdBannerImplCopyWith<$Res>
-    implements $AdBannerCopyWith<$Res> {
-  factory _$$AdBannerImplCopyWith(
-          _$AdBannerImpl value, $Res Function(_$AdBannerImpl) then) =
-      __$$AdBannerImplCopyWithImpl<$Res>;
-  @override
+abstract mixin class $AdBannerCopyWith<$Res> {
+  factory $AdBannerCopyWith(AdBanner value, $Res Function(AdBanner) _then) =
+      _$AdBannerCopyWithImpl;
   @useResult
   $Res call({int id, @AdContentConverter() List<AdContent> content});
 }
 
 /// @nodoc
-class __$$AdBannerImplCopyWithImpl<$Res>
-    extends _$AdBannerCopyWithImpl<$Res, _$AdBannerImpl>
-    implements _$$AdBannerImplCopyWith<$Res> {
-  __$$AdBannerImplCopyWithImpl(
-      _$AdBannerImpl _value, $Res Function(_$AdBannerImpl) _then)
-      : super(_value, _then);
+class _$AdBannerCopyWithImpl<$Res> implements $AdBannerCopyWith<$Res> {
+  _$AdBannerCopyWithImpl(this._self, this._then);
+
+  final AdBanner _self;
+  final $Res Function(AdBanner) _then;
 
   /// Create a copy of AdBanner
   /// with the given fields replaced by the non-null parameter values.
@@ -100,13 +72,13 @@ class __$$AdBannerImplCopyWithImpl<$Res>
     Object? id = null,
     Object? content = null,
   }) {
-    return _then(_$AdBannerImpl(
+    return _then(_self.copyWith(
       id: null == id
-          ? _value.id
+          ? _self.id
           : id // ignore: cast_nullable_to_non_nullable
               as int,
       content: null == content
-          ? _value._content
+          ? _self.content
           : content // ignore: cast_nullable_to_non_nullable
               as List<AdContent>,
     ));
@@ -115,14 +87,13 @@ class __$$AdBannerImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$AdBannerImpl implements _AdBanner {
-  const _$AdBannerImpl(
+class _AdBanner implements AdBanner {
+  const _AdBanner(
       {required this.id,
       @AdContentConverter() required final List<AdContent> content})
       : _content = content;
-
-  factory _$AdBannerImpl.fromJson(Map<String, dynamic> json) =>
-      _$$AdBannerImplFromJson(json);
+  factory _AdBanner.fromJson(Map<String, dynamic> json) =>
+      _$AdBannerFromJson(json);
 
   @override
   final int id;
@@ -135,16 +106,26 @@ class _$AdBannerImpl implements _AdBanner {
     return EqualUnmodifiableListView(_content);
   }
 
+  /// Create a copy of AdBanner
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  String toString() {
-    return 'AdBanner(id: $id, content: $content)';
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  _$AdBannerCopyWith<_AdBanner> get copyWith =>
+      __$AdBannerCopyWithImpl<_AdBanner>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$AdBannerToJson(
+      this,
+    );
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$AdBannerImpl &&
+            other is _AdBanner &&
             (identical(other.id, id) || other.id == id) &&
             const DeepCollectionEquality().equals(other._content, _content));
   }
@@ -154,190 +135,72 @@ class _$AdBannerImpl implements _AdBanner {
   int get hashCode => Object.hash(
       runtimeType, id, const DeepCollectionEquality().hash(_content));
 
-  /// Create a copy of AdBanner
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  @pragma('vm:prefer-inline')
-  _$$AdBannerImplCopyWith<_$AdBannerImpl> get copyWith =>
-      __$$AdBannerImplCopyWithImpl<_$AdBannerImpl>(this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$AdBannerImplToJson(
-      this,
-    );
-  }
-}
-
-abstract class _AdBanner implements AdBanner {
-  const factory _AdBanner(
-          {required final int id,
-          @AdContentConverter() required final List<AdContent> content}) =
-      _$AdBannerImpl;
-
-  factory _AdBanner.fromJson(Map<String, dynamic> json) =
-      _$AdBannerImpl.fromJson;
-
-  @override
-  int get id;
-  @override
-  @AdContentConverter()
-  List<AdContent> get content;
-
-  /// Create a copy of AdBanner
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$AdBannerImplCopyWith<_$AdBannerImpl> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-AdContent _$AdContentFromJson(Map<String, dynamic> json) {
-  return _AdContent.fromJson(json);
-}
-
-/// @nodoc
-mixin _$AdContent {
-  String get url => throw _privateConstructorUsedError;
-  String get type => throw _privateConstructorUsedError;
-  @JsonKey(name: 'order_number')
-  int get orderNumber => throw _privateConstructorUsedError;
-
-  /// Serializes this AdContent to a JSON map.
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-
-  /// Create a copy of AdContent
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  $AdContentCopyWith<AdContent> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class $AdContentCopyWith<$Res> {
-  factory $AdContentCopyWith(AdContent value, $Res Function(AdContent) then) =
-      _$AdContentCopyWithImpl<$Res, AdContent>;
-  @useResult
-  $Res call(
-      {String url,
-      String type,
-      @JsonKey(name: 'order_number') int orderNumber});
-}
-
-/// @nodoc
-class _$AdContentCopyWithImpl<$Res, $Val extends AdContent>
-    implements $AdContentCopyWith<$Res> {
-  _$AdContentCopyWithImpl(this._value, this._then);
-
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
-
-  /// Create a copy of AdContent
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? url = null,
-    Object? type = null,
-    Object? orderNumber = null,
-  }) {
-    return _then(_value.copyWith(
-      url: null == url
-          ? _value.url
-          : url // ignore: cast_nullable_to_non_nullable
-              as String,
-      type: null == type
-          ? _value.type
-          : type // ignore: cast_nullable_to_non_nullable
-              as String,
-      orderNumber: null == orderNumber
-          ? _value.orderNumber
-          : orderNumber // ignore: cast_nullable_to_non_nullable
-              as int,
-    ) as $Val);
+  String toString() {
+    return 'AdBanner(id: $id, content: $content)';
   }
 }
 
 /// @nodoc
-abstract class _$$AdContentImplCopyWith<$Res>
-    implements $AdContentCopyWith<$Res> {
-  factory _$$AdContentImplCopyWith(
-          _$AdContentImpl value, $Res Function(_$AdContentImpl) then) =
-      __$$AdContentImplCopyWithImpl<$Res>;
+abstract mixin class _$AdBannerCopyWith<$Res>
+    implements $AdBannerCopyWith<$Res> {
+  factory _$AdBannerCopyWith(_AdBanner value, $Res Function(_AdBanner) _then) =
+      __$AdBannerCopyWithImpl;
   @override
   @useResult
-  $Res call(
-      {String url,
-      String type,
-      @JsonKey(name: 'order_number') int orderNumber});
+  $Res call({int id, @AdContentConverter() List<AdContent> content});
 }
 
 /// @nodoc
-class __$$AdContentImplCopyWithImpl<$Res>
-    extends _$AdContentCopyWithImpl<$Res, _$AdContentImpl>
-    implements _$$AdContentImplCopyWith<$Res> {
-  __$$AdContentImplCopyWithImpl(
-      _$AdContentImpl _value, $Res Function(_$AdContentImpl) _then)
-      : super(_value, _then);
+class __$AdBannerCopyWithImpl<$Res> implements _$AdBannerCopyWith<$Res> {
+  __$AdBannerCopyWithImpl(this._self, this._then);
 
-  /// Create a copy of AdContent
+  final _AdBanner _self;
+  final $Res Function(_AdBanner) _then;
+
+  /// Create a copy of AdBanner
   /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
   @override
+  @pragma('vm:prefer-inline')
   $Res call({
-    Object? url = null,
-    Object? type = null,
-    Object? orderNumber = null,
+    Object? id = null,
+    Object? content = null,
   }) {
-    return _then(_$AdContentImpl(
-      url: null == url
-          ? _value.url
-          : url // ignore: cast_nullable_to_non_nullable
-              as String,
-      type: null == type
-          ? _value.type
-          : type // ignore: cast_nullable_to_non_nullable
-              as String,
-      orderNumber: null == orderNumber
-          ? _value.orderNumber
-          : orderNumber // ignore: cast_nullable_to_non_nullable
+    return _then(_AdBanner(
+      id: null == id
+          ? _self.id
+          : id // ignore: cast_nullable_to_non_nullable
               as int,
+      content: null == content
+          ? _self._content
+          : content // ignore: cast_nullable_to_non_nullable
+              as List<AdContent>,
     ));
   }
 }
 
 /// @nodoc
-@JsonSerializable()
-class _$AdContentImpl implements _AdContent {
-  const _$AdContentImpl(
-      {required this.url,
-      required this.type,
-      @JsonKey(name: 'order_number') required this.orderNumber});
-
-  factory _$AdContentImpl.fromJson(Map<String, dynamic> json) =>
-      _$$AdContentImplFromJson(json);
-
-  @override
-  final String url;
-  @override
-  final String type;
-  @override
+mixin _$AdContent {
+  String get url;
+  String get type;
   @JsonKey(name: 'order_number')
-  final int orderNumber;
+  int get orderNumber;
 
-  @override
-  String toString() {
-    return 'AdContent(url: $url, type: $type, orderNumber: $orderNumber)';
-  }
+  /// Create a copy of AdContent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  $AdContentCopyWith<AdContent> get copyWith =>
+      _$AdContentCopyWithImpl<AdContent>(this as AdContent, _$identity);
+
+  /// Serializes this AdContent to a JSON map.
+  Map<String, dynamic> toJson();
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$AdContentImpl &&
+            other is AdContent &&
             (identical(other.url, url) || other.url == url) &&
             (identical(other.type, type) || other.type == type) &&
             (identical(other.orderNumber, orderNumber) ||
@@ -348,44 +211,155 @@ class _$AdContentImpl implements _AdContent {
   @override
   int get hashCode => Object.hash(runtimeType, url, type, orderNumber);
 
-  /// Create a copy of AdContent
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  @pragma('vm:prefer-inline')
-  _$$AdContentImplCopyWith<_$AdContentImpl> get copyWith =>
-      __$$AdContentImplCopyWithImpl<_$AdContentImpl>(this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$AdContentImplToJson(
-      this,
-    );
+  String toString() {
+    return 'AdContent(url: $url, type: $type, orderNumber: $orderNumber)';
   }
 }
 
-abstract class _AdContent implements AdContent {
-  const factory _AdContent(
-          {required final String url,
-          required final String type,
-          @JsonKey(name: 'order_number') required final int orderNumber}) =
-      _$AdContentImpl;
+/// @nodoc
+abstract mixin class $AdContentCopyWith<$Res> {
+  factory $AdContentCopyWith(AdContent value, $Res Function(AdContent) _then) =
+      _$AdContentCopyWithImpl;
+  @useResult
+  $Res call(
+      {String url,
+      String type,
+      @JsonKey(name: 'order_number') int orderNumber});
+}
 
-  factory _AdContent.fromJson(Map<String, dynamic> json) =
-      _$AdContentImpl.fromJson;
+/// @nodoc
+class _$AdContentCopyWithImpl<$Res> implements $AdContentCopyWith<$Res> {
+  _$AdContentCopyWithImpl(this._self, this._then);
+
+  final AdContent _self;
+  final $Res Function(AdContent) _then;
+
+  /// Create a copy of AdContent
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? url = null,
+    Object? type = null,
+    Object? orderNumber = null,
+  }) {
+    return _then(_self.copyWith(
+      url: null == url
+          ? _self.url
+          : url // ignore: cast_nullable_to_non_nullable
+              as String,
+      type: null == type
+          ? _self.type
+          : type // ignore: cast_nullable_to_non_nullable
+              as String,
+      orderNumber: null == orderNumber
+          ? _self.orderNumber
+          : orderNumber // ignore: cast_nullable_to_non_nullable
+              as int,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _AdContent implements AdContent {
+  const _AdContent(
+      {required this.url,
+      required this.type,
+      @JsonKey(name: 'order_number') required this.orderNumber});
+  factory _AdContent.fromJson(Map<String, dynamic> json) =>
+      _$AdContentFromJson(json);
 
   @override
-  String get url;
+  final String url;
   @override
-  String get type;
+  final String type;
   @override
   @JsonKey(name: 'order_number')
-  int get orderNumber;
+  final int orderNumber;
 
   /// Create a copy of AdContent
   /// with the given fields replaced by the non-null parameter values.
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$AdContentImplCopyWith<_$AdContentImpl> get copyWith =>
-      throw _privateConstructorUsedError;
+  @pragma('vm:prefer-inline')
+  _$AdContentCopyWith<_AdContent> get copyWith =>
+      __$AdContentCopyWithImpl<_AdContent>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$AdContentToJson(
+      this,
+    );
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _AdContent &&
+            (identical(other.url, url) || other.url == url) &&
+            (identical(other.type, type) || other.type == type) &&
+            (identical(other.orderNumber, orderNumber) ||
+                other.orderNumber == orderNumber));
+  }
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  int get hashCode => Object.hash(runtimeType, url, type, orderNumber);
+
+  @override
+  String toString() {
+    return 'AdContent(url: $url, type: $type, orderNumber: $orderNumber)';
+  }
 }
+
+/// @nodoc
+abstract mixin class _$AdContentCopyWith<$Res>
+    implements $AdContentCopyWith<$Res> {
+  factory _$AdContentCopyWith(
+          _AdContent value, $Res Function(_AdContent) _then) =
+      __$AdContentCopyWithImpl;
+  @override
+  @useResult
+  $Res call(
+      {String url,
+      String type,
+      @JsonKey(name: 'order_number') int orderNumber});
+}
+
+/// @nodoc
+class __$AdContentCopyWithImpl<$Res> implements _$AdContentCopyWith<$Res> {
+  __$AdContentCopyWithImpl(this._self, this._then);
+
+  final _AdContent _self;
+  final $Res Function(_AdContent) _then;
+
+  /// Create a copy of AdContent
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $Res call({
+    Object? url = null,
+    Object? type = null,
+    Object? orderNumber = null,
+  }) {
+    return _then(_AdContent(
+      url: null == url
+          ? _self.url
+          : url // ignore: cast_nullable_to_non_nullable
+              as String,
+      type: null == type
+          ? _self.type
+          : type // ignore: cast_nullable_to_non_nullable
+              as String,
+      orderNumber: null == orderNumber
+          ? _self.orderNumber
+          : orderNumber // ignore: cast_nullable_to_non_nullable
+              as int,
+    ));
+  }
+}
+
+// dart format on

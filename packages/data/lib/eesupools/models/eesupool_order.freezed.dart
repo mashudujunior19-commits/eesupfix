@@ -1,3 +1,4 @@
+// dart format width=80
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
@@ -9,73 +10,137 @@ part of 'eesupool_order.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// dart format off
 T _$identity<T>(T value) => value;
-
-final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
-
-EESUpoolOrder _$EESUpoolOrderFromJson(Map<String, dynamic> json) {
-  return _EESUpoolOrder.fromJson(json);
-}
 
 /// @nodoc
 mixin _$EESUpoolOrder {
   @JsonKey(includeToJson: false)
-  int get id => throw _privateConstructorUsedError;
+  int get id;
   @JsonKey(name: 'eesupool_id')
-  int get eesupoolId => throw _privateConstructorUsedError;
+  int get eesupoolId;
   @JsonKey(name: 'created_at')
-  DateTime get createdAt => throw _privateConstructorUsedError;
+  DateTime get createdAt;
   @JsonKey(name: 'schedule_for')
-  DateTime get scheduleFor => throw _privateConstructorUsedError;
+  DateTime get scheduleFor;
   @JsonKey(name: 'closes_at')
-  DateTime get closesAt => throw _privateConstructorUsedError;
+  DateTime get closesAt;
   @JsonKey(name: 'secret_pin')
-  int? get secretPin => throw _privateConstructorUsedError;
+  int? get secretPin;
   @JsonKey(name: 'delivered_at')
-  DateTime? get deliveredAt => throw _privateConstructorUsedError;
+  DateTime? get deliveredAt;
   @JsonKey(name: 'admin_fee')
-  double? get adminFee => throw _privateConstructorUsedError;
+  double? get adminFee;
   @JsonKey(name: 'packer_fee')
-  double? get packerFee => throw _privateConstructorUsedError;
+  double? get packerFee;
   @JsonKey(name: 'receiver_fee')
-  double? get receiverFee => throw _privateConstructorUsedError;
+  double? get receiverFee;
   @JsonKey(name: 'collection_fee')
-  double? get collectionFee => throw _privateConstructorUsedError;
+  double? get collectionFee;
   @JsonKey(name: 'address_id')
-  int? get addressId => throw _privateConstructorUsedError;
+  int? get addressId;
   @JsonKey(name: 'receivers')
-  List<String>? get receiversId => throw _privateConstructorUsedError;
+  List<String>? get receiversId;
 
   ///other
   @JsonKey(name: 'eesupool_name', includeToJson: false)
-  String? get eesupoolName => throw _privateConstructorUsedError;
+  String? get eesupoolName;
   @EESUpoolMemberConverter()
   @JsonKey(includeToJson: false, includeFromJson: false)
-  List<EESUpoolMember>? get receivers => throw _privateConstructorUsedError;
+  List<EESUpoolMember>? get receivers;
   @AddressConverter()
   @JsonKey(includeToJson: false)
-  Address? get address => throw _privateConstructorUsedError;
+  Address? get address;
   @JsonKey(name: 'orders_count', includeToJson: false)
-  int get ordersCount => throw _privateConstructorUsedError;
+  int get ordersCount;
   @JsonKey(name: 'current_amount', includeToJson: false)
-  double get currentAmount => throw _privateConstructorUsedError;
-
-  /// Serializes this EESUpoolOrder to a JSON map.
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  double get currentAmount;
 
   /// Create a copy of EESUpoolOrder
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
   $EESUpoolOrderCopyWith<EESUpoolOrder> get copyWith =>
-      throw _privateConstructorUsedError;
+      _$EESUpoolOrderCopyWithImpl<EESUpoolOrder>(
+          this as EESUpoolOrder, _$identity);
+
+  /// Serializes this EESUpoolOrder to a JSON map.
+  Map<String, dynamic> toJson();
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is EESUpoolOrder &&
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.eesupoolId, eesupoolId) ||
+                other.eesupoolId == eesupoolId) &&
+            (identical(other.createdAt, createdAt) ||
+                other.createdAt == createdAt) &&
+            (identical(other.scheduleFor, scheduleFor) ||
+                other.scheduleFor == scheduleFor) &&
+            (identical(other.closesAt, closesAt) ||
+                other.closesAt == closesAt) &&
+            (identical(other.secretPin, secretPin) ||
+                other.secretPin == secretPin) &&
+            (identical(other.deliveredAt, deliveredAt) ||
+                other.deliveredAt == deliveredAt) &&
+            (identical(other.adminFee, adminFee) ||
+                other.adminFee == adminFee) &&
+            (identical(other.packerFee, packerFee) ||
+                other.packerFee == packerFee) &&
+            (identical(other.receiverFee, receiverFee) ||
+                other.receiverFee == receiverFee) &&
+            (identical(other.collectionFee, collectionFee) ||
+                other.collectionFee == collectionFee) &&
+            (identical(other.addressId, addressId) ||
+                other.addressId == addressId) &&
+            const DeepCollectionEquality()
+                .equals(other.receiversId, receiversId) &&
+            (identical(other.eesupoolName, eesupoolName) ||
+                other.eesupoolName == eesupoolName) &&
+            const DeepCollectionEquality().equals(other.receivers, receivers) &&
+            (identical(other.address, address) || other.address == address) &&
+            (identical(other.ordersCount, ordersCount) ||
+                other.ordersCount == ordersCount) &&
+            (identical(other.currentAmount, currentAmount) ||
+                other.currentAmount == currentAmount));
+  }
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  int get hashCode => Object.hash(
+      runtimeType,
+      id,
+      eesupoolId,
+      createdAt,
+      scheduleFor,
+      closesAt,
+      secretPin,
+      deliveredAt,
+      adminFee,
+      packerFee,
+      receiverFee,
+      collectionFee,
+      addressId,
+      const DeepCollectionEquality().hash(receiversId),
+      eesupoolName,
+      const DeepCollectionEquality().hash(receivers),
+      address,
+      ordersCount,
+      currentAmount);
+
+  @override
+  String toString() {
+    return 'EESUpoolOrder(id: $id, eesupoolId: $eesupoolId, createdAt: $createdAt, scheduleFor: $scheduleFor, closesAt: $closesAt, secretPin: $secretPin, deliveredAt: $deliveredAt, adminFee: $adminFee, packerFee: $packerFee, receiverFee: $receiverFee, collectionFee: $collectionFee, addressId: $addressId, receiversId: $receiversId, eesupoolName: $eesupoolName, receivers: $receivers, address: $address, ordersCount: $ordersCount, currentAmount: $currentAmount)';
+  }
 }
 
 /// @nodoc
-abstract class $EESUpoolOrderCopyWith<$Res> {
+abstract mixin class $EESUpoolOrderCopyWith<$Res> {
   factory $EESUpoolOrderCopyWith(
-          EESUpoolOrder value, $Res Function(EESUpoolOrder) then) =
-      _$EESUpoolOrderCopyWithImpl<$Res, EESUpoolOrder>;
+          EESUpoolOrder value, $Res Function(EESUpoolOrder) _then) =
+      _$EESUpoolOrderCopyWithImpl;
   @useResult
   $Res call(
       {@JsonKey(includeToJson: false) int id,
@@ -105,14 +170,12 @@ abstract class $EESUpoolOrderCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$EESUpoolOrderCopyWithImpl<$Res, $Val extends EESUpoolOrder>
+class _$EESUpoolOrderCopyWithImpl<$Res>
     implements $EESUpoolOrderCopyWith<$Res> {
-  _$EESUpoolOrderCopyWithImpl(this._value, this._then);
+  _$EESUpoolOrderCopyWithImpl(this._self, this._then);
 
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
+  final EESUpoolOrder _self;
+  final $Res Function(EESUpoolOrder) _then;
 
   /// Create a copy of EESUpoolOrder
   /// with the given fields replaced by the non-null parameter values.
@@ -138,80 +201,80 @@ class _$EESUpoolOrderCopyWithImpl<$Res, $Val extends EESUpoolOrder>
     Object? ordersCount = null,
     Object? currentAmount = null,
   }) {
-    return _then(_value.copyWith(
+    return _then(_self.copyWith(
       id: null == id
-          ? _value.id
+          ? _self.id
           : id // ignore: cast_nullable_to_non_nullable
               as int,
       eesupoolId: null == eesupoolId
-          ? _value.eesupoolId
+          ? _self.eesupoolId
           : eesupoolId // ignore: cast_nullable_to_non_nullable
               as int,
       createdAt: null == createdAt
-          ? _value.createdAt
+          ? _self.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
               as DateTime,
       scheduleFor: null == scheduleFor
-          ? _value.scheduleFor
+          ? _self.scheduleFor
           : scheduleFor // ignore: cast_nullable_to_non_nullable
               as DateTime,
       closesAt: null == closesAt
-          ? _value.closesAt
+          ? _self.closesAt
           : closesAt // ignore: cast_nullable_to_non_nullable
               as DateTime,
       secretPin: freezed == secretPin
-          ? _value.secretPin
+          ? _self.secretPin
           : secretPin // ignore: cast_nullable_to_non_nullable
               as int?,
       deliveredAt: freezed == deliveredAt
-          ? _value.deliveredAt
+          ? _self.deliveredAt
           : deliveredAt // ignore: cast_nullable_to_non_nullable
               as DateTime?,
       adminFee: freezed == adminFee
-          ? _value.adminFee
+          ? _self.adminFee
           : adminFee // ignore: cast_nullable_to_non_nullable
               as double?,
       packerFee: freezed == packerFee
-          ? _value.packerFee
+          ? _self.packerFee
           : packerFee // ignore: cast_nullable_to_non_nullable
               as double?,
       receiverFee: freezed == receiverFee
-          ? _value.receiverFee
+          ? _self.receiverFee
           : receiverFee // ignore: cast_nullable_to_non_nullable
               as double?,
       collectionFee: freezed == collectionFee
-          ? _value.collectionFee
+          ? _self.collectionFee
           : collectionFee // ignore: cast_nullable_to_non_nullable
               as double?,
       addressId: freezed == addressId
-          ? _value.addressId
+          ? _self.addressId
           : addressId // ignore: cast_nullable_to_non_nullable
               as int?,
       receiversId: freezed == receiversId
-          ? _value.receiversId
+          ? _self.receiversId
           : receiversId // ignore: cast_nullable_to_non_nullable
               as List<String>?,
       eesupoolName: freezed == eesupoolName
-          ? _value.eesupoolName
+          ? _self.eesupoolName
           : eesupoolName // ignore: cast_nullable_to_non_nullable
               as String?,
       receivers: freezed == receivers
-          ? _value.receivers
+          ? _self.receivers
           : receivers // ignore: cast_nullable_to_non_nullable
               as List<EESUpoolMember>?,
       address: freezed == address
-          ? _value.address
+          ? _self.address
           : address // ignore: cast_nullable_to_non_nullable
               as Address?,
       ordersCount: null == ordersCount
-          ? _value.ordersCount
+          ? _self.ordersCount
           : ordersCount // ignore: cast_nullable_to_non_nullable
               as int,
       currentAmount: null == currentAmount
-          ? _value.currentAmount
+          ? _self.currentAmount
           : currentAmount // ignore: cast_nullable_to_non_nullable
               as double,
-    ) as $Val);
+    ));
   }
 
   /// Create a copy of EESUpoolOrder
@@ -219,165 +282,20 @@ class _$EESUpoolOrderCopyWithImpl<$Res, $Val extends EESUpoolOrder>
   @override
   @pragma('vm:prefer-inline')
   $AddressCopyWith<$Res>? get address {
-    if (_value.address == null) {
+    if (_self.address == null) {
       return null;
     }
 
-    return $AddressCopyWith<$Res>(_value.address!, (value) {
-      return _then(_value.copyWith(address: value) as $Val);
+    return $AddressCopyWith<$Res>(_self.address!, (value) {
+      return _then(_self.copyWith(address: value));
     });
   }
 }
 
 /// @nodoc
-abstract class _$$EESUpoolOrderImplCopyWith<$Res>
-    implements $EESUpoolOrderCopyWith<$Res> {
-  factory _$$EESUpoolOrderImplCopyWith(
-          _$EESUpoolOrderImpl value, $Res Function(_$EESUpoolOrderImpl) then) =
-      __$$EESUpoolOrderImplCopyWithImpl<$Res>;
-  @override
-  @useResult
-  $Res call(
-      {@JsonKey(includeToJson: false) int id,
-      @JsonKey(name: 'eesupool_id') int eesupoolId,
-      @JsonKey(name: 'created_at') DateTime createdAt,
-      @JsonKey(name: 'schedule_for') DateTime scheduleFor,
-      @JsonKey(name: 'closes_at') DateTime closesAt,
-      @JsonKey(name: 'secret_pin') int? secretPin,
-      @JsonKey(name: 'delivered_at') DateTime? deliveredAt,
-      @JsonKey(name: 'admin_fee') double? adminFee,
-      @JsonKey(name: 'packer_fee') double? packerFee,
-      @JsonKey(name: 'receiver_fee') double? receiverFee,
-      @JsonKey(name: 'collection_fee') double? collectionFee,
-      @JsonKey(name: 'address_id') int? addressId,
-      @JsonKey(name: 'receivers') List<String>? receiversId,
-      @JsonKey(name: 'eesupool_name', includeToJson: false)
-      String? eesupoolName,
-      @EESUpoolMemberConverter()
-      @JsonKey(includeToJson: false, includeFromJson: false)
-      List<EESUpoolMember>? receivers,
-      @AddressConverter() @JsonKey(includeToJson: false) Address? address,
-      @JsonKey(name: 'orders_count', includeToJson: false) int ordersCount,
-      @JsonKey(name: 'current_amount', includeToJson: false)
-      double currentAmount});
-
-  @override
-  $AddressCopyWith<$Res>? get address;
-}
-
-/// @nodoc
-class __$$EESUpoolOrderImplCopyWithImpl<$Res>
-    extends _$EESUpoolOrderCopyWithImpl<$Res, _$EESUpoolOrderImpl>
-    implements _$$EESUpoolOrderImplCopyWith<$Res> {
-  __$$EESUpoolOrderImplCopyWithImpl(
-      _$EESUpoolOrderImpl _value, $Res Function(_$EESUpoolOrderImpl) _then)
-      : super(_value, _then);
-
-  /// Create a copy of EESUpoolOrder
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? id = null,
-    Object? eesupoolId = null,
-    Object? createdAt = null,
-    Object? scheduleFor = null,
-    Object? closesAt = null,
-    Object? secretPin = freezed,
-    Object? deliveredAt = freezed,
-    Object? adminFee = freezed,
-    Object? packerFee = freezed,
-    Object? receiverFee = freezed,
-    Object? collectionFee = freezed,
-    Object? addressId = freezed,
-    Object? receiversId = freezed,
-    Object? eesupoolName = freezed,
-    Object? receivers = freezed,
-    Object? address = freezed,
-    Object? ordersCount = null,
-    Object? currentAmount = null,
-  }) {
-    return _then(_$EESUpoolOrderImpl(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as int,
-      eesupoolId: null == eesupoolId
-          ? _value.eesupoolId
-          : eesupoolId // ignore: cast_nullable_to_non_nullable
-              as int,
-      createdAt: null == createdAt
-          ? _value.createdAt
-          : createdAt // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      scheduleFor: null == scheduleFor
-          ? _value.scheduleFor
-          : scheduleFor // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      closesAt: null == closesAt
-          ? _value.closesAt
-          : closesAt // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      secretPin: freezed == secretPin
-          ? _value.secretPin
-          : secretPin // ignore: cast_nullable_to_non_nullable
-              as int?,
-      deliveredAt: freezed == deliveredAt
-          ? _value.deliveredAt
-          : deliveredAt // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
-      adminFee: freezed == adminFee
-          ? _value.adminFee
-          : adminFee // ignore: cast_nullable_to_non_nullable
-              as double?,
-      packerFee: freezed == packerFee
-          ? _value.packerFee
-          : packerFee // ignore: cast_nullable_to_non_nullable
-              as double?,
-      receiverFee: freezed == receiverFee
-          ? _value.receiverFee
-          : receiverFee // ignore: cast_nullable_to_non_nullable
-              as double?,
-      collectionFee: freezed == collectionFee
-          ? _value.collectionFee
-          : collectionFee // ignore: cast_nullable_to_non_nullable
-              as double?,
-      addressId: freezed == addressId
-          ? _value.addressId
-          : addressId // ignore: cast_nullable_to_non_nullable
-              as int?,
-      receiversId: freezed == receiversId
-          ? _value._receiversId
-          : receiversId // ignore: cast_nullable_to_non_nullable
-              as List<String>?,
-      eesupoolName: freezed == eesupoolName
-          ? _value.eesupoolName
-          : eesupoolName // ignore: cast_nullable_to_non_nullable
-              as String?,
-      receivers: freezed == receivers
-          ? _value._receivers
-          : receivers // ignore: cast_nullable_to_non_nullable
-              as List<EESUpoolMember>?,
-      address: freezed == address
-          ? _value.address
-          : address // ignore: cast_nullable_to_non_nullable
-              as Address?,
-      ordersCount: null == ordersCount
-          ? _value.ordersCount
-          : ordersCount // ignore: cast_nullable_to_non_nullable
-              as int,
-      currentAmount: null == currentAmount
-          ? _value.currentAmount
-          : currentAmount // ignore: cast_nullable_to_non_nullable
-              as double,
-    ));
-  }
-}
-
-/// @nodoc
 @JsonSerializable()
-class _$EESUpoolOrderImpl implements _EESUpoolOrder {
-  const _$EESUpoolOrderImpl(
+class _EESUpoolOrder implements EESUpoolOrder {
+  const _EESUpoolOrder(
       {@JsonKey(includeToJson: false) required this.id,
       @JsonKey(name: 'eesupool_id') required this.eesupoolId,
       @JsonKey(name: 'created_at') required this.createdAt,
@@ -401,9 +319,8 @@ class _$EESUpoolOrderImpl implements _EESUpoolOrder {
       this.currentAmount = 0.00})
       : _receiversId = receiversId,
         _receivers = receivers;
-
-  factory _$EESUpoolOrderImpl.fromJson(Map<String, dynamic> json) =>
-      _$$EESUpoolOrderImplFromJson(json);
+  factory _EESUpoolOrder.fromJson(Map<String, dynamic> json) =>
+      _$EESUpoolOrderFromJson(json);
 
   @override
   @JsonKey(includeToJson: false)
@@ -479,16 +396,26 @@ class _$EESUpoolOrderImpl implements _EESUpoolOrder {
   @JsonKey(name: 'current_amount', includeToJson: false)
   final double currentAmount;
 
+  /// Create a copy of EESUpoolOrder
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  String toString() {
-    return 'EESUpoolOrder(id: $id, eesupoolId: $eesupoolId, createdAt: $createdAt, scheduleFor: $scheduleFor, closesAt: $closesAt, secretPin: $secretPin, deliveredAt: $deliveredAt, adminFee: $adminFee, packerFee: $packerFee, receiverFee: $receiverFee, collectionFee: $collectionFee, addressId: $addressId, receiversId: $receiversId, eesupoolName: $eesupoolName, receivers: $receivers, address: $address, ordersCount: $ordersCount, currentAmount: $currentAmount)';
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  _$EESUpoolOrderCopyWith<_EESUpoolOrder> get copyWith =>
+      __$EESUpoolOrderCopyWithImpl<_EESUpoolOrder>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$EESUpoolOrderToJson(
+      this,
+    );
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$EESUpoolOrderImpl &&
+            other is _EESUpoolOrder &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.eesupoolId, eesupoolId) ||
                 other.eesupoolId == eesupoolId) &&
@@ -548,223 +475,231 @@ class _$EESUpoolOrderImpl implements _EESUpoolOrder {
       ordersCount,
       currentAmount);
 
-  /// Create a copy of EESUpoolOrder
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  @pragma('vm:prefer-inline')
-  _$$EESUpoolOrderImplCopyWith<_$EESUpoolOrderImpl> get copyWith =>
-      __$$EESUpoolOrderImplCopyWithImpl<_$EESUpoolOrderImpl>(this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$EESUpoolOrderImplToJson(
-      this,
-    );
+  String toString() {
+    return 'EESUpoolOrder(id: $id, eesupoolId: $eesupoolId, createdAt: $createdAt, scheduleFor: $scheduleFor, closesAt: $closesAt, secretPin: $secretPin, deliveredAt: $deliveredAt, adminFee: $adminFee, packerFee: $packerFee, receiverFee: $receiverFee, collectionFee: $collectionFee, addressId: $addressId, receiversId: $receiversId, eesupoolName: $eesupoolName, receivers: $receivers, address: $address, ordersCount: $ordersCount, currentAmount: $currentAmount)';
   }
 }
 
-abstract class _EESUpoolOrder implements EESUpoolOrder {
-  const factory _EESUpoolOrder(
-      {@JsonKey(includeToJson: false) required final int id,
-      @JsonKey(name: 'eesupool_id') required final int eesupoolId,
-      @JsonKey(name: 'created_at') required final DateTime createdAt,
-      @JsonKey(name: 'schedule_for') required final DateTime scheduleFor,
-      @JsonKey(name: 'closes_at') required final DateTime closesAt,
-      @JsonKey(name: 'secret_pin') final int? secretPin,
-      @JsonKey(name: 'delivered_at') final DateTime? deliveredAt,
-      @JsonKey(name: 'admin_fee') final double? adminFee,
-      @JsonKey(name: 'packer_fee') final double? packerFee,
-      @JsonKey(name: 'receiver_fee') final double? receiverFee,
-      @JsonKey(name: 'collection_fee') final double? collectionFee,
-      @JsonKey(name: 'address_id') final int? addressId,
-      @JsonKey(name: 'receivers') final List<String>? receiversId,
+/// @nodoc
+abstract mixin class _$EESUpoolOrderCopyWith<$Res>
+    implements $EESUpoolOrderCopyWith<$Res> {
+  factory _$EESUpoolOrderCopyWith(
+          _EESUpoolOrder value, $Res Function(_EESUpoolOrder) _then) =
+      __$EESUpoolOrderCopyWithImpl;
+  @override
+  @useResult
+  $Res call(
+      {@JsonKey(includeToJson: false) int id,
+      @JsonKey(name: 'eesupool_id') int eesupoolId,
+      @JsonKey(name: 'created_at') DateTime createdAt,
+      @JsonKey(name: 'schedule_for') DateTime scheduleFor,
+      @JsonKey(name: 'closes_at') DateTime closesAt,
+      @JsonKey(name: 'secret_pin') int? secretPin,
+      @JsonKey(name: 'delivered_at') DateTime? deliveredAt,
+      @JsonKey(name: 'admin_fee') double? adminFee,
+      @JsonKey(name: 'packer_fee') double? packerFee,
+      @JsonKey(name: 'receiver_fee') double? receiverFee,
+      @JsonKey(name: 'collection_fee') double? collectionFee,
+      @JsonKey(name: 'address_id') int? addressId,
+      @JsonKey(name: 'receivers') List<String>? receiversId,
       @JsonKey(name: 'eesupool_name', includeToJson: false)
-      final String? eesupoolName,
+      String? eesupoolName,
       @EESUpoolMemberConverter()
       @JsonKey(includeToJson: false, includeFromJson: false)
-      final List<EESUpoolMember>? receivers,
-      @AddressConverter() @JsonKey(includeToJson: false) final Address? address,
-      @JsonKey(name: 'orders_count', includeToJson: false)
-      final int ordersCount,
+      List<EESUpoolMember>? receivers,
+      @AddressConverter() @JsonKey(includeToJson: false) Address? address,
+      @JsonKey(name: 'orders_count', includeToJson: false) int ordersCount,
       @JsonKey(name: 'current_amount', includeToJson: false)
-      final double currentAmount}) = _$EESUpoolOrderImpl;
-
-  factory _EESUpoolOrder.fromJson(Map<String, dynamic> json) =
-      _$EESUpoolOrderImpl.fromJson;
+      double currentAmount});
 
   @override
-  @JsonKey(includeToJson: false)
-  int get id;
-  @override
-  @JsonKey(name: 'eesupool_id')
-  int get eesupoolId;
-  @override
-  @JsonKey(name: 'created_at')
-  DateTime get createdAt;
-  @override
-  @JsonKey(name: 'schedule_for')
-  DateTime get scheduleFor;
-  @override
-  @JsonKey(name: 'closes_at')
-  DateTime get closesAt;
-  @override
-  @JsonKey(name: 'secret_pin')
-  int? get secretPin;
-  @override
-  @JsonKey(name: 'delivered_at')
-  DateTime? get deliveredAt;
-  @override
-  @JsonKey(name: 'admin_fee')
-  double? get adminFee;
-  @override
-  @JsonKey(name: 'packer_fee')
-  double? get packerFee;
-  @override
-  @JsonKey(name: 'receiver_fee')
-  double? get receiverFee;
-  @override
-  @JsonKey(name: 'collection_fee')
-  double? get collectionFee;
-  @override
-  @JsonKey(name: 'address_id')
-  int? get addressId;
-  @override
-  @JsonKey(name: 'receivers')
-  List<String>? get receiversId;
+  $AddressCopyWith<$Res>? get address;
+}
 
-  ///other
-  @override
-  @JsonKey(name: 'eesupool_name', includeToJson: false)
-  String? get eesupoolName;
-  @override
-  @EESUpoolMemberConverter()
-  @JsonKey(includeToJson: false, includeFromJson: false)
-  List<EESUpoolMember>? get receivers;
-  @override
-  @AddressConverter()
-  @JsonKey(includeToJson: false)
-  Address? get address;
-  @override
-  @JsonKey(name: 'orders_count', includeToJson: false)
-  int get ordersCount;
-  @override
-  @JsonKey(name: 'current_amount', includeToJson: false)
-  double get currentAmount;
+/// @nodoc
+class __$EESUpoolOrderCopyWithImpl<$Res>
+    implements _$EESUpoolOrderCopyWith<$Res> {
+  __$EESUpoolOrderCopyWithImpl(this._self, this._then);
+
+  final _EESUpoolOrder _self;
+  final $Res Function(_EESUpoolOrder) _then;
 
   /// Create a copy of EESUpoolOrder
   /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$EESUpoolOrderImplCopyWith<_$EESUpoolOrderImpl> get copyWith =>
-      throw _privateConstructorUsedError;
-}
+  @pragma('vm:prefer-inline')
+  $Res call({
+    Object? id = null,
+    Object? eesupoolId = null,
+    Object? createdAt = null,
+    Object? scheduleFor = null,
+    Object? closesAt = null,
+    Object? secretPin = freezed,
+    Object? deliveredAt = freezed,
+    Object? adminFee = freezed,
+    Object? packerFee = freezed,
+    Object? receiverFee = freezed,
+    Object? collectionFee = freezed,
+    Object? addressId = freezed,
+    Object? receiversId = freezed,
+    Object? eesupoolName = freezed,
+    Object? receivers = freezed,
+    Object? address = freezed,
+    Object? ordersCount = null,
+    Object? currentAmount = null,
+  }) {
+    return _then(_EESUpoolOrder(
+      id: null == id
+          ? _self.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int,
+      eesupoolId: null == eesupoolId
+          ? _self.eesupoolId
+          : eesupoolId // ignore: cast_nullable_to_non_nullable
+              as int,
+      createdAt: null == createdAt
+          ? _self.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as DateTime,
+      scheduleFor: null == scheduleFor
+          ? _self.scheduleFor
+          : scheduleFor // ignore: cast_nullable_to_non_nullable
+              as DateTime,
+      closesAt: null == closesAt
+          ? _self.closesAt
+          : closesAt // ignore: cast_nullable_to_non_nullable
+              as DateTime,
+      secretPin: freezed == secretPin
+          ? _self.secretPin
+          : secretPin // ignore: cast_nullable_to_non_nullable
+              as int?,
+      deliveredAt: freezed == deliveredAt
+          ? _self.deliveredAt
+          : deliveredAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      adminFee: freezed == adminFee
+          ? _self.adminFee
+          : adminFee // ignore: cast_nullable_to_non_nullable
+              as double?,
+      packerFee: freezed == packerFee
+          ? _self.packerFee
+          : packerFee // ignore: cast_nullable_to_non_nullable
+              as double?,
+      receiverFee: freezed == receiverFee
+          ? _self.receiverFee
+          : receiverFee // ignore: cast_nullable_to_non_nullable
+              as double?,
+      collectionFee: freezed == collectionFee
+          ? _self.collectionFee
+          : collectionFee // ignore: cast_nullable_to_non_nullable
+              as double?,
+      addressId: freezed == addressId
+          ? _self.addressId
+          : addressId // ignore: cast_nullable_to_non_nullable
+              as int?,
+      receiversId: freezed == receiversId
+          ? _self._receiversId
+          : receiversId // ignore: cast_nullable_to_non_nullable
+              as List<String>?,
+      eesupoolName: freezed == eesupoolName
+          ? _self.eesupoolName
+          : eesupoolName // ignore: cast_nullable_to_non_nullable
+              as String?,
+      receivers: freezed == receivers
+          ? _self._receivers
+          : receivers // ignore: cast_nullable_to_non_nullable
+              as List<EESUpoolMember>?,
+      address: freezed == address
+          ? _self.address
+          : address // ignore: cast_nullable_to_non_nullable
+              as Address?,
+      ordersCount: null == ordersCount
+          ? _self.ordersCount
+          : ordersCount // ignore: cast_nullable_to_non_nullable
+              as int,
+      currentAmount: null == currentAmount
+          ? _self.currentAmount
+          : currentAmount // ignore: cast_nullable_to_non_nullable
+              as double,
+    ));
+  }
 
-MemberOrderAssignment _$MemberOrderAssignmentFromJson(
-    Map<String, dynamic> json) {
-  return _MemberOrderAssignment.fromJson(json);
+  /// Create a copy of EESUpoolOrder
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $AddressCopyWith<$Res>? get address {
+    if (_self.address == null) {
+      return null;
+    }
+
+    return $AddressCopyWith<$Res>(_self.address!, (value) {
+      return _then(_self.copyWith(address: value));
+    });
+  }
 }
 
 /// @nodoc
 mixin _$MemberOrderAssignment {
   @JsonKey(name: 'order_id')
-  int get orderId => throw _privateConstructorUsedError;
+  int get orderId;
   @JsonKey(name: 'eesupool_ord_id')
-  int get eesupoolOrderId => throw _privateConstructorUsedError;
+  int get eesupoolOrderId;
   @JsonKey(name: 'member_id')
-  String get memberId => throw _privateConstructorUsedError;
+  String get memberId;
   @JsonKey(name: 'full_name', includeToJson: false)
-  String? get fullName => throw _privateConstructorUsedError;
+  String? get fullName;
   @JsonKey(name: 'corp_name', includeToJson: false)
-  String? get corpName => throw _privateConstructorUsedError;
+  String? get corpName;
   @OrderEditPrivilageConverter()
-  OrderEditPrivilage? get privilage => throw _privateConstructorUsedError;
-
-  /// Serializes this MemberOrderAssignment to a JSON map.
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  OrderEditPrivilage? get privilage;
 
   /// Create a copy of MemberOrderAssignment
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  $MemberOrderAssignmentCopyWith<MemberOrderAssignment> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class $MemberOrderAssignmentCopyWith<$Res> {
-  factory $MemberOrderAssignmentCopyWith(MemberOrderAssignment value,
-          $Res Function(MemberOrderAssignment) then) =
-      _$MemberOrderAssignmentCopyWithImpl<$Res, MemberOrderAssignment>;
-  @useResult
-  $Res call(
-      {@JsonKey(name: 'order_id') int orderId,
-      @JsonKey(name: 'eesupool_ord_id') int eesupoolOrderId,
-      @JsonKey(name: 'member_id') String memberId,
-      @JsonKey(name: 'full_name', includeToJson: false) String? fullName,
-      @JsonKey(name: 'corp_name', includeToJson: false) String? corpName,
-      @OrderEditPrivilageConverter() OrderEditPrivilage? privilage});
-}
-
-/// @nodoc
-class _$MemberOrderAssignmentCopyWithImpl<$Res,
-        $Val extends MemberOrderAssignment>
-    implements $MemberOrderAssignmentCopyWith<$Res> {
-  _$MemberOrderAssignmentCopyWithImpl(this._value, this._then);
-
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
-
-  /// Create a copy of MemberOrderAssignment
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
+  $MemberOrderAssignmentCopyWith<MemberOrderAssignment> get copyWith =>
+      _$MemberOrderAssignmentCopyWithImpl<MemberOrderAssignment>(
+          this as MemberOrderAssignment, _$identity);
+
+  /// Serializes this MemberOrderAssignment to a JSON map.
+  Map<String, dynamic> toJson();
+
   @override
-  $Res call({
-    Object? orderId = null,
-    Object? eesupoolOrderId = null,
-    Object? memberId = null,
-    Object? fullName = freezed,
-    Object? corpName = freezed,
-    Object? privilage = freezed,
-  }) {
-    return _then(_value.copyWith(
-      orderId: null == orderId
-          ? _value.orderId
-          : orderId // ignore: cast_nullable_to_non_nullable
-              as int,
-      eesupoolOrderId: null == eesupoolOrderId
-          ? _value.eesupoolOrderId
-          : eesupoolOrderId // ignore: cast_nullable_to_non_nullable
-              as int,
-      memberId: null == memberId
-          ? _value.memberId
-          : memberId // ignore: cast_nullable_to_non_nullable
-              as String,
-      fullName: freezed == fullName
-          ? _value.fullName
-          : fullName // ignore: cast_nullable_to_non_nullable
-              as String?,
-      corpName: freezed == corpName
-          ? _value.corpName
-          : corpName // ignore: cast_nullable_to_non_nullable
-              as String?,
-      privilage: freezed == privilage
-          ? _value.privilage
-          : privilage // ignore: cast_nullable_to_non_nullable
-              as OrderEditPrivilage?,
-    ) as $Val);
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is MemberOrderAssignment &&
+            (identical(other.orderId, orderId) || other.orderId == orderId) &&
+            (identical(other.eesupoolOrderId, eesupoolOrderId) ||
+                other.eesupoolOrderId == eesupoolOrderId) &&
+            (identical(other.memberId, memberId) ||
+                other.memberId == memberId) &&
+            (identical(other.fullName, fullName) ||
+                other.fullName == fullName) &&
+            (identical(other.corpName, corpName) ||
+                other.corpName == corpName) &&
+            (identical(other.privilage, privilage) ||
+                other.privilage == privilage));
+  }
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  int get hashCode => Object.hash(runtimeType, orderId, eesupoolOrderId,
+      memberId, fullName, corpName, privilage);
+
+  @override
+  String toString() {
+    return 'MemberOrderAssignment(orderId: $orderId, eesupoolOrderId: $eesupoolOrderId, memberId: $memberId, fullName: $fullName, corpName: $corpName, privilage: $privilage)';
   }
 }
 
 /// @nodoc
-abstract class _$$MemberOrderAssignmentImplCopyWith<$Res>
-    implements $MemberOrderAssignmentCopyWith<$Res> {
-  factory _$$MemberOrderAssignmentImplCopyWith(
-          _$MemberOrderAssignmentImpl value,
-          $Res Function(_$MemberOrderAssignmentImpl) then) =
-      __$$MemberOrderAssignmentImplCopyWithImpl<$Res>;
-  @override
+abstract mixin class $MemberOrderAssignmentCopyWith<$Res> {
+  factory $MemberOrderAssignmentCopyWith(MemberOrderAssignment value,
+          $Res Function(MemberOrderAssignment) _then) =
+      _$MemberOrderAssignmentCopyWithImpl;
   @useResult
   $Res call(
       {@JsonKey(name: 'order_id') int orderId,
@@ -776,13 +711,12 @@ abstract class _$$MemberOrderAssignmentImplCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$MemberOrderAssignmentImplCopyWithImpl<$Res>
-    extends _$MemberOrderAssignmentCopyWithImpl<$Res,
-        _$MemberOrderAssignmentImpl>
-    implements _$$MemberOrderAssignmentImplCopyWith<$Res> {
-  __$$MemberOrderAssignmentImplCopyWithImpl(_$MemberOrderAssignmentImpl _value,
-      $Res Function(_$MemberOrderAssignmentImpl) _then)
-      : super(_value, _then);
+class _$MemberOrderAssignmentCopyWithImpl<$Res>
+    implements $MemberOrderAssignmentCopyWith<$Res> {
+  _$MemberOrderAssignmentCopyWithImpl(this._self, this._then);
+
+  final MemberOrderAssignment _self;
+  final $Res Function(MemberOrderAssignment) _then;
 
   /// Create a copy of MemberOrderAssignment
   /// with the given fields replaced by the non-null parameter values.
@@ -796,29 +730,29 @@ class __$$MemberOrderAssignmentImplCopyWithImpl<$Res>
     Object? corpName = freezed,
     Object? privilage = freezed,
   }) {
-    return _then(_$MemberOrderAssignmentImpl(
+    return _then(_self.copyWith(
       orderId: null == orderId
-          ? _value.orderId
+          ? _self.orderId
           : orderId // ignore: cast_nullable_to_non_nullable
               as int,
       eesupoolOrderId: null == eesupoolOrderId
-          ? _value.eesupoolOrderId
+          ? _self.eesupoolOrderId
           : eesupoolOrderId // ignore: cast_nullable_to_non_nullable
               as int,
       memberId: null == memberId
-          ? _value.memberId
+          ? _self.memberId
           : memberId // ignore: cast_nullable_to_non_nullable
               as String,
       fullName: freezed == fullName
-          ? _value.fullName
+          ? _self.fullName
           : fullName // ignore: cast_nullable_to_non_nullable
               as String?,
       corpName: freezed == corpName
-          ? _value.corpName
+          ? _self.corpName
           : corpName // ignore: cast_nullable_to_non_nullable
               as String?,
       privilage: freezed == privilage
-          ? _value.privilage
+          ? _self.privilage
           : privilage // ignore: cast_nullable_to_non_nullable
               as OrderEditPrivilage?,
     ));
@@ -827,17 +761,16 @@ class __$$MemberOrderAssignmentImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$MemberOrderAssignmentImpl implements _MemberOrderAssignment {
-  const _$MemberOrderAssignmentImpl(
+class _MemberOrderAssignment implements MemberOrderAssignment {
+  const _MemberOrderAssignment(
       {@JsonKey(name: 'order_id') required this.orderId,
       @JsonKey(name: 'eesupool_ord_id') required this.eesupoolOrderId,
       @JsonKey(name: 'member_id') required this.memberId,
       @JsonKey(name: 'full_name', includeToJson: false) this.fullName,
       @JsonKey(name: 'corp_name', includeToJson: false) this.corpName,
       @OrderEditPrivilageConverter() this.privilage});
-
-  factory _$MemberOrderAssignmentImpl.fromJson(Map<String, dynamic> json) =>
-      _$$MemberOrderAssignmentImplFromJson(json);
+  factory _MemberOrderAssignment.fromJson(Map<String, dynamic> json) =>
+      _$MemberOrderAssignmentFromJson(json);
 
   @override
   @JsonKey(name: 'order_id')
@@ -858,16 +791,27 @@ class _$MemberOrderAssignmentImpl implements _MemberOrderAssignment {
   @OrderEditPrivilageConverter()
   final OrderEditPrivilage? privilage;
 
+  /// Create a copy of MemberOrderAssignment
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  String toString() {
-    return 'MemberOrderAssignment(orderId: $orderId, eesupoolOrderId: $eesupoolOrderId, memberId: $memberId, fullName: $fullName, corpName: $corpName, privilage: $privilage)';
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  _$MemberOrderAssignmentCopyWith<_MemberOrderAssignment> get copyWith =>
+      __$MemberOrderAssignmentCopyWithImpl<_MemberOrderAssignment>(
+          this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$MemberOrderAssignmentToJson(
+      this,
+    );
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$MemberOrderAssignmentImpl &&
+            other is _MemberOrderAssignment &&
             (identical(other.orderId, orderId) || other.orderId == orderId) &&
             (identical(other.eesupoolOrderId, eesupoolOrderId) ||
                 other.eesupoolOrderId == eesupoolOrderId) &&
@@ -886,59 +830,76 @@ class _$MemberOrderAssignmentImpl implements _MemberOrderAssignment {
   int get hashCode => Object.hash(runtimeType, orderId, eesupoolOrderId,
       memberId, fullName, corpName, privilage);
 
-  /// Create a copy of MemberOrderAssignment
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  @pragma('vm:prefer-inline')
-  _$$MemberOrderAssignmentImplCopyWith<_$MemberOrderAssignmentImpl>
-      get copyWith => __$$MemberOrderAssignmentImplCopyWithImpl<
-          _$MemberOrderAssignmentImpl>(this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$MemberOrderAssignmentImplToJson(
-      this,
-    );
+  String toString() {
+    return 'MemberOrderAssignment(orderId: $orderId, eesupoolOrderId: $eesupoolOrderId, memberId: $memberId, fullName: $fullName, corpName: $corpName, privilage: $privilage)';
   }
 }
 
-abstract class _MemberOrderAssignment implements MemberOrderAssignment {
-  const factory _MemberOrderAssignment(
-      {@JsonKey(name: 'order_id') required final int orderId,
-      @JsonKey(name: 'eesupool_ord_id') required final int eesupoolOrderId,
-      @JsonKey(name: 'member_id') required final String memberId,
-      @JsonKey(name: 'full_name', includeToJson: false) final String? fullName,
-      @JsonKey(name: 'corp_name', includeToJson: false) final String? corpName,
-      @OrderEditPrivilageConverter()
-      final OrderEditPrivilage? privilage}) = _$MemberOrderAssignmentImpl;
+/// @nodoc
+abstract mixin class _$MemberOrderAssignmentCopyWith<$Res>
+    implements $MemberOrderAssignmentCopyWith<$Res> {
+  factory _$MemberOrderAssignmentCopyWith(_MemberOrderAssignment value,
+          $Res Function(_MemberOrderAssignment) _then) =
+      __$MemberOrderAssignmentCopyWithImpl;
+  @override
+  @useResult
+  $Res call(
+      {@JsonKey(name: 'order_id') int orderId,
+      @JsonKey(name: 'eesupool_ord_id') int eesupoolOrderId,
+      @JsonKey(name: 'member_id') String memberId,
+      @JsonKey(name: 'full_name', includeToJson: false) String? fullName,
+      @JsonKey(name: 'corp_name', includeToJson: false) String? corpName,
+      @OrderEditPrivilageConverter() OrderEditPrivilage? privilage});
+}
 
-  factory _MemberOrderAssignment.fromJson(Map<String, dynamic> json) =
-      _$MemberOrderAssignmentImpl.fromJson;
+/// @nodoc
+class __$MemberOrderAssignmentCopyWithImpl<$Res>
+    implements _$MemberOrderAssignmentCopyWith<$Res> {
+  __$MemberOrderAssignmentCopyWithImpl(this._self, this._then);
 
-  @override
-  @JsonKey(name: 'order_id')
-  int get orderId;
-  @override
-  @JsonKey(name: 'eesupool_ord_id')
-  int get eesupoolOrderId;
-  @override
-  @JsonKey(name: 'member_id')
-  String get memberId;
-  @override
-  @JsonKey(name: 'full_name', includeToJson: false)
-  String? get fullName;
-  @override
-  @JsonKey(name: 'corp_name', includeToJson: false)
-  String? get corpName;
-  @override
-  @OrderEditPrivilageConverter()
-  OrderEditPrivilage? get privilage;
+  final _MemberOrderAssignment _self;
+  final $Res Function(_MemberOrderAssignment) _then;
 
   /// Create a copy of MemberOrderAssignment
   /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$MemberOrderAssignmentImplCopyWith<_$MemberOrderAssignmentImpl>
-      get copyWith => throw _privateConstructorUsedError;
+  @pragma('vm:prefer-inline')
+  $Res call({
+    Object? orderId = null,
+    Object? eesupoolOrderId = null,
+    Object? memberId = null,
+    Object? fullName = freezed,
+    Object? corpName = freezed,
+    Object? privilage = freezed,
+  }) {
+    return _then(_MemberOrderAssignment(
+      orderId: null == orderId
+          ? _self.orderId
+          : orderId // ignore: cast_nullable_to_non_nullable
+              as int,
+      eesupoolOrderId: null == eesupoolOrderId
+          ? _self.eesupoolOrderId
+          : eesupoolOrderId // ignore: cast_nullable_to_non_nullable
+              as int,
+      memberId: null == memberId
+          ? _self.memberId
+          : memberId // ignore: cast_nullable_to_non_nullable
+              as String,
+      fullName: freezed == fullName
+          ? _self.fullName
+          : fullName // ignore: cast_nullable_to_non_nullable
+              as String?,
+      corpName: freezed == corpName
+          ? _self.corpName
+          : corpName // ignore: cast_nullable_to_non_nullable
+              as String?,
+      privilage: freezed == privilage
+          ? _self.privilage
+          : privilage // ignore: cast_nullable_to_non_nullable
+              as OrderEditPrivilage?,
+    ));
+  }
 }
+
+// dart format on

@@ -6,8 +6,7 @@ part of 'voucher.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$VoucherImpl _$$VoucherImplFromJson(Map<String, dynamic> json) =>
-    _$VoucherImpl(
+_Voucher _$VoucherFromJson(Map<String, dynamic> json) => _Voucher(
       userId: json['user_id'] as String?,
       parameterId: json['parameter_id'] as String,
       createdAt: DateTime.parse(json['created_at'] as String),
@@ -22,8 +21,7 @@ _$VoucherImpl _$$VoucherImplFromJson(Map<String, dynamic> json) =>
           : DateTime.parse(json['confirmed_at'] as String),
     );
 
-Map<String, dynamic> _$$VoucherImplToJson(_$VoucherImpl instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$VoucherToJson(_Voucher instance) => <String, dynamic>{
       'user_id': instance.userId,
       'parameter_id': instance.parameterId,
       'created_at': instance.createdAt.toIso8601String(),

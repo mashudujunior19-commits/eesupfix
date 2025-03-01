@@ -19,7 +19,7 @@ class MediaFileConverter
 }
 
 @freezed
-class MediaFile with _$MediaFile {
+abstract class MediaFile with _$MediaFile {
   const factory MediaFile({
     required String name,
     required String url,

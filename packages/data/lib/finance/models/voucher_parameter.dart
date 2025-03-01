@@ -5,7 +5,7 @@ part 'voucher_parameter.freezed.dart';
 part 'voucher_parameter.g.dart';
 
 @freezed
-class VoucherParameter with _$VoucherParameter {
+abstract class VoucherParameter with _$VoucherParameter {
   const factory VoucherParameter({
     @JsonKey(name: 'id') required String id,
     @JsonKey(name: 'created_at') DateTime? createdAt,

@@ -1,3 +1,4 @@
+// dart format width=80
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
@@ -9,115 +10,64 @@ part of 'partner.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// dart format off
 T _$identity<T>(T value) => value;
-
-final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
-
-Partner _$PartnerFromJson(Map<String, dynamic> json) {
-  return _Partner.fromJson(json);
-}
 
 /// @nodoc
 mixin _$Partner {
-  String get id => throw _privateConstructorUsedError;
-  String get title => throw _privateConstructorUsedError;
-  String get description => throw _privateConstructorUsedError;
+  String get id;
+  String get title;
+  String get description;
   @PartnerSurveyConverter()
-  List<PartnerSurvey> get surveys => throw _privateConstructorUsedError;
+  List<PartnerSurvey> get surveys;
   @JsonKey(name: 'created_at')
-  DateTime? get createdAt => throw _privateConstructorUsedError;
+  DateTime? get createdAt;
   @JsonKey(name: 'is_open')
-  bool get isOpen => throw _privateConstructorUsedError;
+  bool get isOpen;
   @JsonKey(name: 'max_apps')
-  int get maxApps => throw _privateConstructorUsedError;
-
-  /// Serializes this Partner to a JSON map.
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  int get maxApps;
 
   /// Create a copy of Partner
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  $PartnerCopyWith<Partner> get copyWith => throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class $PartnerCopyWith<$Res> {
-  factory $PartnerCopyWith(Partner value, $Res Function(Partner) then) =
-      _$PartnerCopyWithImpl<$Res, Partner>;
-  @useResult
-  $Res call(
-      {String id,
-      String title,
-      String description,
-      @PartnerSurveyConverter() List<PartnerSurvey> surveys,
-      @JsonKey(name: 'created_at') DateTime? createdAt,
-      @JsonKey(name: 'is_open') bool isOpen,
-      @JsonKey(name: 'max_apps') int maxApps});
-}
-
-/// @nodoc
-class _$PartnerCopyWithImpl<$Res, $Val extends Partner>
-    implements $PartnerCopyWith<$Res> {
-  _$PartnerCopyWithImpl(this._value, this._then);
-
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
-
-  /// Create a copy of Partner
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
+  $PartnerCopyWith<Partner> get copyWith =>
+      _$PartnerCopyWithImpl<Partner>(this as Partner, _$identity);
+
+  /// Serializes this Partner to a JSON map.
+  Map<String, dynamic> toJson();
+
   @override
-  $Res call({
-    Object? id = null,
-    Object? title = null,
-    Object? description = null,
-    Object? surveys = null,
-    Object? createdAt = freezed,
-    Object? isOpen = null,
-    Object? maxApps = null,
-  }) {
-    return _then(_value.copyWith(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as String,
-      title: null == title
-          ? _value.title
-          : title // ignore: cast_nullable_to_non_nullable
-              as String,
-      description: null == description
-          ? _value.description
-          : description // ignore: cast_nullable_to_non_nullable
-              as String,
-      surveys: null == surveys
-          ? _value.surveys
-          : surveys // ignore: cast_nullable_to_non_nullable
-              as List<PartnerSurvey>,
-      createdAt: freezed == createdAt
-          ? _value.createdAt
-          : createdAt // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
-      isOpen: null == isOpen
-          ? _value.isOpen
-          : isOpen // ignore: cast_nullable_to_non_nullable
-              as bool,
-      maxApps: null == maxApps
-          ? _value.maxApps
-          : maxApps // ignore: cast_nullable_to_non_nullable
-              as int,
-    ) as $Val);
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is Partner &&
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.title, title) || other.title == title) &&
+            (identical(other.description, description) ||
+                other.description == description) &&
+            const DeepCollectionEquality().equals(other.surveys, surveys) &&
+            (identical(other.createdAt, createdAt) ||
+                other.createdAt == createdAt) &&
+            (identical(other.isOpen, isOpen) || other.isOpen == isOpen) &&
+            (identical(other.maxApps, maxApps) || other.maxApps == maxApps));
+  }
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  int get hashCode => Object.hash(runtimeType, id, title, description,
+      const DeepCollectionEquality().hash(surveys), createdAt, isOpen, maxApps);
+
+  @override
+  String toString() {
+    return 'Partner(id: $id, title: $title, description: $description, surveys: $surveys, createdAt: $createdAt, isOpen: $isOpen, maxApps: $maxApps)';
   }
 }
 
 /// @nodoc
-abstract class _$$PartnerImplCopyWith<$Res> implements $PartnerCopyWith<$Res> {
-  factory _$$PartnerImplCopyWith(
-          _$PartnerImpl value, $Res Function(_$PartnerImpl) then) =
-      __$$PartnerImplCopyWithImpl<$Res>;
-  @override
+abstract mixin class $PartnerCopyWith<$Res> {
+  factory $PartnerCopyWith(Partner value, $Res Function(Partner) _then) =
+      _$PartnerCopyWithImpl;
   @useResult
   $Res call(
       {String id,
@@ -130,12 +80,11 @@ abstract class _$$PartnerImplCopyWith<$Res> implements $PartnerCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$PartnerImplCopyWithImpl<$Res>
-    extends _$PartnerCopyWithImpl<$Res, _$PartnerImpl>
-    implements _$$PartnerImplCopyWith<$Res> {
-  __$$PartnerImplCopyWithImpl(
-      _$PartnerImpl _value, $Res Function(_$PartnerImpl) _then)
-      : super(_value, _then);
+class _$PartnerCopyWithImpl<$Res> implements $PartnerCopyWith<$Res> {
+  _$PartnerCopyWithImpl(this._self, this._then);
+
+  final Partner _self;
+  final $Res Function(Partner) _then;
 
   /// Create a copy of Partner
   /// with the given fields replaced by the non-null parameter values.
@@ -150,33 +99,33 @@ class __$$PartnerImplCopyWithImpl<$Res>
     Object? isOpen = null,
     Object? maxApps = null,
   }) {
-    return _then(_$PartnerImpl(
+    return _then(_self.copyWith(
       id: null == id
-          ? _value.id
+          ? _self.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
       title: null == title
-          ? _value.title
+          ? _self.title
           : title // ignore: cast_nullable_to_non_nullable
               as String,
       description: null == description
-          ? _value.description
+          ? _self.description
           : description // ignore: cast_nullable_to_non_nullable
               as String,
       surveys: null == surveys
-          ? _value._surveys
+          ? _self.surveys
           : surveys // ignore: cast_nullable_to_non_nullable
               as List<PartnerSurvey>,
       createdAt: freezed == createdAt
-          ? _value.createdAt
+          ? _self.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
               as DateTime?,
       isOpen: null == isOpen
-          ? _value.isOpen
+          ? _self.isOpen
           : isOpen // ignore: cast_nullable_to_non_nullable
               as bool,
       maxApps: null == maxApps
-          ? _value.maxApps
+          ? _self.maxApps
           : maxApps // ignore: cast_nullable_to_non_nullable
               as int,
     ));
@@ -185,8 +134,8 @@ class __$$PartnerImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$PartnerImpl implements _Partner {
-  const _$PartnerImpl(
+class _Partner implements Partner {
+  const _Partner(
       {required this.id,
       required this.title,
       required this.description,
@@ -195,9 +144,8 @@ class _$PartnerImpl implements _Partner {
       @JsonKey(name: 'is_open') required this.isOpen,
       @JsonKey(name: 'max_apps') required this.maxApps})
       : _surveys = surveys;
-
-  factory _$PartnerImpl.fromJson(Map<String, dynamic> json) =>
-      _$$PartnerImplFromJson(json);
+  factory _Partner.fromJson(Map<String, dynamic> json) =>
+      _$PartnerFromJson(json);
 
   @override
   final String id;
@@ -224,16 +172,26 @@ class _$PartnerImpl implements _Partner {
   @JsonKey(name: 'max_apps')
   final int maxApps;
 
+  /// Create a copy of Partner
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  String toString() {
-    return 'Partner(id: $id, title: $title, description: $description, surveys: $surveys, createdAt: $createdAt, isOpen: $isOpen, maxApps: $maxApps)';
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  _$PartnerCopyWith<_Partner> get copyWith =>
+      __$PartnerCopyWithImpl<_Partner>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$PartnerToJson(
+      this,
+    );
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$PartnerImpl &&
+            other is _Partner &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.title, title) || other.title == title) &&
             (identical(other.description, description) ||
@@ -257,57 +215,79 @@ class _$PartnerImpl implements _Partner {
       isOpen,
       maxApps);
 
-  /// Create a copy of Partner
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  @pragma('vm:prefer-inline')
-  _$$PartnerImplCopyWith<_$PartnerImpl> get copyWith =>
-      __$$PartnerImplCopyWithImpl<_$PartnerImpl>(this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$PartnerImplToJson(
-      this,
-    );
+  String toString() {
+    return 'Partner(id: $id, title: $title, description: $description, surveys: $surveys, createdAt: $createdAt, isOpen: $isOpen, maxApps: $maxApps)';
   }
 }
 
-abstract class _Partner implements Partner {
-  const factory _Partner(
-      {required final String id,
-      required final String title,
-      required final String description,
-      @PartnerSurveyConverter() required final List<PartnerSurvey> surveys,
-      @JsonKey(name: 'created_at') final DateTime? createdAt,
-      @JsonKey(name: 'is_open') required final bool isOpen,
-      @JsonKey(name: 'max_apps') required final int maxApps}) = _$PartnerImpl;
+/// @nodoc
+abstract mixin class _$PartnerCopyWith<$Res> implements $PartnerCopyWith<$Res> {
+  factory _$PartnerCopyWith(_Partner value, $Res Function(_Partner) _then) =
+      __$PartnerCopyWithImpl;
+  @override
+  @useResult
+  $Res call(
+      {String id,
+      String title,
+      String description,
+      @PartnerSurveyConverter() List<PartnerSurvey> surveys,
+      @JsonKey(name: 'created_at') DateTime? createdAt,
+      @JsonKey(name: 'is_open') bool isOpen,
+      @JsonKey(name: 'max_apps') int maxApps});
+}
 
-  factory _Partner.fromJson(Map<String, dynamic> json) = _$PartnerImpl.fromJson;
+/// @nodoc
+class __$PartnerCopyWithImpl<$Res> implements _$PartnerCopyWith<$Res> {
+  __$PartnerCopyWithImpl(this._self, this._then);
 
-  @override
-  String get id;
-  @override
-  String get title;
-  @override
-  String get description;
-  @override
-  @PartnerSurveyConverter()
-  List<PartnerSurvey> get surveys;
-  @override
-  @JsonKey(name: 'created_at')
-  DateTime? get createdAt;
-  @override
-  @JsonKey(name: 'is_open')
-  bool get isOpen;
-  @override
-  @JsonKey(name: 'max_apps')
-  int get maxApps;
+  final _Partner _self;
+  final $Res Function(_Partner) _then;
 
   /// Create a copy of Partner
   /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$PartnerImplCopyWith<_$PartnerImpl> get copyWith =>
-      throw _privateConstructorUsedError;
+  @pragma('vm:prefer-inline')
+  $Res call({
+    Object? id = null,
+    Object? title = null,
+    Object? description = null,
+    Object? surveys = null,
+    Object? createdAt = freezed,
+    Object? isOpen = null,
+    Object? maxApps = null,
+  }) {
+    return _then(_Partner(
+      id: null == id
+          ? _self.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
+      title: null == title
+          ? _self.title
+          : title // ignore: cast_nullable_to_non_nullable
+              as String,
+      description: null == description
+          ? _self.description
+          : description // ignore: cast_nullable_to_non_nullable
+              as String,
+      surveys: null == surveys
+          ? _self._surveys
+          : surveys // ignore: cast_nullable_to_non_nullable
+              as List<PartnerSurvey>,
+      createdAt: freezed == createdAt
+          ? _self.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      isOpen: null == isOpen
+          ? _self.isOpen
+          : isOpen // ignore: cast_nullable_to_non_nullable
+              as bool,
+      maxApps: null == maxApps
+          ? _self.maxApps
+          : maxApps // ignore: cast_nullable_to_non_nullable
+              as int,
+    ));
+  }
 }
+
+// dart format on

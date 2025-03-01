@@ -1,3 +1,4 @@
+// dart format width=80
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
@@ -9,177 +10,35 @@ part of 'hamper_product.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// dart format off
 T _$identity<T>(T value) => value;
-
-final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
-
-HamperProduct _$HamperProductFromJson(Map<String, dynamic> json) {
-  return _HamperProduct.fromJson(json);
-}
 
 /// @nodoc
 mixin _$HamperProduct {
   @JsonKey(name: 'hamper_id')
-  String get hamperId => throw _privateConstructorUsedError;
+  String get hamperId;
   @JsonKey(name: 'product_id')
-  int get productId => throw _privateConstructorUsedError;
-  int get quantity => throw _privateConstructorUsedError;
+  int get productId;
+  int get quantity;
   @JsonKey(name: 'is_free')
-  bool get isFree => throw _privateConstructorUsedError;
-
-  /// Serializes this HamperProduct to a JSON map.
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  bool get isFree;
 
   /// Create a copy of HamperProduct
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
   $HamperProductCopyWith<HamperProduct> get copyWith =>
-      throw _privateConstructorUsedError;
-}
+      _$HamperProductCopyWithImpl<HamperProduct>(
+          this as HamperProduct, _$identity);
 
-/// @nodoc
-abstract class $HamperProductCopyWith<$Res> {
-  factory $HamperProductCopyWith(
-          HamperProduct value, $Res Function(HamperProduct) then) =
-      _$HamperProductCopyWithImpl<$Res, HamperProduct>;
-  @useResult
-  $Res call(
-      {@JsonKey(name: 'hamper_id') String hamperId,
-      @JsonKey(name: 'product_id') int productId,
-      int quantity,
-      @JsonKey(name: 'is_free') bool isFree});
-}
-
-/// @nodoc
-class _$HamperProductCopyWithImpl<$Res, $Val extends HamperProduct>
-    implements $HamperProductCopyWith<$Res> {
-  _$HamperProductCopyWithImpl(this._value, this._then);
-
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
-
-  /// Create a copy of HamperProduct
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? hamperId = null,
-    Object? productId = null,
-    Object? quantity = null,
-    Object? isFree = null,
-  }) {
-    return _then(_value.copyWith(
-      hamperId: null == hamperId
-          ? _value.hamperId
-          : hamperId // ignore: cast_nullable_to_non_nullable
-              as String,
-      productId: null == productId
-          ? _value.productId
-          : productId // ignore: cast_nullable_to_non_nullable
-              as int,
-      quantity: null == quantity
-          ? _value.quantity
-          : quantity // ignore: cast_nullable_to_non_nullable
-              as int,
-      isFree: null == isFree
-          ? _value.isFree
-          : isFree // ignore: cast_nullable_to_non_nullable
-              as bool,
-    ) as $Val);
-  }
-}
-
-/// @nodoc
-abstract class _$$HamperProductImplCopyWith<$Res>
-    implements $HamperProductCopyWith<$Res> {
-  factory _$$HamperProductImplCopyWith(
-          _$HamperProductImpl value, $Res Function(_$HamperProductImpl) then) =
-      __$$HamperProductImplCopyWithImpl<$Res>;
-  @override
-  @useResult
-  $Res call(
-      {@JsonKey(name: 'hamper_id') String hamperId,
-      @JsonKey(name: 'product_id') int productId,
-      int quantity,
-      @JsonKey(name: 'is_free') bool isFree});
-}
-
-/// @nodoc
-class __$$HamperProductImplCopyWithImpl<$Res>
-    extends _$HamperProductCopyWithImpl<$Res, _$HamperProductImpl>
-    implements _$$HamperProductImplCopyWith<$Res> {
-  __$$HamperProductImplCopyWithImpl(
-      _$HamperProductImpl _value, $Res Function(_$HamperProductImpl) _then)
-      : super(_value, _then);
-
-  /// Create a copy of HamperProduct
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? hamperId = null,
-    Object? productId = null,
-    Object? quantity = null,
-    Object? isFree = null,
-  }) {
-    return _then(_$HamperProductImpl(
-      hamperId: null == hamperId
-          ? _value.hamperId
-          : hamperId // ignore: cast_nullable_to_non_nullable
-              as String,
-      productId: null == productId
-          ? _value.productId
-          : productId // ignore: cast_nullable_to_non_nullable
-              as int,
-      quantity: null == quantity
-          ? _value.quantity
-          : quantity // ignore: cast_nullable_to_non_nullable
-              as int,
-      isFree: null == isFree
-          ? _value.isFree
-          : isFree // ignore: cast_nullable_to_non_nullable
-              as bool,
-    ));
-  }
-}
-
-/// @nodoc
-@JsonSerializable()
-class _$HamperProductImpl implements _HamperProduct {
-  _$HamperProductImpl(
-      {@JsonKey(name: 'hamper_id') required this.hamperId,
-      @JsonKey(name: 'product_id') required this.productId,
-      required this.quantity,
-      @JsonKey(name: 'is_free') required this.isFree});
-
-  factory _$HamperProductImpl.fromJson(Map<String, dynamic> json) =>
-      _$$HamperProductImplFromJson(json);
-
-  @override
-  @JsonKey(name: 'hamper_id')
-  final String hamperId;
-  @override
-  @JsonKey(name: 'product_id')
-  final int productId;
-  @override
-  final int quantity;
-  @override
-  @JsonKey(name: 'is_free')
-  final bool isFree;
-
-  @override
-  String toString() {
-    return 'HamperProduct(hamperId: $hamperId, productId: $productId, quantity: $quantity, isFree: $isFree)';
-  }
+  /// Serializes this HamperProduct to a JSON map.
+  Map<String, dynamic> toJson();
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$HamperProductImpl &&
+            other is HamperProduct &&
             (identical(other.hamperId, hamperId) ||
                 other.hamperId == hamperId) &&
             (identical(other.productId, productId) ||
@@ -194,49 +53,179 @@ class _$HamperProductImpl implements _HamperProduct {
   int get hashCode =>
       Object.hash(runtimeType, hamperId, productId, quantity, isFree);
 
-  /// Create a copy of HamperProduct
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  @pragma('vm:prefer-inline')
-  _$$HamperProductImplCopyWith<_$HamperProductImpl> get copyWith =>
-      __$$HamperProductImplCopyWithImpl<_$HamperProductImpl>(this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$HamperProductImplToJson(
-      this,
-    );
+  String toString() {
+    return 'HamperProduct(hamperId: $hamperId, productId: $productId, quantity: $quantity, isFree: $isFree)';
   }
 }
 
-abstract class _HamperProduct implements HamperProduct {
-  factory _HamperProduct(
-          {@JsonKey(name: 'hamper_id') required final String hamperId,
-          @JsonKey(name: 'product_id') required final int productId,
-          required final int quantity,
-          @JsonKey(name: 'is_free') required final bool isFree}) =
-      _$HamperProductImpl;
+/// @nodoc
+abstract mixin class $HamperProductCopyWith<$Res> {
+  factory $HamperProductCopyWith(
+          HamperProduct value, $Res Function(HamperProduct) _then) =
+      _$HamperProductCopyWithImpl;
+  @useResult
+  $Res call(
+      {@JsonKey(name: 'hamper_id') String hamperId,
+      @JsonKey(name: 'product_id') int productId,
+      int quantity,
+      @JsonKey(name: 'is_free') bool isFree});
+}
 
-  factory _HamperProduct.fromJson(Map<String, dynamic> json) =
-      _$HamperProductImpl.fromJson;
+/// @nodoc
+class _$HamperProductCopyWithImpl<$Res>
+    implements $HamperProductCopyWith<$Res> {
+  _$HamperProductCopyWithImpl(this._self, this._then);
+
+  final HamperProduct _self;
+  final $Res Function(HamperProduct) _then;
+
+  /// Create a copy of HamperProduct
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? hamperId = null,
+    Object? productId = null,
+    Object? quantity = null,
+    Object? isFree = null,
+  }) {
+    return _then(_self.copyWith(
+      hamperId: null == hamperId
+          ? _self.hamperId
+          : hamperId // ignore: cast_nullable_to_non_nullable
+              as String,
+      productId: null == productId
+          ? _self.productId
+          : productId // ignore: cast_nullable_to_non_nullable
+              as int,
+      quantity: null == quantity
+          ? _self.quantity
+          : quantity // ignore: cast_nullable_to_non_nullable
+              as int,
+      isFree: null == isFree
+          ? _self.isFree
+          : isFree // ignore: cast_nullable_to_non_nullable
+              as bool,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _HamperProduct implements HamperProduct {
+  _HamperProduct(
+      {@JsonKey(name: 'hamper_id') required this.hamperId,
+      @JsonKey(name: 'product_id') required this.productId,
+      required this.quantity,
+      @JsonKey(name: 'is_free') required this.isFree});
+  factory _HamperProduct.fromJson(Map<String, dynamic> json) =>
+      _$HamperProductFromJson(json);
 
   @override
   @JsonKey(name: 'hamper_id')
-  String get hamperId;
+  final String hamperId;
   @override
   @JsonKey(name: 'product_id')
-  int get productId;
+  final int productId;
   @override
-  int get quantity;
+  final int quantity;
   @override
   @JsonKey(name: 'is_free')
-  bool get isFree;
+  final bool isFree;
 
   /// Create a copy of HamperProduct
   /// with the given fields replaced by the non-null parameter values.
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$HamperProductImplCopyWith<_$HamperProductImpl> get copyWith =>
-      throw _privateConstructorUsedError;
+  @pragma('vm:prefer-inline')
+  _$HamperProductCopyWith<_HamperProduct> get copyWith =>
+      __$HamperProductCopyWithImpl<_HamperProduct>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$HamperProductToJson(
+      this,
+    );
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _HamperProduct &&
+            (identical(other.hamperId, hamperId) ||
+                other.hamperId == hamperId) &&
+            (identical(other.productId, productId) ||
+                other.productId == productId) &&
+            (identical(other.quantity, quantity) ||
+                other.quantity == quantity) &&
+            (identical(other.isFree, isFree) || other.isFree == isFree));
+  }
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  int get hashCode =>
+      Object.hash(runtimeType, hamperId, productId, quantity, isFree);
+
+  @override
+  String toString() {
+    return 'HamperProduct(hamperId: $hamperId, productId: $productId, quantity: $quantity, isFree: $isFree)';
+  }
 }
+
+/// @nodoc
+abstract mixin class _$HamperProductCopyWith<$Res>
+    implements $HamperProductCopyWith<$Res> {
+  factory _$HamperProductCopyWith(
+          _HamperProduct value, $Res Function(_HamperProduct) _then) =
+      __$HamperProductCopyWithImpl;
+  @override
+  @useResult
+  $Res call(
+      {@JsonKey(name: 'hamper_id') String hamperId,
+      @JsonKey(name: 'product_id') int productId,
+      int quantity,
+      @JsonKey(name: 'is_free') bool isFree});
+}
+
+/// @nodoc
+class __$HamperProductCopyWithImpl<$Res>
+    implements _$HamperProductCopyWith<$Res> {
+  __$HamperProductCopyWithImpl(this._self, this._then);
+
+  final _HamperProduct _self;
+  final $Res Function(_HamperProduct) _then;
+
+  /// Create a copy of HamperProduct
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $Res call({
+    Object? hamperId = null,
+    Object? productId = null,
+    Object? quantity = null,
+    Object? isFree = null,
+  }) {
+    return _then(_HamperProduct(
+      hamperId: null == hamperId
+          ? _self.hamperId
+          : hamperId // ignore: cast_nullable_to_non_nullable
+              as String,
+      productId: null == productId
+          ? _self.productId
+          : productId // ignore: cast_nullable_to_non_nullable
+              as int,
+      quantity: null == quantity
+          ? _self.quantity
+          : quantity // ignore: cast_nullable_to_non_nullable
+              as int,
+      isFree: null == isFree
+          ? _self.isFree
+          : isFree // ignore: cast_nullable_to_non_nullable
+              as bool,
+    ));
+  }
+}
+
+// dart format on

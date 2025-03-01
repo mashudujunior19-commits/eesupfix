@@ -6,7 +6,7 @@ part 'hamper.freezed.dart';
 part 'hamper.g.dart';
 
 @freezed
-class Hamper with _$Hamper {
+abstract class Hamper with _$Hamper {
   factory Hamper({
     required String id,
     @JsonKey(name: 'code') required String hamperCode,

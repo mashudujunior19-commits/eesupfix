@@ -713,9 +713,9 @@ class EESUpoolSupabaseImp implements EESUpoolDataSource {
 
       if (result is List && result.isNotEmpty) {
         print('Raw result list: $result');
-        result.forEach((entry) {
+        for (var entry in result) {
           print('Entry: $entry'); // Check each entry for issues
-        });
+        }
 
         // Find the first valid entry with a non-null user_count
         final filteredResult = result.firstWhere(

@@ -1,6 +1,5 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:package_info_plus/package_info_plus.dart';
 import 'package:ui/app_route.gr.dart';
 import 'package:ui/src/core/extensions/bg_image_deco_ext.dart';
 import 'package:ui/src/core/widgets/eesup_scaffold.dart';
@@ -14,9 +13,6 @@ import 'package:flutter/material.dart';
 import '../../../core/widgets/fullscreen_loading_shimmer.dart';
 import '../../auth/profile/bloc/edit_profile_bloc.dart';
 import '../../auth/profile/bloc/profile_bloc.dart';
-import '../../auth/profile/bloc/version_control_bloc.dart';
-import 'package:url_launcher/url_launcher.dart';
-import 'package:in_app_update/in_app_update.dart';
 
 @RoutePage()
 class OverviewScreen extends StatefulWidget {
@@ -44,7 +40,7 @@ class _OverviewScreenState extends State<OverviewScreen>
 
     context.read<ProfileBloc>().add(ProfileFetched());
     context.read<EditProfileBloc>().add(CheckIfHasAddress());
-    _checkForUpdate();
+  
   }
 
   // Future<void> _checkForUpdate() async {
@@ -104,256 +100,249 @@ class _OverviewScreenState extends State<OverviewScreen>
   Widget build(BuildContext context) {
     return SafeArea(
       key: const Key('shop_overview_screen'),
-      child: MultiBlocListener(
-        listeners: [
-          BlocListener<ProfileBloc, ProfileState>(
-            listener: (context, state) {
-              if (state is ProfileLoaded) {
-                if (state.profile.rsaIdNumber == null ||
-                    state.profile.rsaIdNumber!.isEmpty) {
-                  if (state.profile.foreigner == false ||
-                      state.profile.foreigner == null) {
-                    WidgetsBinding.instance.addPostFrameCallback((_) {
-                      showDialog(
-                        context: context,
-                        builder: (context) => AlertDialog(
-                          title: const Text('Update your RSA ID'),
-                          content:
-                              const Text('Your RSA ID unlocks more benefits.'),
-                          actions: [
-                            TextButton(
-                              onPressed: () {
-                                Navigator.pop(context);
-                                context.router.push(
-                                  EditProfileRoute(profile: state.profile),
-                                );
-                              },
-                              child: const Text('Enter ID'),
-                            ),
-                            TextButton(
-                              onPressed: () {
-                                final editProfileBloc =
-                                    context.read<EditProfileBloc>();
-                                final updatedProfile =
-                                    state.profile.copyWith(foreigner: true);
-
-                                editProfileBloc
-                                    .add(ProfileEdited(updatedProfile));
-                                editProfileBloc.add(
-                                    ProfileSaved(state.profile.rsaIdNumber));
-
-                                Navigator.pop(context);
-                              },
-                              style: TextButton.styleFrom(
-                                foregroundColor: Colors.red,
-                                // backgroundColor: Colors.blue,
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 16, vertical: 8),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(8),
-                                ),
+      child: Material(
+        color: Colors.white,
+        child: MultiBlocListener(
+          listeners: [
+            BlocListener<ProfileBloc, ProfileState>(
+              listener: (context, state) {
+                if (state is ProfileLoaded) {
+                  if (state.profile.rsaIdNumber == null ||
+                      state.profile.rsaIdNumber!.isEmpty) {
+                    if (state.profile.foreigner == false ||
+                        state.profile.foreigner == null) {
+                      WidgetsBinding.instance.addPostFrameCallback((_) {
+                        showDialog(
+                          context: context,
+                          builder: (context) => AlertDialog(
+                            title: const Text('Update your RSA ID'),
+                            content: const Text(
+                                'Your RSA ID unlocks more benefits.'),
+                            actions: [
+                              TextButton(
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                  context.router.push(
+                                    EditProfileRoute(profile: state.profile),
+                                  );
+                                },
+                                child: const Text('Enter ID'),
                               ),
-                              child: const Text('Non-SA'),
-                            ),
-                            TextButton(
-                              onPressed: () {
-                                Navigator.pop(context);
-                              },
-                              style: TextButton.styleFrom(
-                                foregroundColor: Colors.grey,
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 16, vertical: 8),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(8),
+                              TextButton(
+                                onPressed: () {
+                                  final editProfileBloc =
+                                      context.read<EditProfileBloc>();
+                                  final updatedProfile =
+                                      state.profile.copyWith(foreigner: true);
+
+                                  editProfileBloc
+                                      .add(ProfileEdited(updatedProfile));
+                                  editProfileBloc.add(
+                                      ProfileSaved(state.profile.rsaIdNumber));
+
+                                  Navigator.pop(context);
+                                },
+                                style: TextButton.styleFrom(
+                                  foregroundColor: Colors.red,
+                                  // backgroundColor: Colors.blue,
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 16, vertical: 8),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(8),
+                                  ),
                                 ),
+                                child: const Text('Non-SA'),
                               ),
-                              child: const Text('Add later'),
-                            ),
-                          ],
-                        ),
-                      );
-                    });
+                              TextButton(
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                },
+                                style: TextButton.styleFrom(
+                                  foregroundColor: Colors.grey,
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 16, vertical: 8),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(8),
+                                  ),
+                                ),
+                                child: const Text('Add later'),
+                              ),
+                            ],
+                          ),
+                        );
+                      });
+                    }
                   }
                 }
-              }
-            },
-          ),
-          BlocListener<EditProfileBloc, EditProfileState>(
-            listener: (context, state) {
-              if (state is AddressMissingState) {
-                WidgetsBinding.instance.addPostFrameCallback((_) {
-                  showDialog(
-                    context: context,
-                    builder: (context) => AlertDialog(
-                      title: const Text('Update your primary address'),
-                      content: const Text(
-                          'You do not have a verified primary address. Would you like to add it now?'),
-                      actions: [
-                        TextButton(
-                          onPressed: () {
-                            Navigator.pop(context);
-                            context.router.push(EditAddressRoute());
-                          },
-                          child: const Text('Add Address'),
-                        ),
-                        TextButton(
-                          onPressed: () {
-                            Navigator.pop(context);
-                          },
-                          style: TextButton.styleFrom(
-                            foregroundColor: Colors.grey,
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 16, vertical: 8),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(8),
-                            ),
+              },
+            ),
+            BlocListener<EditProfileBloc, EditProfileState>(
+              listener: (context, state) {
+                if (state is AddressMissingState) {
+                  WidgetsBinding.instance.addPostFrameCallback((_) {
+                    showDialog(
+                      context: context,
+                      builder: (context) => AlertDialog(
+                        title: const Text('Update your primary address'),
+                        content: const Text(
+                            'You do not have a verified primary address. Would you like to add it now?'),
+                        actions: [
+                          TextButton(
+                            onPressed: () {
+                              Navigator.pop(context);
+                              context.router.push(EditAddressRoute());
+                            },
+                            child: const Text('Add Address'),
                           ),
-                          child: const Text('Add later'),
-                        ),
+                          TextButton(
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                            style: TextButton.styleFrom(
+                              foregroundColor: Colors.grey,
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 16, vertical: 8),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                            ),
+                            child: const Text('Add later'),
+                          ),
+                        ],
+                      ),
+                    );
+                  });
+                }
+              },
+            ),
+            //
+
+            //
+            // BlocListener<VersionControlBloc, VersionControlState>(
+            //   listener: (context, state) {
+            //     if (state is VersionOutdated) {
+            //       WidgetsBinding.instance.addPostFrameCallback((_) {
+            //         showDialog(
+            //           context: context,
+            //           builder: (context) => AlertDialog(
+            //             title: const Text('Update Available'),
+            //             content: const Text(
+            //                 'A new version of the app is available. Please update to the latest version.'),
+            //             actions: [
+            //               TextButton(
+            //                 onPressed: () async {
+            //                   Uri appUri = Uri.parse(
+            //                       "https://play.google.com/store/apps/details?id=com.eesup.mobile");
+
+            //                   // Simply try to launch the URI. Let the system handle it.
+            //                   try {
+            //                     await _launchURL(appUri);
+            //                   } catch (error) {
+            //                     debugPrint("Error launching URL: $error");
+            //                   }
+
+            //                   Navigator.pop(context);
+            //                 },
+            //                 child: const Text('Update Now'),
+            //               ),
+            //               TextButton(
+            //                 onPressed: () {
+            //                   Navigator.pop(context);
+            //                 },
+            //                 style: TextButton.styleFrom(
+            //                   foregroundColor: Colors.red,
+            //                   padding: const EdgeInsets.symmetric(
+            //                       horizontal: 16, vertical: 8),
+            //                   shape: RoundedRectangleBorder(
+            //                     borderRadius: BorderRadius.circular(8),
+            //                   ),
+            //                 ),
+            //                 child: const Text('Later'),
+            //               ),
+            //             ],
+            //           ),
+            //         );
+            //       });
+            //     }
+            //   },
+            // ),
+            //
+          ],
+          child: BlocBuilder<ProfileBloc, ProfileState>(
+            builder: (context, state) {
+              if (state is ProfileLoading) {
+                return const FullScreenLoadingShimmer();
+              } else if (state is ProfileLoaded) {
+                return Container(
+                  decoration: context.bgImage,
+                  child: EESUpScaffold(
+                    backgroundColor: Colors.transparent,
+                    bottomNavigationBar:
+                        BottomTabBar(
+                      tabController: _tabController,
+                    ),
+                    body: TabBarView(
+                      controller: _tabController,
+                      children: const [
+                        OverviewTab(),
+                        MyKasiTab(),
+                        MyKasiShop(),
+                        MenuTab(),
                       ],
                     ),
-                  );
-                });
+                  ),
+                );
+              } else if (state is ProfileError) {
+                return Center(child: Text(state.ex.message));
               }
+              return Container();
             },
           ),
-//
-
-//
-          // BlocListener<VersionControlBloc, VersionControlState>(
-          //   listener: (context, state) {
-          //     if (state is VersionOutdated) {
-          //       WidgetsBinding.instance.addPostFrameCallback((_) {
-          //         showDialog(
-          //           context: context,
-          //           builder: (context) => AlertDialog(
-          //             title: const Text('Update Available'),
-          //             content: const Text(
-          //                 'A new version of the app is available. Please update to the latest version.'),
-          //             actions: [
-          //               TextButton(
-          //                 onPressed: () async {
-          //                   Uri appUri = Uri.parse(
-          //                       "https://play.google.com/store/apps/details?id=com.eesup.mobile");
-
-          //                   // Simply try to launch the URI. Let the system handle it.
-          //                   try {
-          //                     await _launchURL(appUri);
-          //                   } catch (error) {
-          //                     debugPrint("Error launching URL: $error");
-          //                   }
-
-          //                   Navigator.pop(context);
-          //                 },
-          //                 child: const Text('Update Now'),
-          //               ),
-          //               TextButton(
-          //                 onPressed: () {
-          //                   Navigator.pop(context);
-          //                 },
-          //                 style: TextButton.styleFrom(
-          //                   foregroundColor: Colors.red,
-          //                   padding: const EdgeInsets.symmetric(
-          //                       horizontal: 16, vertical: 8),
-          //                   shape: RoundedRectangleBorder(
-          //                     borderRadius: BorderRadius.circular(8),
-          //                   ),
-          //                 ),
-          //                 child: const Text('Later'),
-          //               ),
-          //             ],
-          //           ),
-          //         );
-          //       });
-          //     }
-          //   },
-          // ),
-//
-        ],
-        child: BlocBuilder<ProfileBloc, ProfileState>(
-          builder: (context, state) {
-            if (state is ProfileLoading) {
-              return const FullScreenLoadingShimmer();
-            } else if (state is ProfileLoaded) {
-              return Container(
-                decoration: context.bgImage,
-                child: EESUpScaffold(
-                  backgroundColor: Colors.transparent,
-                  bottomNavigationBar:
-                      BottomTabBar(tabController: _tabController),
-                  body: TabBarView(
-                    controller: _tabController,
-                    children: const [
-                      OverviewTab(),
-                      MyKasiTab(),
-                      MyKasiShop(),
-                      MenuTab(),
-                    ],
-                  ),
-                ),
-              );
-            } else if (state is ProfileError) {
-              return Center(child: Text(state.ex.message));
-            }
-            return Container();
-          },
         ),
       ),
     );
   }
 
-  ///
-  Future<void> _checkForUpdate() async {
-    try {
-      // Check for updates using the InAppUpdate package
-      final updateInfo = await InAppUpdate.checkForUpdate();
 
-      if (updateInfo.updateAvailability == UpdateAvailability.updateAvailable) {
-        // If update is available, show a dialog to prompt the user
-        _showUpdateDialog(context);
-      }
-    } catch (e) {
-      debugPrint('Error checking for update: $e');
-    }
-  }
+  // void _showUpdateDialog(BuildContext context) {
+  //   showDialog(
+  //     context: context,
+  //     builder: (context) => AlertDialog(
+  //       title: const Text('Update Available'),
+  //       content: const Text(
+  //           'A new version of the app is available. Please update to the latest version.'),
+  //       actions: [
+  //         TextButton(
+  //           onPressed: () async {
+  //             try {
+  //               await InAppUpdate.performImmediateUpdate();
+  //               Navigator.pop(context);
+  //             } catch (e) {
+  //               debugPrint('Error during in-app update: $e');
+  //               Navigator.pop(context); // Close the dialog
+  //             }
+  //           },
+  //           child: const Text('Update Now'),
+  //         ),
+  //         TextButton(
+  //           onPressed: () {
+  //             Navigator.pop(context);
+  //           },
+  //           style: TextButton.styleFrom(
+  //             foregroundColor: Colors.red,
+  //             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+  //             shape: RoundedRectangleBorder(
+  //               borderRadius: BorderRadius.circular(8),
+  //             ),
+  //           ),
+  //           child: const Text('Later'),
+  //         ),
+  //       ],
+  //     ),
+  //   );
+  // }
 
-  void _showUpdateDialog(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: const Text('Update Available'),
-        content: const Text(
-            'A new version of the app is available. Please update to the latest version.'),
-        actions: [
-          TextButton(
-            onPressed: () async {
-              try {
-                await InAppUpdate.performImmediateUpdate();
-                Navigator.pop(context);
-              } catch (e) {
-                debugPrint('Error during in-app update: $e');
-                Navigator.pop(context); // Close the dialog
-              }
-            },
-            child: const Text('Update Now'),
-          ),
-          TextButton(
-            onPressed: () {
-              Navigator.pop(context);
-            },
-            style: TextButton.styleFrom(
-              foregroundColor: Colors.red,
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(8),
-              ),
-            ),
-            child: const Text('Later'),
-          ),
-        ],
-      ),
-    );
-  }
+
 }
 
 // @RoutePage()

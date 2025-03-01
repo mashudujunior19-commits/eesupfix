@@ -1,3 +1,4 @@
+// dart format width=80
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
@@ -9,121 +10,73 @@ part of 'eesupool_settings.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// dart format off
 T _$identity<T>(T value) => value;
-
-final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
-
-EESUpoolSettings _$EESUpoolSettingsFromJson(Map<String, dynamic> json) {
-  return _EESUpoolSettings.fromJson(json);
-}
 
 /// @nodoc
 mixin _$EESUpoolSettings {
   @JsonKey(includeToJson: false)
-  int get id => throw _privateConstructorUsedError;
+  int get id;
   @JsonKey(name: 'created_at')
-  DateTime get createdAt => throw _privateConstructorUsedError;
+  DateTime get createdAt;
   @JsonKey(name: 'minimum_order_value')
-  double? get minimumOrderValue => throw _privateConstructorUsedError;
+  double? get minimumOrderValue;
   @JsonKey(name: 'admin_order_count')
-  int? get adminOrderCount => throw _privateConstructorUsedError;
+  int? get adminOrderCount;
   @JsonKey(name: 'daily_closing_order_time')
-  String? get dailyClosingOrderTime => throw _privateConstructorUsedError;
+  String? get dailyClosingOrderTime;
   @JsonKey(name: 'eesupool_id')
-  int get eesupoolId => throw _privateConstructorUsedError;
+  int get eesupoolId;
   @JsonKey(name: 'user_count')
-  num? get userCount => throw _privateConstructorUsedError;
-
-  /// Serializes this EESUpoolSettings to a JSON map.
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  num? get userCount;
 
   /// Create a copy of EESUpoolSettings
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  $EESUpoolSettingsCopyWith<EESUpoolSettings> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class $EESUpoolSettingsCopyWith<$Res> {
-  factory $EESUpoolSettingsCopyWith(
-          EESUpoolSettings value, $Res Function(EESUpoolSettings) then) =
-      _$EESUpoolSettingsCopyWithImpl<$Res, EESUpoolSettings>;
-  @useResult
-  $Res call(
-      {@JsonKey(includeToJson: false) int id,
-      @JsonKey(name: 'created_at') DateTime createdAt,
-      @JsonKey(name: 'minimum_order_value') double? minimumOrderValue,
-      @JsonKey(name: 'admin_order_count') int? adminOrderCount,
-      @JsonKey(name: 'daily_closing_order_time') String? dailyClosingOrderTime,
-      @JsonKey(name: 'eesupool_id') int eesupoolId,
-      @JsonKey(name: 'user_count') num? userCount});
-}
-
-/// @nodoc
-class _$EESUpoolSettingsCopyWithImpl<$Res, $Val extends EESUpoolSettings>
-    implements $EESUpoolSettingsCopyWith<$Res> {
-  _$EESUpoolSettingsCopyWithImpl(this._value, this._then);
-
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
-
-  /// Create a copy of EESUpoolSettings
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
+  $EESUpoolSettingsCopyWith<EESUpoolSettings> get copyWith =>
+      _$EESUpoolSettingsCopyWithImpl<EESUpoolSettings>(
+          this as EESUpoolSettings, _$identity);
+
+  /// Serializes this EESUpoolSettings to a JSON map.
+  Map<String, dynamic> toJson();
+
   @override
-  $Res call({
-    Object? id = null,
-    Object? createdAt = null,
-    Object? minimumOrderValue = freezed,
-    Object? adminOrderCount = freezed,
-    Object? dailyClosingOrderTime = freezed,
-    Object? eesupoolId = null,
-    Object? userCount = freezed,
-  }) {
-    return _then(_value.copyWith(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as int,
-      createdAt: null == createdAt
-          ? _value.createdAt
-          : createdAt // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      minimumOrderValue: freezed == minimumOrderValue
-          ? _value.minimumOrderValue
-          : minimumOrderValue // ignore: cast_nullable_to_non_nullable
-              as double?,
-      adminOrderCount: freezed == adminOrderCount
-          ? _value.adminOrderCount
-          : adminOrderCount // ignore: cast_nullable_to_non_nullable
-              as int?,
-      dailyClosingOrderTime: freezed == dailyClosingOrderTime
-          ? _value.dailyClosingOrderTime
-          : dailyClosingOrderTime // ignore: cast_nullable_to_non_nullable
-              as String?,
-      eesupoolId: null == eesupoolId
-          ? _value.eesupoolId
-          : eesupoolId // ignore: cast_nullable_to_non_nullable
-              as int,
-      userCount: freezed == userCount
-          ? _value.userCount
-          : userCount // ignore: cast_nullable_to_non_nullable
-              as num?,
-    ) as $Val);
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is EESUpoolSettings &&
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.createdAt, createdAt) ||
+                other.createdAt == createdAt) &&
+            (identical(other.minimumOrderValue, minimumOrderValue) ||
+                other.minimumOrderValue == minimumOrderValue) &&
+            (identical(other.adminOrderCount, adminOrderCount) ||
+                other.adminOrderCount == adminOrderCount) &&
+            (identical(other.dailyClosingOrderTime, dailyClosingOrderTime) ||
+                other.dailyClosingOrderTime == dailyClosingOrderTime) &&
+            (identical(other.eesupoolId, eesupoolId) ||
+                other.eesupoolId == eesupoolId) &&
+            (identical(other.userCount, userCount) ||
+                other.userCount == userCount));
+  }
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  int get hashCode => Object.hash(runtimeType, id, createdAt, minimumOrderValue,
+      adminOrderCount, dailyClosingOrderTime, eesupoolId, userCount);
+
+  @override
+  String toString() {
+    return 'EESUpoolSettings(id: $id, createdAt: $createdAt, minimumOrderValue: $minimumOrderValue, adminOrderCount: $adminOrderCount, dailyClosingOrderTime: $dailyClosingOrderTime, eesupoolId: $eesupoolId, userCount: $userCount)';
   }
 }
 
 /// @nodoc
-abstract class _$$EESUpoolSettingsImplCopyWith<$Res>
-    implements $EESUpoolSettingsCopyWith<$Res> {
-  factory _$$EESUpoolSettingsImplCopyWith(_$EESUpoolSettingsImpl value,
-          $Res Function(_$EESUpoolSettingsImpl) then) =
-      __$$EESUpoolSettingsImplCopyWithImpl<$Res>;
-  @override
+abstract mixin class $EESUpoolSettingsCopyWith<$Res> {
+  factory $EESUpoolSettingsCopyWith(
+          EESUpoolSettings value, $Res Function(EESUpoolSettings) _then) =
+      _$EESUpoolSettingsCopyWithImpl;
   @useResult
   $Res call(
       {@JsonKey(includeToJson: false) int id,
@@ -136,12 +89,12 @@ abstract class _$$EESUpoolSettingsImplCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$EESUpoolSettingsImplCopyWithImpl<$Res>
-    extends _$EESUpoolSettingsCopyWithImpl<$Res, _$EESUpoolSettingsImpl>
-    implements _$$EESUpoolSettingsImplCopyWith<$Res> {
-  __$$EESUpoolSettingsImplCopyWithImpl(_$EESUpoolSettingsImpl _value,
-      $Res Function(_$EESUpoolSettingsImpl) _then)
-      : super(_value, _then);
+class _$EESUpoolSettingsCopyWithImpl<$Res>
+    implements $EESUpoolSettingsCopyWith<$Res> {
+  _$EESUpoolSettingsCopyWithImpl(this._self, this._then);
+
+  final EESUpoolSettings _self;
+  final $Res Function(EESUpoolSettings) _then;
 
   /// Create a copy of EESUpoolSettings
   /// with the given fields replaced by the non-null parameter values.
@@ -156,33 +109,33 @@ class __$$EESUpoolSettingsImplCopyWithImpl<$Res>
     Object? eesupoolId = null,
     Object? userCount = freezed,
   }) {
-    return _then(_$EESUpoolSettingsImpl(
+    return _then(_self.copyWith(
       id: null == id
-          ? _value.id
+          ? _self.id
           : id // ignore: cast_nullable_to_non_nullable
               as int,
       createdAt: null == createdAt
-          ? _value.createdAt
+          ? _self.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
               as DateTime,
       minimumOrderValue: freezed == minimumOrderValue
-          ? _value.minimumOrderValue
+          ? _self.minimumOrderValue
           : minimumOrderValue // ignore: cast_nullable_to_non_nullable
               as double?,
       adminOrderCount: freezed == adminOrderCount
-          ? _value.adminOrderCount
+          ? _self.adminOrderCount
           : adminOrderCount // ignore: cast_nullable_to_non_nullable
               as int?,
       dailyClosingOrderTime: freezed == dailyClosingOrderTime
-          ? _value.dailyClosingOrderTime
+          ? _self.dailyClosingOrderTime
           : dailyClosingOrderTime // ignore: cast_nullable_to_non_nullable
               as String?,
       eesupoolId: null == eesupoolId
-          ? _value.eesupoolId
+          ? _self.eesupoolId
           : eesupoolId // ignore: cast_nullable_to_non_nullable
               as int,
       userCount: freezed == userCount
-          ? _value.userCount
+          ? _self.userCount
           : userCount // ignore: cast_nullable_to_non_nullable
               as num?,
     ));
@@ -191,8 +144,8 @@ class __$$EESUpoolSettingsImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$EESUpoolSettingsImpl extends _EESUpoolSettings {
-  const _$EESUpoolSettingsImpl(
+class _EESUpoolSettings extends EESUpoolSettings {
+  const _EESUpoolSettings(
       {@JsonKey(includeToJson: false) required this.id,
       @JsonKey(name: 'created_at') required this.createdAt,
       @JsonKey(name: 'minimum_order_value') this.minimumOrderValue,
@@ -201,9 +154,8 @@ class _$EESUpoolSettingsImpl extends _EESUpoolSettings {
       @JsonKey(name: 'eesupool_id') required this.eesupoolId,
       @JsonKey(name: 'user_count') this.userCount})
       : super._();
-
-  factory _$EESUpoolSettingsImpl.fromJson(Map<String, dynamic> json) =>
-      _$$EESUpoolSettingsImplFromJson(json);
+  factory _EESUpoolSettings.fromJson(Map<String, dynamic> json) =>
+      _$EESUpoolSettingsFromJson(json);
 
   @override
   @JsonKey(includeToJson: false)
@@ -227,16 +179,26 @@ class _$EESUpoolSettingsImpl extends _EESUpoolSettings {
   @JsonKey(name: 'user_count')
   final num? userCount;
 
+  /// Create a copy of EESUpoolSettings
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  String toString() {
-    return 'EESUpoolSettings(id: $id, createdAt: $createdAt, minimumOrderValue: $minimumOrderValue, adminOrderCount: $adminOrderCount, dailyClosingOrderTime: $dailyClosingOrderTime, eesupoolId: $eesupoolId, userCount: $userCount)';
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  _$EESUpoolSettingsCopyWith<_EESUpoolSettings> get copyWith =>
+      __$EESUpoolSettingsCopyWithImpl<_EESUpoolSettings>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$EESUpoolSettingsToJson(
+      this,
+    );
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$EESUpoolSettingsImpl &&
+            other is _EESUpoolSettings &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.createdAt, createdAt) ||
                 other.createdAt == createdAt) &&
@@ -257,65 +219,82 @@ class _$EESUpoolSettingsImpl extends _EESUpoolSettings {
   int get hashCode => Object.hash(runtimeType, id, createdAt, minimumOrderValue,
       adminOrderCount, dailyClosingOrderTime, eesupoolId, userCount);
 
-  /// Create a copy of EESUpoolSettings
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  @pragma('vm:prefer-inline')
-  _$$EESUpoolSettingsImplCopyWith<_$EESUpoolSettingsImpl> get copyWith =>
-      __$$EESUpoolSettingsImplCopyWithImpl<_$EESUpoolSettingsImpl>(
-          this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$EESUpoolSettingsImplToJson(
-      this,
-    );
+  String toString() {
+    return 'EESUpoolSettings(id: $id, createdAt: $createdAt, minimumOrderValue: $minimumOrderValue, adminOrderCount: $adminOrderCount, dailyClosingOrderTime: $dailyClosingOrderTime, eesupoolId: $eesupoolId, userCount: $userCount)';
   }
 }
 
-abstract class _EESUpoolSettings extends EESUpoolSettings {
-  const factory _EESUpoolSettings(
-          {@JsonKey(includeToJson: false) required final int id,
-          @JsonKey(name: 'created_at') required final DateTime createdAt,
-          @JsonKey(name: 'minimum_order_value') final double? minimumOrderValue,
-          @JsonKey(name: 'admin_order_count') final int? adminOrderCount,
-          @JsonKey(name: 'daily_closing_order_time')
-          final String? dailyClosingOrderTime,
-          @JsonKey(name: 'eesupool_id') required final int eesupoolId,
-          @JsonKey(name: 'user_count') final num? userCount}) =
-      _$EESUpoolSettingsImpl;
-  const _EESUpoolSettings._() : super._();
+/// @nodoc
+abstract mixin class _$EESUpoolSettingsCopyWith<$Res>
+    implements $EESUpoolSettingsCopyWith<$Res> {
+  factory _$EESUpoolSettingsCopyWith(
+          _EESUpoolSettings value, $Res Function(_EESUpoolSettings) _then) =
+      __$EESUpoolSettingsCopyWithImpl;
+  @override
+  @useResult
+  $Res call(
+      {@JsonKey(includeToJson: false) int id,
+      @JsonKey(name: 'created_at') DateTime createdAt,
+      @JsonKey(name: 'minimum_order_value') double? minimumOrderValue,
+      @JsonKey(name: 'admin_order_count') int? adminOrderCount,
+      @JsonKey(name: 'daily_closing_order_time') String? dailyClosingOrderTime,
+      @JsonKey(name: 'eesupool_id') int eesupoolId,
+      @JsonKey(name: 'user_count') num? userCount});
+}
 
-  factory _EESUpoolSettings.fromJson(Map<String, dynamic> json) =
-      _$EESUpoolSettingsImpl.fromJson;
+/// @nodoc
+class __$EESUpoolSettingsCopyWithImpl<$Res>
+    implements _$EESUpoolSettingsCopyWith<$Res> {
+  __$EESUpoolSettingsCopyWithImpl(this._self, this._then);
 
-  @override
-  @JsonKey(includeToJson: false)
-  int get id;
-  @override
-  @JsonKey(name: 'created_at')
-  DateTime get createdAt;
-  @override
-  @JsonKey(name: 'minimum_order_value')
-  double? get minimumOrderValue;
-  @override
-  @JsonKey(name: 'admin_order_count')
-  int? get adminOrderCount;
-  @override
-  @JsonKey(name: 'daily_closing_order_time')
-  String? get dailyClosingOrderTime;
-  @override
-  @JsonKey(name: 'eesupool_id')
-  int get eesupoolId;
-  @override
-  @JsonKey(name: 'user_count')
-  num? get userCount;
+  final _EESUpoolSettings _self;
+  final $Res Function(_EESUpoolSettings) _then;
 
   /// Create a copy of EESUpoolSettings
   /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$EESUpoolSettingsImplCopyWith<_$EESUpoolSettingsImpl> get copyWith =>
-      throw _privateConstructorUsedError;
+  @pragma('vm:prefer-inline')
+  $Res call({
+    Object? id = null,
+    Object? createdAt = null,
+    Object? minimumOrderValue = freezed,
+    Object? adminOrderCount = freezed,
+    Object? dailyClosingOrderTime = freezed,
+    Object? eesupoolId = null,
+    Object? userCount = freezed,
+  }) {
+    return _then(_EESUpoolSettings(
+      id: null == id
+          ? _self.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int,
+      createdAt: null == createdAt
+          ? _self.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as DateTime,
+      minimumOrderValue: freezed == minimumOrderValue
+          ? _self.minimumOrderValue
+          : minimumOrderValue // ignore: cast_nullable_to_non_nullable
+              as double?,
+      adminOrderCount: freezed == adminOrderCount
+          ? _self.adminOrderCount
+          : adminOrderCount // ignore: cast_nullable_to_non_nullable
+              as int?,
+      dailyClosingOrderTime: freezed == dailyClosingOrderTime
+          ? _self.dailyClosingOrderTime
+          : dailyClosingOrderTime // ignore: cast_nullable_to_non_nullable
+              as String?,
+      eesupoolId: null == eesupoolId
+          ? _self.eesupoolId
+          : eesupoolId // ignore: cast_nullable_to_non_nullable
+              as int,
+      userCount: freezed == userCount
+          ? _self.userCount
+          : userCount // ignore: cast_nullable_to_non_nullable
+              as num?,
+    ));
+  }
 }
+
+// dart format on

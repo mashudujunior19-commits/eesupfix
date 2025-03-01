@@ -1,3 +1,4 @@
+// dart format width=80
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
@@ -9,193 +10,35 @@ part of 'day_schedule.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// dart format off
 T _$identity<T>(T value) => value;
-
-final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
-
-DaySchedule _$DayScheduleFromJson(Map<String, dynamic> json) {
-  return _DaySchedule.fromJson(json);
-}
 
 /// @nodoc
 mixin _$DaySchedule {
-  String get day => throw _privateConstructorUsedError;
-  int get index => throw _privateConstructorUsedError;
+  String get day;
+  int get index;
   @JsonKey(name: 'open')
-  String get openTime => throw _privateConstructorUsedError;
+  String get openTime;
   @JsonKey(name: 'close')
-  String get closeTime => throw _privateConstructorUsedError;
+  String get closeTime;
   @JsonKey(name: 'is_closed')
-  bool get isClosed => throw _privateConstructorUsedError;
-
-  /// Serializes this DaySchedule to a JSON map.
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  bool get isClosed;
 
   /// Create a copy of DaySchedule
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
   $DayScheduleCopyWith<DaySchedule> get copyWith =>
-      throw _privateConstructorUsedError;
-}
+      _$DayScheduleCopyWithImpl<DaySchedule>(this as DaySchedule, _$identity);
 
-/// @nodoc
-abstract class $DayScheduleCopyWith<$Res> {
-  factory $DayScheduleCopyWith(
-          DaySchedule value, $Res Function(DaySchedule) then) =
-      _$DayScheduleCopyWithImpl<$Res, DaySchedule>;
-  @useResult
-  $Res call(
-      {String day,
-      int index,
-      @JsonKey(name: 'open') String openTime,
-      @JsonKey(name: 'close') String closeTime,
-      @JsonKey(name: 'is_closed') bool isClosed});
-}
-
-/// @nodoc
-class _$DayScheduleCopyWithImpl<$Res, $Val extends DaySchedule>
-    implements $DayScheduleCopyWith<$Res> {
-  _$DayScheduleCopyWithImpl(this._value, this._then);
-
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
-
-  /// Create a copy of DaySchedule
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? day = null,
-    Object? index = null,
-    Object? openTime = null,
-    Object? closeTime = null,
-    Object? isClosed = null,
-  }) {
-    return _then(_value.copyWith(
-      day: null == day
-          ? _value.day
-          : day // ignore: cast_nullable_to_non_nullable
-              as String,
-      index: null == index
-          ? _value.index
-          : index // ignore: cast_nullable_to_non_nullable
-              as int,
-      openTime: null == openTime
-          ? _value.openTime
-          : openTime // ignore: cast_nullable_to_non_nullable
-              as String,
-      closeTime: null == closeTime
-          ? _value.closeTime
-          : closeTime // ignore: cast_nullable_to_non_nullable
-              as String,
-      isClosed: null == isClosed
-          ? _value.isClosed
-          : isClosed // ignore: cast_nullable_to_non_nullable
-              as bool,
-    ) as $Val);
-  }
-}
-
-/// @nodoc
-abstract class _$$DayScheduleImplCopyWith<$Res>
-    implements $DayScheduleCopyWith<$Res> {
-  factory _$$DayScheduleImplCopyWith(
-          _$DayScheduleImpl value, $Res Function(_$DayScheduleImpl) then) =
-      __$$DayScheduleImplCopyWithImpl<$Res>;
-  @override
-  @useResult
-  $Res call(
-      {String day,
-      int index,
-      @JsonKey(name: 'open') String openTime,
-      @JsonKey(name: 'close') String closeTime,
-      @JsonKey(name: 'is_closed') bool isClosed});
-}
-
-/// @nodoc
-class __$$DayScheduleImplCopyWithImpl<$Res>
-    extends _$DayScheduleCopyWithImpl<$Res, _$DayScheduleImpl>
-    implements _$$DayScheduleImplCopyWith<$Res> {
-  __$$DayScheduleImplCopyWithImpl(
-      _$DayScheduleImpl _value, $Res Function(_$DayScheduleImpl) _then)
-      : super(_value, _then);
-
-  /// Create a copy of DaySchedule
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? day = null,
-    Object? index = null,
-    Object? openTime = null,
-    Object? closeTime = null,
-    Object? isClosed = null,
-  }) {
-    return _then(_$DayScheduleImpl(
-      day: null == day
-          ? _value.day
-          : day // ignore: cast_nullable_to_non_nullable
-              as String,
-      index: null == index
-          ? _value.index
-          : index // ignore: cast_nullable_to_non_nullable
-              as int,
-      openTime: null == openTime
-          ? _value.openTime
-          : openTime // ignore: cast_nullable_to_non_nullable
-              as String,
-      closeTime: null == closeTime
-          ? _value.closeTime
-          : closeTime // ignore: cast_nullable_to_non_nullable
-              as String,
-      isClosed: null == isClosed
-          ? _value.isClosed
-          : isClosed // ignore: cast_nullable_to_non_nullable
-              as bool,
-    ));
-  }
-}
-
-/// @nodoc
-@JsonSerializable()
-class _$DayScheduleImpl implements _DaySchedule {
-  const _$DayScheduleImpl(
-      {required this.day,
-      required this.index,
-      @JsonKey(name: 'open') required this.openTime,
-      @JsonKey(name: 'close') required this.closeTime,
-      @JsonKey(name: 'is_closed') required this.isClosed});
-
-  factory _$DayScheduleImpl.fromJson(Map<String, dynamic> json) =>
-      _$$DayScheduleImplFromJson(json);
-
-  @override
-  final String day;
-  @override
-  final int index;
-  @override
-  @JsonKey(name: 'open')
-  final String openTime;
-  @override
-  @JsonKey(name: 'close')
-  final String closeTime;
-  @override
-  @JsonKey(name: 'is_closed')
-  final bool isClosed;
-
-  @override
-  String toString() {
-    return 'DaySchedule(day: $day, index: $index, openTime: $openTime, closeTime: $closeTime, isClosed: $isClosed)';
-  }
+  /// Serializes this DaySchedule to a JSON map.
+  Map<String, dynamic> toJson();
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$DayScheduleImpl &&
+            other is DaySchedule &&
             (identical(other.day, day) || other.day == day) &&
             (identical(other.index, index) || other.index == index) &&
             (identical(other.openTime, openTime) ||
@@ -211,52 +54,193 @@ class _$DayScheduleImpl implements _DaySchedule {
   int get hashCode =>
       Object.hash(runtimeType, day, index, openTime, closeTime, isClosed);
 
-  /// Create a copy of DaySchedule
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  @pragma('vm:prefer-inline')
-  _$$DayScheduleImplCopyWith<_$DayScheduleImpl> get copyWith =>
-      __$$DayScheduleImplCopyWithImpl<_$DayScheduleImpl>(this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$DayScheduleImplToJson(
-      this,
-    );
+  String toString() {
+    return 'DaySchedule(day: $day, index: $index, openTime: $openTime, closeTime: $closeTime, isClosed: $isClosed)';
   }
 }
 
-abstract class _DaySchedule implements DaySchedule {
-  const factory _DaySchedule(
-          {required final String day,
-          required final int index,
-          @JsonKey(name: 'open') required final String openTime,
-          @JsonKey(name: 'close') required final String closeTime,
-          @JsonKey(name: 'is_closed') required final bool isClosed}) =
-      _$DayScheduleImpl;
+/// @nodoc
+abstract mixin class $DayScheduleCopyWith<$Res> {
+  factory $DayScheduleCopyWith(
+          DaySchedule value, $Res Function(DaySchedule) _then) =
+      _$DayScheduleCopyWithImpl;
+  @useResult
+  $Res call(
+      {String day,
+      int index,
+      @JsonKey(name: 'open') String openTime,
+      @JsonKey(name: 'close') String closeTime,
+      @JsonKey(name: 'is_closed') bool isClosed});
+}
 
-  factory _DaySchedule.fromJson(Map<String, dynamic> json) =
-      _$DayScheduleImpl.fromJson;
+/// @nodoc
+class _$DayScheduleCopyWithImpl<$Res> implements $DayScheduleCopyWith<$Res> {
+  _$DayScheduleCopyWithImpl(this._self, this._then);
+
+  final DaySchedule _self;
+  final $Res Function(DaySchedule) _then;
+
+  /// Create a copy of DaySchedule
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? day = null,
+    Object? index = null,
+    Object? openTime = null,
+    Object? closeTime = null,
+    Object? isClosed = null,
+  }) {
+    return _then(_self.copyWith(
+      day: null == day
+          ? _self.day
+          : day // ignore: cast_nullable_to_non_nullable
+              as String,
+      index: null == index
+          ? _self.index
+          : index // ignore: cast_nullable_to_non_nullable
+              as int,
+      openTime: null == openTime
+          ? _self.openTime
+          : openTime // ignore: cast_nullable_to_non_nullable
+              as String,
+      closeTime: null == closeTime
+          ? _self.closeTime
+          : closeTime // ignore: cast_nullable_to_non_nullable
+              as String,
+      isClosed: null == isClosed
+          ? _self.isClosed
+          : isClosed // ignore: cast_nullable_to_non_nullable
+              as bool,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _DaySchedule implements DaySchedule {
+  const _DaySchedule(
+      {required this.day,
+      required this.index,
+      @JsonKey(name: 'open') required this.openTime,
+      @JsonKey(name: 'close') required this.closeTime,
+      @JsonKey(name: 'is_closed') required this.isClosed});
+  factory _DaySchedule.fromJson(Map<String, dynamic> json) =>
+      _$DayScheduleFromJson(json);
 
   @override
-  String get day;
+  final String day;
   @override
-  int get index;
+  final int index;
   @override
   @JsonKey(name: 'open')
-  String get openTime;
+  final String openTime;
   @override
   @JsonKey(name: 'close')
-  String get closeTime;
+  final String closeTime;
   @override
   @JsonKey(name: 'is_closed')
-  bool get isClosed;
+  final bool isClosed;
 
   /// Create a copy of DaySchedule
   /// with the given fields replaced by the non-null parameter values.
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$DayScheduleImplCopyWith<_$DayScheduleImpl> get copyWith =>
-      throw _privateConstructorUsedError;
+  @pragma('vm:prefer-inline')
+  _$DayScheduleCopyWith<_DaySchedule> get copyWith =>
+      __$DayScheduleCopyWithImpl<_DaySchedule>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$DayScheduleToJson(
+      this,
+    );
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _DaySchedule &&
+            (identical(other.day, day) || other.day == day) &&
+            (identical(other.index, index) || other.index == index) &&
+            (identical(other.openTime, openTime) ||
+                other.openTime == openTime) &&
+            (identical(other.closeTime, closeTime) ||
+                other.closeTime == closeTime) &&
+            (identical(other.isClosed, isClosed) ||
+                other.isClosed == isClosed));
+  }
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  int get hashCode =>
+      Object.hash(runtimeType, day, index, openTime, closeTime, isClosed);
+
+  @override
+  String toString() {
+    return 'DaySchedule(day: $day, index: $index, openTime: $openTime, closeTime: $closeTime, isClosed: $isClosed)';
+  }
 }
+
+/// @nodoc
+abstract mixin class _$DayScheduleCopyWith<$Res>
+    implements $DayScheduleCopyWith<$Res> {
+  factory _$DayScheduleCopyWith(
+          _DaySchedule value, $Res Function(_DaySchedule) _then) =
+      __$DayScheduleCopyWithImpl;
+  @override
+  @useResult
+  $Res call(
+      {String day,
+      int index,
+      @JsonKey(name: 'open') String openTime,
+      @JsonKey(name: 'close') String closeTime,
+      @JsonKey(name: 'is_closed') bool isClosed});
+}
+
+/// @nodoc
+class __$DayScheduleCopyWithImpl<$Res> implements _$DayScheduleCopyWith<$Res> {
+  __$DayScheduleCopyWithImpl(this._self, this._then);
+
+  final _DaySchedule _self;
+  final $Res Function(_DaySchedule) _then;
+
+  /// Create a copy of DaySchedule
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $Res call({
+    Object? day = null,
+    Object? index = null,
+    Object? openTime = null,
+    Object? closeTime = null,
+    Object? isClosed = null,
+  }) {
+    return _then(_DaySchedule(
+      day: null == day
+          ? _self.day
+          : day // ignore: cast_nullable_to_non_nullable
+              as String,
+      index: null == index
+          ? _self.index
+          : index // ignore: cast_nullable_to_non_nullable
+              as int,
+      openTime: null == openTime
+          ? _self.openTime
+          : openTime // ignore: cast_nullable_to_non_nullable
+              as String,
+      closeTime: null == closeTime
+          ? _self.closeTime
+          : closeTime // ignore: cast_nullable_to_non_nullable
+              as String,
+      isClosed: null == isClosed
+          ? _self.isClosed
+          : isClosed // ignore: cast_nullable_to_non_nullable
+              as bool,
+    ));
+  }
+}
+
+// dart format on

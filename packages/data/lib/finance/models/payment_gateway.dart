@@ -7,7 +7,7 @@ part 'payment_gateway.freezed.dart';
 part 'payment_gateway.g.dart';
 
 @freezed
-class PaymentGateway with _$PaymentGateway {
+abstract class PaymentGateway with _$PaymentGateway {
   const factory PaymentGateway({
     @PaymentMethodConverter() required PaymentMethod id,
     @JsonKey(name: 'is_active') required bool isActive,

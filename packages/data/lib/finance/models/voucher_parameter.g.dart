@@ -6,9 +6,8 @@ part of 'voucher_parameter.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$VoucherParameterImpl _$$VoucherParameterImplFromJson(
-        Map<String, dynamic> json) =>
-    _$VoucherParameterImpl(
+_VoucherParameter _$VoucherParameterFromJson(Map<String, dynamic> json) =>
+    _VoucherParameter(
       id: json['id'] as String,
       createdAt: json['created_at'] == null
           ? null
@@ -18,8 +17,7 @@ _$VoucherParameterImpl _$$VoucherParameterImplFromJson(
       minimumValue: (json['minimum_value'] as num).toDouble(),
     );
 
-Map<String, dynamic> _$$VoucherParameterImplToJson(
-        _$VoucherParameterImpl instance) =>
+Map<String, dynamic> _$VoucherParameterToJson(_VoucherParameter instance) =>
     <String, dynamic>{
       'id': instance.id,
       'created_at': instance.createdAt?.toIso8601String(),

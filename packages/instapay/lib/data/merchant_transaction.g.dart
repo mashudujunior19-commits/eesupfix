@@ -6,9 +6,8 @@ part of 'merchant_transaction.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$MerchantTransactionImpl _$$MerchantTransactionImplFromJson(
-        Map<String, dynamic> json) =>
-    _$MerchantTransactionImpl(
+_MerchantTransaction _$MerchantTransactionFromJson(Map<String, dynamic> json) =>
+    _MerchantTransaction(
       mUuid: json['m_uuid'] as String,
       mAccountUuid: json['m_account_uuid'] as String,
       mTxOrderNr: json['m_tx_order_nr'] as String,
@@ -47,8 +46,8 @@ _$MerchantTransactionImpl _$$MerchantTransactionImplFromJson(
       secret: json['secret'] as String,
     );
 
-Map<String, dynamic> _$$MerchantTransactionImplToJson(
-        _$MerchantTransactionImpl instance) =>
+Map<String, dynamic> _$MerchantTransactionToJson(
+        _MerchantTransaction instance) =>
     <String, dynamic>{
       'm_uuid': instance.mUuid,
       'm_account_uuid': instance.mAccountUuid,

@@ -6,8 +6,8 @@ part of 'survey_response.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$SurveyResponseImpl _$$SurveyResponseImplFromJson(Map<String, dynamic> json) =>
-    _$SurveyResponseImpl(
+_SurveyResponse _$SurveyResponseFromJson(Map<String, dynamic> json) =>
+    _SurveyResponse(
       userId: json['user_id'] as String,
       surveyId: json['survey_id'] as String,
       score: (json['score'] as num).toInt(),
@@ -18,8 +18,7 @@ _$SurveyResponseImpl _$$SurveyResponseImplFromJson(Map<String, dynamic> json) =>
           .toList(),
     );
 
-Map<String, dynamic> _$$SurveyResponseImplToJson(
-        _$SurveyResponseImpl instance) =>
+Map<String, dynamic> _$SurveyResponseToJson(_SurveyResponse instance) =>
     <String, dynamic>{
       'user_id': instance.userId,
       'survey_id': instance.surveyId,
@@ -29,8 +28,8 @@ Map<String, dynamic> _$$SurveyResponseImplToJson(
           instance.answers.map(const QuestionAnswerConverter().toJson).toList(),
     };
 
-_$QuestionAnswerImpl _$$QuestionAnswerImplFromJson(Map<String, dynamic> json) =>
-    _$QuestionAnswerImpl(
+_QuestionAnswer _$QuestionAnswerFromJson(Map<String, dynamic> json) =>
+    _QuestionAnswer(
       questionId: (json['question_id'] as num).toInt(),
       sliderValue: (json['slider_value'] as num?)?.toInt(),
       ratingValue: (json['rating_value'] as num?)?.toInt(),
@@ -49,8 +48,7 @@ _$QuestionAnswerImpl _$$QuestionAnswerImplFromJson(Map<String, dynamic> json) =>
       time: json['time'] as String?,
     );
 
-Map<String, dynamic> _$$QuestionAnswerImplToJson(
-        _$QuestionAnswerImpl instance) =>
+Map<String, dynamic> _$QuestionAnswerToJson(_QuestionAnswer instance) =>
     <String, dynamic>{
       'question_id': instance.questionId,
       'slider_value': instance.sliderValue,

@@ -1,3 +1,4 @@
+// dart format width=80
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
@@ -9,66 +10,162 @@ part of 'survey.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// dart format off
 T _$identity<T>(T value) => value;
 
-final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
-
-Survey _$SurveyFromJson(Map<String, dynamic> json) {
-  return _Survey.fromJson(json);
-}
-
 /// @nodoc
-mixin _$Survey {
-  String get id => throw _privateConstructorUsedError;
+mixin _$Survey implements DiagnosticableTreeMixin {
+  String get id;
   @JsonKey(name: 'created_at')
-  DateTime get createdAt => throw _privateConstructorUsedError;
+  DateTime get createdAt;
   @QuestionConverter()
-  List<Question> get questions => throw _privateConstructorUsedError;
-  String get title => throw _privateConstructorUsedError;
-  String? get description => throw _privateConstructorUsedError;
-  String? get wallet => throw _privateConstructorUsedError;
+  List<Question> get questions;
+  String get title;
+  String? get description;
+  String? get wallet;
   @SurveyTypeConverter()
-  SurveyType get type => throw _privateConstructorUsedError;
+  SurveyType get type;
   @JsonKey(name: 'max_responses')
-  int? get maxResponses => throw _privateConstructorUsedError;
+  int? get maxResponses;
   @JsonKey(name: 'image_url')
-  String? get imageUrl => throw _privateConstructorUsedError;
+  String? get imageUrl;
   @JsonKey(name: 'video_url')
-  String? get videoUrl => throw _privateConstructorUsedError;
+  String? get videoUrl;
   @JsonKey(name: 'reward_amount')
-  double? get rewardAmount => throw _privateConstructorUsedError;
-  int? get duration => throw _privateConstructorUsedError;
-  int? get points => throw _privateConstructorUsedError;
+  double? get rewardAmount;
+  int? get duration;
+  int? get points;
   @JsonKey(name: 'responded_at', includeToJson: false)
-  DateTime? get respondedAt => throw _privateConstructorUsedError;
+  DateTime? get respondedAt;
   @JsonKey(name: 'pass_percentage')
-  double? get passPercentage => throw _privateConstructorUsedError;
+  double? get passPercentage;
   @JsonKey(name: 'enable_scoring')
-  bool? get enableScoring => throw _privateConstructorUsedError;
+  bool? get enableScoring;
   @JsonKey(name: 'require_all')
-  bool? get requireAll => throw _privateConstructorUsedError;
+  bool? get requireAll;
   @JsonKey(name: 'enforce_time_limit')
-  bool? get enforceTimeLimit => throw _privateConstructorUsedError;
+  bool? get enforceTimeLimit;
   @SurveyConverter()
   @JsonKey(name: 'pre_survey')
-  Survey? get preSurvey => throw _privateConstructorUsedError;
-  bool? get passed => throw _privateConstructorUsedError;
-  int? get score => throw _privateConstructorUsedError;
-
-  /// Serializes this Survey to a JSON map.
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  Survey? get preSurvey;
+  bool? get passed;
+  int? get score;
 
   /// Create a copy of Survey
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  $SurveyCopyWith<Survey> get copyWith => throw _privateConstructorUsedError;
+  @pragma('vm:prefer-inline')
+  $SurveyCopyWith<Survey> get copyWith =>
+      _$SurveyCopyWithImpl<Survey>(this as Survey, _$identity);
+
+  /// Serializes this Survey to a JSON map.
+  Map<String, dynamic> toJson();
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    properties
+      ..add(DiagnosticsProperty('type', 'Survey'))
+      ..add(DiagnosticsProperty('id', id))
+      ..add(DiagnosticsProperty('createdAt', createdAt))
+      ..add(DiagnosticsProperty('questions', questions))
+      ..add(DiagnosticsProperty('title', title))
+      ..add(DiagnosticsProperty('description', description))
+      ..add(DiagnosticsProperty('wallet', wallet))
+      ..add(DiagnosticsProperty('type', type))
+      ..add(DiagnosticsProperty('maxResponses', maxResponses))
+      ..add(DiagnosticsProperty('imageUrl', imageUrl))
+      ..add(DiagnosticsProperty('videoUrl', videoUrl))
+      ..add(DiagnosticsProperty('rewardAmount', rewardAmount))
+      ..add(DiagnosticsProperty('duration', duration))
+      ..add(DiagnosticsProperty('points', points))
+      ..add(DiagnosticsProperty('respondedAt', respondedAt))
+      ..add(DiagnosticsProperty('passPercentage', passPercentage))
+      ..add(DiagnosticsProperty('enableScoring', enableScoring))
+      ..add(DiagnosticsProperty('requireAll', requireAll))
+      ..add(DiagnosticsProperty('enforceTimeLimit', enforceTimeLimit))
+      ..add(DiagnosticsProperty('preSurvey', preSurvey))
+      ..add(DiagnosticsProperty('passed', passed))
+      ..add(DiagnosticsProperty('score', score));
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is Survey &&
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.createdAt, createdAt) ||
+                other.createdAt == createdAt) &&
+            const DeepCollectionEquality().equals(other.questions, questions) &&
+            (identical(other.title, title) || other.title == title) &&
+            (identical(other.description, description) ||
+                other.description == description) &&
+            (identical(other.wallet, wallet) || other.wallet == wallet) &&
+            (identical(other.type, type) || other.type == type) &&
+            (identical(other.maxResponses, maxResponses) ||
+                other.maxResponses == maxResponses) &&
+            (identical(other.imageUrl, imageUrl) ||
+                other.imageUrl == imageUrl) &&
+            (identical(other.videoUrl, videoUrl) ||
+                other.videoUrl == videoUrl) &&
+            (identical(other.rewardAmount, rewardAmount) ||
+                other.rewardAmount == rewardAmount) &&
+            (identical(other.duration, duration) ||
+                other.duration == duration) &&
+            (identical(other.points, points) || other.points == points) &&
+            (identical(other.respondedAt, respondedAt) ||
+                other.respondedAt == respondedAt) &&
+            (identical(other.passPercentage, passPercentage) ||
+                other.passPercentage == passPercentage) &&
+            (identical(other.enableScoring, enableScoring) ||
+                other.enableScoring == enableScoring) &&
+            (identical(other.requireAll, requireAll) ||
+                other.requireAll == requireAll) &&
+            (identical(other.enforceTimeLimit, enforceTimeLimit) ||
+                other.enforceTimeLimit == enforceTimeLimit) &&
+            (identical(other.preSurvey, preSurvey) ||
+                other.preSurvey == preSurvey) &&
+            (identical(other.passed, passed) || other.passed == passed) &&
+            (identical(other.score, score) || other.score == score));
+  }
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  int get hashCode => Object.hashAll([
+        runtimeType,
+        id,
+        createdAt,
+        const DeepCollectionEquality().hash(questions),
+        title,
+        description,
+        wallet,
+        type,
+        maxResponses,
+        imageUrl,
+        videoUrl,
+        rewardAmount,
+        duration,
+        points,
+        respondedAt,
+        passPercentage,
+        enableScoring,
+        requireAll,
+        enforceTimeLimit,
+        preSurvey,
+        passed,
+        score
+      ]);
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'Survey(id: $id, createdAt: $createdAt, questions: $questions, title: $title, description: $description, wallet: $wallet, type: $type, maxResponses: $maxResponses, imageUrl: $imageUrl, videoUrl: $videoUrl, rewardAmount: $rewardAmount, duration: $duration, points: $points, respondedAt: $respondedAt, passPercentage: $passPercentage, enableScoring: $enableScoring, requireAll: $requireAll, enforceTimeLimit: $enforceTimeLimit, preSurvey: $preSurvey, passed: $passed, score: $score)';
+  }
 }
 
 /// @nodoc
-abstract class $SurveyCopyWith<$Res> {
-  factory $SurveyCopyWith(Survey value, $Res Function(Survey) then) =
-      _$SurveyCopyWithImpl<$Res, Survey>;
+abstract mixin class $SurveyCopyWith<$Res> {
+  factory $SurveyCopyWith(Survey value, $Res Function(Survey) _then) =
+      _$SurveyCopyWithImpl;
   @useResult
   $Res call(
       {String id,
@@ -98,14 +195,11 @@ abstract class $SurveyCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$SurveyCopyWithImpl<$Res, $Val extends Survey>
-    implements $SurveyCopyWith<$Res> {
-  _$SurveyCopyWithImpl(this._value, this._then);
+class _$SurveyCopyWithImpl<$Res> implements $SurveyCopyWith<$Res> {
+  _$SurveyCopyWithImpl(this._self, this._then);
 
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
+  final Survey _self;
+  final $Res Function(Survey) _then;
 
   /// Create a copy of Survey
   /// with the given fields replaced by the non-null parameter values.
@@ -134,92 +228,92 @@ class _$SurveyCopyWithImpl<$Res, $Val extends Survey>
     Object? passed = freezed,
     Object? score = freezed,
   }) {
-    return _then(_value.copyWith(
+    return _then(_self.copyWith(
       id: null == id
-          ? _value.id
+          ? _self.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
       createdAt: null == createdAt
-          ? _value.createdAt
+          ? _self.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
               as DateTime,
       questions: null == questions
-          ? _value.questions
+          ? _self.questions
           : questions // ignore: cast_nullable_to_non_nullable
               as List<Question>,
       title: null == title
-          ? _value.title
+          ? _self.title
           : title // ignore: cast_nullable_to_non_nullable
               as String,
       description: freezed == description
-          ? _value.description
+          ? _self.description
           : description // ignore: cast_nullable_to_non_nullable
               as String?,
       wallet: freezed == wallet
-          ? _value.wallet
+          ? _self.wallet
           : wallet // ignore: cast_nullable_to_non_nullable
               as String?,
       type: null == type
-          ? _value.type
+          ? _self.type
           : type // ignore: cast_nullable_to_non_nullable
               as SurveyType,
       maxResponses: freezed == maxResponses
-          ? _value.maxResponses
+          ? _self.maxResponses
           : maxResponses // ignore: cast_nullable_to_non_nullable
               as int?,
       imageUrl: freezed == imageUrl
-          ? _value.imageUrl
+          ? _self.imageUrl
           : imageUrl // ignore: cast_nullable_to_non_nullable
               as String?,
       videoUrl: freezed == videoUrl
-          ? _value.videoUrl
+          ? _self.videoUrl
           : videoUrl // ignore: cast_nullable_to_non_nullable
               as String?,
       rewardAmount: freezed == rewardAmount
-          ? _value.rewardAmount
+          ? _self.rewardAmount
           : rewardAmount // ignore: cast_nullable_to_non_nullable
               as double?,
       duration: freezed == duration
-          ? _value.duration
+          ? _self.duration
           : duration // ignore: cast_nullable_to_non_nullable
               as int?,
       points: freezed == points
-          ? _value.points
+          ? _self.points
           : points // ignore: cast_nullable_to_non_nullable
               as int?,
       respondedAt: freezed == respondedAt
-          ? _value.respondedAt
+          ? _self.respondedAt
           : respondedAt // ignore: cast_nullable_to_non_nullable
               as DateTime?,
       passPercentage: freezed == passPercentage
-          ? _value.passPercentage
+          ? _self.passPercentage
           : passPercentage // ignore: cast_nullable_to_non_nullable
               as double?,
       enableScoring: freezed == enableScoring
-          ? _value.enableScoring
+          ? _self.enableScoring
           : enableScoring // ignore: cast_nullable_to_non_nullable
               as bool?,
       requireAll: freezed == requireAll
-          ? _value.requireAll
+          ? _self.requireAll
           : requireAll // ignore: cast_nullable_to_non_nullable
               as bool?,
       enforceTimeLimit: freezed == enforceTimeLimit
-          ? _value.enforceTimeLimit
+          ? _self.enforceTimeLimit
           : enforceTimeLimit // ignore: cast_nullable_to_non_nullable
               as bool?,
       preSurvey: freezed == preSurvey
-          ? _value.preSurvey
+          ? _self.preSurvey
           : preSurvey // ignore: cast_nullable_to_non_nullable
               as Survey?,
       passed: freezed == passed
-          ? _value.passed
+          ? _self.passed
           : passed // ignore: cast_nullable_to_non_nullable
               as bool?,
       score: freezed == score
-          ? _value.score
+          ? _self.score
           : score // ignore: cast_nullable_to_non_nullable
               as int?,
-    ) as $Val);
+    ));
   }
 
   /// Create a copy of Survey
@@ -227,179 +321,20 @@ class _$SurveyCopyWithImpl<$Res, $Val extends Survey>
   @override
   @pragma('vm:prefer-inline')
   $SurveyCopyWith<$Res>? get preSurvey {
-    if (_value.preSurvey == null) {
+    if (_self.preSurvey == null) {
       return null;
     }
 
-    return $SurveyCopyWith<$Res>(_value.preSurvey!, (value) {
-      return _then(_value.copyWith(preSurvey: value) as $Val);
+    return $SurveyCopyWith<$Res>(_self.preSurvey!, (value) {
+      return _then(_self.copyWith(preSurvey: value));
     });
   }
 }
 
 /// @nodoc
-abstract class _$$SurveyImplCopyWith<$Res> implements $SurveyCopyWith<$Res> {
-  factory _$$SurveyImplCopyWith(
-          _$SurveyImpl value, $Res Function(_$SurveyImpl) then) =
-      __$$SurveyImplCopyWithImpl<$Res>;
-  @override
-  @useResult
-  $Res call(
-      {String id,
-      @JsonKey(name: 'created_at') DateTime createdAt,
-      @QuestionConverter() List<Question> questions,
-      String title,
-      String? description,
-      String? wallet,
-      @SurveyTypeConverter() SurveyType type,
-      @JsonKey(name: 'max_responses') int? maxResponses,
-      @JsonKey(name: 'image_url') String? imageUrl,
-      @JsonKey(name: 'video_url') String? videoUrl,
-      @JsonKey(name: 'reward_amount') double? rewardAmount,
-      int? duration,
-      int? points,
-      @JsonKey(name: 'responded_at', includeToJson: false)
-      DateTime? respondedAt,
-      @JsonKey(name: 'pass_percentage') double? passPercentage,
-      @JsonKey(name: 'enable_scoring') bool? enableScoring,
-      @JsonKey(name: 'require_all') bool? requireAll,
-      @JsonKey(name: 'enforce_time_limit') bool? enforceTimeLimit,
-      @SurveyConverter() @JsonKey(name: 'pre_survey') Survey? preSurvey,
-      bool? passed,
-      int? score});
-
-  @override
-  $SurveyCopyWith<$Res>? get preSurvey;
-}
-
-/// @nodoc
-class __$$SurveyImplCopyWithImpl<$Res>
-    extends _$SurveyCopyWithImpl<$Res, _$SurveyImpl>
-    implements _$$SurveyImplCopyWith<$Res> {
-  __$$SurveyImplCopyWithImpl(
-      _$SurveyImpl _value, $Res Function(_$SurveyImpl) _then)
-      : super(_value, _then);
-
-  /// Create a copy of Survey
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? id = null,
-    Object? createdAt = null,
-    Object? questions = null,
-    Object? title = null,
-    Object? description = freezed,
-    Object? wallet = freezed,
-    Object? type = null,
-    Object? maxResponses = freezed,
-    Object? imageUrl = freezed,
-    Object? videoUrl = freezed,
-    Object? rewardAmount = freezed,
-    Object? duration = freezed,
-    Object? points = freezed,
-    Object? respondedAt = freezed,
-    Object? passPercentage = freezed,
-    Object? enableScoring = freezed,
-    Object? requireAll = freezed,
-    Object? enforceTimeLimit = freezed,
-    Object? preSurvey = freezed,
-    Object? passed = freezed,
-    Object? score = freezed,
-  }) {
-    return _then(_$SurveyImpl(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as String,
-      createdAt: null == createdAt
-          ? _value.createdAt
-          : createdAt // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      questions: null == questions
-          ? _value._questions
-          : questions // ignore: cast_nullable_to_non_nullable
-              as List<Question>,
-      title: null == title
-          ? _value.title
-          : title // ignore: cast_nullable_to_non_nullable
-              as String,
-      description: freezed == description
-          ? _value.description
-          : description // ignore: cast_nullable_to_non_nullable
-              as String?,
-      wallet: freezed == wallet
-          ? _value.wallet
-          : wallet // ignore: cast_nullable_to_non_nullable
-              as String?,
-      type: null == type
-          ? _value.type
-          : type // ignore: cast_nullable_to_non_nullable
-              as SurveyType,
-      maxResponses: freezed == maxResponses
-          ? _value.maxResponses
-          : maxResponses // ignore: cast_nullable_to_non_nullable
-              as int?,
-      imageUrl: freezed == imageUrl
-          ? _value.imageUrl
-          : imageUrl // ignore: cast_nullable_to_non_nullable
-              as String?,
-      videoUrl: freezed == videoUrl
-          ? _value.videoUrl
-          : videoUrl // ignore: cast_nullable_to_non_nullable
-              as String?,
-      rewardAmount: freezed == rewardAmount
-          ? _value.rewardAmount
-          : rewardAmount // ignore: cast_nullable_to_non_nullable
-              as double?,
-      duration: freezed == duration
-          ? _value.duration
-          : duration // ignore: cast_nullable_to_non_nullable
-              as int?,
-      points: freezed == points
-          ? _value.points
-          : points // ignore: cast_nullable_to_non_nullable
-              as int?,
-      respondedAt: freezed == respondedAt
-          ? _value.respondedAt
-          : respondedAt // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
-      passPercentage: freezed == passPercentage
-          ? _value.passPercentage
-          : passPercentage // ignore: cast_nullable_to_non_nullable
-              as double?,
-      enableScoring: freezed == enableScoring
-          ? _value.enableScoring
-          : enableScoring // ignore: cast_nullable_to_non_nullable
-              as bool?,
-      requireAll: freezed == requireAll
-          ? _value.requireAll
-          : requireAll // ignore: cast_nullable_to_non_nullable
-              as bool?,
-      enforceTimeLimit: freezed == enforceTimeLimit
-          ? _value.enforceTimeLimit
-          : enforceTimeLimit // ignore: cast_nullable_to_non_nullable
-              as bool?,
-      preSurvey: freezed == preSurvey
-          ? _value.preSurvey
-          : preSurvey // ignore: cast_nullable_to_non_nullable
-              as Survey?,
-      passed: freezed == passed
-          ? _value.passed
-          : passed // ignore: cast_nullable_to_non_nullable
-              as bool?,
-      score: freezed == score
-          ? _value.score
-          : score // ignore: cast_nullable_to_non_nullable
-              as int?,
-    ));
-  }
-}
-
-/// @nodoc
 @JsonSerializable()
-class _$SurveyImpl with DiagnosticableTreeMixin implements _Survey {
-  const _$SurveyImpl(
+class _Survey with DiagnosticableTreeMixin implements Survey {
+  const _Survey(
       {required this.id,
       @JsonKey(name: 'created_at') required this.createdAt,
       @QuestionConverter() required final List<Question> questions,
@@ -422,9 +357,7 @@ class _$SurveyImpl with DiagnosticableTreeMixin implements _Survey {
       this.passed,
       this.score})
       : _questions = questions;
-
-  factory _$SurveyImpl.fromJson(Map<String, dynamic> json) =>
-      _$$SurveyImplFromJson(json);
+  factory _Survey.fromJson(Map<String, dynamic> json) => _$SurveyFromJson(json);
 
   @override
   final String id;
@@ -489,14 +422,23 @@ class _$SurveyImpl with DiagnosticableTreeMixin implements _Survey {
   @override
   final int? score;
 
+  /// Create a copy of Survey
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'Survey(id: $id, createdAt: $createdAt, questions: $questions, title: $title, description: $description, wallet: $wallet, type: $type, maxResponses: $maxResponses, imageUrl: $imageUrl, videoUrl: $videoUrl, rewardAmount: $rewardAmount, duration: $duration, points: $points, respondedAt: $respondedAt, passPercentage: $passPercentage, enableScoring: $enableScoring, requireAll: $requireAll, enforceTimeLimit: $enforceTimeLimit, preSurvey: $preSurvey, passed: $passed, score: $score)';
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  _$SurveyCopyWith<_Survey> get copyWith =>
+      __$SurveyCopyWithImpl<_Survey>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$SurveyToJson(
+      this,
+    );
   }
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
     properties
       ..add(DiagnosticsProperty('type', 'Survey'))
       ..add(DiagnosticsProperty('id', id))
@@ -526,7 +468,7 @@ class _$SurveyImpl with DiagnosticableTreeMixin implements _Survey {
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$SurveyImpl &&
+            other is _Survey &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.createdAt, createdAt) ||
                 other.createdAt == createdAt) &&
@@ -591,110 +533,181 @@ class _$SurveyImpl with DiagnosticableTreeMixin implements _Survey {
         score
       ]);
 
-  /// Create a copy of Survey
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  @pragma('vm:prefer-inline')
-  _$$SurveyImplCopyWith<_$SurveyImpl> get copyWith =>
-      __$$SurveyImplCopyWithImpl<_$SurveyImpl>(this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$SurveyImplToJson(
-      this,
-    );
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'Survey(id: $id, createdAt: $createdAt, questions: $questions, title: $title, description: $description, wallet: $wallet, type: $type, maxResponses: $maxResponses, imageUrl: $imageUrl, videoUrl: $videoUrl, rewardAmount: $rewardAmount, duration: $duration, points: $points, respondedAt: $respondedAt, passPercentage: $passPercentage, enableScoring: $enableScoring, requireAll: $requireAll, enforceTimeLimit: $enforceTimeLimit, preSurvey: $preSurvey, passed: $passed, score: $score)';
   }
 }
 
-abstract class _Survey implements Survey {
-  const factory _Survey(
-      {required final String id,
-      @JsonKey(name: 'created_at') required final DateTime createdAt,
-      @QuestionConverter() required final List<Question> questions,
-      required final String title,
-      final String? description,
-      final String? wallet,
-      @SurveyTypeConverter() required final SurveyType type,
-      @JsonKey(name: 'max_responses') final int? maxResponses,
-      @JsonKey(name: 'image_url') final String? imageUrl,
-      @JsonKey(name: 'video_url') final String? videoUrl,
-      @JsonKey(name: 'reward_amount') final double? rewardAmount,
-      final int? duration,
-      final int? points,
+/// @nodoc
+abstract mixin class _$SurveyCopyWith<$Res> implements $SurveyCopyWith<$Res> {
+  factory _$SurveyCopyWith(_Survey value, $Res Function(_Survey) _then) =
+      __$SurveyCopyWithImpl;
+  @override
+  @useResult
+  $Res call(
+      {String id,
+      @JsonKey(name: 'created_at') DateTime createdAt,
+      @QuestionConverter() List<Question> questions,
+      String title,
+      String? description,
+      String? wallet,
+      @SurveyTypeConverter() SurveyType type,
+      @JsonKey(name: 'max_responses') int? maxResponses,
+      @JsonKey(name: 'image_url') String? imageUrl,
+      @JsonKey(name: 'video_url') String? videoUrl,
+      @JsonKey(name: 'reward_amount') double? rewardAmount,
+      int? duration,
+      int? points,
       @JsonKey(name: 'responded_at', includeToJson: false)
-      final DateTime? respondedAt,
-      @JsonKey(name: 'pass_percentage') final double? passPercentage,
-      @JsonKey(name: 'enable_scoring') final bool? enableScoring,
-      @JsonKey(name: 'require_all') final bool? requireAll,
-      @JsonKey(name: 'enforce_time_limit') final bool? enforceTimeLimit,
-      @SurveyConverter() @JsonKey(name: 'pre_survey') final Survey? preSurvey,
-      final bool? passed,
-      final int? score}) = _$SurveyImpl;
-
-  factory _Survey.fromJson(Map<String, dynamic> json) = _$SurveyImpl.fromJson;
+      DateTime? respondedAt,
+      @JsonKey(name: 'pass_percentage') double? passPercentage,
+      @JsonKey(name: 'enable_scoring') bool? enableScoring,
+      @JsonKey(name: 'require_all') bool? requireAll,
+      @JsonKey(name: 'enforce_time_limit') bool? enforceTimeLimit,
+      @SurveyConverter() @JsonKey(name: 'pre_survey') Survey? preSurvey,
+      bool? passed,
+      int? score});
 
   @override
-  String get id;
-  @override
-  @JsonKey(name: 'created_at')
-  DateTime get createdAt;
-  @override
-  @QuestionConverter()
-  List<Question> get questions;
-  @override
-  String get title;
-  @override
-  String? get description;
-  @override
-  String? get wallet;
-  @override
-  @SurveyTypeConverter()
-  SurveyType get type;
-  @override
-  @JsonKey(name: 'max_responses')
-  int? get maxResponses;
-  @override
-  @JsonKey(name: 'image_url')
-  String? get imageUrl;
-  @override
-  @JsonKey(name: 'video_url')
-  String? get videoUrl;
-  @override
-  @JsonKey(name: 'reward_amount')
-  double? get rewardAmount;
-  @override
-  int? get duration;
-  @override
-  int? get points;
-  @override
-  @JsonKey(name: 'responded_at', includeToJson: false)
-  DateTime? get respondedAt;
-  @override
-  @JsonKey(name: 'pass_percentage')
-  double? get passPercentage;
-  @override
-  @JsonKey(name: 'enable_scoring')
-  bool? get enableScoring;
-  @override
-  @JsonKey(name: 'require_all')
-  bool? get requireAll;
-  @override
-  @JsonKey(name: 'enforce_time_limit')
-  bool? get enforceTimeLimit;
-  @override
-  @SurveyConverter()
-  @JsonKey(name: 'pre_survey')
-  Survey? get preSurvey;
-  @override
-  bool? get passed;
-  @override
-  int? get score;
+  $SurveyCopyWith<$Res>? get preSurvey;
+}
+
+/// @nodoc
+class __$SurveyCopyWithImpl<$Res> implements _$SurveyCopyWith<$Res> {
+  __$SurveyCopyWithImpl(this._self, this._then);
+
+  final _Survey _self;
+  final $Res Function(_Survey) _then;
 
   /// Create a copy of Survey
   /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$SurveyImplCopyWith<_$SurveyImpl> get copyWith =>
-      throw _privateConstructorUsedError;
+  @pragma('vm:prefer-inline')
+  $Res call({
+    Object? id = null,
+    Object? createdAt = null,
+    Object? questions = null,
+    Object? title = null,
+    Object? description = freezed,
+    Object? wallet = freezed,
+    Object? type = null,
+    Object? maxResponses = freezed,
+    Object? imageUrl = freezed,
+    Object? videoUrl = freezed,
+    Object? rewardAmount = freezed,
+    Object? duration = freezed,
+    Object? points = freezed,
+    Object? respondedAt = freezed,
+    Object? passPercentage = freezed,
+    Object? enableScoring = freezed,
+    Object? requireAll = freezed,
+    Object? enforceTimeLimit = freezed,
+    Object? preSurvey = freezed,
+    Object? passed = freezed,
+    Object? score = freezed,
+  }) {
+    return _then(_Survey(
+      id: null == id
+          ? _self.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
+      createdAt: null == createdAt
+          ? _self.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as DateTime,
+      questions: null == questions
+          ? _self._questions
+          : questions // ignore: cast_nullable_to_non_nullable
+              as List<Question>,
+      title: null == title
+          ? _self.title
+          : title // ignore: cast_nullable_to_non_nullable
+              as String,
+      description: freezed == description
+          ? _self.description
+          : description // ignore: cast_nullable_to_non_nullable
+              as String?,
+      wallet: freezed == wallet
+          ? _self.wallet
+          : wallet // ignore: cast_nullable_to_non_nullable
+              as String?,
+      type: null == type
+          ? _self.type
+          : type // ignore: cast_nullable_to_non_nullable
+              as SurveyType,
+      maxResponses: freezed == maxResponses
+          ? _self.maxResponses
+          : maxResponses // ignore: cast_nullable_to_non_nullable
+              as int?,
+      imageUrl: freezed == imageUrl
+          ? _self.imageUrl
+          : imageUrl // ignore: cast_nullable_to_non_nullable
+              as String?,
+      videoUrl: freezed == videoUrl
+          ? _self.videoUrl
+          : videoUrl // ignore: cast_nullable_to_non_nullable
+              as String?,
+      rewardAmount: freezed == rewardAmount
+          ? _self.rewardAmount
+          : rewardAmount // ignore: cast_nullable_to_non_nullable
+              as double?,
+      duration: freezed == duration
+          ? _self.duration
+          : duration // ignore: cast_nullable_to_non_nullable
+              as int?,
+      points: freezed == points
+          ? _self.points
+          : points // ignore: cast_nullable_to_non_nullable
+              as int?,
+      respondedAt: freezed == respondedAt
+          ? _self.respondedAt
+          : respondedAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      passPercentage: freezed == passPercentage
+          ? _self.passPercentage
+          : passPercentage // ignore: cast_nullable_to_non_nullable
+              as double?,
+      enableScoring: freezed == enableScoring
+          ? _self.enableScoring
+          : enableScoring // ignore: cast_nullable_to_non_nullable
+              as bool?,
+      requireAll: freezed == requireAll
+          ? _self.requireAll
+          : requireAll // ignore: cast_nullable_to_non_nullable
+              as bool?,
+      enforceTimeLimit: freezed == enforceTimeLimit
+          ? _self.enforceTimeLimit
+          : enforceTimeLimit // ignore: cast_nullable_to_non_nullable
+              as bool?,
+      preSurvey: freezed == preSurvey
+          ? _self.preSurvey
+          : preSurvey // ignore: cast_nullable_to_non_nullable
+              as Survey?,
+      passed: freezed == passed
+          ? _self.passed
+          : passed // ignore: cast_nullable_to_non_nullable
+              as bool?,
+      score: freezed == score
+          ? _self.score
+          : score // ignore: cast_nullable_to_non_nullable
+              as int?,
+    ));
+  }
+
+  /// Create a copy of Survey
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $SurveyCopyWith<$Res>? get preSurvey {
+    if (_self.preSurvey == null) {
+      return null;
+    }
+
+    return $SurveyCopyWith<$Res>(_self.preSurvey!, (value) {
+      return _then(_self.copyWith(preSurvey: value));
+    });
+  }
 }
+
+// dart format on

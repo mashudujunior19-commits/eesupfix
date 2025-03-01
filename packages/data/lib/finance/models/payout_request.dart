@@ -6,7 +6,7 @@ part 'payout_request.freezed.dart';
 part 'payout_request.g.dart';
 
 @freezed
-class PayoutRequest with _$PayoutRequest {
+abstract class PayoutRequest with _$PayoutRequest {
   const factory PayoutRequest({
     @JsonKey(name: 'created_at', includeToJson: false)
     required DateTime createdAt,

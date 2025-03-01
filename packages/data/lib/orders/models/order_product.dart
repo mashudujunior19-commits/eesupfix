@@ -7,7 +7,7 @@ part 'order_product.freezed.dart';
 part 'order_product.g.dart';
 
 @freezed
-class OrderProduct with _$OrderProduct {
+abstract class OrderProduct with _$OrderProduct {
   factory OrderProduct({
     @JsonKey(name: 'product_id') required int productId,
     @JsonKey(name: 'order_id', includeToJson: false) int? orderId,

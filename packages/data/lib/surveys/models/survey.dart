@@ -7,7 +7,7 @@ part 'survey.freezed.dart';
 part 'survey.g.dart';
 
 @freezed
-class Survey with _$Survey {
+abstract class Survey with _$Survey {
   const factory Survey({
     required String id,
     @JsonKey(name: 'created_at') required DateTime createdAt,

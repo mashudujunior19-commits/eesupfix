@@ -6,7 +6,7 @@ part 'merchant_transaction.freezed.dart';
 part 'merchant_transaction.g.dart';
 
 @freezed
-class MerchantTransaction with _$MerchantTransaction {
+abstract class MerchantTransaction with _$MerchantTransaction {
   factory MerchantTransaction({
     @JsonKey(name: 'm_uuid') required String mUuid,
     @JsonKey(name: 'm_account_uuid') required String mAccountUuid,

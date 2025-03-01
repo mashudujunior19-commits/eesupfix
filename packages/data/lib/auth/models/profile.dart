@@ -8,7 +8,7 @@ part 'profile.g.dart';
 
 ///Check box for
 @freezed
-class Profile with _$Profile {
+abstract class Profile with _$Profile {
   const factory Profile({
     @JsonKey(name: 'user_id', includeToJson: false) required String userId,
     @JsonKey(name: 'rsa_id_number') String? rsaIdNumber,

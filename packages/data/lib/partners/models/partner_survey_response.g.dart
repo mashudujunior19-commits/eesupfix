@@ -6,16 +6,16 @@ part of 'partner_survey_response.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$PartnerSurveyResponseImpl _$$PartnerSurveyResponseImplFromJson(
+_PartnerSurveyResponse _$PartnerSurveyResponseFromJson(
         Map<String, dynamic> json) =>
-    _$PartnerSurveyResponseImpl(
+    _PartnerSurveyResponse(
       index: (json['index'] as num).toInt(),
       surveyId: json['survey_id'] as String,
       responseId: json['response_id'] as String,
     );
 
-Map<String, dynamic> _$$PartnerSurveyResponseImplToJson(
-        _$PartnerSurveyResponseImpl instance) =>
+Map<String, dynamic> _$PartnerSurveyResponseToJson(
+        _PartnerSurveyResponse instance) =>
     <String, dynamic>{
       'index': instance.index,
       'survey_id': instance.surveyId,

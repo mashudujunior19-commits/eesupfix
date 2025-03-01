@@ -6,8 +6,8 @@ part of 'voucher_ledger.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$VoucherLedgerImpl _$$VoucherLedgerImplFromJson(Map<String, dynamic> json) =>
-    _$VoucherLedgerImpl(
+_VoucherLedger _$VoucherLedgerFromJson(Map<String, dynamic> json) =>
+    _VoucherLedger(
       voucherId: (json['voucher_id'] as num).toInt(),
       transactionId: (json['transaction_id'] as num).toInt(),
       createdAt: DateTime.parse(json['created_at'] as String),
@@ -17,7 +17,7 @@ _$VoucherLedgerImpl _$$VoucherLedgerImplFromJson(Map<String, dynamic> json) =>
       closingBalance: (json['closing_balance'] as num).toDouble(),
     );
 
-Map<String, dynamic> _$$VoucherLedgerImplToJson(_$VoucherLedgerImpl instance) =>
+Map<String, dynamic> _$VoucherLedgerToJson(_VoucherLedger instance) =>
     <String, dynamic>{
       'voucher_id': instance.voucherId,
       'transaction_id': instance.transactionId,

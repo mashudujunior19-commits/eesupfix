@@ -6,9 +6,8 @@ part of 'mapped_product_hamper.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$HamperProductDetailImpl _$$HamperProductDetailImplFromJson(
-        Map<String, dynamic> json) =>
-    _$HamperProductDetailImpl(
+_HamperProductDetail _$HamperProductDetailFromJson(Map<String, dynamic> json) =>
+    _HamperProductDetail(
       hamperId: json['hamperId'] as String,
       productId: (json['productId'] as num).toInt(),
       quantity: (json['quantity'] as num).toInt(),
@@ -22,8 +21,8 @@ _$HamperProductDetailImpl _$$HamperProductDetailImplFromJson(
       product: Product.fromJson(json['product'] as Map<String, dynamic>),
     );
 
-Map<String, dynamic> _$$HamperProductDetailImplToJson(
-        _$HamperProductDetailImpl instance) =>
+Map<String, dynamic> _$HamperProductDetailToJson(
+        _HamperProductDetail instance) =>
     <String, dynamic>{
       'hamperId': instance.hamperId,
       'productId': instance.productId,

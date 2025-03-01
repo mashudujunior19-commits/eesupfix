@@ -1,4 +1,4 @@
-library ui;
+library;
 
 export 'package:ui/src/core/env/app_type.dart';
 export 'package:ui/config.dart';

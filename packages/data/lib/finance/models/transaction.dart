@@ -7,7 +7,7 @@ part 'transaction.freezed.dart';
 part 'transaction.g.dart'; // For JSON serialization
 
 @freezed
-class Transaction with _$Transaction {
+abstract class Transaction with _$Transaction {
   const factory Transaction({
     required int id,
     required String type,

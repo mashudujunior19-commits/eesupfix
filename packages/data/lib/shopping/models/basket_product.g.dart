@@ -6,8 +6,8 @@ part of 'basket_product.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$BasketProductImpl _$$BasketProductImplFromJson(Map<String, dynamic> json) =>
-    _$BasketProductImpl(
+_BasketProduct _$BasketProductFromJson(Map<String, dynamic> json) =>
+    _BasketProduct(
       basketId: json['basket_id'] as String,
       productId: (json['product_id'] as num).toInt(),
       imageUrl: json['image_url'] as String?,
@@ -23,7 +23,7 @@ _$BasketProductImpl _$$BasketProductImplFromJson(Map<String, dynamic> json) =>
       sellable: json['sellable'] as bool,
     );
 
-Map<String, dynamic> _$$BasketProductImplToJson(_$BasketProductImpl instance) =>
+Map<String, dynamic> _$BasketProductToJson(_BasketProduct instance) =>
     <String, dynamic>{
       'basket_id': instance.basketId,
       'product_id': instance.productId,

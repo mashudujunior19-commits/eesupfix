@@ -1,3 +1,4 @@
+// dart format width=80
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
@@ -9,84 +10,162 @@ part of 'order.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// dart format off
 T _$identity<T>(T value) => value;
-
-final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
-
-Order _$OrderFromJson(Map<String, dynamic> json) {
-  return _Order.fromJson(json);
-}
 
 /// @nodoc
 mixin _$Order {
-  int? get id => throw _privateConstructorUsedError;
+  int? get id;
   @JsonKey(name: 'customer_id')
-  String get customerId => throw _privateConstructorUsedError;
+  String get customerId;
   @JsonKey(name: 'eesupreneur_id')
-  String? get eesupreneurId => throw _privateConstructorUsedError;
+  String? get eesupreneurId;
   @JsonKey(name: 'eesupool_order_id')
-  int? get eesupoolOrderId => throw _privateConstructorUsedError;
+  int? get eesupoolOrderId;
   @JsonKey(name: 'wallet_id', includeFromJson: false, includeToJson: false)
-  int? get walletId => throw _privateConstructorUsedError;
+  int? get walletId;
   @JsonKey(name: 'created_at')
-  DateTime? get createdAt => throw _privateConstructorUsedError;
+  DateTime? get createdAt;
   @JsonKey(name: 'placed_at', includeToJson: false)
-  DateTime? get placedAt => throw _privateConstructorUsedError;
+  DateTime? get placedAt;
   @JsonKey(name: 'packaged_at')
-  DateTime? get packagedAt => throw _privateConstructorUsedError;
+  DateTime? get packagedAt;
   @JsonKey(name: 'ready_at')
-  DateTime? get readyAt => throw _privateConstructorUsedError;
+  DateTime? get readyAt;
   @JsonKey(name: 'collected_at')
-  DateTime? get collectedAt => throw _privateConstructorUsedError;
+  DateTime? get collectedAt;
   @JsonKey(name: 'cancelled_at')
-  DateTime? get cancelledAt => throw _privateConstructorUsedError;
-  double get value => throw _privateConstructorUsedError;
+  DateTime? get cancelledAt;
+  double get value;
   @PaymentMethodConverter()
   @JsonKey(name: 'payment_method')
-  PaymentMethod get paymentMethod => throw _privateConstructorUsedError;
+  PaymentMethod get paymentMethod;
   @JsonKey(name: 'secret_pin')
-  int get secretPin => throw _privateConstructorUsedError;
+  int get secretPin;
   @JsonKey(name: 'delivery_address_id')
-  int? get deliveryAddressId => throw _privateConstructorUsedError;
+  int? get deliveryAddressId;
   @JsonKey(name: 'delivery_fee')
-  double? get deliveryFee => throw _privateConstructorUsedError;
+  double? get deliveryFee;
   @JsonKey(name: 'card_fee')
-  double? get cardFee => throw _privateConstructorUsedError;
+  double? get cardFee;
   @JsonKey(name: 'pay_fees_with_retail_wallet')
-  dynamic get payFeesWithRetailWallet => throw _privateConstructorUsedError;
+  dynamic get payFeesWithRetailWallet;
   @JsonKey(name: 'full_name')
-  String? get fullName => throw _privateConstructorUsedError;
+  String? get fullName;
   @JsonKey(name: 'corp_name')
-  String? get corpName => throw _privateConstructorUsedError;
+  String? get corpName;
   @MemberOrderAssignmentConverter()
-  List<MemberOrderAssignment> get assignments =>
-      throw _privateConstructorUsedError;
+  List<MemberOrderAssignment> get assignments;
   @OrderStatusConverter()
   @JsonKey(includeToJson: false)
-  OrderStatus get status =>
-      throw _privateConstructorUsedError; // @EESUpreneurConverter() @JsonKey(includeToJson: false) EESUpreneur? eesupreneur,
+  OrderStatus
+      get status; // @EESUpreneurConverter() @JsonKey(includeToJson: false) EESUpreneur? eesupreneur,
 // @EESUpoolConverter() @JsonKey(includeToJson: false) EESUpool? eesupool,
 // @ProfileConverter() @JsonKey(includeToJson: false) Profile? customer,
   @OrderProductConverter()
-  List<OrderProduct> get products => throw _privateConstructorUsedError;
+  List<OrderProduct> get products;
   @AddressConverter()
   @JsonKey(includeToJson: false)
-  Address? get address => throw _privateConstructorUsedError;
-
-  /// Serializes this Order to a JSON map.
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  Address? get address;
 
   /// Create a copy of Order
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  $OrderCopyWith<Order> get copyWith => throw _privateConstructorUsedError;
+  @pragma('vm:prefer-inline')
+  $OrderCopyWith<Order> get copyWith =>
+      _$OrderCopyWithImpl<Order>(this as Order, _$identity);
+
+  /// Serializes this Order to a JSON map.
+  Map<String, dynamic> toJson();
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is Order &&
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.customerId, customerId) ||
+                other.customerId == customerId) &&
+            (identical(other.eesupreneurId, eesupreneurId) ||
+                other.eesupreneurId == eesupreneurId) &&
+            (identical(other.eesupoolOrderId, eesupoolOrderId) ||
+                other.eesupoolOrderId == eesupoolOrderId) &&
+            (identical(other.walletId, walletId) ||
+                other.walletId == walletId) &&
+            (identical(other.createdAt, createdAt) ||
+                other.createdAt == createdAt) &&
+            (identical(other.placedAt, placedAt) ||
+                other.placedAt == placedAt) &&
+            (identical(other.packagedAt, packagedAt) ||
+                other.packagedAt == packagedAt) &&
+            (identical(other.readyAt, readyAt) || other.readyAt == readyAt) &&
+            (identical(other.collectedAt, collectedAt) ||
+                other.collectedAt == collectedAt) &&
+            (identical(other.cancelledAt, cancelledAt) ||
+                other.cancelledAt == cancelledAt) &&
+            (identical(other.value, value) || other.value == value) &&
+            (identical(other.paymentMethod, paymentMethod) ||
+                other.paymentMethod == paymentMethod) &&
+            (identical(other.secretPin, secretPin) ||
+                other.secretPin == secretPin) &&
+            (identical(other.deliveryAddressId, deliveryAddressId) ||
+                other.deliveryAddressId == deliveryAddressId) &&
+            (identical(other.deliveryFee, deliveryFee) ||
+                other.deliveryFee == deliveryFee) &&
+            (identical(other.cardFee, cardFee) || other.cardFee == cardFee) &&
+            const DeepCollectionEquality().equals(
+                other.payFeesWithRetailWallet, payFeesWithRetailWallet) &&
+            (identical(other.fullName, fullName) ||
+                other.fullName == fullName) &&
+            (identical(other.corpName, corpName) ||
+                other.corpName == corpName) &&
+            const DeepCollectionEquality()
+                .equals(other.assignments, assignments) &&
+            (identical(other.status, status) || other.status == status) &&
+            const DeepCollectionEquality().equals(other.products, products) &&
+            (identical(other.address, address) || other.address == address));
+  }
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  int get hashCode => Object.hashAll([
+        runtimeType,
+        id,
+        customerId,
+        eesupreneurId,
+        eesupoolOrderId,
+        walletId,
+        createdAt,
+        placedAt,
+        packagedAt,
+        readyAt,
+        collectedAt,
+        cancelledAt,
+        value,
+        paymentMethod,
+        secretPin,
+        deliveryAddressId,
+        deliveryFee,
+        cardFee,
+        const DeepCollectionEquality().hash(payFeesWithRetailWallet),
+        fullName,
+        corpName,
+        const DeepCollectionEquality().hash(assignments),
+        status,
+        const DeepCollectionEquality().hash(products),
+        address
+      ]);
+
+  @override
+  String toString() {
+    return 'Order(id: $id, customerId: $customerId, eesupreneurId: $eesupreneurId, eesupoolOrderId: $eesupoolOrderId, walletId: $walletId, createdAt: $createdAt, placedAt: $placedAt, packagedAt: $packagedAt, readyAt: $readyAt, collectedAt: $collectedAt, cancelledAt: $cancelledAt, value: $value, paymentMethod: $paymentMethod, secretPin: $secretPin, deliveryAddressId: $deliveryAddressId, deliveryFee: $deliveryFee, cardFee: $cardFee, payFeesWithRetailWallet: $payFeesWithRetailWallet, fullName: $fullName, corpName: $corpName, assignments: $assignments, status: $status, products: $products, address: $address)';
+  }
 }
 
 /// @nodoc
-abstract class $OrderCopyWith<$Res> {
-  factory $OrderCopyWith(Order value, $Res Function(Order) then) =
-      _$OrderCopyWithImpl<$Res, Order>;
+abstract mixin class $OrderCopyWith<$Res> {
+  factory $OrderCopyWith(Order value, $Res Function(Order) _then) =
+      _$OrderCopyWithImpl;
   @useResult
   $Res call(
       {int? id,
@@ -122,14 +201,11 @@ abstract class $OrderCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$OrderCopyWithImpl<$Res, $Val extends Order>
-    implements $OrderCopyWith<$Res> {
-  _$OrderCopyWithImpl(this._value, this._then);
+class _$OrderCopyWithImpl<$Res> implements $OrderCopyWith<$Res> {
+  _$OrderCopyWithImpl(this._self, this._then);
 
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
+  final Order _self;
+  final $Res Function(Order) _then;
 
   /// Create a copy of Order
   /// with the given fields replaced by the non-null parameter values.
@@ -161,104 +237,104 @@ class _$OrderCopyWithImpl<$Res, $Val extends Order>
     Object? products = null,
     Object? address = freezed,
   }) {
-    return _then(_value.copyWith(
+    return _then(_self.copyWith(
       id: freezed == id
-          ? _value.id
+          ? _self.id
           : id // ignore: cast_nullable_to_non_nullable
               as int?,
       customerId: null == customerId
-          ? _value.customerId
+          ? _self.customerId
           : customerId // ignore: cast_nullable_to_non_nullable
               as String,
       eesupreneurId: freezed == eesupreneurId
-          ? _value.eesupreneurId
+          ? _self.eesupreneurId
           : eesupreneurId // ignore: cast_nullable_to_non_nullable
               as String?,
       eesupoolOrderId: freezed == eesupoolOrderId
-          ? _value.eesupoolOrderId
+          ? _self.eesupoolOrderId
           : eesupoolOrderId // ignore: cast_nullable_to_non_nullable
               as int?,
       walletId: freezed == walletId
-          ? _value.walletId
+          ? _self.walletId
           : walletId // ignore: cast_nullable_to_non_nullable
               as int?,
       createdAt: freezed == createdAt
-          ? _value.createdAt
+          ? _self.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
               as DateTime?,
       placedAt: freezed == placedAt
-          ? _value.placedAt
+          ? _self.placedAt
           : placedAt // ignore: cast_nullable_to_non_nullable
               as DateTime?,
       packagedAt: freezed == packagedAt
-          ? _value.packagedAt
+          ? _self.packagedAt
           : packagedAt // ignore: cast_nullable_to_non_nullable
               as DateTime?,
       readyAt: freezed == readyAt
-          ? _value.readyAt
+          ? _self.readyAt
           : readyAt // ignore: cast_nullable_to_non_nullable
               as DateTime?,
       collectedAt: freezed == collectedAt
-          ? _value.collectedAt
+          ? _self.collectedAt
           : collectedAt // ignore: cast_nullable_to_non_nullable
               as DateTime?,
       cancelledAt: freezed == cancelledAt
-          ? _value.cancelledAt
+          ? _self.cancelledAt
           : cancelledAt // ignore: cast_nullable_to_non_nullable
               as DateTime?,
       value: null == value
-          ? _value.value
+          ? _self.value
           : value // ignore: cast_nullable_to_non_nullable
               as double,
       paymentMethod: null == paymentMethod
-          ? _value.paymentMethod
+          ? _self.paymentMethod
           : paymentMethod // ignore: cast_nullable_to_non_nullable
               as PaymentMethod,
       secretPin: null == secretPin
-          ? _value.secretPin
+          ? _self.secretPin
           : secretPin // ignore: cast_nullable_to_non_nullable
               as int,
       deliveryAddressId: freezed == deliveryAddressId
-          ? _value.deliveryAddressId
+          ? _self.deliveryAddressId
           : deliveryAddressId // ignore: cast_nullable_to_non_nullable
               as int?,
       deliveryFee: freezed == deliveryFee
-          ? _value.deliveryFee
+          ? _self.deliveryFee
           : deliveryFee // ignore: cast_nullable_to_non_nullable
               as double?,
       cardFee: freezed == cardFee
-          ? _value.cardFee
+          ? _self.cardFee
           : cardFee // ignore: cast_nullable_to_non_nullable
               as double?,
       payFeesWithRetailWallet: freezed == payFeesWithRetailWallet
-          ? _value.payFeesWithRetailWallet
+          ? _self.payFeesWithRetailWallet
           : payFeesWithRetailWallet // ignore: cast_nullable_to_non_nullable
               as dynamic,
       fullName: freezed == fullName
-          ? _value.fullName
+          ? _self.fullName
           : fullName // ignore: cast_nullable_to_non_nullable
               as String?,
       corpName: freezed == corpName
-          ? _value.corpName
+          ? _self.corpName
           : corpName // ignore: cast_nullable_to_non_nullable
               as String?,
       assignments: null == assignments
-          ? _value.assignments
+          ? _self.assignments
           : assignments // ignore: cast_nullable_to_non_nullable
               as List<MemberOrderAssignment>,
       status: null == status
-          ? _value.status
+          ? _self.status
           : status // ignore: cast_nullable_to_non_nullable
               as OrderStatus,
       products: null == products
-          ? _value.products
+          ? _self.products
           : products // ignore: cast_nullable_to_non_nullable
               as List<OrderProduct>,
       address: freezed == address
-          ? _value.address
+          ? _self.address
           : address // ignore: cast_nullable_to_non_nullable
               as Address?,
-    ) as $Val);
+    ));
   }
 
   /// Create a copy of Order
@@ -266,199 +342,20 @@ class _$OrderCopyWithImpl<$Res, $Val extends Order>
   @override
   @pragma('vm:prefer-inline')
   $AddressCopyWith<$Res>? get address {
-    if (_value.address == null) {
+    if (_self.address == null) {
       return null;
     }
 
-    return $AddressCopyWith<$Res>(_value.address!, (value) {
-      return _then(_value.copyWith(address: value) as $Val);
+    return $AddressCopyWith<$Res>(_self.address!, (value) {
+      return _then(_self.copyWith(address: value));
     });
   }
 }
 
 /// @nodoc
-abstract class _$$OrderImplCopyWith<$Res> implements $OrderCopyWith<$Res> {
-  factory _$$OrderImplCopyWith(
-          _$OrderImpl value, $Res Function(_$OrderImpl) then) =
-      __$$OrderImplCopyWithImpl<$Res>;
-  @override
-  @useResult
-  $Res call(
-      {int? id,
-      @JsonKey(name: 'customer_id') String customerId,
-      @JsonKey(name: 'eesupreneur_id') String? eesupreneurId,
-      @JsonKey(name: 'eesupool_order_id') int? eesupoolOrderId,
-      @JsonKey(name: 'wallet_id', includeFromJson: false, includeToJson: false)
-      int? walletId,
-      @JsonKey(name: 'created_at') DateTime? createdAt,
-      @JsonKey(name: 'placed_at', includeToJson: false) DateTime? placedAt,
-      @JsonKey(name: 'packaged_at') DateTime? packagedAt,
-      @JsonKey(name: 'ready_at') DateTime? readyAt,
-      @JsonKey(name: 'collected_at') DateTime? collectedAt,
-      @JsonKey(name: 'cancelled_at') DateTime? cancelledAt,
-      double value,
-      @PaymentMethodConverter()
-      @JsonKey(name: 'payment_method')
-      PaymentMethod paymentMethod,
-      @JsonKey(name: 'secret_pin') int secretPin,
-      @JsonKey(name: 'delivery_address_id') int? deliveryAddressId,
-      @JsonKey(name: 'delivery_fee') double? deliveryFee,
-      @JsonKey(name: 'card_fee') double? cardFee,
-      @JsonKey(name: 'pay_fees_with_retail_wallet')
-      dynamic payFeesWithRetailWallet,
-      @JsonKey(name: 'full_name') String? fullName,
-      @JsonKey(name: 'corp_name') String? corpName,
-      @MemberOrderAssignmentConverter() List<MemberOrderAssignment> assignments,
-      @OrderStatusConverter() @JsonKey(includeToJson: false) OrderStatus status,
-      @OrderProductConverter() List<OrderProduct> products,
-      @AddressConverter() @JsonKey(includeToJson: false) Address? address});
-
-  @override
-  $AddressCopyWith<$Res>? get address;
-}
-
-/// @nodoc
-class __$$OrderImplCopyWithImpl<$Res>
-    extends _$OrderCopyWithImpl<$Res, _$OrderImpl>
-    implements _$$OrderImplCopyWith<$Res> {
-  __$$OrderImplCopyWithImpl(
-      _$OrderImpl _value, $Res Function(_$OrderImpl) _then)
-      : super(_value, _then);
-
-  /// Create a copy of Order
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? id = freezed,
-    Object? customerId = null,
-    Object? eesupreneurId = freezed,
-    Object? eesupoolOrderId = freezed,
-    Object? walletId = freezed,
-    Object? createdAt = freezed,
-    Object? placedAt = freezed,
-    Object? packagedAt = freezed,
-    Object? readyAt = freezed,
-    Object? collectedAt = freezed,
-    Object? cancelledAt = freezed,
-    Object? value = null,
-    Object? paymentMethod = null,
-    Object? secretPin = null,
-    Object? deliveryAddressId = freezed,
-    Object? deliveryFee = freezed,
-    Object? cardFee = freezed,
-    Object? payFeesWithRetailWallet = freezed,
-    Object? fullName = freezed,
-    Object? corpName = freezed,
-    Object? assignments = null,
-    Object? status = null,
-    Object? products = null,
-    Object? address = freezed,
-  }) {
-    return _then(_$OrderImpl(
-      id: freezed == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as int?,
-      customerId: null == customerId
-          ? _value.customerId
-          : customerId // ignore: cast_nullable_to_non_nullable
-              as String,
-      eesupreneurId: freezed == eesupreneurId
-          ? _value.eesupreneurId
-          : eesupreneurId // ignore: cast_nullable_to_non_nullable
-              as String?,
-      eesupoolOrderId: freezed == eesupoolOrderId
-          ? _value.eesupoolOrderId
-          : eesupoolOrderId // ignore: cast_nullable_to_non_nullable
-              as int?,
-      walletId: freezed == walletId
-          ? _value.walletId
-          : walletId // ignore: cast_nullable_to_non_nullable
-              as int?,
-      createdAt: freezed == createdAt
-          ? _value.createdAt
-          : createdAt // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
-      placedAt: freezed == placedAt
-          ? _value.placedAt
-          : placedAt // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
-      packagedAt: freezed == packagedAt
-          ? _value.packagedAt
-          : packagedAt // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
-      readyAt: freezed == readyAt
-          ? _value.readyAt
-          : readyAt // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
-      collectedAt: freezed == collectedAt
-          ? _value.collectedAt
-          : collectedAt // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
-      cancelledAt: freezed == cancelledAt
-          ? _value.cancelledAt
-          : cancelledAt // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
-      value: null == value
-          ? _value.value
-          : value // ignore: cast_nullable_to_non_nullable
-              as double,
-      paymentMethod: null == paymentMethod
-          ? _value.paymentMethod
-          : paymentMethod // ignore: cast_nullable_to_non_nullable
-              as PaymentMethod,
-      secretPin: null == secretPin
-          ? _value.secretPin
-          : secretPin // ignore: cast_nullable_to_non_nullable
-              as int,
-      deliveryAddressId: freezed == deliveryAddressId
-          ? _value.deliveryAddressId
-          : deliveryAddressId // ignore: cast_nullable_to_non_nullable
-              as int?,
-      deliveryFee: freezed == deliveryFee
-          ? _value.deliveryFee
-          : deliveryFee // ignore: cast_nullable_to_non_nullable
-              as double?,
-      cardFee: freezed == cardFee
-          ? _value.cardFee
-          : cardFee // ignore: cast_nullable_to_non_nullable
-              as double?,
-      payFeesWithRetailWallet: freezed == payFeesWithRetailWallet
-          ? _value.payFeesWithRetailWallet!
-          : payFeesWithRetailWallet,
-      fullName: freezed == fullName
-          ? _value.fullName
-          : fullName // ignore: cast_nullable_to_non_nullable
-              as String?,
-      corpName: freezed == corpName
-          ? _value.corpName
-          : corpName // ignore: cast_nullable_to_non_nullable
-              as String?,
-      assignments: null == assignments
-          ? _value._assignments
-          : assignments // ignore: cast_nullable_to_non_nullable
-              as List<MemberOrderAssignment>,
-      status: null == status
-          ? _value.status
-          : status // ignore: cast_nullable_to_non_nullable
-              as OrderStatus,
-      products: null == products
-          ? _value._products
-          : products // ignore: cast_nullable_to_non_nullable
-              as List<OrderProduct>,
-      address: freezed == address
-          ? _value.address
-          : address // ignore: cast_nullable_to_non_nullable
-              as Address?,
-    ));
-  }
-}
-
-/// @nodoc
 @JsonSerializable()
-class _$OrderImpl implements _Order {
-  const _$OrderImpl(
+class _Order implements Order {
+  const _Order(
       {this.id,
       @JsonKey(name: 'customer_id') required this.customerId,
       @JsonKey(name: 'eesupreneur_id') this.eesupreneurId,
@@ -492,9 +389,7 @@ class _$OrderImpl implements _Order {
       @AddressConverter() @JsonKey(includeToJson: false) this.address})
       : _assignments = assignments,
         _products = products;
-
-  factory _$OrderImpl.fromJson(Map<String, dynamic> json) =>
-      _$$OrderImplFromJson(json);
+  factory _Order.fromJson(Map<String, dynamic> json) => _$OrderFromJson(json);
 
   @override
   final int? id;
@@ -590,16 +485,26 @@ class _$OrderImpl implements _Order {
   @JsonKey(includeToJson: false)
   final Address? address;
 
+  /// Create a copy of Order
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  String toString() {
-    return 'Order(id: $id, customerId: $customerId, eesupreneurId: $eesupreneurId, eesupoolOrderId: $eesupoolOrderId, walletId: $walletId, createdAt: $createdAt, placedAt: $placedAt, packagedAt: $packagedAt, readyAt: $readyAt, collectedAt: $collectedAt, cancelledAt: $cancelledAt, value: $value, paymentMethod: $paymentMethod, secretPin: $secretPin, deliveryAddressId: $deliveryAddressId, deliveryFee: $deliveryFee, cardFee: $cardFee, payFeesWithRetailWallet: $payFeesWithRetailWallet, fullName: $fullName, corpName: $corpName, assignments: $assignments, status: $status, products: $products, address: $address)';
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  _$OrderCopyWith<_Order> get copyWith =>
+      __$OrderCopyWithImpl<_Order>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$OrderToJson(
+      this,
+    );
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$OrderImpl &&
+            other is _Order &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.customerId, customerId) ||
                 other.customerId == customerId) &&
@@ -673,142 +578,201 @@ class _$OrderImpl implements _Order {
         address
       ]);
 
-  /// Create a copy of Order
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  @pragma('vm:prefer-inline')
-  _$$OrderImplCopyWith<_$OrderImpl> get copyWith =>
-      __$$OrderImplCopyWithImpl<_$OrderImpl>(this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$OrderImplToJson(
-      this,
-    );
+  String toString() {
+    return 'Order(id: $id, customerId: $customerId, eesupreneurId: $eesupreneurId, eesupoolOrderId: $eesupoolOrderId, walletId: $walletId, createdAt: $createdAt, placedAt: $placedAt, packagedAt: $packagedAt, readyAt: $readyAt, collectedAt: $collectedAt, cancelledAt: $cancelledAt, value: $value, paymentMethod: $paymentMethod, secretPin: $secretPin, deliveryAddressId: $deliveryAddressId, deliveryFee: $deliveryFee, cardFee: $cardFee, payFeesWithRetailWallet: $payFeesWithRetailWallet, fullName: $fullName, corpName: $corpName, assignments: $assignments, status: $status, products: $products, address: $address)';
   }
 }
 
-abstract class _Order implements Order {
-  const factory _Order(
-      {final int? id,
-      @JsonKey(name: 'customer_id') required final String customerId,
-      @JsonKey(name: 'eesupreneur_id') final String? eesupreneurId,
-      @JsonKey(name: 'eesupool_order_id') final int? eesupoolOrderId,
+/// @nodoc
+abstract mixin class _$OrderCopyWith<$Res> implements $OrderCopyWith<$Res> {
+  factory _$OrderCopyWith(_Order value, $Res Function(_Order) _then) =
+      __$OrderCopyWithImpl;
+  @override
+  @useResult
+  $Res call(
+      {int? id,
+      @JsonKey(name: 'customer_id') String customerId,
+      @JsonKey(name: 'eesupreneur_id') String? eesupreneurId,
+      @JsonKey(name: 'eesupool_order_id') int? eesupoolOrderId,
       @JsonKey(name: 'wallet_id', includeFromJson: false, includeToJson: false)
-      final int? walletId,
-      @JsonKey(name: 'created_at') final DateTime? createdAt,
-      @JsonKey(name: 'placed_at', includeToJson: false)
-      final DateTime? placedAt,
-      @JsonKey(name: 'packaged_at') final DateTime? packagedAt,
-      @JsonKey(name: 'ready_at') final DateTime? readyAt,
-      @JsonKey(name: 'collected_at') final DateTime? collectedAt,
-      @JsonKey(name: 'cancelled_at') final DateTime? cancelledAt,
-      required final double value,
+      int? walletId,
+      @JsonKey(name: 'created_at') DateTime? createdAt,
+      @JsonKey(name: 'placed_at', includeToJson: false) DateTime? placedAt,
+      @JsonKey(name: 'packaged_at') DateTime? packagedAt,
+      @JsonKey(name: 'ready_at') DateTime? readyAt,
+      @JsonKey(name: 'collected_at') DateTime? collectedAt,
+      @JsonKey(name: 'cancelled_at') DateTime? cancelledAt,
+      double value,
       @PaymentMethodConverter()
       @JsonKey(name: 'payment_method')
-      required final PaymentMethod paymentMethod,
-      @JsonKey(name: 'secret_pin') required final int secretPin,
-      @JsonKey(name: 'delivery_address_id') final int? deliveryAddressId,
-      @JsonKey(name: 'delivery_fee') final double? deliveryFee,
-      @JsonKey(name: 'card_fee') final double? cardFee,
+      PaymentMethod paymentMethod,
+      @JsonKey(name: 'secret_pin') int secretPin,
+      @JsonKey(name: 'delivery_address_id') int? deliveryAddressId,
+      @JsonKey(name: 'delivery_fee') double? deliveryFee,
+      @JsonKey(name: 'card_fee') double? cardFee,
       @JsonKey(name: 'pay_fees_with_retail_wallet')
-      final dynamic payFeesWithRetailWallet,
-      @JsonKey(name: 'full_name') final String? fullName,
-      @JsonKey(name: 'corp_name') final String? corpName,
-      @MemberOrderAssignmentConverter()
-      final List<MemberOrderAssignment> assignments,
-      @OrderStatusConverter()
-      @JsonKey(includeToJson: false)
-      required final OrderStatus status,
-      @OrderProductConverter() final List<OrderProduct> products,
-      @AddressConverter()
-      @JsonKey(includeToJson: false)
-      final Address? address}) = _$OrderImpl;
-
-  factory _Order.fromJson(Map<String, dynamic> json) = _$OrderImpl.fromJson;
+      dynamic payFeesWithRetailWallet,
+      @JsonKey(name: 'full_name') String? fullName,
+      @JsonKey(name: 'corp_name') String? corpName,
+      @MemberOrderAssignmentConverter() List<MemberOrderAssignment> assignments,
+      @OrderStatusConverter() @JsonKey(includeToJson: false) OrderStatus status,
+      @OrderProductConverter() List<OrderProduct> products,
+      @AddressConverter() @JsonKey(includeToJson: false) Address? address});
 
   @override
-  int? get id;
-  @override
-  @JsonKey(name: 'customer_id')
-  String get customerId;
-  @override
-  @JsonKey(name: 'eesupreneur_id')
-  String? get eesupreneurId;
-  @override
-  @JsonKey(name: 'eesupool_order_id')
-  int? get eesupoolOrderId;
-  @override
-  @JsonKey(name: 'wallet_id', includeFromJson: false, includeToJson: false)
-  int? get walletId;
-  @override
-  @JsonKey(name: 'created_at')
-  DateTime? get createdAt;
-  @override
-  @JsonKey(name: 'placed_at', includeToJson: false)
-  DateTime? get placedAt;
-  @override
-  @JsonKey(name: 'packaged_at')
-  DateTime? get packagedAt;
-  @override
-  @JsonKey(name: 'ready_at')
-  DateTime? get readyAt;
-  @override
-  @JsonKey(name: 'collected_at')
-  DateTime? get collectedAt;
-  @override
-  @JsonKey(name: 'cancelled_at')
-  DateTime? get cancelledAt;
-  @override
-  double get value;
-  @override
-  @PaymentMethodConverter()
-  @JsonKey(name: 'payment_method')
-  PaymentMethod get paymentMethod;
-  @override
-  @JsonKey(name: 'secret_pin')
-  int get secretPin;
-  @override
-  @JsonKey(name: 'delivery_address_id')
-  int? get deliveryAddressId;
-  @override
-  @JsonKey(name: 'delivery_fee')
-  double? get deliveryFee;
-  @override
-  @JsonKey(name: 'card_fee')
-  double? get cardFee;
-  @override
-  @JsonKey(name: 'pay_fees_with_retail_wallet')
-  dynamic get payFeesWithRetailWallet;
-  @override
-  @JsonKey(name: 'full_name')
-  String? get fullName;
-  @override
-  @JsonKey(name: 'corp_name')
-  String? get corpName;
-  @override
-  @MemberOrderAssignmentConverter()
-  List<MemberOrderAssignment> get assignments;
-  @override
-  @OrderStatusConverter()
-  @JsonKey(includeToJson: false)
-  OrderStatus
-      get status; // @EESUpreneurConverter() @JsonKey(includeToJson: false) EESUpreneur? eesupreneur,
-// @EESUpoolConverter() @JsonKey(includeToJson: false) EESUpool? eesupool,
-// @ProfileConverter() @JsonKey(includeToJson: false) Profile? customer,
-  @override
-  @OrderProductConverter()
-  List<OrderProduct> get products;
-  @override
-  @AddressConverter()
-  @JsonKey(includeToJson: false)
-  Address? get address;
+  $AddressCopyWith<$Res>? get address;
+}
+
+/// @nodoc
+class __$OrderCopyWithImpl<$Res> implements _$OrderCopyWith<$Res> {
+  __$OrderCopyWithImpl(this._self, this._then);
+
+  final _Order _self;
+  final $Res Function(_Order) _then;
 
   /// Create a copy of Order
   /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$OrderImplCopyWith<_$OrderImpl> get copyWith =>
-      throw _privateConstructorUsedError;
+  @pragma('vm:prefer-inline')
+  $Res call({
+    Object? id = freezed,
+    Object? customerId = null,
+    Object? eesupreneurId = freezed,
+    Object? eesupoolOrderId = freezed,
+    Object? walletId = freezed,
+    Object? createdAt = freezed,
+    Object? placedAt = freezed,
+    Object? packagedAt = freezed,
+    Object? readyAt = freezed,
+    Object? collectedAt = freezed,
+    Object? cancelledAt = freezed,
+    Object? value = null,
+    Object? paymentMethod = null,
+    Object? secretPin = null,
+    Object? deliveryAddressId = freezed,
+    Object? deliveryFee = freezed,
+    Object? cardFee = freezed,
+    Object? payFeesWithRetailWallet = freezed,
+    Object? fullName = freezed,
+    Object? corpName = freezed,
+    Object? assignments = null,
+    Object? status = null,
+    Object? products = null,
+    Object? address = freezed,
+  }) {
+    return _then(_Order(
+      id: freezed == id
+          ? _self.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int?,
+      customerId: null == customerId
+          ? _self.customerId
+          : customerId // ignore: cast_nullable_to_non_nullable
+              as String,
+      eesupreneurId: freezed == eesupreneurId
+          ? _self.eesupreneurId
+          : eesupreneurId // ignore: cast_nullable_to_non_nullable
+              as String?,
+      eesupoolOrderId: freezed == eesupoolOrderId
+          ? _self.eesupoolOrderId
+          : eesupoolOrderId // ignore: cast_nullable_to_non_nullable
+              as int?,
+      walletId: freezed == walletId
+          ? _self.walletId
+          : walletId // ignore: cast_nullable_to_non_nullable
+              as int?,
+      createdAt: freezed == createdAt
+          ? _self.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      placedAt: freezed == placedAt
+          ? _self.placedAt
+          : placedAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      packagedAt: freezed == packagedAt
+          ? _self.packagedAt
+          : packagedAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      readyAt: freezed == readyAt
+          ? _self.readyAt
+          : readyAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      collectedAt: freezed == collectedAt
+          ? _self.collectedAt
+          : collectedAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      cancelledAt: freezed == cancelledAt
+          ? _self.cancelledAt
+          : cancelledAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      value: null == value
+          ? _self.value
+          : value // ignore: cast_nullable_to_non_nullable
+              as double,
+      paymentMethod: null == paymentMethod
+          ? _self.paymentMethod
+          : paymentMethod // ignore: cast_nullable_to_non_nullable
+              as PaymentMethod,
+      secretPin: null == secretPin
+          ? _self.secretPin
+          : secretPin // ignore: cast_nullable_to_non_nullable
+              as int,
+      deliveryAddressId: freezed == deliveryAddressId
+          ? _self.deliveryAddressId
+          : deliveryAddressId // ignore: cast_nullable_to_non_nullable
+              as int?,
+      deliveryFee: freezed == deliveryFee
+          ? _self.deliveryFee
+          : deliveryFee // ignore: cast_nullable_to_non_nullable
+              as double?,
+      cardFee: freezed == cardFee
+          ? _self.cardFee
+          : cardFee // ignore: cast_nullable_to_non_nullable
+              as double?,
+      payFeesWithRetailWallet: freezed == payFeesWithRetailWallet
+          ? _self.payFeesWithRetailWallet!
+          : payFeesWithRetailWallet,
+      fullName: freezed == fullName
+          ? _self.fullName
+          : fullName // ignore: cast_nullable_to_non_nullable
+              as String?,
+      corpName: freezed == corpName
+          ? _self.corpName
+          : corpName // ignore: cast_nullable_to_non_nullable
+              as String?,
+      assignments: null == assignments
+          ? _self._assignments
+          : assignments // ignore: cast_nullable_to_non_nullable
+              as List<MemberOrderAssignment>,
+      status: null == status
+          ? _self.status
+          : status // ignore: cast_nullable_to_non_nullable
+              as OrderStatus,
+      products: null == products
+          ? _self._products
+          : products // ignore: cast_nullable_to_non_nullable
+              as List<OrderProduct>,
+      address: freezed == address
+          ? _self.address
+          : address // ignore: cast_nullable_to_non_nullable
+              as Address?,
+    ));
+  }
+
+  /// Create a copy of Order
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $AddressCopyWith<$Res>? get address {
+    if (_self.address == null) {
+      return null;
+    }
+
+    return $AddressCopyWith<$Res>(_self.address!, (value) {
+      return _then(_self.copyWith(address: value));
+    });
+  }
 }
+
+// dart format on

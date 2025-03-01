@@ -6,9 +6,8 @@ part of 'profit_allocation.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$ProfitAllocationImpl _$$ProfitAllocationImplFromJson(
-        Map<String, dynamic> json) =>
-    _$ProfitAllocationImpl(
+_ProfitAllocation _$ProfitAllocationFromJson(Map<String, dynamic> json) =>
+    _ProfitAllocation(
       cia: (json['cia'] as num).toDouble(),
       cwa: (json['cwa'] as num).toDouble(),
       eia: (json['eia'] as num).toDouble(),
@@ -19,8 +18,7 @@ _$ProfitAllocationImpl _$$ProfitAllocationImplFromJson(
       cfv: (json['cfv'] as num).toDouble(),
     );
 
-Map<String, dynamic> _$$ProfitAllocationImplToJson(
-        _$ProfitAllocationImpl instance) =>
+Map<String, dynamic> _$ProfitAllocationToJson(_ProfitAllocation instance) =>
     <String, dynamic>{
       'cia': instance.cia,
       'cwa': instance.cwa,

@@ -6,7 +6,7 @@ part 'voucher_ledger.freezed.dart';
 part 'voucher_ledger.g.dart';
 
 @freezed
-class VoucherLedger with _$VoucherLedger {
+abstract class VoucherLedger with _$VoucherLedger {
   const factory VoucherLedger({
     @JsonKey(name: 'voucher_id') required int voucherId,
     @JsonKey(name: 'transaction_id') required int transactionId,

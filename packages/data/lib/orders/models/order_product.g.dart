@@ -6,8 +6,8 @@ part of 'order_product.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$OrderProductImpl _$$OrderProductImplFromJson(Map<String, dynamic> json) =>
-    _$OrderProductImpl(
+_OrderProduct _$OrderProductFromJson(Map<String, dynamic> json) =>
+    _OrderProduct(
       productId: (json['product_id'] as num).toInt(),
       orderId: (json['order_id'] as num?)?.toInt(),
       category: json['class'] as String?,
@@ -27,7 +27,7 @@ _$OrderProductImpl _$$OrderProductImplFromJson(Map<String, dynamic> json) =>
       substituteVariant: json['substitute_variant'] as bool? ?? false,
     );
 
-Map<String, dynamic> _$$OrderProductImplToJson(_$OrderProductImpl instance) =>
+Map<String, dynamic> _$OrderProductToJson(_OrderProduct instance) =>
     <String, dynamic>{
       'product_id': instance.productId,
       'class': instance.category,

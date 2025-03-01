@@ -21,7 +21,7 @@ class DayScheduleConverter
 }
 
 @freezed
-class DaySchedule with _$DaySchedule {
+abstract class DaySchedule with _$DaySchedule {
   const factory DaySchedule({
     required String day,
     required int index,

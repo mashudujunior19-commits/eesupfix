@@ -5,7 +5,7 @@ part 'eesupool_settings.freezed.dart';
 part 'eesupool_settings.g.dart';
 
 @freezed
-class EESUpoolSettings with _$EESUpoolSettings {
+abstract class EESUpoolSettings with _$EESUpoolSettings {
   const EESUpoolSettings._();
 
   const factory EESUpoolSettings({

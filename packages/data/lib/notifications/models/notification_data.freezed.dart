@@ -1,3 +1,4 @@
+// dart format width=80
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
@@ -9,89 +10,55 @@ part of 'notification_data.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// dart format off
 T _$identity<T>(T value) => value;
-
-final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
-
-NotificationData _$NotificationDataFromJson(Map<String, dynamic> json) {
-  return _NotificationData.fromJson(json);
-}
 
 /// @nodoc
 mixin _$NotificationData {
   @JsonKey(name: 'user_id')
-  String? get userId => throw _privateConstructorUsedError;
+  String? get userId;
   @JsonKey(name: 'eesupool_id')
-  int? get eesupoolId => throw _privateConstructorUsedError;
+  int? get eesupoolId;
   @JsonKey(name: 'order_id')
-  int? get orderId => throw _privateConstructorUsedError;
-
-  /// Serializes this NotificationData to a JSON map.
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  int? get orderId;
 
   /// Create a copy of NotificationData
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  $NotificationDataCopyWith<NotificationData> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class $NotificationDataCopyWith<$Res> {
-  factory $NotificationDataCopyWith(
-          NotificationData value, $Res Function(NotificationData) then) =
-      _$NotificationDataCopyWithImpl<$Res, NotificationData>;
-  @useResult
-  $Res call(
-      {@JsonKey(name: 'user_id') String? userId,
-      @JsonKey(name: 'eesupool_id') int? eesupoolId,
-      @JsonKey(name: 'order_id') int? orderId});
-}
-
-/// @nodoc
-class _$NotificationDataCopyWithImpl<$Res, $Val extends NotificationData>
-    implements $NotificationDataCopyWith<$Res> {
-  _$NotificationDataCopyWithImpl(this._value, this._then);
-
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
-
-  /// Create a copy of NotificationData
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
+  $NotificationDataCopyWith<NotificationData> get copyWith =>
+      _$NotificationDataCopyWithImpl<NotificationData>(
+          this as NotificationData, _$identity);
+
+  /// Serializes this NotificationData to a JSON map.
+  Map<String, dynamic> toJson();
+
   @override
-  $Res call({
-    Object? userId = freezed,
-    Object? eesupoolId = freezed,
-    Object? orderId = freezed,
-  }) {
-    return _then(_value.copyWith(
-      userId: freezed == userId
-          ? _value.userId
-          : userId // ignore: cast_nullable_to_non_nullable
-              as String?,
-      eesupoolId: freezed == eesupoolId
-          ? _value.eesupoolId
-          : eesupoolId // ignore: cast_nullable_to_non_nullable
-              as int?,
-      orderId: freezed == orderId
-          ? _value.orderId
-          : orderId // ignore: cast_nullable_to_non_nullable
-              as int?,
-    ) as $Val);
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is NotificationData &&
+            (identical(other.userId, userId) || other.userId == userId) &&
+            (identical(other.eesupoolId, eesupoolId) ||
+                other.eesupoolId == eesupoolId) &&
+            (identical(other.orderId, orderId) || other.orderId == orderId));
+  }
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  int get hashCode => Object.hash(runtimeType, userId, eesupoolId, orderId);
+
+  @override
+  String toString() {
+    return 'NotificationData(userId: $userId, eesupoolId: $eesupoolId, orderId: $orderId)';
   }
 }
 
 /// @nodoc
-abstract class _$$NotificationDataImplCopyWith<$Res>
-    implements $NotificationDataCopyWith<$Res> {
-  factory _$$NotificationDataImplCopyWith(_$NotificationDataImpl value,
-          $Res Function(_$NotificationDataImpl) then) =
-      __$$NotificationDataImplCopyWithImpl<$Res>;
-  @override
+abstract mixin class $NotificationDataCopyWith<$Res> {
+  factory $NotificationDataCopyWith(
+          NotificationData value, $Res Function(NotificationData) _then) =
+      _$NotificationDataCopyWithImpl;
   @useResult
   $Res call(
       {@JsonKey(name: 'user_id') String? userId,
@@ -100,12 +67,12 @@ abstract class _$$NotificationDataImplCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$NotificationDataImplCopyWithImpl<$Res>
-    extends _$NotificationDataCopyWithImpl<$Res, _$NotificationDataImpl>
-    implements _$$NotificationDataImplCopyWith<$Res> {
-  __$$NotificationDataImplCopyWithImpl(_$NotificationDataImpl _value,
-      $Res Function(_$NotificationDataImpl) _then)
-      : super(_value, _then);
+class _$NotificationDataCopyWithImpl<$Res>
+    implements $NotificationDataCopyWith<$Res> {
+  _$NotificationDataCopyWithImpl(this._self, this._then);
+
+  final NotificationData _self;
+  final $Res Function(NotificationData) _then;
 
   /// Create a copy of NotificationData
   /// with the given fields replaced by the non-null parameter values.
@@ -116,17 +83,17 @@ class __$$NotificationDataImplCopyWithImpl<$Res>
     Object? eesupoolId = freezed,
     Object? orderId = freezed,
   }) {
-    return _then(_$NotificationDataImpl(
+    return _then(_self.copyWith(
       userId: freezed == userId
-          ? _value.userId
+          ? _self.userId
           : userId // ignore: cast_nullable_to_non_nullable
               as String?,
       eesupoolId: freezed == eesupoolId
-          ? _value.eesupoolId
+          ? _self.eesupoolId
           : eesupoolId // ignore: cast_nullable_to_non_nullable
               as int?,
       orderId: freezed == orderId
-          ? _value.orderId
+          ? _self.orderId
           : orderId // ignore: cast_nullable_to_non_nullable
               as int?,
     ));
@@ -135,14 +102,13 @@ class __$$NotificationDataImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$NotificationDataImpl implements _NotificationData {
-  const _$NotificationDataImpl(
+class _NotificationData implements NotificationData {
+  const _NotificationData(
       {@JsonKey(name: 'user_id') this.userId,
       @JsonKey(name: 'eesupool_id') this.eesupoolId,
       @JsonKey(name: 'order_id') this.orderId});
-
-  factory _$NotificationDataImpl.fromJson(Map<String, dynamic> json) =>
-      _$$NotificationDataImplFromJson(json);
+  factory _NotificationData.fromJson(Map<String, dynamic> json) =>
+      _$NotificationDataFromJson(json);
 
   @override
   @JsonKey(name: 'user_id')
@@ -154,16 +120,26 @@ class _$NotificationDataImpl implements _NotificationData {
   @JsonKey(name: 'order_id')
   final int? orderId;
 
+  /// Create a copy of NotificationData
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  String toString() {
-    return 'NotificationData(userId: $userId, eesupoolId: $eesupoolId, orderId: $orderId)';
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  _$NotificationDataCopyWith<_NotificationData> get copyWith =>
+      __$NotificationDataCopyWithImpl<_NotificationData>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$NotificationDataToJson(
+      this,
+    );
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$NotificationDataImpl &&
+            other is _NotificationData &&
             (identical(other.userId, userId) || other.userId == userId) &&
             (identical(other.eesupoolId, eesupoolId) ||
                 other.eesupoolId == eesupoolId) &&
@@ -174,46 +150,58 @@ class _$NotificationDataImpl implements _NotificationData {
   @override
   int get hashCode => Object.hash(runtimeType, userId, eesupoolId, orderId);
 
-  /// Create a copy of NotificationData
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  @pragma('vm:prefer-inline')
-  _$$NotificationDataImplCopyWith<_$NotificationDataImpl> get copyWith =>
-      __$$NotificationDataImplCopyWithImpl<_$NotificationDataImpl>(
-          this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$NotificationDataImplToJson(
-      this,
-    );
+  String toString() {
+    return 'NotificationData(userId: $userId, eesupoolId: $eesupoolId, orderId: $orderId)';
   }
 }
 
-abstract class _NotificationData implements NotificationData {
-  const factory _NotificationData(
-      {@JsonKey(name: 'user_id') final String? userId,
-      @JsonKey(name: 'eesupool_id') final int? eesupoolId,
-      @JsonKey(name: 'order_id') final int? orderId}) = _$NotificationDataImpl;
+/// @nodoc
+abstract mixin class _$NotificationDataCopyWith<$Res>
+    implements $NotificationDataCopyWith<$Res> {
+  factory _$NotificationDataCopyWith(
+          _NotificationData value, $Res Function(_NotificationData) _then) =
+      __$NotificationDataCopyWithImpl;
+  @override
+  @useResult
+  $Res call(
+      {@JsonKey(name: 'user_id') String? userId,
+      @JsonKey(name: 'eesupool_id') int? eesupoolId,
+      @JsonKey(name: 'order_id') int? orderId});
+}
 
-  factory _NotificationData.fromJson(Map<String, dynamic> json) =
-      _$NotificationDataImpl.fromJson;
+/// @nodoc
+class __$NotificationDataCopyWithImpl<$Res>
+    implements _$NotificationDataCopyWith<$Res> {
+  __$NotificationDataCopyWithImpl(this._self, this._then);
 
-  @override
-  @JsonKey(name: 'user_id')
-  String? get userId;
-  @override
-  @JsonKey(name: 'eesupool_id')
-  int? get eesupoolId;
-  @override
-  @JsonKey(name: 'order_id')
-  int? get orderId;
+  final _NotificationData _self;
+  final $Res Function(_NotificationData) _then;
 
   /// Create a copy of NotificationData
   /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$NotificationDataImplCopyWith<_$NotificationDataImpl> get copyWith =>
-      throw _privateConstructorUsedError;
+  @pragma('vm:prefer-inline')
+  $Res call({
+    Object? userId = freezed,
+    Object? eesupoolId = freezed,
+    Object? orderId = freezed,
+  }) {
+    return _then(_NotificationData(
+      userId: freezed == userId
+          ? _self.userId
+          : userId // ignore: cast_nullable_to_non_nullable
+              as String?,
+      eesupoolId: freezed == eesupoolId
+          ? _self.eesupoolId
+          : eesupoolId // ignore: cast_nullable_to_non_nullable
+              as int?,
+      orderId: freezed == orderId
+          ? _self.orderId
+          : orderId // ignore: cast_nullable_to_non_nullable
+              as int?,
+    ));
+  }
 }
+
+// dart format on

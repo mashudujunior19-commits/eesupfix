@@ -6,7 +6,7 @@ part of 'order.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$OrderImpl _$$OrderImplFromJson(Map<String, dynamic> json) => _$OrderImpl(
+_Order _$OrderFromJson(Map<String, dynamic> json) => _Order(
       id: (json['id'] as num?)?.toInt(),
       customerId: json['customer_id'] as String,
       eesupreneurId: json['eesupreneur_id'] as String?,
@@ -52,8 +52,7 @@ _$OrderImpl _$$OrderImplFromJson(Map<String, dynamic> json) => _$OrderImpl(
           json['address'], const AddressConverter().fromJson),
     );
 
-Map<String, dynamic> _$$OrderImplToJson(_$OrderImpl instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$OrderToJson(_Order instance) => <String, dynamic>{
       'id': instance.id,
       'customer_id': instance.customerId,
       'eesupreneur_id': instance.eesupreneurId,

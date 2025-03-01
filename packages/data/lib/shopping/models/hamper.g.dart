@@ -6,7 +6,7 @@ part of 'hamper.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$HamperImpl _$$HamperImplFromJson(Map<String, dynamic> json) => _$HamperImpl(
+_Hamper _$HamperFromJson(Map<String, dynamic> json) => _Hamper(
       id: json['id'] as String,
       hamperCode: json['code'] as String,
       type: json['type'] as String,
@@ -27,8 +27,7 @@ _$HamperImpl _$$HamperImplFromJson(Map<String, dynamic> json) => _$HamperImpl(
       ),
     );
 
-Map<String, dynamic> _$$HamperImplToJson(_$HamperImpl instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$HamperToJson(_Hamper instance) => <String, dynamic>{
       'id': instance.id,
       'code': instance.hamperCode,
       'type': instance.type,

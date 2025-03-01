@@ -6,8 +6,7 @@ part of 'ad_banner.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$AdBannerImpl _$$AdBannerImplFromJson(Map<String, dynamic> json) =>
-    _$AdBannerImpl(
+_AdBanner _$AdBannerFromJson(Map<String, dynamic> json) => _AdBanner(
       id: (json['id'] as num).toInt(),
       content: (json['content'] as List<dynamic>)
           .map((e) =>
@@ -15,21 +14,19 @@ _$AdBannerImpl _$$AdBannerImplFromJson(Map<String, dynamic> json) =>
           .toList(),
     );
 
-Map<String, dynamic> _$$AdBannerImplToJson(_$AdBannerImpl instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$AdBannerToJson(_AdBanner instance) => <String, dynamic>{
       'id': instance.id,
       'content':
           instance.content.map(const AdContentConverter().toJson).toList(),
     };
 
-_$AdContentImpl _$$AdContentImplFromJson(Map<String, dynamic> json) =>
-    _$AdContentImpl(
+_AdContent _$AdContentFromJson(Map<String, dynamic> json) => _AdContent(
       url: json['url'] as String,
       type: json['type'] as String,
       orderNumber: (json['order_number'] as num).toInt(),
     );
 
-Map<String, dynamic> _$$AdContentImplToJson(_$AdContentImpl instance) =>
+Map<String, dynamic> _$AdContentToJson(_AdContent instance) =>
     <String, dynamic>{
       'url': instance.url,
       'type': instance.type,

@@ -10,7 +10,7 @@ part 'eesupool.freezed.dart';
 part 'eesupool.g.dart';
 
 @freezed
-class EESUpool with _$EESUpool {
+abstract class EESUpool with _$EESUpool {
   const factory EESUpool({
     @JsonKey(name: 'eesupool_id', includeToJson: false) int? eesupoolId,
     required String name,

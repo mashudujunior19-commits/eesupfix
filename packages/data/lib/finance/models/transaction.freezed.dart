@@ -1,3 +1,4 @@
+// dart format width=80
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
@@ -9,135 +10,89 @@ part of 'transaction.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// dart format off
 T _$identity<T>(T value) => value;
 
-final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
-
-Transaction _$TransactionFromJson(Map<String, dynamic> json) {
-  return _Transaction.fromJson(json);
-}
-
 /// @nodoc
-mixin _$Transaction {
-  int get id => throw _privateConstructorUsedError;
-  String get type => throw _privateConstructorUsedError;
+mixin _$Transaction implements DiagnosticableTreeMixin {
+  int get id;
+  String get type;
   @JsonKey(name: 'doc_ref')
-  int get docRef => throw _privateConstructorUsedError;
+  int get docRef;
   @JsonKey(name: 'value')
-  double get value => throw _privateConstructorUsedError;
+  double get value;
   @JsonKey(name: 'vested')
-  bool get vested => throw _privateConstructorUsedError;
+  bool get vested;
   @JsonKey(name: 'description')
-  String get description => throw _privateConstructorUsedError;
+  String get description;
   @JsonKey(name: 'created_at')
-  DateTime get createdAt => throw _privateConstructorUsedError;
+  DateTime get createdAt;
   @JsonKey(name: 'confirmed_at')
-  DateTime? get confirmedAt => throw _privateConstructorUsedError;
+  DateTime? get confirmedAt;
   @JsonKey(name: 'cancelled_at')
-  DateTime? get cancelledAt => throw _privateConstructorUsedError;
-
-  /// Serializes this Transaction to a JSON map.
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  DateTime? get cancelledAt;
 
   /// Create a copy of Transaction
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  $TransactionCopyWith<Transaction> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class $TransactionCopyWith<$Res> {
-  factory $TransactionCopyWith(
-          Transaction value, $Res Function(Transaction) then) =
-      _$TransactionCopyWithImpl<$Res, Transaction>;
-  @useResult
-  $Res call(
-      {int id,
-      String type,
-      @JsonKey(name: 'doc_ref') int docRef,
-      @JsonKey(name: 'value') double value,
-      @JsonKey(name: 'vested') bool vested,
-      @JsonKey(name: 'description') String description,
-      @JsonKey(name: 'created_at') DateTime createdAt,
-      @JsonKey(name: 'confirmed_at') DateTime? confirmedAt,
-      @JsonKey(name: 'cancelled_at') DateTime? cancelledAt});
-}
-
-/// @nodoc
-class _$TransactionCopyWithImpl<$Res, $Val extends Transaction>
-    implements $TransactionCopyWith<$Res> {
-  _$TransactionCopyWithImpl(this._value, this._then);
-
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
-
-  /// Create a copy of Transaction
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
+  $TransactionCopyWith<Transaction> get copyWith =>
+      _$TransactionCopyWithImpl<Transaction>(this as Transaction, _$identity);
+
+  /// Serializes this Transaction to a JSON map.
+  Map<String, dynamic> toJson();
+
   @override
-  $Res call({
-    Object? id = null,
-    Object? type = null,
-    Object? docRef = null,
-    Object? value = null,
-    Object? vested = null,
-    Object? description = null,
-    Object? createdAt = null,
-    Object? confirmedAt = freezed,
-    Object? cancelledAt = freezed,
-  }) {
-    return _then(_value.copyWith(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as int,
-      type: null == type
-          ? _value.type
-          : type // ignore: cast_nullable_to_non_nullable
-              as String,
-      docRef: null == docRef
-          ? _value.docRef
-          : docRef // ignore: cast_nullable_to_non_nullable
-              as int,
-      value: null == value
-          ? _value.value
-          : value // ignore: cast_nullable_to_non_nullable
-              as double,
-      vested: null == vested
-          ? _value.vested
-          : vested // ignore: cast_nullable_to_non_nullable
-              as bool,
-      description: null == description
-          ? _value.description
-          : description // ignore: cast_nullable_to_non_nullable
-              as String,
-      createdAt: null == createdAt
-          ? _value.createdAt
-          : createdAt // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      confirmedAt: freezed == confirmedAt
-          ? _value.confirmedAt
-          : confirmedAt // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
-      cancelledAt: freezed == cancelledAt
-          ? _value.cancelledAt
-          : cancelledAt // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
-    ) as $Val);
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    properties
+      ..add(DiagnosticsProperty('type', 'Transaction'))
+      ..add(DiagnosticsProperty('id', id))
+      ..add(DiagnosticsProperty('type', type))
+      ..add(DiagnosticsProperty('docRef', docRef))
+      ..add(DiagnosticsProperty('value', value))
+      ..add(DiagnosticsProperty('vested', vested))
+      ..add(DiagnosticsProperty('description', description))
+      ..add(DiagnosticsProperty('createdAt', createdAt))
+      ..add(DiagnosticsProperty('confirmedAt', confirmedAt))
+      ..add(DiagnosticsProperty('cancelledAt', cancelledAt));
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is Transaction &&
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.type, type) || other.type == type) &&
+            (identical(other.docRef, docRef) || other.docRef == docRef) &&
+            (identical(other.value, value) || other.value == value) &&
+            (identical(other.vested, vested) || other.vested == vested) &&
+            (identical(other.description, description) ||
+                other.description == description) &&
+            (identical(other.createdAt, createdAt) ||
+                other.createdAt == createdAt) &&
+            (identical(other.confirmedAt, confirmedAt) ||
+                other.confirmedAt == confirmedAt) &&
+            (identical(other.cancelledAt, cancelledAt) ||
+                other.cancelledAt == cancelledAt));
+  }
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  int get hashCode => Object.hash(runtimeType, id, type, docRef, value, vested,
+      description, createdAt, confirmedAt, cancelledAt);
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'Transaction(id: $id, type: $type, docRef: $docRef, value: $value, vested: $vested, description: $description, createdAt: $createdAt, confirmedAt: $confirmedAt, cancelledAt: $cancelledAt)';
   }
 }
 
 /// @nodoc
-abstract class _$$TransactionImplCopyWith<$Res>
-    implements $TransactionCopyWith<$Res> {
-  factory _$$TransactionImplCopyWith(
-          _$TransactionImpl value, $Res Function(_$TransactionImpl) then) =
-      __$$TransactionImplCopyWithImpl<$Res>;
-  @override
+abstract mixin class $TransactionCopyWith<$Res> {
+  factory $TransactionCopyWith(
+          Transaction value, $Res Function(Transaction) _then) =
+      _$TransactionCopyWithImpl;
   @useResult
   $Res call(
       {int id,
@@ -152,12 +107,11 @@ abstract class _$$TransactionImplCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$TransactionImplCopyWithImpl<$Res>
-    extends _$TransactionCopyWithImpl<$Res, _$TransactionImpl>
-    implements _$$TransactionImplCopyWith<$Res> {
-  __$$TransactionImplCopyWithImpl(
-      _$TransactionImpl _value, $Res Function(_$TransactionImpl) _then)
-      : super(_value, _then);
+class _$TransactionCopyWithImpl<$Res> implements $TransactionCopyWith<$Res> {
+  _$TransactionCopyWithImpl(this._self, this._then);
+
+  final Transaction _self;
+  final $Res Function(Transaction) _then;
 
   /// Create a copy of Transaction
   /// with the given fields replaced by the non-null parameter values.
@@ -174,41 +128,41 @@ class __$$TransactionImplCopyWithImpl<$Res>
     Object? confirmedAt = freezed,
     Object? cancelledAt = freezed,
   }) {
-    return _then(_$TransactionImpl(
+    return _then(_self.copyWith(
       id: null == id
-          ? _value.id
+          ? _self.id
           : id // ignore: cast_nullable_to_non_nullable
               as int,
       type: null == type
-          ? _value.type
+          ? _self.type
           : type // ignore: cast_nullable_to_non_nullable
               as String,
       docRef: null == docRef
-          ? _value.docRef
+          ? _self.docRef
           : docRef // ignore: cast_nullable_to_non_nullable
               as int,
       value: null == value
-          ? _value.value
+          ? _self.value
           : value // ignore: cast_nullable_to_non_nullable
               as double,
       vested: null == vested
-          ? _value.vested
+          ? _self.vested
           : vested // ignore: cast_nullable_to_non_nullable
               as bool,
       description: null == description
-          ? _value.description
+          ? _self.description
           : description // ignore: cast_nullable_to_non_nullable
               as String,
       createdAt: null == createdAt
-          ? _value.createdAt
+          ? _self.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
               as DateTime,
       confirmedAt: freezed == confirmedAt
-          ? _value.confirmedAt
+          ? _self.confirmedAt
           : confirmedAt // ignore: cast_nullable_to_non_nullable
               as DateTime?,
       cancelledAt: freezed == cancelledAt
-          ? _value.cancelledAt
+          ? _self.cancelledAt
           : cancelledAt // ignore: cast_nullable_to_non_nullable
               as DateTime?,
     ));
@@ -217,8 +171,8 @@ class __$$TransactionImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$TransactionImpl with DiagnosticableTreeMixin implements _Transaction {
-  const _$TransactionImpl(
+class _Transaction with DiagnosticableTreeMixin implements Transaction {
+  const _Transaction(
       {required this.id,
       required this.type,
       @JsonKey(name: 'doc_ref') required this.docRef,
@@ -228,9 +182,8 @@ class _$TransactionImpl with DiagnosticableTreeMixin implements _Transaction {
       @JsonKey(name: 'created_at') required this.createdAt,
       @JsonKey(name: 'confirmed_at') this.confirmedAt,
       @JsonKey(name: 'cancelled_at') this.cancelledAt});
-
-  factory _$TransactionImpl.fromJson(Map<String, dynamic> json) =>
-      _$$TransactionImplFromJson(json);
+  factory _Transaction.fromJson(Map<String, dynamic> json) =>
+      _$TransactionFromJson(json);
 
   @override
   final int id;
@@ -258,14 +211,23 @@ class _$TransactionImpl with DiagnosticableTreeMixin implements _Transaction {
   @JsonKey(name: 'cancelled_at')
   final DateTime? cancelledAt;
 
+  /// Create a copy of Transaction
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'Transaction(id: $id, type: $type, docRef: $docRef, value: $value, vested: $vested, description: $description, createdAt: $createdAt, confirmedAt: $confirmedAt, cancelledAt: $cancelledAt)';
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  _$TransactionCopyWith<_Transaction> get copyWith =>
+      __$TransactionCopyWithImpl<_Transaction>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$TransactionToJson(
+      this,
+    );
   }
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
     properties
       ..add(DiagnosticsProperty('type', 'Transaction'))
       ..add(DiagnosticsProperty('id', id))
@@ -283,7 +245,7 @@ class _$TransactionImpl with DiagnosticableTreeMixin implements _Transaction {
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$TransactionImpl &&
+            other is _Transaction &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.type, type) || other.type == type) &&
             (identical(other.docRef, docRef) || other.docRef == docRef) &&
@@ -304,68 +266,93 @@ class _$TransactionImpl with DiagnosticableTreeMixin implements _Transaction {
   int get hashCode => Object.hash(runtimeType, id, type, docRef, value, vested,
       description, createdAt, confirmedAt, cancelledAt);
 
-  /// Create a copy of Transaction
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  @pragma('vm:prefer-inline')
-  _$$TransactionImplCopyWith<_$TransactionImpl> get copyWith =>
-      __$$TransactionImplCopyWithImpl<_$TransactionImpl>(this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$TransactionImplToJson(
-      this,
-    );
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'Transaction(id: $id, type: $type, docRef: $docRef, value: $value, vested: $vested, description: $description, createdAt: $createdAt, confirmedAt: $confirmedAt, cancelledAt: $cancelledAt)';
   }
 }
 
-abstract class _Transaction implements Transaction {
-  const factory _Transaction(
-          {required final int id,
-          required final String type,
-          @JsonKey(name: 'doc_ref') required final int docRef,
-          @JsonKey(name: 'value') required final double value,
-          @JsonKey(name: 'vested') required final bool vested,
-          @JsonKey(name: 'description') required final String description,
-          @JsonKey(name: 'created_at') required final DateTime createdAt,
-          @JsonKey(name: 'confirmed_at') final DateTime? confirmedAt,
-          @JsonKey(name: 'cancelled_at') final DateTime? cancelledAt}) =
-      _$TransactionImpl;
+/// @nodoc
+abstract mixin class _$TransactionCopyWith<$Res>
+    implements $TransactionCopyWith<$Res> {
+  factory _$TransactionCopyWith(
+          _Transaction value, $Res Function(_Transaction) _then) =
+      __$TransactionCopyWithImpl;
+  @override
+  @useResult
+  $Res call(
+      {int id,
+      String type,
+      @JsonKey(name: 'doc_ref') int docRef,
+      @JsonKey(name: 'value') double value,
+      @JsonKey(name: 'vested') bool vested,
+      @JsonKey(name: 'description') String description,
+      @JsonKey(name: 'created_at') DateTime createdAt,
+      @JsonKey(name: 'confirmed_at') DateTime? confirmedAt,
+      @JsonKey(name: 'cancelled_at') DateTime? cancelledAt});
+}
 
-  factory _Transaction.fromJson(Map<String, dynamic> json) =
-      _$TransactionImpl.fromJson;
+/// @nodoc
+class __$TransactionCopyWithImpl<$Res> implements _$TransactionCopyWith<$Res> {
+  __$TransactionCopyWithImpl(this._self, this._then);
 
-  @override
-  int get id;
-  @override
-  String get type;
-  @override
-  @JsonKey(name: 'doc_ref')
-  int get docRef;
-  @override
-  @JsonKey(name: 'value')
-  double get value;
-  @override
-  @JsonKey(name: 'vested')
-  bool get vested;
-  @override
-  @JsonKey(name: 'description')
-  String get description;
-  @override
-  @JsonKey(name: 'created_at')
-  DateTime get createdAt;
-  @override
-  @JsonKey(name: 'confirmed_at')
-  DateTime? get confirmedAt;
-  @override
-  @JsonKey(name: 'cancelled_at')
-  DateTime? get cancelledAt;
+  final _Transaction _self;
+  final $Res Function(_Transaction) _then;
 
   /// Create a copy of Transaction
   /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$TransactionImplCopyWith<_$TransactionImpl> get copyWith =>
-      throw _privateConstructorUsedError;
+  @pragma('vm:prefer-inline')
+  $Res call({
+    Object? id = null,
+    Object? type = null,
+    Object? docRef = null,
+    Object? value = null,
+    Object? vested = null,
+    Object? description = null,
+    Object? createdAt = null,
+    Object? confirmedAt = freezed,
+    Object? cancelledAt = freezed,
+  }) {
+    return _then(_Transaction(
+      id: null == id
+          ? _self.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int,
+      type: null == type
+          ? _self.type
+          : type // ignore: cast_nullable_to_non_nullable
+              as String,
+      docRef: null == docRef
+          ? _self.docRef
+          : docRef // ignore: cast_nullable_to_non_nullable
+              as int,
+      value: null == value
+          ? _self.value
+          : value // ignore: cast_nullable_to_non_nullable
+              as double,
+      vested: null == vested
+          ? _self.vested
+          : vested // ignore: cast_nullable_to_non_nullable
+              as bool,
+      description: null == description
+          ? _self.description
+          : description // ignore: cast_nullable_to_non_nullable
+              as String,
+      createdAt: null == createdAt
+          ? _self.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as DateTime,
+      confirmedAt: freezed == confirmedAt
+          ? _self.confirmedAt
+          : confirmedAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      cancelledAt: freezed == cancelledAt
+          ? _self.cancelledAt
+          : cancelledAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+    ));
+  }
 }
+
+// dart format on

@@ -1,3 +1,4 @@
+// dart format width=80
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
@@ -9,578 +10,72 @@ part of 'product.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// dart format off
 T _$identity<T>(T value) => value;
-
-final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
-
-Product _$ProductFromJson(Map<String, dynamic> json) {
-  return _Product.fromJson(json);
-}
 
 /// @nodoc
 mixin _$Product {
-  int get id => throw _privateConstructorUsedError;
+  int get id;
   @JsonKey(name: 'category_id')
-  int? get categoryId => throw _privateConstructorUsedError;
-  String get name => throw _privateConstructorUsedError;
+  int? get categoryId;
+  String get name;
   @JsonKey(name: 'description')
-  String? get description => throw _privateConstructorUsedError;
+  String? get description;
   @JsonKey(name: 'image_url')
-  String? get imageUrl => throw _privateConstructorUsedError;
-  String? get size => throw _privateConstructorUsedError;
-  String? get brand => throw _privateConstructorUsedError;
-  String? get type => throw _privateConstructorUsedError;
-  String? get uom => throw _privateConstructorUsedError;
+  String? get imageUrl;
+  String? get size;
+  String? get brand;
+  String? get type;
+  String? get uom;
   @JsonKey(name: 'unit_pack_size')
-  String? get unitPackSize => throw _privateConstructorUsedError;
-  String? get flavour => throw _privateConstructorUsedError;
+  String? get unitPackSize;
+  String? get flavour;
   @JsonKey(name: 'sale_price')
-  double get salePrice => throw _privateConstructorUsedError;
+  double get salePrice;
   @JsonKey(name: 'cost_price')
-  double? get costPrice => throw _privateConstructorUsedError;
-  double? get vaa => throw _privateConstructorUsedError;
-  double? get vat => throw _privateConstructorUsedError;
+  double? get costPrice;
+  double? get vaa;
+  double? get vat;
   @JsonKey(name: 'order_max')
-  int? get orderMax => throw _privateConstructorUsedError;
+  int? get orderMax;
   @JsonKey(name: 'child_id')
-  int? get childId => throw _privateConstructorUsedError;
+  int? get childId;
   @JsonKey(name: 'child_break_qty')
-  int? get childBreakQty => throw _privateConstructorUsedError;
+  int? get childBreakQty;
   @JsonKey(name: 'bar_code')
-  String? get barCode => throw _privateConstructorUsedError;
+  String? get barCode;
   @JsonKey(name: 'kit_kat_ref')
-  String? get kitKatRef => throw _privateConstructorUsedError;
+  String? get kitKatRef;
   @JsonKey(name: 'vat_claimable')
-  bool? get vatClaimable => throw _privateConstructorUsedError;
+  bool? get vatClaimable;
   @JsonKey(name: 'vat_able')
-  bool? get vatAble => throw _privateConstructorUsedError;
+  bool? get vatAble;
   @ProductClassConverter()
   @JsonKey(name: 'class')
-  ProductClass get productClass => throw _privateConstructorUsedError;
+  ProductClass get productClass;
   @JsonKey(name: 'category_name')
-  String? get categoryName => throw _privateConstructorUsedError;
+  String? get categoryName;
   @JsonKey(name: 'category_image_url')
-  String? get categoryImageUrl => throw _privateConstructorUsedError;
+  String? get categoryImageUrl;
   @JsonKey(name: 'hamper_id')
-  String? get hamperId => throw _privateConstructorUsedError;
-  bool get sellable => throw _privateConstructorUsedError;
-
-  /// Serializes this Product to a JSON map.
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  String? get hamperId;
+  bool get sellable;
 
   /// Create a copy of Product
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  $ProductCopyWith<Product> get copyWith => throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class $ProductCopyWith<$Res> {
-  factory $ProductCopyWith(Product value, $Res Function(Product) then) =
-      _$ProductCopyWithImpl<$Res, Product>;
-  @useResult
-  $Res call(
-      {int id,
-      @JsonKey(name: 'category_id') int? categoryId,
-      String name,
-      @JsonKey(name: 'description') String? description,
-      @JsonKey(name: 'image_url') String? imageUrl,
-      String? size,
-      String? brand,
-      String? type,
-      String? uom,
-      @JsonKey(name: 'unit_pack_size') String? unitPackSize,
-      String? flavour,
-      @JsonKey(name: 'sale_price') double salePrice,
-      @JsonKey(name: 'cost_price') double? costPrice,
-      double? vaa,
-      double? vat,
-      @JsonKey(name: 'order_max') int? orderMax,
-      @JsonKey(name: 'child_id') int? childId,
-      @JsonKey(name: 'child_break_qty') int? childBreakQty,
-      @JsonKey(name: 'bar_code') String? barCode,
-      @JsonKey(name: 'kit_kat_ref') String? kitKatRef,
-      @JsonKey(name: 'vat_claimable') bool? vatClaimable,
-      @JsonKey(name: 'vat_able') bool? vatAble,
-      @ProductClassConverter()
-      @JsonKey(name: 'class')
-      ProductClass productClass,
-      @JsonKey(name: 'category_name') String? categoryName,
-      @JsonKey(name: 'category_image_url') String? categoryImageUrl,
-      @JsonKey(name: 'hamper_id') String? hamperId,
-      bool sellable});
-}
-
-/// @nodoc
-class _$ProductCopyWithImpl<$Res, $Val extends Product>
-    implements $ProductCopyWith<$Res> {
-  _$ProductCopyWithImpl(this._value, this._then);
-
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
-
-  /// Create a copy of Product
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? id = null,
-    Object? categoryId = freezed,
-    Object? name = null,
-    Object? description = freezed,
-    Object? imageUrl = freezed,
-    Object? size = freezed,
-    Object? brand = freezed,
-    Object? type = freezed,
-    Object? uom = freezed,
-    Object? unitPackSize = freezed,
-    Object? flavour = freezed,
-    Object? salePrice = null,
-    Object? costPrice = freezed,
-    Object? vaa = freezed,
-    Object? vat = freezed,
-    Object? orderMax = freezed,
-    Object? childId = freezed,
-    Object? childBreakQty = freezed,
-    Object? barCode = freezed,
-    Object? kitKatRef = freezed,
-    Object? vatClaimable = freezed,
-    Object? vatAble = freezed,
-    Object? productClass = null,
-    Object? categoryName = freezed,
-    Object? categoryImageUrl = freezed,
-    Object? hamperId = freezed,
-    Object? sellable = null,
-  }) {
-    return _then(_value.copyWith(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as int,
-      categoryId: freezed == categoryId
-          ? _value.categoryId
-          : categoryId // ignore: cast_nullable_to_non_nullable
-              as int?,
-      name: null == name
-          ? _value.name
-          : name // ignore: cast_nullable_to_non_nullable
-              as String,
-      description: freezed == description
-          ? _value.description
-          : description // ignore: cast_nullable_to_non_nullable
-              as String?,
-      imageUrl: freezed == imageUrl
-          ? _value.imageUrl
-          : imageUrl // ignore: cast_nullable_to_non_nullable
-              as String?,
-      size: freezed == size
-          ? _value.size
-          : size // ignore: cast_nullable_to_non_nullable
-              as String?,
-      brand: freezed == brand
-          ? _value.brand
-          : brand // ignore: cast_nullable_to_non_nullable
-              as String?,
-      type: freezed == type
-          ? _value.type
-          : type // ignore: cast_nullable_to_non_nullable
-              as String?,
-      uom: freezed == uom
-          ? _value.uom
-          : uom // ignore: cast_nullable_to_non_nullable
-              as String?,
-      unitPackSize: freezed == unitPackSize
-          ? _value.unitPackSize
-          : unitPackSize // ignore: cast_nullable_to_non_nullable
-              as String?,
-      flavour: freezed == flavour
-          ? _value.flavour
-          : flavour // ignore: cast_nullable_to_non_nullable
-              as String?,
-      salePrice: null == salePrice
-          ? _value.salePrice
-          : salePrice // ignore: cast_nullable_to_non_nullable
-              as double,
-      costPrice: freezed == costPrice
-          ? _value.costPrice
-          : costPrice // ignore: cast_nullable_to_non_nullable
-              as double?,
-      vaa: freezed == vaa
-          ? _value.vaa
-          : vaa // ignore: cast_nullable_to_non_nullable
-              as double?,
-      vat: freezed == vat
-          ? _value.vat
-          : vat // ignore: cast_nullable_to_non_nullable
-              as double?,
-      orderMax: freezed == orderMax
-          ? _value.orderMax
-          : orderMax // ignore: cast_nullable_to_non_nullable
-              as int?,
-      childId: freezed == childId
-          ? _value.childId
-          : childId // ignore: cast_nullable_to_non_nullable
-              as int?,
-      childBreakQty: freezed == childBreakQty
-          ? _value.childBreakQty
-          : childBreakQty // ignore: cast_nullable_to_non_nullable
-              as int?,
-      barCode: freezed == barCode
-          ? _value.barCode
-          : barCode // ignore: cast_nullable_to_non_nullable
-              as String?,
-      kitKatRef: freezed == kitKatRef
-          ? _value.kitKatRef
-          : kitKatRef // ignore: cast_nullable_to_non_nullable
-              as String?,
-      vatClaimable: freezed == vatClaimable
-          ? _value.vatClaimable
-          : vatClaimable // ignore: cast_nullable_to_non_nullable
-              as bool?,
-      vatAble: freezed == vatAble
-          ? _value.vatAble
-          : vatAble // ignore: cast_nullable_to_non_nullable
-              as bool?,
-      productClass: null == productClass
-          ? _value.productClass
-          : productClass // ignore: cast_nullable_to_non_nullable
-              as ProductClass,
-      categoryName: freezed == categoryName
-          ? _value.categoryName
-          : categoryName // ignore: cast_nullable_to_non_nullable
-              as String?,
-      categoryImageUrl: freezed == categoryImageUrl
-          ? _value.categoryImageUrl
-          : categoryImageUrl // ignore: cast_nullable_to_non_nullable
-              as String?,
-      hamperId: freezed == hamperId
-          ? _value.hamperId
-          : hamperId // ignore: cast_nullable_to_non_nullable
-              as String?,
-      sellable: null == sellable
-          ? _value.sellable
-          : sellable // ignore: cast_nullable_to_non_nullable
-              as bool,
-    ) as $Val);
-  }
-}
+  $ProductCopyWith<Product> get copyWith =>
+      _$ProductCopyWithImpl<Product>(this as Product, _$identity);
 
-/// @nodoc
-abstract class _$$ProductImplCopyWith<$Res> implements $ProductCopyWith<$Res> {
-  factory _$$ProductImplCopyWith(
-          _$ProductImpl value, $Res Function(_$ProductImpl) then) =
-      __$$ProductImplCopyWithImpl<$Res>;
-  @override
-  @useResult
-  $Res call(
-      {int id,
-      @JsonKey(name: 'category_id') int? categoryId,
-      String name,
-      @JsonKey(name: 'description') String? description,
-      @JsonKey(name: 'image_url') String? imageUrl,
-      String? size,
-      String? brand,
-      String? type,
-      String? uom,
-      @JsonKey(name: 'unit_pack_size') String? unitPackSize,
-      String? flavour,
-      @JsonKey(name: 'sale_price') double salePrice,
-      @JsonKey(name: 'cost_price') double? costPrice,
-      double? vaa,
-      double? vat,
-      @JsonKey(name: 'order_max') int? orderMax,
-      @JsonKey(name: 'child_id') int? childId,
-      @JsonKey(name: 'child_break_qty') int? childBreakQty,
-      @JsonKey(name: 'bar_code') String? barCode,
-      @JsonKey(name: 'kit_kat_ref') String? kitKatRef,
-      @JsonKey(name: 'vat_claimable') bool? vatClaimable,
-      @JsonKey(name: 'vat_able') bool? vatAble,
-      @ProductClassConverter()
-      @JsonKey(name: 'class')
-      ProductClass productClass,
-      @JsonKey(name: 'category_name') String? categoryName,
-      @JsonKey(name: 'category_image_url') String? categoryImageUrl,
-      @JsonKey(name: 'hamper_id') String? hamperId,
-      bool sellable});
-}
-
-/// @nodoc
-class __$$ProductImplCopyWithImpl<$Res>
-    extends _$ProductCopyWithImpl<$Res, _$ProductImpl>
-    implements _$$ProductImplCopyWith<$Res> {
-  __$$ProductImplCopyWithImpl(
-      _$ProductImpl _value, $Res Function(_$ProductImpl) _then)
-      : super(_value, _then);
-
-  /// Create a copy of Product
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? id = null,
-    Object? categoryId = freezed,
-    Object? name = null,
-    Object? description = freezed,
-    Object? imageUrl = freezed,
-    Object? size = freezed,
-    Object? brand = freezed,
-    Object? type = freezed,
-    Object? uom = freezed,
-    Object? unitPackSize = freezed,
-    Object? flavour = freezed,
-    Object? salePrice = null,
-    Object? costPrice = freezed,
-    Object? vaa = freezed,
-    Object? vat = freezed,
-    Object? orderMax = freezed,
-    Object? childId = freezed,
-    Object? childBreakQty = freezed,
-    Object? barCode = freezed,
-    Object? kitKatRef = freezed,
-    Object? vatClaimable = freezed,
-    Object? vatAble = freezed,
-    Object? productClass = null,
-    Object? categoryName = freezed,
-    Object? categoryImageUrl = freezed,
-    Object? hamperId = freezed,
-    Object? sellable = null,
-  }) {
-    return _then(_$ProductImpl(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as int,
-      categoryId: freezed == categoryId
-          ? _value.categoryId
-          : categoryId // ignore: cast_nullable_to_non_nullable
-              as int?,
-      name: null == name
-          ? _value.name
-          : name // ignore: cast_nullable_to_non_nullable
-              as String,
-      description: freezed == description
-          ? _value.description
-          : description // ignore: cast_nullable_to_non_nullable
-              as String?,
-      imageUrl: freezed == imageUrl
-          ? _value.imageUrl
-          : imageUrl // ignore: cast_nullable_to_non_nullable
-              as String?,
-      size: freezed == size
-          ? _value.size
-          : size // ignore: cast_nullable_to_non_nullable
-              as String?,
-      brand: freezed == brand
-          ? _value.brand
-          : brand // ignore: cast_nullable_to_non_nullable
-              as String?,
-      type: freezed == type
-          ? _value.type
-          : type // ignore: cast_nullable_to_non_nullable
-              as String?,
-      uom: freezed == uom
-          ? _value.uom
-          : uom // ignore: cast_nullable_to_non_nullable
-              as String?,
-      unitPackSize: freezed == unitPackSize
-          ? _value.unitPackSize
-          : unitPackSize // ignore: cast_nullable_to_non_nullable
-              as String?,
-      flavour: freezed == flavour
-          ? _value.flavour
-          : flavour // ignore: cast_nullable_to_non_nullable
-              as String?,
-      salePrice: null == salePrice
-          ? _value.salePrice
-          : salePrice // ignore: cast_nullable_to_non_nullable
-              as double,
-      costPrice: freezed == costPrice
-          ? _value.costPrice
-          : costPrice // ignore: cast_nullable_to_non_nullable
-              as double?,
-      vaa: freezed == vaa
-          ? _value.vaa
-          : vaa // ignore: cast_nullable_to_non_nullable
-              as double?,
-      vat: freezed == vat
-          ? _value.vat
-          : vat // ignore: cast_nullable_to_non_nullable
-              as double?,
-      orderMax: freezed == orderMax
-          ? _value.orderMax
-          : orderMax // ignore: cast_nullable_to_non_nullable
-              as int?,
-      childId: freezed == childId
-          ? _value.childId
-          : childId // ignore: cast_nullable_to_non_nullable
-              as int?,
-      childBreakQty: freezed == childBreakQty
-          ? _value.childBreakQty
-          : childBreakQty // ignore: cast_nullable_to_non_nullable
-              as int?,
-      barCode: freezed == barCode
-          ? _value.barCode
-          : barCode // ignore: cast_nullable_to_non_nullable
-              as String?,
-      kitKatRef: freezed == kitKatRef
-          ? _value.kitKatRef
-          : kitKatRef // ignore: cast_nullable_to_non_nullable
-              as String?,
-      vatClaimable: freezed == vatClaimable
-          ? _value.vatClaimable
-          : vatClaimable // ignore: cast_nullable_to_non_nullable
-              as bool?,
-      vatAble: freezed == vatAble
-          ? _value.vatAble
-          : vatAble // ignore: cast_nullable_to_non_nullable
-              as bool?,
-      productClass: null == productClass
-          ? _value.productClass
-          : productClass // ignore: cast_nullable_to_non_nullable
-              as ProductClass,
-      categoryName: freezed == categoryName
-          ? _value.categoryName
-          : categoryName // ignore: cast_nullable_to_non_nullable
-              as String?,
-      categoryImageUrl: freezed == categoryImageUrl
-          ? _value.categoryImageUrl
-          : categoryImageUrl // ignore: cast_nullable_to_non_nullable
-              as String?,
-      hamperId: freezed == hamperId
-          ? _value.hamperId
-          : hamperId // ignore: cast_nullable_to_non_nullable
-              as String?,
-      sellable: null == sellable
-          ? _value.sellable
-          : sellable // ignore: cast_nullable_to_non_nullable
-              as bool,
-    ));
-  }
-}
-
-/// @nodoc
-@JsonSerializable()
-class _$ProductImpl implements _Product {
-  _$ProductImpl(
-      {required this.id,
-      @JsonKey(name: 'category_id') this.categoryId,
-      required this.name,
-      @JsonKey(name: 'description') this.description,
-      @JsonKey(name: 'image_url') this.imageUrl,
-      this.size,
-      this.brand,
-      this.type,
-      this.uom,
-      @JsonKey(name: 'unit_pack_size') this.unitPackSize,
-      this.flavour,
-      @JsonKey(name: 'sale_price') required this.salePrice,
-      @JsonKey(name: 'cost_price') this.costPrice,
-      this.vaa,
-      this.vat,
-      @JsonKey(name: 'order_max') this.orderMax,
-      @JsonKey(name: 'child_id') this.childId,
-      @JsonKey(name: 'child_break_qty') this.childBreakQty,
-      @JsonKey(name: 'bar_code') this.barCode,
-      @JsonKey(name: 'kit_kat_ref') this.kitKatRef,
-      @JsonKey(name: 'vat_claimable') this.vatClaimable,
-      @JsonKey(name: 'vat_able') this.vatAble,
-      @ProductClassConverter()
-      @JsonKey(name: 'class')
-      required this.productClass,
-      @JsonKey(name: 'category_name') this.categoryName,
-      @JsonKey(name: 'category_image_url') this.categoryImageUrl,
-      @JsonKey(name: 'hamper_id') this.hamperId,
-      required this.sellable});
-
-  factory _$ProductImpl.fromJson(Map<String, dynamic> json) =>
-      _$$ProductImplFromJson(json);
-
-  @override
-  final int id;
-  @override
-  @JsonKey(name: 'category_id')
-  final int? categoryId;
-  @override
-  final String name;
-  @override
-  @JsonKey(name: 'description')
-  final String? description;
-  @override
-  @JsonKey(name: 'image_url')
-  final String? imageUrl;
-  @override
-  final String? size;
-  @override
-  final String? brand;
-  @override
-  final String? type;
-  @override
-  final String? uom;
-  @override
-  @JsonKey(name: 'unit_pack_size')
-  final String? unitPackSize;
-  @override
-  final String? flavour;
-  @override
-  @JsonKey(name: 'sale_price')
-  final double salePrice;
-  @override
-  @JsonKey(name: 'cost_price')
-  final double? costPrice;
-  @override
-  final double? vaa;
-  @override
-  final double? vat;
-  @override
-  @JsonKey(name: 'order_max')
-  final int? orderMax;
-  @override
-  @JsonKey(name: 'child_id')
-  final int? childId;
-  @override
-  @JsonKey(name: 'child_break_qty')
-  final int? childBreakQty;
-  @override
-  @JsonKey(name: 'bar_code')
-  final String? barCode;
-  @override
-  @JsonKey(name: 'kit_kat_ref')
-  final String? kitKatRef;
-  @override
-  @JsonKey(name: 'vat_claimable')
-  final bool? vatClaimable;
-  @override
-  @JsonKey(name: 'vat_able')
-  final bool? vatAble;
-  @override
-  @ProductClassConverter()
-  @JsonKey(name: 'class')
-  final ProductClass productClass;
-  @override
-  @JsonKey(name: 'category_name')
-  final String? categoryName;
-  @override
-  @JsonKey(name: 'category_image_url')
-  final String? categoryImageUrl;
-  @override
-  @JsonKey(name: 'hamper_id')
-  final String? hamperId;
-  @override
-  final bool sellable;
-
-  @override
-  String toString() {
-    return 'Product(id: $id, categoryId: $categoryId, name: $name, description: $description, imageUrl: $imageUrl, size: $size, brand: $brand, type: $type, uom: $uom, unitPackSize: $unitPackSize, flavour: $flavour, salePrice: $salePrice, costPrice: $costPrice, vaa: $vaa, vat: $vat, orderMax: $orderMax, childId: $childId, childBreakQty: $childBreakQty, barCode: $barCode, kitKatRef: $kitKatRef, vatClaimable: $vatClaimable, vatAble: $vatAble, productClass: $productClass, categoryName: $categoryName, categoryImageUrl: $categoryImageUrl, hamperId: $hamperId, sellable: $sellable)';
-  }
+  /// Serializes this Product to a JSON map.
+  Map<String, dynamic> toJson();
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$ProductImpl &&
+            other is Product &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.categoryId, categoryId) ||
                 other.categoryId == categoryId) &&
@@ -658,133 +153,603 @@ class _$ProductImpl implements _Product {
         sellable
       ]);
 
-  /// Create a copy of Product
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  @pragma('vm:prefer-inline')
-  _$$ProductImplCopyWith<_$ProductImpl> get copyWith =>
-      __$$ProductImplCopyWithImpl<_$ProductImpl>(this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$ProductImplToJson(
-      this,
-    );
+  String toString() {
+    return 'Product(id: $id, categoryId: $categoryId, name: $name, description: $description, imageUrl: $imageUrl, size: $size, brand: $brand, type: $type, uom: $uom, unitPackSize: $unitPackSize, flavour: $flavour, salePrice: $salePrice, costPrice: $costPrice, vaa: $vaa, vat: $vat, orderMax: $orderMax, childId: $childId, childBreakQty: $childBreakQty, barCode: $barCode, kitKatRef: $kitKatRef, vatClaimable: $vatClaimable, vatAble: $vatAble, productClass: $productClass, categoryName: $categoryName, categoryImageUrl: $categoryImageUrl, hamperId: $hamperId, sellable: $sellable)';
   }
 }
 
-abstract class _Product implements Product {
-  factory _Product(
-      {required final int id,
-      @JsonKey(name: 'category_id') final int? categoryId,
-      required final String name,
-      @JsonKey(name: 'description') final String? description,
-      @JsonKey(name: 'image_url') final String? imageUrl,
-      final String? size,
-      final String? brand,
-      final String? type,
-      final String? uom,
-      @JsonKey(name: 'unit_pack_size') final String? unitPackSize,
-      final String? flavour,
-      @JsonKey(name: 'sale_price') required final double salePrice,
-      @JsonKey(name: 'cost_price') final double? costPrice,
-      final double? vaa,
-      final double? vat,
-      @JsonKey(name: 'order_max') final int? orderMax,
-      @JsonKey(name: 'child_id') final int? childId,
-      @JsonKey(name: 'child_break_qty') final int? childBreakQty,
-      @JsonKey(name: 'bar_code') final String? barCode,
-      @JsonKey(name: 'kit_kat_ref') final String? kitKatRef,
-      @JsonKey(name: 'vat_claimable') final bool? vatClaimable,
-      @JsonKey(name: 'vat_able') final bool? vatAble,
+/// @nodoc
+abstract mixin class $ProductCopyWith<$Res> {
+  factory $ProductCopyWith(Product value, $Res Function(Product) _then) =
+      _$ProductCopyWithImpl;
+  @useResult
+  $Res call(
+      {int id,
+      @JsonKey(name: 'category_id') int? categoryId,
+      String name,
+      @JsonKey(name: 'description') String? description,
+      @JsonKey(name: 'image_url') String? imageUrl,
+      String? size,
+      String? brand,
+      String? type,
+      String? uom,
+      @JsonKey(name: 'unit_pack_size') String? unitPackSize,
+      String? flavour,
+      @JsonKey(name: 'sale_price') double salePrice,
+      @JsonKey(name: 'cost_price') double? costPrice,
+      double? vaa,
+      double? vat,
+      @JsonKey(name: 'order_max') int? orderMax,
+      @JsonKey(name: 'child_id') int? childId,
+      @JsonKey(name: 'child_break_qty') int? childBreakQty,
+      @JsonKey(name: 'bar_code') String? barCode,
+      @JsonKey(name: 'kit_kat_ref') String? kitKatRef,
+      @JsonKey(name: 'vat_claimable') bool? vatClaimable,
+      @JsonKey(name: 'vat_able') bool? vatAble,
       @ProductClassConverter()
       @JsonKey(name: 'class')
-      required final ProductClass productClass,
-      @JsonKey(name: 'category_name') final String? categoryName,
-      @JsonKey(name: 'category_image_url') final String? categoryImageUrl,
-      @JsonKey(name: 'hamper_id') final String? hamperId,
-      required final bool sellable}) = _$ProductImpl;
+      ProductClass productClass,
+      @JsonKey(name: 'category_name') String? categoryName,
+      @JsonKey(name: 'category_image_url') String? categoryImageUrl,
+      @JsonKey(name: 'hamper_id') String? hamperId,
+      bool sellable});
+}
 
-  factory _Product.fromJson(Map<String, dynamic> json) = _$ProductImpl.fromJson;
+/// @nodoc
+class _$ProductCopyWithImpl<$Res> implements $ProductCopyWith<$Res> {
+  _$ProductCopyWithImpl(this._self, this._then);
+
+  final Product _self;
+  final $Res Function(Product) _then;
+
+  /// Create a copy of Product
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? id = null,
+    Object? categoryId = freezed,
+    Object? name = null,
+    Object? description = freezed,
+    Object? imageUrl = freezed,
+    Object? size = freezed,
+    Object? brand = freezed,
+    Object? type = freezed,
+    Object? uom = freezed,
+    Object? unitPackSize = freezed,
+    Object? flavour = freezed,
+    Object? salePrice = null,
+    Object? costPrice = freezed,
+    Object? vaa = freezed,
+    Object? vat = freezed,
+    Object? orderMax = freezed,
+    Object? childId = freezed,
+    Object? childBreakQty = freezed,
+    Object? barCode = freezed,
+    Object? kitKatRef = freezed,
+    Object? vatClaimable = freezed,
+    Object? vatAble = freezed,
+    Object? productClass = null,
+    Object? categoryName = freezed,
+    Object? categoryImageUrl = freezed,
+    Object? hamperId = freezed,
+    Object? sellable = null,
+  }) {
+    return _then(_self.copyWith(
+      id: null == id
+          ? _self.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int,
+      categoryId: freezed == categoryId
+          ? _self.categoryId
+          : categoryId // ignore: cast_nullable_to_non_nullable
+              as int?,
+      name: null == name
+          ? _self.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String,
+      description: freezed == description
+          ? _self.description
+          : description // ignore: cast_nullable_to_non_nullable
+              as String?,
+      imageUrl: freezed == imageUrl
+          ? _self.imageUrl
+          : imageUrl // ignore: cast_nullable_to_non_nullable
+              as String?,
+      size: freezed == size
+          ? _self.size
+          : size // ignore: cast_nullable_to_non_nullable
+              as String?,
+      brand: freezed == brand
+          ? _self.brand
+          : brand // ignore: cast_nullable_to_non_nullable
+              as String?,
+      type: freezed == type
+          ? _self.type
+          : type // ignore: cast_nullable_to_non_nullable
+              as String?,
+      uom: freezed == uom
+          ? _self.uom
+          : uom // ignore: cast_nullable_to_non_nullable
+              as String?,
+      unitPackSize: freezed == unitPackSize
+          ? _self.unitPackSize
+          : unitPackSize // ignore: cast_nullable_to_non_nullable
+              as String?,
+      flavour: freezed == flavour
+          ? _self.flavour
+          : flavour // ignore: cast_nullable_to_non_nullable
+              as String?,
+      salePrice: null == salePrice
+          ? _self.salePrice
+          : salePrice // ignore: cast_nullable_to_non_nullable
+              as double,
+      costPrice: freezed == costPrice
+          ? _self.costPrice
+          : costPrice // ignore: cast_nullable_to_non_nullable
+              as double?,
+      vaa: freezed == vaa
+          ? _self.vaa
+          : vaa // ignore: cast_nullable_to_non_nullable
+              as double?,
+      vat: freezed == vat
+          ? _self.vat
+          : vat // ignore: cast_nullable_to_non_nullable
+              as double?,
+      orderMax: freezed == orderMax
+          ? _self.orderMax
+          : orderMax // ignore: cast_nullable_to_non_nullable
+              as int?,
+      childId: freezed == childId
+          ? _self.childId
+          : childId // ignore: cast_nullable_to_non_nullable
+              as int?,
+      childBreakQty: freezed == childBreakQty
+          ? _self.childBreakQty
+          : childBreakQty // ignore: cast_nullable_to_non_nullable
+              as int?,
+      barCode: freezed == barCode
+          ? _self.barCode
+          : barCode // ignore: cast_nullable_to_non_nullable
+              as String?,
+      kitKatRef: freezed == kitKatRef
+          ? _self.kitKatRef
+          : kitKatRef // ignore: cast_nullable_to_non_nullable
+              as String?,
+      vatClaimable: freezed == vatClaimable
+          ? _self.vatClaimable
+          : vatClaimable // ignore: cast_nullable_to_non_nullable
+              as bool?,
+      vatAble: freezed == vatAble
+          ? _self.vatAble
+          : vatAble // ignore: cast_nullable_to_non_nullable
+              as bool?,
+      productClass: null == productClass
+          ? _self.productClass
+          : productClass // ignore: cast_nullable_to_non_nullable
+              as ProductClass,
+      categoryName: freezed == categoryName
+          ? _self.categoryName
+          : categoryName // ignore: cast_nullable_to_non_nullable
+              as String?,
+      categoryImageUrl: freezed == categoryImageUrl
+          ? _self.categoryImageUrl
+          : categoryImageUrl // ignore: cast_nullable_to_non_nullable
+              as String?,
+      hamperId: freezed == hamperId
+          ? _self.hamperId
+          : hamperId // ignore: cast_nullable_to_non_nullable
+              as String?,
+      sellable: null == sellable
+          ? _self.sellable
+          : sellable // ignore: cast_nullable_to_non_nullable
+              as bool,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _Product implements Product {
+  _Product(
+      {required this.id,
+      @JsonKey(name: 'category_id') this.categoryId,
+      required this.name,
+      @JsonKey(name: 'description') this.description,
+      @JsonKey(name: 'image_url') this.imageUrl,
+      this.size,
+      this.brand,
+      this.type,
+      this.uom,
+      @JsonKey(name: 'unit_pack_size') this.unitPackSize,
+      this.flavour,
+      @JsonKey(name: 'sale_price') required this.salePrice,
+      @JsonKey(name: 'cost_price') this.costPrice,
+      this.vaa,
+      this.vat,
+      @JsonKey(name: 'order_max') this.orderMax,
+      @JsonKey(name: 'child_id') this.childId,
+      @JsonKey(name: 'child_break_qty') this.childBreakQty,
+      @JsonKey(name: 'bar_code') this.barCode,
+      @JsonKey(name: 'kit_kat_ref') this.kitKatRef,
+      @JsonKey(name: 'vat_claimable') this.vatClaimable,
+      @JsonKey(name: 'vat_able') this.vatAble,
+      @ProductClassConverter()
+      @JsonKey(name: 'class')
+      required this.productClass,
+      @JsonKey(name: 'category_name') this.categoryName,
+      @JsonKey(name: 'category_image_url') this.categoryImageUrl,
+      @JsonKey(name: 'hamper_id') this.hamperId,
+      required this.sellable});
+  factory _Product.fromJson(Map<String, dynamic> json) =>
+      _$ProductFromJson(json);
 
   @override
-  int get id;
+  final int id;
   @override
   @JsonKey(name: 'category_id')
-  int? get categoryId;
+  final int? categoryId;
   @override
-  String get name;
+  final String name;
   @override
   @JsonKey(name: 'description')
-  String? get description;
+  final String? description;
   @override
   @JsonKey(name: 'image_url')
-  String? get imageUrl;
+  final String? imageUrl;
   @override
-  String? get size;
+  final String? size;
   @override
-  String? get brand;
+  final String? brand;
   @override
-  String? get type;
+  final String? type;
   @override
-  String? get uom;
+  final String? uom;
   @override
   @JsonKey(name: 'unit_pack_size')
-  String? get unitPackSize;
+  final String? unitPackSize;
   @override
-  String? get flavour;
+  final String? flavour;
   @override
   @JsonKey(name: 'sale_price')
-  double get salePrice;
+  final double salePrice;
   @override
   @JsonKey(name: 'cost_price')
-  double? get costPrice;
+  final double? costPrice;
   @override
-  double? get vaa;
+  final double? vaa;
   @override
-  double? get vat;
+  final double? vat;
   @override
   @JsonKey(name: 'order_max')
-  int? get orderMax;
+  final int? orderMax;
   @override
   @JsonKey(name: 'child_id')
-  int? get childId;
+  final int? childId;
   @override
   @JsonKey(name: 'child_break_qty')
-  int? get childBreakQty;
+  final int? childBreakQty;
   @override
   @JsonKey(name: 'bar_code')
-  String? get barCode;
+  final String? barCode;
   @override
   @JsonKey(name: 'kit_kat_ref')
-  String? get kitKatRef;
+  final String? kitKatRef;
   @override
   @JsonKey(name: 'vat_claimable')
-  bool? get vatClaimable;
+  final bool? vatClaimable;
   @override
   @JsonKey(name: 'vat_able')
-  bool? get vatAble;
+  final bool? vatAble;
   @override
   @ProductClassConverter()
   @JsonKey(name: 'class')
-  ProductClass get productClass;
+  final ProductClass productClass;
   @override
   @JsonKey(name: 'category_name')
-  String? get categoryName;
+  final String? categoryName;
   @override
   @JsonKey(name: 'category_image_url')
-  String? get categoryImageUrl;
+  final String? categoryImageUrl;
   @override
   @JsonKey(name: 'hamper_id')
-  String? get hamperId;
+  final String? hamperId;
   @override
-  bool get sellable;
+  final bool sellable;
 
   /// Create a copy of Product
   /// with the given fields replaced by the non-null parameter values.
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$ProductImplCopyWith<_$ProductImpl> get copyWith =>
-      throw _privateConstructorUsedError;
+  @pragma('vm:prefer-inline')
+  _$ProductCopyWith<_Product> get copyWith =>
+      __$ProductCopyWithImpl<_Product>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$ProductToJson(
+      this,
+    );
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _Product &&
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.categoryId, categoryId) ||
+                other.categoryId == categoryId) &&
+            (identical(other.name, name) || other.name == name) &&
+            (identical(other.description, description) ||
+                other.description == description) &&
+            (identical(other.imageUrl, imageUrl) ||
+                other.imageUrl == imageUrl) &&
+            (identical(other.size, size) || other.size == size) &&
+            (identical(other.brand, brand) || other.brand == brand) &&
+            (identical(other.type, type) || other.type == type) &&
+            (identical(other.uom, uom) || other.uom == uom) &&
+            (identical(other.unitPackSize, unitPackSize) ||
+                other.unitPackSize == unitPackSize) &&
+            (identical(other.flavour, flavour) || other.flavour == flavour) &&
+            (identical(other.salePrice, salePrice) ||
+                other.salePrice == salePrice) &&
+            (identical(other.costPrice, costPrice) ||
+                other.costPrice == costPrice) &&
+            (identical(other.vaa, vaa) || other.vaa == vaa) &&
+            (identical(other.vat, vat) || other.vat == vat) &&
+            (identical(other.orderMax, orderMax) ||
+                other.orderMax == orderMax) &&
+            (identical(other.childId, childId) || other.childId == childId) &&
+            (identical(other.childBreakQty, childBreakQty) ||
+                other.childBreakQty == childBreakQty) &&
+            (identical(other.barCode, barCode) || other.barCode == barCode) &&
+            (identical(other.kitKatRef, kitKatRef) ||
+                other.kitKatRef == kitKatRef) &&
+            (identical(other.vatClaimable, vatClaimable) ||
+                other.vatClaimable == vatClaimable) &&
+            (identical(other.vatAble, vatAble) || other.vatAble == vatAble) &&
+            (identical(other.productClass, productClass) ||
+                other.productClass == productClass) &&
+            (identical(other.categoryName, categoryName) ||
+                other.categoryName == categoryName) &&
+            (identical(other.categoryImageUrl, categoryImageUrl) ||
+                other.categoryImageUrl == categoryImageUrl) &&
+            (identical(other.hamperId, hamperId) ||
+                other.hamperId == hamperId) &&
+            (identical(other.sellable, sellable) ||
+                other.sellable == sellable));
+  }
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  int get hashCode => Object.hashAll([
+        runtimeType,
+        id,
+        categoryId,
+        name,
+        description,
+        imageUrl,
+        size,
+        brand,
+        type,
+        uom,
+        unitPackSize,
+        flavour,
+        salePrice,
+        costPrice,
+        vaa,
+        vat,
+        orderMax,
+        childId,
+        childBreakQty,
+        barCode,
+        kitKatRef,
+        vatClaimable,
+        vatAble,
+        productClass,
+        categoryName,
+        categoryImageUrl,
+        hamperId,
+        sellable
+      ]);
+
+  @override
+  String toString() {
+    return 'Product(id: $id, categoryId: $categoryId, name: $name, description: $description, imageUrl: $imageUrl, size: $size, brand: $brand, type: $type, uom: $uom, unitPackSize: $unitPackSize, flavour: $flavour, salePrice: $salePrice, costPrice: $costPrice, vaa: $vaa, vat: $vat, orderMax: $orderMax, childId: $childId, childBreakQty: $childBreakQty, barCode: $barCode, kitKatRef: $kitKatRef, vatClaimable: $vatClaimable, vatAble: $vatAble, productClass: $productClass, categoryName: $categoryName, categoryImageUrl: $categoryImageUrl, hamperId: $hamperId, sellable: $sellable)';
+  }
 }
+
+/// @nodoc
+abstract mixin class _$ProductCopyWith<$Res> implements $ProductCopyWith<$Res> {
+  factory _$ProductCopyWith(_Product value, $Res Function(_Product) _then) =
+      __$ProductCopyWithImpl;
+  @override
+  @useResult
+  $Res call(
+      {int id,
+      @JsonKey(name: 'category_id') int? categoryId,
+      String name,
+      @JsonKey(name: 'description') String? description,
+      @JsonKey(name: 'image_url') String? imageUrl,
+      String? size,
+      String? brand,
+      String? type,
+      String? uom,
+      @JsonKey(name: 'unit_pack_size') String? unitPackSize,
+      String? flavour,
+      @JsonKey(name: 'sale_price') double salePrice,
+      @JsonKey(name: 'cost_price') double? costPrice,
+      double? vaa,
+      double? vat,
+      @JsonKey(name: 'order_max') int? orderMax,
+      @JsonKey(name: 'child_id') int? childId,
+      @JsonKey(name: 'child_break_qty') int? childBreakQty,
+      @JsonKey(name: 'bar_code') String? barCode,
+      @JsonKey(name: 'kit_kat_ref') String? kitKatRef,
+      @JsonKey(name: 'vat_claimable') bool? vatClaimable,
+      @JsonKey(name: 'vat_able') bool? vatAble,
+      @ProductClassConverter()
+      @JsonKey(name: 'class')
+      ProductClass productClass,
+      @JsonKey(name: 'category_name') String? categoryName,
+      @JsonKey(name: 'category_image_url') String? categoryImageUrl,
+      @JsonKey(name: 'hamper_id') String? hamperId,
+      bool sellable});
+}
+
+/// @nodoc
+class __$ProductCopyWithImpl<$Res> implements _$ProductCopyWith<$Res> {
+  __$ProductCopyWithImpl(this._self, this._then);
+
+  final _Product _self;
+  final $Res Function(_Product) _then;
+
+  /// Create a copy of Product
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $Res call({
+    Object? id = null,
+    Object? categoryId = freezed,
+    Object? name = null,
+    Object? description = freezed,
+    Object? imageUrl = freezed,
+    Object? size = freezed,
+    Object? brand = freezed,
+    Object? type = freezed,
+    Object? uom = freezed,
+    Object? unitPackSize = freezed,
+    Object? flavour = freezed,
+    Object? salePrice = null,
+    Object? costPrice = freezed,
+    Object? vaa = freezed,
+    Object? vat = freezed,
+    Object? orderMax = freezed,
+    Object? childId = freezed,
+    Object? childBreakQty = freezed,
+    Object? barCode = freezed,
+    Object? kitKatRef = freezed,
+    Object? vatClaimable = freezed,
+    Object? vatAble = freezed,
+    Object? productClass = null,
+    Object? categoryName = freezed,
+    Object? categoryImageUrl = freezed,
+    Object? hamperId = freezed,
+    Object? sellable = null,
+  }) {
+    return _then(_Product(
+      id: null == id
+          ? _self.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int,
+      categoryId: freezed == categoryId
+          ? _self.categoryId
+          : categoryId // ignore: cast_nullable_to_non_nullable
+              as int?,
+      name: null == name
+          ? _self.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String,
+      description: freezed == description
+          ? _self.description
+          : description // ignore: cast_nullable_to_non_nullable
+              as String?,
+      imageUrl: freezed == imageUrl
+          ? _self.imageUrl
+          : imageUrl // ignore: cast_nullable_to_non_nullable
+              as String?,
+      size: freezed == size
+          ? _self.size
+          : size // ignore: cast_nullable_to_non_nullable
+              as String?,
+      brand: freezed == brand
+          ? _self.brand
+          : brand // ignore: cast_nullable_to_non_nullable
+              as String?,
+      type: freezed == type
+          ? _self.type
+          : type // ignore: cast_nullable_to_non_nullable
+              as String?,
+      uom: freezed == uom
+          ? _self.uom
+          : uom // ignore: cast_nullable_to_non_nullable
+              as String?,
+      unitPackSize: freezed == unitPackSize
+          ? _self.unitPackSize
+          : unitPackSize // ignore: cast_nullable_to_non_nullable
+              as String?,
+      flavour: freezed == flavour
+          ? _self.flavour
+          : flavour // ignore: cast_nullable_to_non_nullable
+              as String?,
+      salePrice: null == salePrice
+          ? _self.salePrice
+          : salePrice // ignore: cast_nullable_to_non_nullable
+              as double,
+      costPrice: freezed == costPrice
+          ? _self.costPrice
+          : costPrice // ignore: cast_nullable_to_non_nullable
+              as double?,
+      vaa: freezed == vaa
+          ? _self.vaa
+          : vaa // ignore: cast_nullable_to_non_nullable
+              as double?,
+      vat: freezed == vat
+          ? _self.vat
+          : vat // ignore: cast_nullable_to_non_nullable
+              as double?,
+      orderMax: freezed == orderMax
+          ? _self.orderMax
+          : orderMax // ignore: cast_nullable_to_non_nullable
+              as int?,
+      childId: freezed == childId
+          ? _self.childId
+          : childId // ignore: cast_nullable_to_non_nullable
+              as int?,
+      childBreakQty: freezed == childBreakQty
+          ? _self.childBreakQty
+          : childBreakQty // ignore: cast_nullable_to_non_nullable
+              as int?,
+      barCode: freezed == barCode
+          ? _self.barCode
+          : barCode // ignore: cast_nullable_to_non_nullable
+              as String?,
+      kitKatRef: freezed == kitKatRef
+          ? _self.kitKatRef
+          : kitKatRef // ignore: cast_nullable_to_non_nullable
+              as String?,
+      vatClaimable: freezed == vatClaimable
+          ? _self.vatClaimable
+          : vatClaimable // ignore: cast_nullable_to_non_nullable
+              as bool?,
+      vatAble: freezed == vatAble
+          ? _self.vatAble
+          : vatAble // ignore: cast_nullable_to_non_nullable
+              as bool?,
+      productClass: null == productClass
+          ? _self.productClass
+          : productClass // ignore: cast_nullable_to_non_nullable
+              as ProductClass,
+      categoryName: freezed == categoryName
+          ? _self.categoryName
+          : categoryName // ignore: cast_nullable_to_non_nullable
+              as String?,
+      categoryImageUrl: freezed == categoryImageUrl
+          ? _self.categoryImageUrl
+          : categoryImageUrl // ignore: cast_nullable_to_non_nullable
+              as String?,
+      hamperId: freezed == hamperId
+          ? _self.hamperId
+          : hamperId // ignore: cast_nullable_to_non_nullable
+              as String?,
+      sellable: null == sellable
+          ? _self.sellable
+          : sellable // ignore: cast_nullable_to_non_nullable
+              as bool,
+    ));
+  }
+}
+
+// dart format on

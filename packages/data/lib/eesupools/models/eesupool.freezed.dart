@@ -1,3 +1,4 @@
+// dart format width=80
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
@@ -9,81 +10,158 @@ part of 'eesupool.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// dart format off
 T _$identity<T>(T value) => value;
-
-final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
-
-EESUpool _$EESUpoolFromJson(Map<String, dynamic> json) {
-  return _EESUpool.fromJson(json);
-}
 
 /// @nodoc
 mixin _$EESUpool {
   @JsonKey(name: 'eesupool_id', includeToJson: false)
-  int? get eesupoolId => throw _privateConstructorUsedError;
-  String get name => throw _privateConstructorUsedError;
-  String? get description => throw _privateConstructorUsedError;
+  int? get eesupoolId;
+  String get name;
+  String? get description;
   @JsonKey(name: 'admin_fee')
-  double? get adminFee => throw _privateConstructorUsedError;
+  double? get adminFee;
   @JsonKey(name: 'receiving_fee')
-  double? get receivingFee => throw _privateConstructorUsedError;
+  double? get receivingFee;
   @JsonKey(name: 'collection_fee')
-  double? get collectionFee => throw _privateConstructorUsedError;
+  double? get collectionFee;
   @JsonKey(name: 'packaging_fee')
-  double? get packagingFee => throw _privateConstructorUsedError;
+  double? get packagingFee;
   @JsonKey(name: 'is_public')
-  bool get isPublic => throw _privateConstructorUsedError;
+  bool get isPublic;
   @JsonKey(name: 'chat_enabled')
-  bool get chatEnabled => throw _privateConstructorUsedError;
-  int? get code => throw _privateConstructorUsedError;
+  bool get chatEnabled;
+  int? get code;
   @JsonKey(name: 'address_id')
-  int? get addressId => throw _privateConstructorUsedError;
+  int? get addressId;
   @EESUpoolLevelConverter()
   @JsonKey(name: 'level', includeToJson: false)
-  EESUpoolLevel? get level => throw _privateConstructorUsedError;
+  EESUpoolLevel? get level;
   @JsonKey(name: 'box_code')
-  String? get boxCode => throw _privateConstructorUsedError;
+  String? get boxCode;
   @JsonKey(name: 'street_code')
-  String? get streetCode => throw _privateConstructorUsedError;
+  String? get streetCode;
   @JsonKey(name: 'parent_id')
-  int? get parentId => throw _privateConstructorUsedError;
+  int? get parentId;
   @JsonKey(name: 'chat_tags')
-  List<String>? get chatTags => throw _privateConstructorUsedError;
+  List<String>? get chatTags;
   @JsonKey(name: 'chat_tags_suggestions')
-  List<String>? get chatTagsSuggestions => throw _privateConstructorUsedError;
+  List<String>? get chatTagsSuggestions;
   @EESUpoolMemberRoleConverter()
   @JsonKey(includeToJson: false)
-  EESUpoolMemberRole? get role => throw _privateConstructorUsedError;
+  EESUpoolMemberRole? get role;
   @JsonKey(name: 'is_censored', includeToJson: false)
-  bool? get isCensored => throw _privateConstructorUsedError;
+  bool? get isCensored;
   @EESUpoolTypeConverter()
   @JsonKey(includeToJson: false)
-  EESUpoolType get type => throw _privateConstructorUsedError;
+  EESUpoolType get type;
   @JsonKey(name: 'member_id', includeToJson: false)
-  String? get memberId => throw _privateConstructorUsedError;
+  String? get memberId;
   @JsonKey(name: 'num_members', includeToJson: false)
-  int? get numMembers => throw _privateConstructorUsedError;
+  int? get numMembers;
   @JsonKey(name: 'unseen_messages', includeToJson: false)
-  int? get unseenMessages => throw _privateConstructorUsedError;
+  int? get unseenMessages;
   @AddressConverter()
   @JsonKey(includeToJson: false)
-  Address? get address => throw _privateConstructorUsedError;
-
-  /// Serializes this EESUpool to a JSON map.
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  Address? get address;
 
   /// Create a copy of EESUpool
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
   $EESUpoolCopyWith<EESUpool> get copyWith =>
-      throw _privateConstructorUsedError;
+      _$EESUpoolCopyWithImpl<EESUpool>(this as EESUpool, _$identity);
+
+  /// Serializes this EESUpool to a JSON map.
+  Map<String, dynamic> toJson();
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is EESUpool &&
+            (identical(other.eesupoolId, eesupoolId) ||
+                other.eesupoolId == eesupoolId) &&
+            (identical(other.name, name) || other.name == name) &&
+            (identical(other.description, description) ||
+                other.description == description) &&
+            (identical(other.adminFee, adminFee) ||
+                other.adminFee == adminFee) &&
+            (identical(other.receivingFee, receivingFee) ||
+                other.receivingFee == receivingFee) &&
+            (identical(other.collectionFee, collectionFee) ||
+                other.collectionFee == collectionFee) &&
+            (identical(other.packagingFee, packagingFee) ||
+                other.packagingFee == packagingFee) &&
+            (identical(other.isPublic, isPublic) ||
+                other.isPublic == isPublic) &&
+            (identical(other.chatEnabled, chatEnabled) ||
+                other.chatEnabled == chatEnabled) &&
+            (identical(other.code, code) || other.code == code) &&
+            (identical(other.addressId, addressId) ||
+                other.addressId == addressId) &&
+            (identical(other.level, level) || other.level == level) &&
+            (identical(other.boxCode, boxCode) || other.boxCode == boxCode) &&
+            (identical(other.streetCode, streetCode) ||
+                other.streetCode == streetCode) &&
+            (identical(other.parentId, parentId) ||
+                other.parentId == parentId) &&
+            const DeepCollectionEquality().equals(other.chatTags, chatTags) &&
+            const DeepCollectionEquality()
+                .equals(other.chatTagsSuggestions, chatTagsSuggestions) &&
+            (identical(other.role, role) || other.role == role) &&
+            (identical(other.isCensored, isCensored) ||
+                other.isCensored == isCensored) &&
+            (identical(other.type, type) || other.type == type) &&
+            (identical(other.memberId, memberId) ||
+                other.memberId == memberId) &&
+            (identical(other.numMembers, numMembers) ||
+                other.numMembers == numMembers) &&
+            (identical(other.unseenMessages, unseenMessages) ||
+                other.unseenMessages == unseenMessages) &&
+            (identical(other.address, address) || other.address == address));
+  }
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  int get hashCode => Object.hashAll([
+        runtimeType,
+        eesupoolId,
+        name,
+        description,
+        adminFee,
+        receivingFee,
+        collectionFee,
+        packagingFee,
+        isPublic,
+        chatEnabled,
+        code,
+        addressId,
+        level,
+        boxCode,
+        streetCode,
+        parentId,
+        const DeepCollectionEquality().hash(chatTags),
+        const DeepCollectionEquality().hash(chatTagsSuggestions),
+        role,
+        isCensored,
+        type,
+        memberId,
+        numMembers,
+        unseenMessages,
+        address
+      ]);
+
+  @override
+  String toString() {
+    return 'EESUpool(eesupoolId: $eesupoolId, name: $name, description: $description, adminFee: $adminFee, receivingFee: $receivingFee, collectionFee: $collectionFee, packagingFee: $packagingFee, isPublic: $isPublic, chatEnabled: $chatEnabled, code: $code, addressId: $addressId, level: $level, boxCode: $boxCode, streetCode: $streetCode, parentId: $parentId, chatTags: $chatTags, chatTagsSuggestions: $chatTagsSuggestions, role: $role, isCensored: $isCensored, type: $type, memberId: $memberId, numMembers: $numMembers, unseenMessages: $unseenMessages, address: $address)';
+  }
 }
 
 /// @nodoc
-abstract class $EESUpoolCopyWith<$Res> {
-  factory $EESUpoolCopyWith(EESUpool value, $Res Function(EESUpool) then) =
-      _$EESUpoolCopyWithImpl<$Res, EESUpool>;
+abstract mixin class $EESUpoolCopyWith<$Res> {
+  factory $EESUpoolCopyWith(EESUpool value, $Res Function(EESUpool) _then) =
+      _$EESUpoolCopyWithImpl;
   @useResult
   $Res call(
       {@JsonKey(name: 'eesupool_id', includeToJson: false) int? eesupoolId,
@@ -120,14 +198,11 @@ abstract class $EESUpoolCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$EESUpoolCopyWithImpl<$Res, $Val extends EESUpool>
-    implements $EESUpoolCopyWith<$Res> {
-  _$EESUpoolCopyWithImpl(this._value, this._then);
+class _$EESUpoolCopyWithImpl<$Res> implements $EESUpoolCopyWith<$Res> {
+  _$EESUpoolCopyWithImpl(this._self, this._then);
 
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
+  final EESUpool _self;
+  final $Res Function(EESUpool) _then;
 
   /// Create a copy of EESUpool
   /// with the given fields replaced by the non-null parameter values.
@@ -159,104 +234,104 @@ class _$EESUpoolCopyWithImpl<$Res, $Val extends EESUpool>
     Object? unseenMessages = freezed,
     Object? address = freezed,
   }) {
-    return _then(_value.copyWith(
+    return _then(_self.copyWith(
       eesupoolId: freezed == eesupoolId
-          ? _value.eesupoolId
+          ? _self.eesupoolId
           : eesupoolId // ignore: cast_nullable_to_non_nullable
               as int?,
       name: null == name
-          ? _value.name
+          ? _self.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
       description: freezed == description
-          ? _value.description
+          ? _self.description
           : description // ignore: cast_nullable_to_non_nullable
               as String?,
       adminFee: freezed == adminFee
-          ? _value.adminFee
+          ? _self.adminFee
           : adminFee // ignore: cast_nullable_to_non_nullable
               as double?,
       receivingFee: freezed == receivingFee
-          ? _value.receivingFee
+          ? _self.receivingFee
           : receivingFee // ignore: cast_nullable_to_non_nullable
               as double?,
       collectionFee: freezed == collectionFee
-          ? _value.collectionFee
+          ? _self.collectionFee
           : collectionFee // ignore: cast_nullable_to_non_nullable
               as double?,
       packagingFee: freezed == packagingFee
-          ? _value.packagingFee
+          ? _self.packagingFee
           : packagingFee // ignore: cast_nullable_to_non_nullable
               as double?,
       isPublic: null == isPublic
-          ? _value.isPublic
+          ? _self.isPublic
           : isPublic // ignore: cast_nullable_to_non_nullable
               as bool,
       chatEnabled: null == chatEnabled
-          ? _value.chatEnabled
+          ? _self.chatEnabled
           : chatEnabled // ignore: cast_nullable_to_non_nullable
               as bool,
       code: freezed == code
-          ? _value.code
+          ? _self.code
           : code // ignore: cast_nullable_to_non_nullable
               as int?,
       addressId: freezed == addressId
-          ? _value.addressId
+          ? _self.addressId
           : addressId // ignore: cast_nullable_to_non_nullable
               as int?,
       level: freezed == level
-          ? _value.level
+          ? _self.level
           : level // ignore: cast_nullable_to_non_nullable
               as EESUpoolLevel?,
       boxCode: freezed == boxCode
-          ? _value.boxCode
+          ? _self.boxCode
           : boxCode // ignore: cast_nullable_to_non_nullable
               as String?,
       streetCode: freezed == streetCode
-          ? _value.streetCode
+          ? _self.streetCode
           : streetCode // ignore: cast_nullable_to_non_nullable
               as String?,
       parentId: freezed == parentId
-          ? _value.parentId
+          ? _self.parentId
           : parentId // ignore: cast_nullable_to_non_nullable
               as int?,
       chatTags: freezed == chatTags
-          ? _value.chatTags
+          ? _self.chatTags
           : chatTags // ignore: cast_nullable_to_non_nullable
               as List<String>?,
       chatTagsSuggestions: freezed == chatTagsSuggestions
-          ? _value.chatTagsSuggestions
+          ? _self.chatTagsSuggestions
           : chatTagsSuggestions // ignore: cast_nullable_to_non_nullable
               as List<String>?,
       role: freezed == role
-          ? _value.role
+          ? _self.role
           : role // ignore: cast_nullable_to_non_nullable
               as EESUpoolMemberRole?,
       isCensored: freezed == isCensored
-          ? _value.isCensored
+          ? _self.isCensored
           : isCensored // ignore: cast_nullable_to_non_nullable
               as bool?,
       type: null == type
-          ? _value.type
+          ? _self.type
           : type // ignore: cast_nullable_to_non_nullable
               as EESUpoolType,
       memberId: freezed == memberId
-          ? _value.memberId
+          ? _self.memberId
           : memberId // ignore: cast_nullable_to_non_nullable
               as String?,
       numMembers: freezed == numMembers
-          ? _value.numMembers
+          ? _self.numMembers
           : numMembers // ignore: cast_nullable_to_non_nullable
               as int?,
       unseenMessages: freezed == unseenMessages
-          ? _value.unseenMessages
+          ? _self.unseenMessages
           : unseenMessages // ignore: cast_nullable_to_non_nullable
               as int?,
       address: freezed == address
-          ? _value.address
+          ? _self.address
           : address // ignore: cast_nullable_to_non_nullable
               as Address?,
-    ) as $Val);
+    ));
   }
 
   /// Create a copy of EESUpool
@@ -264,202 +339,20 @@ class _$EESUpoolCopyWithImpl<$Res, $Val extends EESUpool>
   @override
   @pragma('vm:prefer-inline')
   $AddressCopyWith<$Res>? get address {
-    if (_value.address == null) {
+    if (_self.address == null) {
       return null;
     }
 
-    return $AddressCopyWith<$Res>(_value.address!, (value) {
-      return _then(_value.copyWith(address: value) as $Val);
+    return $AddressCopyWith<$Res>(_self.address!, (value) {
+      return _then(_self.copyWith(address: value));
     });
   }
 }
 
 /// @nodoc
-abstract class _$$EESUpoolImplCopyWith<$Res>
-    implements $EESUpoolCopyWith<$Res> {
-  factory _$$EESUpoolImplCopyWith(
-          _$EESUpoolImpl value, $Res Function(_$EESUpoolImpl) then) =
-      __$$EESUpoolImplCopyWithImpl<$Res>;
-  @override
-  @useResult
-  $Res call(
-      {@JsonKey(name: 'eesupool_id', includeToJson: false) int? eesupoolId,
-      String name,
-      String? description,
-      @JsonKey(name: 'admin_fee') double? adminFee,
-      @JsonKey(name: 'receiving_fee') double? receivingFee,
-      @JsonKey(name: 'collection_fee') double? collectionFee,
-      @JsonKey(name: 'packaging_fee') double? packagingFee,
-      @JsonKey(name: 'is_public') bool isPublic,
-      @JsonKey(name: 'chat_enabled') bool chatEnabled,
-      int? code,
-      @JsonKey(name: 'address_id') int? addressId,
-      @EESUpoolLevelConverter()
-      @JsonKey(name: 'level', includeToJson: false)
-      EESUpoolLevel? level,
-      @JsonKey(name: 'box_code') String? boxCode,
-      @JsonKey(name: 'street_code') String? streetCode,
-      @JsonKey(name: 'parent_id') int? parentId,
-      @JsonKey(name: 'chat_tags') List<String>? chatTags,
-      @JsonKey(name: 'chat_tags_suggestions') List<String>? chatTagsSuggestions,
-      @EESUpoolMemberRoleConverter()
-      @JsonKey(includeToJson: false)
-      EESUpoolMemberRole? role,
-      @JsonKey(name: 'is_censored', includeToJson: false) bool? isCensored,
-      @EESUpoolTypeConverter() @JsonKey(includeToJson: false) EESUpoolType type,
-      @JsonKey(name: 'member_id', includeToJson: false) String? memberId,
-      @JsonKey(name: 'num_members', includeToJson: false) int? numMembers,
-      @JsonKey(name: 'unseen_messages', includeToJson: false)
-      int? unseenMessages,
-      @AddressConverter() @JsonKey(includeToJson: false) Address? address});
-
-  @override
-  $AddressCopyWith<$Res>? get address;
-}
-
-/// @nodoc
-class __$$EESUpoolImplCopyWithImpl<$Res>
-    extends _$EESUpoolCopyWithImpl<$Res, _$EESUpoolImpl>
-    implements _$$EESUpoolImplCopyWith<$Res> {
-  __$$EESUpoolImplCopyWithImpl(
-      _$EESUpoolImpl _value, $Res Function(_$EESUpoolImpl) _then)
-      : super(_value, _then);
-
-  /// Create a copy of EESUpool
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? eesupoolId = freezed,
-    Object? name = null,
-    Object? description = freezed,
-    Object? adminFee = freezed,
-    Object? receivingFee = freezed,
-    Object? collectionFee = freezed,
-    Object? packagingFee = freezed,
-    Object? isPublic = null,
-    Object? chatEnabled = null,
-    Object? code = freezed,
-    Object? addressId = freezed,
-    Object? level = freezed,
-    Object? boxCode = freezed,
-    Object? streetCode = freezed,
-    Object? parentId = freezed,
-    Object? chatTags = freezed,
-    Object? chatTagsSuggestions = freezed,
-    Object? role = freezed,
-    Object? isCensored = freezed,
-    Object? type = null,
-    Object? memberId = freezed,
-    Object? numMembers = freezed,
-    Object? unseenMessages = freezed,
-    Object? address = freezed,
-  }) {
-    return _then(_$EESUpoolImpl(
-      eesupoolId: freezed == eesupoolId
-          ? _value.eesupoolId
-          : eesupoolId // ignore: cast_nullable_to_non_nullable
-              as int?,
-      name: null == name
-          ? _value.name
-          : name // ignore: cast_nullable_to_non_nullable
-              as String,
-      description: freezed == description
-          ? _value.description
-          : description // ignore: cast_nullable_to_non_nullable
-              as String?,
-      adminFee: freezed == adminFee
-          ? _value.adminFee
-          : adminFee // ignore: cast_nullable_to_non_nullable
-              as double?,
-      receivingFee: freezed == receivingFee
-          ? _value.receivingFee
-          : receivingFee // ignore: cast_nullable_to_non_nullable
-              as double?,
-      collectionFee: freezed == collectionFee
-          ? _value.collectionFee
-          : collectionFee // ignore: cast_nullable_to_non_nullable
-              as double?,
-      packagingFee: freezed == packagingFee
-          ? _value.packagingFee
-          : packagingFee // ignore: cast_nullable_to_non_nullable
-              as double?,
-      isPublic: null == isPublic
-          ? _value.isPublic
-          : isPublic // ignore: cast_nullable_to_non_nullable
-              as bool,
-      chatEnabled: null == chatEnabled
-          ? _value.chatEnabled
-          : chatEnabled // ignore: cast_nullable_to_non_nullable
-              as bool,
-      code: freezed == code
-          ? _value.code
-          : code // ignore: cast_nullable_to_non_nullable
-              as int?,
-      addressId: freezed == addressId
-          ? _value.addressId
-          : addressId // ignore: cast_nullable_to_non_nullable
-              as int?,
-      level: freezed == level
-          ? _value.level
-          : level // ignore: cast_nullable_to_non_nullable
-              as EESUpoolLevel?,
-      boxCode: freezed == boxCode
-          ? _value.boxCode
-          : boxCode // ignore: cast_nullable_to_non_nullable
-              as String?,
-      streetCode: freezed == streetCode
-          ? _value.streetCode
-          : streetCode // ignore: cast_nullable_to_non_nullable
-              as String?,
-      parentId: freezed == parentId
-          ? _value.parentId
-          : parentId // ignore: cast_nullable_to_non_nullable
-              as int?,
-      chatTags: freezed == chatTags
-          ? _value._chatTags
-          : chatTags // ignore: cast_nullable_to_non_nullable
-              as List<String>?,
-      chatTagsSuggestions: freezed == chatTagsSuggestions
-          ? _value._chatTagsSuggestions
-          : chatTagsSuggestions // ignore: cast_nullable_to_non_nullable
-              as List<String>?,
-      role: freezed == role
-          ? _value.role
-          : role // ignore: cast_nullable_to_non_nullable
-              as EESUpoolMemberRole?,
-      isCensored: freezed == isCensored
-          ? _value.isCensored
-          : isCensored // ignore: cast_nullable_to_non_nullable
-              as bool?,
-      type: null == type
-          ? _value.type
-          : type // ignore: cast_nullable_to_non_nullable
-              as EESUpoolType,
-      memberId: freezed == memberId
-          ? _value.memberId
-          : memberId // ignore: cast_nullable_to_non_nullable
-              as String?,
-      numMembers: freezed == numMembers
-          ? _value.numMembers
-          : numMembers // ignore: cast_nullable_to_non_nullable
-              as int?,
-      unseenMessages: freezed == unseenMessages
-          ? _value.unseenMessages
-          : unseenMessages // ignore: cast_nullable_to_non_nullable
-              as int?,
-      address: freezed == address
-          ? _value.address
-          : address // ignore: cast_nullable_to_non_nullable
-              as Address?,
-    ));
-  }
-}
-
-/// @nodoc
 @JsonSerializable()
-class _$EESUpoolImpl implements _EESUpool {
-  const _$EESUpoolImpl(
+class _EESUpool implements EESUpool {
+  const _EESUpool(
       {@JsonKey(name: 'eesupool_id', includeToJson: false) this.eesupoolId,
       required this.name,
       this.description,
@@ -492,9 +385,8 @@ class _$EESUpoolImpl implements _EESUpool {
       @AddressConverter() @JsonKey(includeToJson: false) this.address})
       : _chatTags = chatTags,
         _chatTagsSuggestions = chatTagsSuggestions;
-
-  factory _$EESUpoolImpl.fromJson(Map<String, dynamic> json) =>
-      _$$EESUpoolImplFromJson(json);
+  factory _EESUpool.fromJson(Map<String, dynamic> json) =>
+      _$EESUpoolFromJson(json);
 
   @override
   @JsonKey(name: 'eesupool_id', includeToJson: false)
@@ -587,16 +479,26 @@ class _$EESUpoolImpl implements _EESUpool {
   @JsonKey(includeToJson: false)
   final Address? address;
 
+  /// Create a copy of EESUpool
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  String toString() {
-    return 'EESUpool(eesupoolId: $eesupoolId, name: $name, description: $description, adminFee: $adminFee, receivingFee: $receivingFee, collectionFee: $collectionFee, packagingFee: $packagingFee, isPublic: $isPublic, chatEnabled: $chatEnabled, code: $code, addressId: $addressId, level: $level, boxCode: $boxCode, streetCode: $streetCode, parentId: $parentId, chatTags: $chatTags, chatTagsSuggestions: $chatTagsSuggestions, role: $role, isCensored: $isCensored, type: $type, memberId: $memberId, numMembers: $numMembers, unseenMessages: $unseenMessages, address: $address)';
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  _$EESUpoolCopyWith<_EESUpool> get copyWith =>
+      __$EESUpoolCopyWithImpl<_EESUpool>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$EESUpoolToJson(
+      this,
+    );
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$EESUpoolImpl &&
+            other is _EESUpool &&
             (identical(other.eesupoolId, eesupoolId) ||
                 other.eesupoolId == eesupoolId) &&
             (identical(other.name, name) || other.name == name) &&
@@ -669,142 +571,204 @@ class _$EESUpoolImpl implements _EESUpool {
         address
       ]);
 
-  /// Create a copy of EESUpool
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  @pragma('vm:prefer-inline')
-  _$$EESUpoolImplCopyWith<_$EESUpoolImpl> get copyWith =>
-      __$$EESUpoolImplCopyWithImpl<_$EESUpoolImpl>(this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$EESUpoolImplToJson(
-      this,
-    );
+  String toString() {
+    return 'EESUpool(eesupoolId: $eesupoolId, name: $name, description: $description, adminFee: $adminFee, receivingFee: $receivingFee, collectionFee: $collectionFee, packagingFee: $packagingFee, isPublic: $isPublic, chatEnabled: $chatEnabled, code: $code, addressId: $addressId, level: $level, boxCode: $boxCode, streetCode: $streetCode, parentId: $parentId, chatTags: $chatTags, chatTagsSuggestions: $chatTagsSuggestions, role: $role, isCensored: $isCensored, type: $type, memberId: $memberId, numMembers: $numMembers, unseenMessages: $unseenMessages, address: $address)';
   }
 }
 
-abstract class _EESUpool implements EESUpool {
-  const factory _EESUpool(
-      {@JsonKey(name: 'eesupool_id', includeToJson: false)
-      final int? eesupoolId,
-      required final String name,
-      final String? description,
-      @JsonKey(name: 'admin_fee') final double? adminFee,
-      @JsonKey(name: 'receiving_fee') final double? receivingFee,
-      @JsonKey(name: 'collection_fee') final double? collectionFee,
-      @JsonKey(name: 'packaging_fee') final double? packagingFee,
-      @JsonKey(name: 'is_public') final bool isPublic,
-      @JsonKey(name: 'chat_enabled') final bool chatEnabled,
-      final int? code,
-      @JsonKey(name: 'address_id') final int? addressId,
+/// @nodoc
+abstract mixin class _$EESUpoolCopyWith<$Res>
+    implements $EESUpoolCopyWith<$Res> {
+  factory _$EESUpoolCopyWith(_EESUpool value, $Res Function(_EESUpool) _then) =
+      __$EESUpoolCopyWithImpl;
+  @override
+  @useResult
+  $Res call(
+      {@JsonKey(name: 'eesupool_id', includeToJson: false) int? eesupoolId,
+      String name,
+      String? description,
+      @JsonKey(name: 'admin_fee') double? adminFee,
+      @JsonKey(name: 'receiving_fee') double? receivingFee,
+      @JsonKey(name: 'collection_fee') double? collectionFee,
+      @JsonKey(name: 'packaging_fee') double? packagingFee,
+      @JsonKey(name: 'is_public') bool isPublic,
+      @JsonKey(name: 'chat_enabled') bool chatEnabled,
+      int? code,
+      @JsonKey(name: 'address_id') int? addressId,
       @EESUpoolLevelConverter()
       @JsonKey(name: 'level', includeToJson: false)
-      final EESUpoolLevel? level,
-      @JsonKey(name: 'box_code') final String? boxCode,
-      @JsonKey(name: 'street_code') final String? streetCode,
-      @JsonKey(name: 'parent_id') final int? parentId,
-      @JsonKey(name: 'chat_tags') final List<String>? chatTags,
-      @JsonKey(name: 'chat_tags_suggestions')
-      final List<String>? chatTagsSuggestions,
+      EESUpoolLevel? level,
+      @JsonKey(name: 'box_code') String? boxCode,
+      @JsonKey(name: 'street_code') String? streetCode,
+      @JsonKey(name: 'parent_id') int? parentId,
+      @JsonKey(name: 'chat_tags') List<String>? chatTags,
+      @JsonKey(name: 'chat_tags_suggestions') List<String>? chatTagsSuggestions,
       @EESUpoolMemberRoleConverter()
       @JsonKey(includeToJson: false)
-      final EESUpoolMemberRole? role,
-      @JsonKey(name: 'is_censored', includeToJson: false)
-      final bool? isCensored,
-      @EESUpoolTypeConverter()
-      @JsonKey(includeToJson: false)
-      required final EESUpoolType type,
-      @JsonKey(name: 'member_id', includeToJson: false) final String? memberId,
-      @JsonKey(name: 'num_members', includeToJson: false) final int? numMembers,
+      EESUpoolMemberRole? role,
+      @JsonKey(name: 'is_censored', includeToJson: false) bool? isCensored,
+      @EESUpoolTypeConverter() @JsonKey(includeToJson: false) EESUpoolType type,
+      @JsonKey(name: 'member_id', includeToJson: false) String? memberId,
+      @JsonKey(name: 'num_members', includeToJson: false) int? numMembers,
       @JsonKey(name: 'unseen_messages', includeToJson: false)
-      final int? unseenMessages,
-      @AddressConverter()
-      @JsonKey(includeToJson: false)
-      final Address? address}) = _$EESUpoolImpl;
-
-  factory _EESUpool.fromJson(Map<String, dynamic> json) =
-      _$EESUpoolImpl.fromJson;
+      int? unseenMessages,
+      @AddressConverter() @JsonKey(includeToJson: false) Address? address});
 
   @override
-  @JsonKey(name: 'eesupool_id', includeToJson: false)
-  int? get eesupoolId;
-  @override
-  String get name;
-  @override
-  String? get description;
-  @override
-  @JsonKey(name: 'admin_fee')
-  double? get adminFee;
-  @override
-  @JsonKey(name: 'receiving_fee')
-  double? get receivingFee;
-  @override
-  @JsonKey(name: 'collection_fee')
-  double? get collectionFee;
-  @override
-  @JsonKey(name: 'packaging_fee')
-  double? get packagingFee;
-  @override
-  @JsonKey(name: 'is_public')
-  bool get isPublic;
-  @override
-  @JsonKey(name: 'chat_enabled')
-  bool get chatEnabled;
-  @override
-  int? get code;
-  @override
-  @JsonKey(name: 'address_id')
-  int? get addressId;
-  @override
-  @EESUpoolLevelConverter()
-  @JsonKey(name: 'level', includeToJson: false)
-  EESUpoolLevel? get level;
-  @override
-  @JsonKey(name: 'box_code')
-  String? get boxCode;
-  @override
-  @JsonKey(name: 'street_code')
-  String? get streetCode;
-  @override
-  @JsonKey(name: 'parent_id')
-  int? get parentId;
-  @override
-  @JsonKey(name: 'chat_tags')
-  List<String>? get chatTags;
-  @override
-  @JsonKey(name: 'chat_tags_suggestions')
-  List<String>? get chatTagsSuggestions;
-  @override
-  @EESUpoolMemberRoleConverter()
-  @JsonKey(includeToJson: false)
-  EESUpoolMemberRole? get role;
-  @override
-  @JsonKey(name: 'is_censored', includeToJson: false)
-  bool? get isCensored;
-  @override
-  @EESUpoolTypeConverter()
-  @JsonKey(includeToJson: false)
-  EESUpoolType get type;
-  @override
-  @JsonKey(name: 'member_id', includeToJson: false)
-  String? get memberId;
-  @override
-  @JsonKey(name: 'num_members', includeToJson: false)
-  int? get numMembers;
-  @override
-  @JsonKey(name: 'unseen_messages', includeToJson: false)
-  int? get unseenMessages;
-  @override
-  @AddressConverter()
-  @JsonKey(includeToJson: false)
-  Address? get address;
+  $AddressCopyWith<$Res>? get address;
+}
+
+/// @nodoc
+class __$EESUpoolCopyWithImpl<$Res> implements _$EESUpoolCopyWith<$Res> {
+  __$EESUpoolCopyWithImpl(this._self, this._then);
+
+  final _EESUpool _self;
+  final $Res Function(_EESUpool) _then;
 
   /// Create a copy of EESUpool
   /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$EESUpoolImplCopyWith<_$EESUpoolImpl> get copyWith =>
-      throw _privateConstructorUsedError;
+  @pragma('vm:prefer-inline')
+  $Res call({
+    Object? eesupoolId = freezed,
+    Object? name = null,
+    Object? description = freezed,
+    Object? adminFee = freezed,
+    Object? receivingFee = freezed,
+    Object? collectionFee = freezed,
+    Object? packagingFee = freezed,
+    Object? isPublic = null,
+    Object? chatEnabled = null,
+    Object? code = freezed,
+    Object? addressId = freezed,
+    Object? level = freezed,
+    Object? boxCode = freezed,
+    Object? streetCode = freezed,
+    Object? parentId = freezed,
+    Object? chatTags = freezed,
+    Object? chatTagsSuggestions = freezed,
+    Object? role = freezed,
+    Object? isCensored = freezed,
+    Object? type = null,
+    Object? memberId = freezed,
+    Object? numMembers = freezed,
+    Object? unseenMessages = freezed,
+    Object? address = freezed,
+  }) {
+    return _then(_EESUpool(
+      eesupoolId: freezed == eesupoolId
+          ? _self.eesupoolId
+          : eesupoolId // ignore: cast_nullable_to_non_nullable
+              as int?,
+      name: null == name
+          ? _self.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String,
+      description: freezed == description
+          ? _self.description
+          : description // ignore: cast_nullable_to_non_nullable
+              as String?,
+      adminFee: freezed == adminFee
+          ? _self.adminFee
+          : adminFee // ignore: cast_nullable_to_non_nullable
+              as double?,
+      receivingFee: freezed == receivingFee
+          ? _self.receivingFee
+          : receivingFee // ignore: cast_nullable_to_non_nullable
+              as double?,
+      collectionFee: freezed == collectionFee
+          ? _self.collectionFee
+          : collectionFee // ignore: cast_nullable_to_non_nullable
+              as double?,
+      packagingFee: freezed == packagingFee
+          ? _self.packagingFee
+          : packagingFee // ignore: cast_nullable_to_non_nullable
+              as double?,
+      isPublic: null == isPublic
+          ? _self.isPublic
+          : isPublic // ignore: cast_nullable_to_non_nullable
+              as bool,
+      chatEnabled: null == chatEnabled
+          ? _self.chatEnabled
+          : chatEnabled // ignore: cast_nullable_to_non_nullable
+              as bool,
+      code: freezed == code
+          ? _self.code
+          : code // ignore: cast_nullable_to_non_nullable
+              as int?,
+      addressId: freezed == addressId
+          ? _self.addressId
+          : addressId // ignore: cast_nullable_to_non_nullable
+              as int?,
+      level: freezed == level
+          ? _self.level
+          : level // ignore: cast_nullable_to_non_nullable
+              as EESUpoolLevel?,
+      boxCode: freezed == boxCode
+          ? _self.boxCode
+          : boxCode // ignore: cast_nullable_to_non_nullable
+              as String?,
+      streetCode: freezed == streetCode
+          ? _self.streetCode
+          : streetCode // ignore: cast_nullable_to_non_nullable
+              as String?,
+      parentId: freezed == parentId
+          ? _self.parentId
+          : parentId // ignore: cast_nullable_to_non_nullable
+              as int?,
+      chatTags: freezed == chatTags
+          ? _self._chatTags
+          : chatTags // ignore: cast_nullable_to_non_nullable
+              as List<String>?,
+      chatTagsSuggestions: freezed == chatTagsSuggestions
+          ? _self._chatTagsSuggestions
+          : chatTagsSuggestions // ignore: cast_nullable_to_non_nullable
+              as List<String>?,
+      role: freezed == role
+          ? _self.role
+          : role // ignore: cast_nullable_to_non_nullable
+              as EESUpoolMemberRole?,
+      isCensored: freezed == isCensored
+          ? _self.isCensored
+          : isCensored // ignore: cast_nullable_to_non_nullable
+              as bool?,
+      type: null == type
+          ? _self.type
+          : type // ignore: cast_nullable_to_non_nullable
+              as EESUpoolType,
+      memberId: freezed == memberId
+          ? _self.memberId
+          : memberId // ignore: cast_nullable_to_non_nullable
+              as String?,
+      numMembers: freezed == numMembers
+          ? _self.numMembers
+          : numMembers // ignore: cast_nullable_to_non_nullable
+              as int?,
+      unseenMessages: freezed == unseenMessages
+          ? _self.unseenMessages
+          : unseenMessages // ignore: cast_nullable_to_non_nullable
+              as int?,
+      address: freezed == address
+          ? _self.address
+          : address // ignore: cast_nullable_to_non_nullable
+              as Address?,
+    ));
+  }
+
+  /// Create a copy of EESUpool
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $AddressCopyWith<$Res>? get address {
+    if (_self.address == null) {
+      return null;
+    }
+
+    return $AddressCopyWith<$Res>(_self.address!, (value) {
+      return _then(_self.copyWith(address: value));
+    });
+  }
 }
+
+// dart format on

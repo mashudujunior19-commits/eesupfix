@@ -6,8 +6,7 @@ part of 'referral.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$ReferralImpl _$$ReferralImplFromJson(Map<String, dynamic> json) =>
-    _$ReferralImpl(
+_Referral _$ReferralFromJson(Map<String, dynamic> json) => _Referral(
       referrerUserId: json['referrer_user_id'] as String,
       refereedUserId: json['refereed_user_id'] as String,
       refereedFullName: json['refereed_full_name'] as String,
@@ -16,8 +15,7 @@ _$ReferralImpl _$$ReferralImplFromJson(Map<String, dynamic> json) =>
       isCompleted: json['is_completed'] as bool,
     );
 
-Map<String, dynamic> _$$ReferralImplToJson(_$ReferralImpl instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$ReferralToJson(_Referral instance) => <String, dynamic>{
       'referrer_user_id': instance.referrerUserId,
       'refereed_user_id': instance.refereedUserId,
       'refereed_full_name': instance.refereedFullName,

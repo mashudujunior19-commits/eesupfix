@@ -6,9 +6,8 @@ part of 'chat_message_reaction.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$ChatMessageReactionImpl _$$ChatMessageReactionImplFromJson(
-        Map<String, dynamic> json) =>
-    _$ChatMessageReactionImpl(
+_ChatMessageReaction _$ChatMessageReactionFromJson(Map<String, dynamic> json) =>
+    _ChatMessageReaction(
       messageId: (json['message_id'] as num).toInt(),
       memberId: json['member_id'] as String,
       createdAt: DateTime.parse(json['created_at'] as String),
@@ -16,8 +15,8 @@ _$ChatMessageReactionImpl _$$ChatMessageReactionImplFromJson(
       liked: json['liked'] as bool,
     );
 
-Map<String, dynamic> _$$ChatMessageReactionImplToJson(
-        _$ChatMessageReactionImpl instance) =>
+Map<String, dynamic> _$ChatMessageReactionToJson(
+        _ChatMessageReaction instance) =>
     <String, dynamic>{
       'message_id': instance.messageId,
       'member_id': instance.memberId,

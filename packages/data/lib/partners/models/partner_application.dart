@@ -8,7 +8,7 @@ part 'partner_application.freezed.dart';
 part 'partner_application.g.dart';
 
 @freezed
-class PartnerApplication with _$PartnerApplication {
+abstract class PartnerApplication with _$PartnerApplication {
   const factory PartnerApplication({
     required int id,
     @JsonKey(name: 'partner_id') required String partnerId,

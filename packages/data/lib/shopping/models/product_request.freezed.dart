@@ -1,3 +1,4 @@
+// dart format width=80
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
@@ -9,133 +10,73 @@ part of 'product_request.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// dart format off
 T _$identity<T>(T value) => value;
-
-final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
-
-ProductRequest _$ProductRequestFromJson(Map<String, dynamic> json) {
-  return _ProductRequest.fromJson(json);
-}
 
 /// @nodoc
 mixin _$ProductRequest {
   @JsonKey(includeToJson: false)
-  int get id => throw _privateConstructorUsedError;
+  int get id;
   @JsonKey(name: 'user_id')
-  String get userId => throw _privateConstructorUsedError;
+  String get userId;
   @JsonKey(name: 'created_at', includeToJson: false)
-  DateTime? get createdAt => throw _privateConstructorUsedError;
+  DateTime? get createdAt;
   @JsonKey(name: 'product_id')
-  int? get productId => throw _privateConstructorUsedError;
+  int? get productId;
   @JsonKey(name: 'pack_size')
-  String get packSize => throw _privateConstructorUsedError;
-  String get type => throw _privateConstructorUsedError;
-  String get brand => throw _privateConstructorUsedError;
-  String? get variant => throw _privateConstructorUsedError;
-  int? get quantity => throw _privateConstructorUsedError;
-
-  /// Serializes this ProductRequest to a JSON map.
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  String get packSize;
+  String get type;
+  String get brand;
+  String? get variant;
+  int? get quantity;
 
   /// Create a copy of ProductRequest
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  $ProductRequestCopyWith<ProductRequest> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class $ProductRequestCopyWith<$Res> {
-  factory $ProductRequestCopyWith(
-          ProductRequest value, $Res Function(ProductRequest) then) =
-      _$ProductRequestCopyWithImpl<$Res, ProductRequest>;
-  @useResult
-  $Res call(
-      {@JsonKey(includeToJson: false) int id,
-      @JsonKey(name: 'user_id') String userId,
-      @JsonKey(name: 'created_at', includeToJson: false) DateTime? createdAt,
-      @JsonKey(name: 'product_id') int? productId,
-      @JsonKey(name: 'pack_size') String packSize,
-      String type,
-      String brand,
-      String? variant,
-      int? quantity});
-}
-
-/// @nodoc
-class _$ProductRequestCopyWithImpl<$Res, $Val extends ProductRequest>
-    implements $ProductRequestCopyWith<$Res> {
-  _$ProductRequestCopyWithImpl(this._value, this._then);
-
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
-
-  /// Create a copy of ProductRequest
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
+  $ProductRequestCopyWith<ProductRequest> get copyWith =>
+      _$ProductRequestCopyWithImpl<ProductRequest>(
+          this as ProductRequest, _$identity);
+
+  /// Serializes this ProductRequest to a JSON map.
+  Map<String, dynamic> toJson();
+
   @override
-  $Res call({
-    Object? id = null,
-    Object? userId = null,
-    Object? createdAt = freezed,
-    Object? productId = freezed,
-    Object? packSize = null,
-    Object? type = null,
-    Object? brand = null,
-    Object? variant = freezed,
-    Object? quantity = freezed,
-  }) {
-    return _then(_value.copyWith(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as int,
-      userId: null == userId
-          ? _value.userId
-          : userId // ignore: cast_nullable_to_non_nullable
-              as String,
-      createdAt: freezed == createdAt
-          ? _value.createdAt
-          : createdAt // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
-      productId: freezed == productId
-          ? _value.productId
-          : productId // ignore: cast_nullable_to_non_nullable
-              as int?,
-      packSize: null == packSize
-          ? _value.packSize
-          : packSize // ignore: cast_nullable_to_non_nullable
-              as String,
-      type: null == type
-          ? _value.type
-          : type // ignore: cast_nullable_to_non_nullable
-              as String,
-      brand: null == brand
-          ? _value.brand
-          : brand // ignore: cast_nullable_to_non_nullable
-              as String,
-      variant: freezed == variant
-          ? _value.variant
-          : variant // ignore: cast_nullable_to_non_nullable
-              as String?,
-      quantity: freezed == quantity
-          ? _value.quantity
-          : quantity // ignore: cast_nullable_to_non_nullable
-              as int?,
-    ) as $Val);
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is ProductRequest &&
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.userId, userId) || other.userId == userId) &&
+            (identical(other.createdAt, createdAt) ||
+                other.createdAt == createdAt) &&
+            (identical(other.productId, productId) ||
+                other.productId == productId) &&
+            (identical(other.packSize, packSize) ||
+                other.packSize == packSize) &&
+            (identical(other.type, type) || other.type == type) &&
+            (identical(other.brand, brand) || other.brand == brand) &&
+            (identical(other.variant, variant) || other.variant == variant) &&
+            (identical(other.quantity, quantity) ||
+                other.quantity == quantity));
+  }
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  int get hashCode => Object.hash(runtimeType, id, userId, createdAt, productId,
+      packSize, type, brand, variant, quantity);
+
+  @override
+  String toString() {
+    return 'ProductRequest(id: $id, userId: $userId, createdAt: $createdAt, productId: $productId, packSize: $packSize, type: $type, brand: $brand, variant: $variant, quantity: $quantity)';
   }
 }
 
 /// @nodoc
-abstract class _$$ProductRequestImplCopyWith<$Res>
-    implements $ProductRequestCopyWith<$Res> {
-  factory _$$ProductRequestImplCopyWith(_$ProductRequestImpl value,
-          $Res Function(_$ProductRequestImpl) then) =
-      __$$ProductRequestImplCopyWithImpl<$Res>;
-  @override
+abstract mixin class $ProductRequestCopyWith<$Res> {
+  factory $ProductRequestCopyWith(
+          ProductRequest value, $Res Function(ProductRequest) _then) =
+      _$ProductRequestCopyWithImpl;
   @useResult
   $Res call(
       {@JsonKey(includeToJson: false) int id,
@@ -150,12 +91,12 @@ abstract class _$$ProductRequestImplCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$ProductRequestImplCopyWithImpl<$Res>
-    extends _$ProductRequestCopyWithImpl<$Res, _$ProductRequestImpl>
-    implements _$$ProductRequestImplCopyWith<$Res> {
-  __$$ProductRequestImplCopyWithImpl(
-      _$ProductRequestImpl _value, $Res Function(_$ProductRequestImpl) _then)
-      : super(_value, _then);
+class _$ProductRequestCopyWithImpl<$Res>
+    implements $ProductRequestCopyWith<$Res> {
+  _$ProductRequestCopyWithImpl(this._self, this._then);
+
+  final ProductRequest _self;
+  final $Res Function(ProductRequest) _then;
 
   /// Create a copy of ProductRequest
   /// with the given fields replaced by the non-null parameter values.
@@ -172,41 +113,41 @@ class __$$ProductRequestImplCopyWithImpl<$Res>
     Object? variant = freezed,
     Object? quantity = freezed,
   }) {
-    return _then(_$ProductRequestImpl(
+    return _then(_self.copyWith(
       id: null == id
-          ? _value.id
+          ? _self.id
           : id // ignore: cast_nullable_to_non_nullable
               as int,
       userId: null == userId
-          ? _value.userId
+          ? _self.userId
           : userId // ignore: cast_nullable_to_non_nullable
               as String,
       createdAt: freezed == createdAt
-          ? _value.createdAt
+          ? _self.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
               as DateTime?,
       productId: freezed == productId
-          ? _value.productId
+          ? _self.productId
           : productId // ignore: cast_nullable_to_non_nullable
               as int?,
       packSize: null == packSize
-          ? _value.packSize
+          ? _self.packSize
           : packSize // ignore: cast_nullable_to_non_nullable
               as String,
       type: null == type
-          ? _value.type
+          ? _self.type
           : type // ignore: cast_nullable_to_non_nullable
               as String,
       brand: null == brand
-          ? _value.brand
+          ? _self.brand
           : brand // ignore: cast_nullable_to_non_nullable
               as String,
       variant: freezed == variant
-          ? _value.variant
+          ? _self.variant
           : variant // ignore: cast_nullable_to_non_nullable
               as String?,
       quantity: freezed == quantity
-          ? _value.quantity
+          ? _self.quantity
           : quantity // ignore: cast_nullable_to_non_nullable
               as int?,
     ));
@@ -215,8 +156,8 @@ class __$$ProductRequestImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$ProductRequestImpl implements _ProductRequest {
-  const _$ProductRequestImpl(
+class _ProductRequest implements ProductRequest {
+  const _ProductRequest(
       {@JsonKey(includeToJson: false) required this.id,
       @JsonKey(name: 'user_id') required this.userId,
       @JsonKey(name: 'created_at', includeToJson: false) this.createdAt,
@@ -226,9 +167,8 @@ class _$ProductRequestImpl implements _ProductRequest {
       required this.brand,
       this.variant,
       this.quantity});
-
-  factory _$ProductRequestImpl.fromJson(Map<String, dynamic> json) =>
-      _$$ProductRequestImplFromJson(json);
+  factory _ProductRequest.fromJson(Map<String, dynamic> json) =>
+      _$ProductRequestFromJson(json);
 
   @override
   @JsonKey(includeToJson: false)
@@ -254,16 +194,26 @@ class _$ProductRequestImpl implements _ProductRequest {
   @override
   final int? quantity;
 
+  /// Create a copy of ProductRequest
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  String toString() {
-    return 'ProductRequest(id: $id, userId: $userId, createdAt: $createdAt, productId: $productId, packSize: $packSize, type: $type, brand: $brand, variant: $variant, quantity: $quantity)';
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  _$ProductRequestCopyWith<_ProductRequest> get copyWith =>
+      __$ProductRequestCopyWithImpl<_ProductRequest>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$ProductRequestToJson(
+      this,
+    );
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$ProductRequestImpl &&
+            other is _ProductRequest &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.userId, userId) || other.userId == userId) &&
             (identical(other.createdAt, createdAt) ||
@@ -284,67 +234,94 @@ class _$ProductRequestImpl implements _ProductRequest {
   int get hashCode => Object.hash(runtimeType, id, userId, createdAt, productId,
       packSize, type, brand, variant, quantity);
 
-  /// Create a copy of ProductRequest
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  @pragma('vm:prefer-inline')
-  _$$ProductRequestImplCopyWith<_$ProductRequestImpl> get copyWith =>
-      __$$ProductRequestImplCopyWithImpl<_$ProductRequestImpl>(
-          this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$ProductRequestImplToJson(
-      this,
-    );
+  String toString() {
+    return 'ProductRequest(id: $id, userId: $userId, createdAt: $createdAt, productId: $productId, packSize: $packSize, type: $type, brand: $brand, variant: $variant, quantity: $quantity)';
   }
 }
 
-abstract class _ProductRequest implements ProductRequest {
-  const factory _ProductRequest(
-      {@JsonKey(includeToJson: false) required final int id,
-      @JsonKey(name: 'user_id') required final String userId,
-      @JsonKey(name: 'created_at', includeToJson: false)
-      final DateTime? createdAt,
-      @JsonKey(name: 'product_id') final int? productId,
-      @JsonKey(name: 'pack_size') required final String packSize,
-      required final String type,
-      required final String brand,
-      final String? variant,
-      final int? quantity}) = _$ProductRequestImpl;
+/// @nodoc
+abstract mixin class _$ProductRequestCopyWith<$Res>
+    implements $ProductRequestCopyWith<$Res> {
+  factory _$ProductRequestCopyWith(
+          _ProductRequest value, $Res Function(_ProductRequest) _then) =
+      __$ProductRequestCopyWithImpl;
+  @override
+  @useResult
+  $Res call(
+      {@JsonKey(includeToJson: false) int id,
+      @JsonKey(name: 'user_id') String userId,
+      @JsonKey(name: 'created_at', includeToJson: false) DateTime? createdAt,
+      @JsonKey(name: 'product_id') int? productId,
+      @JsonKey(name: 'pack_size') String packSize,
+      String type,
+      String brand,
+      String? variant,
+      int? quantity});
+}
 
-  factory _ProductRequest.fromJson(Map<String, dynamic> json) =
-      _$ProductRequestImpl.fromJson;
+/// @nodoc
+class __$ProductRequestCopyWithImpl<$Res>
+    implements _$ProductRequestCopyWith<$Res> {
+  __$ProductRequestCopyWithImpl(this._self, this._then);
 
-  @override
-  @JsonKey(includeToJson: false)
-  int get id;
-  @override
-  @JsonKey(name: 'user_id')
-  String get userId;
-  @override
-  @JsonKey(name: 'created_at', includeToJson: false)
-  DateTime? get createdAt;
-  @override
-  @JsonKey(name: 'product_id')
-  int? get productId;
-  @override
-  @JsonKey(name: 'pack_size')
-  String get packSize;
-  @override
-  String get type;
-  @override
-  String get brand;
-  @override
-  String? get variant;
-  @override
-  int? get quantity;
+  final _ProductRequest _self;
+  final $Res Function(_ProductRequest) _then;
 
   /// Create a copy of ProductRequest
   /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$ProductRequestImplCopyWith<_$ProductRequestImpl> get copyWith =>
-      throw _privateConstructorUsedError;
+  @pragma('vm:prefer-inline')
+  $Res call({
+    Object? id = null,
+    Object? userId = null,
+    Object? createdAt = freezed,
+    Object? productId = freezed,
+    Object? packSize = null,
+    Object? type = null,
+    Object? brand = null,
+    Object? variant = freezed,
+    Object? quantity = freezed,
+  }) {
+    return _then(_ProductRequest(
+      id: null == id
+          ? _self.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int,
+      userId: null == userId
+          ? _self.userId
+          : userId // ignore: cast_nullable_to_non_nullable
+              as String,
+      createdAt: freezed == createdAt
+          ? _self.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      productId: freezed == productId
+          ? _self.productId
+          : productId // ignore: cast_nullable_to_non_nullable
+              as int?,
+      packSize: null == packSize
+          ? _self.packSize
+          : packSize // ignore: cast_nullable_to_non_nullable
+              as String,
+      type: null == type
+          ? _self.type
+          : type // ignore: cast_nullable_to_non_nullable
+              as String,
+      brand: null == brand
+          ? _self.brand
+          : brand // ignore: cast_nullable_to_non_nullable
+              as String,
+      variant: freezed == variant
+          ? _self.variant
+          : variant // ignore: cast_nullable_to_non_nullable
+              as String?,
+      quantity: freezed == quantity
+          ? _self.quantity
+          : quantity // ignore: cast_nullable_to_non_nullable
+              as int?,
+    ));
+  }
 }
+
+// dart format on

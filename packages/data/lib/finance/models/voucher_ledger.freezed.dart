@@ -1,3 +1,4 @@
+// dart format width=80
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
@@ -9,121 +10,73 @@ part of 'voucher_ledger.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// dart format off
 T _$identity<T>(T value) => value;
-
-final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
-
-VoucherLedger _$VoucherLedgerFromJson(Map<String, dynamic> json) {
-  return _VoucherLedger.fromJson(json);
-}
 
 /// @nodoc
 mixin _$VoucherLedger {
   @JsonKey(name: 'voucher_id')
-  int get voucherId => throw _privateConstructorUsedError;
+  int get voucherId;
   @JsonKey(name: 'transaction_id')
-  int get transactionId => throw _privateConstructorUsedError;
+  int get transactionId;
   @JsonKey(name: 'created_at')
-  DateTime get createdAt => throw _privateConstructorUsedError;
+  DateTime get createdAt;
   @JsonKey(name: 'opening_balance')
-  double? get openingBalance => throw _privateConstructorUsedError;
+  double? get openingBalance;
   @JsonKey(name: 'payout')
-  double? get payout => throw _privateConstructorUsedError;
+  double? get payout;
   @JsonKey(name: 'profit_share')
-  double? get profitShare => throw _privateConstructorUsedError;
+  double? get profitShare;
   @JsonKey(name: 'closing_balance')
-  double get closingBalance => throw _privateConstructorUsedError;
-
-  /// Serializes this VoucherLedger to a JSON map.
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  double get closingBalance;
 
   /// Create a copy of VoucherLedger
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  $VoucherLedgerCopyWith<VoucherLedger> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class $VoucherLedgerCopyWith<$Res> {
-  factory $VoucherLedgerCopyWith(
-          VoucherLedger value, $Res Function(VoucherLedger) then) =
-      _$VoucherLedgerCopyWithImpl<$Res, VoucherLedger>;
-  @useResult
-  $Res call(
-      {@JsonKey(name: 'voucher_id') int voucherId,
-      @JsonKey(name: 'transaction_id') int transactionId,
-      @JsonKey(name: 'created_at') DateTime createdAt,
-      @JsonKey(name: 'opening_balance') double? openingBalance,
-      @JsonKey(name: 'payout') double? payout,
-      @JsonKey(name: 'profit_share') double? profitShare,
-      @JsonKey(name: 'closing_balance') double closingBalance});
-}
-
-/// @nodoc
-class _$VoucherLedgerCopyWithImpl<$Res, $Val extends VoucherLedger>
-    implements $VoucherLedgerCopyWith<$Res> {
-  _$VoucherLedgerCopyWithImpl(this._value, this._then);
-
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
-
-  /// Create a copy of VoucherLedger
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
+  $VoucherLedgerCopyWith<VoucherLedger> get copyWith =>
+      _$VoucherLedgerCopyWithImpl<VoucherLedger>(
+          this as VoucherLedger, _$identity);
+
+  /// Serializes this VoucherLedger to a JSON map.
+  Map<String, dynamic> toJson();
+
   @override
-  $Res call({
-    Object? voucherId = null,
-    Object? transactionId = null,
-    Object? createdAt = null,
-    Object? openingBalance = freezed,
-    Object? payout = freezed,
-    Object? profitShare = freezed,
-    Object? closingBalance = null,
-  }) {
-    return _then(_value.copyWith(
-      voucherId: null == voucherId
-          ? _value.voucherId
-          : voucherId // ignore: cast_nullable_to_non_nullable
-              as int,
-      transactionId: null == transactionId
-          ? _value.transactionId
-          : transactionId // ignore: cast_nullable_to_non_nullable
-              as int,
-      createdAt: null == createdAt
-          ? _value.createdAt
-          : createdAt // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      openingBalance: freezed == openingBalance
-          ? _value.openingBalance
-          : openingBalance // ignore: cast_nullable_to_non_nullable
-              as double?,
-      payout: freezed == payout
-          ? _value.payout
-          : payout // ignore: cast_nullable_to_non_nullable
-              as double?,
-      profitShare: freezed == profitShare
-          ? _value.profitShare
-          : profitShare // ignore: cast_nullable_to_non_nullable
-              as double?,
-      closingBalance: null == closingBalance
-          ? _value.closingBalance
-          : closingBalance // ignore: cast_nullable_to_non_nullable
-              as double,
-    ) as $Val);
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is VoucherLedger &&
+            (identical(other.voucherId, voucherId) ||
+                other.voucherId == voucherId) &&
+            (identical(other.transactionId, transactionId) ||
+                other.transactionId == transactionId) &&
+            (identical(other.createdAt, createdAt) ||
+                other.createdAt == createdAt) &&
+            (identical(other.openingBalance, openingBalance) ||
+                other.openingBalance == openingBalance) &&
+            (identical(other.payout, payout) || other.payout == payout) &&
+            (identical(other.profitShare, profitShare) ||
+                other.profitShare == profitShare) &&
+            (identical(other.closingBalance, closingBalance) ||
+                other.closingBalance == closingBalance));
+  }
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  int get hashCode => Object.hash(runtimeType, voucherId, transactionId,
+      createdAt, openingBalance, payout, profitShare, closingBalance);
+
+  @override
+  String toString() {
+    return 'VoucherLedger(voucherId: $voucherId, transactionId: $transactionId, createdAt: $createdAt, openingBalance: $openingBalance, payout: $payout, profitShare: $profitShare, closingBalance: $closingBalance)';
   }
 }
 
 /// @nodoc
-abstract class _$$VoucherLedgerImplCopyWith<$Res>
-    implements $VoucherLedgerCopyWith<$Res> {
-  factory _$$VoucherLedgerImplCopyWith(
-          _$VoucherLedgerImpl value, $Res Function(_$VoucherLedgerImpl) then) =
-      __$$VoucherLedgerImplCopyWithImpl<$Res>;
-  @override
+abstract mixin class $VoucherLedgerCopyWith<$Res> {
+  factory $VoucherLedgerCopyWith(
+          VoucherLedger value, $Res Function(VoucherLedger) _then) =
+      _$VoucherLedgerCopyWithImpl;
   @useResult
   $Res call(
       {@JsonKey(name: 'voucher_id') int voucherId,
@@ -136,12 +89,12 @@ abstract class _$$VoucherLedgerImplCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$VoucherLedgerImplCopyWithImpl<$Res>
-    extends _$VoucherLedgerCopyWithImpl<$Res, _$VoucherLedgerImpl>
-    implements _$$VoucherLedgerImplCopyWith<$Res> {
-  __$$VoucherLedgerImplCopyWithImpl(
-      _$VoucherLedgerImpl _value, $Res Function(_$VoucherLedgerImpl) _then)
-      : super(_value, _then);
+class _$VoucherLedgerCopyWithImpl<$Res>
+    implements $VoucherLedgerCopyWith<$Res> {
+  _$VoucherLedgerCopyWithImpl(this._self, this._then);
+
+  final VoucherLedger _self;
+  final $Res Function(VoucherLedger) _then;
 
   /// Create a copy of VoucherLedger
   /// with the given fields replaced by the non-null parameter values.
@@ -156,33 +109,33 @@ class __$$VoucherLedgerImplCopyWithImpl<$Res>
     Object? profitShare = freezed,
     Object? closingBalance = null,
   }) {
-    return _then(_$VoucherLedgerImpl(
+    return _then(_self.copyWith(
       voucherId: null == voucherId
-          ? _value.voucherId
+          ? _self.voucherId
           : voucherId // ignore: cast_nullable_to_non_nullable
               as int,
       transactionId: null == transactionId
-          ? _value.transactionId
+          ? _self.transactionId
           : transactionId // ignore: cast_nullable_to_non_nullable
               as int,
       createdAt: null == createdAt
-          ? _value.createdAt
+          ? _self.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
               as DateTime,
       openingBalance: freezed == openingBalance
-          ? _value.openingBalance
+          ? _self.openingBalance
           : openingBalance // ignore: cast_nullable_to_non_nullable
               as double?,
       payout: freezed == payout
-          ? _value.payout
+          ? _self.payout
           : payout // ignore: cast_nullable_to_non_nullable
               as double?,
       profitShare: freezed == profitShare
-          ? _value.profitShare
+          ? _self.profitShare
           : profitShare // ignore: cast_nullable_to_non_nullable
               as double?,
       closingBalance: null == closingBalance
-          ? _value.closingBalance
+          ? _self.closingBalance
           : closingBalance // ignore: cast_nullable_to_non_nullable
               as double,
     ));
@@ -191,8 +144,8 @@ class __$$VoucherLedgerImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$VoucherLedgerImpl implements _VoucherLedger {
-  const _$VoucherLedgerImpl(
+class _VoucherLedger implements VoucherLedger {
+  const _VoucherLedger(
       {@JsonKey(name: 'voucher_id') required this.voucherId,
       @JsonKey(name: 'transaction_id') required this.transactionId,
       @JsonKey(name: 'created_at') required this.createdAt,
@@ -200,9 +153,8 @@ class _$VoucherLedgerImpl implements _VoucherLedger {
       @JsonKey(name: 'payout') this.payout,
       @JsonKey(name: 'profit_share') this.profitShare,
       @JsonKey(name: 'closing_balance') required this.closingBalance});
-
-  factory _$VoucherLedgerImpl.fromJson(Map<String, dynamic> json) =>
-      _$$VoucherLedgerImplFromJson(json);
+  factory _VoucherLedger.fromJson(Map<String, dynamic> json) =>
+      _$VoucherLedgerFromJson(json);
 
   @override
   @JsonKey(name: 'voucher_id')
@@ -226,16 +178,26 @@ class _$VoucherLedgerImpl implements _VoucherLedger {
   @JsonKey(name: 'closing_balance')
   final double closingBalance;
 
+  /// Create a copy of VoucherLedger
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  String toString() {
-    return 'VoucherLedger(voucherId: $voucherId, transactionId: $transactionId, createdAt: $createdAt, openingBalance: $openingBalance, payout: $payout, profitShare: $profitShare, closingBalance: $closingBalance)';
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  _$VoucherLedgerCopyWith<_VoucherLedger> get copyWith =>
+      __$VoucherLedgerCopyWithImpl<_VoucherLedger>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$VoucherLedgerToJson(
+      this,
+    );
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$VoucherLedgerImpl &&
+            other is _VoucherLedger &&
             (identical(other.voucherId, voucherId) ||
                 other.voucherId == voucherId) &&
             (identical(other.transactionId, transactionId) ||
@@ -256,62 +218,82 @@ class _$VoucherLedgerImpl implements _VoucherLedger {
   int get hashCode => Object.hash(runtimeType, voucherId, transactionId,
       createdAt, openingBalance, payout, profitShare, closingBalance);
 
-  /// Create a copy of VoucherLedger
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  @pragma('vm:prefer-inline')
-  _$$VoucherLedgerImplCopyWith<_$VoucherLedgerImpl> get copyWith =>
-      __$$VoucherLedgerImplCopyWithImpl<_$VoucherLedgerImpl>(this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$VoucherLedgerImplToJson(
-      this,
-    );
+  String toString() {
+    return 'VoucherLedger(voucherId: $voucherId, transactionId: $transactionId, createdAt: $createdAt, openingBalance: $openingBalance, payout: $payout, profitShare: $profitShare, closingBalance: $closingBalance)';
   }
 }
 
-abstract class _VoucherLedger implements VoucherLedger {
-  const factory _VoucherLedger(
-      {@JsonKey(name: 'voucher_id') required final int voucherId,
-      @JsonKey(name: 'transaction_id') required final int transactionId,
-      @JsonKey(name: 'created_at') required final DateTime createdAt,
-      @JsonKey(name: 'opening_balance') final double? openingBalance,
-      @JsonKey(name: 'payout') final double? payout,
-      @JsonKey(name: 'profit_share') final double? profitShare,
-      @JsonKey(name: 'closing_balance')
-      required final double closingBalance}) = _$VoucherLedgerImpl;
+/// @nodoc
+abstract mixin class _$VoucherLedgerCopyWith<$Res>
+    implements $VoucherLedgerCopyWith<$Res> {
+  factory _$VoucherLedgerCopyWith(
+          _VoucherLedger value, $Res Function(_VoucherLedger) _then) =
+      __$VoucherLedgerCopyWithImpl;
+  @override
+  @useResult
+  $Res call(
+      {@JsonKey(name: 'voucher_id') int voucherId,
+      @JsonKey(name: 'transaction_id') int transactionId,
+      @JsonKey(name: 'created_at') DateTime createdAt,
+      @JsonKey(name: 'opening_balance') double? openingBalance,
+      @JsonKey(name: 'payout') double? payout,
+      @JsonKey(name: 'profit_share') double? profitShare,
+      @JsonKey(name: 'closing_balance') double closingBalance});
+}
 
-  factory _VoucherLedger.fromJson(Map<String, dynamic> json) =
-      _$VoucherLedgerImpl.fromJson;
+/// @nodoc
+class __$VoucherLedgerCopyWithImpl<$Res>
+    implements _$VoucherLedgerCopyWith<$Res> {
+  __$VoucherLedgerCopyWithImpl(this._self, this._then);
 
-  @override
-  @JsonKey(name: 'voucher_id')
-  int get voucherId;
-  @override
-  @JsonKey(name: 'transaction_id')
-  int get transactionId;
-  @override
-  @JsonKey(name: 'created_at')
-  DateTime get createdAt;
-  @override
-  @JsonKey(name: 'opening_balance')
-  double? get openingBalance;
-  @override
-  @JsonKey(name: 'payout')
-  double? get payout;
-  @override
-  @JsonKey(name: 'profit_share')
-  double? get profitShare;
-  @override
-  @JsonKey(name: 'closing_balance')
-  double get closingBalance;
+  final _VoucherLedger _self;
+  final $Res Function(_VoucherLedger) _then;
 
   /// Create a copy of VoucherLedger
   /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$VoucherLedgerImplCopyWith<_$VoucherLedgerImpl> get copyWith =>
-      throw _privateConstructorUsedError;
+  @pragma('vm:prefer-inline')
+  $Res call({
+    Object? voucherId = null,
+    Object? transactionId = null,
+    Object? createdAt = null,
+    Object? openingBalance = freezed,
+    Object? payout = freezed,
+    Object? profitShare = freezed,
+    Object? closingBalance = null,
+  }) {
+    return _then(_VoucherLedger(
+      voucherId: null == voucherId
+          ? _self.voucherId
+          : voucherId // ignore: cast_nullable_to_non_nullable
+              as int,
+      transactionId: null == transactionId
+          ? _self.transactionId
+          : transactionId // ignore: cast_nullable_to_non_nullable
+              as int,
+      createdAt: null == createdAt
+          ? _self.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as DateTime,
+      openingBalance: freezed == openingBalance
+          ? _self.openingBalance
+          : openingBalance // ignore: cast_nullable_to_non_nullable
+              as double?,
+      payout: freezed == payout
+          ? _self.payout
+          : payout // ignore: cast_nullable_to_non_nullable
+              as double?,
+      profitShare: freezed == profitShare
+          ? _self.profitShare
+          : profitShare // ignore: cast_nullable_to_non_nullable
+              as double?,
+      closingBalance: null == closingBalance
+          ? _self.closingBalance
+          : closingBalance // ignore: cast_nullable_to_non_nullable
+              as double,
+    ));
+  }
 }
+
+// dart format on

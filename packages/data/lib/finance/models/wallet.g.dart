@@ -6,7 +6,7 @@ part of 'wallet.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$WalletImpl _$$WalletImplFromJson(Map<String, dynamic> json) => _$WalletImpl(
+_Wallet _$WalletFromJson(Map<String, dynamic> json) => _Wallet(
       id: (json['id'] as num).toInt(),
       userId: json['user_id'] as String,
       balance: (json['balance'] as num).toDouble(),
@@ -23,8 +23,7 @@ _$WalletImpl _$$WalletImplFromJson(Map<String, dynamic> json) => _$WalletImpl(
       sortNumber: (json['sort_num'] as num).toInt(),
     );
 
-Map<String, dynamic> _$$WalletImplToJson(_$WalletImpl instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$WalletToJson(_Wallet instance) => <String, dynamic>{
       'id': instance.id,
       'user_id': instance.userId,
       'balance': instance.balance,

@@ -6,8 +6,8 @@ part of 'payout_request.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$PayoutRequestImpl _$$PayoutRequestImplFromJson(Map<String, dynamic> json) =>
-    _$PayoutRequestImpl(
+_PayoutRequest _$PayoutRequestFromJson(Map<String, dynamic> json) =>
+    _PayoutRequest(
       createdAt: DateTime.parse(json['created_at'] as String),
       bank: json['bank'] as String,
       accNumber: json['acc_number'] as String,
@@ -23,7 +23,7 @@ _$PayoutRequestImpl _$$PayoutRequestImplFromJson(Map<String, dynamic> json) =>
       transactionId: (json['transaction_id'] as num?)?.toInt(),
     );
 
-Map<String, dynamic> _$$PayoutRequestImplToJson(_$PayoutRequestImpl instance) =>
+Map<String, dynamic> _$PayoutRequestToJson(_PayoutRequest instance) =>
     <String, dynamic>{
       'bank': instance.bank,
       'acc_number': instance.accNumber,

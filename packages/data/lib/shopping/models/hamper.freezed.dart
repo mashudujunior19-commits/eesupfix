@@ -1,3 +1,4 @@
+// dart format width=80
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
@@ -9,168 +10,99 @@ part of 'hamper.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// dart format off
 T _$identity<T>(T value) => value;
-
-final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
-
-Hamper _$HamperFromJson(Map<String, dynamic> json) {
-  return _Hamper.fromJson(json);
-}
 
 /// @nodoc
 mixin _$Hamper {
-  String get id => throw _privateConstructorUsedError;
+  String get id;
   @JsonKey(name: 'code')
-  String get hamperCode => throw _privateConstructorUsedError;
-  String get type => throw _privateConstructorUsedError;
-  double get value => throw _privateConstructorUsedError;
+  String get hamperCode;
+  String get type;
+  double get value;
   @JsonKey(name: 'expiry_date')
-  DateTime get expiryDate => throw _privateConstructorUsedError;
+  DateTime get expiryDate;
   @JsonKey(name: 'is_final')
-  bool get isFinal => throw _privateConstructorUsedError;
-  List<int>? get productIds => throw _privateConstructorUsedError;
+  bool get isFinal;
+  List<int>? get productIds;
   @JsonKey(name: 'img_url')
-  String? get imgUrl => throw _privateConstructorUsedError;
+  String? get imgUrl;
   @JsonKey(name: 'hamper_gif_url1')
-  String? get gifUrl1 => throw _privateConstructorUsedError;
+  String? get gifUrl1;
   @JsonKey(name: 'profit_allocation_id')
-  int? get profitAllocationId => throw _privateConstructorUsedError;
+  int? get profitAllocationId;
   @JsonKey(name: 'hamper_gif_url2')
-  String? get gifUrl2 => throw _privateConstructorUsedError;
+  String? get gifUrl2;
   @JsonKey(name: 'customer_type')
-  String? get customerType => throw _privateConstructorUsedError;
-  bool? get isFree => throw _privateConstructorUsedError;
-  Map<int, int>? get quantity => throw _privateConstructorUsedError;
-
-  /// Serializes this Hamper to a JSON map.
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  String? get customerType;
+  bool? get isFree;
+  Map<int, int>? get quantity;
 
   /// Create a copy of Hamper
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  $HamperCopyWith<Hamper> get copyWith => throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class $HamperCopyWith<$Res> {
-  factory $HamperCopyWith(Hamper value, $Res Function(Hamper) then) =
-      _$HamperCopyWithImpl<$Res, Hamper>;
-  @useResult
-  $Res call(
-      {String id,
-      @JsonKey(name: 'code') String hamperCode,
-      String type,
-      double value,
-      @JsonKey(name: 'expiry_date') DateTime expiryDate,
-      @JsonKey(name: 'is_final') bool isFinal,
-      List<int>? productIds,
-      @JsonKey(name: 'img_url') String? imgUrl,
-      @JsonKey(name: 'hamper_gif_url1') String? gifUrl1,
-      @JsonKey(name: 'profit_allocation_id') int? profitAllocationId,
-      @JsonKey(name: 'hamper_gif_url2') String? gifUrl2,
-      @JsonKey(name: 'customer_type') String? customerType,
-      bool? isFree,
-      Map<int, int>? quantity});
-}
-
-/// @nodoc
-class _$HamperCopyWithImpl<$Res, $Val extends Hamper>
-    implements $HamperCopyWith<$Res> {
-  _$HamperCopyWithImpl(this._value, this._then);
-
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
-
-  /// Create a copy of Hamper
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
+  $HamperCopyWith<Hamper> get copyWith =>
+      _$HamperCopyWithImpl<Hamper>(this as Hamper, _$identity);
+
+  /// Serializes this Hamper to a JSON map.
+  Map<String, dynamic> toJson();
+
   @override
-  $Res call({
-    Object? id = null,
-    Object? hamperCode = null,
-    Object? type = null,
-    Object? value = null,
-    Object? expiryDate = null,
-    Object? isFinal = null,
-    Object? productIds = freezed,
-    Object? imgUrl = freezed,
-    Object? gifUrl1 = freezed,
-    Object? profitAllocationId = freezed,
-    Object? gifUrl2 = freezed,
-    Object? customerType = freezed,
-    Object? isFree = freezed,
-    Object? quantity = freezed,
-  }) {
-    return _then(_value.copyWith(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as String,
-      hamperCode: null == hamperCode
-          ? _value.hamperCode
-          : hamperCode // ignore: cast_nullable_to_non_nullable
-              as String,
-      type: null == type
-          ? _value.type
-          : type // ignore: cast_nullable_to_non_nullable
-              as String,
-      value: null == value
-          ? _value.value
-          : value // ignore: cast_nullable_to_non_nullable
-              as double,
-      expiryDate: null == expiryDate
-          ? _value.expiryDate
-          : expiryDate // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      isFinal: null == isFinal
-          ? _value.isFinal
-          : isFinal // ignore: cast_nullable_to_non_nullable
-              as bool,
-      productIds: freezed == productIds
-          ? _value.productIds
-          : productIds // ignore: cast_nullable_to_non_nullable
-              as List<int>?,
-      imgUrl: freezed == imgUrl
-          ? _value.imgUrl
-          : imgUrl // ignore: cast_nullable_to_non_nullable
-              as String?,
-      gifUrl1: freezed == gifUrl1
-          ? _value.gifUrl1
-          : gifUrl1 // ignore: cast_nullable_to_non_nullable
-              as String?,
-      profitAllocationId: freezed == profitAllocationId
-          ? _value.profitAllocationId
-          : profitAllocationId // ignore: cast_nullable_to_non_nullable
-              as int?,
-      gifUrl2: freezed == gifUrl2
-          ? _value.gifUrl2
-          : gifUrl2 // ignore: cast_nullable_to_non_nullable
-              as String?,
-      customerType: freezed == customerType
-          ? _value.customerType
-          : customerType // ignore: cast_nullable_to_non_nullable
-              as String?,
-      isFree: freezed == isFree
-          ? _value.isFree
-          : isFree // ignore: cast_nullable_to_non_nullable
-              as bool?,
-      quantity: freezed == quantity
-          ? _value.quantity
-          : quantity // ignore: cast_nullable_to_non_nullable
-              as Map<int, int>?,
-    ) as $Val);
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is Hamper &&
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.hamperCode, hamperCode) ||
+                other.hamperCode == hamperCode) &&
+            (identical(other.type, type) || other.type == type) &&
+            (identical(other.value, value) || other.value == value) &&
+            (identical(other.expiryDate, expiryDate) ||
+                other.expiryDate == expiryDate) &&
+            (identical(other.isFinal, isFinal) || other.isFinal == isFinal) &&
+            const DeepCollectionEquality()
+                .equals(other.productIds, productIds) &&
+            (identical(other.imgUrl, imgUrl) || other.imgUrl == imgUrl) &&
+            (identical(other.gifUrl1, gifUrl1) || other.gifUrl1 == gifUrl1) &&
+            (identical(other.profitAllocationId, profitAllocationId) ||
+                other.profitAllocationId == profitAllocationId) &&
+            (identical(other.gifUrl2, gifUrl2) || other.gifUrl2 == gifUrl2) &&
+            (identical(other.customerType, customerType) ||
+                other.customerType == customerType) &&
+            (identical(other.isFree, isFree) || other.isFree == isFree) &&
+            const DeepCollectionEquality().equals(other.quantity, quantity));
+  }
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  int get hashCode => Object.hash(
+      runtimeType,
+      id,
+      hamperCode,
+      type,
+      value,
+      expiryDate,
+      isFinal,
+      const DeepCollectionEquality().hash(productIds),
+      imgUrl,
+      gifUrl1,
+      profitAllocationId,
+      gifUrl2,
+      customerType,
+      isFree,
+      const DeepCollectionEquality().hash(quantity));
+
+  @override
+  String toString() {
+    return 'Hamper(id: $id, hamperCode: $hamperCode, type: $type, value: $value, expiryDate: $expiryDate, isFinal: $isFinal, productIds: $productIds, imgUrl: $imgUrl, gifUrl1: $gifUrl1, profitAllocationId: $profitAllocationId, gifUrl2: $gifUrl2, customerType: $customerType, isFree: $isFree, quantity: $quantity)';
   }
 }
 
 /// @nodoc
-abstract class _$$HamperImplCopyWith<$Res> implements $HamperCopyWith<$Res> {
-  factory _$$HamperImplCopyWith(
-          _$HamperImpl value, $Res Function(_$HamperImpl) then) =
-      __$$HamperImplCopyWithImpl<$Res>;
-  @override
+abstract mixin class $HamperCopyWith<$Res> {
+  factory $HamperCopyWith(Hamper value, $Res Function(Hamper) _then) =
+      _$HamperCopyWithImpl;
   @useResult
   $Res call(
       {String id,
@@ -190,12 +122,11 @@ abstract class _$$HamperImplCopyWith<$Res> implements $HamperCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$HamperImplCopyWithImpl<$Res>
-    extends _$HamperCopyWithImpl<$Res, _$HamperImpl>
-    implements _$$HamperImplCopyWith<$Res> {
-  __$$HamperImplCopyWithImpl(
-      _$HamperImpl _value, $Res Function(_$HamperImpl) _then)
-      : super(_value, _then);
+class _$HamperCopyWithImpl<$Res> implements $HamperCopyWith<$Res> {
+  _$HamperCopyWithImpl(this._self, this._then);
+
+  final Hamper _self;
+  final $Res Function(Hamper) _then;
 
   /// Create a copy of Hamper
   /// with the given fields replaced by the non-null parameter values.
@@ -217,61 +148,61 @@ class __$$HamperImplCopyWithImpl<$Res>
     Object? isFree = freezed,
     Object? quantity = freezed,
   }) {
-    return _then(_$HamperImpl(
+    return _then(_self.copyWith(
       id: null == id
-          ? _value.id
+          ? _self.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
       hamperCode: null == hamperCode
-          ? _value.hamperCode
+          ? _self.hamperCode
           : hamperCode // ignore: cast_nullable_to_non_nullable
               as String,
       type: null == type
-          ? _value.type
+          ? _self.type
           : type // ignore: cast_nullable_to_non_nullable
               as String,
       value: null == value
-          ? _value.value
+          ? _self.value
           : value // ignore: cast_nullable_to_non_nullable
               as double,
       expiryDate: null == expiryDate
-          ? _value.expiryDate
+          ? _self.expiryDate
           : expiryDate // ignore: cast_nullable_to_non_nullable
               as DateTime,
       isFinal: null == isFinal
-          ? _value.isFinal
+          ? _self.isFinal
           : isFinal // ignore: cast_nullable_to_non_nullable
               as bool,
       productIds: freezed == productIds
-          ? _value._productIds
+          ? _self.productIds
           : productIds // ignore: cast_nullable_to_non_nullable
               as List<int>?,
       imgUrl: freezed == imgUrl
-          ? _value.imgUrl
+          ? _self.imgUrl
           : imgUrl // ignore: cast_nullable_to_non_nullable
               as String?,
       gifUrl1: freezed == gifUrl1
-          ? _value.gifUrl1
+          ? _self.gifUrl1
           : gifUrl1 // ignore: cast_nullable_to_non_nullable
               as String?,
       profitAllocationId: freezed == profitAllocationId
-          ? _value.profitAllocationId
+          ? _self.profitAllocationId
           : profitAllocationId // ignore: cast_nullable_to_non_nullable
               as int?,
       gifUrl2: freezed == gifUrl2
-          ? _value.gifUrl2
+          ? _self.gifUrl2
           : gifUrl2 // ignore: cast_nullable_to_non_nullable
               as String?,
       customerType: freezed == customerType
-          ? _value.customerType
+          ? _self.customerType
           : customerType // ignore: cast_nullable_to_non_nullable
               as String?,
       isFree: freezed == isFree
-          ? _value.isFree
+          ? _self.isFree
           : isFree // ignore: cast_nullable_to_non_nullable
               as bool?,
       quantity: freezed == quantity
-          ? _value._quantity
+          ? _self.quantity
           : quantity // ignore: cast_nullable_to_non_nullable
               as Map<int, int>?,
     ));
@@ -280,8 +211,8 @@ class __$$HamperImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$HamperImpl implements _Hamper {
-  _$HamperImpl(
+class _Hamper implements Hamper {
+  _Hamper(
       {required this.id,
       @JsonKey(name: 'code') required this.hamperCode,
       required this.type,
@@ -298,9 +229,7 @@ class _$HamperImpl implements _Hamper {
       final Map<int, int>? quantity})
       : _productIds = productIds,
         _quantity = quantity;
-
-  factory _$HamperImpl.fromJson(Map<String, dynamic> json) =>
-      _$$HamperImplFromJson(json);
+  factory _Hamper.fromJson(Map<String, dynamic> json) => _$HamperFromJson(json);
 
   @override
   final String id;
@@ -354,16 +283,26 @@ class _$HamperImpl implements _Hamper {
     return EqualUnmodifiableMapView(value);
   }
 
+  /// Create a copy of Hamper
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  String toString() {
-    return 'Hamper(id: $id, hamperCode: $hamperCode, type: $type, value: $value, expiryDate: $expiryDate, isFinal: $isFinal, productIds: $productIds, imgUrl: $imgUrl, gifUrl1: $gifUrl1, profitAllocationId: $profitAllocationId, gifUrl2: $gifUrl2, customerType: $customerType, isFree: $isFree, quantity: $quantity)';
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  _$HamperCopyWith<_Hamper> get copyWith =>
+      __$HamperCopyWithImpl<_Hamper>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$HamperToJson(
+      this,
+    );
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$HamperImpl &&
+            other is _Hamper &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.hamperCode, hamperCode) ||
                 other.hamperCode == hamperCode) &&
@@ -404,82 +343,121 @@ class _$HamperImpl implements _Hamper {
       isFree,
       const DeepCollectionEquality().hash(_quantity));
 
-  /// Create a copy of Hamper
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  @pragma('vm:prefer-inline')
-  _$$HamperImplCopyWith<_$HamperImpl> get copyWith =>
-      __$$HamperImplCopyWithImpl<_$HamperImpl>(this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$HamperImplToJson(
-      this,
-    );
+  String toString() {
+    return 'Hamper(id: $id, hamperCode: $hamperCode, type: $type, value: $value, expiryDate: $expiryDate, isFinal: $isFinal, productIds: $productIds, imgUrl: $imgUrl, gifUrl1: $gifUrl1, profitAllocationId: $profitAllocationId, gifUrl2: $gifUrl2, customerType: $customerType, isFree: $isFree, quantity: $quantity)';
   }
 }
 
-abstract class _Hamper implements Hamper {
-  factory _Hamper(
-      {required final String id,
-      @JsonKey(name: 'code') required final String hamperCode,
-      required final String type,
-      required final double value,
-      @JsonKey(name: 'expiry_date') required final DateTime expiryDate,
-      @JsonKey(name: 'is_final') required final bool isFinal,
-      final List<int>? productIds,
-      @JsonKey(name: 'img_url') final String? imgUrl,
-      @JsonKey(name: 'hamper_gif_url1') final String? gifUrl1,
-      @JsonKey(name: 'profit_allocation_id') final int? profitAllocationId,
-      @JsonKey(name: 'hamper_gif_url2') final String? gifUrl2,
-      @JsonKey(name: 'customer_type') final String? customerType,
-      final bool? isFree,
-      final Map<int, int>? quantity}) = _$HamperImpl;
+/// @nodoc
+abstract mixin class _$HamperCopyWith<$Res> implements $HamperCopyWith<$Res> {
+  factory _$HamperCopyWith(_Hamper value, $Res Function(_Hamper) _then) =
+      __$HamperCopyWithImpl;
+  @override
+  @useResult
+  $Res call(
+      {String id,
+      @JsonKey(name: 'code') String hamperCode,
+      String type,
+      double value,
+      @JsonKey(name: 'expiry_date') DateTime expiryDate,
+      @JsonKey(name: 'is_final') bool isFinal,
+      List<int>? productIds,
+      @JsonKey(name: 'img_url') String? imgUrl,
+      @JsonKey(name: 'hamper_gif_url1') String? gifUrl1,
+      @JsonKey(name: 'profit_allocation_id') int? profitAllocationId,
+      @JsonKey(name: 'hamper_gif_url2') String? gifUrl2,
+      @JsonKey(name: 'customer_type') String? customerType,
+      bool? isFree,
+      Map<int, int>? quantity});
+}
 
-  factory _Hamper.fromJson(Map<String, dynamic> json) = _$HamperImpl.fromJson;
+/// @nodoc
+class __$HamperCopyWithImpl<$Res> implements _$HamperCopyWith<$Res> {
+  __$HamperCopyWithImpl(this._self, this._then);
 
-  @override
-  String get id;
-  @override
-  @JsonKey(name: 'code')
-  String get hamperCode;
-  @override
-  String get type;
-  @override
-  double get value;
-  @override
-  @JsonKey(name: 'expiry_date')
-  DateTime get expiryDate;
-  @override
-  @JsonKey(name: 'is_final')
-  bool get isFinal;
-  @override
-  List<int>? get productIds;
-  @override
-  @JsonKey(name: 'img_url')
-  String? get imgUrl;
-  @override
-  @JsonKey(name: 'hamper_gif_url1')
-  String? get gifUrl1;
-  @override
-  @JsonKey(name: 'profit_allocation_id')
-  int? get profitAllocationId;
-  @override
-  @JsonKey(name: 'hamper_gif_url2')
-  String? get gifUrl2;
-  @override
-  @JsonKey(name: 'customer_type')
-  String? get customerType;
-  @override
-  bool? get isFree;
-  @override
-  Map<int, int>? get quantity;
+  final _Hamper _self;
+  final $Res Function(_Hamper) _then;
 
   /// Create a copy of Hamper
   /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$HamperImplCopyWith<_$HamperImpl> get copyWith =>
-      throw _privateConstructorUsedError;
+  @pragma('vm:prefer-inline')
+  $Res call({
+    Object? id = null,
+    Object? hamperCode = null,
+    Object? type = null,
+    Object? value = null,
+    Object? expiryDate = null,
+    Object? isFinal = null,
+    Object? productIds = freezed,
+    Object? imgUrl = freezed,
+    Object? gifUrl1 = freezed,
+    Object? profitAllocationId = freezed,
+    Object? gifUrl2 = freezed,
+    Object? customerType = freezed,
+    Object? isFree = freezed,
+    Object? quantity = freezed,
+  }) {
+    return _then(_Hamper(
+      id: null == id
+          ? _self.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
+      hamperCode: null == hamperCode
+          ? _self.hamperCode
+          : hamperCode // ignore: cast_nullable_to_non_nullable
+              as String,
+      type: null == type
+          ? _self.type
+          : type // ignore: cast_nullable_to_non_nullable
+              as String,
+      value: null == value
+          ? _self.value
+          : value // ignore: cast_nullable_to_non_nullable
+              as double,
+      expiryDate: null == expiryDate
+          ? _self.expiryDate
+          : expiryDate // ignore: cast_nullable_to_non_nullable
+              as DateTime,
+      isFinal: null == isFinal
+          ? _self.isFinal
+          : isFinal // ignore: cast_nullable_to_non_nullable
+              as bool,
+      productIds: freezed == productIds
+          ? _self._productIds
+          : productIds // ignore: cast_nullable_to_non_nullable
+              as List<int>?,
+      imgUrl: freezed == imgUrl
+          ? _self.imgUrl
+          : imgUrl // ignore: cast_nullable_to_non_nullable
+              as String?,
+      gifUrl1: freezed == gifUrl1
+          ? _self.gifUrl1
+          : gifUrl1 // ignore: cast_nullable_to_non_nullable
+              as String?,
+      profitAllocationId: freezed == profitAllocationId
+          ? _self.profitAllocationId
+          : profitAllocationId // ignore: cast_nullable_to_non_nullable
+              as int?,
+      gifUrl2: freezed == gifUrl2
+          ? _self.gifUrl2
+          : gifUrl2 // ignore: cast_nullable_to_non_nullable
+              as String?,
+      customerType: freezed == customerType
+          ? _self.customerType
+          : customerType // ignore: cast_nullable_to_non_nullable
+              as String?,
+      isFree: freezed == isFree
+          ? _self.isFree
+          : isFree // ignore: cast_nullable_to_non_nullable
+              as bool?,
+      quantity: freezed == quantity
+          ? _self._quantity
+          : quantity // ignore: cast_nullable_to_non_nullable
+              as Map<int, int>?,
+    ));
+  }
 }
+
+// dart format on

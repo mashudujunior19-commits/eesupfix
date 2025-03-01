@@ -6,8 +6,8 @@ part of 'eesupool_issue.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$EESUpoolIssueImpl _$$EESUpoolIssueImplFromJson(Map<String, dynamic> json) =>
-    _$EESUpoolIssueImpl(
+_EESUpoolIssue _$EESUpoolIssueFromJson(Map<String, dynamic> json) =>
+    _EESUpoolIssue(
       id: json['issue_id'] as String,
       eesupoolId: (json['eesupool_id'] as num).toInt(),
       parentPoolId: (json['parent_pool_id'] as num?)?.toInt(),
@@ -31,7 +31,7 @@ _$EESUpoolIssueImpl _$$EESUpoolIssueImplFromJson(Map<String, dynamic> json) =>
           json['offender_member'], const EESUpoolMemberConverter().fromJson),
     );
 
-Map<String, dynamic> _$$EESUpoolIssueImplToJson(_$EESUpoolIssueImpl instance) =>
+Map<String, dynamic> _$EESUpoolIssueToJson(_EESUpoolIssue instance) =>
     <String, dynamic>{
       'eesupool_id': instance.eesupoolId,
       'parent_pool_id': instance.parentPoolId,

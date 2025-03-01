@@ -1,3 +1,4 @@
+// dart format width=80
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
@@ -9,159 +10,33 @@ part of 'payment_gateway.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// dart format off
 T _$identity<T>(T value) => value;
-
-final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
-
-PaymentGateway _$PaymentGatewayFromJson(Map<String, dynamic> json) {
-  return _PaymentGateway.fromJson(json);
-}
 
 /// @nodoc
 mixin _$PaymentGateway {
   @PaymentMethodConverter()
-  PaymentMethod get id => throw _privateConstructorUsedError;
+  PaymentMethod get id;
   @JsonKey(name: 'is_active')
-  bool get isActive => throw _privateConstructorUsedError;
-  double get fee => throw _privateConstructorUsedError;
-
-  /// Serializes this PaymentGateway to a JSON map.
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  bool get isActive;
+  double get fee;
 
   /// Create a copy of PaymentGateway
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
   $PaymentGatewayCopyWith<PaymentGateway> get copyWith =>
-      throw _privateConstructorUsedError;
-}
+      _$PaymentGatewayCopyWithImpl<PaymentGateway>(
+          this as PaymentGateway, _$identity);
 
-/// @nodoc
-abstract class $PaymentGatewayCopyWith<$Res> {
-  factory $PaymentGatewayCopyWith(
-          PaymentGateway value, $Res Function(PaymentGateway) then) =
-      _$PaymentGatewayCopyWithImpl<$Res, PaymentGateway>;
-  @useResult
-  $Res call(
-      {@PaymentMethodConverter() PaymentMethod id,
-      @JsonKey(name: 'is_active') bool isActive,
-      double fee});
-}
-
-/// @nodoc
-class _$PaymentGatewayCopyWithImpl<$Res, $Val extends PaymentGateway>
-    implements $PaymentGatewayCopyWith<$Res> {
-  _$PaymentGatewayCopyWithImpl(this._value, this._then);
-
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
-
-  /// Create a copy of PaymentGateway
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? id = null,
-    Object? isActive = null,
-    Object? fee = null,
-  }) {
-    return _then(_value.copyWith(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as PaymentMethod,
-      isActive: null == isActive
-          ? _value.isActive
-          : isActive // ignore: cast_nullable_to_non_nullable
-              as bool,
-      fee: null == fee
-          ? _value.fee
-          : fee // ignore: cast_nullable_to_non_nullable
-              as double,
-    ) as $Val);
-  }
-}
-
-/// @nodoc
-abstract class _$$PaymentGatewayImplCopyWith<$Res>
-    implements $PaymentGatewayCopyWith<$Res> {
-  factory _$$PaymentGatewayImplCopyWith(_$PaymentGatewayImpl value,
-          $Res Function(_$PaymentGatewayImpl) then) =
-      __$$PaymentGatewayImplCopyWithImpl<$Res>;
-  @override
-  @useResult
-  $Res call(
-      {@PaymentMethodConverter() PaymentMethod id,
-      @JsonKey(name: 'is_active') bool isActive,
-      double fee});
-}
-
-/// @nodoc
-class __$$PaymentGatewayImplCopyWithImpl<$Res>
-    extends _$PaymentGatewayCopyWithImpl<$Res, _$PaymentGatewayImpl>
-    implements _$$PaymentGatewayImplCopyWith<$Res> {
-  __$$PaymentGatewayImplCopyWithImpl(
-      _$PaymentGatewayImpl _value, $Res Function(_$PaymentGatewayImpl) _then)
-      : super(_value, _then);
-
-  /// Create a copy of PaymentGateway
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? id = null,
-    Object? isActive = null,
-    Object? fee = null,
-  }) {
-    return _then(_$PaymentGatewayImpl(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as PaymentMethod,
-      isActive: null == isActive
-          ? _value.isActive
-          : isActive // ignore: cast_nullable_to_non_nullable
-              as bool,
-      fee: null == fee
-          ? _value.fee
-          : fee // ignore: cast_nullable_to_non_nullable
-              as double,
-    ));
-  }
-}
-
-/// @nodoc
-@JsonSerializable()
-class _$PaymentGatewayImpl implements _PaymentGateway {
-  const _$PaymentGatewayImpl(
-      {@PaymentMethodConverter() required this.id,
-      @JsonKey(name: 'is_active') required this.isActive,
-      required this.fee});
-
-  factory _$PaymentGatewayImpl.fromJson(Map<String, dynamic> json) =>
-      _$$PaymentGatewayImplFromJson(json);
-
-  @override
-  @PaymentMethodConverter()
-  final PaymentMethod id;
-  @override
-  @JsonKey(name: 'is_active')
-  final bool isActive;
-  @override
-  final double fee;
-
-  @override
-  String toString() {
-    return 'PaymentGateway(id: $id, isActive: $isActive, fee: $fee)';
-  }
+  /// Serializes this PaymentGateway to a JSON map.
+  Map<String, dynamic> toJson();
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$PaymentGatewayImpl &&
+            other is PaymentGateway &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.isActive, isActive) ||
                 other.isActive == isActive) &&
@@ -172,45 +47,159 @@ class _$PaymentGatewayImpl implements _PaymentGateway {
   @override
   int get hashCode => Object.hash(runtimeType, id, isActive, fee);
 
-  /// Create a copy of PaymentGateway
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  @pragma('vm:prefer-inline')
-  _$$PaymentGatewayImplCopyWith<_$PaymentGatewayImpl> get copyWith =>
-      __$$PaymentGatewayImplCopyWithImpl<_$PaymentGatewayImpl>(
-          this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$PaymentGatewayImplToJson(
-      this,
-    );
+  String toString() {
+    return 'PaymentGateway(id: $id, isActive: $isActive, fee: $fee)';
   }
 }
 
-abstract class _PaymentGateway implements PaymentGateway {
-  const factory _PaymentGateway(
-      {@PaymentMethodConverter() required final PaymentMethod id,
-      @JsonKey(name: 'is_active') required final bool isActive,
-      required final double fee}) = _$PaymentGatewayImpl;
+/// @nodoc
+abstract mixin class $PaymentGatewayCopyWith<$Res> {
+  factory $PaymentGatewayCopyWith(
+          PaymentGateway value, $Res Function(PaymentGateway) _then) =
+      _$PaymentGatewayCopyWithImpl;
+  @useResult
+  $Res call(
+      {@PaymentMethodConverter() PaymentMethod id,
+      @JsonKey(name: 'is_active') bool isActive,
+      double fee});
+}
 
-  factory _PaymentGateway.fromJson(Map<String, dynamic> json) =
-      _$PaymentGatewayImpl.fromJson;
+/// @nodoc
+class _$PaymentGatewayCopyWithImpl<$Res>
+    implements $PaymentGatewayCopyWith<$Res> {
+  _$PaymentGatewayCopyWithImpl(this._self, this._then);
+
+  final PaymentGateway _self;
+  final $Res Function(PaymentGateway) _then;
+
+  /// Create a copy of PaymentGateway
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? id = null,
+    Object? isActive = null,
+    Object? fee = null,
+  }) {
+    return _then(_self.copyWith(
+      id: null == id
+          ? _self.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as PaymentMethod,
+      isActive: null == isActive
+          ? _self.isActive
+          : isActive // ignore: cast_nullable_to_non_nullable
+              as bool,
+      fee: null == fee
+          ? _self.fee
+          : fee // ignore: cast_nullable_to_non_nullable
+              as double,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _PaymentGateway implements PaymentGateway {
+  const _PaymentGateway(
+      {@PaymentMethodConverter() required this.id,
+      @JsonKey(name: 'is_active') required this.isActive,
+      required this.fee});
+  factory _PaymentGateway.fromJson(Map<String, dynamic> json) =>
+      _$PaymentGatewayFromJson(json);
 
   @override
   @PaymentMethodConverter()
-  PaymentMethod get id;
+  final PaymentMethod id;
   @override
   @JsonKey(name: 'is_active')
-  bool get isActive;
+  final bool isActive;
   @override
-  double get fee;
+  final double fee;
 
   /// Create a copy of PaymentGateway
   /// with the given fields replaced by the non-null parameter values.
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$PaymentGatewayImplCopyWith<_$PaymentGatewayImpl> get copyWith =>
-      throw _privateConstructorUsedError;
+  @pragma('vm:prefer-inline')
+  _$PaymentGatewayCopyWith<_PaymentGateway> get copyWith =>
+      __$PaymentGatewayCopyWithImpl<_PaymentGateway>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$PaymentGatewayToJson(
+      this,
+    );
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _PaymentGateway &&
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.isActive, isActive) ||
+                other.isActive == isActive) &&
+            (identical(other.fee, fee) || other.fee == fee));
+  }
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  int get hashCode => Object.hash(runtimeType, id, isActive, fee);
+
+  @override
+  String toString() {
+    return 'PaymentGateway(id: $id, isActive: $isActive, fee: $fee)';
+  }
 }
+
+/// @nodoc
+abstract mixin class _$PaymentGatewayCopyWith<$Res>
+    implements $PaymentGatewayCopyWith<$Res> {
+  factory _$PaymentGatewayCopyWith(
+          _PaymentGateway value, $Res Function(_PaymentGateway) _then) =
+      __$PaymentGatewayCopyWithImpl;
+  @override
+  @useResult
+  $Res call(
+      {@PaymentMethodConverter() PaymentMethod id,
+      @JsonKey(name: 'is_active') bool isActive,
+      double fee});
+}
+
+/// @nodoc
+class __$PaymentGatewayCopyWithImpl<$Res>
+    implements _$PaymentGatewayCopyWith<$Res> {
+  __$PaymentGatewayCopyWithImpl(this._self, this._then);
+
+  final _PaymentGateway _self;
+  final $Res Function(_PaymentGateway) _then;
+
+  /// Create a copy of PaymentGateway
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $Res call({
+    Object? id = null,
+    Object? isActive = null,
+    Object? fee = null,
+  }) {
+    return _then(_PaymentGateway(
+      id: null == id
+          ? _self.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as PaymentMethod,
+      isActive: null == isActive
+          ? _self.isActive
+          : isActive // ignore: cast_nullable_to_non_nullable
+              as bool,
+      fee: null == fee
+          ? _self.fee
+          : fee // ignore: cast_nullable_to_non_nullable
+              as double,
+    ));
+  }
+}
+
+// dart format on

@@ -6,7 +6,7 @@ part 'category.freezed.dart';
 part 'category.g.dart';
 
 @freezed
-class Category with _$Category {
+abstract class Category with _$Category {
   factory Category({
     required int id,
     int? products,

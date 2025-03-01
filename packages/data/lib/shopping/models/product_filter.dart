@@ -5,7 +5,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 part 'product_filter.freezed.dart';
 
 @freezed
-class ProductFilter with _$ProductFilter {
+abstract class ProductFilter with _$ProductFilter {
   const factory ProductFilter({
     required int limit,
     required ProductSortEnums sort,

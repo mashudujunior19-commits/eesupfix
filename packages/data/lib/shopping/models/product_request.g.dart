@@ -6,8 +6,8 @@ part of 'product_request.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$ProductRequestImpl _$$ProductRequestImplFromJson(Map<String, dynamic> json) =>
-    _$ProductRequestImpl(
+_ProductRequest _$ProductRequestFromJson(Map<String, dynamic> json) =>
+    _ProductRequest(
       id: (json['id'] as num).toInt(),
       userId: json['user_id'] as String,
       createdAt: json['created_at'] == null
@@ -21,8 +21,7 @@ _$ProductRequestImpl _$$ProductRequestImplFromJson(Map<String, dynamic> json) =>
       quantity: (json['quantity'] as num?)?.toInt(),
     );
 
-Map<String, dynamic> _$$ProductRequestImplToJson(
-        _$ProductRequestImpl instance) =>
+Map<String, dynamic> _$ProductRequestToJson(_ProductRequest instance) =>
     <String, dynamic>{
       'user_id': instance.userId,
       'product_id': instance.productId,

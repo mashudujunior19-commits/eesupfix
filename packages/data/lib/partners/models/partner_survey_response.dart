@@ -6,7 +6,7 @@ part 'partner_survey_response.freezed.dart';
 part 'partner_survey_response.g.dart';
 
 @freezed
-class PartnerSurveyResponse with _$PartnerSurveyResponse {
+abstract class PartnerSurveyResponse with _$PartnerSurveyResponse {
   const factory PartnerSurveyResponse({
     required int index,
     @JsonKey(name: 'survey_id') required String surveyId,

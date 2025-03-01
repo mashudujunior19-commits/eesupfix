@@ -1,6 +1,5 @@
 import 'package:bloc/bloc.dart';
 import 'package:data/orders/models/order_product.dart';
-import 'package:data/shopping/models/hamper_product.dart';
 import 'package:data/shopping/models/product.dart';
 import 'package:data/shopping/repository/shopping_repository.dart';
 import 'package:meta/meta.dart';

@@ -6,7 +6,7 @@ part 'eesupool_request.freezed.dart';
 part 'eesupool_request.g.dart';
 
 @freezed
-class EESUpoolRequest with _$EESUpoolRequest {
+abstract class EESUpoolRequest with _$EESUpoolRequest {
   factory EESUpoolRequest({
     @JsonKey(name: 'user_id') required String userId,
     @JsonKey(name: 'created_at') required DateTime createdAt,
