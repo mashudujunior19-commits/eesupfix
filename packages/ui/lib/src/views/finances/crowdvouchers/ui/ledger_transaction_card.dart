@@ -6,6 +6,7 @@ import 'package:ui/src/core/utils/date_formatter.dart';
 import 'package:ui/src/views/finances/crowdvouchers/ui/linked_transaction_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
+import 'package:data/utils/double_ext.dart';
 
 class LedgerTransactionCard extends StatelessWidget {
   const LedgerTransactionCard({
@@ -53,7 +54,7 @@ class LedgerTransactionCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Opening Balance: R${ledger.openingBalance?.toStringAsFixed(2) ?? '~'}',
+                    'Opening Balance: R${ledger.openingBalance?.toRounded() ?? '~'}',
                     style: context.textTheme.labelSmall,
                   ),
                   Container(
@@ -63,7 +64,7 @@ class LedgerTransactionCard extends StatelessWidget {
                     margin: const EdgeInsets.only(top: 4, bottom: 4),
                   ),
                   Text(
-                    'Profit Share: R${ledger.profitShare?.toStringAsFixed(2) ?? '~'}',
+                    'Profit Share: R${ledger.profitShare?.toRounded() ?? '~'}',
                     style: context.textTheme.labelSmall,
                   ),
                   Container(
@@ -73,7 +74,7 @@ class LedgerTransactionCard extends StatelessWidget {
                     margin: const EdgeInsets.only(top: 4, bottom: 4),
                   ),
                   Text(
-                    'Closing Balance: R${ledger.closingBalance.toStringAsFixed(2)}',
+                    'Closing Balance: R${ledger.closingBalance.toRounded()}',
                     style: context.textTheme.labelSmall,
                   ),
                   Container(

@@ -36,6 +36,14 @@ class HampersList extends StatelessWidget {
                       exception: EESUpException(message: state.message));
                 } else if (state is HampersLoaded) {
                   final hampers = state.hampers;
+
+                  if (hampers.isEmpty) {
+                    return FullScreenError(
+                      exception:
+                          EESUpException(message: 'No hampers available'),
+                      isError: false,
+                    );
+                  }
                   return ListView.builder(
                     padding: const EdgeInsets.only(bottom: 300),
                     itemCount: hampers.length,

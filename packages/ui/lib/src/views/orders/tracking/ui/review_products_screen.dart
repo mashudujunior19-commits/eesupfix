@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
+import 'package:data/utils/double_ext.dart';
 
 @RoutePage()
 class ReviewProductsScreen extends StatelessWidget {
@@ -178,7 +179,7 @@ class _ProductCard extends StatelessWidget {
               ),
             const SizedBox(height: 2),
             Text(
-              'R${(product.price * product.quantity).toStringAsFixed(2)} (${product.quantity})',
+              'R${(product.price * product.quantity).toRounded()} (${product.quantity})',
               style: context.textTheme.labelMedium,
             ),
           ],

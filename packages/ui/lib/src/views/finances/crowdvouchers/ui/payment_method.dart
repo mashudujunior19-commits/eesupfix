@@ -3,6 +3,7 @@ import 'package:ui/src/core/extensions/context_theme_ext.dart';
 import 'package:ui/src/core/extensions/sizedbox_ext.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
+import 'package:data/utils/double_ext.dart';
 
 class PaymentMethodTile extends StatelessWidget {
   const PaymentMethodTile({
@@ -60,7 +61,7 @@ class PaymentMethodTile extends StatelessWidget {
           children: [
             if (fee() != null)
               Text(
-                'Additional fee R${fee()?.toStringAsFixed(2) ?? 0.00} (${gateway?.fee.toStringAsFixed(2) ?? 0.00}%)',
+                'Additional fee R${fee()?.toRounded() ?? 0.00} (${gateway?.fee.toRounded() ?? 0.00}%)',
                 style: context.textTheme.labelMedium?.copyWith(fontSize: 11),
               ),
             Text(

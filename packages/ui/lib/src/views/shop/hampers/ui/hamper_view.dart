@@ -17,6 +17,7 @@ import 'package:ui/src/core/widgets/fullscreen_loading_shimmer.dart';
 import '../../baskets/ui/basket_selection_dialog.dart';
 import '../../cart/bloc/cart_bloc.dart';
 import '../bloc/hamper_bloc.dart';
+import 'package:data/utils/double_ext.dart';
 
 @RoutePage()
 class HamperViewPage extends StatefulWidget {
@@ -229,7 +230,7 @@ class _HamperViewPageState extends State<HamperViewPage> {
                   const SizedBox(height: 8),
                   Text("Type: ${hamper.type}"),
                   const SizedBox(height: 8),
-                  Text("Hamper Value: ${hamper.value.toStringAsFixed(2)}"),
+                  Text("Hamper Value: ${hamper.value.toRounded()}"),
                   const SizedBox(height: 8),
                   Text(
                       "Expiry date: ${hamper.expiryDate.toLocal().toString().split(' ')[0]}"),
@@ -411,7 +412,7 @@ class _ProductItemCard extends StatelessWidget {
                   Text(productDetail.name,
                       style: Theme.of(context).textTheme.bodyMedium),
                   Text(
-                      "Price: R${productDetail.salePrice.toStringAsFixed(2)}                       (${productDetail.quantity})"),
+                      "Price: R${productDetail.salePrice.toRounded()}                       (${productDetail.quantity})"),
                   if (productDetail.isFree)
                     const Text(
                       "Free",

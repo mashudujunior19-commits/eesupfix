@@ -176,6 +176,7 @@ import 'package:ui/src/core/extensions/context_alerts_ext.dart';
 import '../../../../../app_route.gr.dart';
 import '../../cart/bloc/cart_bloc.dart';
 import '../bloc/hamper_bloc.dart';
+import 'package:data/utils/double_ext.dart';
 
 @RoutePage()
 class HamperImageStack extends StatefulWidget {
@@ -228,8 +229,9 @@ class _HamperImageStackState extends State<HamperImageStack> {
               hamperProduct = state.hamperProduct;
             }
             if (state is HamperError) {
+              
               // Handle error state
-              context.snackBarError('Error occurred while loading hamper.');
+              context.snackBarError(state.message);
             }
           },
           child: Stack(
@@ -316,7 +318,7 @@ class _HamperImageStackState extends State<HamperImageStack> {
                       print('Profit allocations clicked');
                     },
                     child: Text(
-                      '${widget.profitpercentage!.toStringAsFixed(2)}% Profit',
+                      '${widget.profitpercentage!.toRounded()}% Profit',
                       style: GoogleFonts.poppins(
                         fontSize: 18,
                         fontWeight: FontWeight.w600,

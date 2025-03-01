@@ -11,6 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:data/finance/models/wallet.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:loader_overlay/loader_overlay.dart';
+import 'package:data/utils/double_ext.dart';
 
 @RoutePage()
 class TransferScreen extends StatefulWidget {
@@ -217,7 +218,7 @@ class _TransferScreenState extends State<TransferScreen> {
 
                     context.showAlertDialog(
                         'Confirm transfer',
-                        'Are you sure you want to transfer R${amount.toStringAsFixed(2)} '
+                        'Are you sure you want to transfer R${amount.toRounded()} '
                             'to ${_selectedRecipientType == 'Wallet' ? _selectedWallet!.description : _beneficiary['full_name']}?',
                         onNegative: () {},
                         negativeColor:
@@ -272,7 +273,7 @@ class _TransferScreenState extends State<TransferScreen> {
                   .map((wallet) => ListTile(
                         title: Text(wallet.description),
                         subtitle: Text(
-                            'Balance: R${wallet.balance.toStringAsFixed(2)}'),
+                            'Balance: R${wallet.balance.toRounded()}'),
                         onTap: () {
                           Navigator.pop(context, wallet);
                         },
@@ -324,7 +325,7 @@ class _TransferScreenState extends State<TransferScreen> {
 //                   type: TextInputType.number,
 //                   controller: TextEditingController(
 //                     text:
-//                         '${widget.wallet.description} - R${widget.wallet.balance.toStringAsFixed(2)}',
+//                         '${widget.wallet.description} - R${widget.wallet.balance.toRounded()}',
 //                   ),
 //                 ),
 //                 EESUpTextFormField(
@@ -416,7 +417,7 @@ class _TransferScreenState extends State<TransferScreen> {
 
 //                     context.showAlertDialog(
 //                         'Confirm transfer',
-//                         'Are you sure you want to transfer R${amount.toStringAsFixed(2)} '
+//                         'Are you sure you want to transfer R${amount.toRounded()} '
 //                             'to ${_beneficiary['full_name']}?',
 //                         onNegative: () {},
 //                         negativeColor:

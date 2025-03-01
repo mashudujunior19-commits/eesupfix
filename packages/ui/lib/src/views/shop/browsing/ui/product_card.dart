@@ -12,6 +12,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:data/utils/double_ext.dart';
 
 class ProductCard extends StatelessWidget {
   const ProductCard({super.key, required this.product, this.isBundle = false});
@@ -113,15 +114,15 @@ class ProductCard extends StatelessWidget {
                           final cia = state
                               .calcCIA(
                                   product.salePrice - product.costPrice!, qty)
-                              .toStringAsFixed(2);
+                              .toRounded();
                           final cwa = state
                               .calcCWA(
                                   product.salePrice - product.costPrice!, qty)
-                              .toStringAsFixed(2);
+                              .toRounded();
                           final csa = state
                               .calcCSA(
                                   product.salePrice - product.costPrice!, qty)
-                              .toStringAsFixed(2);
+                              .toRounded();
 
                           return Tooltip(
                             message: 'These are amounts are what you will get '
@@ -168,7 +169,7 @@ class ProductCard extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.only(top: 3),
                         child: Text(
-                          'R${product.salePrice.toStringAsFixed(2)}',
+                          'R${product.salePrice.toRounded()}',
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,
                           textAlign: TextAlign.start,

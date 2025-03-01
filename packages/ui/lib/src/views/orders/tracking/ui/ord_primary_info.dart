@@ -1,6 +1,7 @@
 import 'package:data/orders/models/order.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
+import 'package:data/utils/double_ext.dart';
 
 class OrdPrimaryInfo extends StatelessWidget {
   const OrdPrimaryInfo({super.key, required this.order});
@@ -125,7 +126,7 @@ class OrdPrimaryInfo extends StatelessWidget {
                 Column(
                   children: [
                     Text(
-                      'R${totalAmount().toStringAsFixed(2)}',
+                      'R${totalAmount().toRounded()}',
                       style: textTheme.labelSmall,
                     ),
                   ],

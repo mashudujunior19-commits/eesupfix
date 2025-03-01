@@ -5,6 +5,7 @@ import 'package:ui/src/core/utils/date_formatter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:flutter_expanded_tile/flutter_expanded_tile.dart';
+import 'package:data/utils/double_ext.dart';
 
 class VoucherInfoCard extends StatelessWidget {
   const VoucherInfoCard({
@@ -62,7 +63,7 @@ class VoucherInfoCard extends StatelessWidget {
                       style: context.textTheme.labelSmall,
                     ),
                     Text(
-                      'R${voucher.balance.toStringAsFixed(2)}',
+                      'R${voucher.balance.toRounded()}',
                       style: context.textTheme.labelSmall,
                     ),
                   ],
@@ -90,7 +91,7 @@ class VoucherInfoCard extends StatelessWidget {
                       style: context.textTheme.labelSmall,
                     ),
                     Text(
-                      'R${voucher.value.toStringAsFixed(2)}',
+                      'R${voucher.value.toRounded()}',
                       style: context.textTheme.labelSmall,
                     ),
                   ],
@@ -147,7 +148,7 @@ class VoucherInfoCard extends StatelessWidget {
                       style: context.textTheme.labelSmall,
                     ),
                     Text(
-                      '${parameter.interest.toStringAsFixed(2)}%',
+                      '${parameter.interest.toRounded()}%',
                       style: context.textTheme.labelSmall,
                     ),
                   ],

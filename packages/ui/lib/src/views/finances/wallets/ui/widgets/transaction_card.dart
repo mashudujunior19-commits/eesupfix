@@ -4,6 +4,7 @@ import 'package:ui/src/core/extensions/sizedbox_ext.dart';
 import 'package:ui/src/core/utils/date_formatter.dart';
 import 'package:flutter/material.dart';
 import 'package:data/finance/models/transaction.dart';
+import 'package:data/utils/double_ext.dart';
 
 class TransactionCard extends StatelessWidget {
   const TransactionCard({super.key, required this.transaction});
@@ -71,8 +72,8 @@ class TransactionCard extends StatelessWidget {
               padding: const EdgeInsets.only(top: 5),
               child: Text(
                 transaction.value < 0
-                    ? '- R${transaction.value.toStringAsFixed(2).substring(1)}'
-                    : 'R${transaction.value.toStringAsFixed(2)}',
+                    ? '- R${transaction.value.toRounded().substring(1)}'
+                    : 'R${transaction.value.toRounded()}',
               ),
             ),
           ],

@@ -4,6 +4,7 @@ import 'package:bootstrap_icons/bootstrap_icons.dart';
 import 'package:data/eesupools/models/eesupool.dart';
 import 'package:data/eesupools/models/eesupool_order.dart';
 import 'package:data/geolocation/models/address.dart';
+import 'package:data/utils/double_ext.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ui/app_route.gr.dart';
 import 'package:ui/src/core/extensions/context_theme_ext.dart';
@@ -159,7 +160,7 @@ class EESUpoolOrderCard extends StatelessWidget {
                         ),
                       ),
                       Text(
-                        'R${order.currentAmount.toStringAsFixed(2)}',
+                        'R${order.currentAmount.toRounded()}',
                         style: textTheme.bodySmall?.copyWith(
                           fontSize: 14,
                         ),
@@ -179,7 +180,7 @@ class EESUpoolOrderCard extends StatelessWidget {
                             order.address!.longitude!,
                             selectedAddress!.latitude!,
                             selectedAddress!.longitude!,
-                          ).toStringAsFixed(2)} km Away',
+                          ).toRounded()} km Away',
                           style: textTheme.bodySmall?.copyWith(
                             fontSize: 14,
                             fontWeight: FontWeight.bold,

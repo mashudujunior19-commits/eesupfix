@@ -11,6 +11,7 @@ import 'package:data/utils/eesup_exception.dart';
 import 'package:syncfusion_flutter_pdf/pdf.dart';
 import 'dart:io';
 import 'package:path_provider/path_provider.dart';
+import 'package:data/utils/double_ext.dart';
 
 part 'order_tracking_event.dart';
 part 'order_tracking_state.dart';
@@ -152,7 +153,7 @@ class OrderTrackingBloc extends Bloc<OrderTrackingEvent, OrderTrackingState> {
         bounds: Rect.fromLTWH(400, 0, pageSize.width - 400, 90),
         brush: PdfSolidBrush(PdfColor(48, 142, 88)));
 
-    page.graphics.drawString('R${order.value.toStringAsFixed(2)}',
+    page.graphics.drawString('R${order.value.toRounded()}',
         PdfStandardFont(PdfFontFamily.helvetica, 18),
         bounds: Rect.fromLTWH(400, 0, pageSize.width - 400, 100),
         brush: PdfBrushes.white,
@@ -219,7 +220,7 @@ class OrderTrackingBloc extends Bloc<OrderTrackingEvent, OrderTrackingState> {
             result.bounds.bottom + 10,
             quantityCellBounds!.width,
             quantityCellBounds!.height));
-    page.graphics.drawString('R${order.value.toStringAsFixed(2)}',
+    page.graphics.drawString('R${order.value.toRounded()}',
         PdfStandardFont(PdfFontFamily.helvetica, 9, style: PdfFontStyle.bold),
         bounds: Rect.fromLTWH(
             totalPriceCellBounds!.left,

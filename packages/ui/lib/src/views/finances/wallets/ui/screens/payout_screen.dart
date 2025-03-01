@@ -9,6 +9,7 @@ import 'package:ui/src/core/extensions/context_alerts_ext.dart';
 import 'package:ui/src/core/extensions/sizedbox_ext.dart';
 import 'package:ui/src/core/widgets/eesup_form_field.dart';
 import 'package:flutter/material.dart';
+import 'package:data/utils/double_ext.dart';
 
 @RoutePage()
 class PayoutScreen extends StatelessWidget {
@@ -42,7 +43,7 @@ class PayoutScreen extends StatelessWidget {
                 EESUpTextFormField(
                   label: 'Available balance',
                   readOnly: true,
-                  initialValue: 'R ${wallet.balance.toStringAsFixed(2)}',
+                  initialValue: 'R ${wallet.balance.toRounded()}',
                 ),
                 EESUpTextFormField(
                   label: 'Amount',

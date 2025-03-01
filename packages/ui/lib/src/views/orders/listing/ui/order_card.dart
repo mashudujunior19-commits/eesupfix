@@ -8,6 +8,7 @@ import 'package:ui/src/core/extensions/context_theme_ext.dart';
 import 'package:ui/src/core/extensions/sizedbox_ext.dart';
 import 'package:ui/src/core/utils/date_formatter.dart';
 import 'package:flutter/material.dart';
+import 'package:data/utils/double_ext.dart';
 
 class OrderCard extends StatelessWidget {
   const OrderCard({
@@ -217,7 +218,7 @@ class OrderCard extends StatelessWidget {
                             style: context.textTheme.labelSmall?.copyWith(),
                           ),
                           3.sH,
-                          Text('R${totalAmount().toStringAsFixed(2)}'),
+                          Text('R${totalAmount().toRounded()}'),
                         ],
                       ),
                       Container(

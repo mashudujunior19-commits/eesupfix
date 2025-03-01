@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:data/eesupools/models/eesupool.dart';
 import 'package:data/eesupools/models/eesupool_member.dart';
 import 'package:data/eesupools/models/eesupool_order.dart';
+import 'package:data/utils/double_ext.dart';
 import 'package:ui/app_route.gr.dart';
 import 'package:ui/src/core/extensions/bottom_sheet_context_ext.dart';
 import 'package:ui/src/core/extensions/context_theme_ext.dart';
@@ -126,7 +127,7 @@ class OrderDetailsTab extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    'R${order.currentAmount.toStringAsFixed(2)}',
+                    'R${order.currentAmount.toRounded()}',
                     style: context.textTheme.labelMedium?.copyWith(
                       fontSize: 13,
                     ),

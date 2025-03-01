@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
+import 'package:data/utils/double_ext.dart';
 
 class CartProductCard extends StatelessWidget {
   const CartProductCard({super.key, required this.product});
@@ -81,7 +82,7 @@ class CartProductCard extends StatelessWidget {
                     ),
                   const SizedBox(height: 2),
                   Text(
-                    'R${(product.price * product.quantity).toStringAsFixed(2)}',
+                    'R${(product.price * product.quantity).toRounded()}',
                     style: theme.textTheme.labelMedium,
                   ),
                 ],

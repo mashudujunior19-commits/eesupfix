@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:data/finance/models/wallet.dart';
+import 'package:data/utils/double_ext.dart';
 
 class WalletCard extends StatelessWidget {
   const WalletCard({super.key, required this.wallet});
@@ -50,7 +51,7 @@ class WalletCard extends StatelessWidget {
                     ),
               ),
               const SizedBox(height: 1),
-              Text('R${wallet.balance.toStringAsFixed(2)}'),
+              Text('R${wallet.balance.toRounded()}'),
             ],
           ),
           trailing: const Text('Tap to view'),

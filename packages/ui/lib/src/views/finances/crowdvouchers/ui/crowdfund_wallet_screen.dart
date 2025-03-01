@@ -15,6 +15,7 @@ import 'package:loader_overlay/loader_overlay.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:tab_indicator_styler/tab_indicator_styler.dart';
 import 'package:data/finance/data_source/wallet_supabase_impl.dart';
+import 'package:data/utils/double_ext.dart';
 
 class CrowdfundWalletScreen extends StatelessWidget {
   const CrowdfundWalletScreen({super.key});
@@ -68,8 +69,8 @@ class CrowdfundWalletScreen extends StatelessWidget {
                                 const SizedBox(height: 5),
                                 Text(
                                   state.wallet.balance < 0
-                                      ? '- R${state.wallet.balance.toStringAsFixed(2).substring(1)}'
-                                      : 'R${state.wallet.balance.toStringAsFixed(2)}',
+                                      ? '- R${state.wallet.balance.toRounded().substring(1)}'
+                                      : 'R${state.wallet.balance.toRounded()}',
                                   style: context.textTheme.labelLarge!.copyWith(
                                     fontWeight: FontWeight.w600,
                                     fontSize: 25,

@@ -14,6 +14,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
+import 'package:data/utils/double_ext.dart';
 
 @RoutePage()
 class CartScreen extends StatelessWidget {
@@ -132,7 +133,7 @@ class _CheckoutTotal extends StatelessWidget {
                 ),
               ),
               Text(
-                'R${total.toStringAsFixed(2)}',
+                'R${total.toRounded()}',
                 style: context.textTheme.displayMedium?.copyWith(
                   fontSize: 18,
                 ),
@@ -384,7 +385,7 @@ class _EmptyCartWidget extends StatelessWidget {
 //                 ),
 //               ),
 //               Text(
-//                 'R${total.toStringAsFixed(2)}',
+//                 'R${total.toRounded()}',
 //                 style: context.textTheme.displayMedium?.copyWith(
 //                   fontSize: 18,
 //                 ),

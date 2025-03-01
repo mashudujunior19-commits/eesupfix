@@ -6,6 +6,7 @@ import 'package:data/eesupools/models/eesupool_type.dart';
 import 'package:data/eesupools/repository/eesupool_members_repo.dart';
 import 'package:data/eesupools/repository/eesupool_repo.dart';
 import 'package:data/geolocation/models/address.dart';
+import 'package:data/utils/double_ext.dart';
 import 'package:data/utils/eesup_exception.dart';
 import 'package:either_dart/either.dart';
 import 'package:flutter/material.dart';
@@ -236,7 +237,7 @@ class _EESUpoolCard extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.only(top: 5),
                     child: Text(
-                      '${(double.parse(pool['distance'].toString())).toStringAsFixed(2)}'
+                      '${(double.parse(pool['distance'].toString())).toRounded()}'
                       ' km away',
                     ),
                   ),

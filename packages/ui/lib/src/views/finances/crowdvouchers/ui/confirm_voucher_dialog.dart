@@ -16,6 +16,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:loader_overlay/loader_overlay.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:data/utils/double_ext.dart';
 
 class ConfirmVoucherParameterDialog extends StatelessWidget {
   const ConfirmVoucherParameterDialog({super.key, required this.voucher});
@@ -108,7 +109,7 @@ class ConfirmVoucherParameterDialog extends StatelessWidget {
                 //         mCategory1: id.toString(),
                 //         mCategory2: 'Voucher',
                 //         mCategory3: authKey,
-                //         mTxAmount: amount.toStringAsFixed(2),
+                //         mTxAmount: amount.toRounded(),
                 //         mTxItemName: 'Crowdfund Voucher Payment',
                 //         mTxItemDescription: 'Crowdfund Voucher Payment',
                 //         secret: secret,
@@ -215,14 +216,14 @@ class ConfirmVoucherParameterDialog extends StatelessWidget {
                             readOnly: true,
                             label: 'Amount',
                             controller: TextEditingController(
-                              text: 'R${voucher.value.toStringAsFixed(2)}',
+                              text: 'R${voucher.value.toRounded()}',
                             ),
                           ),
                           EESUpTextFormField(
                             readOnly: true,
                             label: 'Profit Share(%)',
                             controller: TextEditingController(
-                              text: parameter.interest.toStringAsFixed(2),
+                              text: parameter.interest.toRounded(),
                             ),
                           ),
                           EESUpTextFormField(

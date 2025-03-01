@@ -8,6 +8,7 @@ import 'package:ui/src/views/geolocation/ui/widgets/select_address_popup_button.
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:data/utils/double_ext.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 
 class SettingsTab extends StatelessWidget {
@@ -186,7 +187,7 @@ class SettingsTab extends StatelessWidget {
               ).animate().shakeX(),
               EESUpTextFormField(
                 label: 'Administration fee(%)',
-                initialValue: pool.adminFee?.toStringAsFixed(2),
+                initialValue: pool.adminFee?.toRounded(),
                 type: TextInputType.number,
                 onChanged: (value) {
                   context.read<EESUpoolViewBloc>().add(
@@ -201,7 +202,7 @@ class SettingsTab extends StatelessWidget {
               EESUpTextFormField(
                 label: 'Recieving fee(%)',
                 maxLines: 1,
-                initialValue: pool.receivingFee?.toStringAsFixed(2),
+                initialValue: pool.receivingFee?.toRounded(),
                 onChanged: (value) {
                   context.read<EESUpoolViewBloc>().add(
                         EESUpoolPercentagesUpdated(
@@ -215,7 +216,7 @@ class SettingsTab extends StatelessWidget {
               EESUpTextFormField(
                 label: 'Packaging fee(%)',
                 maxLines: 1,
-                initialValue: pool.packagingFee?.toStringAsFixed(2),
+                initialValue: pool.packagingFee?.toRounded(),
                 onChanged: (value) {
                   context.read<EESUpoolViewBloc>().add(
                         EESUpoolPercentagesUpdated(
@@ -229,7 +230,7 @@ class SettingsTab extends StatelessWidget {
               EESUpTextFormField(
                 label: 'Dispatching fee(%)',
                 maxLines: 1,
-                initialValue: pool.collectionFee?.toStringAsFixed(2),
+                initialValue: pool.collectionFee?.toRounded(),
                 onChanged: (value) {
                   context.read<EESUpoolViewBloc>().add(
                         EESUpoolPercentagesUpdated(

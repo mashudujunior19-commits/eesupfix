@@ -38,11 +38,11 @@
 //                 ),
 //                 // _LineTile(
 //                 //   label: 'Discount',
-//                 //   value: 'R${discount.toStringAsFixed(2)}',
+//                 //   value: 'R${discount.toRounded()}',
 //                 // ),
 //                 _LineTile(
 //                   label: 'Subtotal',
-//                   value: 'R${newOrder?.value.toStringAsFixed(2) ?? '0.00'}',
+//                   value: 'R${newOrder?.value.toRounded() ?? '0.00'}',
 //                 ),
 //                 Column(
 //                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -52,7 +52,7 @@
 //                       label: 'Card fee',
 //                       isVisible: newOrder?.cardFee != null,
 //                       value:
-//                           'R${newOrder?.cardFee?.toStringAsFixed(2) ?? '0.00'}',
+//                           'R${newOrder?.cardFee?.toRounded() ?? '0.00'}',
 //                     ),
 //                     if (newOrder?.paymentMethod != PaymentMethod.retailWallet)
 //                       GestureDetector(
@@ -114,11 +114,11 @@
 //                 _LineTile(
 //                   label: 'Delivery fee',
 //                   value:
-//                       "R${newOrder?.deliveryFee?.toStringAsFixed(2) ?? 0.00}",
+//                       "R${newOrder?.deliveryFee?.toRounded() ?? 0.00}",
 //                 ),
 //                 _LineTile(
 //                   label: 'Total',
-//                   value: "R${total?.toStringAsFixed(2) ?? 0.00}",
+//                   value: "R${total?.toRounded() ?? 0.00}",
 //                   isBold: true,
 //                 ),
 //               ],

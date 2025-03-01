@@ -37,7 +37,9 @@ class HamperBloc extends Bloc<HamperEvent, HamperState> {
     on<FetchHamperProducts>((event, emit) async {
       emit(HamperLoading());
       final result =
-          await _repository.fetchHamperProductDetails(event.hamperId);
+          await _repository.fetchHamperProductDetails(
+        event.hamperId,
+      );
 
       result.fold(
         (error) {

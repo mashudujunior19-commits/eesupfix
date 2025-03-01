@@ -17,6 +17,7 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:data/utils/eesup_exception.dart';
+import 'package:data/utils/double_ext.dart';
 
 @RoutePage()
 class WalletViewScreen extends StatelessWidget {
@@ -292,8 +293,8 @@ class _Transact extends StatelessWidget {
 //         const SizedBox(height: 5),
 //         Text(
 //           wallet.balance < 0
-//               ? '- R${wallet.balance.toStringAsFixed(2).substring(1)}'
-//               : 'R${wallet.balance.toStringAsFixed(2)}',
+//               ? '- R${wallet.balance.toRounded().substring(1)}'
+//               : 'R${wallet.balance.toRounded()}',
 //           style: context.textTheme.labelLarge!.copyWith(
 //             fontWeight: FontWeight.w600,
 //             fontSize: 25,
@@ -309,8 +310,8 @@ class _Transact extends StatelessWidget {
 //         const SizedBox(height: 5),
 //         Text(
 //           wallet.balance < 0
-//               ? '- R${wallet.balance.toStringAsFixed(2).substring(1)}'
-//               : 'R${wallet.balance.toStringAsFixed(2)}',
+//               ? '- R${wallet.balance.toRounded().substring(1)}'
+//               : 'R${wallet.balance.toRounded()}',
 //           style: context.textTheme.labelLarge!.copyWith(
 //             fontWeight: FontWeight.w600,
 //             fontSize: 25,
@@ -341,8 +342,8 @@ class _BalanceCard extends StatelessWidget {
         const SizedBox(height: 5),
         Text(
           balance.totalBalance! < 0
-              ? '- R${balance.totalBalance!.toStringAsFixed(2).substring(1)}'
-              : 'R${balance.totalBalance!.toStringAsFixed(2)}',
+              ? '- R${balance.totalBalance!.toRounded().substring(1)}'
+              : 'R${balance.totalBalance!.toRounded()}',
           style: context.textTheme.labelLarge!.copyWith(
             fontWeight: FontWeight.w600,
             fontSize: 25,
@@ -359,8 +360,8 @@ class _BalanceCard extends StatelessWidget {
         const SizedBox(height: 5),
         Text(
           balance.availableBalance! < 0
-              ? '- R${balance.availableBalance!.toStringAsFixed(2).substring(1)}'
-              : 'R${balance.availableBalance!.toStringAsFixed(2)}',
+              ? '- R${balance.availableBalance!.toRounded().substring(1)}'
+              : 'R${balance.availableBalance!.toRounded()}',
           style: context.textTheme.labelLarge!.copyWith(
             fontWeight: FontWeight.w600,
             fontSize: 25,

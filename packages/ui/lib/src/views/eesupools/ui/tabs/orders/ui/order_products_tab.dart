@@ -1,6 +1,7 @@
 import 'package:data/eesupools/repository/eesupool_orders_repo.dart';
 import 'package:data/eesupools/repository/eesupool_repo.dart';
 import 'package:data/orders/models/order_product.dart';
+import 'package:data/utils/double_ext.dart';
 import 'package:data/utils/eesup_exception.dart';
 import 'package:either_dart/either.dart';
 import 'package:flutter/material.dart';
@@ -112,7 +113,7 @@ class _ProductCard extends StatelessWidget {
               ),
             const SizedBox(height: 2),
             Text(
-              'R${(product.price * product.quantity).toStringAsFixed(2)} (${product.quantity})',
+              'R${(product.price * product.quantity).toRounded()} (${product.quantity})',
               style: context.textTheme.labelMedium,
             ),
           ],

@@ -2,6 +2,7 @@ import 'package:data/finance/models/voucher.dart';
 import 'package:ui/src/core/extensions/context_theme_ext.dart';
 import 'package:ui/src/core/extensions/sizedbox_ext.dart';
 import 'package:flutter/material.dart';
+import 'package:data/utils/double_ext.dart';
 
 class VoucherCard extends StatelessWidget {
   const VoucherCard({super.key, required this.voucher});
@@ -71,7 +72,7 @@ class VoucherCard extends StatelessWidget {
               ),
               5.sH,
               Text(
-                'R${voucher.balance.toStringAsFixed(2)}',
+                'R${voucher.balance.toRounded()}',
                 style: context.textTheme.labelMedium,
               ),
             ],

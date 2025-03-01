@@ -24,6 +24,7 @@ import 'package:loader_overlay/loader_overlay.dart';
 import 'package:data/utils/eesup_exception.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:tab_indicator_styler/tab_indicator_styler.dart';
+import 'package:data/utils/double_ext.dart';
 
 class CollectionStep extends StatelessWidget {
   const CollectionStep({
@@ -246,7 +247,7 @@ class _KasipreneurCard extends StatelessWidget {
               .showAlertDialog(
                   'Delivery',
                   '${eesupreneur.name} Offers'
-                      ' delivery for a R${deliveryFee.toStringAsFixed(2)} fee'
+                      ' delivery for a R${deliveryFee.toRounded()} fee'
                       ' do you wish to have your Order delivered',
                   positiveText: 'Yes',
                   negativeText: 'No, I will collect my order')
@@ -317,7 +318,7 @@ class _KasipreneurCard extends StatelessWidget {
                   ),
                   10.sW,
                   Text(
-                    '${eesupreneur.distance?.toStringAsFixed(2)} km away',
+                    '${eesupreneur.distance?.toRounded()} km away',
                     style: context.textTheme.labelSmall?.copyWith(
                       color: context.colorScheme.primary,
                     ),

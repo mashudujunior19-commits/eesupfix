@@ -5,7 +5,7 @@ import 'package:ui/src/core/extensions/context_alerts_ext.dart';
 import 'package:ui/src/core/extensions/context_theme_ext.dart';
 import 'package:ui/src/core/extensions/sizedbox_ext.dart';
 import 'package:ui/app_route.gr.dart';
-
+import 'package:data/utils/double_ext.dart';
 import 'package:ui/src/views/shop/checkout/bloc/checkout_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -132,11 +132,11 @@ class SummaryStep extends StatelessWidget {
                 ),
                 // _LineTile(
                 //   label: 'Discount',
-                //   value: 'R${discount.toStringAsFixed(2)}',
+                //   value: 'R${discount.toRounded()}',
                 // ),
                 _LineTile(
                   label: 'Subtotal',
-                  value: 'R${newOrder?.value.toStringAsFixed(2) ?? '0.00'}',
+                  value: 'R${newOrder?.value.toRounded() ?? '0.00'}',
                 ),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -146,7 +146,7 @@ class SummaryStep extends StatelessWidget {
                       label: 'Card fee',
                       isVisible: newOrder?.cardFee != null,
                       value:
-                          'R${newOrder?.cardFee?.toStringAsFixed(2) ?? '0.00'}',
+                          'R${newOrder?.cardFee?.toRounded() ?? '0.00'}',
                     ),
                     if (newOrder?.paymentMethod != PaymentMethod.retailWallet)
                       GestureDetector(
@@ -208,11 +208,11 @@ class SummaryStep extends StatelessWidget {
                 _LineTile(
                   label: 'Delivery fee',
                   value:
-                      "R${newOrder?.deliveryFee?.toStringAsFixed(2) ?? 0.00}",
+                      "R${newOrder?.deliveryFee?.toRounded() ?? 0.00}",
                 ),
                 _LineTile(
                   label: 'Total',
-                  value: "R${total?.toStringAsFixed(2) ?? 0.00}",
+                  value: "R${total?.toRounded() ?? 0.00}",
                   isBold: true,
                 ),
               ],
@@ -272,7 +272,7 @@ class SummaryStep extends StatelessWidget {
       mCategory1: response.orderId.toString(),
       mCategory2: 'Order',
       mCategory3: authKey,
-      mTxAmount: response.outstandingAmount.toStringAsFixed(2),
+      mTxAmount: response.outstandingAmount.toRounded(),
       mTxItemName: 'Order ${response.orderId}',
       mTxItemDescription: 'Order ${response.orderId}',
       secret: secret,

@@ -8,6 +8,7 @@ import 'package:ui/src/views/geolocation/ui/widgets/select_address_popup_button.
 import 'package:ui/src/views/kasipreneur/bloc/kasipreneur_view_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:data/utils/double_ext.dart';
 
 class KasipreneurSettingsTab extends StatelessWidget {
   const KasipreneurSettingsTab({super.key, required this.eesupreneur});
@@ -133,7 +134,7 @@ class KasipreneurSettingsTab extends StatelessWidget {
                 ),
                 EESUpTextFormField(
                   label: 'Delivery Fee(R)',
-                  initialValue: eesupreneur.deliveryFee?.toStringAsFixed(2),
+                  initialValue: eesupreneur.deliveryFee?.toRounded(),
                   type: TextInputType.number,
                   onChanged: (v) {
                     final amount = double.tryParse(v);

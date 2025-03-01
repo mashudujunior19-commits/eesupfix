@@ -16,6 +16,7 @@ import 'package:ui/src/views/shop/baskets/ui/basket_selection_dialog.dart';
 import 'package:ui/src/views/shop/browsing/ui/product_card.dart';
 import 'package:ui/src/views/shop/cart/ui/cart_button.dart';
 import 'package:readmore/readmore.dart';
+import 'package:data/utils/double_ext.dart';
 
 @RoutePage()
 class ProductViewScreen extends StatelessWidget {
@@ -154,7 +155,7 @@ class _ProductInformation extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               if (product.sellable)
-                Text('R${product.salePrice.toStringAsFixed(2)}'),
+                Text('R${product.salePrice.toRounded()}'),
               Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [

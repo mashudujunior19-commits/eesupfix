@@ -17,6 +17,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_expanded_tile/flutter_expanded_tile.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:data/utils/eesup_exception.dart';
+import 'package:data/utils/double_ext.dart';
 
 class PaymentMethodStep extends StatelessWidget {
   const PaymentMethodStep({super.key, required this.tabController});
@@ -84,7 +85,7 @@ class PaymentMethodStep extends StatelessWidget {
                               title: 'Retail wallet',
                               imagePath: 'assets/images/wallet.png',
                               subtitle: 'Available balance:'
-                                  ' R${balance.toStringAsFixed(2)}',
+                                  ' R${balance.toRounded()}',
                               onTap: (gateway) {
                                 final amount = total ?? 0;
 
