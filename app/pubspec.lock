@@ -1590,8 +1590,8 @@ packages:
   ui:
     dependency: "direct main"
     description:
-      path: "/Users/misomenze/Documents/Work/eesup-bloc-codebase/packages/ui"
-      relative: false
+      path: "../packages/ui"
+      relative: true
     source: path
     version: "16.2.8+128"
   url_launcher:
