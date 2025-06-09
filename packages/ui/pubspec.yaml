@@ -74,7 +74,7 @@ dependencies:
   flutter_expandable_fab: ^2.2.0
   email_validator: ^3.0.0
   dart_mappable: ^4.2.2
-  package_info_plus: ^8.1.1
+  #package_info_plus: ^8.1.1
   
 dev_dependencies:
   flutter_test:
