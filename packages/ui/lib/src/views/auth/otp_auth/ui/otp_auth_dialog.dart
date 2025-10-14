@@ -77,6 +77,8 @@ class _OtpAuthDialogState extends State<OtpAuthDialog> {
                 if (widget.isSignUp) {
                   if (widget.phone != null) {
                     type = OtpType.sms;
+                  } else if (widget.email != null) {
+                    type = OtpType.signup;
                   }
                 }
 
@@ -106,6 +108,8 @@ class _OtpAuthDialogState extends State<OtpAuthDialog> {
               if (widget.isSignUp) {
                 if (widget.phone != null) {
                   type = OtpType.sms;
+                } else if (widget.email != null) {
+                  type = OtpType.signup;
                 }
               }
 

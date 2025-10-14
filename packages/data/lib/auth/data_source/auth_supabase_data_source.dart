@@ -27,7 +27,7 @@ class AuthSupabaseDataSource implements IAuthDataSource {
   @override
   Future<bool> isPhoneRegistered(String phone) async {
     final table = _client.from('profile');
-    final res = await table.select('phone').eq('phone', phone);
+    final res = await table.select('phone').eq('phone', phone.trim());
     return res.isNotEmpty;
   }
 

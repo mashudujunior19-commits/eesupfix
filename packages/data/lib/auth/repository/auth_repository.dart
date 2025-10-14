@@ -17,7 +17,8 @@ class AuthRepository {
     required String email,
     required String password,
   }) async {
-    final emailValid = EmailValidator.validate(email);
+    final trimmedEmail = email.trim();
+    final emailValid = EmailValidator.validate(trimmedEmail);
     if (!emailValid) {
       return Left(EESUpException(message: 'Invalid email address.'));
     }
@@ -28,7 +29,7 @@ class AuthRepository {
 
     final result = await EESUpException.guardFuture(action: () async {
       final res = await supaSource.signIn(
-        email: email,
+        email: trimmedEmail,
         password: password,
       );
       return res;
@@ -52,8 +53,8 @@ class AuthRepository {
       (r) async {
         final result = await EESUpException.guardFuture(action: () async {
           final res = await supaSource.signIn(
-            email: email,
-            phone: phone,
+            email: email?.trim(),
+            phone: phone?.trim(),
             password: password,
           );
 
@@ -117,8 +118,8 @@ class AuthRepository {
     }, (r) async {
       final result = await EESUpException.guardFuture(action: () async {
         final res = await supaSource.signUp(
-          email: email,
-          phone: phone,
+          email: email?.trim(),
+          phone: phone?.trim(),
           password: password,
           data: metaData,
         );
@@ -137,8 +138,8 @@ class AuthRepository {
     final results = await EESUpException.guardFuture(
       action: () => supaSource.resendOtp(
         type: type,
-        email: email,
-        phone: phone,
+        email: email?.trim(),
+        phone: phone?.trim(),
       ),
     );
     return results;
@@ -152,8 +153,8 @@ class AuthRepository {
   }) async {
     try {
       final res = await supaSource.verifyOtp(
-        email: email,
-        phone: phone,
+        email: email?.trim(),
+        phone: phone?.trim(),
         otp: otp,
         type: type,
       );
@@ -170,17 +171,19 @@ class AuthRepository {
       String? email, String? phone) {
     //validate email
     if (email != null) {
-      final isValidEmail = EmailValidator.validate(email);
+      final trimmedEmail = email.trim();
+      final isValidEmail = EmailValidator.validate(trimmedEmail);
       if (!isValidEmail) {
         return Left(EESUpException(message: 'Invalid email address.'));
       }
-      return Right(email);
+      return Right(trimmedEmail);
     } else if (phone != null) {
+      final trimmedPhone = phone.trim();
       // phone = _getPhoneWithRSACode(phone);
       // if (phone == null) {
       //   return Left(EESUpException(message: 'Invalid phone number'));
       // }
-      return Right(phone);
+      return Right(trimmedPhone);
     } else {
       return Left(
         EESUpException(
