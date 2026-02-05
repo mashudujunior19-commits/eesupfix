@@ -39,24 +39,56 @@ class ReferralsTab extends StatelessWidget {
             if (state is ReferralsLoaded) {
               final referrals = state.referrals;
               if (referrals.isEmpty) {
-                return FullScreenError(
-                  isError: false,
-                  exception: EESUpException(
-                    message: 'You have not referred anyone yet.',
+                return RefreshIndicator(
+                  onRefresh: () async {
+                    context.read<ReferralsBloc>().add(ReferralsFetched());
+                  },
+                  child: ListView(
+                    physics: const AlwaysScrollableScrollPhysics(),
+                    children: [
+                      SizedBox(
+                        height: MediaQuery.of(context).size.height * 0.6,
+                        child: FullScreenError(
+                          isError: false,
+                          exception: EESUpException(
+                            message: 'You have not referred anyone yet.',
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 );
               }
-              return ListView.builder(
-                itemCount: referrals.length,
-                itemBuilder: (context, index) {
-                  final referral = referrals[index];
-                  return _ReferralCard(referral: referral);
+              return RefreshIndicator(
+                onRefresh: () async {
+                  context.read<ReferralsBloc>().add(ReferralsFetched());
                 },
+                child: ListView.builder(
+                  physics: const AlwaysScrollableScrollPhysics(),
+                  itemCount: referrals.length,
+                  itemBuilder: (context, index) {
+                    final referral = referrals[index];
+                    return _ReferralCard(referral: referral);
+                  },
+                ),
               );
             } else if (state is ReferralsLoading) {
               return const FullScreenLoadingShimmer();
             } else if (state is ReferralsError) {
-              return FullScreenError(exception: state.exception);
+              return RefreshIndicator(
+                onRefresh: () async {
+                  context.read<ReferralsBloc>().add(ReferralsFetched());
+                },
+                child: ListView(
+                  physics: const AlwaysScrollableScrollPhysics(),
+                  children: [
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.6,
+                      child: FullScreenError(exception: state.exception),
+                    ),
+                  ],
+                ),
+              );
             } else {
               return FullScreenError(
                 exception: EESUpException(message: ''),

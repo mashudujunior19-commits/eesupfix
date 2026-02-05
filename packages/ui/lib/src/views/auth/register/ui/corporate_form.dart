@@ -33,17 +33,15 @@ class CorporateForm extends StatelessWidget {
           label: 'Company Name',
           isRequired: true,
           hintText: 'EESUp',
+          initialValue: form.corpName,
           onChanged: (value) {
-            final v = value.isEmpty ? null : value;
-
-            if (v != null) {
-              context.read<RegisterCubit>().updateForm(
-                    form.copyWith(
-                      corpName: v,
-                      corpReg: form.corpReg,
-                    ),
-                  );
-            }
+            final v = value.trim().isEmpty ? null : value.trim();
+            context.read<RegisterCubit>().updateForm(
+                  form.copyWith(
+                    corpName: v,
+                    corpReg: form.corpReg,
+                  ),
+                );
           },
         ).animate().slideIn(0),
         EESUpTextFormField(
@@ -64,8 +62,13 @@ class CorporateForm extends StatelessWidget {
         ElevatedButton(
           onPressed: () {
             FocusScope.of(context).unfocus();
-            if (form.corpName == null) {
-              context.snackBarError('Please fill in the corporate name');
+            if (form.corpName == null || form.corpName!.trim().isEmpty) {
+              context.snackBarError('Please fill in the company name');
+              return;
+            }
+
+            if (form.corpName!.trim().length < 2) {
+              context.snackBarError('Company name must be at least 2 characters');
               return;
             }
 

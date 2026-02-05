@@ -21,6 +21,60 @@ class CreateNewPasswordDialog extends StatefulWidget {
 class _CreateNewPasswordState extends State<CreateNewPasswordDialog> {
   final _passwordController = TextEditingController();
   final _confirmController = TextEditingController();
+  bool _isValidPassword = false;
+  bool _isSubmitting = false;
+
+  @override
+  void dispose() {
+    _passwordController.dispose();
+    _confirmController.dispose();
+    super.dispose();
+  }
+
+  Future<void> _handleSubmit() async {
+    if (_isSubmitting) return;
+
+    // Validate password strength
+    if (!_isValidPassword) {
+      context.snackBarError('Your password must meet all the requirements.');
+      return;
+    }
+
+    // Validate passwords match
+    if (_passwordController.text != _confirmController.text) {
+      context.snackBarError('Passwords do not match.');
+      return;
+    }
+
+    setState(() => _isSubmitting = true);
+    context.loaderOverlay.show();
+
+    final res = await context.read<AuthRepository>().updatePassword(
+          _passwordController.text,
+          email: widget.email,
+          phone: widget.phone,
+        );
+
+    if (!mounted) return;
+    context.loaderOverlay.hide();
+    setState(() => _isSubmitting = false);
+
+    res.fold((l) {
+      context.snackBarError(l.message);
+    }, (r) {
+      if (r) {
+        context.snackBarSuccess(
+          'Password reset, you can now sign in with your new password',
+        );
+        Navigator.of(context).pop();
+        Navigator.of(context).pop();
+      } else {
+        context.snackBarError(
+          'Failed to update password. Please try again.',
+        );
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +102,9 @@ class _CreateNewPasswordState extends State<CreateNewPasswordDialog> {
             PasswordStrength(
               confirmPassword: _confirmController.text,
               password: _passwordController.text,
-              onValidPassword: (isValid) {},
+              onValidPassword: (isValid) {
+                _isValidPassword = isValid;
+              },
             ).animate().slideIn(100),
             EESUpTextFormField(
               isPassword: true,
@@ -58,33 +114,17 @@ class _CreateNewPasswordState extends State<CreateNewPasswordDialog> {
             ).animate().slideIn(150),
             25.sH,
             ElevatedButton(
-              onPressed: () async {
-                context.loaderOverlay.show();
-                final res = await context.read<AuthRepository>().updatePassword(
-                      _passwordController.text,
-                      email: widget.email,
-                      phone: widget.phone,
-                    );
-                context.loaderOverlay.hide();
-                res.fold((l) {
-                  context.snackBarError(l.message);
-                }, (r) {
-                  if (r) {
-                    context.snackBarSuccess(
-                      'Password reset, you can now sign in with your new password',
-                    );
-                    Navigator.of(context).pop();
-                    Navigator.of(context).pop();
-                  } else {
-                    context.snackBarError(
-                      'Failed to update password. Please try again.',
-                    );
-                  }
-                });
-              },
-              child: const Text(
-                'Submit',
-              ),
+              onPressed: _isSubmitting ? null : _handleSubmit,
+              child: _isSubmitting
+                  ? const SizedBox(
+                      height: 20,
+                      width: 20,
+                      child: CircularProgressIndicator(
+                        strokeWidth: 2,
+                        color: Colors.white,
+                      ),
+                    )
+                  : const Text('Submit'),
             )
           ],
         ),

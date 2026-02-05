@@ -1,5 +1,3 @@
-// ignore_for_file: use_build_context_synchronously
-
 import 'package:auto_route/auto_route.dart';
 import 'package:data/auth/repository/auth_repository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -14,7 +12,7 @@ import 'package:flutter/material.dart';
 import 'package:ui/src/views/auth/register/cubit/register_cubit.dart';
 import 'package:ui/src/views/auth/register/cubit/register_form.dart';
 
-class ReferralCodeForm extends StatelessWidget {
+class ReferralCodeForm extends StatefulWidget {
   const ReferralCodeForm({
     super.key,
     required this.form,
@@ -22,6 +20,77 @@ class ReferralCodeForm extends StatelessWidget {
   });
   final RegisterForm form;
   final TabController tabController;
+
+  @override
+  State<ReferralCodeForm> createState() => _ReferralCodeFormState();
+}
+
+class _ReferralCodeFormState extends State<ReferralCodeForm> {
+  bool _isSubmitting = false;
+
+  RegisterForm get form => widget.form;
+  TabController get tabController => widget.tabController;
+
+  Future<void> _handleSignUp() async {
+    if (_isSubmitting) return;
+
+    FocusScope.of(context).unfocus();
+
+    if (!form.agreedToTcsAndCs) {
+      context.snackBarError(
+        'Please review our Terms of Service and accept them to continue.',
+      );
+      return;
+    }
+
+    // Validate referral code is positive if provided
+    if (form.referralCode != null && form.referralCode! <= 0) {
+      context.snackBarError('Invalid referral code.');
+      return;
+    }
+
+    if (form.referralCode != null) {
+      setState(() => _isSubmitting = true);
+      context.loaderOverlay.show();
+
+      final results = await context
+          .read<AuthRepository>()
+          .isValidReferralCode(form.referralCode!);
+
+      if (!mounted) return;
+      context.loaderOverlay.hide();
+
+      // Use fold result to determine if we should proceed
+      final hasError = results.fold(
+        (left) {
+          context.snackBarError(left.message);
+          return true;
+        },
+        (right) {
+          if (!right.isValid) {
+            context.snackBarError('Invalid referral code.');
+            return true;
+          }
+          if (right.isCorporate) {
+            context.snackBarError(
+              'A corporate account cannot refer other accounts',
+            );
+            return true;
+          }
+          return false;
+        },
+      );
+
+      if (hasError) {
+        setState(() => _isSubmitting = false);
+        return;
+      }
+    }
+
+    // Submit registration
+    context.read<RegisterCubit>().submit();
+    setState(() => _isSubmitting = false);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -80,47 +149,21 @@ class ReferralCodeForm extends StatelessWidget {
             ),
             20.sH,
             ElevatedButton(
-              onPressed: () async {
-                FocusScope.of(context).unfocus();
-                if (!form.agreedToTcsAndCs) {
-                  context.snackBarError(
-                    'Please review our Terms of Service and accept them to continue.',
-                  );
-                  return;
-                }
-                if (form.referralCode != null) {
-                  context.loaderOverlay.show();
-                  final results =
-                      await context.read<AuthRepository>().isValidReferralCode(
-                            form.referralCode!,
-                          );
-                  context.loaderOverlay.hide();
-                  ({bool isValid, bool isCorporate})? res;
-                  results.fold((left) {
-                    context.snackBarError(left.message);
-                    return;
-                  }, (right) {
-                    res = right;
-                  });
-
-                  if (res?.isValid == false) {
-                    context.snackBarError('Invalid referral code.');
-                    return;
-                  }
-
-                  if (res?.isCorporate == true) {
-                    context.snackBarError(
-                        'A corporate account cannot refer other accounts');
-                    return;
-                  }
-                }
-                context.read<RegisterCubit>().submit();
-              },
-              child: Text(
-                form.referralCode != null
-                    ? 'Got it, Sign up'
-                    : 'No one, Sign up',
-              ),
+              onPressed: _isSubmitting ? null : _handleSignUp,
+              child: _isSubmitting
+                  ? const SizedBox(
+                      height: 20,
+                      width: 20,
+                      child: CircularProgressIndicator(
+                        strokeWidth: 2,
+                        color: Colors.white,
+                      ),
+                    )
+                  : Text(
+                      form.referralCode != null
+                          ? 'Got it, Sign up'
+                          : 'No one, Sign up',
+                    ),
             )
           ],
         ),

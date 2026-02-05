@@ -1,4 +1,4 @@
-// ignore_for_file: use_build_context_synchronously
+import 'dart:async';
 
 import 'package:data/eesupools/repository/eesupool_members_repo.dart';
 import 'package:data/eesupools/repository/eesupool_repo.dart';
@@ -26,86 +26,144 @@ class InviteMembersDialog extends StatefulWidget {
 
 class _InviteMembersDialogState extends State<InviteMembersDialog> {
   final _searchController = TextEditingController();
+  Timer? _debounceTimer;
+  List<Map<String, dynamic>>? _searchResults;
+  bool _isSearching = false;
+  String? _searchError;
+  final Set<String> _pendingOperations = {};
+
+  @override
+  void dispose() {
+    _searchController.dispose();
+    _debounceTimer?.cancel();
+    super.dispose();
+  }
+
+  void _onSearchChanged(String query) {
+    _debounceTimer?.cancel();
+
+    if (query.isEmpty) {
+      setState(() {
+        _searchResults = null;
+        _isSearching = false;
+        _searchError = null;
+      });
+      return;
+    }
+
+    setState(() => _isSearching = true);
+
+    _debounceTimer = Timer(const Duration(milliseconds: 500), () async {
+      final repo = context.read<EESUpoolRepository>();
+      final result = await repo.searchProfileForInvites(
+        query,
+        widget.poolId,
+        25,
+      );
+
+      if (!mounted) return;
+
+      result.fold(
+        (error) => setState(() {
+          _searchError = error.message;
+          _searchResults = null;
+          _isSearching = false;
+        }),
+        (data) => setState(() {
+          _searchResults = List<Map<String, dynamic>>.from(data as List);
+          _searchError = null;
+          _isSearching = false;
+        }),
+      );
+    });
+  }
+
+  void _refreshSearch() {
+    final query = _searchController.text;
+    if (query.isNotEmpty) {
+      _onSearchChanged(query);
+    }
+  }
+
+  void _handleBackPressed() {
+    if (widget.isNewPool) {
+      // Pop both screens safely
+      final navigator = Navigator.of(context);
+      navigator.pop();
+      if (navigator.canPop()) {
+        navigator.pop();
+      }
+    } else {
+      Navigator.of(context).pop();
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
-    final repo = context.read<EESUpoolRepository>();
     return Scaffold(
       appBar: AppBar(
-        leading: BackButton(
-          onPressed: () {
-            if (widget.isNewPool) {
-              Navigator.of(context).pop();
-              Navigator.of(context).pop();
-            } else {
-              Navigator.of(context).pop();
-            }
-          },
-        ),
+        leading: BackButton(onPressed: _handleBackPressed),
         title: Transform.scale(
           scale: .94,
           child: EESUpTextFormField(
             hintText: 'SEARCH REFERRAL CODE, FIRST NAME, LAST NAME..',
             controller: _searchController,
-            onChanged: (v) {
-              setState(() {});
-            },
+            onChanged: _onSearchChanged,
           ),
         ),
       ),
-      body: () {
-        if (_searchController.text.isNotEmpty) {
-          return FutureBuilder(
-            future: repo.searchProfileForInvites(
-              _searchController.text,
-              widget.poolId,
-              25,
-            ),
-            builder: (context, snap) {
-              if (snap.data != null) {
-                return snap.data!.fold(
-                  (left) {
-                    return FullScreenError(exception: left);
-                  },
-                  (right) {
-                    return ListView.builder(
-                      itemCount: right.length,
-                      itemBuilder: (context, index) {
-                        return _resultsItem(right[index], context);
-                      },
-                    );
-                  },
-                );
-              } else {
-                return FullScreenError(
-                  isError: false,
-                  exception: EESUpException(message: 'Search for people'),
-                );
-              }
-            },
-          );
-        } else {
-          return FullScreenError(
-            isError: false,
-            exception: EESUpException(message: 'Search for people'),
-          );
-        }
-      }(),
+      body: _buildBody(),
     );
   }
 
-  ListTile _resultsItem(item, BuildContext context) {
+  Widget _buildBody() {
+    if (_searchController.text.isEmpty) {
+      return FullScreenError(
+        isError: false,
+        exception: EESUpException(message: 'Search for people'),
+      );
+    }
+
+    if (_isSearching) {
+      return const Center(child: CircularProgressIndicator());
+    }
+
+    if (_searchError != null) {
+      return FullScreenError(
+        exception: EESUpException(message: _searchError!),
+      );
+    }
+
+    if (_searchResults == null || _searchResults!.isEmpty) {
+      return FullScreenError(
+        isError: false,
+        exception: EESUpException(message: 'No results found'),
+      );
+    }
+
+    return ListView.builder(
+      itemCount: _searchResults!.length,
+      itemBuilder: (context, index) {
+        return _resultsItem(_searchResults![index], context);
+      },
+    );
+  }
+
+  ListTile _resultsItem(Map<String, dynamic> item, BuildContext context) {
+    final fullName = item['full_name'] as String?;
+    final corporateName = item['corporate_name'] as String?;
+    final displayName = fullName ?? corporateName ?? 'Unknown';
+    final firstLetter = displayName.isNotEmpty ? displayName[0] : '?';
+
     return ListTile(
       contentPadding: const EdgeInsets.only(left: 18, right: 8),
       leading: CircleAvatar(
         backgroundColor: Colors.grey.shade200,
-        child: Text(item['full_name']?[0] ?? item['corporate_name']?[0]),
+        child: Text(firstLetter),
       ),
-      title: Text(
-        item['full_name'] ?? item['corporate_name'],
-      ),
+      title: Text(displayName),
       subtitle: Text(
-        item['role'] ?? "~",
+        item['role'] as String? ?? "~",
         style: context.textTheme.labelSmall?.copyWith(
           color: Colors.grey.shade500,
         ),
@@ -115,26 +173,24 @@ class _InviteMembersDialogState extends State<InviteMembersDialog> {
         children: [
           if (item['status'] == 'pending')
             _AcceptInvite(
-              onRequestSetState: () {
-                setState(() {});
-              },
+              onRequestSetState: _refreshSearch,
               poolId: widget.poolId,
               item: item,
+              pendingOperations: _pendingOperations,
             ),
           if (item['status'] != null)
             _RevokeInvite(
-                onRequestSetState: () {
-                  setState(() {});
-                },
-                poolId: widget.poolId,
-                item: item),
+              onRequestSetState: _refreshSearch,
+              poolId: widget.poolId,
+              item: item,
+              pendingOperations: _pendingOperations,
+            ),
           if (item['status'] == null)
             _SendInvite(
-              onRequestSetState: () {
-                setState(() {});
-              },
+              onRequestSetState: _refreshSearch,
               item: item,
               poolId: widget.poolId,
+              pendingOperations: _pendingOperations,
             ),
         ],
       ),
@@ -147,56 +203,80 @@ class _SendInvite extends StatelessWidget {
     required this.onRequestSetState,
     required this.item,
     required this.poolId,
+    required this.pendingOperations,
   });
   final VoidCallback onRequestSetState;
   final int poolId;
-  final dynamic item;
+  final Map<String, dynamic> item;
+  final Set<String> pendingOperations;
 
   @override
   Widget build(BuildContext context) {
+    final userId = item['user_id'] as String?;
+    final displayName =
+        item['full_name'] as String? ?? item['corporate_name'] as String? ?? 'User';
+    final isPending = userId != null && pendingOperations.contains(userId);
+
     return TextButton(
-      child: const Padding(
-        padding: EdgeInsets.only(
-          right: 15,
-        ),
-        child: Text('Invite'),
+      onPressed: isPending
+          ? null
+          : () async {
+              if (item['membership_id'] != null) {
+                context.snackBarError(
+                  '$displayName is already a member of this EESUpool',
+                );
+                return;
+              }
+
+              if (item['status'] != null) {
+                context.snackBarError(
+                  '$displayName already has an invite or a request to join this EESUpool',
+                );
+                return;
+              }
+
+              if (userId == null) {
+                context.snackBarError('Invalid user');
+                return;
+              }
+
+              // Prevent double-tap
+              pendingOperations.add(userId);
+
+              final repo = context.read<EESUpoolRepository>();
+              context.loaderOverlay.show();
+              final result = await repo.createEESUpoolInvite(
+                poolId,
+                userId,
+                'Invite',
+              );
+
+              pendingOperations.remove(userId);
+
+              if (!context.mounted) return;
+              context.loaderOverlay.hide();
+
+              result.fold((l) {
+                context.snackBarError(
+                  '$displayName has already been invited to join this EESUpool',
+                );
+              }, (r) {
+                context.snackBarSuccess(
+                  '$displayName has been invited to join this EESUpool',
+                );
+                onRequestSetState.call();
+              });
+            },
+      child: Padding(
+        padding: const EdgeInsets.only(right: 15),
+        child: isPending
+            ? const SizedBox(
+                height: 16,
+                width: 16,
+                child: CircularProgressIndicator(strokeWidth: 2),
+              )
+            : const Text('Invite'),
       ),
-      onPressed: () async {
-        if (item['membership_id'] != null) {
-          context.snackBarError(
-            '${item['full_name'] ?? item['corporate_name']} is already a member of this EESUpool',
-          );
-          return;
-        }
-
-        if (item['status'] != null) {
-          context.snackBarError(
-            '${item['full_name'] ?? item['corporate_name']} already has an invite or a request to join this EESUpool',
-          );
-          return;
-        }
-        final repo = context.read<EESUpoolRepository>();
-
-        context.loaderOverlay.show();
-        final result = await repo.createEESUpoolInvite(
-          poolId,
-          item['user_id'],
-          'Invite',
-        );
-        context.loaderOverlay.hide();
-
-        result.fold((l) {
-          context.snackBarError(
-            '${item['full_name'] ?? item['corporate_name']} has already been invited to join this EESUpool',
-          );
-        }, (r) {
-          context.snackBarSuccess(
-            '${item['full_name'] ?? item['corporate_name']} has been invited to join this EESUpool',
-          );
-
-          onRequestSetState.call();
-        });
-      },
     );
   }
 }
@@ -206,43 +286,68 @@ class _RevokeInvite extends StatelessWidget {
     required this.onRequestSetState,
     required this.item,
     required this.poolId,
+    required this.pendingOperations,
   });
   final VoidCallback onRequestSetState;
   final int poolId;
-  final dynamic item;
+  final Map<String, dynamic> item;
+  final Set<String> pendingOperations;
 
   @override
   Widget build(BuildContext context) {
-    return TextButton(
-      child: const Padding(
-        padding: EdgeInsets.only(
-          right: 15,
-        ),
-        child: Text(
-          'Revoke',
-          style: TextStyle(color: Colors.red),
-        ),
-      ),
-      onPressed: () async {
-        if (item['membership_id'] != null) {
-          context.snackBarError(
-            '${item['full_name'] ?? item['corporate_name']} is already a member of this EESUpool',
-          );
-          return;
-        }
-        final repo = context.read<EESUpoolRepository>();
-        context.loaderOverlay.show();
-        final result =
-            await repo.deleteInviteOrRequest(item['user_id'], poolId);
-        context.loaderOverlay.hide();
+    final userId = item['user_id'] as String?;
+    final displayName =
+        item['full_name'] as String? ?? item['corporate_name'] as String? ?? 'User';
+    final isPending = userId != null && pendingOperations.contains('revoke_$userId');
 
-        result.fold((l) {
-          context.snackBarError('Failed to revoke the invite');
-        }, (r) {
-          context.snackBarSuccess('Invite revoked');
-          onRequestSetState.call();
-        });
-      },
+    return TextButton(
+      onPressed: isPending
+          ? null
+          : () async {
+              if (item['membership_id'] != null) {
+                context.snackBarError(
+                  '$displayName is already a member of this EESUpool',
+                );
+                return;
+              }
+
+              if (userId == null) {
+                context.snackBarError('Invalid user');
+                return;
+              }
+
+              // Prevent double-tap
+              pendingOperations.add('revoke_$userId');
+
+              final repo = context.read<EESUpoolRepository>();
+              context.loaderOverlay.show();
+              final result = await repo.deleteInviteOrRequest(userId, poolId);
+
+              pendingOperations.remove('revoke_$userId');
+
+              if (!context.mounted) return;
+              context.loaderOverlay.hide();
+
+              result.fold((l) {
+                context.snackBarError('Failed to revoke the invite');
+              }, (r) {
+                context.snackBarSuccess('Invite revoked');
+                onRequestSetState.call();
+              });
+            },
+      child: Padding(
+        padding: const EdgeInsets.only(right: 15),
+        child: isPending
+            ? const SizedBox(
+                height: 16,
+                width: 16,
+                child: CircularProgressIndicator(strokeWidth: 2),
+              )
+            : const Text(
+                'Revoke',
+                style: TextStyle(color: Colors.red),
+              ),
+      ),
     );
   }
 }
@@ -252,38 +357,64 @@ class _AcceptInvite extends StatelessWidget {
     required this.onRequestSetState,
     required this.item,
     required this.poolId,
+    required this.pendingOperations,
   });
   final VoidCallback onRequestSetState;
   final int poolId;
-  final dynamic item;
+  final Map<String, dynamic> item;
+  final Set<String> pendingOperations;
 
   @override
   Widget build(BuildContext context) {
+    final userId = item['user_id'] as String?;
+    final displayName =
+        item['full_name'] as String? ?? item['corporate_name'] as String? ?? 'User';
+    final isPending = userId != null && pendingOperations.contains('accept_$userId');
+
     return TextButton(
-      child: const Padding(
-        padding: EdgeInsets.only(
-          right: 15,
-        ),
-        child: Text('Accept'),
+      onPressed: isPending
+          ? null
+          : () async {
+              if (userId == null) {
+                context.snackBarError('Invalid user');
+                return;
+              }
+
+              // Prevent double-tap
+              pendingOperations.add('accept_$userId');
+
+              final repo = context.read<EESUpoolRepository>();
+              context.loaderOverlay.show();
+              final result = await repo.updateEESUpoolRequest(
+                userId,
+                poolId,
+                'Accepted',
+              );
+
+              pendingOperations.remove('accept_$userId');
+
+              if (!context.mounted) return;
+              context.loaderOverlay.hide();
+
+              result.fold((l) {
+                context.snackBarError('Failed to accept the invite');
+              }, (r) {
+                context.snackBarSuccess(
+                  '$displayName has been accepted to join this EESUpool',
+                );
+                onRequestSetState.call();
+              });
+            },
+      child: Padding(
+        padding: const EdgeInsets.only(right: 15),
+        child: isPending
+            ? const SizedBox(
+                height: 16,
+                width: 16,
+                child: CircularProgressIndicator(strokeWidth: 2),
+              )
+            : const Text('Accept'),
       ),
-      onPressed: () async {
-        final repo = context.read<EESUpoolRepository>();
-
-        context.loaderOverlay.show();
-        final result = await repo.updateEESUpoolRequest(
-            item['user_id'], poolId, 'Accepted');
-        context.loaderOverlay.hide();
-
-        result.fold((l) {
-          context.snackBarError('Failed to accept the invite');
-        }, (r) {
-          context.snackBarSuccess(
-            '${item['full_name'] ?? item['corporate_name']} has been accepted to join this EESUpool',
-          );
-
-          onRequestSetState.call();
-        });
-      },
     );
   }
 }

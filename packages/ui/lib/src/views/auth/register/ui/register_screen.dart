@@ -43,6 +43,12 @@ class _RegisterScreenState extends State<RegisterScreen>
   }
 
   @override
+  void dispose() {
+    _tabController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return BlocListener<AuthBloc, AuthBlocState>(
       listener: (context, state) {
@@ -130,12 +136,16 @@ class _RegisterScreenState extends State<RegisterScreen>
                 ),
               )
                   .then((value) {
-                ///THIS RETURNS TRUE IF OTP AUTH IS SUCCESS
+                if (!mounted) return;
+                // value == true: OTP verified successfully
+                // value == false: OTP verification failed
+                // value == null: Dialog dismissed without action
                 if (value == true) {
                   _tabController.animateTo(_tabController.index + 1);
-                } else {
-                  context.snackBarError('Otp verification failed');
+                } else if (value == false) {
+                  context.snackBarError('OTP verification failed');
                 }
+                // null = dismissed, don't show error
               });
             }
           },

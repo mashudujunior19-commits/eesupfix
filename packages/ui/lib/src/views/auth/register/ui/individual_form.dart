@@ -1,4 +1,3 @@
-// ignore_for_file: use_build_context_synchronously
 import 'package:data/auth/repository/auth_repository.dart';
 import 'package:loader_overlay/loader_overlay.dart';
 import 'package:ui/src/core/extensions/context_alerts_ext.dart';
@@ -14,7 +13,7 @@ import 'package:omni_datetime_picker/omni_datetime_picker.dart';
 import 'package:ui/src/views/auth/register/cubit/register_cubit.dart';
 import 'package:ui/src/views/auth/register/cubit/register_form.dart';
 
-class IndividualForm extends StatelessWidget {
+class IndividualForm extends StatefulWidget {
   const IndividualForm({
     super.key,
     required this.form,
@@ -22,6 +21,16 @@ class IndividualForm extends StatelessWidget {
   });
   final RegisterForm form;
   final TabController tabController;
+
+  @override
+  State<IndividualForm> createState() => _IndividualFormState();
+}
+
+class _IndividualFormState extends State<IndividualForm> {
+  bool _isSubmitting = false;
+
+  RegisterForm get form => widget.form;
+  TabController get tabController => widget.tabController;
 
   @override
   Widget build(BuildContext context) {
@@ -148,70 +157,95 @@ class IndividualForm extends StatelessWidget {
           ).animate().slideIn(150),
         30.sH,
         ElevatedButton(
-          onPressed: () async {
-            FocusScope.of(context).unfocus();
-            if (form.firstName == null) {
-              context.snackBarError('Please provide your first name');
-              return;
-            }
-
-            if (form.lastName == null) {
-              context.snackBarError('Please provide your last name');
-              return;
-            }
-
-            if (form.idNumber == null && form.dob == null) {
-              if (form.isRSACitizen) {
-                context.snackBarError(
-                    "Please provide your South African ID number.");
-                return;
-              } else {
-                context.snackBarError("Please provide your date of birth.");
-                return;
-              }
-            }
-
-            if (form.idNumber != null) {
-              if (!form.isValidIdNumber()) {
-                context.snackBarError("Invalid Id number.");
-                return;
-              }
-            }
-
-            if (!form.isOfAge()) {
-              context.snackBarError(
-                "You must be 18 years and above to Register on EESUp.",
-              );
-              return;
-            }
-
-            if (form.isRSACitizen) {
-              context.loaderOverlay.show();
-              final results = await context
-                  .read<AuthRepository>()
-                  .idNumberExists(form.idNumber!);
-              context.loaderOverlay.hide();
-
-              results.fold((left) {
-                context.snackBarError(left.message);
-                return;
-              }, (isUsed) {
-                if (isUsed) {
-                  context.snackBarError(
-                    'An account with this id number already exists',
-                  );
-                  return;
-                } else {
-                  tabController.animateTo(tabController.index + 1);
-                }
-              });
-            } else {
-              tabController.animateTo(tabController.index + 1);
-            }
-          },
-          child: const Text('Next'),
+          onPressed: _isSubmitting ? null : _handleNext,
+          child: _isSubmitting
+              ? const SizedBox(
+                  height: 20,
+                  width: 20,
+                  child: CircularProgressIndicator(
+                    strokeWidth: 2,
+                    color: Colors.white,
+                  ),
+                )
+              : const Text('Next'),
         )
       ],
     );
+  }
+
+  Future<void> _handleNext() async {
+    if (_isSubmitting) return;
+
+    FocusScope.of(context).unfocus();
+
+    if (form.firstName == null || form.firstName!.trim().isEmpty) {
+      context.snackBarError('Please provide your first name');
+      return;
+    }
+
+    if (form.lastName == null || form.lastName!.trim().isEmpty) {
+      context.snackBarError('Please provide your last name');
+      return;
+    }
+
+    if (form.idNumber == null && form.dob == null) {
+      if (form.isRSACitizen) {
+        context.snackBarError("Please provide your South African ID number.");
+        return;
+      } else {
+        context.snackBarError("Please provide your date of birth.");
+        return;
+      }
+    }
+
+    if (form.idNumber != null) {
+      if (!form.isValidIdNumber()) {
+        context.snackBarError("Invalid ID number.");
+        return;
+      }
+    }
+
+    if (!form.isOfAge()) {
+      context.snackBarError(
+        "You must be 18 years and above to Register on EESUp.",
+      );
+      return;
+    }
+
+    if (form.isRSACitizen) {
+      setState(() => _isSubmitting = true);
+      context.loaderOverlay.show();
+
+      final results = await context
+          .read<AuthRepository>()
+          .idNumberExists(form.idNumber!);
+
+      if (!mounted) return;
+      context.loaderOverlay.hide();
+      setState(() => _isSubmitting = false);
+
+      // Use fold result to determine if we should proceed
+      final hasError = results.fold(
+        (left) {
+          context.snackBarError(left.message);
+          return true;
+        },
+        (isUsed) {
+          if (isUsed) {
+            context.snackBarError(
+              'An account with this ID number already exists',
+            );
+            return true;
+          }
+          return false;
+        },
+      );
+
+      if (!hasError) {
+        tabController.animateTo(tabController.index + 1);
+      }
+    } else {
+      tabController.animateTo(tabController.index + 1);
+    }
   }
 }

@@ -10,17 +10,17 @@ class BottomTabBar extends StatelessWidget {
   Widget build(BuildContext context) {
     int index = tabController.index;
     return Container(
-      height: 60,
+      height: 70,
       width: MediaQuery.sizeOf(context).width,
       decoration: BoxDecoration(
-        color: Colors.white.withOpacity(.3),
-        // boxShadow: [
-        //   BoxShadow(
-        //     color: Colors.grey.shade300,
-        //     blurRadius: 5,
-        //     offset: const Offset(0, -1),
-        //   ),
-        // ],
+        color: Colors.white,
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.shade300,
+            blurRadius: 5,
+            offset: const Offset(0, -1),
+          ),
+        ],
       ),
       child: TabBar(
         controller: tabController,

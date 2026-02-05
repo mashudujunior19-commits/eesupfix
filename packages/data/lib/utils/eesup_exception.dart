@@ -47,15 +47,98 @@ class EESUpException implements Exception {
   @override
   int get hashCode => debugMessage.hashCode ^ message.hashCode;
 
+  /// Maps AuthException messages to user-friendly error messages
+  static String _getAuthErrorMessage(AuthException exception) {
+    final errorMessage = exception.message.toLowerCase();
+
+    if (errorMessage.contains('invalid login credentials') ||
+        errorMessage.contains('invalid credentials')) {
+      return 'Incorrect email/phone or password. Please try again.';
+    }
+    if (errorMessage.contains('email not confirmed')) {
+      return 'Please verify your email before signing in.';
+    }
+    if (errorMessage.contains('user already registered') ||
+        errorMessage.contains('already been registered')) {
+      return 'An account with this email already exists.';
+    }
+    if (errorMessage.contains('phone') && errorMessage.contains('registered')) {
+      return 'An account with this phone number already exists.';
+    }
+    if (errorMessage.contains('invalid otp') ||
+        errorMessage.contains('otp expired') ||
+        errorMessage.contains('token has expired')) {
+      return 'Invalid or expired OTP. Please request a new one.';
+    }
+    if (errorMessage.contains('password') &&
+        (errorMessage.contains('weak') || errorMessage.contains('short'))) {
+      return 'Password is too weak. Please use a stronger password.';
+    }
+    if (errorMessage.contains('rate limit') ||
+        errorMessage.contains('too many requests')) {
+      return 'Too many attempts. Please wait a moment and try again.';
+    }
+    if (errorMessage.contains('session') && errorMessage.contains('expired')) {
+      return 'Your session has expired. Please sign in again.';
+    }
+    if (errorMessage.contains('not authorized') ||
+        errorMessage.contains('unauthorized')) {
+      return 'You are not authorized to perform this action.';
+    }
+
+    // Default auth error message
+    return 'Authentication failed. Please try again.';
+  }
+
+  /// Maps PostgrestException messages to user-friendly error messages
+  static String _getPostgrestErrorMessage(PostgrestException exception) {
+    final errorMessage = exception.message.toLowerCase();
+    final code = exception.code;
+
+    // Handle specific error codes
+    if (code == '23505') {
+      // Unique violation
+      return 'This record already exists.';
+    }
+    if (code == '23503') {
+      // Foreign key violation
+      return 'This operation references data that does not exist.';
+    }
+    if (code == '42501') {
+      // Permission denied
+      return 'You do not have permission to perform this action.';
+    }
+
+    // Handle error messages
+    if (errorMessage.contains('duplicate') ||
+        errorMessage.contains('already exists')) {
+      return 'This record already exists.';
+    }
+    if (errorMessage.contains('not found')) {
+      return 'The requested data could not be found.';
+    }
+    if (errorMessage.contains('permission') ||
+        errorMessage.contains('denied')) {
+      return 'You do not have permission to perform this action.';
+    }
+
+    // Default database error
+    return 'A database error occurred. Please try again.';
+  }
+
   static Either<EESUpException, T> _handleException<T>(Object exception) {
     if (kDebugMode) {
       print('EESUpException:=> ${exception.toString()}');
     }
 
     if (exception is AuthException) {
+      final message = _getAuthErrorMessage(exception);
       return Left(EESUpException(
-          message: 'Invalid credentials. Please try again.',
-          debugMessage: exception.toString()));
+          message: message, debugMessage: exception.toString()));
+    } else if (exception is PostgrestException) {
+      final message = _getPostgrestErrorMessage(exception);
+      return Left(EESUpException(
+          message: message, debugMessage: exception.toString()));
     } else if (exception is HandshakeException) {
       return Left(EESUpException(
           message: 'This is taking longer than usual. Check your connection.',

@@ -1,20 +1,22 @@
 {
     "configurations": [
         {
-            "name": "Release",
+            "name": "release",
             "type": "dart",
             "request": "launch",
             "cwd": "app",
+            "program": "lib/main.dart",
             "noDebug": true,
-            "program": "lib/main.dart"
+            "flutterMode": "debug",
         },
         {
-            "name": "Dev",
+            "name": "development",
             "type": "dart",
             "request": "launch",
-            "noDebug": true,
             "cwd": "app",
-            "program": "lib/main_development.dart"
+            "program": "lib/main.dart",
+            "noDebug": true,
+            "flutterMode": "debug",
         }
     ]
 }

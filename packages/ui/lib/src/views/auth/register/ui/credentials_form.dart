@@ -13,16 +13,119 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'email_and_phone_tab_container.dart';
 
-// ignore: must_be_immutable
-class CredentialsForm extends StatelessWidget {
-  CredentialsForm({
+class CredentialsForm extends StatefulWidget {
+  const CredentialsForm({
     super.key,
     required this.form,
     required this.tabController,
   });
   final RegisterForm form;
   final TabController tabController;
-  bool isValidPassword = false;
+
+  @override
+  State<CredentialsForm> createState() => _CredentialsFormState();
+}
+
+class _CredentialsFormState extends State<CredentialsForm> {
+  bool _isValidPassword = false;
+  bool _isSubmitting = false;
+
+  RegisterForm get form => widget.form;
+  TabController get tabController => widget.tabController;
+
+  Future<void> _handleNext() async {
+    if (_isSubmitting) return;
+
+    FocusScope.of(context).unfocus();
+
+    final tempEmail = form.email?.trim() ?? '';
+    final tempPhone = form.phone?.trim() ?? '';
+
+    if (tempPhone.isEmpty && tempEmail.isEmpty) {
+      context.snackBarError('Please provide your email or phone');
+      return;
+    }
+
+    setState(() => _isSubmitting = true);
+
+    if (tempEmail.isNotEmpty) {
+      if (!EmailValidator.validate(tempEmail)) {
+        setState(() => _isSubmitting = false);
+        context.snackBarError('Invalid email address');
+        return;
+      }
+
+      context.loaderOverlay.show();
+      final results = await context.read<RegisterCubit>().emailExistsResult(
+            tempEmail,
+          );
+      if (!mounted) return;
+      context.loaderOverlay.hide();
+
+      final shouldReturn = results.fold(
+        (error) {
+          context.snackBarError(error.message);
+          return true;
+        },
+        (exists) {
+          if (exists) {
+            context.snackBarError(
+              'This email address is already registered to another account',
+            );
+            return true;
+          }
+          return false;
+        },
+      );
+
+      if (shouldReturn) {
+        setState(() => _isSubmitting = false);
+        return;
+      }
+    }
+
+    if (tempPhone.isNotEmpty) {
+      context.loaderOverlay.show();
+      final results = await context.read<RegisterCubit>().phoneExistsResult(
+            tempPhone,
+          );
+      if (!mounted) return;
+      context.loaderOverlay.hide();
+
+      final shouldReturn = results.fold(
+        (error) {
+          context.snackBarError(error.message);
+          return true;
+        },
+        (exists) {
+          if (exists) {
+            context.snackBarError(
+              'This phone is already registered to another account',
+            );
+            return true;
+          }
+          return false;
+        },
+      );
+
+      if (shouldReturn) {
+        setState(() => _isSubmitting = false);
+        return;
+      }
+    }
+
+    if (!_isValidPassword) {
+      setState(() => _isSubmitting = false);
+      context.snackBarError(
+        'Your password must meet all the requirements.',
+      );
+      return;
+    }
+
+    setState(() => _isSubmitting = false);
+    final next = tabController.index + 1;
+    tabController.animateTo(next);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -72,7 +175,7 @@ class CredentialsForm extends StatelessWidget {
           confirmPassword: form.retypedPassword ?? '',
           password: form.password ?? '',
           onValidPassword: (isValid) {
-            isValidPassword = isValid;
+            _isValidPassword = isValid;
           },
         ).animate().slideIn(100),
         EESUpTextFormField(
@@ -93,67 +196,19 @@ class CredentialsForm extends StatelessWidget {
         ).animate().slideIn(150),
         30.sH,
         ElevatedButton(
-          onPressed: () async {
-            FocusScope.of(context).unfocus();
-
-            final tempEmail = form.email?.trim() ?? '';
-            final tempPhone = form.phone?.trim() ?? '';
-
-            if (tempPhone.isEmpty && tempEmail.isEmpty) {
-              context.snackBarError('Please provide your email or phone');
-              return;
-            }
-
-            if (tempEmail.isNotEmpty) {
-              if (!EmailValidator.validate(tempEmail)) {
-                context.snackBarError('Invalid email address');
-                return;
-              }
-              context.loaderOverlay.show();
-              final exists = await context.read<RegisterCubit>().emailExists(
-                    tempEmail,
-                  );
-              context.loaderOverlay.hide();
-
-              if (exists) {
-                context.snackBarError(
-                  'This email address is already registered to another account',
-                );
-                return;
-              }
-            }
-
-            if (tempPhone.isNotEmpty) {
-              context.loaderOverlay.show();
-              final exists = await context.read<RegisterCubit>().phoneExists(
-                    tempPhone,
-                  );
-              context.loaderOverlay.hide();
-              if (exists) {
-                context.snackBarError(
-                  'This phone is already registered to another account',
-                );
-                return;
-              }
-            }
-
-            if (!isValidPassword) {
-              context.snackBarError(
-                'Your password must meet all the requirements.',
-              );
-              return;
-            }
-            final next = tabController.index + 1;
-            tabController.animateTo(next);
-          },
-          child: const Text('Next'),
+          onPressed: _isSubmitting ? null : _handleNext,
+          child: _isSubmitting
+              ? const SizedBox(
+                  height: 20,
+                  width: 20,
+                  child: CircularProgressIndicator(
+                    strokeWidth: 2,
+                    color: Colors.white,
+                  ),
+                )
+              : const Text('Next'),
         ).animate().slideIn(200)
       ],
     );
-  }
-
-  String capitalizeFirstLetter(String str) {
-    if (str.isEmpty) return str;
-    return str[0].toUpperCase() + str.substring(1);
   }
 }

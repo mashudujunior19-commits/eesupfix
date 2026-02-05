@@ -15,13 +15,49 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:loader_overlay/loader_overlay.dart';
 
-String? _phone = '';
-String? _email = '';
-String _password = '';
-
 @RoutePage()
-class SignInScreen extends StatelessWidget {
+class SignInScreen extends StatefulWidget {
   const SignInScreen({super.key});
+
+  @override
+  State<SignInScreen> createState() => _SignInScreenState();
+}
+
+class _SignInScreenState extends State<SignInScreen> {
+  String? _phone;
+  String? _email;
+  String _password = '';
+
+  @override
+  void dispose() {
+    // Clear sensitive data on dispose
+    _password = '';
+    super.dispose();
+  }
+
+  void _handleSignIn() {
+    FocusScope.of(context).unfocus();
+
+    final email = _email?.trim();
+    final phone = _phone?.trim();
+
+    if ((email == null || email.isEmpty) && (phone == null || phone.isEmpty)) {
+      context.snackBarError('Enter an email or phone number');
+      return;
+    }
+
+    if (_password.isEmpty) {
+      context.snackBarError('Enter your password');
+      return;
+    }
+
+    if (_password.length < 8) {
+      context.snackBarError('Password must be at least 8 characters');
+      return;
+    }
+
+    context.read<AuthBloc>().add(SignInPressed(email, phone, _password));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -61,12 +97,16 @@ class SignInScreen extends StatelessWidget {
                     20.sH,
                     EmailAndPhoneTabContainer(
                       onEmailChanged: (e) {
-                        _email = e?.trim();
-                        _phone = null;
+                        setState(() {
+                          _email = e?.trim();
+                          _phone = null;
+                        });
                       },
                       onPhoneChanged: (p) {
-                        _phone = p?.trim();
-                        _email = null;
+                        setState(() {
+                          _phone = p?.trim();
+                          _email = null;
+                        });
                       },
                     ).animate().slideIn(100),
                     EESUpTextFormField(
@@ -83,24 +123,8 @@ class SignInScreen extends StatelessWidget {
                     ).animate().slideIn(150),
                     ElevatedButton(
                       key: const Key('sign_in_button'),
+                      onPressed: _handleSignIn,
                       child: const Text('Sign In'),
-                      onPressed: () {
-                        FocusScope.of(context).unfocus();
-                        if (_email == null && _phone == null) {
-                          context
-                              .snackBarError('Enter an email or phone number');
-                          return;
-                        }
-
-                        if (_password.isEmpty) {
-                          context.snackBarError('Enter your password');
-                          return;
-                        }
-
-                        context
-                            .read<AuthBloc>()
-                            .add(SignInPressed(_email, _phone, _password));
-                      },
                     ).animate().slideIn(200),
                     20.sH,
                     HighlightedText(
