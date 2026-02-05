@@ -55,7 +55,6 @@ class _CredentialsFormTabState extends State<CredentialsFormTab> {
                 onPhoneChanged: (p) {
                   email = null;
                   phone = p;
-                  print(phone);
                 },
               ),
               25.sH,
@@ -113,8 +112,8 @@ class _CredentialsFormTabState extends State<CredentialsFormTab> {
                             .showBottomSheetDialog(
                           child: OtpAuthDialog(
                             type: OtpType.recovery,
-                            email: email,
-                            phone: null,
+                            email: null,
+                            phone: phone,
                             isSignUp: false,
                           ),
                         )

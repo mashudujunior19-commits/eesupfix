@@ -47,10 +47,10 @@ class _MenuTabState extends State<MenuTab> {
         ..add(ProfileFetched()),
       builder: (context, state) {
         if (state is ProfileLoaded) {
-          print(state);
           final profile = state.profile;
           return Column(
             children: [
+              50.sH,
               Builder(builder: (context) {
                 return EditProfileButton(
                   profile: profile,

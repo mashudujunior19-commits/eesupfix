@@ -3,7 +3,6 @@ import 'package:ui/src/core/extensions/context_theme_ext.dart';
 import 'package:ui/src/core/extensions/sizedbox_ext.dart';
 import 'package:ui/src/core/extensions/slide_in_animation_ext.dart';
 import 'package:ui/src/core/widgets/eesup_form_field.dart';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -53,14 +52,12 @@ class CorporateForm extends StatelessWidget {
           onChanged: (value) {
             final v = value.isEmpty ? null : value;
 
-            if (v != null) {
-              context.read<RegisterCubit>().updateForm(
-                    form.copyWith(
-                      corpName: v,
-                      corpReg: form.corpReg,
-                    ),
-                  );
-            }
+            context.read<RegisterCubit>().updateForm(
+                  form.copyWith(
+                    corpName: form.corpName,
+                    corpReg: v,
+                  ),
+                );
           },
         ).animate().slideIn(100),
         25.sH,
@@ -72,7 +69,7 @@ class CorporateForm extends StatelessWidget {
               return;
             }
 
-            tabController.animateTo(tabController.index++);
+            tabController.animateTo(tabController.index + 1);
           },
           child: const Text('Next'),
         ).animate().slideIn(200),

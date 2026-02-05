@@ -16,11 +16,12 @@ extension CustomAnimatedDialogExt on BuildContext {
       context: this,
       // barrierDismissible: isDismissable,
       builder: (BuildContext context) {
+        final h = context.height;
         return SafeArea(
           child: BackdropFilter(
             filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
             child: Container(
-              margin: margin ?? EdgeInsets.only(top: context.height * .1),
+              margin: margin ?? EdgeInsets.only(top: h * .1),
               padding: const EdgeInsets.all(6),
               decoration: BoxDecoration(
                 color: Colors.white,
@@ -34,7 +35,7 @@ extension CustomAnimatedDialogExt on BuildContext {
             ),
           ),
         ).animate().slideY(
-              begin: height,
+              begin: h,
               end: 0,
               duration: 200.ms,
               curve: Curves.easeInToLinear,
@@ -54,14 +55,15 @@ extension CustomAnimatedDialogExt on BuildContext {
       context: this,
       androidBarrierDismissible: isDismissable,
       builder: (BuildContext context) {
+        final h = context.height;
         return SafeArea(
           child: BackdropFilter(
             filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
             child: Container(
               margin: margin ??
                   EdgeInsets.only(
-                    top: height * .15,
-                    bottom: height * .15,
+                    top: h * .15,
+                    bottom: h * .15,
                     right: 10,
                     left: 10,
                   ),
@@ -77,7 +79,7 @@ extension CustomAnimatedDialogExt on BuildContext {
             ),
           ),
         ).animate().slideY(
-              begin: height,
+              begin: h,
               end: 0,
               duration: 200.ms,
               curve: Curves.easeInToLinear,

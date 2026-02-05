@@ -32,52 +32,50 @@ class EESUpoolsTypeView extends StatelessWidget {
       child: BlocConsumer<EESUpoolTypeViewBloc, EESUpoolTypeViewState>(
         listener: (context, state) {},
         builder: (context, state) {
-          return Scaffold(
-            backgroundColor: Colors.transparent,
-            body: () {
-              if (state is EESUpoolTypeViewLoading) {
-                return const FullScreenLoadingShimmer();
-              }
-              if (state is EESUpoolsTypeViewLoaded) {
-                return Column(
-                  children: [
-                    if (showTopActions)
-                      _TypeHeader(
-                        type: type,
-                        key: const Key('value'),
-                        kasiPoolsCount: state.kasiPoolsCount,
+          if (state is EESUpoolTypeViewLoading) {
+            return const FullScreenLoadingShimmer();
+          }
+          if (state is EESUpoolsTypeViewLoaded) {
+            return Column(
+              children: [
+                if (showTopActions)
+                  _TypeHeader(
+                    type: type,
+                    key: const Key('value'),
+                    kasiPoolsCount: state.kasiPoolsCount,
+                  ),
+                if (state.eesupools.isEmpty)
+                  Expanded(
+                    child: Center(
+                      child: FullScreenError(
+                        isError: false,
+                        exception: EESUpException(
+                            message: 'Oops!! nothing to show here'),
                       ),
-                    if (state.eesupools.isEmpty)
-                      Padding(
-                        padding: const EdgeInsets.only(top: 350),
-                        child: FullScreenError(
-                          isError: false,
-                          exception: EESUpException(
-                              message: 'Oops!! nothing to show here'),
-                        ),
-                      )
-                    else
-                      Expanded(
-                        child: ListView.builder(
-                          padding: const EdgeInsets.only(bottom: 300),
-                          itemCount: state.eesupools.length,
-                          itemBuilder: (context, index) {
-                            final pool = state.eesupools[index];
-                            return EESUpoolCard(eesupool: pool)
-                                .animate()
-                                .slideIn((index + 1) * 50);
-                          },
-                        ),
-                      ),
-                  ],
-                );
-              }
+                    ),
+                  )
+                else
+                  Expanded(
+                    child: ListView.builder(
+                      padding: const EdgeInsets.only(bottom: 300),
+                      itemCount: state.eesupools.length,
+                      itemBuilder: (context, index) {
+                        final pool = state.eesupools[index];
+                        return EESUpoolCard(eesupool: pool)
+                            .animate()
+                            .slideIn((index + 1) * 50);
+                      },
+                    ),
+                  ),
+              ],
+            );
+          }
 
-              if (state is EESUpoolTypeViewError) {
-                return FullScreenError(exception: state.exception);
-              }
-            }(),
-          );
+          if (state is EESUpoolTypeViewError) {
+            return FullScreenError(exception: state.exception);
+          }
+
+          return const SizedBox.shrink();
         },
       ),
     );
@@ -98,39 +96,33 @@ class _TypeHeader extends StatelessWidget {
     return Container(
       width: context.width,
       color: Colors.white,
-      padding: const EdgeInsets.only(left: 15, right: 15),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+      padding: const EdgeInsets.only(left: 15, right: 15, bottom: 10),
+      child: Row(
         children: [
-          Row(
-            children: [
-              _EESUpoolTypeViewActionBtn(
-                isEnabled: type != EESUpoolType.kasi,
-                label: 'Create',
-                onPressed: () {
-                  context.router
-                      .push(CreateEESUpoolRoute(type: type))
-                      .whenComplete(() {
-                    context
-                        .read<EESUpoolTypeViewBloc>()
-                        .add(EESUpoolsTypeViewFetched(type));
-                  });
-                },
-              ),
-              20.sW,
-              _EESUpoolTypeViewActionBtn(
-                label: 'Search',
-                onPressed: () {
-                  context.router
-                      .push(EESUpoolSearchRoute(type: type))
-                      .whenComplete(() {
-                    context
-                        .read<EESUpoolTypeViewBloc>()
-                        .add(EESUpoolsTypeViewFetched(type));
-                  });
-                },
-              ),
-            ],
+          _EESUpoolTypeViewActionBtn(
+            label: 'Create',
+            onPressed: () {
+              context.router
+                  .push(CreateEESUpoolRoute(type: type))
+                  .whenComplete(() {
+                context
+                    .read<EESUpoolTypeViewBloc>()
+                    .add(EESUpoolsTypeViewFetched(type));
+              });
+            },
+          ),
+          20.sW,
+          _EESUpoolTypeViewActionBtn(
+            label: 'Search',
+            onPressed: () {
+              context.router
+                  .push(EESUpoolSearchRoute(type: type))
+                  .whenComplete(() {
+                context
+                    .read<EESUpoolTypeViewBloc>()
+                    .add(EESUpoolsTypeViewFetched(type));
+              });
+            },
           ),
         ],
       ),
@@ -142,33 +134,30 @@ class _EESUpoolTypeViewActionBtn extends StatelessWidget {
   const _EESUpoolTypeViewActionBtn({
     required this.label,
     required this.onPressed,
-    this.isEnabled = true,
   });
   final String label;
-  final bool isEnabled;
   final void Function() onPressed;
 
   @override
   Widget build(BuildContext context) {
     return Expanded(
-      child: InkWell(
-        onTap: !isEnabled ? null : onPressed,
-        child: Opacity(
-          opacity: isEnabled ? 1 : .3,
-          child: Container(
-            margin: const EdgeInsets.only(top: 10),
-            padding: const EdgeInsets.only(left: 15, right: 15),
-            height: 40,
-            decoration: BoxDecoration(
-              border: Border.all(color: Colors.grey.shade400, width: 1),
-              borderRadius: BorderRadius.circular(8),
-            ),
-            child: Center(
-              child: Text(
-                label,
-                style: context.textTheme.labelSmall?.copyWith(
-                  fontSize: 13,
-                ),
+      child: GestureDetector(
+        behavior: HitTestBehavior.opaque,
+        onTap: onPressed,
+        child: Container(
+          margin: const EdgeInsets.only(top: 10),
+          padding: const EdgeInsets.only(left: 15, right: 15),
+          height: 40,
+          decoration: BoxDecoration(
+            color: Colors.white,
+            border: Border.all(color: Colors.grey.shade400, width: 1),
+            borderRadius: BorderRadius.circular(8),
+          ),
+          child: Center(
+            child: Text(
+              label,
+              style: context.textTheme.labelSmall?.copyWith(
+                fontSize: 13,
               ),
             ),
           ),

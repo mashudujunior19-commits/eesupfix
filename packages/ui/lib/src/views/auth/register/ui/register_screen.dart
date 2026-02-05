@@ -132,7 +132,7 @@ class _RegisterScreenState extends State<RegisterScreen>
                   .then((value) {
                 ///THIS RETURNS TRUE IF OTP AUTH IS SUCCESS
                 if (value == true) {
-                  _tabController.animateTo(_tabController.index++);
+                  _tabController.animateTo(_tabController.index + 1);
                 } else {
                   context.snackBarError('Otp verification failed');
                 }

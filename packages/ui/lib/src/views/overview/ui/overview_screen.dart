@@ -215,58 +215,6 @@ class _OverviewScreenState extends State<OverviewScreen>
                 }
               },
             ),
-            //
-
-            //
-            // BlocListener<VersionControlBloc, VersionControlState>(
-            //   listener: (context, state) {
-            //     if (state is VersionOutdated) {
-            //       WidgetsBinding.instance.addPostFrameCallback((_) {
-            //         showDialog(
-            //           context: context,
-            //           builder: (context) => AlertDialog(
-            //             title: const Text('Update Available'),
-            //             content: const Text(
-            //                 'A new version of the app is available. Please update to the latest version.'),
-            //             actions: [
-            //               TextButton(
-            //                 onPressed: () async {
-            //                   Uri appUri = Uri.parse(
-            //                       "https://play.google.com/store/apps/details?id=com.eesup.mobile");
-
-            //                   // Simply try to launch the URI. Let the system handle it.
-            //                   try {
-            //                     await _launchURL(appUri);
-            //                   } catch (error) {
-            //                     debugPrint("Error launching URL: $error");
-            //                   }
-
-            //                   Navigator.pop(context);
-            //                 },
-            //                 child: const Text('Update Now'),
-            //               ),
-            //               TextButton(
-            //                 onPressed: () {
-            //                   Navigator.pop(context);
-            //                 },
-            //                 style: TextButton.styleFrom(
-            //                   foregroundColor: Colors.red,
-            //                   padding: const EdgeInsets.symmetric(
-            //                       horizontal: 16, vertical: 8),
-            //                   shape: RoundedRectangleBorder(
-            //                     borderRadius: BorderRadius.circular(8),
-            //                   ),
-            //                 ),
-            //                 child: const Text('Later'),
-            //               ),
-            //             ],
-            //           ),
-            //         );
-            //       });
-            //     }
-            //   },
-            // ),
-            //
           ],
           child: BlocBuilder<ProfileBloc, ProfileState>(
             builder: (context, state) {

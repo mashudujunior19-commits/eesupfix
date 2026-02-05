@@ -1,5 +1,6 @@
 import 'package:data/eesupools/models/eesupool_type.dart';
 import 'package:ui/src/core/extensions/context_theme_ext.dart';
+import 'package:ui/src/core/extensions/sizedbox_ext.dart';
 import 'package:ui/src/views/eesupools/ui/eesupool_type_view.dart';
 import 'package:ui/src/views/finances/wallets/ui/screens/wallets_tab.dart';
 import 'package:ui/src/views/kasipreneur/ui/kasipreneur_tab.dart';
@@ -13,12 +14,13 @@ class MyKasiShop extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    return Scaffold(
       backgroundColor: Colors.transparent,
       body: DefaultTabController(
         length: 5,
         child: Column(
           children: [
+            50.sH,
             _TabBar(),
             Expanded(
               child: TabBarView(

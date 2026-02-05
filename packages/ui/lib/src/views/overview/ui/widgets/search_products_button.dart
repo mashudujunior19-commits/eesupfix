@@ -18,7 +18,7 @@ class SearchProductsButton extends StatelessWidget {
       child: Container(
         width: MediaQuery.sizeOf(context).width,
         height: 45,
-        margin: const EdgeInsets.only(right: 15, left: 15, top: 60),
+        margin: const EdgeInsets.only(right: 15, left: 15, top: 120),
         padding: const EdgeInsets.only(left: 15, right: 15),
         decoration: BoxDecoration(
           color: Colors.grey.shade200.withOpacity(.5),

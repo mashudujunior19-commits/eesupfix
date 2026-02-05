@@ -139,7 +139,7 @@ class CredentialsForm extends StatelessWidget {
 
             if (!isValidPassword) {
               context.snackBarError(
-                'Your password must meet all the requirments.',
+                'Your password must meet all the requirements.',
               );
               return;
             }

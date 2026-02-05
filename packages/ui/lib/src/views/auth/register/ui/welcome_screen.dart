@@ -1,4 +1,6 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:ui/app_route.gr.dart';
 import 'package:ui/src/core/extensions/sizedbox_ext.dart';
 
 class WelcomeScreen extends StatelessWidget {
@@ -43,12 +45,7 @@ class WelcomeScreen extends StatelessWidget {
           child: ElevatedButton(
             child: const Text('Get Started'),
             onPressed: () {
-              // if (ref.read(authRepoProvider).sessionId != null) {
-              //   ref.read(profileProvider.notifier).fetchProfile();
-              //   context.pushReplacement(HomeScreen.route);
-              // } else {
-              //   context.pushReplacement(SignInScreen.route);
-              // }
+              context.router.replaceAll([const OverviewRoute()]);
             },
           ),
         ),

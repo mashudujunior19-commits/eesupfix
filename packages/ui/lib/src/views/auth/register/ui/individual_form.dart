@@ -163,11 +163,10 @@ class IndividualForm extends StatelessWidget {
             if (form.idNumber == null && form.dob == null) {
               if (form.isRSACitizen) {
                 context.snackBarError(
-                    "Please provider your South African ID number.");
+                    "Please provide your South African ID number.");
                 return;
               } else {
-                context.snackBarError(
-                    "Please provider your South African ID number.");
+                context.snackBarError("Please provide your date of birth.");
                 return;
               }
             }

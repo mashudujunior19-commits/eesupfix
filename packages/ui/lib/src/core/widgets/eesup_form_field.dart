@@ -25,6 +25,7 @@ class EESUpTextFormField extends StatefulWidget {
     this.isExpandalbe = false,
     this.textAlign,
     this.autoFocus = false,
+    this.validator,
   });
   final bool isRequired;
   final String? label;
@@ -46,6 +47,7 @@ class EESUpTextFormField extends StatefulWidget {
   final void Function(String)? onChanged;
   final void Function(String?)? onSubmit;
   final void Function()? onTap;
+  final String? Function(String?)? validator;
 
   @override
   State<EESUpTextFormField> createState() => _EESUpTextFormFieldState();
@@ -128,6 +130,7 @@ class _EESUpTextFormFieldState extends State<EESUpTextFormField> {
               onChanged: widget.onChanged,
               keyboardType: widget.type,
               onTap: widget.onTap,
+              validator: widget.validator,
               textAlign: widget.textAlign ?? TextAlign.start,
               style: widget.style ??
                   context.textTheme.bodySmall?.copyWith(

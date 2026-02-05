@@ -35,6 +35,7 @@ class SurveyScreen extends StatelessWidget {
                     length: 2,
                     child: Column(
                       children: [
+                        50.sH,
                         Container(
                           height: 60,
                           padding: const EdgeInsets.only(left: 5, right: 16),

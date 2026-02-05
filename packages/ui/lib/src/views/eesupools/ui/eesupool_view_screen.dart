@@ -41,6 +41,7 @@ class EESUpoolViewScreen extends StatelessWidget {
           return SizedBox(
             child: Scaffold(
               body: Container(
+                padding: const EdgeInsets.only(top: 50),
                 width: context.width,
                 height: context.height,
                 decoration: context.bgImage,

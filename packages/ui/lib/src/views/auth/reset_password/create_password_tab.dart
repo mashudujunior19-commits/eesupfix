@@ -67,9 +67,7 @@ class _CreateNewPasswordState extends State<CreateNewPasswordDialog> {
                     );
                 context.loaderOverlay.hide();
                 res.fold((l) {
-                  context.snackBarError(
-                    'New password should be different from the old password.',
-                  );
+                  context.snackBarError(l.message);
                 }, (r) {
                   if (r) {
                     context.snackBarSuccess(
@@ -79,7 +77,7 @@ class _CreateNewPasswordState extends State<CreateNewPasswordDialog> {
                     Navigator.of(context).pop();
                   } else {
                     context.snackBarError(
-                      'New password should be different from the old password.',
+                      'Failed to update password. Please try again.',
                     );
                   }
                 });
