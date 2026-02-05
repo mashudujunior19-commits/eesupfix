@@ -25,112 +25,108 @@ class SignInScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      key: const Key('sign_in_screen'),
-      child: EESUpScaffold(
-        body: BlocListener<AuthBloc, AuthBlocState>(
-          listener: (context, state) {
-            if (state is AuthLoading) {
-              context.loaderOverlay.show();
-            } else {
-              context.loaderOverlay.hide();
+    return EESUpScaffold(
+      body: BlocListener<AuthBloc, AuthBlocState>(
+        listener: (context, state) {
+          if (state is AuthLoading) {
+            context.loaderOverlay.show();
+          } else {
+            context.loaderOverlay.hide();
+          }
+
+          if (state is AuthError) {
+            context.snackBarError(state.error.message);
+          }
+
+          if (state is Authenticated) {
+            if (context.router.current.name == SignInRoute.name) {
+              context.router.replaceAll([const OverviewRoute()]);
             }
-
-            if (state is AuthError) {
-              context.snackBarError(state.error.message);
-            }
-
-            if (state is Authenticated) {
-              if (context.router.current.name == SignInRoute.name) {
-                context.router.replaceAll([const OverviewRoute()]);
-              }
-            }
-          },
-          child: BlocBuilder<AuthBloc, AuthBlocState>(
-            builder: (context, state) {
-              return BackgroundDecoration(
-                key: const Key('background_decoration'),
-                child: Center(
-                  child: ListView(
-                    padding: const EdgeInsets.only(
-                      left: 20,
-                      right: 20,
-                      top: 100,
-                      bottom: 100,
-                    ),
-                    children: [
-                      const _WelcomeMessage(),
-                      20.sH,
-                      EmailAndPhoneTabContainer(
-                        onEmailChanged: (e) {
-                          _email = e?.trim();
-                          _phone = null;
-                        },
-                        onPhoneChanged: (p) {
-                          _phone = p?.trim();
-                          _email = null;
-                        },
-                      ).animate().slideIn(100),
-                      EESUpTextFormField(
-                        key: const Key('password_text_field'),
-                        onChanged: (password) {
-                          _password = password;
-                        },
-                        isPassword: true,
-                        label: 'Password',
-                      ).animate().slideIn(150),
-                      20.sH,
-                      const _ForgotPasswordButton(
-                        key: Key('forgot_password_button'),
-                      ).animate().slideIn(150),
-                      ElevatedButton(
-                        key: const Key('sign_in_button'),
-                        child: const Text('Sign In'),
-                        onPressed: () {
-                          FocusScope.of(context).unfocus();
-                          if (_email == null && _phone == null) {
-                            context.snackBarError(
-                                'Enter an email or phone number');
-                            return;
-                          }
-
-                          if (_password.isEmpty) {
-                            context.snackBarError('Enter your password');
-                            return;
-                          }
-
-                          context
-                              .read<AuthBloc>()
-                              .add(SignInPressed(_email, _phone, _password));
-                        },
-                      ).animate().slideIn(200),
-                      20.sH,
-                      HighlightedText(
-                        'Don\'t  have an account?  Register',
-                        patterns: const ['Register'],
-                        style: context.textTheme.displayMedium!.copyWith(
-                          color: Colors.grey.shade800,
-                          fontSize: 14,
-                          fontWeight: FontWeight.w500,
-                        ),
-                        dotAll: true,
-                        highLightStyle:
-                            context.textTheme.displayMedium!.copyWith(
-                          color: context.colorScheme.primary,
-                          fontSize: 14,
-                          fontWeight: FontWeight.w500,
-                        ),
-                        textAlign: TextAlign.center,
-                        onTap: (p) {
-                          context.router.push(const RegisterRoute());
-                        },
-                      ).animate().slideIn(250)
-                    ],
+          }
+        },
+        child: BlocBuilder<AuthBloc, AuthBlocState>(
+          builder: (context, state) {
+            return BackgroundDecoration(
+              key: const Key('background_decoration'),
+              child: Center(
+                child: ListView(
+                  padding: const EdgeInsets.only(
+                    left: 20,
+                    right: 20,
+                    top: 100,
+                    bottom: 100,
                   ),
+                  children: [
+                    const _WelcomeMessage(),
+                    20.sH,
+                    EmailAndPhoneTabContainer(
+                      onEmailChanged: (e) {
+                        _email = e?.trim();
+                        _phone = null;
+                      },
+                      onPhoneChanged: (p) {
+                        _phone = p?.trim();
+                        _email = null;
+                      },
+                    ).animate().slideIn(100),
+                    EESUpTextFormField(
+                      key: const Key('password_text_field'),
+                      onChanged: (password) {
+                        _password = password;
+                      },
+                      isPassword: true,
+                      label: 'Password',
+                    ).animate().slideIn(150),
+                    20.sH,
+                    const _ForgotPasswordButton(
+                      key: Key('forgot_password_button'),
+                    ).animate().slideIn(150),
+                    ElevatedButton(
+                      key: const Key('sign_in_button'),
+                      child: const Text('Sign In'),
+                      onPressed: () {
+                        FocusScope.of(context).unfocus();
+                        if (_email == null && _phone == null) {
+                          context
+                              .snackBarError('Enter an email or phone number');
+                          return;
+                        }
+
+                        if (_password.isEmpty) {
+                          context.snackBarError('Enter your password');
+                          return;
+                        }
+
+                        context
+                            .read<AuthBloc>()
+                            .add(SignInPressed(_email, _phone, _password));
+                      },
+                    ).animate().slideIn(200),
+                    20.sH,
+                    HighlightedText(
+                      'Don\'t  have an account?  Register',
+                      patterns: const ['Register'],
+                      style: context.textTheme.displayMedium!.copyWith(
+                        color: Colors.grey.shade800,
+                        fontSize: 14,
+                        fontWeight: FontWeight.w500,
+                      ),
+                      dotAll: true,
+                      highLightStyle: context.textTheme.displayMedium!.copyWith(
+                        color: context.colorScheme.primary,
+                        fontSize: 14,
+                        fontWeight: FontWeight.w500,
+                      ),
+                      textAlign: TextAlign.center,
+                      onTap: (p) {
+                        context.router.push(const RegisterRoute());
+                      },
+                    ).animate().slideIn(250)
+                  ],
                 ),
-              );
-            },
-          ),
+              ),
+            );
+          },
         ),
       ),
     );

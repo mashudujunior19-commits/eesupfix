@@ -203,27 +203,25 @@ class MainApp extends StatelessWidget {
         ],
 
         ///This is the global loader overlay, it is used to show a loading animation
-        child: SafeArea(
-          child: GlobalLoaderOverlay(
-            useDefaultLoading: false,
-            overlayWidgetBuilder: (progress) {
-              return const _LoadingAnimation(
-                key: Key('global_loading_animation'),
-              );
+        child: GlobalLoaderOverlay(
+          useDefaultLoading: false,
+          overlayWidgetBuilder: (progress) {
+            return const _LoadingAnimation(
+              key: Key('global_loading_animation'),
+            );
+          },
+          child: BlocListener<AuthBloc, AuthBlocState>(
+            listener: (context, state) async {
+              ///This bloc listner is used to listen to the state of the auth bloc
+              ///and navigate to the appropriate screen
+              if (state is UnAuthenticated) {
+                _appRouter.replaceAll([const SignInRoute()]);
+              }
             },
-            child: BlocListener<AuthBloc, AuthBlocState>(
-              listener: (context, state) async {
-                ///This bloc listner is used to listen to the state of the auth bloc
-                ///and navigate to the appropriate screen
-                if (state is UnAuthenticated) {
-                  _appRouter.replaceAll([const SignInRoute()]);
-                }
-              },
-              child: MaterialApp.router(
-                debugShowCheckedModeBanner: false,
-                theme: theme,
-                routerConfig: _appRouter.config(),
-              ),
+            child: MaterialApp.router(
+              debugShowCheckedModeBanner: false,
+              theme: theme,
+              routerConfig: _appRouter.config(),
             ),
           ),
         ),
