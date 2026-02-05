@@ -29,7 +29,7 @@ class PartnerAppScreen extends StatelessWidget {
     return BlocProvider(
       create: (context) => ApplicationsBloc(context.read<PartnerRepository>())
         ..add(ApplicationsFetched(partner.id)),
-      child: SafeArea(
+      child: SizedBox(
         child: Scaffold(
           appBar: AppBar(
             leading: const BackButton(),

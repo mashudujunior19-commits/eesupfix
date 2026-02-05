@@ -31,7 +31,7 @@ class OrderTrackingScreen extends StatelessWidget {
         ..add(OrderLoaded(id)),
       child: BlocBuilder<OrderTrackingBloc, OrderTrackingState>(
         builder: (context, state) {
-          return SafeArea(
+          return SizedBox(
             child: Scaffold(
               appBar: AppBar(
                 leading: const BackButton(),

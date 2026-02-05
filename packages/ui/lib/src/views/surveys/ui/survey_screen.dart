@@ -18,8 +18,9 @@ class SurveyScreen extends StatelessWidget {
   const SurveyScreen({super.key});
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
+    return SizedBox(
       child: Scaffold(
+        
         body: Container(
           decoration: context.bgImage,
           height: context.height,

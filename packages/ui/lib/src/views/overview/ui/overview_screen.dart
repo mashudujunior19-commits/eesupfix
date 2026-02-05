@@ -98,7 +98,7 @@ class _OverviewScreenState extends State<OverviewScreen>
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
+    return SizedBox(
       key: const Key('shop_overview_screen'),
       child: Material(
         color: Colors.white,
@@ -372,7 +372,7 @@ class _OverviewScreenState extends State<OverviewScreen>
 
 //   @override
 //   Widget build(BuildContext context) {
-//     return SafeArea(
+//     return SizedBox(
 //       key: const Key('shop_overview_screen'),
 //       child: BlocListener<ProfileBloc, ProfileState>(
 //         listener: (context, state) {
@@ -539,7 +539,7 @@ class _OverviewScreenState extends State<OverviewScreen>
 
 //   @override
 //   Widget build(BuildContext context) {
-//     return SafeArea(
+//     return SizedBox(
 //       key: const Key('shop_overview_screen'),
 //       child: Container(
 //         decoration: context.bgImage,

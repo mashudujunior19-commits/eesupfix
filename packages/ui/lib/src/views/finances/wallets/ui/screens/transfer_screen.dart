@@ -63,7 +63,7 @@ class _TransferScreenState extends State<TransferScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
+    return SizedBox(
       child: Scaffold(
         appBar: AppBar(
           leading: const BackButton(),
@@ -305,7 +305,7 @@ class _TransferScreenState extends State<TransferScreen> {
 
 //   @override
 //   Widget build(BuildContext context) {
-//     return SafeArea(
+//     return SizedBox(
 //       child: Scaffold(
 //         appBar: AppBar(
 //           leading: const BackButton(),

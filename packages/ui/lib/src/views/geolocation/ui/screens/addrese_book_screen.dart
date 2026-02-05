@@ -21,7 +21,7 @@ class AddressBookScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
+    return SizedBox(
       child: BlocProvider(
         create: (context) => AddressesBloc(context.read<GeoRepository>())
           ..add(AddressesFetched()),

@@ -28,7 +28,7 @@ class BasketsListScreen extends StatelessWidget {
       create: (context) => BasketListBloc(
         context.read<ShoppingRepository>(),
       )..add(BasketListsFetched()),
-      child: SafeArea(
+      child: SizedBox(
         child: Scaffold(
           appBar: AppBar(
             leading: const BackButton(),

@@ -38,7 +38,7 @@ class _OzowScreenState extends State<OzowScreen> {
   OzowStatus? status;
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
+    return SizedBox(
       child: Scaffold(
         appBar: AppBar(
           automaticallyImplyLeading: false,

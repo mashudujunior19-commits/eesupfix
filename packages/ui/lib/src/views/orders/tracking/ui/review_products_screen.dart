@@ -29,7 +29,7 @@ class ReviewProductsScreen extends StatelessWidget {
         ..add(
           ReviewOrderProductsInitialized(order),
         ),
-      child: SafeArea(
+      child: SizedBox(
         child: BlocBuilder<ReviewOrderProductsBloc, ReviewOrderProductsState>(
           builder: (context, state) {
             return Scaffold(

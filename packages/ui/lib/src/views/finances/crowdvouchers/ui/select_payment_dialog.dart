@@ -10,7 +10,7 @@ class SelectPyamentMethodDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
+    return SizedBox(
       child: Container(
         margin: EdgeInsets.only(top: context.height * .5),
         padding: const EdgeInsets.all(5),

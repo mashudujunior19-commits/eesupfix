@@ -39,7 +39,7 @@ class OrderReceiverScreen extends StatelessWidget {
             ..add(OrderReceiversFetched(ids)),
       child: BlocBuilder<OrderReceiversBloc, OrderReceiversState>(
         builder: (context, state) {
-          return SafeArea(
+          return SizedBox(
             child: Scaffold(
               appBar: AppBar(
                 leading: BackButton(

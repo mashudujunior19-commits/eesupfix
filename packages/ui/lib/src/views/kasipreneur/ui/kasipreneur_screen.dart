@@ -33,7 +33,7 @@ class KasipreneurScreen extends StatelessWidget {
         create: (context) => KasipreneurViewBloc(
           context.read<EESUpreneurRepository>(),
         )..add(KasipreneurViewInitialized(eesupreneur)),
-        child: SafeArea(
+        child: SizedBox(
           child: Scaffold(
             appBar: AppBar(
               leading: const BackButton(),

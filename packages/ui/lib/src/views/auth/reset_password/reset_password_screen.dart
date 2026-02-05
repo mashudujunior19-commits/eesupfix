@@ -14,7 +14,7 @@ class ResetPasswordScreen extends StatefulWidget {
 class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
+    return SizedBox(
       child: Scaffold(
         appBar: AppBar(
           leading: const BackButton(),

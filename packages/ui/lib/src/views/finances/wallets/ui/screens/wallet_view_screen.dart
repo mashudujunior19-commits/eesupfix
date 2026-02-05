@@ -29,7 +29,7 @@ class WalletViewScreen extends StatelessWidget {
     return BlocProvider(
       create: (context) => WalletViewBloc(context.read<WalletsRepository>())
         ..add(WalletViewFetched(id)),
-      child: SafeArea(
+      child: SizedBox(
         child: Scaffold(
           body: Container(
             decoration: context.bgImage,

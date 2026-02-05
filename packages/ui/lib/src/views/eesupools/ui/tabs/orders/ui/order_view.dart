@@ -28,7 +28,7 @@ class EESUpoolOrderViewScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
+    return SizedBox(
       child: Scaffold(
         body: Container(
           decoration: context.bgImage,

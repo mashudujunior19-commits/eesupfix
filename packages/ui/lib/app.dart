@@ -132,8 +132,8 @@ class MainApp extends StatelessWidget {
   Widget build(BuildContext context) {
     ///get the correct theme based on the app type (eesup or my kasi)
     final theme = context.environment.app == AppType.eesup
-        ? EESUpLightTheme
-        : MyKasiLightTheme;
+        ? eesupLightTheme
+        : myKasiLightTheme;
 
     return MultiRepositoryProvider(
       providers: [

@@ -30,7 +30,7 @@ class CategoryScreen extends StatelessWidget {
     return BlocProvider(
       create: (context) => CategoryBloc(context.read<ShoppingRepository>())
         ..add(CategoryProductAndDescendentsFetched(category.id)),
-      child: SafeArea(
+      child: SizedBox(
         child: BlocBuilder<ProductsFilterBloc, ProductsFilterState>(
           builder: (context, state) {
             final filter = (state as CurrentProductsFilters).filter;

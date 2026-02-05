@@ -54,7 +54,7 @@ class _RegisterScreenState extends State<RegisterScreen>
         create: (context) => RegisterCubit(context.read<AuthRepository>()),
         child: BlocConsumer<RegisterCubit, RegisterForm>(
           builder: (context, state) {
-            return SafeArea(
+            return SizedBox(
               child: EESUpScaffold(
                 body: BackgroundDecoration(
                   child: Scaffold(

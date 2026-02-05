@@ -29,7 +29,7 @@ class CreateEESUpoolScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
+    return SizedBox(
       child: Scaffold(
         appBar: AppBar(
           leading: const BackButton(),

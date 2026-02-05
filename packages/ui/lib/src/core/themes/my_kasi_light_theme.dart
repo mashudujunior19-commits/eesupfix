@@ -5,8 +5,7 @@ import 'package:ui/src/core/themes/text_theme.dart';
 const _primaryOrange = Color.fromRGBO(252, 127, 3, 1);
 const _primaryGreen = Color.fromRGBO(48, 142, 88, 1);
 
-// ignore: non_constant_identifier_names
-final MyKasiLightTheme = ThemeData(
+final myKasiLightTheme = ThemeData(
   colorScheme: ColorScheme.fromSeed(
     seedColor: _primaryOrange,
     primary: _primaryOrange,

@@ -28,7 +28,7 @@ class ProductRequestScreen extends StatefulWidget {
 class _ProductRequestScreenState extends State<ProductRequestScreen> {
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
+    return SizedBox(
       child: Scaffold(
         appBar: AppBar(
           leading: const BackButton(),

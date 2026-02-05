@@ -22,7 +22,7 @@ class PartnerScreen extends StatelessWidget {
     return BlocProvider(
       create: (context) => PartnersBloc(context.read<PartnerRepository>())
         ..add(PartnersFetched(role)),
-      child: SafeArea(
+      child: SizedBox(
         child: Scaffold(
           appBar: AppBar(
             title: const Text('Available Services'),

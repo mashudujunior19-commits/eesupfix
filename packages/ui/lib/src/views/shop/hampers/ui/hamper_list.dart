@@ -18,7 +18,7 @@ class HampersList extends StatelessWidget {
     return BlocProvider(
       create: (context) =>
           HamperBloc(context.read<ShoppingRepository>())..add(FetchHampers()),
-      child: SafeArea(
+      child: SizedBox(
         child: Scaffold(
           appBar: AppBar(
             leading: const BackButton(),

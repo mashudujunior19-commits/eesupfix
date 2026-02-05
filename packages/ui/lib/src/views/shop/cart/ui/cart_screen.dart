@@ -24,7 +24,7 @@ class CartScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
+    return SizedBox(
       child: BlocBuilder<CartBloc, CartState>(
         builder: (context, state) {
           if (state is CurrentCart) {
@@ -234,7 +234,7 @@ class _EmptyCartWidget extends StatelessWidget {
 //   Product? hamperOrderProduct;
 //   @override
 //   Widget build(BuildContext context) {
-//     return SafeArea(
+//     return SizedBox(
 //       child: BlocBuilder<CartBloc, CartState>(builder: (context, state) {
 //         final cart = (state as CurrentCart);
 

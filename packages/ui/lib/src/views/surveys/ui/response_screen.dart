@@ -26,7 +26,7 @@ class ResponseScreen extends StatelessWidget {
         ..add(
           ResponseInitialized(survey),
         ),
-      child: SafeArea(
+      child: SizedBox(
         child: BlocBuilder<SurveyResponseBloc, SurveyResponseState>(
           builder: (context, state) {
             if (state is CurrentResponseSurvey) {

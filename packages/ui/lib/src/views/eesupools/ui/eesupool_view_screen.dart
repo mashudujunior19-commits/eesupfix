@@ -38,7 +38,7 @@ class EESUpoolViewScreen extends StatelessWidget {
           }
         },
         builder: (context, state) {
-          return SafeArea(
+          return SizedBox(
             child: Scaffold(
               body: Container(
                 width: context.width,

@@ -24,7 +24,7 @@ class SearchTransferBeneficiaryDialogState
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
+    return SizedBox(
       child: Container(
         margin: EdgeInsets.only(
           top: context.height * .2,

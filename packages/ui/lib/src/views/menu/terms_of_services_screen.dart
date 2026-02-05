@@ -37,7 +37,7 @@ class _TermsOfServiceScreenState extends State<TermsOfServiceScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
+    return SizedBox(
       child: DefaultTabController(
         length: 2,
         child: Scaffold(

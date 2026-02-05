@@ -52,7 +52,7 @@ class _CheckoutScreenState extends State<CheckoutScreen>
     return BlocProvider(
       create: (context) => CheckoutBloc(context.read<OrderRepository>())
         ..add(CheckoutStarted(widget.products)),
-      child: SafeArea(
+      child: SizedBox(
         child: Scaffold(
           appBar: AppBar(
             leading: BackButton(

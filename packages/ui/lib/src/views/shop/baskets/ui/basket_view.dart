@@ -39,7 +39,7 @@ class BasketViewScreen extends StatelessWidget {
         ),
         BlocProvider(create: (context) => CopyingCubit()),
       ],
-      child: SafeArea(
+      child: SizedBox(
         child: Scaffold(
           floatingActionButton: _AddProdactButton(basket: basket),
           appBar: AppBar(

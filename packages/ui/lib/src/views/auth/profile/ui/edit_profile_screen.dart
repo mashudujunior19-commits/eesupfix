@@ -25,7 +25,7 @@ class EditProfileScreen extends StatelessWidget {
         ..add(
           EditProfileInitialized(profile),
         ),
-      child: SafeArea(
+      child: SizedBox(
         child: BlocConsumer<EditProfileBloc, EditProfileState>(
           listener: (context, state) {
             if (state is EditProfileLoading) {

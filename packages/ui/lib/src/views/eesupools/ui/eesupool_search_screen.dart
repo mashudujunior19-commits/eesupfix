@@ -38,7 +38,7 @@ class _EESUpoolSearchScreenState extends State<EESUpoolSearchScreen> {
   @override
   Widget build(BuildContext context) {
     final repo = context.read<EESUpoolRepository>();
-    return SafeArea(
+    return SizedBox(
       child: Scaffold(
         appBar: AppBar(
           leading: const BackButton(),

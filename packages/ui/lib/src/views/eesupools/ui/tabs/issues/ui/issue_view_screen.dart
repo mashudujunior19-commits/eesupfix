@@ -30,7 +30,7 @@ class _IssueViewScreenState extends State<IssueViewScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
+    return SizedBox(
       child: Scaffold(
         appBar: AppBar(
           leading: const BackButton(),

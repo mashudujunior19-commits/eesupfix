@@ -77,7 +77,7 @@ class _EditAddressScreenState extends State<EditAddressScreen> {
       create: (context) => AutoCompletionBloc(),
       child: BlocBuilder<AutoCompletionBloc, AutoCompletionState>(
         builder: (context, state) {
-          return SafeArea(
+          return SizedBox(
             child: Scaffold(
               appBar: AppBar(
                 leading: BackButton(onPressed: () => Navigator.pop(context)),

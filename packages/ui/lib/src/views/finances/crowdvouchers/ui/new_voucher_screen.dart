@@ -27,7 +27,7 @@ class NewVoucherScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
+    return SizedBox(
       child: BlocProvider(
         create: (context) => CreateVoucherBloc(
           VoucherRepository(

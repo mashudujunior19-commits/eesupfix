@@ -21,7 +21,7 @@ class StartUpScreen extends StatelessWidget {
           context.router.replaceAll([const OverviewRoute()]);
         }
       },
-      child: const SafeArea(
+      child: const SizedBox(
         child: Scaffold(
           key: Key('start_up_screen'),
           body: Center(

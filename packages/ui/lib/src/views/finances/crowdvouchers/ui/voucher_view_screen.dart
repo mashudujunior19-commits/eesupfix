@@ -33,7 +33,7 @@ class VoucherViewScreen extends StatelessWidget {
         ..add(
           FetchVoucherDetailsEvent(voucherId),
         ),
-      child: SafeArea(
+      child: SizedBox(
         child: BlocListener<VoucherViewBloc, VoucherViewState>(
           listener: (context, state) {
             if (state is VoucherViewBusyState) {

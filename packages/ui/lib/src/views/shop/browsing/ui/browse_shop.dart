@@ -45,7 +45,7 @@ class BrowseShopScreen extends StatelessWidget {
               return BlocBuilder<ProductsFilterBloc, ProductsFilterState>(
                 builder: (context, filterState) {
                   final filter = (filterState as CurrentProductsFilters).filter;
-                  return SafeArea(
+                  return SizedBox(
                     child: Scaffold(
                       body: Container(
                         decoration: context.bgImage,

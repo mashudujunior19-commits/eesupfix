@@ -30,7 +30,7 @@ class EditApplicationScreen extends StatelessWidget {
       create: (context) => ApplicationSurveysBloc(
         context.read<PartnerRepository>(),
       )..add(ApplicationSurveysFetched(partner)),
-      child: SafeArea(
+      child: SizedBox(
         child: Scaffold(
           appBar: AppBar(
             leading: const BackButton(),
