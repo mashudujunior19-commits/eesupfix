@@ -89,3 +89,5 @@ dev_dependencies:
     sdk: flutter
   mockito: ^5.4.4
   dart_mappable_builder: ^4.2.3
+  bloc_test: ^10.0.0
+  mocktail: ^1.0.4
