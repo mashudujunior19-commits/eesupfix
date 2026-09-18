@@ -37,6 +37,11 @@ class MessageAttachments extends StatelessWidget {
                   image: Image.network(
                     _decrypt(mediaFiles[index].url),
                     fit: BoxFit.cover,
+                    errorBuilder: (context, error, stackTrace) => const Icon(
+                      Icons.error_outline,
+                      color: Colors.grey,
+                      size: 48,
+                    ),
                   ),
                 ),
               );

@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:data/shopping/models/category.dart';
 import 'package:ui/src/core/extensions/slide_in_animation_ext.dart';
+import 'package:ui/src/core/widgets/safe_network_image.dart';
 import 'package:ui/app_route.gr.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
@@ -52,10 +53,12 @@ class _CategoryCard extends StatelessWidget {
           leading: CircleAvatar(
             radius: 25,
             backgroundColor: colorScheme.primary.withOpacity(.1),
-            child: category.imageUrl != null
-                ? Image.network(category.imageUrl!)
-                : Image.asset('assets/images/diet.png',
-                    width: 30, color: colorScheme.primary),
+            child: SafeNetworkImage(
+              category.imageUrl,
+              width: 30,
+              placeholderAsset: 'assets/images/diet.png',
+              placeholderColor: colorScheme.primary,
+            ),
           ),
           title: Text(
             category.name,

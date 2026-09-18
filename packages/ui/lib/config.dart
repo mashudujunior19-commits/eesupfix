@@ -42,7 +42,14 @@ class AppConfig {
         );
 
     //init one signal
-    OneSignal.initialize(dotenv.env['ONESIGNAL_APP_ID'] ?? '');
+    final oneSignalAppId = dotenv.env['ONESIGNAL_APP_ID'] ?? '';
+    if (oneSignalAppId.isNotEmpty) {
+      try {
+        OneSignal.initialize(oneSignalAppId);
+      } catch (_) {
+        // Push notifications are non-critical; don't block app startup.
+      }
+    }
   }
 
   void registerInstances() {

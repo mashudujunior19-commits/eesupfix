@@ -8,6 +8,7 @@ import 'package:ui/src/views/surveys/ui/widgets/slider_scale.dart';
 import 'package:ui/src/views/surveys/ui/widgets/time_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:data/surveys/models/question.dart';
+import 'package:ui/src/core/widgets/safe_network_image.dart';
 
 ///Displays the current question in a survey.
 class CurrentQuestionView extends StatelessWidget {
@@ -35,9 +36,11 @@ class CurrentQuestionView extends StatelessWidget {
                 width: 200,
                 height: 200,
                 margin: const EdgeInsets.only(top: 10, bottom: 15),
-                child: ClipRRect(
+                child: SafeNetworkImage(
+                  question.imageUrl,
+                  width: 200,
+                  height: 200,
                   borderRadius: BorderRadius.circular(7),
-                  child: Image.network(question.imageUrl!, fit: BoxFit.cover),
                 ),
               ),
             QuestionBody(

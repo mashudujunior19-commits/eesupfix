@@ -9,6 +9,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ui/src/core/extensions/context_theme_ext.dart';
 import 'package:ui/src/core/widgets/fullscreen_error_widget.dart';
 import 'package:ui/src/core/widgets/fullscreen_loading_shimmer.dart';
+import 'package:ui/src/core/widgets/safe_network_image.dart';
 
 class OrderProductsTab extends StatelessWidget {
   const OrderProductsTab({super.key, required this.id});
@@ -79,13 +80,7 @@ class _ProductCard extends StatelessWidget {
         contentPadding: const EdgeInsets.only(left: 5),
         leading: CircleAvatar(
           backgroundColor: Colors.transparent,
-          child: product.imageUrl != null
-              ? Image.network(product.imageUrl!, width: 27)
-              : Image.asset(
-                  'assets/images/no-photo.png',
-                  width: 27,
-                  color: Colors.grey,
-                ),
+          child: SafeNetworkImage(product.imageUrl, width: 27),
         ),
         title: Text(
           product.name,

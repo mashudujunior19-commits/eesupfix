@@ -12,6 +12,7 @@ import 'package:ui/src/core/extensions/context_theme_ext.dart';
 import 'package:ui/src/core/extensions/sizedbox_ext.dart';
 import 'package:ui/src/core/widgets/fullscreen_error_widget.dart';
 import 'package:ui/src/core/widgets/fullscreen_loading_shimmer.dart';
+import 'package:ui/src/core/widgets/safe_network_image.dart';
 import 'package:ui/src/views/shop/baskets/ui/basket_selection_dialog.dart';
 import 'package:ui/src/views/shop/browsing/ui/product_card.dart';
 import 'package:ui/src/views/shop/cart/ui/cart_button.dart';
@@ -134,18 +135,13 @@ class _ProductInformation extends StatelessWidget {
             margin: const EdgeInsets.only(bottom: 20),
             height: 250,
             child: Center(
-              child: product.imageUrl != null
-                  ? Image(
-                      image: NetworkImage(
-                        product.imageUrl!,
-                      ),
-                    )
-                  : Image.asset(
-                      'assets/images/no-photo.png',
-                      fit: BoxFit.contain,
-                      color: Colors.grey.shade200,
-                      width: 150,
-                    ),
+              child: SafeNetworkImage(
+                product.imageUrl,
+                width: 150,
+                height: 250,
+                fit: BoxFit.contain,
+                placeholderColor: Colors.grey.shade200,
+              ),
             ),
           ),
           Text(product.name),

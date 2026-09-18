@@ -3,6 +3,7 @@ import 'package:data/orders/models/order_product.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:ui/src/core/extensions/sizedbox_ext.dart';
+import 'package:ui/src/core/widgets/safe_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:ui/src/views/shop/cart/bloc/cart_bloc.dart';
 
@@ -84,12 +85,10 @@ class OrdProducts extends StatelessWidget {
                         ),
                       ),
                       child: SizedBox(
-                        child: order.products[index].imageUrl != null
-                            ? Image.network(
-                                order.products[index].imageUrl!,
-                                fit: BoxFit.cover,
-                              )
-                            : Image.asset('assets/images/no-photo.png'),
+                        child: SafeNetworkImage(
+                          order.products[index].imageUrl,
+                          fit: BoxFit.cover,
+                        ),
                       ),
                     ),
                   ),

@@ -11,6 +11,7 @@ import 'package:ui/src/core/extensions/sizedbox_ext.dart';
 import 'package:ui/src/core/extensions/slide_in_animation_ext.dart';
 import 'package:ui/src/core/widgets/fullscreen_error_widget.dart';
 import 'package:ui/src/core/widgets/fullscreen_loading_shimmer.dart';
+import 'package:ui/src/core/widgets/safe_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:ui/src/views/shop/baskets/bloc/basket_list_bloc.dart';
@@ -105,10 +106,7 @@ class _ProductPreview extends StatelessWidget {
         contentPadding: const EdgeInsets.only(left: 5, right: 5),
         leading: CircleAvatar(
           backgroundColor: Colors.transparent,
-          child: product.imageUrl != null
-              ? Image.network(product.imageUrl!, width: 27)
-              : Image.asset('assets/images/no-photo.png',
-                  width: 27, color: Colors.grey),
+          child: SafeNetworkImage(product.imageUrl, width: 27),
         ),
         title: Text(
           product.name,

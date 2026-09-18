@@ -7,6 +7,7 @@ import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:ui/src/core/extensions/bottom_sheet_context_ext.dart';
 import 'package:ui/src/core/extensions/context_theme_ext.dart';
 import 'package:ui/src/core/utils/date_formatter.dart';
+import 'package:ui/src/core/widgets/safe_network_image.dart';
 import 'package:ui/src/views/eesupools/ui/tabs/chats/ui/widgets/message_bubble.dart';
 import 'package:ui/src/views/eesupools/ui/tabs/members/ui/member_settings.dart';
 
@@ -192,11 +193,10 @@ class _IssueViewScreenState extends State<IssueViewScreen> {
                     padding: const EdgeInsets.only(right: 10),
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(10),
-                      child: Image.network(
+                      child: SafeNetworkImage(
                         media.url,
                         width: 100,
                         height: 100,
-                        fit: BoxFit.cover,
                       ),
                     ),
                   );

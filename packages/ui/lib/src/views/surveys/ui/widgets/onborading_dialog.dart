@@ -1,6 +1,7 @@
 import 'package:data/surveys/models/survey.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
+import 'package:ui/src/core/widgets/safe_network_image.dart';
 
 class SurveyOnbordingDialog extends StatelessWidget {
   const SurveyOnbordingDialog({super.key, required this.survey});
@@ -65,9 +66,10 @@ class SurveyOnbordingDialog extends StatelessWidget {
                       bottom: 15,
                     ),
                     height: 300,
-                    child: ClipRRect(
+                    child: SafeNetworkImage(
+                      survey.imageUrl,
+                      height: 300,
                       borderRadius: BorderRadius.circular(10),
-                      child: Image.network(survey.imageUrl ?? ''),
                     ),
                   ),
                 if (survey.description != null)

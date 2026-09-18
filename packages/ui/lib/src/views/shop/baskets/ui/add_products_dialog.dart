@@ -6,6 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ui/src/core/extensions/context_alerts_ext.dart';
 import 'package:ui/src/core/extensions/slide_in_animation_ext.dart';
 import 'package:ui/src/core/widgets/eesup_form_field.dart';
+import 'package:ui/src/core/widgets/safe_network_image.dart';
 import 'package:ui/src/views/eesupools/ui/tabs/chats/ui/widgets/animated_reaction_btn.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
@@ -83,10 +84,7 @@ class _ProductCard extends StatelessWidget {
         contentPadding: const EdgeInsets.only(left: 5),
         leading: CircleAvatar(
           backgroundColor: Colors.transparent,
-          child: product.imageUrl != null
-              ? Image.network(product.imageUrl!, width: 27)
-              : Image.asset('assets/images/no-photo.png',
-                  width: 27, color: Colors.grey),
+          child: SafeNetworkImage(product.imageUrl, width: 27),
         ),
         title: Text(
           product.name,

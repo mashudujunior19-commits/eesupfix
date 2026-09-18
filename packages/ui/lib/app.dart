@@ -222,6 +222,18 @@ class MainApp extends StatelessWidget {
               debugShowCheckedModeBanner: false,
               theme: theme,
               routerConfig: _appRouter.config(),
+              builder: (context, child) {
+                final mediaQuery = MediaQuery.of(context);
+                return MediaQuery(
+                  data: mediaQuery.copyWith(
+                    textScaler: mediaQuery.textScaler.clamp(
+                      minScaleFactor: 0.9,
+                      maxScaleFactor: 1.2,
+                    ),
+                  ),
+                  child: child!,
+                );
+              },
             ),
           ),
         ),

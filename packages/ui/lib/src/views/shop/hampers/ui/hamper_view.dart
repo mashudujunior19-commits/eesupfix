@@ -312,6 +312,8 @@ class _HamperViewPageState extends State<HamperViewPage> {
                 height: 50,
                 width: 100,
                 fit: BoxFit.contain,
+                errorBuilder: (context, error, stackTrace) =>
+                    const SizedBox.shrink(),
               ),
             ),
 
@@ -325,6 +327,8 @@ class _HamperViewPageState extends State<HamperViewPage> {
                 height: 75,
                 width: 140,
                 fit: BoxFit.contain,
+                errorBuilder: (context, error, stackTrace) =>
+                    const SizedBox.shrink(),
               ),
             ),
         ],
@@ -395,6 +399,9 @@ class _ProductItemCard extends StatelessWidget {
               radius: 30,
               backgroundImage: productDetail.imageUrl.isNotEmpty
                   ? NetworkImage(productDetail.imageUrl)
+                  : null,
+              onBackgroundImageError: productDetail.imageUrl.isNotEmpty
+                  ? (exception, stackTrace) {}
                   : null,
               child: productDetail.imageUrl.isNotEmpty
                   ? null

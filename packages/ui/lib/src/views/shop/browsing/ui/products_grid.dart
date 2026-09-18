@@ -5,6 +5,7 @@ import 'package:data/shopping/models/product_filter.dart';
 import 'package:ui/src/core/extensions/context_theme_ext.dart';
 import 'package:ui/src/core/extensions/sizedbox_ext.dart';
 import 'package:ui/src/core/extensions/slide_in_animation_ext.dart';
+import 'package:ui/src/core/responsive/breakpoints.dart';
 import 'package:ui/app_route.gr.dart';
 import 'package:ui/src/views/shop/browsing/ui/product_card.dart';
 import 'package:flutter/material.dart';
@@ -45,7 +46,7 @@ class ProductsGridView extends StatelessWidget {
     final sortedProducts = orderedProducts(filter);
     return GridView.count(
       shrinkWrap: true,
-      crossAxisCount: 2,
+      crossAxisCount: context.gridColumns(),
       childAspectRatio: 0.71,
       crossAxisSpacing: 10,
       mainAxisSpacing: 10,

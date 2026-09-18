@@ -11,6 +11,7 @@ import 'package:ui/src/core/extensions/sizedbox_ext.dart';
 import 'package:ui/src/core/extensions/slide_in_animation_ext.dart';
 import 'package:ui/src/core/widgets/fullscreen_error_widget.dart';
 import 'package:ui/src/core/widgets/fullscreen_loading_shimmer.dart';
+import 'package:ui/src/core/widgets/safe_network_image.dart';
 import 'package:ui/src/views/shop/baskets/bloc/basket_view_bloc.dart';
 import 'package:ui/src/views/shop/baskets/cubit/copying_cubit.dart';
 import 'package:ui/src/views/shop/baskets/ui/add_products_dialog.dart';
@@ -415,10 +416,8 @@ class _BasketProductCard extends StatelessWidget {
                     contentPadding: const EdgeInsets.only(left: 5),
                     leading: CircleAvatar(
                       backgroundColor: Colors.transparent,
-                      child: basketProduct.imageUrl != null
-                          ? Image.network(basketProduct.imageUrl!, width: 27)
-                          : Image.asset('assets/images/no-photo.png',
-                              width: 27, color: Colors.grey),
+                      child: SafeNetworkImage(basketProduct.imageUrl,
+                          width: 27),
                     ),
                     title: Text(
                       basketProduct.name,
