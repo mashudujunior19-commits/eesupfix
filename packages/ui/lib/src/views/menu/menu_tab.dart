@@ -1,7 +1,10 @@
 // ignore_for_file: unused_element
 import 'package:auto_route/auto_route.dart';
 import 'package:bootstrap_icons/bootstrap_icons.dart';
+import 'package:data/auth/models/user_role.dart';
 import 'package:data/auth/repository/profile_repository.dart';
+import 'package:ui/src/core/extensions/bottom_sheet_context_ext.dart';
+import 'package:ui/src/core/extensions/context_alerts_ext.dart';
 import 'package:ui/src/views/auth/profile/bloc/profile_bloc.dart';
 import 'package:ui/src/views/auth/sign_in/bloc/auth_bloc.dart';
 import 'package:ui/src/core/extensions/context_theme_ext.dart';
@@ -9,6 +12,7 @@ import 'package:ui/app_route.gr.dart';
 import 'package:ui/src/core/extensions/sizedbox_ext.dart';
 import 'package:ui/src/core/widgets/fullscreen_error_widget.dart';
 import 'package:ui/src/core/widgets/fullscreen_loading_shimmer.dart';
+import 'package:ui/src/views/menu/get_involved_sheet.dart';
 import 'package:ui/src/views/menu/profile_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -102,7 +106,21 @@ class _MenuTabState extends State<MenuTab> {
                       label: 'Get Involved',
                       icon: IconlyLight.work,
                       onTap: () {
-                        context.router.push(PartnerRoute(role: profile.role));
+                        final isVerifiedIndividual = profile.isVerified &&
+                            profile.role == UserRole.Ubuntunist;
+                        if (!isVerifiedIndividual) {
+                          context.snackBarError(
+                            profile.role != UserRole.Ubuntunist
+                                ? 'This is only available to Individual accounts.'
+                                : 'Please complete verification (add your '
+                                    'RSA ID and a primary address) before '
+                                    'you can get involved.',
+                          );
+                          return;
+                        }
+                        context.showBottomSheetDialog(
+                          child: GetInvolvedSheet(role: profile.role),
+                        );
                       },
                     ),
                     _MenuButton(

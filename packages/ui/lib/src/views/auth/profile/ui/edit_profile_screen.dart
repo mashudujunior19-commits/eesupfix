@@ -7,7 +7,7 @@ import 'package:ui/src/views/auth/profile/bloc/edit_profile_bloc.dart';
 import 'package:ui/src/core/extensions/bg_image_deco_ext.dart';
 import 'package:ui/src/core/extensions/context_theme_ext.dart';
 import 'package:ui/src/core/extensions/sizedbox_ext.dart';
-import 'package:ui/src//core/widgets/eesup_form_field.dart';
+import 'package:ui/src/core/widgets/eesup_form_field.dart';
 import 'package:ui/src/core/widgets/eesup_phone_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

@@ -73,6 +73,8 @@ import 'package:ui/src/views/orders/tracking/ui/order_tracking_screen.dart'
     as _i25;
 import 'package:ui/src/views/orders/tracking/ui/review_products_screen.dart'
     as _i36;
+import 'package:ui/src/views/organisation/ui/organisation_registration_screen.dart'
+    as _i69;
 import 'package:ui/src/views/overview/ui/overview_screen.dart' as _i26;
 import 'package:ui/src/views/partners/ui/edit_application.dart' as _i14;
 import 'package:ui/src/views/partners/ui/partner_apps_screen.dart' as _i28;
@@ -1099,6 +1101,22 @@ class OrderTrackingRouteArgs {
   String toString() {
     return 'OrderTrackingRouteArgs{key: $key, id: $id, privilage: $privilage}';
   }
+}
+
+/// generated route for
+/// [_i69.OrganisationRegistrationScreen]
+class OrganisationRegistrationRoute extends _i48.PageRouteInfo<void> {
+  const OrganisationRegistrationRoute({List<_i48.PageRouteInfo>? children})
+    : super(OrganisationRegistrationRoute.name, initialChildren: children);
+
+  static const String name = 'OrganisationRegistrationRoute';
+
+  static _i48.PageInfo page = _i48.PageInfo(
+    name,
+    builder: (data) {
+      return const _i69.OrganisationRegistrationScreen();
+    },
+  );
 }
 
 /// generated route for

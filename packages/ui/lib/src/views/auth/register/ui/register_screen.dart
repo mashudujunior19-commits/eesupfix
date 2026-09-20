@@ -9,11 +9,9 @@ import 'package:ui/src/core/widgets/eesup_scaffold.dart';
 import 'package:ui/src/views/auth/otp_auth/ui/otp_auth_dialog.dart';
 import 'package:ui/src/views/auth/register/cubit/register_cubit.dart';
 import 'package:ui/src/views/auth/register/cubit/register_form.dart';
-import 'package:ui/src/views/auth/register/ui/corporate_form.dart';
 import 'package:ui/src/views/auth/register/ui/credentials_form.dart';
 import 'package:ui/src/views/auth/register/ui/individual_form.dart';
 import 'package:ui/src/views/auth/register/ui/referral_code_form.dart';
-import 'package:ui/src/views/auth/register/ui/select_account_type.dart';
 import 'package:ui/src/views/auth/register/ui/welcome_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -35,7 +33,7 @@ class _RegisterScreenState extends State<RegisterScreen>
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: 5, vsync: this);
+    _tabController = TabController(length: 4, vsync: this);
 
     _tabController.addListener(() {
       setState(() {});
@@ -69,7 +67,7 @@ class _RegisterScreenState extends State<RegisterScreen>
                       automaticallyImplyLeading: false,
                       backgroundColor: Colors.transparent,
                       //Hide Back button on the welcome tab
-                      leading: _tabController.index != 4
+                      leading: _tabController.index != 3
                           ? BackButton(onPressed: () {
                               if (_tabController.index == 0) {
                                 Navigator.of(context).pop();
@@ -79,7 +77,7 @@ class _RegisterScreenState extends State<RegisterScreen>
                               }
                             })
                           : null,
-                      title: _tabController.index != 4
+                      title: _tabController.index != 3
                           ? const Text('Sign up')
                           : null,
                     ),
@@ -87,17 +85,10 @@ class _RegisterScreenState extends State<RegisterScreen>
                       physics: const NeverScrollableScrollPhysics(),
                       controller: _tabController,
                       children: [
-                        SelectAccountType(tabController: _tabController),
-                        if (state.isCorp)
-                          CorporateForm(
-                            tabController: _tabController,
-                            form: state,
-                          )
-                        else
-                          IndividualForm(
-                            tabController: _tabController,
-                            form: state,
-                          ),
+                        IndividualForm(
+                          tabController: _tabController,
+                          form: state,
+                        ),
                         CredentialsForm(
                           form: state,
                           tabController: _tabController,

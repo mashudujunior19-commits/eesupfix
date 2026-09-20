@@ -14,6 +14,8 @@ import 'package:data/notifications/repository/notification_repository.dart';
 import 'package:data/notifications/repository/survey_repository.dart';
 import 'package:data/orders/data_source/orders_supabase_impl.dart';
 import 'package:data/orders/repository/order_repository.dart';
+import 'package:data/organisation/data_source/organisation_supabase_impl.dart';
+import 'package:data/organisation/repository/organisation_repository.dart';
 import 'package:data/partners/data_source/partner_supabase_impl.dart';
 import 'package:data/partners/repository/partner_repository.dart';
 import 'package:data/shopping/data_source/shopping_supabase_impl.dart';
@@ -114,6 +116,15 @@ class MainApp extends StatelessWidget {
     ),
   );
 
+  final _organisationRepository = RepositoryProvider(
+    create: (context) => OrganisationRepository(
+      authRepository: context.read<AuthRepository>(),
+      dataSource: OrganisationSupabaseImpl(
+        client: GetIt.I.get<SupabaseClient>(),
+      ),
+    ),
+  );
+
   final _surveysRepository = RepositoryProvider(
     create: (context) => SurveyRepository(
       SurveySupabaseImpl(GetIt.I.get<SupabaseClient>()),
@@ -147,7 +158,8 @@ class MainApp extends StatelessWidget {
         _paymentGatewayRepo,
         _partnerRepository,
         _surveysRepository,
-        _notificationRepo
+        _notificationRepo,
+        _organisationRepository,
       ],
       child: MultiBlocProvider(
         providers: [
