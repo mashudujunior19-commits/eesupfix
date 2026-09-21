@@ -19,6 +19,7 @@ import 'package:ui/src/views/overview/ui/widgets/overview_categories.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:shimmer/shimmer.dart';
 
 class OverviewTab extends StatelessWidget {
@@ -40,9 +41,9 @@ class OverviewTab extends StatelessWidget {
                 centerTitle: true,
                 automaticallyImplyLeading: false,
                 leading: const NotificationButton(),
-                title: Image(
+                title: SvgPicture.asset(
+                  'assets/images/logo.svg',
                   width: context.environment.app == AppType.eesup ? 80 : 45,
-                  image: const AssetImage('assets/images/logo.png'),
                 ),
                 actions: const [CartButton()],
                 flexibleSpace: const SearchProductsButton(),

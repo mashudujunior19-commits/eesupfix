@@ -13,6 +13,7 @@ import 'package:flutter_highlighted_text/flutter_highlighted_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:loader_overlay/loader_overlay.dart';
 
 @RoutePage()
@@ -188,14 +189,14 @@ class _WelcomeMessage extends StatelessWidget {
       children: [
         SizedBox(
           height: 30,
-          child: Image.asset(
-            'assets/images/logo.png',
+          child: SvgPicture.asset(
+            'assets/images/logo.svg',
             alignment: Alignment.center,
           ),
         ).animate().slideIn(0),
         15.sH,
         Text(
-          'Welcome back!',
+          'Welcome',
           textAlign: TextAlign.center,
           style: context.textTheme.displayMedium,
         ).animate().slideIn(50),

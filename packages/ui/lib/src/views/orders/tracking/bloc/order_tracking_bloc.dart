@@ -47,7 +47,7 @@ class OrderTrackingBloc extends Bloc<OrderTrackingEvent, OrderTrackingState> {
           await _getBytesFromAssetImage('assets/images/logo.png', 60, 25);
       final bytes = await _generatePDF(event.order, logo);
       final file = await _saveFileInFolder(
-          '${event.order.id}_invoice.pdf', bytes, 'EESUp');
+          '${event.order.id}_invoice.pdf', bytes, 'TOWRIS');
       print(file);
     });
   }

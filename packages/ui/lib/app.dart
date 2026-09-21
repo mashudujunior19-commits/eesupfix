@@ -4,6 +4,8 @@ import 'package:data/auth/repository/auth_repository.dart';
 import 'package:data/auth/repository/profile_repository.dart';
 import 'package:data/eesupools/data_source/eesupool_supabase_impl.dart';
 import 'package:data/eesupools/repository/eesupool_repo.dart';
+import 'package:data/get_involved/data_source/get_involved_supabase_impl.dart';
+import 'package:data/get_involved/repository/get_involved_repository.dart';
 import 'package:data/finance/data_source/wallet_supabase_impl.dart';
 import 'package:data/finance/repository/payment_gateway_repository.dart';
 import 'package:data/finance/repository/wallets_repository.dart';
@@ -125,6 +127,15 @@ class MainApp extends StatelessWidget {
     ),
   );
 
+  final _getInvolvedRepository = RepositoryProvider(
+    create: (context) => GetInvolvedRepository(
+      authRepository: context.read<AuthRepository>(),
+      dataSource: GetInvolvedSupabaseImpl(
+        client: GetIt.I.get<SupabaseClient>(),
+      ),
+    ),
+  );
+
   final _surveysRepository = RepositoryProvider(
     create: (context) => SurveyRepository(
       SurveySupabaseImpl(GetIt.I.get<SupabaseClient>()),
@@ -160,6 +171,7 @@ class MainApp extends StatelessWidget {
         _surveysRepository,
         _notificationRepo,
         _organisationRepository,
+        _getInvolvedRepository,
       ],
       child: MultiBlocProvider(
         providers: [

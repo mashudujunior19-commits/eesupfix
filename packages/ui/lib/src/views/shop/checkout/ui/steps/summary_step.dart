@@ -47,7 +47,7 @@ class SummaryStep extends StatelessWidget {
               reference: state.response.orderId!,
               amount: state.response.outstandingAmount,
               type: "Order",
-              bankRef: "${state.response.orderId} EESUp",
+              bankRef: "${state.response.orderId} TOWRIS",
             ))
                 .then((value) {
               if (value == true) {
@@ -284,7 +284,7 @@ class SummaryStep extends StatelessWidget {
       mTridentAllowed: false,
       mTxDueDate: formatter.format(DateTime.now()),
       mMessage: 'Payment for order ${response.orderId}',
-      mSiteName: 'EESUp',
+      mSiteName: 'TOWRIS',
       mReturnUrl: successUrl,
       mBack2shopUrl: failedUrl,
       mNotifyUrl: notifyUrl,

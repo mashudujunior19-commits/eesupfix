@@ -85,7 +85,7 @@ body {
         <input type="hidden" name="b_name" value="John">
         <input type="hidden" name="b_surname" value="Doe">
         <input type="hidden" name="m_message" value="Payment for order 101965">
-        <input type="hidden" name="m_site_name" value="EESUp">
+        <input type="hidden" name="m_site_name" value="TOWRIS">
         <input type="hidden" name="m_back2shop_url" value="https://eesup.com/wp-content/payment_failed.php">        
         
         <input type="submit" class="btn" id="submit-button" value="Start Payment">

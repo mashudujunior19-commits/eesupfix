@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 260" fill="none">
+  <defs>
+    <linearGradient id="towrisPinGradient" x1="100" y1="45" x2="100" y2="255" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#0B3D66"/>
+      <stop offset="1" stop-color="#14B8A6"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Connection nodes: business / networking -->
+  <line x1="55" y1="25" x2="100" y2="10" stroke="#14B8A6" stroke-width="3" stroke-linecap="round" opacity="0.9"/>
+  <line x1="100" y1="10" x2="145" y2="25" stroke="#14B8A6" stroke-width="3" stroke-linecap="round" opacity="0.9"/>
+  <circle cx="55" cy="25" r="7" fill="#14B8A6"/>
+  <circle cx="145" cy="25" r="7" fill="#14B8A6"/>
+  <circle cx="100" cy="10" r="9" fill="#F59E0B"/>
+
+  <!-- Location pin: town -->
+  <path d="M100,45 C144.18,45 180,80.82 180,125 C180,175 130,215 100,255 C70,215 20,175 20,125 C20,80.82 55.82,45 100,45 Z" fill="url(#towrisPinGradient)"/>
+
+  <!-- Skyline inside the pin -->
+  <rect x="48" y="115" width="24" height="45" rx="2" fill="#FFFFFF"/>
+  <rect x="82" y="90" width="30" height="70" rx="2" fill="#FFFFFF"/>
+  <rect x="122" y="105" width="26" height="55" rx="2" fill="#FFFFFF"/>
+</svg>
