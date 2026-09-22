@@ -41,15 +41,6 @@ class GetInvolvedSheet extends StatelessWidget {
             context.router.push(PartnerRoute(role: role));
           },
         ),
-        _GetInvolvedOption(
-          icon: IconlyLight.paper,
-          title: 'Submit an Application',
-          subtitle: 'Tell us about your business, registered or not.',
-          onTap: () {
-            Navigator.of(context).pop();
-            context.router.push(const GetInvolvedApplicationRoute());
-          },
-        ),
       ],
     );
   }

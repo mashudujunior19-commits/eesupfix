@@ -1,4 +1,3 @@
-import 'package:data/organisation/models/organisation_registration_status.dart';
 import 'package:ui/src/core/extensions/context_theme_ext.dart';
 import 'package:ui/src/core/extensions/sizedbox_ext.dart';
 import 'package:ui/src/core/extensions/slide_in_animation_ext.dart';
@@ -32,27 +31,22 @@ class RegistrationStatusStep extends StatelessWidget {
         OrganisationOptionTile(
           title: 'Registered',
           subtitle: 'The organisation has a formal registration number.',
-          isSelected:
-              form.registrationStatus ==
-                  OrganisationRegistrationStatus.registered,
-          onTap: () =>
-              _select(context, OrganisationRegistrationStatus.registered),
+          isSelected: form.registrationStatus == RegistrationStatus.registered,
+          onTap: () => _select(context, RegistrationStatus.registered),
         ).animate().slideIn(50),
         15.sH,
         OrganisationOptionTile(
           title: 'Unregistered',
           subtitle: 'The organisation is not yet formally registered.',
           isSelected:
-              form.registrationStatus ==
-                  OrganisationRegistrationStatus.unregistered,
-          onTap: () =>
-              _select(context, OrganisationRegistrationStatus.unregistered),
+              form.registrationStatus == RegistrationStatus.unregistered,
+          onTap: () => _select(context, RegistrationStatus.unregistered),
         ).animate().slideIn(100),
       ],
     );
   }
 
-  void _select(BuildContext context, OrganisationRegistrationStatus status) {
+  void _select(BuildContext context, RegistrationStatus status) {
     context.read<OrganisationCubit>().updateForm(
           form.copyWith(registrationStatus: status),
         );

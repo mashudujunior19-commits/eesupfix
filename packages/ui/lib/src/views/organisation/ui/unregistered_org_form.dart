@@ -1,4 +1,3 @@
-import 'package:data/organisation/models/organisation_contact_method.dart';
 import 'package:ui/src/core/extensions/context_alerts_ext.dart';
 import 'package:ui/src/core/extensions/context_theme_ext.dart';
 import 'package:ui/src/core/extensions/sizedbox_ext.dart';
@@ -9,7 +8,8 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ui/src/views/organisation/cubit/organisation_cubit.dart';
 import 'package:ui/src/views/organisation/cubit/organisation_form.dart';
-import 'package:ui/src/views/organisation/ui/widgets/organisation_address_field.dart';
+import 'package:ui/src/views/organisation/ui/widgets/document_specs.dart';
+import 'package:ui/src/views/organisation/ui/widgets/document_upload_field.dart';
 
 class UnregisteredOrgForm extends StatefulWidget {
   const UnregisteredOrgForm({
@@ -33,68 +33,47 @@ class _UnregisteredOrgFormState extends State<UnregisteredOrgForm> {
 
   @override
   Widget build(BuildContext context) {
+    final documentTypes = [
+      ...form.requiredDocumentTypes,
+      ...form.optionalDocumentTypes,
+    ];
+
     return ListView(
       padding: const EdgeInsets.only(left: 20, right: 20, top: 10, bottom: 60),
       children: [
         EESUpTextFormField(
-          initialValue: form.name,
-          label: 'Name',
+          initialValue: form.organisationName,
+          label: 'Name of Business/Organisation',
+          hintText: 'Enter your business name',
           isRequired: true,
-          onChanged: (value) => _update(name: value.isEmpty ? null : value),
+          onChanged: (value) =>
+              _update(organisationName: value.isEmpty ? null : value),
         ).animate().slideIn(0),
-        OrganisationAddressField(
-          address: form.address,
-          onAddressSelected: (address) {
-            context.read<OrganisationCubit>().updateForm(
-                  form.copyWith(address: address, addressId: address?.id),
-                );
-          },
-        ).animate().slideIn(50),
-        EESUpTextFormField(
-          initialValue: form.contactPerson1,
-          label: 'Contact Person 1',
-          isRequired: true,
-          onChanged: (value) =>
-              _update(contactPerson1: value.isEmpty ? null : value),
-        ).animate().slideIn(100),
-        Text(
-          'Preferred contact method',
-          style: context.textTheme.labelMedium?.copyWith(fontSize: 14),
-        ).animate().slideIn(150),
-        5.sH,
-        Wrap(
-          spacing: 10,
-          children: OrganisationContactMethod.values.map((method) {
-            final isSelected = form.contactMethod == method;
-            return ChoiceChip(
-              label: Text(method.toString()),
-              selected: isSelected,
-              onSelected: (_) {
-                context.read<OrganisationCubit>().updateForm(
-                      form.copyWith(contactMethod: method),
-                    );
-              },
-            );
-          }).toList(),
-        ).animate().slideIn(200),
-        10.sH,
-        EESUpTextFormField(
-          initialValue: form.contactValue,
-          label: _contactValueLabel(form.contactMethod),
-          type: form.contactMethod == OrganisationContactMethod.email
-              ? TextInputType.emailAddress
-              : TextInputType.phone,
-          isRequired: true,
-          onChanged: (value) =>
-              _update(contactValue: value.isEmpty ? null : value),
-        ).animate().slideIn(250),
         EESUpTextFormField(
           initialValue: form.industryType,
           label: 'Industry Type',
+          hintText: 'e.g Soccer Club',
           isRequired: true,
           onChanged: (value) =>
               _update(industryType: value.isEmpty ? null : value),
-        ).animate().slideIn(300),
+        ).animate().slideIn(50),
+        20.sH,
+        Text(
+          'Upload Documents',
+          style: context.textTheme.labelMedium?.copyWith(fontSize: 16),
+        ).animate().slideIn(100),
+        for (final type in documentTypes)
+          DocumentUploadField(
+            label: docSpecs[type]!.label,
+            hint: docSpecs[type]!.hint,
+            isRequired: form.requiredDocumentTypes.contains(type),
+            allowedExtensions: docSpecs[type]!.extensions,
+            pickedFile: form.pickedDocuments[type],
+            isUploading: form.uploadingDocuments.contains(type),
+            isUploaded: form.uploadedDocumentPaths[type] != null,
+            onFilePicked: (file) =>
+                context.read<OrganisationCubit>().pickDocument(type, file),
+          ).animate().slideIn(150),
         30.sH,
         ElevatedButton(
           onPressed: _isSubmitting ? null : _handleSubmit,
@@ -113,30 +92,10 @@ class _UnregisteredOrgFormState extends State<UnregisteredOrgForm> {
     );
   }
 
-  String _contactValueLabel(OrganisationContactMethod? method) {
-    switch (method) {
-      case OrganisationContactMethod.email:
-        return 'Email Address';
-      case OrganisationContactMethod.phoneNumber:
-        return 'Phone Number';
-      case OrganisationContactMethod.cellNumber:
-        return 'Cell Number';
-      case null:
-        return 'Contact Value';
-    }
-  }
-
-  void _update({
-    String? name,
-    String? contactPerson1,
-    String? contactValue,
-    String? industryType,
-  }) {
+  void _update({String? organisationName, String? industryType}) {
     context.read<OrganisationCubit>().updateForm(
           form.copyWith(
-            name: name ?? form.name,
-            contactPerson1: contactPerson1 ?? form.contactPerson1,
-            contactValue: contactValue ?? form.contactValue,
+            organisationName: organisationName ?? form.organisationName,
             industryType: industryType ?? form.industryType,
           ),
         );
@@ -146,28 +105,17 @@ class _UnregisteredOrgFormState extends State<UnregisteredOrgForm> {
     if (_isSubmitting) return;
     FocusScope.of(context).unfocus();
 
-    if (form.name == null || form.name!.trim().isEmpty) {
-      context.snackBarError('Please provide the organisation name.');
-      return;
-    }
-    if (form.contactPerson1 == null || form.contactPerson1!.trim().isEmpty) {
-      context.snackBarError('Please provide a contact person.');
-      return;
-    }
-    if (form.contactMethod == null) {
-      context.snackBarError('Please choose a preferred contact method.');
-      return;
-    }
-    if (!form.isValidContactValue()) {
-      context.snackBarError(
-        form.contactMethod == OrganisationContactMethod.email
-            ? 'Please provide a valid email address.'
-            : 'Please provide a valid South African phone number.',
-      );
+    if (form.organisationName == null ||
+        form.organisationName!.trim().isEmpty) {
+      context.snackBarError('Please provide the business/organisation name.');
       return;
     }
     if (form.industryType == null || form.industryType!.trim().isEmpty) {
       context.snackBarError('Please provide the industry type.');
+      return;
+    }
+    if (!form.hasAllRequiredDocuments) {
+      context.snackBarError('Please upload all required documents.');
       return;
     }
 

@@ -1,124 +1,137 @@
-import 'package:data/geolocation/models/address.dart';
-import 'package:data/organisation/models/organisation.dart';
-import 'package:data/organisation/models/organisation_contact_method.dart';
-import 'package:data/organisation/models/organisation_registration_status.dart';
-import 'package:data/organisation/models/organisation_type.dart';
-import 'package:data/utils/validate_organisation_fields.dart'
-    as org_validators;
-import 'package:dart_mappable/dart_mappable.dart';
-import 'package:email_validator/email_validator.dart';
+import 'dart:io';
 
-part 'organisation_form.mapper.dart';
+import 'package:data/get_involved/models/document_type.dart';
+import 'package:data/get_involved/models/get_involved_submission.dart';
+import 'package:data/get_involved/models/get_involved_submission_type.dart';
 
-@MappableClass(generateMethods: GenerateMethods.equals | GenerateMethods.copy)
-class OrganisationForm with OrganisationFormMappable {
-  final OrganisationType? orgType;
-  final OrganisationRegistrationStatus? registrationStatus;
-  final String? name;
-  final String? surname;
-  final int? addressId;
-  final Address? address;
-  final String? contactPerson1;
-  final String? contactPerson2;
-  final String? contactPerson3;
-  final OrganisationContactMethod? contactMethod;
-  final String? contactValue;
-  final String? companyRegistrationNumber;
-  final String? vatNumber;
-  final String? industryType;
-  final String? pboNumber;
-  final String? socialDevelopmentNumber;
-  final bool isLoading;
-  final OrganisationSubmitStatus status;
-  final String? errorMessage;
+enum OrganisationKind { publicBenefit, business }
 
-  OrganisationForm({
-    this.orgType,
-    this.registrationStatus,
-    this.name,
-    this.surname,
-    this.addressId,
-    this.address,
-    this.contactPerson1,
-    this.contactPerson2,
-    this.contactPerson3,
-    this.contactMethod,
-    this.contactValue,
-    this.companyRegistrationNumber,
-    this.vatNumber,
-    this.industryType,
-    this.pboNumber,
-    this.socialDevelopmentNumber,
-    this.errorMessage,
-    required this.isLoading,
-    required this.status,
-  });
-
-  factory OrganisationForm.initial() => OrganisationForm(
-        isLoading: false,
-        status: OrganisationSubmitStatus.init,
-      );
-
-  bool get isNPO => orgType == OrganisationType.publicBenefit;
-  bool get isRegistered =>
-      registrationStatus == OrganisationRegistrationStatus.registered;
-  bool get isUnregistered =>
-      registrationStatus == OrganisationRegistrationStatus.unregistered;
-
-  bool isValidCompanyRegistrationNumber() {
-    if (companyRegistrationNumber == null) return false;
-    return org_validators
-        .isValidCompanyRegistrationNumber(companyRegistrationNumber!);
-  }
-
-  bool isValidVATNumber() {
-    if (vatNumber == null || vatNumber!.isEmpty) return true; // optional
-    return org_validators.isValidVATNumber(vatNumber!);
-  }
-
-  bool isValidPBONumber() {
-    if (pboNumber == null) return false;
-    return org_validators.isValidPBONumber(pboNumber!);
-  }
-
-  bool isValidContactValue() {
-    if (contactValue == null || contactMethod == null) return false;
-    switch (contactMethod!) {
-      case OrganisationContactMethod.email:
-        return EmailValidator.validate(contactValue!);
-      case OrganisationContactMethod.phoneNumber:
-      case OrganisationContactMethod.cellNumber:
-        return org_validators.isValidSouthAfricanPhoneOrCell(contactValue!);
-    }
-  }
-
-  Organisation toOrganisation() {
-    return Organisation(
-      organisationType: orgType!,
-      registrationStatus: registrationStatus!,
-      name: name!,
-      surname: isRegistered ? surname : null,
-      addressId: addressId,
-      contactPerson1: contactPerson1,
-      contactPerson2: isRegistered ? contactPerson2 : null,
-      contactPerson3: isRegistered ? contactPerson3 : null,
-      contactMethod: isUnregistered ? contactMethod : null,
-      contactValue: isUnregistered ? contactValue : null,
-      companyRegistrationNumber:
-          isRegistered ? companyRegistrationNumber : null,
-      vatNumber: isRegistered && vatNumber != null && vatNumber!.isNotEmpty
-          ? vatNumber
-          : null,
-      industryType: industryType!,
-      pboNumber: isRegistered && isNPO ? pboNumber : null,
-      socialDevelopmentNumber:
-          isRegistered && isNPO ? socialDevelopmentNumber : null,
-    );
-  }
-}
+enum RegistrationStatus { registered, unregistered }
 
 enum OrganisationSubmitStatus {
   init,
   success,
   failed,
+}
+
+class OrganisationForm {
+  final OrganisationKind? orgKind;
+  final RegistrationStatus? registrationStatus;
+  final String? organisationName;
+  final String? industryType;
+  final String? submissionId;
+  final Map<DocumentType, File?> pickedDocuments;
+  final Map<DocumentType, String?> uploadedDocumentPaths;
+  final Set<DocumentType> uploadingDocuments;
+  final bool isLoading;
+  final OrganisationSubmitStatus status;
+  final String? errorMessage;
+
+  const OrganisationForm({
+    this.orgKind,
+    this.registrationStatus,
+    this.organisationName,
+    this.industryType,
+    this.submissionId,
+    this.pickedDocuments = const {},
+    this.uploadedDocumentPaths = const {},
+    this.uploadingDocuments = const {},
+    required this.isLoading,
+    required this.status,
+    this.errorMessage,
+  });
+
+  factory OrganisationForm.initial() => const OrganisationForm(
+        isLoading: false,
+        status: OrganisationSubmitStatus.init,
+      );
+
+  bool get isNPO => orgKind == OrganisationKind.publicBenefit;
+  bool get isRegistered => registrationStatus == RegistrationStatus.registered;
+  bool get isUnregistered =>
+      registrationStatus == RegistrationStatus.unregistered;
+
+  GetInvolvedSubmissionType get submissionType =>
+      GetInvolvedSubmissionType.from(isNPO: isNPO, isRegistered: isRegistered);
+
+  /// Documents that must be uploaded before the form for the current
+  /// (org kind, registration status) combination can be submitted.
+  List<DocumentType> get requiredDocumentTypes {
+    if (isNPO && isRegistered) {
+      // Form A: Registered NPO
+      return const [
+        DocumentType.businessRegistration,
+        DocumentType.proofOfBank,
+        DocumentType.proofOfResidence,
+      ];
+    }
+    if (isNPO && isUnregistered) {
+      // Form B: Unregistered NPO
+      return const [
+        DocumentType.proofOfBank,
+        DocumentType.proofOfResidence,
+        DocumentType.constitution,
+      ];
+    }
+    if (!isNPO && isRegistered) {
+      // Form C: Registered Business
+      return const [
+        DocumentType.cipcDocument,
+        DocumentType.proofOfResidence,
+      ];
+    }
+    // Form D: Unregistered Business
+    return const [DocumentType.proofOfBank];
+  }
+
+  /// Documents that may optionally be uploaded for the current combination.
+  List<DocumentType> get optionalDocumentTypes {
+    if (isNPO && isRegistered) {
+      return const [DocumentType.pboCertificate];
+    }
+    if (!isNPO && isRegistered) {
+      return const [DocumentType.proofOfBank, DocumentType.vatDocument];
+    }
+    return const [];
+  }
+
+  bool get hasAllRequiredDocuments => requiredDocumentTypes
+      .every((type) => pickedDocuments[type] != null);
+
+  OrganisationForm copyWith({
+    OrganisationKind? orgKind,
+    RegistrationStatus? registrationStatus,
+    String? organisationName,
+    String? industryType,
+    String? submissionId,
+    Map<DocumentType, File?>? pickedDocuments,
+    Map<DocumentType, String?>? uploadedDocumentPaths,
+    Set<DocumentType>? uploadingDocuments,
+    bool? isLoading,
+    OrganisationSubmitStatus? status,
+    String? errorMessage,
+  }) {
+    return OrganisationForm(
+      orgKind: orgKind ?? this.orgKind,
+      registrationStatus: registrationStatus ?? this.registrationStatus,
+      organisationName: organisationName ?? this.organisationName,
+      industryType: industryType ?? this.industryType,
+      submissionId: submissionId ?? this.submissionId,
+      pickedDocuments: pickedDocuments ?? this.pickedDocuments,
+      uploadedDocumentPaths:
+          uploadedDocumentPaths ?? this.uploadedDocumentPaths,
+      uploadingDocuments: uploadingDocuments ?? this.uploadingDocuments,
+      isLoading: isLoading ?? this.isLoading,
+      status: status ?? this.status,
+      errorMessage: errorMessage,
+    );
+  }
+
+  GetInvolvedSubmission toSubmission() {
+    return GetInvolvedSubmission(
+      submissionType: submissionType,
+      organisationName: organisationName!,
+      industryType: industryType!,
+    );
+  }
 }

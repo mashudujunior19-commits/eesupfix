@@ -1,11 +1,22 @@
-import 'package:data/get_involved/models/get_involved_application.dart';
+import 'dart:io';
+
+import 'package:data/get_involved/models/get_involved_submission.dart';
+import 'package:data/get_involved/models/submission_document.dart';
 
 abstract class GetInvolvedDataSource {
-  /// Submits a new "Get Involved" application, returns the created row.
-  Future<GetInvolvedApplication> createApplication(
-    GetInvolvedApplication application,
+  /// Creates a new submission, returns the created row (including its id and
+  /// default status).
+  Future<GetInvolvedSubmission> createSubmission(
+    GetInvolvedSubmission submission,
   );
 
-  /// Returns the applications submitted by the given user.
-  Future<List<GetInvolvedApplication>> fetchApplicationsByUser(String userId);
+  /// Uploads a supporting document to private storage and returns the
+  /// storage path (not a public URL -- these documents are sensitive).
+  Future<String?> uploadDocumentFile(String path, File file);
+
+  /// Records an uploaded document against a submission.
+  Future<SubmissionDocument> attachDocument(SubmissionDocument document);
+
+  /// Returns the submissions made by the given user.
+  Future<List<GetInvolvedSubmission>> fetchSubmissionsByUser(String userId);
 }

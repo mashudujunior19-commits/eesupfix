@@ -1,6 +1,5 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:data/organisation/models/organisation_registration_status.dart';
-import 'package:data/organisation/repository/organisation_repository.dart';
+import 'package:data/get_involved/repository/get_involved_repository.dart';
 import 'package:loader_overlay/loader_overlay.dart';
 import 'package:ui/src/core/widgets/eesup_scaffold.dart';
 import 'package:flutter/material.dart';
@@ -54,7 +53,7 @@ class _OrganisationRegistrationScreenState
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) =>
-          OrganisationCubit(context.read<OrganisationRepository>()),
+          OrganisationCubit(context.read<GetInvolvedRepository>()),
       child: BlocConsumer<OrganisationCubit, OrganisationForm>(
         listener: (context, state) {
           if (state.isLoading) {
@@ -91,7 +90,7 @@ class _OrganisationRegistrationScreenState
                     tabController: _tabController,
                   ),
                   if (state.registrationStatus ==
-                      OrganisationRegistrationStatus.registered)
+                      RegistrationStatus.registered)
                     RegisteredOrgForm(
                       form: state,
                       tabController: _tabController,

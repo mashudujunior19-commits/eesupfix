@@ -97,8 +97,6 @@ import 'package:ui/src/views/shop/product_request/product_request_screen.dart'
 import 'package:ui/src/views/support/ui/support_screen.dart' as _i40;
 import 'package:ui/src/views/surveys/ui/response_screen.dart' as _i35;
 import 'package:ui/src/views/surveys/ui/survey_screen.dart' as _i41;
-import 'package:ui/src/views/get_involved/ui/get_involved_application_screen.dart'
-    as _i100;
 
 /// generated route for
 /// [_i1.AddressBookScreen]
@@ -1117,22 +1115,6 @@ class OrganisationRegistrationRoute extends _i48.PageRouteInfo<void> {
     name,
     builder: (data) {
       return const _i69.OrganisationRegistrationScreen();
-    },
-  );
-}
-
-/// generated route for
-/// [_i100.GetInvolvedApplicationScreen]
-class GetInvolvedApplicationRoute extends _i48.PageRouteInfo<void> {
-  const GetInvolvedApplicationRoute({List<_i48.PageRouteInfo>? children})
-    : super(GetInvolvedApplicationRoute.name, initialChildren: children);
-
-  static const String name = 'GetInvolvedApplicationRoute';
-
-  static _i48.PageInfo page = _i48.PageInfo(
-    name,
-    builder: (data) {
-      return const _i100.GetInvolvedApplicationScreen();
     },
   );
 }
