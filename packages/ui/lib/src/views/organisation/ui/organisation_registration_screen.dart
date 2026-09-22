@@ -7,10 +7,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ui/src/views/organisation/cubit/organisation_cubit.dart';
 import 'package:ui/src/views/organisation/cubit/organisation_form.dart';
 import 'package:ui/src/views/organisation/ui/org_type_step.dart';
+import 'package:ui/src/views/organisation/ui/organisation_details_form.dart';
 import 'package:ui/src/views/organisation/ui/organisation_success_screen.dart';
-import 'package:ui/src/views/organisation/ui/registered_org_form.dart';
 import 'package:ui/src/views/organisation/ui/registration_status_step.dart';
-import 'package:ui/src/views/organisation/ui/unregistered_org_form.dart';
 
 /// Multi-step "Register an Organisation" wizard.
 ///
@@ -89,17 +88,10 @@ class _OrganisationRegistrationScreenState
                     form: state,
                     tabController: _tabController,
                   ),
-                  if (state.registrationStatus ==
-                      RegistrationStatus.registered)
-                    RegisteredOrgForm(
-                      form: state,
-                      tabController: _tabController,
-                    )
-                  else
-                    UnregisteredOrgForm(
-                      form: state,
-                      tabController: _tabController,
-                    ),
+                  OrganisationDetailsForm(
+                    form: state,
+                    tabController: _tabController,
+                  ),
                   const OrganisationSuccessScreen(),
                 ],
               ),

@@ -40,6 +40,11 @@ CREATE TABLE IF NOT EXISTS "services"."get_involved_submissions" (
     "submission_type" "text" NOT NULL,
     "organisation_name" "text" NOT NULL,
     "industry_type" "text" NOT NULL,
+    -- Collected for every combination except Form D (Unregistered Business).
+    "address" "text",
+    -- Department of Social Development NPO registration number; only
+    -- collected for Form A (Registered NPO).
+    "social_development_number" "text",
     "created_at" timestamp with time zone DEFAULT "now"() NOT NULL,
     "status" "text" DEFAULT 'pending' NOT NULL,
     CONSTRAINT "get_involved_submissions_submission_type_check" CHECK (
@@ -99,6 +104,28 @@ ALTER TABLE ONLY "services"."submission_documents"
 
 CREATE INDEX "submission_documents_submission_id_idx" ON "services"."submission_documents" USING "btree" ("submission_id");
 
+-- Up to 3 contact persons (email + phone) per submission for Registered
+-- NPOs/Businesses; unregistered NPOs/Businesses collect just the one. The
+-- "up to 3" cap is enforced client-side (like the required-document set
+-- above), not with a DB constraint.
+CREATE TABLE IF NOT EXISTS "services"."submission_contacts" (
+    "id" "uuid" DEFAULT "gen_random_uuid"() NOT NULL,
+    "submission_id" "uuid" NOT NULL,
+    "email" "text" NOT NULL,
+    "phone" "text" NOT NULL,
+    "created_at" timestamp with time zone DEFAULT "now"() NOT NULL
+);
+
+ALTER TABLE "services"."submission_contacts" OWNER TO "postgres";
+
+ALTER TABLE ONLY "services"."submission_contacts"
+    ADD CONSTRAINT "submission_contacts_pkey" PRIMARY KEY ("id");
+
+ALTER TABLE ONLY "services"."submission_contacts"
+    ADD CONSTRAINT "submission_contacts_submission_id_fkey" FOREIGN KEY ("submission_id") REFERENCES "services"."get_involved_submissions"("id") ON DELETE CASCADE;
+
+CREATE INDEX "submission_contacts_submission_id_idx" ON "services"."submission_contacts" USING "btree" ("submission_id");
+
 ALTER TABLE "services"."get_involved_submissions" ENABLE ROW LEVEL SECURITY;
 
 CREATE POLICY "Users can insert their own submissions" ON "services"."get_involved_submissions" FOR INSERT TO "authenticated" WITH CHECK (("auth"."uid"() = "user_id"));
@@ -124,10 +151,30 @@ CREATE POLICY "Users can view documents for their own submissions" ON "services"
     )
 );
 
+ALTER TABLE "services"."submission_contacts" ENABLE ROW LEVEL SECURITY;
+
+-- Contacts inherit access from their parent submission, same as documents.
+CREATE POLICY "Users can insert contacts for their own submissions" ON "services"."submission_contacts" FOR INSERT TO "authenticated" WITH CHECK (
+    EXISTS (
+        SELECT 1 FROM "services"."get_involved_submissions" s
+        WHERE s."id" = "submission_contacts"."submission_id"
+        AND s."user_id" = "auth"."uid"()
+    )
+);
+CREATE POLICY "Users can view contacts for their own submissions" ON "services"."submission_contacts" FOR SELECT TO "authenticated" USING (
+    EXISTS (
+        SELECT 1 FROM "services"."get_involved_submissions" s
+        WHERE s."id" = "submission_contacts"."submission_id"
+        AND s."user_id" = "auth"."uid"()
+    )
+);
+
 GRANT ALL ON TABLE "services"."get_involved_submissions" TO "authenticated";
 GRANT ALL ON TABLE "services"."get_involved_submissions" TO "service_role";
 GRANT ALL ON TABLE "services"."submission_documents" TO "authenticated";
 GRANT ALL ON TABLE "services"."submission_documents" TO "service_role";
+GRANT ALL ON TABLE "services"."submission_contacts" TO "authenticated";
+GRANT ALL ON TABLE "services"."submission_contacts" TO "service_role";
 
 -- Storage: a private bucket for the uploaded documents. Objects are stored at
 -- "<user_id>/<submission_id>/<document_type>_<timestamp>.<ext>", so RLS scopes
@@ -153,16 +200,22 @@ CREATE POLICY "Users can view their own get involved documents" ON "storage"."ob
 -- get_involved_repository.dart for the actual Dart implementation):
 --
 --   1. Create the submission (user_id stamped from the session, not client-
---      supplied):
+--      supplied; address/social_development_number omitted for Form D):
 --        insert into services.get_involved_submissions
---          (user_id, submission_type, organisation_name, industry_type)
---        values ($1, $2, $3, $4)
+--          (user_id, submission_type, organisation_name, industry_type,
+--           address, social_development_number)
+--        values ($1, $2, $3, $4, $5, $6)
 --        returning *;
 --
---   2. Upload each picked file to Storage bucket "get_involved_documents" at
+--   2. Batch-insert the 1-3 contact persons (omitted for Form D):
+--        insert into services.submission_contacts (submission_id, email, phone)
+--        values ($1, $2, $3), ($1, $4, $5), ...
+--        returning *;
+--
+--   3. Upload each picked file to Storage bucket "get_involved_documents" at
 --      path "<user_id>/<submission_id>/<document_type>_<timestamp>.<ext>".
 --
---   3. Record each uploaded file:
+--   4. Record each uploaded file:
 --        insert into services.submission_documents
 --          (submission_id, document_type, file_path)
 --        values ($1, $2, $3)

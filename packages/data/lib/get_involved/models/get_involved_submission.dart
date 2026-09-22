@@ -7,6 +7,8 @@ class GetInvolvedSubmission {
   final GetInvolvedSubmissionType submissionType;
   final String organisationName;
   final String industryType;
+  final String? address;
+  final String? socialDevelopmentNumber;
   final String? status;
 
   const GetInvolvedSubmission({
@@ -16,6 +18,8 @@ class GetInvolvedSubmission {
     required this.submissionType,
     required this.organisationName,
     required this.industryType,
+    this.address,
+    this.socialDevelopmentNumber,
     this.status,
   });
 
@@ -26,6 +30,8 @@ class GetInvolvedSubmission {
     GetInvolvedSubmissionType? submissionType,
     String? organisationName,
     String? industryType,
+    String? address,
+    String? socialDevelopmentNumber,
     String? status,
   }) {
     return GetInvolvedSubmission(
@@ -35,6 +41,9 @@ class GetInvolvedSubmission {
       submissionType: submissionType ?? this.submissionType,
       organisationName: organisationName ?? this.organisationName,
       industryType: industryType ?? this.industryType,
+      address: address ?? this.address,
+      socialDevelopmentNumber:
+          socialDevelopmentNumber ?? this.socialDevelopmentNumber,
       status: status ?? this.status,
     );
   }
@@ -45,6 +54,9 @@ class GetInvolvedSubmission {
       'submission_type': submissionType.toString(),
       'organisation_name': organisationName,
       'industry_type': industryType,
+      if (address != null) 'address': address,
+      if (socialDevelopmentNumber != null)
+        'social_development_number': socialDevelopmentNumber,
     };
   }
 
@@ -60,6 +72,8 @@ class GetInvolvedSubmission {
       ),
       organisationName: json['organisation_name'] as String,
       industryType: json['industry_type'] as String,
+      address: json['address'] as String?,
+      socialDevelopmentNumber: json['social_development_number'] as String?,
       status: json['status'] as String?,
     );
   }

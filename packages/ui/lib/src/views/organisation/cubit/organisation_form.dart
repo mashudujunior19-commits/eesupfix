@@ -1,3 +1,4 @@
+import 'package:data/get_involved/models/contact_person.dart';
 import 'package:data/get_involved/models/document_type.dart';
 import 'package:data/get_involved/models/get_involved_submission.dart';
 import 'package:data/get_involved/models/get_involved_submission_type.dart';
@@ -18,6 +19,9 @@ class OrganisationForm {
   final RegistrationStatus? registrationStatus;
   final String? organisationName;
   final String? industryType;
+  final String? address;
+  final String? socialDevelopmentNumber;
+  final List<ContactPerson> contactPersons;
   final String? submissionId;
   final Map<DocumentType, PickedDocument?> pickedDocuments;
   final Map<DocumentType, String?> uploadedDocumentPaths;
@@ -31,6 +35,9 @@ class OrganisationForm {
     this.registrationStatus,
     this.organisationName,
     this.industryType,
+    this.address,
+    this.socialDevelopmentNumber,
+    this.contactPersons = const [],
     this.submissionId,
     this.pickedDocuments = const {},
     this.uploadedDocumentPaths = const {},
@@ -43,6 +50,7 @@ class OrganisationForm {
   factory OrganisationForm.initial() => const OrganisationForm(
         isLoading: false,
         status: OrganisationSubmitStatus.init,
+        contactPersons: [ContactPerson(email: '', phone: '')],
       );
 
   bool get isNPO => orgKind == OrganisationKind.publicBenefit;
@@ -52,6 +60,18 @@ class OrganisationForm {
 
   GetInvolvedSubmissionType get submissionType =>
       GetInvolvedSubmissionType.from(isNPO: isNPO, isRegistered: isRegistered);
+
+  /// Every combination except Form D (Unregistered Business) collects an
+  /// address and up to a few contact persons.
+  bool get requiresOrganisationDetails => isNPO || isRegistered;
+
+  /// Only Registered NPOs collect the NPO's Department of Social
+  /// Development registration number.
+  bool get requiresSocialDevelopmentNumber => isNPO && isRegistered;
+
+  /// Registered organisations may list up to 3 contact persons; unregistered
+  /// ones collect just the one.
+  int get maxContactPersons => isRegistered ? 3 : 1;
 
   /// Documents that must be uploaded before the form for the current
   /// (org kind, registration status) combination can be submitted.
@@ -97,11 +117,22 @@ class OrganisationForm {
   bool get hasAllRequiredDocuments => requiredDocumentTypes
       .every((type) => pickedDocuments[type] != null);
 
+  bool get hasValidContactPersons {
+    if (!requiresOrganisationDetails) return true;
+    final first = contactPersons.isEmpty ? null : contactPersons.first;
+    return first != null &&
+        first.email.trim().isNotEmpty &&
+        first.phone.trim().isNotEmpty;
+  }
+
   OrganisationForm copyWith({
     OrganisationKind? orgKind,
     RegistrationStatus? registrationStatus,
     String? organisationName,
     String? industryType,
+    String? address,
+    String? socialDevelopmentNumber,
+    List<ContactPerson>? contactPersons,
     String? submissionId,
     Map<DocumentType, PickedDocument?>? pickedDocuments,
     Map<DocumentType, String?>? uploadedDocumentPaths,
@@ -115,6 +146,10 @@ class OrganisationForm {
       registrationStatus: registrationStatus ?? this.registrationStatus,
       organisationName: organisationName ?? this.organisationName,
       industryType: industryType ?? this.industryType,
+      address: address ?? this.address,
+      socialDevelopmentNumber:
+          socialDevelopmentNumber ?? this.socialDevelopmentNumber,
+      contactPersons: contactPersons ?? this.contactPersons,
       submissionId: submissionId ?? this.submissionId,
       pickedDocuments: pickedDocuments ?? this.pickedDocuments,
       uploadedDocumentPaths:
@@ -131,6 +166,17 @@ class OrganisationForm {
       submissionType: submissionType,
       organisationName: organisationName!,
       industryType: industryType!,
+      address: requiresOrganisationDetails ? address : null,
+      socialDevelopmentNumber:
+          requiresSocialDevelopmentNumber ? socialDevelopmentNumber : null,
     );
+  }
+
+  /// Contact persons with both fields filled in, ready to persist.
+  List<ContactPerson> get contactPersonsToSave {
+    if (!requiresOrganisationDetails) return const [];
+    return contactPersons
+        .where((c) => c.email.trim().isNotEmpty && c.phone.trim().isNotEmpty)
+        .toList();
   }
 }

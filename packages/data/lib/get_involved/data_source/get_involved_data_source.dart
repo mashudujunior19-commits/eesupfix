@@ -1,5 +1,6 @@
 import 'dart:typed_data';
 
+import 'package:data/get_involved/models/contact_person.dart';
 import 'package:data/get_involved/models/get_involved_submission.dart';
 import 'package:data/get_involved/models/submission_document.dart';
 
@@ -19,6 +20,13 @@ abstract class GetInvolvedDataSource {
 
   /// Records an uploaded document against a submission.
   Future<SubmissionDocument> attachDocument(SubmissionDocument document);
+
+  /// Records the contact persons (up to 3) for a submission in one batch
+  /// insert.
+  Future<List<ContactPerson>> attachContactPersons(
+    String submissionId,
+    List<ContactPerson> contactPersons,
+  );
 
   /// Returns the submissions made by the given user.
   Future<List<GetInvolvedSubmission>> fetchSubmissionsByUser(String userId);

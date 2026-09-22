@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import 'package:data/get_involved/models/contact_person.dart';
 import 'package:data/get_involved/models/document_type.dart';
 import 'package:data/get_involved/models/picked_document.dart';
 import 'package:data/get_involved/repository/get_involved_repository.dart';
@@ -19,6 +20,29 @@ class OrganisationCubit extends Cubit<OrganisationForm> {
         pickedDocuments: {...state.pickedDocuments, type: document},
       ),
     );
+  }
+
+  void updateContactPerson(int index, {String? email, String? phone}) {
+    final contacts = [...state.contactPersons];
+    contacts[index] = contacts[index].copyWith(email: email, phone: phone);
+    emit(state.copyWith(contactPersons: contacts));
+  }
+
+  void addContactPerson() {
+    if (state.contactPersons.length >= state.maxContactPersons) return;
+    emit(
+      state.copyWith(
+        contactPersons: [
+          ...state.contactPersons,
+          const ContactPerson(email: '', phone: ''),
+        ],
+      ),
+    );
+  }
+
+  void removeContactPerson(int index) {
+    final contacts = [...state.contactPersons]..removeAt(index);
+    emit(state.copyWith(contactPersons: contacts));
   }
 
   Future<void> submit() async {
@@ -50,6 +74,26 @@ class OrganisationCubit extends Cubit<OrganisationForm> {
     final submission = submissionResult.fold((_) => null, (right) => right);
     final submissionId = submission!.id!;
     emit(state.copyWith(submissionId: submissionId));
+
+    final contactsToSave = state.contactPersonsToSave;
+    if (contactsToSave.isNotEmpty) {
+      final contactsResult = await _getInvolvedRepository.saveContactPersons(
+        submissionId: submissionId,
+        contactPersons: contactsToSave,
+      );
+      final contactsFailure = contactsResult.fold((left) => left, (_) => null);
+      if (contactsFailure != null) {
+        _isSubmitting = false;
+        emit(
+          state.copyWith(
+            isLoading: false,
+            status: OrganisationSubmitStatus.failed,
+            errorMessage: 'Failed to save contact details. Please try again.',
+          ),
+        );
+        return;
+      }
+    }
 
     final docsToUpload = {
       ...state.pickedDocuments,

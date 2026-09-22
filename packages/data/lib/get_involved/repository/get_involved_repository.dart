@@ -1,5 +1,6 @@
 import 'package:data/auth/repository/auth_repository.dart';
 import 'package:data/get_involved/data_source/get_involved_data_source.dart';
+import 'package:data/get_involved/models/contact_person.dart';
 import 'package:data/get_involved/models/document_type.dart';
 import 'package:data/get_involved/models/get_involved_submission.dart';
 import 'package:data/get_involved/models/picked_document.dart';
@@ -48,6 +49,18 @@ class GetInvolvedRepository {
           filePath: storedPath,
         ),
       );
+    });
+    return result;
+  }
+
+  /// Records the contact persons (up to 3) for a submission in one batch
+  /// insert.
+  Future<Either<EESUpException, List<ContactPerson>>> saveContactPersons({
+    required String submissionId,
+    required List<ContactPerson> contactPersons,
+  }) async {
+    final result = authRepository.executeFutureWithAuth((_) {
+      return dataSource.attachContactPersons(submissionId, contactPersons);
     });
     return result;
   }

@@ -1,6 +1,7 @@
 import 'dart:typed_data';
 
 import 'package:data/get_involved/data_source/get_involved_data_source.dart';
+import 'package:data/get_involved/models/contact_person.dart';
 import 'package:data/get_involved/models/get_involved_submission.dart';
 import 'package:data/get_involved/models/submission_document.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -48,6 +49,27 @@ class GetInvolvedSupabaseImpl implements GetInvolvedDataSource {
         .select()
         .single();
     return SubmissionDocument.fromJson(response);
+  }
+
+  @override
+  Future<List<ContactPerson>> attachContactPersons(
+    String submissionId,
+    List<ContactPerson> contactPersons,
+  ) async {
+    if (contactPersons.isEmpty) return [];
+    final rows = contactPersons
+        .map((c) => {
+              'submission_id': submissionId,
+              'email': c.email,
+              'phone': c.phone,
+            })
+        .toList();
+    final response = await client
+        .schema('services')
+        .from('submission_contacts')
+        .insert(rows)
+        .select();
+    return response.map((e) => ContactPerson.fromJson(e)).toList();
   }
 
   @override
