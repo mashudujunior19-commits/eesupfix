@@ -3,8 +3,6 @@ import 'package:auto_route/auto_route.dart';
 import 'package:data/auth/models/user_role.dart';
 import 'package:data/shopping/repository/shopping_repository.dart';
 import 'package:ui/app_route.gr.dart';
-import 'package:ui/src/core/env/app_type.dart';
-import 'package:ui/src/core/extensions/context_environment_ext.dart';
 import 'package:ui/src/views/notifications/ui/notification_button.dart';
 import 'package:ui/src/views/referrals/ui/referral_code_tile.dart';
 import 'package:ui/src/views/shop/cart/ui/cart_button.dart';
@@ -41,9 +39,12 @@ class OverviewTab extends StatelessWidget {
                 centerTitle: true,
                 automaticallyImplyLeading: false,
                 leading: const NotificationButton(),
-                title: SvgPicture.asset(
-                  'assets/images/logo.svg',
-                  width: context.environment.app == AppType.eesup ? 80 : 45,
+                title: SizedBox(
+                  height: 40,
+                  child: SvgPicture.asset(
+                    'assets/images/logo.svg',
+                    fit: BoxFit.contain,
+                  ),
                 ),
                 actions: const [CartButton()],
                 flexibleSpace: const SearchProductsButton(),
