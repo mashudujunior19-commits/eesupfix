@@ -1,7 +1,6 @@
-import 'dart:io';
-
 import 'package:bloc/bloc.dart';
 import 'package:data/get_involved/models/document_type.dart';
+import 'package:data/get_involved/models/picked_document.dart';
 import 'package:data/get_involved/repository/get_involved_repository.dart';
 import 'package:ui/src/views/organisation/cubit/organisation_form.dart';
 
@@ -14,10 +13,10 @@ class OrganisationCubit extends Cubit<OrganisationForm> {
 
   void updateForm(OrganisationForm form) => emit(form);
 
-  void pickDocument(DocumentType type, File file) {
+  void pickDocument(DocumentType type, PickedDocument document) {
     emit(
       state.copyWith(
-        pickedDocuments: {...state.pickedDocuments, type: file},
+        pickedDocuments: {...state.pickedDocuments, type: document},
       ),
     );
   }
@@ -54,11 +53,11 @@ class OrganisationCubit extends Cubit<OrganisationForm> {
 
     final docsToUpload = {
       ...state.pickedDocuments,
-    }..removeWhere((_, file) => file == null);
+    }..removeWhere((_, document) => document == null);
 
     for (final entry in docsToUpload.entries) {
       final type = entry.key;
-      final file = entry.value!;
+      final document = entry.value!;
 
       emit(
         state.copyWith(
@@ -69,7 +68,7 @@ class OrganisationCubit extends Cubit<OrganisationForm> {
       final uploadResult = await _getInvolvedRepository.uploadDocument(
         submissionId: submissionId,
         documentType: type,
-        file: file,
+        document: document,
       );
 
       final stillUploading = {...state.uploadingDocuments}..remove(type);

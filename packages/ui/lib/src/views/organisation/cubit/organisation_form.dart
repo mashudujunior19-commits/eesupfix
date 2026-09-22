@@ -1,8 +1,7 @@
-import 'dart:io';
-
 import 'package:data/get_involved/models/document_type.dart';
 import 'package:data/get_involved/models/get_involved_submission.dart';
 import 'package:data/get_involved/models/get_involved_submission_type.dart';
+import 'package:data/get_involved/models/picked_document.dart';
 
 enum OrganisationKind { publicBenefit, business }
 
@@ -20,7 +19,7 @@ class OrganisationForm {
   final String? organisationName;
   final String? industryType;
   final String? submissionId;
-  final Map<DocumentType, File?> pickedDocuments;
+  final Map<DocumentType, PickedDocument?> pickedDocuments;
   final Map<DocumentType, String?> uploadedDocumentPaths;
   final Set<DocumentType> uploadingDocuments;
   final bool isLoading;
@@ -104,7 +103,7 @@ class OrganisationForm {
     String? organisationName,
     String? industryType,
     String? submissionId,
-    Map<DocumentType, File?>? pickedDocuments,
+    Map<DocumentType, PickedDocument?>? pickedDocuments,
     Map<DocumentType, String?>? uploadedDocumentPaths,
     Set<DocumentType>? uploadingDocuments,
     bool? isLoading,

@@ -1,9 +1,8 @@
-import 'dart:io';
-
 import 'package:data/auth/repository/auth_repository.dart';
 import 'package:data/get_involved/data_source/get_involved_data_source.dart';
 import 'package:data/get_involved/models/document_type.dart';
 import 'package:data/get_involved/models/get_involved_submission.dart';
+import 'package:data/get_involved/models/picked_document.dart';
 import 'package:data/get_involved/models/submission_document.dart';
 import 'package:data/utils/eesup_exception.dart';
 import 'package:either_dart/either.dart';
@@ -31,13 +30,14 @@ class GetInvolvedRepository {
   Future<Either<EESUpException, SubmissionDocument>> uploadDocument({
     required String submissionId,
     required DocumentType documentType,
-    required File file,
+    required PickedDocument document,
   }) async {
     final result = authRepository.executeFutureWithAuth((id) async {
-      final ext = file.path.split('.').last;
+      final ext = document.extension;
       final path =
           '$id/$submissionId/${documentType}_${DateTime.now().millisecondsSinceEpoch}.$ext';
-      final storedPath = await dataSource.uploadDocumentFile(path, file);
+      final storedPath =
+          await dataSource.uploadDocumentFile(path, document.bytes);
       if (storedPath == null) {
         throw EESUpException(message: 'Could not upload the document.');
       }

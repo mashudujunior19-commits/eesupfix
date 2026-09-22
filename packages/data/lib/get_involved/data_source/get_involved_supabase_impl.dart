@@ -1,4 +1,4 @@
-import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:data/get_involved/data_source/get_involved_data_source.dart';
 import 'package:data/get_involved/models/get_involved_submission.dart';
@@ -26,11 +26,11 @@ class GetInvolvedSupabaseImpl implements GetInvolvedDataSource {
   }
 
   @override
-  Future<String?> uploadDocumentFile(String path, File file) async {
+  Future<String?> uploadDocumentFile(String path, Uint8List bytes) async {
     try {
-      await client.storage.from(_bucket).upload(
+      await client.storage.from(_bucket).uploadBinary(
             path,
-            file,
+            bytes,
             fileOptions: const FileOptions(cacheControl: '3600', upsert: true),
           );
       return path;

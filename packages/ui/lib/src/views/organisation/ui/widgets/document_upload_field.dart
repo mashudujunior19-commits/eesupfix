@@ -1,6 +1,5 @@
-import 'dart:io';
-
 import 'package:bootstrap_icons/bootstrap_icons.dart';
+import 'package:data/get_involved/models/picked_document.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:ui/src/core/extensions/context_theme_ext.dart';
 import 'package:ui/src/core/extensions/sizedbox_ext.dart';
@@ -25,10 +24,10 @@ class DocumentUploadField extends StatelessWidget {
   final String hint;
   final bool isRequired;
   final List<String> allowedExtensions;
-  final File? pickedFile;
+  final PickedDocument? pickedFile;
   final bool isUploading;
   final bool isUploaded;
-  final ValueChanged<File> onFilePicked;
+  final ValueChanged<PickedDocument> onFilePicked;
 
   @override
   Widget build(BuildContext context) {
@@ -99,9 +98,7 @@ class DocumentUploadField extends StatelessWidget {
                   8.sW,
                   Expanded(
                     child: Text(
-                      pickedFile != null
-                          ? pickedFile!.path.split(Platform.pathSeparator).last
-                          : 'Choose file',
+                      pickedFile != null ? pickedFile!.fileName : 'Choose file',
                       overflow: TextOverflow.ellipsis,
                       style: context.textTheme.bodySmall?.copyWith(
                         fontSize: 13,
@@ -131,10 +128,12 @@ class DocumentUploadField extends StatelessWidget {
       allowMultiple: false,
       type: FileType.custom,
       allowedExtensions: allowedExtensions,
+      withData: true,
     );
-    final path = result?.files.single.path;
-    if (path != null) {
-      onFilePicked(File(path));
+    final picked = result?.files.single;
+    final bytes = picked?.bytes;
+    if (picked != null && bytes != null) {
+      onFilePicked(PickedDocument(fileName: picked.name, bytes: bytes));
     }
   }
 }
