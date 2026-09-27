@@ -14,13 +14,38 @@ enum OrganisationSubmitStatus {
   failed,
 }
 
+/// The fixed set of sectors an Ubuntunist can choose between when donating
+/// their Social Wallet to a KasiLift organisation, and that organisations
+/// report against. Kept as plain strings (not a DB enum) so the value set
+/// can be extended without a schema migration -- see
+/// `industry_type`/`services.get_involved_submissions` in the Supabase
+/// migrations.
+const List<String> broadSectorTypes = [
+  'Social & welfare',
+  'Education & training',
+  'Economic development',
+  'Community development',
+  'Health',
+  'Environment',
+  'Religion',
+  'Culture & heritage',
+  'Sport & recreation',
+  'Research',
+  'Housing / community facilities',
+  'Advocacy',
+  'Professional / group interests',
+];
+
 class OrganisationForm {
   final OrganisationKind? orgKind;
   final RegistrationStatus? registrationStatus;
   final String? organisationName;
   final String? industryType;
   final String? address;
+  final String? province;
   final String? socialDevelopmentNumber;
+  final bool isKasilift;
+  final String? aboutUs;
   final List<ContactPerson> contactPersons;
   final String? submissionId;
   final Map<DocumentType, PickedDocument?> pickedDocuments;
@@ -36,7 +61,10 @@ class OrganisationForm {
     this.organisationName,
     this.industryType,
     this.address,
+    this.province,
     this.socialDevelopmentNumber,
+    this.isKasilift = false,
+    this.aboutUs,
     this.contactPersons = const [],
     this.submissionId,
     this.pickedDocuments = const {},
@@ -69,49 +97,40 @@ class OrganisationForm {
   /// Development registration number.
   bool get requiresSocialDevelopmentNumber => isNPO && isRegistered;
 
-  /// Registered organisations may list up to 3 contact persons; unregistered
-  /// ones collect just the one.
-  int get maxContactPersons => isRegistered ? 3 : 1;
+  /// Only Registered NPOs collect a Province (in addition to Address).
+  bool get requiresProvince => isNPO && isRegistered;
 
-  /// Documents that must be uploaded before the form for the current
-  /// (org kind, registration status) combination can be submitted.
+  /// Every combination that collects organisation details may list up to 3
+  /// contact persons (a stokvel or soccer club, while unregistered, still
+  /// needs more than one contact).
+  int get maxContactPersons => requiresOrganisationDetails ? 3 : 0;
+
+  /// Documents required for this (org kind, registration status)
+  /// combination once KasiLift participation is active -- see
+  /// [requiredDocumentTypes], which gates these behind [isKasilift].
+  List<DocumentType> get baseRequiredDocumentTypes =>
+      submissionType.baseRequiredDocumentTypes;
+
+  List<DocumentType> get baseOptionalDocumentTypes =>
+      submissionType.baseOptionalDocumentTypes;
+
+  /// Documents that must be uploaded before the form can be submitted.
+  ///
+  /// KasiLift opt-in only applies to organisations (NPOs) -- for those,
+  /// supporting documents are only mandatory once the applicant opts into
+  /// KasiLift (see [isKasilift]), otherwise every document is optional. For
+  /// businesses (which never opt into KasiLift) the base required set always
+  /// applies unchanged.
   List<DocumentType> get requiredDocumentTypes {
-    if (isNPO && isRegistered) {
-      // Form A: Registered NPO
-      return const [
-        DocumentType.businessRegistration,
-        DocumentType.proofOfBank,
-        DocumentType.proofOfResidence,
-      ];
-    }
-    if (isNPO && isUnregistered) {
-      // Form B: Unregistered NPO
-      return const [
-        DocumentType.proofOfBank,
-        DocumentType.proofOfResidence,
-        DocumentType.constitution,
-      ];
-    }
-    if (!isNPO && isRegistered) {
-      // Form C: Registered Business
-      return const [
-        DocumentType.cipcDocument,
-        DocumentType.proofOfResidence,
-      ];
-    }
-    // Form D: Unregistered Business
-    return const [DocumentType.proofOfBank];
+    if (!isNPO) return baseRequiredDocumentTypes;
+    return isKasilift ? baseRequiredDocumentTypes : const [];
   }
 
   /// Documents that may optionally be uploaded for the current combination.
   List<DocumentType> get optionalDocumentTypes {
-    if (isNPO && isRegistered) {
-      return const [DocumentType.pboCertificate];
-    }
-    if (!isNPO && isRegistered) {
-      return const [DocumentType.proofOfBank, DocumentType.vatDocument];
-    }
-    return const [];
+    if (!isNPO) return baseOptionalDocumentTypes;
+    if (isKasilift) return baseOptionalDocumentTypes;
+    return [...baseRequiredDocumentTypes, ...baseOptionalDocumentTypes];
   }
 
   bool get hasAllRequiredDocuments => requiredDocumentTypes
@@ -121,8 +140,56 @@ class OrganisationForm {
     if (!requiresOrganisationDetails) return true;
     final first = contactPersons.isEmpty ? null : contactPersons.first;
     return first != null &&
+        (first.name?.trim().isNotEmpty ?? false) &&
         first.email.trim().isNotEmpty &&
         first.phone.trim().isNotEmpty;
+  }
+
+  bool get hasValidKasiliftDetails =>
+      !isKasilift || (aboutUs != null && aboutUs!.trim().isNotEmpty);
+
+  /// Sentinel used by [updateDetails] to distinguish "leave this field
+  /// alone" from "clear this field to null" -- unlike [copyWith]'s `??`
+  /// fallback, this lets a field actually be set back to null (e.g. when a
+  /// user backspaces a text field down to empty).
+  static const _unset = Object();
+
+  OrganisationForm updateDetails({
+    Object? organisationName = _unset,
+    Object? industryType = _unset,
+    Object? address = _unset,
+    Object? province = _unset,
+    Object? socialDevelopmentNumber = _unset,
+    Object? aboutUs = _unset,
+  }) {
+    return OrganisationForm(
+      orgKind: orgKind,
+      registrationStatus: registrationStatus,
+      organisationName: identical(organisationName, _unset)
+          ? this.organisationName
+          : organisationName as String?,
+      industryType: identical(industryType, _unset)
+          ? this.industryType
+          : industryType as String?,
+      address:
+          identical(address, _unset) ? this.address : address as String?,
+      province:
+          identical(province, _unset) ? this.province : province as String?,
+      socialDevelopmentNumber: identical(socialDevelopmentNumber, _unset)
+          ? this.socialDevelopmentNumber
+          : socialDevelopmentNumber as String?,
+      isKasilift: isKasilift,
+      aboutUs:
+          identical(aboutUs, _unset) ? this.aboutUs : aboutUs as String?,
+      contactPersons: contactPersons,
+      submissionId: submissionId,
+      pickedDocuments: pickedDocuments,
+      uploadedDocumentPaths: uploadedDocumentPaths,
+      uploadingDocuments: uploadingDocuments,
+      isLoading: isLoading,
+      status: status,
+      errorMessage: errorMessage,
+    );
   }
 
   OrganisationForm copyWith({
@@ -131,7 +198,10 @@ class OrganisationForm {
     String? organisationName,
     String? industryType,
     String? address,
+    String? province,
     String? socialDevelopmentNumber,
+    bool? isKasilift,
+    String? aboutUs,
     List<ContactPerson>? contactPersons,
     String? submissionId,
     Map<DocumentType, PickedDocument?>? pickedDocuments,
@@ -147,8 +217,11 @@ class OrganisationForm {
       organisationName: organisationName ?? this.organisationName,
       industryType: industryType ?? this.industryType,
       address: address ?? this.address,
+      province: province ?? this.province,
       socialDevelopmentNumber:
           socialDevelopmentNumber ?? this.socialDevelopmentNumber,
+      isKasilift: isKasilift ?? this.isKasilift,
+      aboutUs: aboutUs ?? this.aboutUs,
       contactPersons: contactPersons ?? this.contactPersons,
       submissionId: submissionId ?? this.submissionId,
       pickedDocuments: pickedDocuments ?? this.pickedDocuments,
@@ -167,16 +240,22 @@ class OrganisationForm {
       organisationName: organisationName!,
       industryType: industryType!,
       address: requiresOrganisationDetails ? address : null,
+      province: requiresProvince ? province : null,
       socialDevelopmentNumber:
           requiresSocialDevelopmentNumber ? socialDevelopmentNumber : null,
+      isKasilift: isKasilift,
+      aboutUs: isKasilift ? aboutUs : null,
     );
   }
 
-  /// Contact persons with both fields filled in, ready to persist.
+  /// Contact persons with all fields filled in, ready to persist.
   List<ContactPerson> get contactPersonsToSave {
     if (!requiresOrganisationDetails) return const [];
     return contactPersons
-        .where((c) => c.email.trim().isNotEmpty && c.phone.trim().isNotEmpty)
+        .where((c) =>
+            (c.name?.trim().isNotEmpty ?? false) &&
+            c.email.trim().isNotEmpty &&
+            c.phone.trim().isNotEmpty)
         .toList();
   }
 }

@@ -8,7 +8,10 @@ class GetInvolvedSubmission {
   final String organisationName;
   final String industryType;
   final String? address;
+  final String? province;
   final String? socialDevelopmentNumber;
+  final bool isKasilift;
+  final String? aboutUs;
   final String? status;
 
   const GetInvolvedSubmission({
@@ -19,7 +22,10 @@ class GetInvolvedSubmission {
     required this.organisationName,
     required this.industryType,
     this.address,
+    this.province,
     this.socialDevelopmentNumber,
+    this.isKasilift = false,
+    this.aboutUs,
     this.status,
   });
 
@@ -31,7 +37,10 @@ class GetInvolvedSubmission {
     String? organisationName,
     String? industryType,
     String? address,
+    String? province,
     String? socialDevelopmentNumber,
+    bool? isKasilift,
+    String? aboutUs,
     String? status,
   }) {
     return GetInvolvedSubmission(
@@ -42,8 +51,11 @@ class GetInvolvedSubmission {
       organisationName: organisationName ?? this.organisationName,
       industryType: industryType ?? this.industryType,
       address: address ?? this.address,
+      province: province ?? this.province,
       socialDevelopmentNumber:
           socialDevelopmentNumber ?? this.socialDevelopmentNumber,
+      isKasilift: isKasilift ?? this.isKasilift,
+      aboutUs: aboutUs ?? this.aboutUs,
       status: status ?? this.status,
     );
   }
@@ -55,8 +67,11 @@ class GetInvolvedSubmission {
       'organisation_name': organisationName,
       'industry_type': industryType,
       if (address != null) 'address': address,
+      if (province != null) 'province': province,
       if (socialDevelopmentNumber != null)
         'social_development_number': socialDevelopmentNumber,
+      'is_kasilift': isKasilift,
+      if (aboutUs != null) 'about_us': aboutUs,
     };
   }
 
@@ -73,7 +88,10 @@ class GetInvolvedSubmission {
       organisationName: json['organisation_name'] as String,
       industryType: json['industry_type'] as String,
       address: json['address'] as String?,
+      province: json['province'] as String?,
       socialDevelopmentNumber: json['social_development_number'] as String?,
+      isKasilift: json['is_kasilift'] as bool? ?? false,
+      aboutUs: json['about_us'] as String?,
       status: json['status'] as String?,
     );
   }

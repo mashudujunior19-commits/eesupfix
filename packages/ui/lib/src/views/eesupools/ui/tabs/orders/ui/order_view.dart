@@ -67,7 +67,7 @@ class EESUpoolOrderViewScreen extends StatelessWidget {
                           ),
                           tabs: [
                             Tab(child: Icon(MdiIcons.packageVariant, size: 15)),
-                            const Tab(text: 'ORDER PRODUCTS'),
+                            const Tab(text: 'ORDERED ITEMS'),
                             const Tab(text: 'MEMBER ORDERS')
                           ],
                         ),

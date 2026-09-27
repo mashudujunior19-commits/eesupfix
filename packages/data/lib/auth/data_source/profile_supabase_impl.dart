@@ -66,20 +66,20 @@ class ProfileSupabaseImpl implements ProfileDataSource {
   @override
   Future<bool> checkIfhasAddress(String id) async {
     try {
+      // Filter directly on is_primary (and area_id, which verification also
+      // requires) instead of grabbing an arbitrary row with limit(1) -- a
+      // user with more than one address could otherwise have a non-primary
+      // row returned first and be wrongly reported as having no address.
       final response = await _client
           .schema('geolocations')
           .from('address')
-          .select('user_id, is_primary')
+          .select('user_id')
           .eq('user_id', id)
-          .limit(1); // Only fetch one record
+          .eq('is_primary', true)
+          .not('area_id', 'is', null)
+          .limit(1);
 
-      if (response.isNotEmpty) {
-        // Check if the address is marked as primary
-        final address = response.first;
-        return address['is_primary'] == true;
-      }
-
-      return false; // No address found
+      return response.isNotEmpty;
     } catch (e) {
       if (kDebugMode) {
         print('check address error : $e');

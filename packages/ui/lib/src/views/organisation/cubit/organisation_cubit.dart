@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:data/get_involved/models/contact_person.dart';
+import 'package:data/get_involved/models/contact_person_role.dart';
 import 'package:data/get_involved/models/document_type.dart';
 import 'package:data/get_involved/models/picked_document.dart';
 import 'package:data/get_involved/repository/get_involved_repository.dart';
@@ -22,9 +23,29 @@ class OrganisationCubit extends Cubit<OrganisationForm> {
     );
   }
 
-  void updateContactPerson(int index, {String? email, String? phone}) {
+  /// Replaces the contact person at [index] outright with the given field
+  /// values (the caller -- [_ContactPersonFields] -- always passes the
+  /// current value of every field alongside the one actually being edited,
+  /// rather than a partial update; this sidesteps `copyWith`'s usual
+  /// can't-clear-to-null problem entirely, since there's nothing to
+  /// distinguish "not touched" from "cleared" here).
+  void updateContactPerson(
+    int index, {
+    String? name,
+    required String email,
+    required String phone,
+    ContactPersonRole? role,
+  }) {
     final contacts = [...state.contactPersons];
-    contacts[index] = contacts[index].copyWith(email: email, phone: phone);
+    final existing = contacts[index];
+    contacts[index] = ContactPerson(
+      id: existing.id,
+      submissionId: existing.submissionId,
+      name: name,
+      email: email,
+      phone: phone,
+      role: role,
+    );
     emit(state.copyWith(contactPersons: contacts));
   }
 

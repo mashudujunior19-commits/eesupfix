@@ -26,6 +26,17 @@ class GetInvolvedRepository {
     return result;
   }
 
+  /// Updates an existing submission, e.g. to opt into KasiLift after the
+  /// fact (see [GetInvolvedSubmission.isKasilift]).
+  Future<Either<EESUpException, GetInvolvedSubmission>> updateSubmission(
+    GetInvolvedSubmission submission,
+  ) async {
+    final result = authRepository.executeFutureWithAuth((_) {
+      return dataSource.updateSubmission(submission);
+    });
+    return result;
+  }
+
   /// Uploads a single supporting document to private storage (scoped under
   /// the current user's own folder) and records it against [submissionId].
   Future<Either<EESUpException, SubmissionDocument>> uploadDocument({

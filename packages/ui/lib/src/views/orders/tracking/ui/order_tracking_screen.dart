@@ -7,6 +7,7 @@ import 'package:ui/src/core/extensions/sizedbox_ext.dart';
 import 'package:ui/src/core/widgets/fullscreen_error_widget.dart';
 import 'package:ui/src/core/widgets/fullscreen_loading_shimmer.dart';
 import 'package:ui/src/views/orders/tracking/bloc/order_tracking_bloc.dart';
+import 'package:ui/src/views/orders/tracking/ui/ord_kasipool_timeline.dart';
 import 'package:ui/src/views/orders/tracking/ui/ord_primary_info.dart';
 import 'package:ui/src/views/orders/tracking/ui/ord_products.dart';
 import 'package:ui/src/views/orders/tracking/ui/track_statuses.dart';
@@ -63,6 +64,10 @@ class OrderTrackingScreen extends StatelessWidget {
                     return ListView(
                       padding: const EdgeInsets.only(bottom: 300),
                       children: [
+                        if (order.eesupoolOrderId != null)
+                          OrdKasipoolTimeline(
+                            eesupoolOrderId: order.eesupoolOrderId!,
+                          ),
                         OrdPrimaryInfo(order: order),
                         OrdProducts(order: order),
                         TrackStatuses(order: order, privilage: privilage)

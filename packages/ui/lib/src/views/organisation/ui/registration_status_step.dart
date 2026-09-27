@@ -24,20 +24,26 @@ class RegistrationStatusStep extends StatelessWidget {
       padding: const EdgeInsets.only(left: 20, right: 20, top: 10),
       children: [
         Text(
-          'Is the organisation registered or unregistered?',
+          form.isNPO
+              ? 'Is the organisation registered or unregistered?'
+              : 'Is the business registered or unregistered?',
           style: context.textTheme.labelMedium?.copyWith(fontSize: 18),
         ).animate().slideIn(0),
         25.sH,
         OrganisationOptionTile(
           title: 'Registered',
-          subtitle: 'The organisation has a formal registration number.',
+          subtitle: form.isNPO
+              ? 'The organisation has a formal registration number.'
+              : 'The business has a formal registration number.',
           isSelected: form.registrationStatus == RegistrationStatus.registered,
           onTap: () => _select(context, RegistrationStatus.registered),
         ).animate().slideIn(50),
         15.sH,
         OrganisationOptionTile(
           title: 'Unregistered',
-          subtitle: 'The organisation is not yet formally registered.',
+          subtitle: form.isNPO
+              ? 'The organisation is not yet formally registered.'
+              : 'The business is not yet formally registered.',
           isSelected:
               form.registrationStatus == RegistrationStatus.unregistered,
           onTap: () => _select(context, RegistrationStatus.unregistered),

@@ -1,8 +1,10 @@
 import 'package:data/get_involved/models/contact_person.dart';
+import 'package:data/get_involved/models/contact_person_role.dart';
 import 'package:ui/src/core/extensions/context_alerts_ext.dart';
 import 'package:ui/src/core/extensions/context_theme_ext.dart';
 import 'package:ui/src/core/extensions/sizedbox_ext.dart';
 import 'package:ui/src/core/extensions/slide_in_animation_ext.dart';
+import 'package:ui/src/core/widgets/eesup_dropdown_form_field.dart';
 import 'package:ui/src/core/widgets/eesup_form_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
@@ -50,37 +52,56 @@ class _OrganisationDetailsFormState extends State<OrganisationDetailsForm> {
       children: [
         EESUpTextFormField(
           initialValue: form.organisationName,
-          label: 'Name of Business/Organisation',
-          hintText: 'Enter your business name',
+          label: form.isNPO ? 'Name of Organisation' : 'Name of Business',
+          hintText:
+              form.isNPO ? "Enter your organisation's name" : 'Enter your business name',
           isRequired: true,
-          onChanged: (value) =>
-              _update(organisationName: value.isEmpty ? null : value),
+          onChanged: (value) => _updateOrganisationName(value),
         ).animate().slideIn(0),
-        EESUpTextFormField(
-          initialValue: form.industryType,
-          label: 'Industry Type',
-          hintText: 'e.g Soccer Club',
-          isRequired: true,
-          onChanged: (value) =>
-              _update(industryType: value.isEmpty ? null : value),
-        ).animate().slideIn(50),
+        if (form.isNPO)
+          EESUpDropdownFormField<String>(
+            value: broadSectorTypes.contains(form.industryType)
+                ? form.industryType
+                : null,
+            label: 'Broad Sector Type',
+            hintText: 'Select a sector',
+            isRequired: true,
+            items: broadSectorTypes,
+            itemLabel: (value) => value,
+            onChanged: (value) => _updateIndustryType(value ?? ''),
+          ).animate().slideIn(50)
+        else
+          EESUpTextFormField(
+            initialValue: form.industryType,
+            label: 'Type of business',
+            hintText: 'Welder / Plumber / Spaza',
+            isRequired: true,
+            onChanged: (value) => _updateIndustryType(value),
+          ).animate().slideIn(50),
         if (form.requiresOrganisationDetails) ...[
           EESUpTextFormField(
             initialValue: form.address,
             label: 'Address',
-            hintText: "Enter the organisation's physical address",
+            hintText: form.isNPO
+                ? "Enter the organisation's physical address"
+                : "Enter the business's physical address",
             isRequired: true,
-            onChanged: (value) => _update(address: value.isEmpty ? null : value),
+            onChanged: (value) => _updateAddress(value),
           ).animate().slideIn(75),
+          if (form.requiresProvince)
+            EESUpTextFormField(
+              initialValue: form.province,
+              label: 'Province',
+              hintText: 'e.g. Gauteng',
+              onChanged: (value) => _updateProvince(value),
+            ).animate().slideIn(80),
           if (form.requiresSocialDevelopmentNumber)
             EESUpTextFormField(
               initialValue: form.socialDevelopmentNumber,
               label: 'Social Development Number',
-              hintText: 'NPO registration number (Dept. of Social Development)',
-              isRequired: true,
-              onChanged: (value) => _update(
-                socialDevelopmentNumber: value.isEmpty ? null : value,
-              ),
+              hintText: 'NPO registration number (Dept. of Social '
+                  'Development), if registered with the DSD',
+              onChanged: (value) => _updateSocialDevelopmentNumber(value),
             ).animate().slideIn(85),
           20.sH,
           Row(
@@ -117,12 +138,19 @@ class _OrganisationDetailsFormState extends State<OrganisationDetailsForm> {
             label: docSpecs[type]!.label,
             hint: docSpecs[type]!.hint,
             isRequired: form.requiredDocumentTypes.contains(type),
+            wouldBeRequiredIfKasiLift: form.isNPO &&
+                !form.isKasilift &&
+                form.baseRequiredDocumentTypes.contains(type),
             allowedExtensions: docSpecs[type]!.extensions,
             pickedFile: form.pickedDocuments[type],
             isUploading: form.uploadingDocuments.contains(type),
             isUploaded: form.uploadedDocumentPaths[type] != null,
             onFilePicked: (file) => cubit.pickDocument(type, file),
           ).animate().slideIn(150),
+        if (form.isNPO) ...[
+          20.sH,
+          _KasiliftOptIn(form: form),
+        ],
         30.sH,
         ElevatedButton(
           onPressed: _isSubmitting ? null : _handleSubmit,
@@ -141,19 +169,36 @@ class _OrganisationDetailsFormState extends State<OrganisationDetailsForm> {
     );
   }
 
-  void _update({
-    String? organisationName,
-    String? industryType,
-    String? address,
-    String? socialDevelopmentNumber,
-  }) {
+  void _updateOrganisationName(String value) {
     context.read<OrganisationCubit>().updateForm(
-          form.copyWith(
-            organisationName: organisationName ?? form.organisationName,
-            industryType: industryType ?? form.industryType,
-            address: address ?? form.address,
-            socialDevelopmentNumber:
-                socialDevelopmentNumber ?? form.socialDevelopmentNumber,
+          form.updateDetails(
+            organisationName: value.isEmpty ? null : value,
+          ),
+        );
+  }
+
+  void _updateIndustryType(String value) {
+    context.read<OrganisationCubit>().updateForm(
+          form.updateDetails(industryType: value.isEmpty ? null : value),
+        );
+  }
+
+  void _updateAddress(String value) {
+    context.read<OrganisationCubit>().updateForm(
+          form.updateDetails(address: value.isEmpty ? null : value),
+        );
+  }
+
+  void _updateProvince(String value) {
+    context.read<OrganisationCubit>().updateForm(
+          form.updateDetails(province: value.isEmpty ? null : value),
+        );
+  }
+
+  void _updateSocialDevelopmentNumber(String value) {
+    context.read<OrganisationCubit>().updateForm(
+          form.updateDetails(
+            socialDevelopmentNumber: value.isEmpty ? null : value,
           ),
         );
   }
@@ -164,11 +209,19 @@ class _OrganisationDetailsFormState extends State<OrganisationDetailsForm> {
 
     if (form.organisationName == null ||
         form.organisationName!.trim().isEmpty) {
-      context.snackBarError('Please provide the business/organisation name.');
+      context.snackBarError(
+        form.isNPO
+            ? 'Please provide the organisation name.'
+            : 'Please provide the business name.',
+      );
       return;
     }
     if (form.industryType == null || form.industryType!.trim().isEmpty) {
-      context.snackBarError('Please provide the industry type.');
+      context.snackBarError(
+        form.isNPO
+            ? 'Please select a broad sector type.'
+            : 'Please provide the type of business.',
+      );
       return;
     }
     if (form.requiresOrganisationDetails) {
@@ -176,21 +229,21 @@ class _OrganisationDetailsFormState extends State<OrganisationDetailsForm> {
         context.snackBarError('Please provide the address.');
         return;
       }
-      if (form.requiresSocialDevelopmentNumber &&
-          (form.socialDevelopmentNumber == null ||
-              form.socialDevelopmentNumber!.trim().isEmpty)) {
-        context.snackBarError('Please provide the Social Development Number.');
-        return;
-      }
       if (!form.hasValidContactPersons) {
         context.snackBarError(
-          'Please provide at least one contact person (email and phone).',
+          'Please provide at least one contact person '
+          '(name, email and phone).',
         );
         return;
       }
     }
     if (!form.hasAllRequiredDocuments) {
       context.snackBarError('Please upload all required documents.');
+      return;
+    }
+    if (!form.hasValidKasiliftDetails) {
+      context.snackBarError('Please tell us a bit about your KasiLift '
+          'organisation in "About Us".');
       return;
     }
 
@@ -206,6 +259,66 @@ class _OrganisationDetailsFormState extends State<OrganisationDetailsForm> {
       final message = context.read<OrganisationCubit>().state.errorMessage;
       context.snackBarError(message ?? 'Something went wrong.');
     }
+  }
+}
+
+class _KasiliftOptIn extends StatelessWidget {
+  const _KasiliftOptIn({required this.form});
+
+  final OrganisationForm form;
+
+  @override
+  Widget build(BuildContext context) {
+    final cubit = context.read<OrganisationCubit>();
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        InkWell(
+          onTap: () => cubit.updateForm(
+            form.copyWith(isKasilift: !form.isKasilift),
+          ),
+          child: Row(
+            children: [
+              Checkbox(
+                value: form.isKasilift,
+                onChanged: (value) => cubit.updateForm(
+                  form.copyWith(isKasilift: value ?? false),
+                ),
+              ),
+              Expanded(
+                child: Text(
+                  'Register as KasiLift Organisation',
+                  style: context.textTheme.labelMedium?.copyWith(fontSize: 14),
+                ),
+              ),
+            ],
+          ),
+        ),
+        if (form.isKasilift) ...[
+          Padding(
+            padding: const EdgeInsets.only(left: 10, bottom: 4),
+            child: Text(
+              'KasiLift organisations participate in the Social '
+              'Wallet funding ecosystem.',
+              style: context.textTheme.bodySmall?.copyWith(
+                color: Colors.grey.shade600,
+                fontSize: 12,
+              ),
+            ),
+          ),
+          EESUpTextFormField(
+            initialValue: form.aboutUs,
+            label: 'About Us',
+            hintText: 'Tell us about your organisation and its mission',
+            isRequired: true,
+            maxLines: 4,
+            onChanged: (value) => cubit.updateForm(
+              form.updateDetails(aboutUs: value.isEmpty ? null : value),
+            ),
+          ),
+        ],
+      ],
+    );
   }
 }
 
@@ -254,13 +367,31 @@ class _ContactPersonFields extends StatelessWidget {
             ],
           ),
           EESUpTextFormField(
+            initialValue: contact.name,
+            label: 'Name',
+            hintText: 'Full name',
+            isRequired: true,
+            onChanged: (value) => cubit.updateContactPerson(
+              index,
+              name: value.isEmpty ? null : value,
+              email: contact.email,
+              phone: contact.phone,
+              role: contact.role,
+            ),
+          ),
+          EESUpTextFormField(
             initialValue: contact.email,
             label: 'Email',
             hintText: 'contact@example.com',
             type: TextInputType.emailAddress,
             isRequired: true,
-            onChanged: (value) =>
-                cubit.updateContactPerson(index, email: value),
+            onChanged: (value) => cubit.updateContactPerson(
+              index,
+              name: contact.name,
+              email: value,
+              phone: contact.phone,
+              role: contact.role,
+            ),
           ),
           EESUpTextFormField(
             initialValue: contact.phone,
@@ -268,8 +399,27 @@ class _ContactPersonFields extends StatelessWidget {
             hintText: '0821234567',
             type: TextInputType.phone,
             isRequired: true,
-            onChanged: (value) =>
-                cubit.updateContactPerson(index, phone: value),
+            onChanged: (value) => cubit.updateContactPerson(
+              index,
+              name: contact.name,
+              email: contact.email,
+              phone: value,
+              role: contact.role,
+            ),
+          ),
+          EESUpDropdownFormField<ContactPersonRole>(
+            value: contact.role,
+            label: 'Role',
+            hintText: 'Select a role',
+            items: ContactPersonRole.values,
+            itemLabel: (role) => role.label,
+            onChanged: (role) => cubit.updateContactPerson(
+              index,
+              name: contact.name,
+              email: contact.email,
+              phone: contact.phone,
+              role: role,
+            ),
           ),
         ],
       ),

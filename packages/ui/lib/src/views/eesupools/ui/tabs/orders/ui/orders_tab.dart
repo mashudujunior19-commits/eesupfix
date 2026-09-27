@@ -26,6 +26,18 @@ class OrdersPoolTab extends StatelessWidget {
       child: BlocBuilder<OrdersBloc, OrdersState>(
         builder: (context, state) {
           if (state is OrdersLoaded) {
+            // The Master Order (the pool-wide order, aggregating every
+            // member's individual order) is only for the KasiPool owner to
+            // manage -- other members place and track their own orders
+            // through My Orders instead.
+            if (pool.role != EESUpoolMemberRole.admin) {
+              return FullScreenError(
+                isError: false,
+                exception: EESUpException(
+                  message: 'Only the KasiPool owner can view the pool order.',
+                ),
+              );
+            }
             final openOrder = state.openOrder;
             final orders = state.orders;
             return Scaffold(

@@ -11,6 +11,12 @@ abstract class GetInvolvedDataSource {
     GetInvolvedSubmission submission,
   );
 
+  /// Updates an existing submission (e.g. opting into KasiLift after the
+  /// initial registration -- see [GetInvolvedSubmission.isKasilift]).
+  Future<GetInvolvedSubmission> updateSubmission(
+    GetInvolvedSubmission submission,
+  );
+
   /// Uploads a supporting document to private storage and returns the
   /// storage path (not a public URL -- these documents are sensitive).
   ///

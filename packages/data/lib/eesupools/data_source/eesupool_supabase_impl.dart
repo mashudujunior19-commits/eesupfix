@@ -638,6 +638,18 @@ class EESUpoolSupabaseImp implements EESUpoolDataSource {
   }
 
   @override
+  Future<EESUpoolOrder?> fetchEESUpoolOrderById(int orderId) async {
+    try {
+      final order = await client
+          .schema('communities')
+          .rpc('get_eesupool_order_by_id', params: {'order_id': orderId}).single();
+      return EESUpoolOrder.fromJson(order);
+    } catch (e) {
+      return null;
+    }
+  }
+
+  @override
   Future<bool> updateMemberOrderAssignments(
     List<MemberOrderAssignment> assignment,
     int orderId,

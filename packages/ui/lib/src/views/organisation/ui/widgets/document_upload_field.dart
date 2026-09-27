@@ -13,6 +13,7 @@ class DocumentUploadField extends StatelessWidget {
     required this.label,
     required this.hint,
     required this.isRequired,
+    this.wouldBeRequiredIfKasiLift = false,
     required this.allowedExtensions,
     required this.pickedFile,
     required this.isUploading,
@@ -23,6 +24,11 @@ class DocumentUploadField extends StatelessWidget {
   final String label;
   final String hint;
   final bool isRequired;
+
+  /// True when this document isn't currently required only because the
+  /// applicant hasn't opted into KasiLift -- shown as an info tooltip
+  /// instead of the "Optional" label.
+  final bool wouldBeRequiredIfKasiLift;
   final List<String> allowedExtensions;
   final PickedDocument? pickedFile;
   final bool isUploading;
@@ -53,16 +59,34 @@ class DocumentUploadField extends StatelessWidget {
                   ),
                 ),
               ),
-              Text(
-                isRequired ? 'Required' : 'Optional',
-                style: context.textTheme.bodySmall?.copyWith(
-                  fontSize: 11,
-                  fontWeight: FontWeight.w600,
-                  color: isRequired
-                      ? context.colorScheme.error
-                      : Colors.grey.shade600,
+              if (isRequired)
+                Text(
+                  '*',
+                  style: context.textTheme.labelMedium?.copyWith(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w700,
+                    color: context.colorScheme.error,
+                  ),
+                )
+              else if (wouldBeRequiredIfKasiLift)
+                Tooltip(
+                  message: 'Required if you register as '
+                      'KasiLift Organisation.',
+                  child: Icon(
+                    Icons.info_outline,
+                    size: 16,
+                    color: Colors.grey.shade600,
+                  ),
+                )
+              else
+                Text(
+                  'Optional',
+                  style: context.textTheme.bodySmall?.copyWith(
+                    fontSize: 11,
+                    fontWeight: FontWeight.w600,
+                    color: Colors.grey.shade600,
+                  ),
                 ),
-              ),
             ],
           ),
           4.sH,

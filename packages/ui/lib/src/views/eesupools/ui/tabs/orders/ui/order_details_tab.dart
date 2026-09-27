@@ -320,7 +320,7 @@ class OrderDetailsTab extends StatelessWidget {
             children: [
               const Padding(
                 padding: EdgeInsets.only(left: 20, top: 20),
-                child: Text('Location'),
+                child: Text('Pickup Point'),
               ),
               AddressCard(
                 address: order.address!,

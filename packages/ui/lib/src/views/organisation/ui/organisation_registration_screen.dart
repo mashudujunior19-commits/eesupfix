@@ -76,7 +76,11 @@ class _OrganisationRegistrationScreenState
                       })
                     : null,
                 title: _tabController.index != _lastTabIndex
-                    ? const Text('Register an Organisation')
+                    ? Text(
+                        state.orgKind == OrganisationKind.business
+                            ? 'Register a Business'
+                            : 'Register an Organisation',
+                      )
                     : null,
               ),
               body: TabBarView(
@@ -92,7 +96,7 @@ class _OrganisationRegistrationScreenState
                     form: state,
                     tabController: _tabController,
                   ),
-                  const OrganisationSuccessScreen(),
+                  OrganisationSuccessScreen(isNPO: state.isNPO),
                 ],
               ),
             ),

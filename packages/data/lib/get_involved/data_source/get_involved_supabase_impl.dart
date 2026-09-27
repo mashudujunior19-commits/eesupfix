@@ -27,6 +27,20 @@ class GetInvolvedSupabaseImpl implements GetInvolvedDataSource {
   }
 
   @override
+  Future<GetInvolvedSubmission> updateSubmission(
+    GetInvolvedSubmission submission,
+  ) async {
+    final response = await client
+        .schema('services')
+        .from('get_involved_submissions')
+        .update(submission.toJson())
+        .eq('id', submission.id!)
+        .select()
+        .single();
+    return GetInvolvedSubmission.fromJson(response);
+  }
+
+  @override
   Future<String?> uploadDocumentFile(String path, Uint8List bytes) async {
     try {
       await client.storage.from(_bucket).uploadBinary(
@@ -60,8 +74,10 @@ class GetInvolvedSupabaseImpl implements GetInvolvedDataSource {
     final rows = contactPersons
         .map((c) => {
               'submission_id': submissionId,
+              if (c.name != null) 'name': c.name,
               'email': c.email,
               'phone': c.phone,
+              if (c.role != null) 'role': c.role.toString(),
             })
         .toList();
     final response = await client

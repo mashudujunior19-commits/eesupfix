@@ -27,7 +27,15 @@ class OrderReceiversBloc
         List<EESUpoolMember> receivers = [
           ...(state as OrderReceiversLoaded).receivers
         ];
-        if (!receivers.contains(event.member)) {
+        // Compare by memberId rather than whole-object equality: the member
+        // being added comes from a different fetch (the member-picker
+        // dialog) than the ones already in `receivers`, and freezed's
+        // generated `==` requires every field to match, so two instances
+        // of the same member can fail to compare equal and slip past this
+        // dedup check.
+        final alreadyAdded =
+            receivers.any((r) => r.memberId == event.member.memberId);
+        if (!alreadyAdded) {
           receivers.add(event.member);
           final ids = receivers.map((e) => e.memberId).toList();
           _repository.updatePoolOrderReceivers(event.orderId, ids);
@@ -41,7 +49,7 @@ class OrderReceiversBloc
         List<EESUpoolMember> receivers = [
           ...(state as OrderReceiversLoaded).receivers
         ];
-        receivers.remove(event.member);
+        receivers.removeWhere((r) => r.memberId == event.member.memberId);
         final ids = receivers.map((e) => e.memberId).toList();
         _repository.updatePoolOrderReceivers(event.orderId, ids);
         emit(OrderReceiversLoaded(receivers));
