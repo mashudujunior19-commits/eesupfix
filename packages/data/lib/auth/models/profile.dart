@@ -15,7 +15,7 @@ abstract class Profile with _$Profile {
     @JsonKey(name: 'first_name') String? firstName,
     @JsonKey(name: 'last_name') String? lastName,
     @JsonKey(includeToJson: false) String? email,
-    @JsonKey(includeToJson: false) String? phone,
+    String? phone,
     @JsonKey(name: 'is_active') bool? isActive,
     @JsonKey(name: 'deactivated_on') DateTime? deactivatedOn,
     @JsonKey(name: 'accepted_ts_and_cs') bool? acceptedTsAndCs,

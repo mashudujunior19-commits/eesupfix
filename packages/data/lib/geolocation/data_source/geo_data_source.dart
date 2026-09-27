@@ -11,4 +11,8 @@ abstract class GeoDataSource {
   Future<Address?> updateAddress(Address address);
 
   Future<void> deleteAddress(int id);
+
+  /// Geocodes a free-typed address string to lat/lng. Used on web, where
+  /// the `geocoding` package has no browser implementation.
+  Future<({double lat, double lng})?> geocodeAddress(String address);
 }

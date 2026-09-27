@@ -3,6 +3,7 @@ import 'package:data/utils/eesup_exception.dart';
 import 'package:either_dart/either.dart';
 import 'package:data/geolocation/data_source/geo_data_source.dart';
 import 'package:data/geolocation/models/address.dart';
+import 'package:flutter/foundation.dart';
 import 'package:geocoding/geocoding.dart' as geocoding;
 
 class GeoRepository {
@@ -80,6 +81,15 @@ class GeoRepository {
 
   Future<({double lat, double lng})?> _getGeoCoordinates(
       String strAddress) async {
+    // The `geocoding` package has no web implementation, so on web this
+    // falls through to a Supabase edge function that geocodes server-side.
+    if (kIsWeb) {
+      final result = await EESUpException.guardFuture(
+        action: () => _dataSource.geocodeAddress(strAddress),
+      );
+      return result.fold((l) => null, (r) => r);
+    }
+
     final result = await EESUpException.guardFuture(action: () {
       return geocoding.locationFromAddress(strAddress);
     });

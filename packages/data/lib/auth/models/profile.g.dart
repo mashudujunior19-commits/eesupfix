@@ -37,6 +37,7 @@ Map<String, dynamic> _$ProfileToJson(_Profile instance) => <String, dynamic>{
       'rsa_id_number': instance.rsaIdNumber,
       'first_name': instance.firstName,
       'last_name': instance.lastName,
+      'phone': instance.phone,
       'is_active': instance.isActive,
       'deactivated_on': instance.deactivatedOn?.toIso8601String(),
       'accepted_ts_and_cs': instance.acceptedTsAndCs,

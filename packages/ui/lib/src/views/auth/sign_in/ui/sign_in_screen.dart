@@ -188,10 +188,11 @@ class _WelcomeMessage extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         SizedBox(
-          height: 30,
+          width: MediaQuery.of(context).size.width * 0.45,
           child: SvgPicture.asset(
             'assets/images/logo.svg',
             alignment: Alignment.center,
+            fit: BoxFit.contain,
           ),
         ).animate().slideIn(0),
         15.sH,

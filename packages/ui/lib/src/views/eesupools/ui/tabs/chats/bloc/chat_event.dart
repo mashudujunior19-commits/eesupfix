@@ -25,3 +25,9 @@ final class MessageReactionAdded extends ChatEvent {
 final class ChatStreamStopped extends ChatEvent {
   ChatStreamStopped();
 }
+
+final class MessageDeleted extends ChatEvent {
+  final int poolId;
+  final int messageId;
+  MessageDeleted(this.poolId, this.messageId);
+}

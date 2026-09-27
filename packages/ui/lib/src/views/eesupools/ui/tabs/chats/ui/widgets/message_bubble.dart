@@ -5,6 +5,7 @@ import 'package:data/eesupools/models/eesupool_member.dart';
 import 'package:ui/src/core/extensions/bottom_sheet_context_ext.dart';
 import 'package:ui/src/core/extensions/context_theme_ext.dart';
 import 'package:ui/src/core/extensions/sizedbox_ext.dart';
+import 'package:ui/src/views/eesupools/ui/tabs/chats/bloc/chat_bloc.dart';
 import 'package:ui/src/views/eesupools/ui/tabs/chats/bloc/chat_textfield_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
@@ -122,12 +123,21 @@ class MessageBubble extends StatelessWidget {
                                     );
                                   },
                                 ),
-                              _bubblPopUpOption(
-                                context,
-                                'Delete',
-                                IconlyLight.delete,
-                                () {},
-                              ),
+                              if (message.authorId == pool.memberId ||
+                                  pool.role == EESUpoolMemberRole.admin)
+                                _bubblPopUpOption(
+                                  context,
+                                  'Delete',
+                                  IconlyLight.delete,
+                                  () {
+                                    context.read<ChatBloc>().add(
+                                          MessageDeleted(
+                                            pool.eesupoolId!,
+                                            message.id,
+                                          ),
+                                        );
+                                  },
+                                ),
                             ];
                           },
                         )
