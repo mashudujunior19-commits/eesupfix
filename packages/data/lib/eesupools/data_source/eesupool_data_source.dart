@@ -147,6 +147,12 @@ abstract class EESUpoolDataSource {
 
   Future<EESUpoolOrder?> fetchEESUpoolOpenOrder(int poolId);
 
+  /// Fetches a single pool order (with its aggregate member-order stats)
+  /// by its own id, regardless of which pool it belongs to or whether it's
+  /// still open -- used to show an individual buyer's order its parent
+  /// KasiPool order's delivery date/progress.
+  Future<EESUpoolOrder?> fetchEESUpoolOrderById(int orderId);
+
   Future<bool> joinKasi(String userId, int poolId);
   Future<dynamic> kasiStreetsSearch({
     required int parentId,

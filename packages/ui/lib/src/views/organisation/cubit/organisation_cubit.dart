@@ -1,15 +1,70 @@
 import 'package:bloc/bloc.dart';
-import 'package:data/organisation/repository/organisation_repository.dart';
+import 'package:data/get_involved/models/contact_person.dart';
+import 'package:data/get_involved/models/contact_person_role.dart';
+import 'package:data/get_involved/models/document_type.dart';
+import 'package:data/get_involved/models/picked_document.dart';
+import 'package:data/get_involved/repository/get_involved_repository.dart';
 import 'package:ui/src/views/organisation/cubit/organisation_form.dart';
 
 class OrganisationCubit extends Cubit<OrganisationForm> {
-  final OrganisationRepository _organisationRepository;
+  final GetInvolvedRepository _getInvolvedRepository;
   bool _isSubmitting = false;
 
-  OrganisationCubit(this._organisationRepository)
+  OrganisationCubit(this._getInvolvedRepository)
       : super(OrganisationForm.initial());
 
   void updateForm(OrganisationForm form) => emit(form);
+
+  void pickDocument(DocumentType type, PickedDocument document) {
+    emit(
+      state.copyWith(
+        pickedDocuments: {...state.pickedDocuments, type: document},
+      ),
+    );
+  }
+
+  /// Replaces the contact person at [index] outright with the given field
+  /// values (the caller -- [_ContactPersonFields] -- always passes the
+  /// current value of every field alongside the one actually being edited,
+  /// rather than a partial update; this sidesteps `copyWith`'s usual
+  /// can't-clear-to-null problem entirely, since there's nothing to
+  /// distinguish "not touched" from "cleared" here).
+  void updateContactPerson(
+    int index, {
+    String? name,
+    required String email,
+    required String phone,
+    ContactPersonRole? role,
+  }) {
+    final contacts = [...state.contactPersons];
+    final existing = contacts[index];
+    contacts[index] = ContactPerson(
+      id: existing.id,
+      submissionId: existing.submissionId,
+      name: name,
+      email: email,
+      phone: phone,
+      role: role,
+    );
+    emit(state.copyWith(contactPersons: contacts));
+  }
+
+  void addContactPerson() {
+    if (state.contactPersons.length >= state.maxContactPersons) return;
+    emit(
+      state.copyWith(
+        contactPersons: [
+          ...state.contactPersons,
+          const ContactPerson(email: '', phone: ''),
+        ],
+      ),
+    );
+  }
+
+  void removeContactPerson(int index) {
+    final contacts = [...state.contactPersons]..removeAt(index);
+    emit(state.copyWith(contactPersons: contacts));
+  }
 
   Future<void> submit() async {
     if (_isSubmitting) return;
@@ -17,22 +72,104 @@ class OrganisationCubit extends Cubit<OrganisationForm> {
 
     emit(state.copyWith(isLoading: true, errorMessage: null));
 
-    final results = await _organisationRepository.registerOrganisation(
-      state.toOrganisation(),
+    final submissionResult =
+        await _getInvolvedRepository.submitApplication(state.toSubmission());
+
+    final failure = submissionResult.fold(
+      (left) => left,
+      (right) => null,
     );
 
-    _isSubmitting = false;
-    emit(state.copyWith(isLoading: false));
-
-    results.fold((left) {
+    if (failure != null) {
+      _isSubmitting = false;
       emit(
         state.copyWith(
+          isLoading: false,
           status: OrganisationSubmitStatus.failed,
-          errorMessage: left.message,
+          errorMessage: failure.message,
         ),
       );
-    }, (right) {
-      emit(state.copyWith(status: OrganisationSubmitStatus.success));
-    });
+      return;
+    }
+
+    final submission = submissionResult.fold((_) => null, (right) => right);
+    final submissionId = submission!.id!;
+    emit(state.copyWith(submissionId: submissionId));
+
+    final contactsToSave = state.contactPersonsToSave;
+    if (contactsToSave.isNotEmpty) {
+      final contactsResult = await _getInvolvedRepository.saveContactPersons(
+        submissionId: submissionId,
+        contactPersons: contactsToSave,
+      );
+      final contactsFailure = contactsResult.fold((left) => left, (_) => null);
+      if (contactsFailure != null) {
+        _isSubmitting = false;
+        emit(
+          state.copyWith(
+            isLoading: false,
+            status: OrganisationSubmitStatus.failed,
+            errorMessage: 'Failed to save contact details. Please try again.',
+          ),
+        );
+        return;
+      }
+    }
+
+    final docsToUpload = {
+      ...state.pickedDocuments,
+    }..removeWhere((_, document) => document == null);
+
+    for (final entry in docsToUpload.entries) {
+      final type = entry.key;
+      final document = entry.value!;
+
+      emit(
+        state.copyWith(
+          uploadingDocuments: {...state.uploadingDocuments, type},
+        ),
+      );
+
+      final uploadResult = await _getInvolvedRepository.uploadDocument(
+        submissionId: submissionId,
+        documentType: type,
+        document: document,
+      );
+
+      final stillUploading = {...state.uploadingDocuments}..remove(type);
+
+      final uploadFailure = uploadResult.fold((left) => left, (_) => null);
+      if (uploadFailure != null && state.requiredDocumentTypes.contains(type)) {
+        _isSubmitting = false;
+        emit(
+          state.copyWith(
+            isLoading: false,
+            uploadingDocuments: stillUploading,
+            status: OrganisationSubmitStatus.failed,
+            errorMessage:
+                'Failed to upload a required document. Please try again.',
+          ),
+        );
+        return;
+      }
+
+      emit(
+        state.copyWith(
+          uploadingDocuments: stillUploading,
+          uploadedDocumentPaths: {
+            ...state.uploadedDocumentPaths,
+            type: uploadResult.fold((_) => null, (right) => right.filePath),
+          },
+        ),
+      );
+    }
+
+    _isSubmitting = false;
+    emit(
+      state.copyWith(
+        isLoading: false,
+        status: OrganisationSubmitStatus.success,
+      ),
+    );
   }
 }

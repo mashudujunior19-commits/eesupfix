@@ -1,6 +1,7 @@
 // ignore_for_file: unused_element
 import 'package:auto_route/auto_route.dart';
 import 'package:bootstrap_icons/bootstrap_icons.dart';
+import 'package:data/auth/models/profile.dart';
 import 'package:data/auth/models/user_role.dart';
 import 'package:data/auth/repository/profile_repository.dart';
 import 'package:ui/src/core/extensions/bottom_sheet_context_ext.dart';
@@ -42,6 +43,50 @@ class _MenuTabState extends State<MenuTab> {
     setState(() {
       appVersion = packageInfo.version;
     });
+  }
+
+  /// Re-checks verification live (rather than trusting a possibly-stale
+  /// cached [Profile]) so a user who has just added their ID/address isn't
+  /// stuck seeing an out-of-date "not verified" result, and so the message
+  /// names only what's actually still missing.
+  Future<void> _onGetInvolvedTapped(BuildContext context, Profile profile) async {
+    if (profile.role != UserRole.Ubuntunist) {
+      context.snackBarError('This is only available to Individual accounts.');
+      return;
+    }
+
+    final profileRepo = context.read<ProfileRepository>();
+    final freshProfileResult = await profileRepo.fetchSessionProfile();
+    final freshProfile = freshProfileResult.fold((l) => null, (r) => r);
+    if (!mounted) return;
+    if (freshProfile == null) {
+      context.snackBarError('Something went wrong, please try again.');
+      return;
+    }
+
+    if (freshProfile.isVerified) {
+      context.read<ProfileBloc>().add(ProfileReloaded(freshProfile));
+      context.showBottomSheetDialog(
+        child: GetInvolvedSheet(role: freshProfile.role),
+      );
+      return;
+    }
+
+    final hasId = freshProfile.rsaIdNumber != null &&
+        freshProfile.rsaIdNumber!.trim().isNotEmpty;
+    final hasAddressResult = await profileRepo.checkIfHasAddress();
+    if (!mounted) return;
+    final hasAddress = hasAddressResult.fold((l) => false, (r) => r);
+
+    final missing = <String>[
+      if (!hasId) 'your RSA ID',
+      if (!hasAddress) 'a primary address',
+    ];
+    context.snackBarError(
+      missing.isEmpty
+          ? 'Please complete verification before you can get involved.'
+          : 'Please add ${missing.join(' and ')} before you can get involved.',
+    );
   }
 
   @override
@@ -105,23 +150,7 @@ class _MenuTabState extends State<MenuTab> {
                     _MenuButton(
                       label: 'Get Involved',
                       icon: IconlyLight.work,
-                      onTap: () {
-                        final isVerifiedIndividual = profile.isVerified &&
-                            profile.role == UserRole.Ubuntunist;
-                        if (!isVerifiedIndividual) {
-                          context.snackBarError(
-                            profile.role != UserRole.Ubuntunist
-                                ? 'This is only available to Individual accounts.'
-                                : 'Please complete verification (add your '
-                                    'RSA ID and a primary address) before '
-                                    'you can get involved.',
-                          );
-                          return;
-                        }
-                        context.showBottomSheetDialog(
-                          child: GetInvolvedSheet(role: profile.role),
-                        );
-                      },
+                      onTap: () => _onGetInvolvedTapped(context, profile),
                     ),
                     _MenuButton(
                       label: 'Request Products',

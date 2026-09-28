@@ -2,7 +2,9 @@ import 'package:ui/src/core/extensions/sizedbox_ext.dart';
 import 'package:flutter/material.dart';
 
 class OrganisationSuccessScreen extends StatelessWidget {
-  const OrganisationSuccessScreen({super.key});
+  const OrganisationSuccessScreen({super.key, required this.isNPO});
+
+  final bool isNPO;
 
   @override
   Widget build(BuildContext context) {
@@ -22,8 +24,11 @@ class OrganisationSuccessScreen extends StatelessWidget {
         ),
         10.sH,
         Text(
-          'Your organisation registration is now pending review. '
-          "We'll notify you once it has been reviewed.",
+          isNPO
+              ? 'Your organisation registration is now pending review. '
+                  "We'll notify you once it has been reviewed."
+              : 'Your business registration is now pending review. '
+                  "We'll notify you once it has been reviewed.",
           style: TextStyle(
             color: Colors.grey.shade600,
             fontWeight: FontWeight.w500,

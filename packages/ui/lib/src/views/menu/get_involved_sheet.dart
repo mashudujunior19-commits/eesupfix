@@ -25,7 +25,8 @@ class GetInvolvedSheet extends StatelessWidget {
         const SizedBox(height: 15),
         _GetInvolvedOption(
           icon: IconlyLight.work,
-          title: 'Register an Organisation',
+          title: 'Register a business / Non-profit company / '
+              'Unregistered voluntary association',
           subtitle: 'Register a business or public benefit organisation.',
           onTap: () {
             Navigator.of(context).pop();
@@ -34,20 +35,21 @@ class GetInvolvedSheet extends StatelessWidget {
         ),
         _GetInvolvedOption(
           icon: BootstrapIcons.people,
-          title: 'Become a Partner',
-          subtitle: 'Apply to become one of our partners.',
+          title: 'Become a Vendor',
+          subtitle: 'Apply to become one of our vendors.',
           onTap: () {
             Navigator.of(context).pop();
             context.router.push(PartnerRoute(role: role));
           },
         ),
         _GetInvolvedOption(
-          icon: IconlyLight.paper,
-          title: 'Submit an Application',
-          subtitle: 'Tell us about your business, registered or not.',
+          icon: BootstrapIcons.arrow_up_circle,
+          title: 'Upgrade to KasiLift Organisation',
+          subtitle: 'Already registered? Opt an existing registration into '
+              'the Social Wallet funding ecosystem.',
           onTap: () {
             Navigator.of(context).pop();
-            context.router.push(const GetInvolvedApplicationRoute());
+            context.router.push(const KasiliftUpgradeRoute());
           },
         ),
       ],

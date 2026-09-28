@@ -217,7 +217,15 @@ class _CreatePoolOrderDialogState extends State<CreatePoolOrderDialog> {
                           List<EESUpoolMember> current = [
                             ...order?.receivers ?? []
                           ];
-                          if (!current.contains(value)) {
+                          // Compare by memberId, not whole-object equality
+                          // -- `value` comes from a separate member-picker
+                          // fetch than `current`, so freezed's generated
+                          // `==` (which requires every field to match) can
+                          // fail to recognize the same member and let a
+                          // duplicate through.
+                          final alreadyAdded = current
+                              .any((r) => r.memberId == value.memberId);
+                          if (!alreadyAdded) {
                             current.add(value);
                             setState(() {
                               order = order!.copyWith(

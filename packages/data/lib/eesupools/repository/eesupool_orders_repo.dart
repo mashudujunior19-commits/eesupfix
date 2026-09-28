@@ -62,6 +62,21 @@ extension EESUpoolOrdersRepo on EESUpoolRepository {
     );
   }
 
+  /// Fetches the KasiPool order an individual buyer's order belongs to (see
+  /// `Order.eesupoolOrderId`), so its own order-tracking screen can show
+  /// the KasiPool's delivery date and progress.
+  Future<Either<EESUpException, EESUpoolOrder?>> fetchEESUpoolOrderById(
+    int orderId,
+  ) async {
+    final result = await authRepository.executeFutureWithAuth((_) {
+      return dataSource.fetchEESUpoolOrderById(orderId);
+    });
+    return result.fold(
+      (l) => Left(l),
+      (r) => Right(r),
+    );
+  }
+
   Future<Either<EESUpException, bool>> updateOrderAssignments(
     List<MemberOrderAssignment> assignments,
     int orderId,

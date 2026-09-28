@@ -148,7 +148,7 @@ class AppRouter extends RootStackRouter {
           durationInMilliseconds: 300,
         ),
         CustomRoute(
-          page: GetInvolvedApplicationRoute.page,
+          page: KasiliftUpgradeRoute.page,
           transitionsBuilder: TransitionsBuilders.slideLeftWithFade,
           durationInMilliseconds: 300,
         ),

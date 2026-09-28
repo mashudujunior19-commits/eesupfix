@@ -1,4 +1,3 @@
-import 'package:data/organisation/models/organisation_type.dart';
 import 'package:ui/src/core/extensions/context_theme_ext.dart';
 import 'package:ui/src/core/extensions/sizedbox_ext.dart';
 import 'package:ui/src/core/extensions/slide_in_animation_ext.dart';
@@ -32,23 +31,23 @@ class OrgTypeStep extends StatelessWidget {
         OrganisationOptionTile(
           title: 'Public Benefit (NPO)',
           subtitle: 'A non-profit organisation serving a public benefit.',
-          isSelected: form.orgType == OrganisationType.publicBenefit,
-          onTap: () => _select(context, OrganisationType.publicBenefit),
+          isSelected: form.orgKind == OrganisationKind.publicBenefit,
+          onTap: () => _select(context, OrganisationKind.publicBenefit),
         ).animate().slideIn(50),
         15.sH,
         OrganisationOptionTile(
           title: 'Business (For-Profit)',
           subtitle: 'A commercial, for-profit business.',
-          isSelected: form.orgType == OrganisationType.business,
-          onTap: () => _select(context, OrganisationType.business),
+          isSelected: form.orgKind == OrganisationKind.business,
+          onTap: () => _select(context, OrganisationKind.business),
         ).animate().slideIn(100),
       ],
     );
   }
 
-  void _select(BuildContext context, OrganisationType type) {
+  void _select(BuildContext context, OrganisationKind kind) {
     context.read<OrganisationCubit>().updateForm(
-          form.copyWith(orgType: type),
+          form.copyWith(orgKind: kind),
         );
     tabController.animateTo(tabController.index + 1);
   }
