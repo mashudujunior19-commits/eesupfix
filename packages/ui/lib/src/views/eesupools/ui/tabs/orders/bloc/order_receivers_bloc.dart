@@ -1,5 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:data/eesupools/models/eesupool_member.dart';
+import 'package:data/eesupools/models/receiver_role.dart';
+import 'package:data/eesupools/repository/eesupool_orders_repo.dart';
 import 'package:data/eesupools/repository/eesupool_repo.dart';
 import 'package:meta/meta.dart';
 import 'package:data/utils/eesup_exception.dart';
@@ -18,7 +20,7 @@ class OrderReceiversBloc
       results.fold((left) {
         emit(OrderReceiversError(left));
       }, (right) {
-        emit(OrderReceiversLoaded(right));
+        emit(OrderReceiversLoaded(right, event.initialRoles));
       });
     });
 
@@ -39,20 +41,45 @@ class OrderReceiversBloc
           receivers.add(event.member);
           final ids = receivers.map((e) => e.memberId).toList();
           _repository.updatePoolOrderReceivers(event.orderId, ids);
-          emit(OrderReceiversLoaded(receivers));
+          emit(
+            OrderReceiversLoaded(
+              receivers,
+              (state as OrderReceiversLoaded).roles,
+            ),
+          );
         }
       }
     });
 
     on<OrderReceiverRemoved>((event, emit) {
       if (state is OrderReceiversLoaded) {
-        List<EESUpoolMember> receivers = [
-          ...(state as OrderReceiversLoaded).receivers
-        ];
+        final current = state as OrderReceiversLoaded;
+        List<EESUpoolMember> receivers = [...current.receivers];
         receivers.removeWhere((r) => r.memberId == event.member.memberId);
         final ids = receivers.map((e) => e.memberId).toList();
         _repository.updatePoolOrderReceivers(event.orderId, ids);
-        emit(OrderReceiversLoaded(receivers));
+
+        // Drop the removed member's role too, and persist that cleanup so
+        // a re-added member doesn't inherit a stale role.
+        final roles = {...current.roles}..remove(event.member.memberId);
+        if (roles.length != current.roles.length) {
+          _repository.updateOrderReceiverRoles(event.orderId, roles);
+        }
+        emit(OrderReceiversLoaded(receivers, roles));
+      }
+    });
+
+    on<OrderReceiverRoleAssigned>((event, emit) {
+      if (state is OrderReceiversLoaded) {
+        final current = state as OrderReceiversLoaded;
+        final roles = {...current.roles};
+        if (event.role == null) {
+          roles.remove(event.memberId);
+        } else {
+          roles[event.memberId] = event.role!;
+        }
+        _repository.updateOrderReceiverRoles(event.orderId, roles);
+        emit(OrderReceiversLoaded(current.receivers, roles));
       }
     });
   }

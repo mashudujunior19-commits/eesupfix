@@ -25,6 +25,10 @@ _EESUpoolOrder _$EESUpoolOrderFromJson(Map<String, dynamic> json) =>
       receiversId: (json['receivers'] as List<dynamic>?)
           ?.map((e) => e as String)
           .toList(),
+      receiverRoles: json['receiver_roles'] == null
+          ? const {}
+          : const ReceiverRolesConverter()
+              .fromJson(json['receiver_roles'] as Map<String, dynamic>?),
       eesupoolName: json['eesupool_name'] as String?,
       address: _$JsonConverterFromJson<Map<String, dynamic>, Address>(
           json['address'], const AddressConverter().fromJson),
@@ -46,6 +50,8 @@ Map<String, dynamic> _$EESUpoolOrderToJson(_EESUpoolOrder instance) =>
       'collection_fee': instance.collectionFee,
       'address_id': instance.addressId,
       'receivers': instance.receiversId,
+      'receiver_roles':
+          const ReceiverRolesConverter().toJson(instance.receiverRoles),
     };
 
 Value? _$JsonConverterFromJson<Json, Value>(

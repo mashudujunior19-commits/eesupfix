@@ -14,13 +14,14 @@ enum OrganisationSubmitStatus {
   failed,
 }
 
-/// The fixed set of sectors an Ubuntunist can choose between when donating
-/// their Social Wallet to a KasiLift organisation, and that organisations
-/// report against. Kept as plain strings (not a DB enum) so the value set
-/// can be extended without a schema migration -- see
+/// The fixed set of industry types selectable when registering an
+/// organisation or a business -- also what an Ubuntunist chooses between
+/// when donating their Social Wallet to a KasiLift organisation, and what
+/// organisations report against. Kept as plain strings (not a DB enum) so
+/// the value set can be extended without a schema migration -- see
 /// `industry_type`/`services.get_involved_submissions` in the Supabase
 /// migrations.
-const List<String> broadSectorTypes = [
+const List<String> industryTypeOptions = [
   'Social & welfare',
   'Education & training',
   'Economic development',

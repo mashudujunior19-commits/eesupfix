@@ -8,6 +8,7 @@ import 'package:data/eesupools/models/eesupool_issue.dart';
 import 'package:data/eesupools/models/eesupool_level.dart';
 import 'package:data/eesupools/models/eesupool_member.dart';
 import 'package:data/eesupools/models/eesupool_order.dart';
+import 'package:data/eesupools/models/receiver_role.dart';
 import 'package:data/eesupools/models/eesupool_request.dart';
 import 'package:data/eesupools/models/eesupool_type.dart';
 import 'package:data/orders/models/order_product.dart';
@@ -41,6 +42,13 @@ abstract class EESUpoolDataSource {
   Future<List<EESUpool>> fetchEESUpools(String sessionId, EESUpoolType type);
 
   Future<bool> updatePoolOrderReceivers(int orderId, List<String> memberIds);
+
+  /// Updates the role (Receiver / Packer / Distributor) assigned to each
+  /// bulk order receiver, keyed by member id.
+  Future<bool> updateOrderReceiverRoles(
+    int orderId,
+    Map<String, ReceiverRole> roles,
+  );
 
   ///Given a user id, return a list of pools that the user is a member of
   Future<EESUpool> fetchEESUpool(int poolId, String userId);

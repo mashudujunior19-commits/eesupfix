@@ -58,26 +58,17 @@ class _OrganisationDetailsFormState extends State<OrganisationDetailsForm> {
           isRequired: true,
           onChanged: (value) => _updateOrganisationName(value),
         ).animate().slideIn(0),
-        if (form.isNPO)
-          EESUpDropdownFormField<String>(
-            value: broadSectorTypes.contains(form.industryType)
-                ? form.industryType
-                : null,
-            label: 'Broad Sector Type',
-            hintText: 'Select a sector',
-            isRequired: true,
-            items: broadSectorTypes,
-            itemLabel: (value) => value,
-            onChanged: (value) => _updateIndustryType(value ?? ''),
-          ).animate().slideIn(50)
-        else
-          EESUpTextFormField(
-            initialValue: form.industryType,
-            label: 'Type of business',
-            hintText: 'Welder / Plumber / Spaza',
-            isRequired: true,
-            onChanged: (value) => _updateIndustryType(value),
-          ).animate().slideIn(50),
+        EESUpDropdownFormField<String>(
+          value: industryTypeOptions.contains(form.industryType)
+              ? form.industryType
+              : null,
+          label: 'Industry type',
+          hintText: 'Select an industry type',
+          isRequired: true,
+          items: industryTypeOptions,
+          itemLabel: (value) => value,
+          onChanged: (value) => _updateIndustryType(value ?? ''),
+        ).animate().slideIn(50),
         if (form.requiresOrganisationDetails) ...[
           EESUpTextFormField(
             initialValue: form.address,
@@ -99,6 +90,7 @@ class _OrganisationDetailsFormState extends State<OrganisationDetailsForm> {
             EESUpTextFormField(
               initialValue: form.socialDevelopmentNumber,
               label: 'Social Development Number',
+              isOptional: true,
               hintText: 'NPO registration number (Dept. of Social '
                   'Development), if registered with the DSD',
               onChanged: (value) => _updateSocialDevelopmentNumber(value),
@@ -217,11 +209,7 @@ class _OrganisationDetailsFormState extends State<OrganisationDetailsForm> {
       return;
     }
     if (form.industryType == null || form.industryType!.trim().isEmpty) {
-      context.snackBarError(
-        form.isNPO
-            ? 'Please select a broad sector type.'
-            : 'Please provide the type of business.',
-      );
+      context.snackBarError('Please select an industry type.');
       return;
     }
     if (form.requiresOrganisationDetails) {

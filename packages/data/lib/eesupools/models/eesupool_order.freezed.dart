@@ -1,6 +1,5 @@
-// dart format width=80
-// coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// coverage:ignore-file
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
@@ -41,6 +40,13 @@ mixin _$EESUpoolOrder {
   int? get addressId;
   @JsonKey(name: 'receivers')
   List<String>? get receiversId;
+
+  /// Maps each bulk receiver's member id to the role the pool admin
+  /// assigned them (Receiver / Packer / Distributor), so it's clear who
+  /// does what on the order.
+  @ReceiverRolesConverter()
+  @JsonKey(name: 'receiver_roles')
+  Map<String, ReceiverRole> get receiverRoles;
 
   ///other
   @JsonKey(name: 'eesupool_name', includeToJson: false)
@@ -97,6 +103,8 @@ mixin _$EESUpoolOrder {
                 other.addressId == addressId) &&
             const DeepCollectionEquality()
                 .equals(other.receiversId, receiversId) &&
+            const DeepCollectionEquality()
+                .equals(other.receiverRoles, receiverRoles) &&
             (identical(other.eesupoolName, eesupoolName) ||
                 other.eesupoolName == eesupoolName) &&
             const DeepCollectionEquality().equals(other.receivers, receivers) &&
@@ -109,30 +117,32 @@ mixin _$EESUpoolOrder {
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      id,
-      eesupoolId,
-      createdAt,
-      scheduleFor,
-      closesAt,
-      secretPin,
-      deliveredAt,
-      adminFee,
-      packerFee,
-      receiverFee,
-      collectionFee,
-      addressId,
-      const DeepCollectionEquality().hash(receiversId),
-      eesupoolName,
-      const DeepCollectionEquality().hash(receivers),
-      address,
-      ordersCount,
-      currentAmount);
+  int get hashCode => Object.hashAll([
+        runtimeType,
+        id,
+        eesupoolId,
+        createdAt,
+        scheduleFor,
+        closesAt,
+        secretPin,
+        deliveredAt,
+        adminFee,
+        packerFee,
+        receiverFee,
+        collectionFee,
+        addressId,
+        const DeepCollectionEquality().hash(receiversId),
+        const DeepCollectionEquality().hash(receiverRoles),
+        eesupoolName,
+        const DeepCollectionEquality().hash(receivers),
+        address,
+        ordersCount,
+        currentAmount
+      ]);
 
   @override
   String toString() {
-    return 'EESUpoolOrder(id: $id, eesupoolId: $eesupoolId, createdAt: $createdAt, scheduleFor: $scheduleFor, closesAt: $closesAt, secretPin: $secretPin, deliveredAt: $deliveredAt, adminFee: $adminFee, packerFee: $packerFee, receiverFee: $receiverFee, collectionFee: $collectionFee, addressId: $addressId, receiversId: $receiversId, eesupoolName: $eesupoolName, receivers: $receivers, address: $address, ordersCount: $ordersCount, currentAmount: $currentAmount)';
+    return 'EESUpoolOrder(id: $id, eesupoolId: $eesupoolId, createdAt: $createdAt, scheduleFor: $scheduleFor, closesAt: $closesAt, secretPin: $secretPin, deliveredAt: $deliveredAt, adminFee: $adminFee, packerFee: $packerFee, receiverFee: $receiverFee, collectionFee: $collectionFee, addressId: $addressId, receiversId: $receiversId, receiverRoles: $receiverRoles, eesupoolName: $eesupoolName, receivers: $receivers, address: $address, ordersCount: $ordersCount, currentAmount: $currentAmount)';
   }
 }
 
@@ -156,6 +166,9 @@ abstract mixin class $EESUpoolOrderCopyWith<$Res> {
       @JsonKey(name: 'collection_fee') double? collectionFee,
       @JsonKey(name: 'address_id') int? addressId,
       @JsonKey(name: 'receivers') List<String>? receiversId,
+      @ReceiverRolesConverter()
+      @JsonKey(name: 'receiver_roles')
+      Map<String, ReceiverRole> receiverRoles,
       @JsonKey(name: 'eesupool_name', includeToJson: false)
       String? eesupoolName,
       @EESUpoolMemberConverter()
@@ -195,6 +208,7 @@ class _$EESUpoolOrderCopyWithImpl<$Res>
     Object? collectionFee = freezed,
     Object? addressId = freezed,
     Object? receiversId = freezed,
+    Object? receiverRoles = null,
     Object? eesupoolName = freezed,
     Object? receivers = freezed,
     Object? address = freezed,
@@ -254,6 +268,10 @@ class _$EESUpoolOrderCopyWithImpl<$Res>
           ? _self.receiversId
           : receiversId // ignore: cast_nullable_to_non_nullable
               as List<String>?,
+      receiverRoles: null == receiverRoles
+          ? _self.receiverRoles
+          : receiverRoles // ignore: cast_nullable_to_non_nullable
+              as Map<String, ReceiverRole>,
       eesupoolName: freezed == eesupoolName
           ? _self.eesupoolName
           : eesupoolName // ignore: cast_nullable_to_non_nullable
@@ -292,6 +310,301 @@ class _$EESUpoolOrderCopyWithImpl<$Res>
   }
 }
 
+/// Adds pattern-matching-related methods to [EESUpoolOrder].
+extension EESUpoolOrderPatterns on EESUpoolOrder {
+  /// A variant of `map` that fallback to returning `orElse`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>(
+    TResult Function(_EESUpoolOrder value)? $default, {
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _EESUpoolOrder() when $default != null:
+        return $default(_that);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// Callbacks receives the raw object, upcasted.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case final Subclass2 value:
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>(
+    TResult Function(_EESUpoolOrder value) $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _EESUpoolOrder():
+        return $default(_that);
+      case _:
+        throw StateError('Unexpected subclass');
+    }
+  }
+
+  /// A variant of `map` that fallback to returning `null`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>(
+    TResult? Function(_EESUpoolOrder value)? $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _EESUpoolOrder() when $default != null:
+        return $default(_that);
+      case _:
+        return null;
+    }
+  }
+
+  /// A variant of `when` that fallback to an `orElse` callback.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>(
+    TResult Function(
+            @JsonKey(includeToJson: false) int id,
+            @JsonKey(name: 'eesupool_id') int eesupoolId,
+            @JsonKey(name: 'created_at') DateTime createdAt,
+            @JsonKey(name: 'schedule_for') DateTime scheduleFor,
+            @JsonKey(name: 'closes_at') DateTime closesAt,
+            @JsonKey(name: 'secret_pin') int? secretPin,
+            @JsonKey(name: 'delivered_at') DateTime? deliveredAt,
+            @JsonKey(name: 'admin_fee') double? adminFee,
+            @JsonKey(name: 'packer_fee') double? packerFee,
+            @JsonKey(name: 'receiver_fee') double? receiverFee,
+            @JsonKey(name: 'collection_fee') double? collectionFee,
+            @JsonKey(name: 'address_id') int? addressId,
+            @JsonKey(name: 'receivers') List<String>? receiversId,
+            @ReceiverRolesConverter()
+            @JsonKey(name: 'receiver_roles')
+            Map<String, ReceiverRole> receiverRoles,
+            @JsonKey(name: 'eesupool_name', includeToJson: false)
+            String? eesupoolName,
+            @EESUpoolMemberConverter()
+            @JsonKey(includeToJson: false, includeFromJson: false)
+            List<EESUpoolMember>? receivers,
+            @AddressConverter() @JsonKey(includeToJson: false) Address? address,
+            @JsonKey(name: 'orders_count', includeToJson: false)
+            int ordersCount,
+            @JsonKey(name: 'current_amount', includeToJson: false)
+            double currentAmount)?
+        $default, {
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _EESUpoolOrder() when $default != null:
+        return $default(
+            _that.id,
+            _that.eesupoolId,
+            _that.createdAt,
+            _that.scheduleFor,
+            _that.closesAt,
+            _that.secretPin,
+            _that.deliveredAt,
+            _that.adminFee,
+            _that.packerFee,
+            _that.receiverFee,
+            _that.collectionFee,
+            _that.addressId,
+            _that.receiversId,
+            _that.receiverRoles,
+            _that.eesupoolName,
+            _that.receivers,
+            _that.address,
+            _that.ordersCount,
+            _that.currentAmount);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// As opposed to `map`, this offers destructuring.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case Subclass2(:final field2):
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>(
+    TResult Function(
+            @JsonKey(includeToJson: false) int id,
+            @JsonKey(name: 'eesupool_id') int eesupoolId,
+            @JsonKey(name: 'created_at') DateTime createdAt,
+            @JsonKey(name: 'schedule_for') DateTime scheduleFor,
+            @JsonKey(name: 'closes_at') DateTime closesAt,
+            @JsonKey(name: 'secret_pin') int? secretPin,
+            @JsonKey(name: 'delivered_at') DateTime? deliveredAt,
+            @JsonKey(name: 'admin_fee') double? adminFee,
+            @JsonKey(name: 'packer_fee') double? packerFee,
+            @JsonKey(name: 'receiver_fee') double? receiverFee,
+            @JsonKey(name: 'collection_fee') double? collectionFee,
+            @JsonKey(name: 'address_id') int? addressId,
+            @JsonKey(name: 'receivers') List<String>? receiversId,
+            @ReceiverRolesConverter()
+            @JsonKey(name: 'receiver_roles')
+            Map<String, ReceiverRole> receiverRoles,
+            @JsonKey(name: 'eesupool_name', includeToJson: false)
+            String? eesupoolName,
+            @EESUpoolMemberConverter()
+            @JsonKey(includeToJson: false, includeFromJson: false)
+            List<EESUpoolMember>? receivers,
+            @AddressConverter() @JsonKey(includeToJson: false) Address? address,
+            @JsonKey(name: 'orders_count', includeToJson: false)
+            int ordersCount,
+            @JsonKey(name: 'current_amount', includeToJson: false)
+            double currentAmount)
+        $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _EESUpoolOrder():
+        return $default(
+            _that.id,
+            _that.eesupoolId,
+            _that.createdAt,
+            _that.scheduleFor,
+            _that.closesAt,
+            _that.secretPin,
+            _that.deliveredAt,
+            _that.adminFee,
+            _that.packerFee,
+            _that.receiverFee,
+            _that.collectionFee,
+            _that.addressId,
+            _that.receiversId,
+            _that.receiverRoles,
+            _that.eesupoolName,
+            _that.receivers,
+            _that.address,
+            _that.ordersCount,
+            _that.currentAmount);
+      case _:
+        throw StateError('Unexpected subclass');
+    }
+  }
+
+  /// A variant of `when` that fallback to returning `null`
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>(
+    TResult? Function(
+            @JsonKey(includeToJson: false) int id,
+            @JsonKey(name: 'eesupool_id') int eesupoolId,
+            @JsonKey(name: 'created_at') DateTime createdAt,
+            @JsonKey(name: 'schedule_for') DateTime scheduleFor,
+            @JsonKey(name: 'closes_at') DateTime closesAt,
+            @JsonKey(name: 'secret_pin') int? secretPin,
+            @JsonKey(name: 'delivered_at') DateTime? deliveredAt,
+            @JsonKey(name: 'admin_fee') double? adminFee,
+            @JsonKey(name: 'packer_fee') double? packerFee,
+            @JsonKey(name: 'receiver_fee') double? receiverFee,
+            @JsonKey(name: 'collection_fee') double? collectionFee,
+            @JsonKey(name: 'address_id') int? addressId,
+            @JsonKey(name: 'receivers') List<String>? receiversId,
+            @ReceiverRolesConverter()
+            @JsonKey(name: 'receiver_roles')
+            Map<String, ReceiverRole> receiverRoles,
+            @JsonKey(name: 'eesupool_name', includeToJson: false)
+            String? eesupoolName,
+            @EESUpoolMemberConverter()
+            @JsonKey(includeToJson: false, includeFromJson: false)
+            List<EESUpoolMember>? receivers,
+            @AddressConverter() @JsonKey(includeToJson: false) Address? address,
+            @JsonKey(name: 'orders_count', includeToJson: false)
+            int ordersCount,
+            @JsonKey(name: 'current_amount', includeToJson: false)
+            double currentAmount)?
+        $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _EESUpoolOrder() when $default != null:
+        return $default(
+            _that.id,
+            _that.eesupoolId,
+            _that.createdAt,
+            _that.scheduleFor,
+            _that.closesAt,
+            _that.secretPin,
+            _that.deliveredAt,
+            _that.adminFee,
+            _that.packerFee,
+            _that.receiverFee,
+            _that.collectionFee,
+            _that.addressId,
+            _that.receiversId,
+            _that.receiverRoles,
+            _that.eesupoolName,
+            _that.receivers,
+            _that.address,
+            _that.ordersCount,
+            _that.currentAmount);
+      case _:
+        return null;
+    }
+  }
+}
+
 /// @nodoc
 @JsonSerializable()
 class _EESUpoolOrder implements EESUpoolOrder {
@@ -309,6 +622,9 @@ class _EESUpoolOrder implements EESUpoolOrder {
       @JsonKey(name: 'collection_fee') this.collectionFee,
       @JsonKey(name: 'address_id') this.addressId,
       @JsonKey(name: 'receivers') final List<String>? receiversId,
+      @ReceiverRolesConverter()
+      @JsonKey(name: 'receiver_roles')
+      final Map<String, ReceiverRole> receiverRoles = const {},
       @JsonKey(name: 'eesupool_name', includeToJson: false) this.eesupoolName,
       @EESUpoolMemberConverter()
       @JsonKey(includeToJson: false, includeFromJson: false)
@@ -318,6 +634,7 @@ class _EESUpoolOrder implements EESUpoolOrder {
       @JsonKey(name: 'current_amount', includeToJson: false)
       this.currentAmount = 0.00})
       : _receiversId = receiversId,
+        _receiverRoles = receiverRoles,
         _receivers = receivers;
   factory _EESUpoolOrder.fromJson(Map<String, dynamic> json) =>
       _$EESUpoolOrderFromJson(json);
@@ -367,6 +684,23 @@ class _EESUpoolOrder implements EESUpoolOrder {
     if (_receiversId is EqualUnmodifiableListView) return _receiversId;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(value);
+  }
+
+  /// Maps each bulk receiver's member id to the role the pool admin
+  /// assigned them (Receiver / Packer / Distributor), so it's clear who
+  /// does what on the order.
+  final Map<String, ReceiverRole> _receiverRoles;
+
+  /// Maps each bulk receiver's member id to the role the pool admin
+  /// assigned them (Receiver / Packer / Distributor), so it's clear who
+  /// does what on the order.
+  @override
+  @ReceiverRolesConverter()
+  @JsonKey(name: 'receiver_roles')
+  Map<String, ReceiverRole> get receiverRoles {
+    if (_receiverRoles is EqualUnmodifiableMapView) return _receiverRoles;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableMapView(_receiverRoles);
   }
 
   ///other
@@ -441,6 +775,8 @@ class _EESUpoolOrder implements EESUpoolOrder {
                 other.addressId == addressId) &&
             const DeepCollectionEquality()
                 .equals(other._receiversId, _receiversId) &&
+            const DeepCollectionEquality()
+                .equals(other._receiverRoles, _receiverRoles) &&
             (identical(other.eesupoolName, eesupoolName) ||
                 other.eesupoolName == eesupoolName) &&
             const DeepCollectionEquality()
@@ -454,30 +790,32 @@ class _EESUpoolOrder implements EESUpoolOrder {
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      id,
-      eesupoolId,
-      createdAt,
-      scheduleFor,
-      closesAt,
-      secretPin,
-      deliveredAt,
-      adminFee,
-      packerFee,
-      receiverFee,
-      collectionFee,
-      addressId,
-      const DeepCollectionEquality().hash(_receiversId),
-      eesupoolName,
-      const DeepCollectionEquality().hash(_receivers),
-      address,
-      ordersCount,
-      currentAmount);
+  int get hashCode => Object.hashAll([
+        runtimeType,
+        id,
+        eesupoolId,
+        createdAt,
+        scheduleFor,
+        closesAt,
+        secretPin,
+        deliveredAt,
+        adminFee,
+        packerFee,
+        receiverFee,
+        collectionFee,
+        addressId,
+        const DeepCollectionEquality().hash(_receiversId),
+        const DeepCollectionEquality().hash(_receiverRoles),
+        eesupoolName,
+        const DeepCollectionEquality().hash(_receivers),
+        address,
+        ordersCount,
+        currentAmount
+      ]);
 
   @override
   String toString() {
-    return 'EESUpoolOrder(id: $id, eesupoolId: $eesupoolId, createdAt: $createdAt, scheduleFor: $scheduleFor, closesAt: $closesAt, secretPin: $secretPin, deliveredAt: $deliveredAt, adminFee: $adminFee, packerFee: $packerFee, receiverFee: $receiverFee, collectionFee: $collectionFee, addressId: $addressId, receiversId: $receiversId, eesupoolName: $eesupoolName, receivers: $receivers, address: $address, ordersCount: $ordersCount, currentAmount: $currentAmount)';
+    return 'EESUpoolOrder(id: $id, eesupoolId: $eesupoolId, createdAt: $createdAt, scheduleFor: $scheduleFor, closesAt: $closesAt, secretPin: $secretPin, deliveredAt: $deliveredAt, adminFee: $adminFee, packerFee: $packerFee, receiverFee: $receiverFee, collectionFee: $collectionFee, addressId: $addressId, receiversId: $receiversId, receiverRoles: $receiverRoles, eesupoolName: $eesupoolName, receivers: $receivers, address: $address, ordersCount: $ordersCount, currentAmount: $currentAmount)';
   }
 }
 
@@ -503,6 +841,9 @@ abstract mixin class _$EESUpoolOrderCopyWith<$Res>
       @JsonKey(name: 'collection_fee') double? collectionFee,
       @JsonKey(name: 'address_id') int? addressId,
       @JsonKey(name: 'receivers') List<String>? receiversId,
+      @ReceiverRolesConverter()
+      @JsonKey(name: 'receiver_roles')
+      Map<String, ReceiverRole> receiverRoles,
       @JsonKey(name: 'eesupool_name', includeToJson: false)
       String? eesupoolName,
       @EESUpoolMemberConverter()
@@ -543,6 +884,7 @@ class __$EESUpoolOrderCopyWithImpl<$Res>
     Object? collectionFee = freezed,
     Object? addressId = freezed,
     Object? receiversId = freezed,
+    Object? receiverRoles = null,
     Object? eesupoolName = freezed,
     Object? receivers = freezed,
     Object? address = freezed,
@@ -602,6 +944,10 @@ class __$EESUpoolOrderCopyWithImpl<$Res>
           ? _self._receiversId
           : receiversId // ignore: cast_nullable_to_non_nullable
               as List<String>?,
+      receiverRoles: null == receiverRoles
+          ? _self._receiverRoles
+          : receiverRoles // ignore: cast_nullable_to_non_nullable
+              as Map<String, ReceiverRole>,
       eesupoolName: freezed == eesupoolName
           ? _self.eesupoolName
           : eesupoolName // ignore: cast_nullable_to_non_nullable
@@ -756,6 +1102,187 @@ class _$MemberOrderAssignmentCopyWithImpl<$Res>
           : privilage // ignore: cast_nullable_to_non_nullable
               as OrderEditPrivilage?,
     ));
+  }
+}
+
+/// Adds pattern-matching-related methods to [MemberOrderAssignment].
+extension MemberOrderAssignmentPatterns on MemberOrderAssignment {
+  /// A variant of `map` that fallback to returning `orElse`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>(
+    TResult Function(_MemberOrderAssignment value)? $default, {
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _MemberOrderAssignment() when $default != null:
+        return $default(_that);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// Callbacks receives the raw object, upcasted.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case final Subclass2 value:
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>(
+    TResult Function(_MemberOrderAssignment value) $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _MemberOrderAssignment():
+        return $default(_that);
+      case _:
+        throw StateError('Unexpected subclass');
+    }
+  }
+
+  /// A variant of `map` that fallback to returning `null`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>(
+    TResult? Function(_MemberOrderAssignment value)? $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _MemberOrderAssignment() when $default != null:
+        return $default(_that);
+      case _:
+        return null;
+    }
+  }
+
+  /// A variant of `when` that fallback to an `orElse` callback.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>(
+    TResult Function(
+            @JsonKey(name: 'order_id') int orderId,
+            @JsonKey(name: 'eesupool_ord_id') int eesupoolOrderId,
+            @JsonKey(name: 'member_id') String memberId,
+            @JsonKey(name: 'full_name', includeToJson: false) String? fullName,
+            @JsonKey(name: 'corp_name', includeToJson: false) String? corpName,
+            @OrderEditPrivilageConverter() OrderEditPrivilage? privilage)?
+        $default, {
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _MemberOrderAssignment() when $default != null:
+        return $default(_that.orderId, _that.eesupoolOrderId, _that.memberId,
+            _that.fullName, _that.corpName, _that.privilage);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// As opposed to `map`, this offers destructuring.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case Subclass2(:final field2):
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>(
+    TResult Function(
+            @JsonKey(name: 'order_id') int orderId,
+            @JsonKey(name: 'eesupool_ord_id') int eesupoolOrderId,
+            @JsonKey(name: 'member_id') String memberId,
+            @JsonKey(name: 'full_name', includeToJson: false) String? fullName,
+            @JsonKey(name: 'corp_name', includeToJson: false) String? corpName,
+            @OrderEditPrivilageConverter() OrderEditPrivilage? privilage)
+        $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _MemberOrderAssignment():
+        return $default(_that.orderId, _that.eesupoolOrderId, _that.memberId,
+            _that.fullName, _that.corpName, _that.privilage);
+      case _:
+        throw StateError('Unexpected subclass');
+    }
+  }
+
+  /// A variant of `when` that fallback to returning `null`
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>(
+    TResult? Function(
+            @JsonKey(name: 'order_id') int orderId,
+            @JsonKey(name: 'eesupool_ord_id') int eesupoolOrderId,
+            @JsonKey(name: 'member_id') String memberId,
+            @JsonKey(name: 'full_name', includeToJson: false) String? fullName,
+            @JsonKey(name: 'corp_name', includeToJson: false) String? corpName,
+            @OrderEditPrivilageConverter() OrderEditPrivilage? privilage)?
+        $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _MemberOrderAssignment() when $default != null:
+        return $default(_that.orderId, _that.eesupoolOrderId, _that.memberId,
+            _that.fullName, _that.corpName, _that.privilage);
+      case _:
+        return null;
+    }
   }
 }
 

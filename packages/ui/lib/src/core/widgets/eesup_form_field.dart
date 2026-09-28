@@ -22,12 +22,18 @@ class EESUpTextFormField extends StatefulWidget {
     this.onTap,
     this.style,
     this.isRequired = false,
+    this.isOptional = false,
     this.isExpandalbe = false,
     this.textAlign,
     this.autoFocus = false,
     this.validator,
   });
   final bool isRequired;
+
+  /// Shows a muted "Optional" label next to [label], for a field that's
+  /// explicitly not required (as distinct from a field with no indicator
+  /// at all).
+  final bool isOptional;
   final String? label;
   final String? hintText;
   final String? initialValue;
@@ -100,6 +106,17 @@ class _EESUpTextFormFieldState extends State<EESUpTextFormField> {
                       color: context.colorScheme.error,
                     ),
                   ),
+                if (widget.isOptional) ...[
+                  const SizedBox(width: 6),
+                  Text(
+                    'Optional',
+                    style: context.textTheme.bodySmall?.copyWith(
+                      fontSize: 11,
+                      fontWeight: FontWeight.w600,
+                      color: Colors.grey.shade600,
+                    ),
+                  ),
+                ],
               ],
             ),
           Container(

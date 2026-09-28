@@ -1,5 +1,6 @@
 // ignore_for_file: invalid_annotation_target
 import 'package:data/eesupools/models/eesupool_member.dart';
+import 'package:data/eesupools/models/receiver_role.dart';
 import 'package:data/geolocation/models/address.dart';
 import 'package:data/orders/models/order.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -23,6 +24,14 @@ abstract class EESUpoolOrder with _$EESUpoolOrder {
     @JsonKey(name: 'collection_fee') double? collectionFee,
     @JsonKey(name: 'address_id') int? addressId,
     @JsonKey(name: 'receivers') List<String>? receiversId,
+
+    /// Maps each bulk receiver's member id to the role the pool admin
+    /// assigned them (Receiver / Packer / Distributor), so it's clear who
+    /// does what on the order.
+    @ReceiverRolesConverter()
+    @JsonKey(name: 'receiver_roles')
+    @Default({})
+    Map<String, ReceiverRole> receiverRoles,
 
     ///other
     @JsonKey(name: 'eesupool_name', includeToJson: false) String? eesupoolName,
