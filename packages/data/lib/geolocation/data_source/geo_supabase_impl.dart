@@ -44,4 +44,15 @@ class GeoSupabaseImpl implements GeoDataSource {
   Future<void> deleteAddress(int id) async {
     await _client.schema('geolocations').from('address').delete().eq('id', id);
   }
+
+  @override
+  Future<({double lat, double lng})?> geocodeAddress(String address) async {
+    final response = await _client.functions.invoke(
+      'google-places',
+      body: {'action': 'geocode', 'address': address},
+    );
+    final data = response.data;
+    if (data == null) return null;
+    return (lat: (data['lat'] as num).toDouble(), lng: (data['lng'] as num).toDouble());
+  }
 }

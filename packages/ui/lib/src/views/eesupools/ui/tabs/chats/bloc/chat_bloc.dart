@@ -41,5 +41,13 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
         });
       });
     });
+
+    on<MessageDeleted>((event, emit) {
+      _poolRepo.softDeleteChatMessage(event.messageId).then((value) {
+        value.fold((left) {}, (right) {
+          add(ChatStreamStarted(event.poolId));
+        });
+      });
+    });
   }
 }

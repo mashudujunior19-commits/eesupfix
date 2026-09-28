@@ -8,6 +8,6 @@ final class AutoCompletionInitial extends AutoCompletionState {}
 final class AutoCompletionLoading extends AutoCompletionState {}
 
 final class AutoCompletionsLoaded extends AutoCompletionState {
-  final List<GooglePlace> suggestions;
+  final List<AddressSuggestion> suggestions;
   AutoCompletionsLoaded(this.suggestions);
 }

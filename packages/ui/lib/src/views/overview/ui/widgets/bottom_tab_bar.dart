@@ -39,14 +39,7 @@ class BottomTabBar extends StatelessWidget {
           ),
           Tab(
             icon: Icon(
-              index == 1 ? BootstrapIcons.people_fill : BootstrapIcons.people,
-            ),
-            iconMargin: const EdgeInsets.only(bottom: 3),
-            text: 'MyKasi',
-          ),
-          Tab(
-            icon: Icon(
-              index == 2
+              index == 1
                   ? BootstrapIcons.bar_chart_fill
                   : BootstrapIcons.bar_chart,
               size: 22,
@@ -58,7 +51,7 @@ class BottomTabBar extends StatelessWidget {
             icon: Image.asset(
               'assets/images/open-menu.png',
               width: 23,
-              color: tabController.index == 3
+              color: tabController.index == 2
                   ? context.colorScheme.primary
                   : Colors.black,
             ),

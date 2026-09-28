@@ -223,36 +223,17 @@ class EditProfileScreen extends StatelessWidget {
                               onPressed: () {},
                               child: const Text('Verify email'),
                             ),
-                          AbsorbPointer(
-                            absorbing: true,
-                            child: EESUpPhoneTextField(
-                              onChanged: (phone) {
-                                context.read<EditProfileBloc>().add(
-                                      ProfileEdited(
-                                        profileForm.copyWith(
-                                          phone: phone,
-                                        ),
+                          EESUpPhoneTextField(
+                            onChanged: (phone) {
+                              context.read<EditProfileBloc>().add(
+                                    ProfileEdited(
+                                      profileForm.copyWith(
+                                        phone: phone,
                                       ),
-                                    );
-                              },
-                            ),
+                                    ),
+                                  );
+                            },
                           ),
-                          if (state.pendingPhoneVerification(profile.phone))
-                            TextButton(
-                              onPressed: () {
-                                // context.showBottomSheetDialog(
-                                //   child: OtpAuthDialog(
-                                //     type: OtpType.sms,
-                                //     phone: profileForm.phone,
-                                //   ),
-                                // );
-
-                                // context.read<EditProfileBloc>().add(
-                                //       PhoneVerificationStarted(profileForm),
-                                //     );
-                              },
-                              child: const Text('Verify phone'),
-                            ),
                           if (profileForm != profile)
                             ElevatedButton(
                               onPressed: () {
