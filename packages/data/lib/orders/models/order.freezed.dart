@@ -1,6 +1,5 @@
-// dart format width=80
-// coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// coverage:ignore-file
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
@@ -349,6 +348,341 @@ class _$OrderCopyWithImpl<$Res> implements $OrderCopyWith<$Res> {
     return $AddressCopyWith<$Res>(_self.address!, (value) {
       return _then(_self.copyWith(address: value));
     });
+  }
+}
+
+/// Adds pattern-matching-related methods to [Order].
+extension OrderPatterns on Order {
+  /// A variant of `map` that fallback to returning `orElse`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>(
+    TResult Function(_Order value)? $default, {
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _Order() when $default != null:
+        return $default(_that);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// Callbacks receives the raw object, upcasted.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case final Subclass2 value:
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>(
+    TResult Function(_Order value) $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _Order():
+        return $default(_that);
+      case _:
+        throw StateError('Unexpected subclass');
+    }
+  }
+
+  /// A variant of `map` that fallback to returning `null`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>(
+    TResult? Function(_Order value)? $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _Order() when $default != null:
+        return $default(_that);
+      case _:
+        return null;
+    }
+  }
+
+  /// A variant of `when` that fallback to an `orElse` callback.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>(
+    TResult Function(
+            int? id,
+            @JsonKey(name: 'customer_id') String customerId,
+            @JsonKey(name: 'eesupreneur_id') String? eesupreneurId,
+            @JsonKey(name: 'eesupool_order_id') int? eesupoolOrderId,
+            @JsonKey(
+                name: 'wallet_id', includeFromJson: false, includeToJson: false)
+            int? walletId,
+            @JsonKey(name: 'created_at') DateTime? createdAt,
+            @JsonKey(name: 'placed_at', includeToJson: false)
+            DateTime? placedAt,
+            @JsonKey(name: 'packaged_at') DateTime? packagedAt,
+            @JsonKey(name: 'ready_at') DateTime? readyAt,
+            @JsonKey(name: 'collected_at') DateTime? collectedAt,
+            @JsonKey(name: 'cancelled_at') DateTime? cancelledAt,
+            double value,
+            @PaymentMethodConverter()
+            @JsonKey(name: 'payment_method')
+            PaymentMethod paymentMethod,
+            @JsonKey(name: 'secret_pin') int secretPin,
+            @JsonKey(name: 'delivery_address_id') int? deliveryAddressId,
+            @JsonKey(name: 'delivery_fee') double? deliveryFee,
+            @JsonKey(name: 'card_fee') double? cardFee,
+            @JsonKey(name: 'pay_fees_with_retail_wallet')
+            dynamic payFeesWithRetailWallet,
+            @JsonKey(name: 'full_name') String? fullName,
+            @JsonKey(name: 'corp_name') String? corpName,
+            @MemberOrderAssignmentConverter()
+            List<MemberOrderAssignment> assignments,
+            @OrderStatusConverter()
+            @JsonKey(includeToJson: false)
+            OrderStatus status,
+            @OrderProductConverter() List<OrderProduct> products,
+            @AddressConverter()
+            @JsonKey(includeToJson: false)
+            Address? address)?
+        $default, {
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _Order() when $default != null:
+        return $default(
+            _that.id,
+            _that.customerId,
+            _that.eesupreneurId,
+            _that.eesupoolOrderId,
+            _that.walletId,
+            _that.createdAt,
+            _that.placedAt,
+            _that.packagedAt,
+            _that.readyAt,
+            _that.collectedAt,
+            _that.cancelledAt,
+            _that.value,
+            _that.paymentMethod,
+            _that.secretPin,
+            _that.deliveryAddressId,
+            _that.deliveryFee,
+            _that.cardFee,
+            _that.payFeesWithRetailWallet,
+            _that.fullName,
+            _that.corpName,
+            _that.assignments,
+            _that.status,
+            _that.products,
+            _that.address);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// As opposed to `map`, this offers destructuring.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case Subclass2(:final field2):
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>(
+    TResult Function(
+            int? id,
+            @JsonKey(name: 'customer_id') String customerId,
+            @JsonKey(name: 'eesupreneur_id') String? eesupreneurId,
+            @JsonKey(name: 'eesupool_order_id') int? eesupoolOrderId,
+            @JsonKey(
+                name: 'wallet_id', includeFromJson: false, includeToJson: false)
+            int? walletId,
+            @JsonKey(name: 'created_at') DateTime? createdAt,
+            @JsonKey(name: 'placed_at', includeToJson: false)
+            DateTime? placedAt,
+            @JsonKey(name: 'packaged_at') DateTime? packagedAt,
+            @JsonKey(name: 'ready_at') DateTime? readyAt,
+            @JsonKey(name: 'collected_at') DateTime? collectedAt,
+            @JsonKey(name: 'cancelled_at') DateTime? cancelledAt,
+            double value,
+            @PaymentMethodConverter()
+            @JsonKey(name: 'payment_method')
+            PaymentMethod paymentMethod,
+            @JsonKey(name: 'secret_pin') int secretPin,
+            @JsonKey(name: 'delivery_address_id') int? deliveryAddressId,
+            @JsonKey(name: 'delivery_fee') double? deliveryFee,
+            @JsonKey(name: 'card_fee') double? cardFee,
+            @JsonKey(name: 'pay_fees_with_retail_wallet')
+            dynamic payFeesWithRetailWallet,
+            @JsonKey(name: 'full_name') String? fullName,
+            @JsonKey(name: 'corp_name') String? corpName,
+            @MemberOrderAssignmentConverter()
+            List<MemberOrderAssignment> assignments,
+            @OrderStatusConverter()
+            @JsonKey(includeToJson: false)
+            OrderStatus status,
+            @OrderProductConverter() List<OrderProduct> products,
+            @AddressConverter() @JsonKey(includeToJson: false) Address? address)
+        $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _Order():
+        return $default(
+            _that.id,
+            _that.customerId,
+            _that.eesupreneurId,
+            _that.eesupoolOrderId,
+            _that.walletId,
+            _that.createdAt,
+            _that.placedAt,
+            _that.packagedAt,
+            _that.readyAt,
+            _that.collectedAt,
+            _that.cancelledAt,
+            _that.value,
+            _that.paymentMethod,
+            _that.secretPin,
+            _that.deliveryAddressId,
+            _that.deliveryFee,
+            _that.cardFee,
+            _that.payFeesWithRetailWallet,
+            _that.fullName,
+            _that.corpName,
+            _that.assignments,
+            _that.status,
+            _that.products,
+            _that.address);
+      case _:
+        throw StateError('Unexpected subclass');
+    }
+  }
+
+  /// A variant of `when` that fallback to returning `null`
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>(
+    TResult? Function(
+            int? id,
+            @JsonKey(name: 'customer_id') String customerId,
+            @JsonKey(name: 'eesupreneur_id') String? eesupreneurId,
+            @JsonKey(name: 'eesupool_order_id') int? eesupoolOrderId,
+            @JsonKey(
+                name: 'wallet_id', includeFromJson: false, includeToJson: false)
+            int? walletId,
+            @JsonKey(name: 'created_at') DateTime? createdAt,
+            @JsonKey(name: 'placed_at', includeToJson: false)
+            DateTime? placedAt,
+            @JsonKey(name: 'packaged_at') DateTime? packagedAt,
+            @JsonKey(name: 'ready_at') DateTime? readyAt,
+            @JsonKey(name: 'collected_at') DateTime? collectedAt,
+            @JsonKey(name: 'cancelled_at') DateTime? cancelledAt,
+            double value,
+            @PaymentMethodConverter()
+            @JsonKey(name: 'payment_method')
+            PaymentMethod paymentMethod,
+            @JsonKey(name: 'secret_pin') int secretPin,
+            @JsonKey(name: 'delivery_address_id') int? deliveryAddressId,
+            @JsonKey(name: 'delivery_fee') double? deliveryFee,
+            @JsonKey(name: 'card_fee') double? cardFee,
+            @JsonKey(name: 'pay_fees_with_retail_wallet')
+            dynamic payFeesWithRetailWallet,
+            @JsonKey(name: 'full_name') String? fullName,
+            @JsonKey(name: 'corp_name') String? corpName,
+            @MemberOrderAssignmentConverter()
+            List<MemberOrderAssignment> assignments,
+            @OrderStatusConverter()
+            @JsonKey(includeToJson: false)
+            OrderStatus status,
+            @OrderProductConverter() List<OrderProduct> products,
+            @AddressConverter()
+            @JsonKey(includeToJson: false)
+            Address? address)?
+        $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _Order() when $default != null:
+        return $default(
+            _that.id,
+            _that.customerId,
+            _that.eesupreneurId,
+            _that.eesupoolOrderId,
+            _that.walletId,
+            _that.createdAt,
+            _that.placedAt,
+            _that.packagedAt,
+            _that.readyAt,
+            _that.collectedAt,
+            _that.cancelledAt,
+            _that.value,
+            _that.paymentMethod,
+            _that.secretPin,
+            _that.deliveryAddressId,
+            _that.deliveryFee,
+            _that.cardFee,
+            _that.payFeesWithRetailWallet,
+            _that.fullName,
+            _that.corpName,
+            _that.assignments,
+            _that.status,
+            _that.products,
+            _that.address);
+      case _:
+        return null;
+    }
   }
 }
 
@@ -731,8 +1065,9 @@ class __$OrderCopyWithImpl<$Res> implements _$OrderCopyWith<$Res> {
           : cardFee // ignore: cast_nullable_to_non_nullable
               as double?,
       payFeesWithRetailWallet: freezed == payFeesWithRetailWallet
-          ? _self.payFeesWithRetailWallet!
-          : payFeesWithRetailWallet,
+          ? _self.payFeesWithRetailWallet
+          : payFeesWithRetailWallet // ignore: cast_nullable_to_non_nullable
+              as dynamic,
       fullName: freezed == fullName
           ? _self.fullName
           : fullName // ignore: cast_nullable_to_non_nullable

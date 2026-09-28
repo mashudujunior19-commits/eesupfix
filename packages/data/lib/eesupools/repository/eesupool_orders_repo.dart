@@ -2,6 +2,7 @@ import 'package:data/orders/models/order_product.dart';
 import 'package:data/utils/eesup_exception.dart';
 import 'package:either_dart/either.dart';
 import 'package:data/eesupools/models/eesupool_order.dart';
+import 'package:data/eesupools/models/receiver_role.dart';
 import '../models/eesupool_settings.dart';
 import 'eesupool_repo.dart';
 
@@ -70,6 +71,21 @@ extension EESUpoolOrdersRepo on EESUpoolRepository {
   ) async {
     final result = await authRepository.executeFutureWithAuth((_) {
       return dataSource.fetchEESUpoolOrderById(orderId);
+    });
+    return result.fold(
+      (l) => Left(l),
+      (r) => Right(r),
+    );
+  }
+
+  /// Updates the role assigned to each bulk order receiver (see
+  /// [EESUpoolOrder.receiverRoles]).
+  Future<Either<EESUpException, bool>> updateOrderReceiverRoles(
+    int orderId,
+    Map<String, ReceiverRole> roles,
+  ) async {
+    final result = await authRepository.executeFutureWithAuth((_) {
+      return dataSource.updateOrderReceiverRoles(orderId, roles);
     });
     return result.fold(
       (l) => Left(l),

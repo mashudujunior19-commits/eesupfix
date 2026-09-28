@@ -10,6 +10,7 @@ import 'package:data/eesupools/models/eesupool_member.dart';
 import 'package:data/eesupools/models/eesupool_order.dart';
 import 'package:data/eesupools/models/eesupool_request.dart';
 import 'package:data/eesupools/models/eesupool_type.dart';
+import 'package:data/eesupools/models/receiver_role.dart';
 import 'package:data/orders/models/order_product.dart';
 import 'package:flutter/foundation.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -695,6 +696,27 @@ class EESUpoolSupabaseImp implements EESUpoolDataSource {
           .schema('communities')
           .from('eesupool_order')
           .update({'receivers': memberIds.toList()}).eq('id', orderId);
+      return true;
+    } catch (e) {
+      if (kDebugMode) {
+        print(e);
+      }
+      return false;
+    }
+  }
+
+  @override
+  Future<bool> updateOrderReceiverRoles(
+    int orderId,
+    Map<String, ReceiverRole> roles,
+  ) async {
+    try {
+      await client
+          .schema('communities')
+          .from('eesupool_order')
+          .update({
+        'receiver_roles': const ReceiverRolesConverter().toJson(roles),
+      }).eq('id', orderId);
       return true;
     } catch (e) {
       if (kDebugMode) {

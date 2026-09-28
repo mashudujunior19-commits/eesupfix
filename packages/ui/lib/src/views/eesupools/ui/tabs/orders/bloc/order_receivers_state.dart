@@ -12,5 +12,6 @@ final class OrderReceiversError extends OrderReceiversState {
 
 final class OrderReceiversLoaded extends OrderReceiversState {
   final List<EESUpoolMember> receivers;
-  OrderReceiversLoaded(this.receivers);
+  final Map<String, ReceiverRole> roles;
+  OrderReceiversLoaded(this.receivers, [this.roles = const {}]);
 }

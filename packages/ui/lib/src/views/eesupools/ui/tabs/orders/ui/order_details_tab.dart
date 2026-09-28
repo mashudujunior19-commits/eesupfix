@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:data/eesupools/models/eesupool.dart';
 import 'package:data/eesupools/models/eesupool_member.dart';
 import 'package:data/eesupools/models/eesupool_order.dart';
+import 'package:data/eesupools/models/receiver_role.dart';
 import 'package:data/utils/double_ext.dart';
 import 'package:ui/app_route.gr.dart';
 import 'package:ui/src/core/extensions/bottom_sheet_context_ext.dart';
@@ -11,6 +12,7 @@ import 'package:ui/src/core/utils/date_formatter.dart';
 import 'package:ui/src/views/eesupools/ui/tabs/orders/bloc/pool_order_view_bloc.dart';
 import 'package:ui/src/views/eesupools/ui/tabs/orders/ui/create_order_dialog.dart';
 import 'package:ui/src/views/eesupools/ui/tabs/orders/ui/delivary_secret.dart';
+import 'package:ui/src/views/eesupools/ui/tabs/orders/ui/order_receivers_screen.dart';
 import 'package:ui/src/views/geolocation/ui/widgets/address_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -265,10 +267,13 @@ class OrderDetailsTab extends StatelessWidget {
                   ),
                 )
                     .then((value) {
-                  if (value is List<String>) {
+                  if (value is OrderReceiversResult) {
                     context.read<PoolOrderViewBloc>().add(
                           PoolOrderUpdated(
-                            order.copyWith(receiversId: value),
+                            order.copyWith(
+                              receiversId: value.ids,
+                              receiverRoles: value.roles,
+                            ),
                           ),
                         );
                   }
@@ -286,30 +291,47 @@ class OrderDetailsTab extends StatelessWidget {
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(10),
               ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
                 children: [
                   Row(
-                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      const Icon(
-                        IconlyBold.user3,
-                        color: Colors.black,
-                        size: 18,
+                      Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          const Icon(
+                            IconlyBold.user3,
+                            color: Colors.black,
+                            size: 18,
+                          ),
+                          10.sW,
+                          Text(
+                            'Bulk Order Receivers',
+                            style: context.textTheme.labelMedium?.copyWith(
+                              decoration: TextDecoration.underline,
+                              color: Colors.black,
+                              fontSize: 14,
+                            ),
+                          ),
+                        ],
                       ),
-                      10.sW,
-                      Text(
-                        'Bulk Order Receivers',
-                        style: context.textTheme.labelMedium?.copyWith(
-                          decoration: TextDecoration.underline,
-                          color: Colors.black,
-                          fontSize: 14,
-                        ),
-                      ),
+                      const Icon(IconlyLight.arrowRight2,
+                          size: 18, color: Colors.black)
                     ],
                   ),
-                  const Icon(IconlyLight.arrowRight2,
-                      size: 18, color: Colors.black)
+                  if (_receiverRolesSummary(order.receiverRoles) != null)
+                    Padding(
+                      padding: const EdgeInsets.only(top: 6, left: 28),
+                      child: Text(
+                        _receiverRolesSummary(order.receiverRoles)!,
+                        style: context.textTheme.bodySmall?.copyWith(
+                          fontSize: 12,
+                          color: Colors.grey.shade600,
+                        ),
+                      ),
+                    ),
                 ],
               ),
             ),
@@ -337,4 +359,18 @@ class OrderDetailsTab extends StatelessWidget {
       ],
     );
   }
+}
+
+/// A short "2 Packer, 1 Distributor" style readout of who's assigned which
+/// role, so the admin can see who does what without opening the receivers
+/// screen. Returns null when no roles have been assigned yet.
+String? _receiverRolesSummary(Map<String, ReceiverRole> roles) {
+  if (roles.isEmpty) return null;
+  final counts = <ReceiverRole, int>{};
+  for (final role in roles.values) {
+    counts[role] = (counts[role] ?? 0) + 1;
+  }
+  return counts.entries
+      .map((e) => '${e.value} ${e.key.label}${e.value > 1 ? 's' : ''}')
+      .join(', ');
 }
