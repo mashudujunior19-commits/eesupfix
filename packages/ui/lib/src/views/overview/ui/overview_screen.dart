@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ui/app_route.gr.dart';
 import 'package:ui/src/core/extensions/bg_image_deco_ext.dart';
 import 'package:ui/src/core/widgets/eesup_scaffold.dart';
-import 'package:ui/src/views/eesupools/ui/my_kasi_tab.dart';
 import 'package:ui/src/views/menu/menu_tab.dart';
 import 'package:ui/src/views/overview/ui/my_kasi_shop.dart';
 import 'package:ui/src/views/overview/ui/widgets/bottom_tab_bar.dart';
@@ -31,7 +30,7 @@ class _OverviewScreenState extends State<OverviewScreen>
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: 4, vsync: this, initialIndex: 0);
+    _tabController = TabController(length: 3, vsync: this, initialIndex: 0);
     _tabController.addListener(() {
       if (_tabController.indexIsChanging) {
         setState(() {});
@@ -178,7 +177,6 @@ class _OverviewScreenState extends State<OverviewScreen>
                       controller: _tabController,
                       children: const [
                         OverviewTab(),
-                        MyKasiTab(),
                         MyKasiShop(),
                         MenuTab(),
                       ],
