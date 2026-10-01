@@ -1,8 +1,9 @@
 import 'package:ui/src/core/env/app_type.dart';
 import 'package:ui/src/core/env/environment.dart';
-import 'package:flutter/widgets.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get_it/get_it.dart';
+import 'package:mapbox_maps_flutter/mapbox_maps_flutter.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
@@ -48,6 +49,15 @@ class AppConfig {
         OneSignal.initialize(oneSignalAppId);
       } catch (_) {
         // Push notifications are non-critical; don't block app startup.
+      }
+    }
+
+    // mapbox_maps_flutter's stable release has no web platform
+    // implementation (web support is still alpha), so this is native-only.
+    if (!kIsWeb) {
+      final mapboxToken = dotenv.env['MAPBOX_ACCESS_TOKEN'] ?? '';
+      if (mapboxToken.isNotEmpty) {
+        MapboxOptions.setAccessToken(mapboxToken);
       }
     }
   }

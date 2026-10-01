@@ -59,7 +59,8 @@ dependencies:
   syncfusion_flutter_sliders: ^28.2.7
   flutter_rating_bar: ^4.0.1
   # record: ^5.1.2
-  flutter_google_place_search: ^0.0.1
+  http: ^1.2.0
+  mapbox_maps_flutter: ^2.31.1
   flutter_highlighted_text: ^0.0.1
   visibility_detector: ^0.4.0+2
   either_dart: ^1.0.0

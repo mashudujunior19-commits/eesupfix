@@ -28,6 +28,7 @@ import 'package:ui/src/core/themes/eesup_light_theme.dart';
 import 'package:ui/src/core/themes/my_kasi_light_theme.dart';
 import 'package:ui/app_route.gr.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:loader_overlay/loader_overlay.dart';
@@ -90,7 +91,10 @@ class MainApp extends StatelessWidget {
 
   final _geoRepo = RepositoryProvider(
     create: (context) => GeoRepository(
-      GeoSupabaseImpl(GetIt.I.get<SupabaseClient>()),
+      GeoSupabaseImpl(
+        GetIt.I.get<SupabaseClient>(),
+        dotenv.env['GEOAPIFY_API_KEY'] ?? '',
+      ),
       context.read<AuthRepository>(),
     ),
   );

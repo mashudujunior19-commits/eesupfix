@@ -1,7 +1,8 @@
+import 'dart:convert';
+
 import 'package:bloc/bloc.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter_google_place_search/flutter_google_place_search.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:http/http.dart' as http;
 import 'package:ui/src/views/geolocation/models/address_suggestion.dart';
 
 part 'auto_completion_event.dart';
@@ -13,9 +14,7 @@ class AutoCompletionBloc
     on<AutoCompletionRequested>((event, emit) async {
       emit(AutoCompletionLoading());
       try {
-        final results = kIsWeb
-            ? await _webPredictions(event.input)
-            : await _nativePredictions(event.key, event.input);
+        final results = await _predictions(event.key, event.input);
         emit(AutoCompletionsLoaded(results));
       } catch (e) {
         if (kDebugMode) {
@@ -29,40 +28,27 @@ class AutoCompletionBloc
     });
   }
 
-  // Google's Places Autocomplete/Geocoding REST APIs don't send CORS
-  // headers, so browser fetches to maps.googleapis.com fail on web. This
-  // routes web through a Supabase edge function that calls Google
-  // server-side instead. Native builds aren't subject to CORS and keep
-  // calling Google directly below.
-  Future<List<AddressSuggestion>> _webPredictions(String input) async {
-    final response = await Supabase.instance.client.functions.invoke(
-      'google-places',
-      body: {'action': 'autocomplete', 'input': input, 'region': 'za'},
-    );
-    final data = response.data as List;
-    return data
-        .map(
-          (e) => AddressSuggestion(
-            address: e['address'] as String,
-            lat: (e['lat'] as num).toDouble(),
-            lng: (e['lng'] as num).toDouble(),
-          ),
-        )
-        .toList();
-  }
-
-  Future<List<AddressSuggestion>> _nativePredictions(
-    String key,
-    String input,
-  ) async {
-    final places =
-        await FlutterGooglePlace(key: key, region: 'za').getPredictions(
-      input,
-    );
-    return places
-        .map(
-          (p) => AddressSuggestion(address: p.address, lat: p.lat, lng: p.lng),
-        )
+  // Geoapify's Autocomplete API sends CORS headers (unlike Google's Places
+  // REST API), so it can be called directly from the browser on web and
+  // natively on mobile with the same code path.
+  Future<List<AddressSuggestion>> _predictions(String key, String input) async {
+    final uri = Uri.https('api.geoapify.com', '/v1/geocode/autocomplete', {
+      'text': input,
+      'filter': 'countrycode:za',
+      'apiKey': key,
+    });
+    final response = await http.get(uri);
+    final body = jsonDecode(response.body) as Map<String, dynamic>;
+    final features = (body['features'] as List?) ?? const [];
+    return features
+        .map((f) {
+          final properties = f['properties'] as Map<String, dynamic>;
+          return AddressSuggestion(
+            address: properties['formatted'] as String,
+            lat: (properties['lat'] as num).toDouble(),
+            lng: (properties['lon'] as num).toDouble(),
+          );
+        })
         .toList();
   }
 }
