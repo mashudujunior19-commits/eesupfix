@@ -39,130 +39,132 @@ class InstapayConfirmDetailsScreen extends StatelessWidget {
         leading: const BackButton(),
         title: const Text('Confirm you details'),
       ),
-      body: Container(
-        decoration: context.bgImage,
+      body: SafeArea(
         child: Container(
-          color: Colors.white.withOpacity(.3),
-          child: BlocBuilder<ProfileBloc, ProfileState>(
-            bloc: ProfileBloc(context.read<ProfileRepository>())
-              ..add(ProfileFetched()),
-            builder: (context, state) {
-              if (state is ProfileLoading) {
-                return const FullScreenLoadingShimmer();
-              } else if (state is ProfileLoaded) {
-                final profile = state.profile;
-                fNameController.text = profile.firstName ?? "";
-                lNameController.text = profile.lastName ?? "";
-                emailController.text = profile.email ?? "";
-                phone = formatPhone(phone);
+          decoration: context.bgImage,
+          child: Container(
+            color: Colors.white.withOpacity(.3),
+            child: BlocBuilder<ProfileBloc, ProfileState>(
+              bloc: ProfileBloc(context.read<ProfileRepository>())
+                ..add(ProfileFetched()),
+              builder: (context, state) {
+                if (state is ProfileLoading) {
+                  return const FullScreenLoadingShimmer();
+                } else if (state is ProfileLoaded) {
+                  final profile = state.profile;
+                  fNameController.text = profile.firstName ?? "";
+                  lNameController.text = profile.lastName ?? "";
+                  emailController.text = profile.email ?? "";
+                  phone = formatPhone(phone);
 
-                return ListView(
-                  padding: const EdgeInsets.only(
-                    left: 20,
-                    right: 20,
-                    bottom: 500,
-                    top: 20,
-                  ),
-                  children: [
-                    const Text(
-                      'Please provide the missing information',
-                      textAlign: TextAlign.start,
+                  return ListView(
+                    padding: const EdgeInsets.only(
+                      left: 20,
+                      right: 20,
+                      bottom: 500,
+                      top: 20,
                     ),
-                    15.sH,
-                    EESUpTextFormField(
-                      controller: fNameController,
-                      label: 'First name',
-                    ),
-                    EESUpTextFormField(
-                      controller: lNameController,
-                      label: 'Last name',
-                    ),
-                    EESUpTextFormField(
-                      controller: emailController,
-                      label: 'Email',
-                    ),
-                    15.sH,
-                    const Text('Phone'),
-                    5.sH,
-                    Container(
-                      padding: const EdgeInsets.only(left: 10, right: 10),
-                      decoration: BoxDecoration(
-                          border: Border.all(color: Colors.grey.shade300),
-                          borderRadius: BorderRadius.circular(15)),
-                      child: PhoneTextField(
-                        initialCountry:
-                            countries.firstWhere((e) => e.code == 'ZA'),
-                        initialValue: phone,
-                        decoration: const InputDecoration(
-                          border: InputBorder.none,
-                        ),
-                        onChanged: (value) {
-                          phone = formatPhone(value);
-                        },
+                    children: [
+                      const Text(
+                        'Please provide the missing information',
+                        textAlign: TextAlign.start,
                       ),
-                    ),
-                    25.sH,
-                    ElevatedButton(
-                      onPressed: () {
-                        if (fNameController.text.isEmpty) {
-                          context.snackBarError(
-                            "Your first name is required.",
-                          );
-                          return;
-                        }
-                        if (lNameController.text.isEmpty) {
-                          context.snackBarError(
-                            "Your last name is required.",
-                          );
-                          return;
-                        }
-                        if (emailController.text.isEmpty) {
-                          context.snackBarError(
-                            "Your email address is required.",
-                          );
-                          return;
-                        }
-                        if (!EmailValidator.validate(emailController.text)) {
-                          context.snackBarError(
-                            "Kindly enter a valid email address.",
-                          );
-                          return;
-                        }
-
-                        if (phone.isEmpty) {
-                          context.snackBarError(
-                            "Your phone is required.",
-                          );
-                          return;
-                        }
-
-                        context.router
-                            .push(
-                          InstapayRoute(
-                            transaction: transaction.copyWith(
-                              bEmail: emailController.text,
-                              bName: fNameController.text,
-                              bSurname: lNameController.text,
-                              bMobile: phone,
-                            ),
+                      15.sH,
+                      EESUpTextFormField(
+                        controller: fNameController,
+                        label: 'First name',
+                      ),
+                      EESUpTextFormField(
+                        controller: lNameController,
+                        label: 'Last name',
+                      ),
+                      EESUpTextFormField(
+                        controller: emailController,
+                        label: 'Email',
+                      ),
+                      15.sH,
+                      const Text('Phone'),
+                      5.sH,
+                      Container(
+                        padding: const EdgeInsets.only(left: 10, right: 10),
+                        decoration: BoxDecoration(
+                            border: Border.all(color: Colors.grey.shade300),
+                            borderRadius: BorderRadius.circular(15)),
+                        child: PhoneTextField(
+                          initialCountry:
+                              countries.firstWhere((e) => e.code == 'ZA'),
+                          initialValue: phone,
+                          decoration: const InputDecoration(
+                            border: InputBorder.none,
                           ),
-                        )
-                            .then((value) {
-                          if (value == true) {
-                            Navigator.of(context).pop(true);
-                          } else if (value == false) {
-                            Navigator.of(context).pop(false);
+                          onChanged: (value) {
+                            phone = formatPhone(value);
+                          },
+                        ),
+                      ),
+                      25.sH,
+                      ElevatedButton(
+                        onPressed: () {
+                          if (fNameController.text.isEmpty) {
+                            context.snackBarError(
+                              "Your first name is required.",
+                            );
+                            return;
                           }
-                        });
-                      },
-                      child: const Text("Next"),
-                    )
-                  ],
-                );
-              } else {
-                return 0.sH;
-              }
-            },
+                          if (lNameController.text.isEmpty) {
+                            context.snackBarError(
+                              "Your last name is required.",
+                            );
+                            return;
+                          }
+                          if (emailController.text.isEmpty) {
+                            context.snackBarError(
+                              "Your email address is required.",
+                            );
+                            return;
+                          }
+                          if (!EmailValidator.validate(emailController.text)) {
+                            context.snackBarError(
+                              "Kindly enter a valid email address.",
+                            );
+                            return;
+                          }
+
+                          if (phone.isEmpty) {
+                            context.snackBarError(
+                              "Your phone is required.",
+                            );
+                            return;
+                          }
+
+                          context.router
+                              .push(
+                            InstapayRoute(
+                              transaction: transaction.copyWith(
+                                bEmail: emailController.text,
+                                bName: fNameController.text,
+                                bSurname: lNameController.text,
+                                bMobile: phone,
+                              ),
+                            ),
+                          )
+                              .then((value) {
+                            if (value == true) {
+                              Navigator.of(context).pop(true);
+                            } else if (value == false) {
+                              Navigator.of(context).pop(false);
+                            }
+                          });
+                        },
+                        child: const Text("Next"),
+                      )
+                    ],
+                  );
+                } else {
+                  return 0.sH;
+                }
+              },
+            ),
           ),
         ),
       ),

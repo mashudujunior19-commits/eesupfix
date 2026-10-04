@@ -83,21 +83,23 @@ class _OrganisationRegistrationScreenState
                       )
                     : null,
               ),
-              body: TabBarView(
-                physics: const NeverScrollableScrollPhysics(),
-                controller: _tabController,
-                children: [
-                  OrgTypeStep(form: state, tabController: _tabController),
-                  RegistrationStatusStep(
-                    form: state,
-                    tabController: _tabController,
-                  ),
-                  OrganisationDetailsForm(
-                    form: state,
-                    tabController: _tabController,
-                  ),
-                  OrganisationSuccessScreen(isNPO: state.isNPO),
-                ],
+              body: SafeArea(
+                child: TabBarView(
+                  physics: const NeverScrollableScrollPhysics(),
+                  controller: _tabController,
+                  children: [
+                    OrgTypeStep(form: state, tabController: _tabController),
+                    RegistrationStatusStep(
+                      form: state,
+                      tabController: _tabController,
+                    ),
+                    OrganisationDetailsForm(
+                      form: state,
+                      tabController: _tabController,
+                    ),
+                    OrganisationSuccessScreen(isNPO: state.isNPO),
+                  ],
+                ),
               ),
             ),
           );

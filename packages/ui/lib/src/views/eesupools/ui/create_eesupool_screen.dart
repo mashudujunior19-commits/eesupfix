@@ -107,33 +107,35 @@ class _CreateEESUpoolScreenState extends State<CreateEESUpoolScreen> {
         leading: const BackButton(),
         title: const Text('Create Kasipool'),
       ),
-      body: ListView(
-        padding: const EdgeInsets.only(
-          top: 15,
-          bottom: 500,
-          left: 25,
-          right: 25,
-        ),
-        children: [
-          _PoolDetailsForm(
-            nameController: _nameController,
-            descriptionController: _descriptionController,
+      body: SafeArea(
+        child: ListView(
+          padding: const EdgeInsets.only(
+            top: 15,
+            bottom: 500,
+            left: 25,
+            right: 25,
           ),
-          25.sH,
-          ElevatedButton(
-            onPressed: _isLoading ? null : _createPool,
-            child: _isLoading
-                ? const SizedBox(
-                    height: 20,
-                    width: 20,
-                    child: CircularProgressIndicator(
-                      strokeWidth: 2,
-                      color: Colors.white,
-                    ),
-                  )
-                : const Text('Create'),
-          )
-        ],
+          children: [
+            _PoolDetailsForm(
+              nameController: _nameController,
+              descriptionController: _descriptionController,
+            ),
+            25.sH,
+            ElevatedButton(
+              onPressed: _isLoading ? null : _createPool,
+              child: _isLoading
+                  ? const SizedBox(
+                      height: 20,
+                      width: 20,
+                      child: CircularProgressIndicator(
+                        strokeWidth: 2,
+                        color: Colors.white,
+                      ),
+                    )
+                  : const Text('Create'),
+            )
+          ],
+        ),
       ),
     );
   }

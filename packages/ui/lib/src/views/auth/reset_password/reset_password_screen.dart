@@ -20,11 +20,13 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
           leading: const BackButton(),
           title: const Text('Reset password'),
         ),
-        body: Container(
-          decoration: context.bgImage,
-          height: context.height,
-          width: context.width,
-          child: const CredentialsFormTab(),
+        body: SafeArea(
+          child: Container(
+            decoration: context.bgImage,
+            height: context.height,
+            width: context.width,
+            child: const CredentialsFormTab(),
+          ),
         ),
       ),
     );

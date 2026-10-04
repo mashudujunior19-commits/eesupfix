@@ -85,48 +85,50 @@ class _CreateNewPasswordState extends State<CreateNewPasswordDialog> {
           leading: const BackButton(),
           title: const Text('Create new password'),
         ),
-        body: ListView(
-          padding: const EdgeInsets.only(
-            left: 15,
-            right: 15,
-            top: 10,
-            bottom: 400,
+        body: SafeArea(
+          child: ListView(
+            padding: const EdgeInsets.only(
+              left: 15,
+              right: 15,
+              top: 10,
+              bottom: 400,
+            ),
+            children: [
+              EESUpTextFormField(
+                isPassword: true,
+                label: 'Password',
+                controller: _passwordController,
+                onChanged: (value) => setState(() {}),
+              ).animate().slideIn(50),
+              PasswordStrength(
+                confirmPassword: _confirmController.text,
+                password: _passwordController.text,
+                onValidPassword: (isValid) {
+                  _isValidPassword = isValid;
+                },
+              ).animate().slideIn(100),
+              EESUpTextFormField(
+                isPassword: true,
+                label: 'Confirm Password',
+                onChanged: (value) => setState(() {}),
+                controller: _confirmController,
+              ).animate().slideIn(150),
+              25.sH,
+              ElevatedButton(
+                onPressed: _isSubmitting ? null : _handleSubmit,
+                child: _isSubmitting
+                    ? const SizedBox(
+                        height: 20,
+                        width: 20,
+                        child: CircularProgressIndicator(
+                          strokeWidth: 2,
+                          color: Colors.white,
+                        ),
+                      )
+                    : const Text('Submit'),
+              )
+            ],
           ),
-          children: [
-            EESUpTextFormField(
-              isPassword: true,
-              label: 'Password',
-              controller: _passwordController,
-              onChanged: (value) => setState(() {}),
-            ).animate().slideIn(50),
-            PasswordStrength(
-              confirmPassword: _confirmController.text,
-              password: _passwordController.text,
-              onValidPassword: (isValid) {
-                _isValidPassword = isValid;
-              },
-            ).animate().slideIn(100),
-            EESUpTextFormField(
-              isPassword: true,
-              label: 'Confirm Password',
-              onChanged: (value) => setState(() {}),
-              controller: _confirmController,
-            ).animate().slideIn(150),
-            25.sH,
-            ElevatedButton(
-              onPressed: _isSubmitting ? null : _handleSubmit,
-              child: _isSubmitting
-                  ? const SizedBox(
-                      height: 20,
-                      width: 20,
-                      child: CircularProgressIndicator(
-                        strokeWidth: 2,
-                        color: Colors.white,
-                      ),
-                    )
-                  : const Text('Submit'),
-            )
-          ],
         ),
       ),
     );

@@ -128,102 +128,103 @@ class _EditAddressScreenState extends State<EditAddressScreen> {
                   widget.address != null ? 'Edit Address' : 'Add Address',
                 ),
               ),
-              body: ListView(
-                padding: const EdgeInsets.only(
-                  left: 22,
-                  right: 22,
-                  bottom: 40,
-                ),
-                children: [
-                  10.sH,
-                  _mapSection(context),
-                  EESUpTextFormField(
-                    label: 'Street Address',
-                    isRequired: true,
-                    prefixIcon: const Icon(IconlyLight.search, size: 20),
-                    hintText: '99 Street, City, Country',
-                    controller: _streetController,
-                    maxLines: 3,
-                    onChanged: (p0) {
-                      final chars = p0.split(',');
-                      if (chars.length >= 2) {
-                        EasyDebounce.debounce(
-                          'auto_complete_search_debouncer',
-                          const Duration(milliseconds: 500),
-                          () => _autoCompleteSearch(p0, context),
+              body: SafeArea(
+                child: ListView(
+                  padding: const EdgeInsets.only(
+                    left: 22,
+                    right: 22,
+                    bottom: 60,
+                  ),
+                  children: [
+                    10.sH,
+                    _mapSection(context),
+                    EESUpTextFormField(
+                      label: 'Street Address',
+                      isRequired: true,
+                      prefixIcon: const Icon(IconlyLight.search, size: 20),
+                      hintText: '99 Street, City, Country',
+                      controller: _streetController,
+                      maxLines: 3,
+                      onChanged: (p0) {
+                        if (p0.trim().length >= 3) {
+                          EasyDebounce.debounce(
+                            'auto_complete_search_debouncer',
+                            const Duration(milliseconds: 500),
+                            () => _autoCompleteSearch(p0, context),
+                          );
+                        } else {
+                          context
+                              .read<AutoCompletionBloc>()
+                              .add(AutoCompletionReseted());
+                        }
+                      },
+                    ),
+                    () {
+                      if (state is AutoCompletionsLoaded) {
+                        return Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'Suggestions',
+                              style: context.textTheme.labelMedium?.copyWith(
+                                fontSize: 13,
+                                fontWeight: FontWeight.w500,
+                                color: context.colorScheme.primary,
+                              ),
+                            ),
+                            for (final prediction in state.suggestions)
+                              ListTile(
+                                contentPadding: const EdgeInsets.only(),
+                                onTap: () {
+                                  _streetController.text = prediction.address;
+                                  _moveMapTo(prediction.lat, prediction.lng);
+                                  context.read<AutoCompletionBloc>().add(
+                                        AutoCompletionReseted(),
+                                      );
+                                },
+                                leading: const Icon(IconlyLight.location),
+                                title: Text(
+                                  prediction.address,
+                                  style: context.textTheme.bodySmall?.copyWith(
+                                    fontSize: 13,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                ),
+                              )
+                          ],
                         );
                       } else {
-                        context
-                            .read<AutoCompletionBloc>()
-                            .add(AutoCompletionReseted());
+                        return 0.sW;
                       }
-                    },
-                  ),
-                  () {
-                    if (state is AutoCompletionsLoaded) {
-                      return Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'Suggestions',
-                            style: context.textTheme.labelMedium?.copyWith(
-                              fontSize: 13,
-                              fontWeight: FontWeight.w500,
-                              color: context.colorScheme.primary,
-                            ),
-                          ),
-                          for (final prediction in state.suggestions)
-                            ListTile(
-                              contentPadding: const EdgeInsets.only(),
-                              onTap: () {
-                                _streetController.text = prediction.address;
-                                _moveMapTo(prediction.lat, prediction.lng);
-                                context.read<AutoCompletionBloc>().add(
-                                      AutoCompletionReseted(),
-                                    );
-                              },
-                              leading: const Icon(IconlyLight.location),
-                              title: Text(
-                                prediction.address,
-                                style: context.textTheme.bodySmall?.copyWith(
-                                  fontSize: 13,
-                                  fontWeight: FontWeight.w600,
-                                ),
-                              ),
-                            )
-                        ],
-                      );
-                    } else {
-                      return 0.sW;
-                    }
-                  }(),
-                  EESUpTextFormField(
-                    label: 'Building',
-                    hintText: 'Building Name, Number, Floor',
-                    controller: _buildingController,
-                  ),
-                  10.sH,
-                  _province(context),
-                  EESUpTextFormField(
-                    label: 'Phone',
-                    isRequired: true,
-                    hintText: '0712345678',
-                    type: TextInputType.phone,
-                    controller: _phoneController,
-                  ),
-                  EESUpTextFormField(
-                    label: 'Recipient',
-                    isRequired: true,
-                    hintText: 'John Doe',
-                    controller: _recipientController,
-                  ),
-                  10.sH,
-                  _typeChips(context),
-                  10.sH,
-                  _isPrimary(context),
-                  20.sH,
-                  _saveButton(context),
-                ],
+                    }(),
+                    EESUpTextFormField(
+                      label: 'Building',
+                      hintText: 'Building Name, Number, Floor',
+                      controller: _buildingController,
+                    ),
+                    10.sH,
+                    _typeChips(context),
+                    10.sH,
+                    _province(context),
+                    EESUpTextFormField(
+                      label: 'Phone',
+                      isRequired: true,
+                      hintText: '0712345678',
+                      type: TextInputType.phone,
+                      controller: _phoneController,
+                    ),
+                    EESUpTextFormField(
+                      label: 'Recipient',
+                      isRequired: true,
+                      hintText: 'John Doe',
+                      controller: _recipientController,
+                    ),
+                    10.sH,
+                    _isPrimary(context),
+                    20.sH,
+                    _saveButton(context),
+                  ],
+                ),
               ),
             ),
           );
@@ -235,8 +236,10 @@ class _EditAddressScreenState extends State<EditAddressScreen> {
   Widget _mapSection(BuildContext context) {
     final lat = latitude ?? _defaultLat;
     final lng = longitude ?? _defaultLng;
+    final mapHeight =
+        (MediaQuery.sizeOf(context).height * 0.26).clamp(180.0, 260.0);
     return Container(
-      height: 220,
+      height: mapHeight,
       margin: const EdgeInsets.only(bottom: 15),
       child: Stack(
         children: [
@@ -288,10 +291,7 @@ class _EditAddressScreenState extends State<EditAddressScreen> {
   Widget _staticMapImage(double lat, double lng) {
     final token = dotenv.env['MAPBOX_ACCESS_TOKEN'] ?? '';
     final primary = context.colorScheme.primary;
-    final hex = primary.value
-        .toRadixString(16)
-        .padLeft(8, '0')
-        .substring(2);
+    final hex = primary.value.toRadixString(16).padLeft(8, '0').substring(2);
     final url = 'https://api.mapbox.com/styles/v1/mapbox/streets-v12/static/'
         'pin-s+$hex($lng,$lat)/$lng,$lat,14,0/640x440@2x'
         '?access_token=$token';
@@ -333,7 +333,8 @@ class _EditAddressScreenState extends State<EditAddressScreen> {
     _marker = await manager.create(
       PointAnnotationOptions(
         geometry: Point(
-          coordinates: Position(longitude ?? _defaultLng, latitude ?? _defaultLat),
+          coordinates:
+              Position(longitude ?? _defaultLng, latitude ?? _defaultLat),
         ),
         iconImage: 'marker-15',
         iconSize: 2,
@@ -439,7 +440,15 @@ class _EditAddressScreenState extends State<EditAddressScreen> {
     saveResults.fold((l) {
       context.snackBarError(l.message);
     }, (r) {
-      context.snackBarSuccess('Address saved successfully');
+      if (r != null && r.isPrimary && r.areaId == null) {
+        context.snackBarWarning(
+          'Address saved, but we could not verify this location falls '
+          'within a serviced area. Please pick an address from the '
+          'suggestions list so it can be confirmed.',
+        );
+      } else {
+        context.snackBarSuccess('Address saved successfully');
+      }
       Navigator.pop(context, r);
     });
   }

@@ -32,87 +32,89 @@ class _SuggestTopicDialogState extends State<SuggestTopicDialog> {
       backgroundColor: Colors.transparent,
       appBar: AppBar(
         leading: BackButton(
-          onPressed: () {   
+          onPressed: () {
             Navigator.of(context).pop(currentTopics);
           },
         ),
       ),
-      body: ListView(
-        padding: const EdgeInsets.only(left: 20, right: 20),
-        children: [
-          Text(
-            '💭 Suggest a new Topic.',
-            style: context.textTheme.labelSmall,
-            textAlign: TextAlign.start,
-          ),
-          // 20.sH,
-          EESUpTextFormField(
-            hintText: '#EESUpleasure',
-            controller: controller,
-          ),
-          5.sH,
-          if (currentTopics.isNotEmpty)
-            Text('Current Topics',
-                textAlign: TextAlign.start,
-                style: context.textTheme.labelSmall),
-          5.sH,
-          SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                for (final topic in currentTopics)
-                  Padding(
-                    padding: const EdgeInsets.only(right: 10),
-                    child: Text(
-                      topic,
-                      style: context.textTheme.labelMedium?.copyWith(
-                        color: Colors.black,
-                      ),
-                      textAlign: TextAlign.start,
-                    ),
-                  ),
-              ],
+      body: SafeArea(
+        child: ListView(
+          padding: const EdgeInsets.only(left: 20, right: 20),
+          children: [
+            Text(
+              '💭 Suggest a new Topic.',
+              style: context.textTheme.labelSmall,
+              textAlign: TextAlign.start,
             ),
-          ),
-          20.sH,
-          ElevatedButton(
-            onPressed: () {
-              FocusScope.of(context).unfocus();
-              String topic = controller.text;
-
-              if (topic.isEmpty) return;
-
-              if (!topic.startsWith("#")) {
-                context.snackBarError("invalid topic, please start with #");
-                return;
-              }
-
-              final suggestions = widget.pool.chatTagsSuggestions ?? [];
-
-              if (topic.isNotEmpty) {
-                if (suggestions.contains(topic)) {
-                  context.snackBarError('Topic already exists!!!');
-                  return;
-                }
-              }
-              setState(() {
-                currentTopics.add(topic);
-              });
-
-              controller.clear();
-
-              context.snackBarSuccess("Captured");
-            },
-            child: Text(
-              'Suggest',
-              style: context.textTheme.labelMedium?.copyWith(
-                color: Colors.white,
+            // 20.sH,
+            EESUpTextFormField(
+              hintText: '#EESUpleasure',
+              controller: controller,
+            ),
+            5.sH,
+            if (currentTopics.isNotEmpty)
+              Text('Current Topics',
+                  textAlign: TextAlign.start,
+                  style: context.textTheme.labelSmall),
+            5.sH,
+            SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  for (final topic in currentTopics)
+                    Padding(
+                      padding: const EdgeInsets.only(right: 10),
+                      child: Text(
+                        topic,
+                        style: context.textTheme.labelMedium?.copyWith(
+                          color: Colors.black,
+                        ),
+                        textAlign: TextAlign.start,
+                      ),
+                    ),
+                ],
               ),
             ),
-          ),
-        ],
+            20.sH,
+            ElevatedButton(
+              onPressed: () {
+                FocusScope.of(context).unfocus();
+                String topic = controller.text;
+
+                if (topic.isEmpty) return;
+
+                if (!topic.startsWith("#")) {
+                  context.snackBarError("invalid topic, please start with #");
+                  return;
+                }
+
+                final suggestions = widget.pool.chatTagsSuggestions ?? [];
+
+                if (topic.isNotEmpty) {
+                  if (suggestions.contains(topic)) {
+                    context.snackBarError('Topic already exists!!!');
+                    return;
+                  }
+                }
+                setState(() {
+                  currentTopics.add(topic);
+                });
+
+                controller.clear();
+
+                context.snackBarSuccess("Captured");
+              },
+              child: Text(
+                'Suggest',
+                style: context.textTheme.labelMedium?.copyWith(
+                  color: Colors.white,
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

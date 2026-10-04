@@ -28,55 +28,57 @@ class CreateIssueDialog extends StatelessWidget {
         leading: const BackButton(),
         title: const Text('Create Issue'),
       ),
-      body: ListView(
-        padding: const EdgeInsets.only(
-          left: 20,
-          right: 20,
-          top: 20,
-          bottom: 300,
+      body: SafeArea(
+        child: ListView(
+          padding: const EdgeInsets.only(
+            left: 20,
+            right: 20,
+            top: 20,
+            bottom: 300,
+          ),
+          children: [
+            if (message != null) _MessagePreview(message: message!, pool: pool),
+            10.sH,
+            EESUpTextFormField(
+              label: 'Description',
+              hintText: 'Describe the issue',
+              maxLines: 8,
+              controller: _textController,
+            ),
+            20.sH,
+            ElevatedButton(
+              onPressed: () async {
+                if (_textController.text.isEmpty) return;
+                FocusScope.of(context).unfocus();
+                final repo = context.read<EESUpoolRepository>();
+                context.loaderOverlay.show();
+
+                final results = await repo.reportIssue(
+                  EESUpoolIssue(
+                    id: '',
+                    eesupoolId: pool.eesupoolId!,
+                    parentPoolId: pool.parentId,
+                    createdAt: DateTime.now(),
+                    description: _textController.text,
+                    reporterId: pool.memberId,
+                    offenderId: message?.authorId,
+                    chatMessageId: message?.id,
+                  ),
+                );
+                // ignore: use_build_context_synchronously
+                context.loaderOverlay.hide();
+
+                results.fold((left) {
+                  context.snackBarError(left.message);
+                }, (right) {
+                  context.snackBarSuccess('Issue captured.');
+                  Navigator.pop(context);
+                });
+              },
+              child: const Text('Submit'),
+            ),
+          ],
         ),
-        children: [
-          if (message != null) _MessagePreview(message: message!, pool: pool),
-          10.sH,
-          EESUpTextFormField(
-            label: 'Description',
-            hintText: 'Describe the issue',
-            maxLines: 8,
-            controller: _textController,
-          ),
-          20.sH,
-          ElevatedButton(
-            onPressed: () async {
-              if (_textController.text.isEmpty) return;
-              FocusScope.of(context).unfocus();
-              final repo = context.read<EESUpoolRepository>();
-              context.loaderOverlay.show();
-
-              final results = await repo.reportIssue(
-                EESUpoolIssue(
-                  id: '',
-                  eesupoolId: pool.eesupoolId!,
-                  parentPoolId: pool.parentId,
-                  createdAt: DateTime.now(),
-                  description: _textController.text,
-                  reporterId: pool.memberId,
-                  offenderId: message?.authorId,
-                  chatMessageId: message?.id,
-                ),
-              );
-              // ignore: use_build_context_synchronously
-              context.loaderOverlay.hide();
-
-              results.fold((left) {
-                context.snackBarError(left.message);
-              }, (right) {
-                context.snackBarSuccess('Issue captured.');
-                Navigator.pop(context);
-              });
-            },
-            child: const Text('Submit'),
-          ),
-        ],
       ),
     );
   }
