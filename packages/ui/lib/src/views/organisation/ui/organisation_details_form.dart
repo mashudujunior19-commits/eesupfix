@@ -80,11 +80,15 @@ class _OrganisationDetailsFormState extends State<OrganisationDetailsForm> {
             onChanged: (value) => _updateAddress(value),
           ).animate().slideIn(75),
           if (form.requiresProvince)
-            EESUpTextFormField(
-              initialValue: form.province,
+            EESUpDropdownFormField<String>(
+              value: provinceOptions.contains(form.province)
+                  ? form.province
+                  : null,
               label: 'Province',
-              hintText: 'e.g. Gauteng',
-              onChanged: (value) => _updateProvince(value),
+              hintText: 'Select a province',
+              items: provinceOptions,
+              itemLabel: (value) => value,
+              onChanged: (value) => _updateProvince(value ?? ''),
             ).animate().slideIn(80),
           if (form.requiresSocialDevelopmentNumber)
             EESUpTextFormField(

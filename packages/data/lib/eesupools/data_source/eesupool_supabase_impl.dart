@@ -448,11 +448,17 @@ class EESUpoolSupabaseImp implements EESUpoolDataSource {
   @override
   Future<bool> updateEESUpoolOrder(EESUpoolOrder order) async {
     try {
-      print(order.toJson());
+      // Receivers and their roles are owned by updatePoolOrderReceivers /
+      // updateOrderReceiverRoles. Leaving them out here stops a stale copy
+      // of the order (e.g. "Close order" after editing receivers) from
+      // overwriting roles that were just saved.
+      final payload = order.toJson()
+        ..remove('receivers')
+        ..remove('receiver_roles');
       await client
           .schema('communities')
           .from('eesupool_order')
-          .update(order.toJson())
+          .update(payload)
           .eq('id', order.id);
       return true;
     } catch (e) {
@@ -655,27 +661,21 @@ class EESUpoolSupabaseImp implements EESUpoolDataSource {
     List<MemberOrderAssignment> assignment,
     int orderId,
   ) async {
-    try {
-      await client
-          .schema('communities')
-          .from('member_order_assignment')
-          .delete()
-          .eq('order_id', orderId)
-          .whenComplete(() async {
-        await client
-            .schema('communities')
-            .from('member_order_assignment')
-            .insert(
-              assignment.map((e) => e.toJson()).toList(),
-            );
-      });
-      return true;
-    } catch (e) {
-      if (kDebugMode) {
-        print(e.toString());
-      }
-      return false;
-    }
+    // Saved atomically (and validated) server-side: replacing the rows with
+    // a client-side delete-then-insert lost every role if the insert failed.
+    await client.schema('communities').rpc(
+      'set_order_assignments',
+      params: {
+        '_order_id': orderId,
+        '_assignments': assignment
+            .map((e) => {
+                  'member_id': e.memberId,
+                  'privilage': e.privilage.toString(),
+                })
+            .toList(),
+      },
+    );
+    return true;
   }
 
   @override
@@ -691,18 +691,13 @@ class EESUpoolSupabaseImp implements EESUpoolDataSource {
     int orderId,
     List<String> memberIds,
   ) async {
-    try {
-      await client
-          .schema('communities')
-          .from('eesupool_order')
-          .update({'receivers': memberIds.toList()}).eq('id', orderId);
-      return true;
-    } catch (e) {
-      if (kDebugMode) {
-        print(e);
-      }
-      return false;
-    }
+    // Errors propagate so the caller can tell the admin the change didn't
+    // save (e.g. the member isn't verified).
+    await client
+        .schema('communities')
+        .from('eesupool_order')
+        .update({'receivers': memberIds.toList()}).eq('id', orderId);
+    return true;
   }
 
   @override
@@ -710,20 +705,10 @@ class EESUpoolSupabaseImp implements EESUpoolDataSource {
     int orderId,
     Map<String, ReceiverRole> roles,
   ) async {
-    try {
-      await client
-          .schema('communities')
-          .from('eesupool_order')
-          .update({
-        'receiver_roles': const ReceiverRolesConverter().toJson(roles),
-      }).eq('id', orderId);
-      return true;
-    } catch (e) {
-      if (kDebugMode) {
-        print(e);
-      }
-      return false;
-    }
+    await client.schema('communities').from('eesupool_order').update({
+      'receiver_roles': const ReceiverRolesConverter().toJson(roles),
+    }).eq('id', orderId);
+    return true;
   }
 
   @override

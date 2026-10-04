@@ -11,6 +11,7 @@ abstract class NotificationData with _$NotificationData {
     @JsonKey(name: 'user_id') String? userId,
     @JsonKey(name: 'eesupool_id') int? eesupoolId,
     @JsonKey(name: 'order_id') int? orderId,
+    @JsonKey(name: 'eesupool_order_id') int? eesupoolOrderId,
   }) = _NotificationData;
 
   factory NotificationData.fromJson(Map<String, dynamic> json) =>

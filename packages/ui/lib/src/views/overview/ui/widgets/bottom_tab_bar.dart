@@ -45,7 +45,7 @@ class BottomTabBar extends StatelessWidget {
               size: 22,
             ),
             iconMargin: const EdgeInsets.only(bottom: 3),
-            text: 'MyKasiShop',
+            text: 'My Economy',
           ),
           Tab(
             icon: Image.asset(

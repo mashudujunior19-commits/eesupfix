@@ -1,6 +1,5 @@
 import 'package:bloc/bloc.dart';
 import 'package:data/shopping/models/basket.dart';
-import 'package:data/shopping/models/product.dart';
 import 'package:data/shopping/repository/basket_repository.dart';
 import 'package:data/shopping/repository/shopping_repository.dart';
 import 'package:meta/meta.dart';
@@ -30,16 +29,5 @@ class BasketListBloc extends Bloc<BasketListEvent, BasketListState> {
       _repository.deleteBasket(event.basket.id);
     });
 
-    on<AddProductsToBasket>((event, emit) async {
-      try {
-        for (final product in event.products) {
-          await _repository.addProductToBasket(event.basketId, product.id);
-        }
-        emit(BasketListSuccess("Products added to basket successfully."));
-        add(BasketListsFetched());
-      } catch (e) {
-        emit(BasketListError(EESUpException(message: e.toString())));
-      }
-    });
   }
 }

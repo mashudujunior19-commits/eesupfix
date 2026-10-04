@@ -42,10 +42,16 @@ class ProfileRepository {
 
   ///previoudId is the id of the profile before it was updated
   ///TODO:JUST A TEMPORARY FIX FOR THE ID NUMBER VALIDATION
+  ///
+  /// When [original] (the profile as it was before editing) is given, only
+  /// the fields that changed are written, so saving one field from a stale
+  /// copy of the profile can't put old values (e.g. an old phone number)
+  /// back over newer ones.
   Future<Either<EESUpException, bool>> updateProfile(
     Profile profile,
-    String? prevIdNumber,
-  ) async {
+    String? prevIdNumber, {
+    Profile? original,
+  }) async {
     final idNumber = profile.rsaIdNumber;
 
     if (idNumber != null && idNumber != prevIdNumber) {
@@ -69,12 +75,7 @@ class ProfileRepository {
               message: 'Failed to verify id number, Please try again.')),
           (r) async {
         if (!r) {
-          final result =
-              await _authRepository.executeFutureWithAuth((id) async {
-            final updated = await _profileDataSource.updateProfile(profile);
-            return updated;
-          });
-          return result;
+          return _save(profile, original);
         } else {
           return Left(
             EESUpException(
@@ -84,12 +85,22 @@ class ProfileRepository {
         }
       });
     } else {
-      final result = await _authRepository.executeFutureWithAuth((id) async {
-        final updated = await _profileDataSource.updateProfile(profile);
-        return updated;
-      });
-      return result;
+      return _save(profile, original);
     }
+  }
+
+  Future<Either<EESUpException, bool>> _save(
+    Profile profile,
+    Profile? original,
+  ) {
+    return _authRepository.executeFutureWithAuth((id) {
+      if (original == null) return _profileDataSource.updateProfile(profile);
+      final before = original.toJson();
+      final changed = Map<String, dynamic>.fromEntries(
+        profile.toJson().entries.where((e) => before[e.key] != e.value),
+      );
+      return _profileDataSource.updateProfileFields(profile.userId, changed);
+    });
   }
 
   Future<Either<EESUpException, bool>> checkIdNumber() async {

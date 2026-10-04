@@ -4,6 +4,7 @@ import 'package:data/auth/models/user_role.dart';
 import 'package:data/auth/repository/profile_repository.dart';
 import 'package:ui/src/core/extensions/context_alerts_ext.dart';
 import 'package:ui/src/views/auth/profile/bloc/edit_profile_bloc.dart';
+import 'package:ui/src/views/auth/profile/bloc/profile_bloc.dart';
 import 'package:ui/src/core/extensions/bg_image_deco_ext.dart';
 import 'package:ui/src/core/extensions/context_theme_ext.dart';
 import 'package:ui/src/core/extensions/sizedbox_ext.dart';
@@ -35,6 +36,9 @@ class EditProfileScreen extends StatelessWidget {
             }
 
             if (state is ProfileSavingSuccess) {
+              // Refresh the app-wide copy too, so nothing else keeps (and
+              // later re-saves) the old details.
+              context.read<ProfileBloc>().add(ProfileFetched());
               Navigator.of(context).pop();
             }
 
@@ -225,6 +229,7 @@ class EditProfileScreen extends StatelessWidget {
                                 child: const Text('Verify email'),
                               ),
                             EESUpPhoneTextField(
+                              initialValue: profile.phone,
                               onChanged: (phone) {
                                 context.read<EditProfileBloc>().add(
                                       ProfileEdited(

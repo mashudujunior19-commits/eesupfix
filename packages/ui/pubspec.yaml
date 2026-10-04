@@ -79,6 +79,8 @@ dependencies:
   email_validator: ^3.0.0
   dart_mappable: ^4.2.2
   package_info_plus: ^8.1.1
+  share_plus: ^12.0.2
+  syncfusion_flutter_pdfviewer: ^28.2.7
   
 dev_dependencies:
   flutter_test:

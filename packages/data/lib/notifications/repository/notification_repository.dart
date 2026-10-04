@@ -21,4 +21,10 @@ class NotificationRepo {
       (_) => _supaSource.deleteNotification(id),
     );
   }
+
+  Future<Either<EESUpException, void>> markSeen(int id) async {
+    return _authRepository.executeFutureWithAuth(
+      (_) => _supaSource.markSeen(id),
+    );
+  }
 }

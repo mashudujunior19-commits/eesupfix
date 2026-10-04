@@ -5,6 +5,8 @@ sealed class BrowsingState {}
 
 final class BrowsingInitial extends BrowsingState {}
 
+final class BrowsingSearching extends BrowsingState {}
+
 final class BrowsingError extends BrowsingState {
   final EESUpException exception;
   BrowsingError(this.exception);

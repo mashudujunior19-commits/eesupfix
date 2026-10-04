@@ -1,5 +1,6 @@
 import 'package:data/auth/repository/profile_repository.dart';
 import 'package:ui/src/views/auth/profile/bloc/profile_bloc.dart';
+import 'package:ui/src/views/referrals/ui/share_referral_button.dart';
 import 'package:ui/src/core/extensions/context_theme_ext.dart';
 import 'package:ui/src/core/extensions/sizedbox_ext.dart';
 import 'package:flutter/material.dart';
@@ -76,6 +77,10 @@ class ReferalCodeTile extends StatelessWidget {
                               color: Colors.black,
                               size: 20,
                             ),
+                          ),
+                          ShareReferralButton(
+                            code: state.profile.referralCode,
+                            color: Colors.black,
                           ),
                         ],
                       ),

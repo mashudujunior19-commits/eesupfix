@@ -1,60 +1,60 @@
 import 'package:auto_route/annotations.dart';
 import 'package:flutter/material.dart';
-import 'package:webview_flutter/webview_flutter.dart';
+import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
+import 'package:ui/src/core/extensions/context_theme_ext.dart';
 
+/// Which legal document [TermsOfServiceScreen] opens on.
+enum LegalDocument {
+  termsAndConditions(
+      'Terms & Conditions', 'assets/legal/terms_and_conditions.pdf'),
+  privacyPolicy('Privacy Policy', 'assets/legal/privacy_policy.pdf');
 
-@RoutePage()
-class TermsOfServiceScreen extends StatefulWidget {
-  const TermsOfServiceScreen({super.key});
-  static const route = '/terms-and-conditions';
-
-  @override
-  State<TermsOfServiceScreen> createState() =>
-      _TermsOfServiceScreenState();
+  const LegalDocument(this.title, this.assetPath);
+  final String title;
+  final String assetPath;
 }
 
-class _TermsOfServiceScreenState extends State<TermsOfServiceScreen> {
-  late final WebViewController controller;
-  double progress = 0;
-  @override
-  void initState() {
-    super.initState();
-    controller = WebViewController()
-      ..setJavaScriptMode(JavaScriptMode.unrestricted)
-      ..setBackgroundColor(const Color(0x00000000))
-      ..setNavigationDelegate(
-        NavigationDelegate(
-          onProgress: (int progress) {
-            // Update loading bar.
-          },
-          onPageStarted: (String url) {},
-          onPageFinished: (String url) {},
-          onWebResourceError: (WebResourceError error) {},
-        ),
-      )
-      ..loadRequest(Uri.parse('https://eesup-privacy-policy.web.app/#/'));
-  }
+/// EESUp's Terms and Conditions and Privacy Policy, bundled with the app as
+/// PDFs (app/assets/legal) so they show offline and on every platform.
+@RoutePage()
+class TermsOfServiceScreen extends StatelessWidget {
+  const TermsOfServiceScreen({
+    super.key,
+    this.initialDocument = LegalDocument.termsAndConditions,
+  });
+  static const route = '/terms-and-conditions';
+
+  final LegalDocument initialDocument;
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      child: DefaultTabController(
-        length: 2,
-        child: Scaffold(
-          appBar: AppBar(
-            leading: const BackButton(),
-            centerTitle: false,
-            title: const Text('Terms and Conditions'),
-          ),
-          body: Column(
-            children: [
-              LinearProgressIndicator(
-                value: progress,
-                minHeight: 2,
-              ),
-              Expanded(child: WebViewWidget(controller: controller)),
+    return DefaultTabController(
+      length: LegalDocument.values.length,
+      initialIndex: initialDocument.index,
+      child: Scaffold(
+        appBar: AppBar(
+          leading: const BackButton(),
+          centerTitle: false,
+          title: const Text('Legal'),
+          bottom: TabBar(
+            labelColor: context.colorScheme.primary,
+            indicatorColor: context.colorScheme.primary,
+            tabs: [
+              for (final doc in LegalDocument.values) Tab(text: doc.title),
             ],
           ),
+        ),
+        body: TabBarView(
+          // Swiping would fight the PDF viewer's own horizontal scrolling.
+          physics: const NeverScrollableScrollPhysics(),
+          children: [
+            for (final doc in LegalDocument.values)
+              SfPdfViewer.asset(
+                doc.assetPath,
+                canShowScrollHead: false,
+                pageSpacing: 2,
+              ),
+          ],
         ),
       ),
     );

@@ -10,9 +10,3 @@ final class BasketDeleted extends BasketListEvent {
   BasketDeleted(this.basket);
 }
 
-class AddProductsToBasket extends BasketListEvent {
-  final String basketId;
-  final List<Product> products;
-
-  AddProductsToBasket(this.basketId, this.products);
-}

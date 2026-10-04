@@ -1,6 +1,7 @@
 import 'package:bootstrap_icons/bootstrap_icons.dart';
 import 'package:data/shopping/models/basket.dart';
 import 'package:data/shopping/models/product.dart';
+import 'package:data/shopping/repository/basket_repository.dart';
 import 'package:data/shopping/repository/shopping_repository.dart';
 import 'package:data/utils/eesup_exception.dart';
 import 'package:flutter_animate/flutter_animate.dart';
@@ -225,11 +226,28 @@ class _BasketCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {
-        context.read<BasketListBloc>().add(
-              AddProductsToBasket(basket.id, products),
-            );
-        context.snackBarSuccess('Hamper products added to basket');
+      // Adds directly and pops with the basket's id. This used to go through
+      // the list bloc, which swapped the basket list for an empty view while
+      // it reloaded, so a second basket couldn't be picked, and reported
+      // success even when the add failed.
+      onTap: () async {
+        final repo = context.read<ShoppingRepository>();
+        String? error;
+        for (final product in products) {
+          final result = await repo.addProductToBasket(basket.id, product.id);
+          error ??= result.fold((l) => l.message, (_) => null);
+        }
+        if (!context.mounted) return;
+        if (error != null) {
+          context.snackBarError(error);
+          return;
+        }
+        context.snackBarSuccess(
+          products.length == 1
+              ? 'Added to ${basket.name}'
+              : 'Products added to ${basket.name}',
+        );
+        Navigator.of(context).pop(basket.id);
       },
       child: Container(
         margin: const EdgeInsets.only(right: 21, left: 19, bottom: 15),

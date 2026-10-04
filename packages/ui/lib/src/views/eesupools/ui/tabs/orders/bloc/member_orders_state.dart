@@ -7,7 +7,10 @@ final class OrdersLoading extends MemberOrdersState {}
 
 final class OrdersLoaded extends MemberOrdersState {
   final List<Order> orders;
-  OrdersLoaded(this.orders);
+
+  /// Set when the last role assignment change couldn't be saved.
+  final String? saveError;
+  OrdersLoaded(this.orders, {this.saveError});
 }
 
 final class OrdersError extends MemberOrdersState {

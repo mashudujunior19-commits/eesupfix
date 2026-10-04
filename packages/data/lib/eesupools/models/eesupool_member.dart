@@ -16,6 +16,10 @@ abstract class EESUpoolMember with _$EESUpoolMember {
     @JsonKey(name: "full_name", includeToJson: false) required String fullName,
     @JsonKey(name: "created_at", includeToJson: false)
     required DateTime createdAt,
+
+    /// Whether the member's profile is verified. Null when the source RPC
+    /// doesn't report it; the database enforces the rule either way.
+    @JsonKey(name: "is_verified", includeToJson: false) bool? isVerified,
   }) = _EESUpoolMember;
 
   factory EESUpoolMember.fromJson(Map<String, dynamic> json) =>

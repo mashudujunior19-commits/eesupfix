@@ -1,4 +1,5 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:easy_debounce/easy_debounce.dart';
 import 'package:bootstrap_icons/bootstrap_icons.dart';
 import 'package:data/shopping/models/product_filter.dart';
 import 'package:data/shopping/repository/shopping_repository.dart';
@@ -55,6 +56,18 @@ class BrowseShopScreen extends StatelessWidget {
                           children: [
                             _SearchBox(filter),
                             () {
+                              if (searchState is BrowsingSearching) {
+                                return const Expanded(
+                                  child: FullScreenLoadingShimmer(),
+                                );
+                              }
+                              if (searchState is BrowsingError) {
+                                return Expanded(
+                                  child: FullScreenError(
+                                    exception: searchState.exception,
+                                  ),
+                                );
+                              }
                               //IF THERE ARE SEARCHING EVENTS SHOW THE RESULTS
                               //IN A TAB VIEW
                               if (searchState is BrowsingSearchResults) {
@@ -167,10 +180,47 @@ class _SearchTabBar extends StatelessWidget {
   }
 }
 
-class _SearchBox extends StatelessWidget {
-  _SearchBox(this.filter);
+/// Stateful so the text controller survives the rebuilds every search
+/// result causes; it used to be recreated each build and was never attached
+/// to the field, so the clear button never appeared or worked.
+class _SearchBox extends StatefulWidget {
+  const _SearchBox(this.filter);
   final ProductFilter filter;
+
+  @override
+  State<_SearchBox> createState() => _SearchBoxState();
+}
+
+class _SearchBoxState extends State<_SearchBox> {
+  static const _debounceTag = 'browse_shop_search';
   final _textController = TextEditingController();
+
+  ProductFilter get filter => widget.filter;
+
+  @override
+  void dispose() {
+    EasyDebounce.cancel(_debounceTag);
+    _textController.dispose();
+    super.dispose();
+  }
+
+  void _onChanged(String value) {
+    setState(() {}); // show/hide the clear button
+    final query = value.trim();
+    if (query.length < 3) {
+      EasyDebounce.cancel(_debounceTag);
+      context.read<BrowsingBloc>().add(SearchCleared());
+      return;
+    }
+    EasyDebounce.debounce(
+      _debounceTag,
+      const Duration(milliseconds: 400),
+      () {
+        if (!mounted) return;
+        context.read<BrowsingBloc>().add(ProductsSearched(query, 500));
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -180,6 +230,7 @@ class _SearchBox extends StatelessWidget {
       child: EESUpTextFormField(
         margin: const EdgeInsets.all(0),
         hintText: 'Looking for something?',
+        controller: _textController,
         prefixIcon: const BackButton(),
         suffixIcon: Row(
           mainAxisSize: MainAxisSize.min,
@@ -190,6 +241,7 @@ class _SearchBox extends StatelessWidget {
                 child: InkWell(
                   onTap: () {
                     _textController.clear();
+                    _onChanged('');
                     FocusScope.of(context).unfocus();
                   },
                   child: const Icon(
@@ -204,9 +256,12 @@ class _SearchBox extends StatelessWidget {
             const CartButton(),
           ],
         ),
-        onChanged: (value) {
-          if (value.length < 3) return;
-          context.read<BrowsingBloc>().add(ProductsSearched(value, 500));
+        onChanged: _onChanged,
+        onSubmit: (value) {
+          final query = (value ?? '').trim();
+          if (query.isEmpty) return;
+          EasyDebounce.cancel(_debounceTag);
+          context.read<BrowsingBloc>().add(ProductsSearched(query, 500));
         },
       ),
     );

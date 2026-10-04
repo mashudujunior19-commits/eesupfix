@@ -1,6 +1,5 @@
-// dart format width=80
-// coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// coverage:ignore-file
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
@@ -31,6 +30,11 @@ mixin _$EESUpoolMember {
   @JsonKey(name: "created_at", includeToJson: false)
   DateTime get createdAt;
 
+  /// Whether the member's profile is verified. Null when the source RPC
+  /// doesn't report it; the database enforces the rule either way.
+  @JsonKey(name: "is_verified", includeToJson: false)
+  bool? get isVerified;
+
   /// Create a copy of EESUpoolMember
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -58,17 +62,19 @@ mixin _$EESUpoolMember {
             (identical(other.fullName, fullName) ||
                 other.fullName == fullName) &&
             (identical(other.createdAt, createdAt) ||
-                other.createdAt == createdAt));
+                other.createdAt == createdAt) &&
+            (identical(other.isVerified, isVerified) ||
+                other.isVerified == isVerified));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, memberId, eesupoolId, userId,
-      role, isCensored, fullName, createdAt);
+      role, isCensored, fullName, createdAt, isVerified);
 
   @override
   String toString() {
-    return 'EESUpoolMember(memberId: $memberId, eesupoolId: $eesupoolId, userId: $userId, role: $role, isCensored: $isCensored, fullName: $fullName, createdAt: $createdAt)';
+    return 'EESUpoolMember(memberId: $memberId, eesupoolId: $eesupoolId, userId: $userId, role: $role, isCensored: $isCensored, fullName: $fullName, createdAt: $createdAt, isVerified: $isVerified)';
   }
 }
 
@@ -87,7 +93,8 @@ abstract mixin class $EESUpoolMemberCopyWith<$Res> {
       EESUpoolMemberRole role,
       @JsonKey(name: "is_censored") bool isCensored,
       @JsonKey(name: "full_name", includeToJson: false) String fullName,
-      @JsonKey(name: "created_at", includeToJson: false) DateTime createdAt});
+      @JsonKey(name: "created_at", includeToJson: false) DateTime createdAt,
+      @JsonKey(name: "is_verified", includeToJson: false) bool? isVerified});
 }
 
 /// @nodoc
@@ -110,6 +117,7 @@ class _$EESUpoolMemberCopyWithImpl<$Res>
     Object? isCensored = null,
     Object? fullName = null,
     Object? createdAt = null,
+    Object? isVerified = freezed,
   }) {
     return _then(_self.copyWith(
       memberId: null == memberId
@@ -140,7 +148,231 @@ class _$EESUpoolMemberCopyWithImpl<$Res>
           ? _self.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
               as DateTime,
+      isVerified: freezed == isVerified
+          ? _self.isVerified
+          : isVerified // ignore: cast_nullable_to_non_nullable
+              as bool?,
     ));
+  }
+}
+
+/// Adds pattern-matching-related methods to [EESUpoolMember].
+extension EESUpoolMemberPatterns on EESUpoolMember {
+  /// A variant of `map` that fallback to returning `orElse`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>(
+    TResult Function(_EESUpoolMember value)? $default, {
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _EESUpoolMember() when $default != null:
+        return $default(_that);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// Callbacks receives the raw object, upcasted.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case final Subclass2 value:
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>(
+    TResult Function(_EESUpoolMember value) $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _EESUpoolMember():
+        return $default(_that);
+      case _:
+        throw StateError('Unexpected subclass');
+    }
+  }
+
+  /// A variant of `map` that fallback to returning `null`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>(
+    TResult? Function(_EESUpoolMember value)? $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _EESUpoolMember() when $default != null:
+        return $default(_that);
+      case _:
+        return null;
+    }
+  }
+
+  /// A variant of `when` that fallback to an `orElse` callback.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>(
+    TResult Function(
+            @JsonKey(name: "member_id", includeToJson: false) String memberId,
+            @JsonKey(name: "eesupool_id") int eesupoolId,
+            @JsonKey(name: "user_id") String userId,
+            @EESUpoolMemberRoleConverter()
+            @JsonKey(name: "role")
+            EESUpoolMemberRole role,
+            @JsonKey(name: "is_censored") bool isCensored,
+            @JsonKey(name: "full_name", includeToJson: false) String fullName,
+            @JsonKey(name: "created_at", includeToJson: false)
+            DateTime createdAt,
+            @JsonKey(name: "is_verified", includeToJson: false)
+            bool? isVerified)?
+        $default, {
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _EESUpoolMember() when $default != null:
+        return $default(
+            _that.memberId,
+            _that.eesupoolId,
+            _that.userId,
+            _that.role,
+            _that.isCensored,
+            _that.fullName,
+            _that.createdAt,
+            _that.isVerified);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// As opposed to `map`, this offers destructuring.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case Subclass2(:final field2):
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>(
+    TResult Function(
+            @JsonKey(name: "member_id", includeToJson: false) String memberId,
+            @JsonKey(name: "eesupool_id") int eesupoolId,
+            @JsonKey(name: "user_id") String userId,
+            @EESUpoolMemberRoleConverter()
+            @JsonKey(name: "role")
+            EESUpoolMemberRole role,
+            @JsonKey(name: "is_censored") bool isCensored,
+            @JsonKey(name: "full_name", includeToJson: false) String fullName,
+            @JsonKey(name: "created_at", includeToJson: false)
+            DateTime createdAt,
+            @JsonKey(name: "is_verified", includeToJson: false)
+            bool? isVerified)
+        $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _EESUpoolMember():
+        return $default(
+            _that.memberId,
+            _that.eesupoolId,
+            _that.userId,
+            _that.role,
+            _that.isCensored,
+            _that.fullName,
+            _that.createdAt,
+            _that.isVerified);
+      case _:
+        throw StateError('Unexpected subclass');
+    }
+  }
+
+  /// A variant of `when` that fallback to returning `null`
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>(
+    TResult? Function(
+            @JsonKey(name: "member_id", includeToJson: false) String memberId,
+            @JsonKey(name: "eesupool_id") int eesupoolId,
+            @JsonKey(name: "user_id") String userId,
+            @EESUpoolMemberRoleConverter()
+            @JsonKey(name: "role")
+            EESUpoolMemberRole role,
+            @JsonKey(name: "is_censored") bool isCensored,
+            @JsonKey(name: "full_name", includeToJson: false) String fullName,
+            @JsonKey(name: "created_at", includeToJson: false)
+            DateTime createdAt,
+            @JsonKey(name: "is_verified", includeToJson: false)
+            bool? isVerified)?
+        $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _EESUpoolMember() when $default != null:
+        return $default(
+            _that.memberId,
+            _that.eesupoolId,
+            _that.userId,
+            _that.role,
+            _that.isCensored,
+            _that.fullName,
+            _that.createdAt,
+            _that.isVerified);
+      case _:
+        return null;
+    }
   }
 }
 
@@ -155,7 +387,8 @@ class _EESUpoolMember implements EESUpoolMember {
       @JsonKey(name: "is_censored") required this.isCensored,
       @JsonKey(name: "full_name", includeToJson: false) required this.fullName,
       @JsonKey(name: "created_at", includeToJson: false)
-      required this.createdAt});
+      required this.createdAt,
+      @JsonKey(name: "is_verified", includeToJson: false) this.isVerified});
   factory _EESUpoolMember.fromJson(Map<String, dynamic> json) =>
       _$EESUpoolMemberFromJson(json);
 
@@ -181,6 +414,12 @@ class _EESUpoolMember implements EESUpoolMember {
   @override
   @JsonKey(name: "created_at", includeToJson: false)
   final DateTime createdAt;
+
+  /// Whether the member's profile is verified. Null when the source RPC
+  /// doesn't report it; the database enforces the rule either way.
+  @override
+  @JsonKey(name: "is_verified", includeToJson: false)
+  final bool? isVerified;
 
   /// Create a copy of EESUpoolMember
   /// with the given fields replaced by the non-null parameter values.
@@ -213,17 +452,19 @@ class _EESUpoolMember implements EESUpoolMember {
             (identical(other.fullName, fullName) ||
                 other.fullName == fullName) &&
             (identical(other.createdAt, createdAt) ||
-                other.createdAt == createdAt));
+                other.createdAt == createdAt) &&
+            (identical(other.isVerified, isVerified) ||
+                other.isVerified == isVerified));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, memberId, eesupoolId, userId,
-      role, isCensored, fullName, createdAt);
+      role, isCensored, fullName, createdAt, isVerified);
 
   @override
   String toString() {
-    return 'EESUpoolMember(memberId: $memberId, eesupoolId: $eesupoolId, userId: $userId, role: $role, isCensored: $isCensored, fullName: $fullName, createdAt: $createdAt)';
+    return 'EESUpoolMember(memberId: $memberId, eesupoolId: $eesupoolId, userId: $userId, role: $role, isCensored: $isCensored, fullName: $fullName, createdAt: $createdAt, isVerified: $isVerified)';
   }
 }
 
@@ -244,7 +485,8 @@ abstract mixin class _$EESUpoolMemberCopyWith<$Res>
       EESUpoolMemberRole role,
       @JsonKey(name: "is_censored") bool isCensored,
       @JsonKey(name: "full_name", includeToJson: false) String fullName,
-      @JsonKey(name: "created_at", includeToJson: false) DateTime createdAt});
+      @JsonKey(name: "created_at", includeToJson: false) DateTime createdAt,
+      @JsonKey(name: "is_verified", includeToJson: false) bool? isVerified});
 }
 
 /// @nodoc
@@ -267,6 +509,7 @@ class __$EESUpoolMemberCopyWithImpl<$Res>
     Object? isCensored = null,
     Object? fullName = null,
     Object? createdAt = null,
+    Object? isVerified = freezed,
   }) {
     return _then(_EESUpoolMember(
       memberId: null == memberId
@@ -297,6 +540,10 @@ class __$EESUpoolMemberCopyWithImpl<$Res>
           ? _self.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
               as DateTime,
+      isVerified: freezed == isVerified
+          ? _self.isVerified
+          : isVerified // ignore: cast_nullable_to_non_nullable
+              as bool?,
     ));
   }
 }

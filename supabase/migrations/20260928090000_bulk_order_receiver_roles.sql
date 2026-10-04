@@ -17,6 +17,10 @@ ALTER TABLE "communities"."eesupool_order"
 -- column-for-column identical otherwise, so a pool's order list/open-order
 -- fetch returns the new column too.
 
+-- Adding a column to a function's result set needs a drop first;
+-- CREATE OR REPLACE can't change a function's return type.
+DROP FUNCTION IF EXISTS "communities"."get_eesupool_orders"(integer, integer);
+
 CREATE OR REPLACE FUNCTION "communities"."get_eesupool_orders"("pool_id" integer, "limit_to" integer) RETURNS TABLE("id" integer, "eesupool_id" integer, "created_at" timestamp with time zone, "schedule_for" timestamp with time zone, "delivered_at" timestamp with time zone, "closes_at" timestamp with time zone, "admin_fee" numeric, "packer_fee" numeric, "receiver_fee" numeric, "collection_fee" numeric, "address_id" integer, "secret_pin" integer, "receivers" "uuid"[], "receiver_roles" "jsonb", "status" "public"."order_type", "minimun_order_value" numeric, "warehouse_order_id" integer, "consolidated" boolean, "received_at" "date", "order_extension_count" integer, "eesupool_name" "text", "address" "jsonb", "orders_count" integer, "current_amount" numeric)
     LANGUAGE "plpgsql"
     AS $$
@@ -71,6 +75,15 @@ BEGIN
 END;
 $$;
 
+ALTER FUNCTION "communities"."get_eesupool_orders"("pool_id" integer, "limit_to" integer) OWNER TO "postgres";
+GRANT ALL ON FUNCTION "communities"."get_eesupool_orders"("pool_id" integer, "limit_to" integer) TO "anon";
+GRANT ALL ON FUNCTION "communities"."get_eesupool_orders"("pool_id" integer, "limit_to" integer) TO "authenticated";
+GRANT ALL ON FUNCTION "communities"."get_eesupool_orders"("pool_id" integer, "limit_to" integer) TO "service_role";
+
+-- Adding a column to a function's result set needs a drop first;
+-- CREATE OR REPLACE can't change a function's return type.
+DROP FUNCTION IF EXISTS "communities"."get_open_eesupool_order"(integer);
+
 CREATE OR REPLACE FUNCTION "communities"."get_open_eesupool_order"("pool_id" integer) RETURNS TABLE("id" integer, "eesupool_id" integer, "created_at" timestamp with time zone, "schedule_for" timestamp with time zone, "delivered_at" timestamp with time zone, "closes_at" timestamp with time zone, "admin_fee" numeric, "packer_fee" numeric, "receiver_fee" numeric, "collection_fee" numeric, "address_id" integer, "eesupool_name" "text", "address" "jsonb", "orders_count" integer, "current_amount" numeric, "secret_pin" integer, "receivers" "uuid"[], "receiver_roles" "jsonb")
     LANGUAGE "plpgsql"
     AS $$
@@ -105,9 +118,18 @@ BEGIN
 END;
 $$;
 
+ALTER FUNCTION "communities"."get_open_eesupool_order"("pool_id" integer) OWNER TO "postgres";
+GRANT ALL ON FUNCTION "communities"."get_open_eesupool_order"("pool_id" integer) TO "anon";
+GRANT ALL ON FUNCTION "communities"."get_open_eesupool_order"("pool_id" integer) TO "authenticated";
+GRANT ALL ON FUNCTION "communities"."get_open_eesupool_order"("pool_id" integer) TO "service_role";
+
 -- communities.get_eesupool_order_by_id (added in
 -- 20260927120000_get_involved_extensions_and_order_lookup.sql) re-declared
 -- with receiver_roles added, for the same reason.
+
+-- Adding a column to a function's result set needs a drop first;
+-- CREATE OR REPLACE can't change a function's return type.
+DROP FUNCTION IF EXISTS "communities"."get_eesupool_order_by_id"(integer);
 
 CREATE OR REPLACE FUNCTION "communities"."get_eesupool_order_by_id"("order_id" integer) RETURNS TABLE("id" integer, "eesupool_id" integer, "created_at" timestamp with time zone, "schedule_for" timestamp with time zone, "delivered_at" timestamp with time zone, "closes_at" timestamp with time zone, "admin_fee" numeric, "packer_fee" numeric, "receiver_fee" numeric, "collection_fee" numeric, "address_id" integer, "secret_pin" integer, "receivers" "uuid"[], "receiver_roles" "jsonb", "status" "public"."order_type", "minimun_order_value" numeric, "warehouse_order_id" integer, "consolidated" boolean, "received_at" "date", "order_extension_count" integer, "eesupool_name" "text", "address" "jsonb", "orders_count" integer, "current_amount" numeric)
     LANGUAGE "plpgsql"
@@ -160,3 +182,8 @@ BEGIN
     WHERE eo.id = order_id;
 END;
 $$;
+
+ALTER FUNCTION "communities"."get_eesupool_order_by_id"("order_id" integer) OWNER TO "postgres";
+GRANT ALL ON FUNCTION "communities"."get_eesupool_order_by_id"("order_id" integer) TO "anon";
+GRANT ALL ON FUNCTION "communities"."get_eesupool_order_by_id"("order_id" integer) TO "authenticated";
+GRANT ALL ON FUNCTION "communities"."get_eesupool_order_by_id"("order_id" integer) TO "service_role";

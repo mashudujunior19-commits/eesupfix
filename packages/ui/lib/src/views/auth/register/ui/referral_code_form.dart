@@ -11,6 +11,7 @@ import 'package:ui/src/core/widgets/eesup_form_field.dart';
 import 'package:flutter/material.dart';
 import 'package:ui/src/views/auth/register/cubit/register_cubit.dart';
 import 'package:ui/src/views/auth/register/cubit/register_form.dart';
+import 'package:ui/src/views/menu/terms_of_services_screen.dart';
 
 class ReferralCodeForm extends StatefulWidget {
   const ReferralCodeForm({
@@ -128,12 +129,17 @@ class _ReferralCodeFormState extends State<ReferralCodeForm> {
                 ),
                 Expanded(
                   child: HighlightedText(
-                    'I agree to the EESUp\'s Terms of Service',
-                    patterns: const ['Terms of Service'],
+                    'I agree to the EESUp\'s Terms of Service and '
+                    'Privacy Policy',
+                    patterns: const ['Terms of Service', 'Privacy Policy'],
                     onTap: (p) {
-                      if (p == 'Terms of Service') {
-                        context.router.push(const TermsOfServiceRoute());
-                      }
+                      context.router.push(
+                        TermsOfServiceRoute(
+                          initialDocument: p == 'Privacy Policy'
+                              ? LegalDocument.privacyPolicy
+                              : LegalDocument.termsAndConditions,
+                        ),
+                      );
                     },
                     style: context.textTheme.labelSmall?.copyWith(
                       fontSize: 14,

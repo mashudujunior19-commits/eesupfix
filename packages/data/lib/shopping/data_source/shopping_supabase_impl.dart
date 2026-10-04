@@ -118,15 +118,11 @@ class ShoppingSupabaseImp implements ShoppingDataSource {
 
   @override
   Future<bool> addProductToBasket(String basketId, int productId) async {
-    try {
-      await _client.schema('public').rpc('add_product_to_basket', params: {
-        '_basket_id': basketId,
-        '_product_id': productId,
-      });
-      return true;
-    } catch (e) {
-      return false;
-    }
+    await _client.schema('public').rpc('add_product_to_basket', params: {
+      '_basket_id': basketId,
+      '_product_id': productId,
+    });
+    return true;
   }
 
   @override

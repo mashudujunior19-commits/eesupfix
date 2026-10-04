@@ -37,6 +37,20 @@ const List<String> industryTypeOptions = [
   'Professional / group interests',
 ];
 
+/// South Africa's nine provinces, offered as a fixed dropdown so the value
+/// stored on a Registered NPO's submission is always one of a known set.
+const List<String> provinceOptions = [
+  'Eastern Cape',
+  'Free State',
+  'Gauteng',
+  'KwaZulu-Natal',
+  'Limpopo',
+  'Mpumalanga',
+  'North West',
+  'Northern Cape',
+  'Western Cape',
+];
+
 class OrganisationForm {
   final OrganisationKind? orgKind;
   final RegistrationStatus? registrationStatus;

@@ -29,7 +29,7 @@ class OrgTypeStep extends StatelessWidget {
         ).animate().slideIn(0),
         25.sH,
         OrganisationOptionTile(
-          title: 'Public Benefit (NPO)',
+          title: 'Public benefit ()',
           subtitle: 'A non-profit organisation serving a public benefit.',
           isSelected: form.orgKind == OrganisationKind.publicBenefit,
           onTap: () => _select(context, OrganisationKind.publicBenefit),
