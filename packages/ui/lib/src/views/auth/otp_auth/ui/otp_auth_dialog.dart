@@ -139,68 +139,71 @@ class _OtpAuthDialogState extends State<OtpAuthDialog> {
         leading: const BackButton(),
         title: const Text('Verify One time pin'),
       ),
-      body: ListView(
-        children: [
-          SizedBox(
-            height: 150,
-            child: Image.asset(
-              'assets/images/verification_person.png',
-            ),
-          ),
-          if (widget.phone != null)
-            Padding(
-              padding: const EdgeInsets.only(left: 25, right: 25, top: 20),
-              child: Text(
-                'We have sent an OTP to your phone number, +${widget.phone}',
-                textAlign: TextAlign.center,
+      body: SafeArea(
+        child: ListView(
+          children: [
+            SizedBox(
+              height: 150,
+              child: Image.asset(
+                'assets/images/verification_person.png',
               ),
             ),
-          if (widget.email != null)
+            if (widget.phone != null)
+              Padding(
+                padding: const EdgeInsets.only(left: 25, right: 25, top: 20),
+                child: Text(
+                  'We have sent an OTP to your phone number, +${widget.phone}',
+                  textAlign: TextAlign.center,
+                ),
+              ),
+            if (widget.email != null)
+              Padding(
+                padding: const EdgeInsets.only(left: 25, right: 25, top: 20),
+                child: Text(
+                  'We have sent an OTP to your email address, ${widget.email}',
+                  textAlign: TextAlign.center,
+                ),
+              ),
+            EESUpTextFormField(
+              margin: const EdgeInsets.only(left: 40, right: 40, top: 15),
+              hintText: 'Enter 6-digit OTP',
+              controller: controller,
+              type: TextInputType.number,
+            ),
             Padding(
-              padding: const EdgeInsets.only(left: 25, right: 25, top: 20),
-              child: Text(
-                'We have sent an OTP to your email address, ${widget.email}',
-                textAlign: TextAlign.center,
+              padding: const EdgeInsets.only(top: 20, left: 40, right: 40),
+              child: ElevatedButton(
+                onPressed: _isVerifying ? null : _handleVerify,
+                child: _isVerifying
+                    ? const SizedBox(
+                        height: 20,
+                        width: 20,
+                        child: CircularProgressIndicator(
+                          strokeWidth: 2,
+                          color: Colors.white,
+                        ),
+                      )
+                    : const Text('Verify'),
               ),
             ),
-          EESUpTextFormField(
-            margin: const EdgeInsets.only(left: 40, right: 40, top: 15),
-            hintText: 'Enter 6-digit OTP',
-            controller: controller,
-            type: TextInputType.number,
-          ),
-          Padding(
-            padding: const EdgeInsets.only(top: 20, left: 40, right: 40),
-            child: ElevatedButton(
-              onPressed: _isVerifying ? null : _handleVerify,
-              child: _isVerifying
+            10.sH,
+            TextButton(
+              onPressed:
+                  (_isResending || _resendCooldown > 0) ? null : _handleResend,
+              child: _isResending
                   ? const SizedBox(
-                      height: 20,
-                      width: 20,
-                      child: CircularProgressIndicator(
-                        strokeWidth: 2,
-                        color: Colors.white,
-                      ),
+                      height: 16,
+                      width: 16,
+                      child: CircularProgressIndicator(strokeWidth: 2),
                     )
-                  : const Text('Verify'),
+                  : Text(
+                      _resendCooldown > 0
+                          ? 'Resend in ${_resendCooldown}s'
+                          : 'Resend',
+                    ),
             ),
-          ),
-          10.sH,
-          TextButton(
-            onPressed: (_isResending || _resendCooldown > 0) ? null : _handleResend,
-            child: _isResending
-                ? const SizedBox(
-                    height: 16,
-                    width: 16,
-                    child: CircularProgressIndicator(strokeWidth: 2),
-                  )
-                : Text(
-                    _resendCooldown > 0
-                        ? 'Resend in ${_resendCooldown}s'
-                        : 'Resend',
-                  ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

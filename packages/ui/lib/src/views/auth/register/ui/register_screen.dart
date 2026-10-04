@@ -81,24 +81,26 @@ class _RegisterScreenState extends State<RegisterScreen>
                           ? const Text('Sign up')
                           : null,
                     ),
-                    body: TabBarView(
-                      physics: const NeverScrollableScrollPhysics(),
-                      controller: _tabController,
-                      children: [
-                        IndividualForm(
-                          tabController: _tabController,
-                          form: state,
-                        ),
-                        CredentialsForm(
-                          form: state,
-                          tabController: _tabController,
-                        ),
-                        ReferralCodeForm(
-                          tabController: _tabController,
-                          form: state,
-                        ),
-                        const WelcomeScreen(),
-                      ],
+                    body: SafeArea(
+                      child: TabBarView(
+                        physics: const NeverScrollableScrollPhysics(),
+                        controller: _tabController,
+                        children: [
+                          IndividualForm(
+                            tabController: _tabController,
+                            form: state,
+                          ),
+                          CredentialsForm(
+                            form: state,
+                            tabController: _tabController,
+                          ),
+                          ReferralCodeForm(
+                            tabController: _tabController,
+                            form: state,
+                          ),
+                          const WelcomeScreen(),
+                        ],
+                      ),
                     ),
                   ),
                 ),

@@ -69,33 +69,35 @@ class _CheckoutScreenState extends State<CheckoutScreen>
             ),
             title: const Text('Checkout'),
           ),
-          body: Container(
-            height: context.height,
-            width: context.width,
-            decoration: context.bgImage,
-            child: Column(
-              children: [
-                BlocBuilder<CheckoutBloc, CheckoutState>(
-                  builder: (context, state) {
-                    if (state is! CheckoutCompleted) {
-                      return StepIndicator(activeStep: index);
-                    }
-                    return 0.sW;
-                  },
-                ),
-                Expanded(
-                  child: TabBarView(
-                    controller: _tabController,
-                    children: [
-                      AddressSelectionStep(tabController: _tabController),
-                      CollectionStep(tabController: _tabController),
-                      PaymentMethodStep(tabController: _tabController),
-                      SummaryStep(tabController: _tabController),
-                      const ResultStep(),
-                    ],
+          body: SafeArea(
+            child: Container(
+              height: context.height,
+              width: context.width,
+              decoration: context.bgImage,
+              child: Column(
+                children: [
+                  BlocBuilder<CheckoutBloc, CheckoutState>(
+                    builder: (context, state) {
+                      if (state is! CheckoutCompleted) {
+                        return StepIndicator(activeStep: index);
+                      }
+                      return 0.sW;
+                    },
                   ),
-                )
-              ],
+                  Expanded(
+                    child: TabBarView(
+                      controller: _tabController,
+                      children: [
+                        AddressSelectionStep(tabController: _tabController),
+                        CollectionStep(tabController: _tabController),
+                        PaymentMethodStep(tabController: _tabController),
+                        SummaryStep(tabController: _tabController),
+                        const ResultStep(),
+                      ],
+                    ),
+                  )
+                ],
+              ),
             ),
           ),
         ),

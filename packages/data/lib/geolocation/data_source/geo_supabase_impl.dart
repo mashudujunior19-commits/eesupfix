@@ -1,11 +1,15 @@
 import 'package:data/geolocation/data_source/geo_data_source.dart';
 import 'package:data/geolocation/models/address.dart';
+import 'package:dio/dio.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class GeoSupabaseImpl implements GeoDataSource {
   final SupabaseClient _client;
+  final String _geoapifyApiKey;
+  final Dio _dio;
 
-  GeoSupabaseImpl(this._client);
+  GeoSupabaseImpl(this._client, this._geoapifyApiKey, {Dio? dio})
+      : _dio = dio ?? Dio();
 
   @override
   Future<List<Address>> fetchUserAddresses(String userId) async {
@@ -47,12 +51,20 @@ class GeoSupabaseImpl implements GeoDataSource {
 
   @override
   Future<({double lat, double lng})?> geocodeAddress(String address) async {
-    final response = await _client.functions.invoke(
-      'google-places',
-      body: {'action': 'geocode', 'address': address},
+    final response = await _dio.get(
+      'https://api.geoapify.com/v1/geocode/search',
+      queryParameters: {
+        'text': address,
+        'filter': 'countrycode:za',
+        'apiKey': _geoapifyApiKey,
+      },
     );
-    final data = response.data;
-    if (data == null) return null;
-    return (lat: (data['lat'] as num).toDouble(), lng: (data['lng'] as num).toDouble());
+    final features = (response.data['features'] as List?) ?? const [];
+    if (features.isEmpty) return null;
+    final properties = features.first['properties'] as Map<String, dynamic>;
+    return (
+      lat: (properties['lat'] as num).toDouble(),
+      lng: (properties['lon'] as num).toDouble(),
+    );
   }
 }

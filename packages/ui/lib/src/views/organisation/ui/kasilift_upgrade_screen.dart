@@ -36,50 +36,52 @@ class _KasiliftUpgradeScreenState extends State<KasiliftUpgradeScreen> {
           KasiliftUpgradeCubit(context.read<GetInvolvedRepository>()),
       child: Scaffold(
         appBar: AppBar(title: const Text('Upgrade to KasiLift')),
-        body: BlocConsumer<KasiliftUpgradeCubit, KasiliftUpgradeState>(
-          listener: (context, state) {
-            if (state.status == KasiliftUpgradeStatus.success) {
-              context.snackBarSuccess(
-                'Your organisation is now registered for KasiLift.',
-              );
-              Navigator.of(context).pop(true);
-            } else if (state.status == KasiliftUpgradeStatus.failed) {
-              context.snackBarError(
-                state.errorMessage ?? 'Something went wrong.',
-              );
-            }
-          },
-          builder: (context, state) {
-            switch (state.status) {
-              case KasiliftUpgradeStatus.loading:
-                return const FullScreenLoadingShimmer();
-              case KasiliftUpgradeStatus.noEligibleSubmissions:
-                return FullScreenError(
-                  isError: false,
-                  exception: EESUpException(
-                    message: "You don't have an existing organisation or "
-                        'business registration to upgrade yet. Please '
-                        'register one first, then come back here to opt '
-                        'into KasiLift.',
-                  ),
+        body: SafeArea(
+          child: BlocConsumer<KasiliftUpgradeCubit, KasiliftUpgradeState>(
+            listener: (context, state) {
+              if (state.status == KasiliftUpgradeStatus.success) {
+                context.snackBarSuccess(
+                  'Your organisation is now registered for KasiLift.',
                 );
-              case KasiliftUpgradeStatus.failed
-                  when state.eligibleSubmissions.isEmpty:
-                return FullScreenError(
-                  exception: EESUpException(
-                    message: state.errorMessage ??
-                        'Something went wrong while loading your '
-                            'registrations.',
-                  ),
+                Navigator.of(context).pop(true);
+              } else if (state.status == KasiliftUpgradeStatus.failed) {
+                context.snackBarError(
+                  state.errorMessage ?? 'Something went wrong.',
                 );
-              default:
-                return _UpgradeForm(
-                  state: state,
-                  isSubmitting: _isSubmitting,
-                  onSubmit: () => _handleSubmit(context, state),
-                );
-            }
-          },
+              }
+            },
+            builder: (context, state) {
+              switch (state.status) {
+                case KasiliftUpgradeStatus.loading:
+                  return const FullScreenLoadingShimmer();
+                case KasiliftUpgradeStatus.noEligibleSubmissions:
+                  return FullScreenError(
+                    isError: false,
+                    exception: EESUpException(
+                      message: "You don't have an existing organisation or "
+                          'business registration to upgrade yet. Please '
+                          'register one first, then come back here to opt '
+                          'into KasiLift.',
+                    ),
+                  );
+                case KasiliftUpgradeStatus.failed
+                    when state.eligibleSubmissions.isEmpty:
+                  return FullScreenError(
+                    exception: EESUpException(
+                      message: state.errorMessage ??
+                          'Something went wrong while loading your '
+                              'registrations.',
+                    ),
+                  );
+                default:
+                  return _UpgradeForm(
+                    state: state,
+                    isSubmitting: _isSubmitting,
+                    onSubmit: () => _handleSubmit(context, state),
+                  );
+              }
+            },
+          ),
         ),
       ),
     );
@@ -140,9 +142,7 @@ class _UpgradeForm extends StatelessWidget {
           EESUpDropdownFormField<String>(
             value: selected?.id,
             label: 'Which registration would you like to upgrade?',
-            items: state.eligibleSubmissions
-                .map((s) => s.id!)
-                .toList(),
+            items: state.eligibleSubmissions.map((s) => s.id!).toList(),
             itemLabel: (id) => state.eligibleSubmissions
                 .firstWhere((s) => s.id == id)
                 .organisationName,
