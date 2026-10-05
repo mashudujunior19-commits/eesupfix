@@ -21,7 +21,6 @@ class CreateNewPasswordDialog extends StatefulWidget {
 class _CreateNewPasswordState extends State<CreateNewPasswordDialog> {
   final _passwordController = TextEditingController();
   final _confirmController = TextEditingController();
-  bool _isValidPassword = false;
   bool _isSubmitting = false;
 
   @override
@@ -34,15 +33,10 @@ class _CreateNewPasswordState extends State<CreateNewPasswordDialog> {
   Future<void> _handleSubmit() async {
     if (_isSubmitting) return;
 
-    // Validate password strength
-    if (!_isValidPassword) {
-      context.snackBarError('Your password must meet all the requirements.');
-      return;
-    }
-
-    // Validate passwords match
-    if (_passwordController.text != _confirmController.text) {
-      context.snackBarError('Passwords do not match.');
+    final password = _passwordController.text;
+    final confirm = _confirmController.text;
+    if (!PasswordRules.isValid(password, confirm)) {
+      context.snackBarError(PasswordRules.errorMessage(password, confirm));
       return;
     }
 
@@ -100,12 +94,8 @@ class _CreateNewPasswordState extends State<CreateNewPasswordDialog> {
                 controller: _passwordController,
                 onChanged: (value) => setState(() {}),
               ).animate().slideIn(50),
-              PasswordStrength(
-                confirmPassword: _confirmController.text,
+              PasswordRequirements(
                 password: _passwordController.text,
-                onValidPassword: (isValid) {
-                  _isValidPassword = isValid;
-                },
               ).animate().slideIn(100),
               EESUpTextFormField(
                 isPassword: true,
@@ -113,6 +103,10 @@ class _CreateNewPasswordState extends State<CreateNewPasswordDialog> {
                 onChanged: (value) => setState(() {}),
                 controller: _confirmController,
               ).animate().slideIn(150),
+              PasswordsMatchIndicator(
+                password: _passwordController.text,
+                confirmPassword: _confirmController.text,
+              ),
               25.sH,
               ElevatedButton(
                 onPressed: _isSubmitting ? null : _handleSubmit,

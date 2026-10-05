@@ -174,15 +174,14 @@ class ShoppingSupabaseImp implements ShoppingDataSource {
 
   @override
   Future<bool> createBasket(String name, String userId) async {
-    try {
-      await _client.schema('public').from('basket').insert({
-        'name': name,
-        'user_id': userId,
-      });
-      return true;
-    } catch (e) {
-      return false;
-    }
+    // Errors propagate so the user is told the basket wasn't created,
+    // instead of a "created successfully" message for a basket that
+    // doesn't exist.
+    await _client.schema('public').from('basket').insert({
+      'name': name,
+      'user_id': userId,
+    });
+    return true;
   }
 
   @override

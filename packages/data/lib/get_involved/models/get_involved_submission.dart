@@ -7,6 +7,10 @@ class GetInvolvedSubmission {
   final GetInvolvedSubmissionType submissionType;
   final String organisationName;
   final String industryType;
+
+  /// Business submissions only: the business type within [industryType]
+  /// (one of TOWRIS's 8 commercial verticals).
+  final String? businessType;
   final String? address;
   final String? province;
   final String? socialDevelopmentNumber;
@@ -21,6 +25,7 @@ class GetInvolvedSubmission {
     required this.submissionType,
     required this.organisationName,
     required this.industryType,
+    this.businessType,
     this.address,
     this.province,
     this.socialDevelopmentNumber,
@@ -36,6 +41,7 @@ class GetInvolvedSubmission {
     GetInvolvedSubmissionType? submissionType,
     String? organisationName,
     String? industryType,
+    String? businessType,
     String? address,
     String? province,
     String? socialDevelopmentNumber,
@@ -50,6 +56,7 @@ class GetInvolvedSubmission {
       submissionType: submissionType ?? this.submissionType,
       organisationName: organisationName ?? this.organisationName,
       industryType: industryType ?? this.industryType,
+      businessType: businessType ?? this.businessType,
       address: address ?? this.address,
       province: province ?? this.province,
       socialDevelopmentNumber:
@@ -66,6 +73,7 @@ class GetInvolvedSubmission {
       'submission_type': submissionType.toString(),
       'organisation_name': organisationName,
       'industry_type': industryType,
+      if (businessType != null) 'business_type': businessType,
       if (address != null) 'address': address,
       if (province != null) 'province': province,
       if (socialDevelopmentNumber != null)
@@ -87,6 +95,7 @@ class GetInvolvedSubmission {
       ),
       organisationName: json['organisation_name'] as String,
       industryType: json['industry_type'] as String,
+      businessType: json['business_type'] as String?,
       address: json['address'] as String?,
       province: json['province'] as String?,
       socialDevelopmentNumber: json['social_development_number'] as String?,

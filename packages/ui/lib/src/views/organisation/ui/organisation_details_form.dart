@@ -10,7 +10,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ui/src/views/organisation/cubit/organisation_cubit.dart';
+import 'package:ui/src/views/organisation/cubit/commercial_verticals.dart';
 import 'package:ui/src/views/organisation/cubit/organisation_form.dart';
+import 'package:ui/src/views/organisation/ui/widgets/business_type_picker.dart';
 import 'package:ui/src/views/organisation/ui/widgets/document_specs.dart';
 import 'package:ui/src/views/organisation/ui/widgets/document_upload_field.dart';
 
@@ -52,23 +54,43 @@ class _OrganisationDetailsFormState extends State<OrganisationDetailsForm> {
       children: [
         EESUpTextFormField(
           initialValue: form.organisationName,
-          label: form.isNPO ? 'Name of Organisation' : 'Name of Business',
-          hintText:
-              form.isNPO ? "Enter your organisation's name" : 'Enter your business name',
+          label: form.isNPO
+              ? 'Name of NPO/Voluntary Association'
+              : 'Name of Business',
+          hintText: form.isNPO ? 'Enter its name' : 'Enter your business name',
           isRequired: true,
           onChanged: (value) => _updateOrganisationName(value),
         ).animate().slideIn(0),
-        EESUpDropdownFormField<String>(
-          value: industryTypeOptions.contains(form.industryType)
-              ? form.industryType
-              : null,
-          label: 'Industry type',
-          hintText: 'Select an industry type',
-          isRequired: true,
-          items: industryTypeOptions,
-          itemLabel: (value) => value,
-          onChanged: (value) => _updateIndustryType(value ?? ''),
-        ).animate().slideIn(50),
+        if (form.isNPO)
+          EESUpDropdownFormField<String>(
+            value: industryTypeOptions.contains(form.industryType)
+                ? form.industryType
+                : null,
+            label: 'Industry type',
+            hintText: 'Select an industry type',
+            isRequired: true,
+            items: industryTypeOptions,
+            itemLabel: (value) => value,
+            onChanged: (value) => _updateIndustryType(value ?? ''),
+          ).animate().slideIn(50)
+        else ...[
+          EESUpDropdownFormField<String>(
+            value: CommercialVertical.byName(form.industryType)?.name,
+            label: 'Industry',
+            hintText: 'Select your industry',
+            isRequired: true,
+            items: [for (final v in commercialVerticals) v.name],
+            itemLabel: (value) => value,
+            onChanged: (value) => _updateVertical(value),
+          ).animate().slideIn(50),
+          BusinessTypePicker(
+            vertical: CommercialVertical.byName(form.industryType),
+            value: form.businessType,
+            onChanged: (value) => context
+                .read<OrganisationCubit>()
+                .updateForm(form.updateDetails(businessType: value)),
+          ).animate().slideIn(60),
+        ],
         if (form.requiresOrganisationDetails) ...[
           EESUpTextFormField(
             initialValue: form.address,
@@ -179,6 +201,21 @@ class _OrganisationDetailsFormState extends State<OrganisationDetailsForm> {
         );
   }
 
+  /// Picking a different industry clears a business type that belonged to
+  /// the previous one.
+  void _updateVertical(String? value) {
+    final keepType = CommercialVertical.byName(value)
+            ?.businessTypes
+            .any((b) => b.name == form.businessType) ??
+        false;
+    context.read<OrganisationCubit>().updateForm(
+          form.updateDetails(
+            industryType: value,
+            businessType: keepType ? form.businessType : null,
+          ),
+        );
+  }
+
   void _updateAddress(String value) {
     context.read<OrganisationCubit>().updateForm(
           form.updateDetails(address: value.isEmpty ? null : value),
@@ -207,13 +244,27 @@ class _OrganisationDetailsFormState extends State<OrganisationDetailsForm> {
         form.organisationName!.trim().isEmpty) {
       context.snackBarError(
         form.isNPO
-            ? 'Please provide the organisation name.'
+            ? 'Please provide the name of the NPO/Voluntary Association.'
             : 'Please provide the business name.',
       );
       return;
     }
-    if (form.industryType == null || form.industryType!.trim().isEmpty) {
-      context.snackBarError('Please select an industry type.');
+    // Checked against the list for this path: switching between NPO and
+    // Business can leave the other path's (hidden) value behind.
+    final validIndustry = form.isNPO
+        ? industryTypeOptions.contains(form.industryType)
+        : CommercialVertical.byName(form.industryType) != null;
+    if (!validIndustry) {
+      context.snackBarError(
+        form.isNPO
+            ? 'Please select an industry type.'
+            : 'Please select your industry.',
+      );
+      return;
+    }
+    if (!form.isNPO &&
+        (form.businessType == null || form.businessType!.trim().isEmpty)) {
+      context.snackBarError('Please select your type of business.');
       return;
     }
     if (form.requiresOrganisationDetails) {
@@ -354,7 +405,8 @@ class _ContactPersonFields extends StatelessWidget {
               if (canRemove)
                 InkWell(
                   onTap: () => cubit.removeContactPerson(index),
-                  child: Icon(Icons.close, size: 16, color: Colors.grey.shade600),
+                  child:
+                      Icon(Icons.close, size: 16, color: Colors.grey.shade600),
                 ),
             ],
           ),

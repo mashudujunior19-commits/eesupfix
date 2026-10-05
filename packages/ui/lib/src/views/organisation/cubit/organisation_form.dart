@@ -55,7 +55,13 @@ class OrganisationForm {
   final OrganisationKind? orgKind;
   final RegistrationStatus? registrationStatus;
   final String? organisationName;
+
+  /// NPO: one of [industryTypeOptions]. Business: one of the 8
+  /// [commercialVerticals].
   final String? industryType;
+
+  /// Business only: the business type within its commercial vertical.
+  final String? businessType;
   final String? address;
   final String? province;
   final String? socialDevelopmentNumber;
@@ -75,6 +81,7 @@ class OrganisationForm {
     this.registrationStatus,
     this.organisationName,
     this.industryType,
+    this.businessType,
     this.address,
     this.province,
     this.socialDevelopmentNumber,
@@ -148,8 +155,8 @@ class OrganisationForm {
     return [...baseRequiredDocumentTypes, ...baseOptionalDocumentTypes];
   }
 
-  bool get hasAllRequiredDocuments => requiredDocumentTypes
-      .every((type) => pickedDocuments[type] != null);
+  bool get hasAllRequiredDocuments =>
+      requiredDocumentTypes.every((type) => pickedDocuments[type] != null);
 
   bool get hasValidContactPersons {
     if (!requiresOrganisationDetails) return true;
@@ -172,6 +179,7 @@ class OrganisationForm {
   OrganisationForm updateDetails({
     Object? organisationName = _unset,
     Object? industryType = _unset,
+    Object? businessType = _unset,
     Object? address = _unset,
     Object? province = _unset,
     Object? socialDevelopmentNumber = _unset,
@@ -186,16 +194,17 @@ class OrganisationForm {
       industryType: identical(industryType, _unset)
           ? this.industryType
           : industryType as String?,
-      address:
-          identical(address, _unset) ? this.address : address as String?,
+      businessType: identical(businessType, _unset)
+          ? this.businessType
+          : businessType as String?,
+      address: identical(address, _unset) ? this.address : address as String?,
       province:
           identical(province, _unset) ? this.province : province as String?,
       socialDevelopmentNumber: identical(socialDevelopmentNumber, _unset)
           ? this.socialDevelopmentNumber
           : socialDevelopmentNumber as String?,
       isKasilift: isKasilift,
-      aboutUs:
-          identical(aboutUs, _unset) ? this.aboutUs : aboutUs as String?,
+      aboutUs: identical(aboutUs, _unset) ? this.aboutUs : aboutUs as String?,
       contactPersons: contactPersons,
       submissionId: submissionId,
       pickedDocuments: pickedDocuments,
@@ -212,6 +221,7 @@ class OrganisationForm {
     RegistrationStatus? registrationStatus,
     String? organisationName,
     String? industryType,
+    String? businessType,
     String? address,
     String? province,
     String? socialDevelopmentNumber,
@@ -231,6 +241,7 @@ class OrganisationForm {
       registrationStatus: registrationStatus ?? this.registrationStatus,
       organisationName: organisationName ?? this.organisationName,
       industryType: industryType ?? this.industryType,
+      businessType: businessType ?? this.businessType,
       address: address ?? this.address,
       province: province ?? this.province,
       socialDevelopmentNumber:
@@ -254,6 +265,7 @@ class OrganisationForm {
       submissionType: submissionType,
       organisationName: organisationName!,
       industryType: industryType!,
+      businessType: isNPO ? null : businessType,
       address: requiresOrganisationDetails ? address : null,
       province: requiresProvince ? province : null,
       socialDevelopmentNumber:

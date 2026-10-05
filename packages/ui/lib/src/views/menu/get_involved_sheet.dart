@@ -27,7 +27,7 @@ class GetInvolvedSheet extends StatelessWidget {
           icon: IconlyLight.work,
           title: 'Register a business / Non-profit company / '
               'Unregistered voluntary association',
-          subtitle: 'Register a business or public benefit organisation.',
+          subtitle: 'Register a business or an NPO/Voluntary Association.',
           onTap: () {
             Navigator.of(context).pop();
             context.router.push(const OrganisationRegistrationRoute());
