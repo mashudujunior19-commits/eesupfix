@@ -442,9 +442,12 @@ class _EditAddressScreenState extends State<EditAddressScreen> {
     }, (r) {
       if (r != null && r.isPrimary && r.areaId == null) {
         context.snackBarWarning(
-          'Address saved, but we could not verify this location falls '
-          'within a serviced area. Please pick an address from the '
-          'suggestions list so it can be confirmed.',
+          r.latitude == null || r.longitude == null
+              ? 'Address saved, but we could not find its location on the '
+                  'map. Please pick an address from the suggestions list so '
+                  'it can be confirmed.'
+              : 'Address saved, but it is outside the areas TOWRIS currently '
+                  'serves, so it cannot be verified yet.',
         );
       } else {
         context.snackBarSuccess('Address saved successfully');
