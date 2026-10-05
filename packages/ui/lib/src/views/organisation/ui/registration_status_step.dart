@@ -25,7 +25,7 @@ class RegistrationStatusStep extends StatelessWidget {
       children: [
         Text(
           form.isNPO
-              ? 'Is the organisation registered or unregistered?'
+              ? 'Is the NPO/Voluntary Association registered or unregistered?'
               : 'Is the business registered or unregistered?',
           style: context.textTheme.labelMedium?.copyWith(fontSize: 18),
         ).animate().slideIn(0),
@@ -33,7 +33,8 @@ class RegistrationStatusStep extends StatelessWidget {
         OrganisationOptionTile(
           title: 'Registered',
           subtitle: form.isNPO
-              ? 'The organisation has a formal registration number.'
+              ? 'The NPO/Voluntary Association has a formal registration '
+                  'number.'
               : 'The business has a formal registration number.',
           isSelected: form.registrationStatus == RegistrationStatus.registered,
           onTap: () => _select(context, RegistrationStatus.registered),
@@ -42,7 +43,8 @@ class RegistrationStatusStep extends StatelessWidget {
         OrganisationOptionTile(
           title: 'Unregistered',
           subtitle: form.isNPO
-              ? 'The organisation is not yet formally registered.'
+              ? 'The NPO/Voluntary Association is not yet formally '
+                  'registered.'
               : 'The business is not yet formally registered.',
           isSelected:
               form.registrationStatus == RegistrationStatus.unregistered,

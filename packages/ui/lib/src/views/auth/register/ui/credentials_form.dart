@@ -27,7 +27,6 @@ class CredentialsForm extends StatefulWidget {
 }
 
 class _CredentialsFormState extends State<CredentialsForm> {
-  bool _isValidPassword = false;
   bool _isSubmitting = false;
 
   RegisterForm get form => widget.form;
@@ -114,11 +113,11 @@ class _CredentialsFormState extends State<CredentialsForm> {
       }
     }
 
-    if (!_isValidPassword) {
+    final password = form.password ?? '';
+    final confirm = form.retypedPassword ?? '';
+    if (!PasswordRules.isValid(password, confirm)) {
       setState(() => _isSubmitting = false);
-      context.snackBarError(
-        'Your password must meet all the requirements.',
-      );
+      context.snackBarError(PasswordRules.errorMessage(password, confirm));
       return;
     }
 
@@ -171,12 +170,8 @@ class _CredentialsFormState extends State<CredentialsForm> {
                 );
           },
         ).animate().slideIn(50),
-        PasswordStrength(
-          confirmPassword: form.retypedPassword ?? '',
+        PasswordRequirements(
           password: form.password ?? '',
-          onValidPassword: (isValid) {
-            _isValidPassword = isValid;
-          },
         ).animate().slideIn(100),
         EESUpTextFormField(
           isPassword: true,
@@ -194,6 +189,10 @@ class _CredentialsFormState extends State<CredentialsForm> {
                 );
           },
         ).animate().slideIn(150),
+        PasswordsMatchIndicator(
+          password: form.password ?? '',
+          confirmPassword: form.retypedPassword ?? '',
+        ),
         30.sH,
         ElevatedButton(
           onPressed: _isSubmitting ? null : _handleNext,

@@ -52,11 +52,6 @@ class _SignInScreenState extends State<SignInScreen> {
       return;
     }
 
-    if (_password.length < 8) {
-      context.snackBarError('Password must be at least 8 characters');
-      return;
-    }
-
     context.read<AuthBloc>().add(SignInPressed(email, phone, _password));
   }
 

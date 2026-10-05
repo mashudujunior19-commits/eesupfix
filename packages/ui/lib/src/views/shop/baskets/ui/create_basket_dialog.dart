@@ -41,15 +41,14 @@ class CreateBasketDialog extends StatelessWidget {
 
   Future<void> _saveBasket(BuildContext context) async {
     FocusScope.of(context).unfocus();
-    if (controller.text.isEmpty) {
+    final name = controller.text.trim();
+    if (name.isEmpty) {
       context.snackBarError("Enter the name of your basket");
       return;
     }
     context.loaderOverlay.show();
     final repo = context.read<ShoppingRepository>();
-    final success = await repo.createBasket(
-      controller.text,
-    );
+    final success = await repo.createBasket(name);
 
     if (context.mounted) {
       context.loaderOverlay.hide();
