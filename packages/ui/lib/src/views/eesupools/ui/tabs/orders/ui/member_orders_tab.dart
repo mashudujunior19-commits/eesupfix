@@ -8,6 +8,7 @@ import 'package:data/orders/models/order.dart';
 import 'package:data/orders/repository/order_repository.dart';
 import 'package:ui/app_route.gr.dart';
 import 'package:ui/src/core/extensions/bottom_sheet_context_ext.dart';
+import 'package:ui/src/core/extensions/context_alerts_ext.dart';
 import 'package:ui/src/core/extensions/context_theme_ext.dart';
 import 'package:ui/src/core/extensions/sizedbox_ext.dart';
 import 'package:ui/src/core/widgets/fullscreen_error_widget.dart';
@@ -36,7 +37,12 @@ class MemberOrdersTab extends StatelessWidget {
             OrderStatus.values.where((e) => e != OrderStatus.pending).toList(),
             500,
             poolOrder.id)),
-      child: BlocBuilder<MemberOrdersBloc, MemberOrdersState>(
+      child: BlocConsumer<MemberOrdersBloc, MemberOrdersState>(
+        listenWhen: (_, state) =>
+            state is OrdersLoaded && state.saveError != null,
+        listener: (context, state) {
+          context.snackBarError((state as OrdersLoaded).saveError!);
+        },
         builder: (context, state) {
           if (state is OrdersLoaded) {
             final orders = state.orders;

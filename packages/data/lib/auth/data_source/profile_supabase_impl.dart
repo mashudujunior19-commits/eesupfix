@@ -120,6 +120,16 @@ class ProfileSupabaseImpl implements ProfileDataSource {
   }
 
   @override
+  Future<bool> updateProfileFields(
+    String userId,
+    Map<String, dynamic> fields,
+  ) async {
+    if (fields.isEmpty) return true;
+    await _client.from('profile').update(fields).eq('user_id', userId);
+    return true;
+  }
+
+  @override
   Future<bool> changePhone(String phone) async {
     // final results =
     //     await _client.auth.updateUser(UserAttributes(phone: '+27618640746'));

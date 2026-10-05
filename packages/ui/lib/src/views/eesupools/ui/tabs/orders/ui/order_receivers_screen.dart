@@ -6,6 +6,7 @@ import 'package:data/eesupools/models/receiver_role.dart';
 import 'package:data/eesupools/repository/eesupool_repo.dart';
 import 'package:ui/src/core/extensions/bg_image_deco_ext.dart';
 import 'package:ui/src/core/extensions/bottom_sheet_context_ext.dart';
+import 'package:ui/src/core/extensions/context_alerts_ext.dart';
 import 'package:ui/src/core/extensions/context_theme_ext.dart';
 import 'package:ui/src/core/widgets/fullscreen_error_widget.dart';
 import 'package:ui/src/core/widgets/fullscreen_loading_shimmer.dart';
@@ -48,7 +49,14 @@ class OrderReceiverScreen extends StatelessWidget {
         ..add(OrderReceiversFetched(ids, order.receiverRoles)),
       child: BlocBuilder<OrderReceiversBloc, OrderReceiversState>(
         builder: (context, state) {
-          return SizedBox(
+          // Always hand the latest receivers/roles back, including on a
+          // system back gesture, so the order screen never keeps (and later
+          // re-saves) a stale copy.
+          return PopScope(
+            canPop: false,
+            onPopInvokedWithResult: (didPop, _) {
+              if (!didPop) Navigator.of(context).pop(_result);
+            },
             child: Scaffold(
               appBar: AppBar(
                 leading: BackButton(
@@ -81,7 +89,14 @@ class OrderReceiverScreen extends StatelessWidget {
               body: Container(
                 decoration: context.bgImage,
                 height: context.height,
-                child: BlocBuilder<OrderReceiversBloc, OrderReceiversState>(
+                child: BlocConsumer<OrderReceiversBloc, OrderReceiversState>(
+                  listenWhen: (_, state) =>
+                      state is OrderReceiversLoaded && state.saveError != null,
+                  listener: (context, state) {
+                    context.snackBarError(
+                      (state as OrderReceiversLoaded).saveError!,
+                    );
+                  },
                   builder: (context, state) {
                     if (state is OrderReceiversLoading) {
                       return const FullScreenLoadingShimmer();
@@ -185,44 +200,41 @@ class _RoleDropdown extends StatelessWidget {
 
   final ReceiverRole? role;
   final bool enabled;
-  final ValueChanged<ReceiverRole?> onChanged;
+  final ValueChanged<ReceiverRole> onChanged;
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
       height: 25,
       width: 100,
-      child: DropdownButton<ReceiverRole?>(
+      child: DropdownButton<ReceiverRole>(
         value: role,
         isExpanded: true,
         dropdownColor: Colors.white,
         borderRadius: BorderRadius.circular(10),
         underline: const SizedBox(),
         icon: enabled ? const Icon(IconlyLight.arrowDown2, size: 16) : null,
+        // Only shown for receivers saved before a role was required.
         hint: Text(
-          'No role',
+          'Select role',
           style: context.textTheme.labelSmall?.copyWith(
-            color: Colors.grey.shade500,
+            color: context.colorScheme.error,
             fontSize: 11,
           ),
         ),
-        onChanged: enabled ? onChanged : null,
+        onChanged: enabled
+            ? (value) {
+                if (value != null) onChanged(value);
+              }
+            : null,
         style: context.textTheme.labelSmall?.copyWith(
           color: context.colorScheme.primary,
           fontWeight: FontWeight.bold,
           fontSize: 11,
         ),
         items: [
-          const DropdownMenuItem<ReceiverRole?>(
-            value: null,
-            child: Text('No role'),
-          ),
-          ...ReceiverRole.values.map(
-            (r) => DropdownMenuItem<ReceiverRole?>(
-              value: r,
-              child: Text(r.label),
-            ),
-          ),
+          for (final r in ReceiverRole.values)
+            DropdownMenuItem<ReceiverRole>(value: r, child: Text(r.label)),
         ],
       ),
     );

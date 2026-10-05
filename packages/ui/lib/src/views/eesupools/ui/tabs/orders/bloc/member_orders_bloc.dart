@@ -37,18 +37,26 @@ class MemberOrdersBloc extends Bloc<MemberOrdersEvent, MemberOrdersState> {
       );
     });
 
-    on<MemberOrderAssignmentsUpdated>((event, emit) {
+    on<MemberOrderAssignmentsUpdated>((event, emit) async {
       if (state is OrdersLoaded) {
-        List<Order> orders = [...(state as OrdersLoaded).orders];
+        final previous = (state as OrdersLoaded).orders;
+        List<Order> orders = [...previous];
         final index = orders.indexWhere((e) => e.id == event.orderId);
         if (index != -1) {
           final copy = orders[index].copyWith(
             assignments: event.assignments,
           );
           orders[index] = copy;
-          _poolRepository.updateOrderAssignments(
-              event.assignments, event.orderId);
           emit(OrdersLoaded(orders));
+
+          // Roll back to what's actually stored if the save is rejected
+          // (e.g. an unverified member, or someone packing their own order).
+          final saved = await _poolRepository.updateOrderAssignments(
+              event.assignments, event.orderId);
+          saved.fold(
+            (l) => emit(OrdersLoaded(previous, saveError: l.message)),
+            (_) {},
+          );
         }
       }
     });

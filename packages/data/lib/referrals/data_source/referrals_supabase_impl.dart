@@ -18,4 +18,20 @@ class ReferralsSupabaseImpl implements ReferralsDataSource {
 
     return (res as List).map((e) => Referral.fromJson(e)).toList();
   }
+
+  @override
+  Future<({String? android, String? ios})> fetchStoreUrls() async {
+    final row = await _client
+        .schema('public')
+        .from('version_control')
+        .select('app_store_url, ios_url')
+        .not('app_store_url', 'is', null)
+        .order('id', ascending: false)
+        .limit(1)
+        .maybeSingle();
+    return (
+      android: row?['app_store_url'] as String?,
+      ios: row?['ios_url'] as String?,
+    );
+  }
 }

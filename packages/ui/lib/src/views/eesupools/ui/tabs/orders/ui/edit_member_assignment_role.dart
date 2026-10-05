@@ -30,6 +30,21 @@ class _EditOrderAssignmentsDialogState
     extends State<EditOrderAssignmentsDialog> {
   List<MemberOrderAssignment> assignments = [];
 
+  /// Roles an admin can pick. Owner is implicit and None isn't a role.
+  static const _assignableRoles = [
+    OrderEditPrivilage.packer,
+    OrderEditPrivilage.collector,
+    OrderEditPrivilage.all,
+  ];
+
+  /// Member ids (added in this dialog) that belong to the customer who
+  /// placed the order: they may collect it but not pack it. The database
+  /// enforces the same rule for assignments that were already saved.
+  final Set<String> _customerMemberIds = {};
+
+  bool _packs(OrderEditPrivilage? role) =>
+      role == OrderEditPrivilage.packer || role == OrderEditPrivilage.all;
+
   @override
   void initState() {
     super.initState();
@@ -42,6 +57,16 @@ class _EditOrderAssignmentsDialogState
     bool alreadyExists =
         assignments.any((element) => element.memberId == member.memberId);
 
+    if (member.isVerified == false) {
+      context.snackBarError(
+        '${member.fullName} is not verified and cannot be assigned a role.',
+      );
+      return;
+    }
+
+    final isCustomer = member.userId == widget.order.customerId;
+    if (isCustomer) _customerMemberIds.add(member.memberId);
+
     if (!alreadyExists) {
       setState(() {
         assignments.add(
@@ -50,7 +75,11 @@ class _EditOrderAssignmentsDialogState
             fullName: member.fullName,
             orderId: widget.order.id!,
             eesupoolOrderId: widget.order.eesupoolOrderId!,
-            privilage: OrderEditPrivilage.all,
+            // Someone can't pack their own order, so the customer starts
+            // out as its collector instead.
+            privilage: isCustomer
+                ? OrderEditPrivilage.collector
+                : OrderEditPrivilage.all,
             corpName: null,
           ),
         );
@@ -59,6 +88,10 @@ class _EditOrderAssignmentsDialogState
   }
 
   void setRole(OrderEditPrivilage role, MemberOrderAssignment assignment) {
+    if (_packs(role) && _customerMemberIds.contains(assignment.memberId)) {
+      context.snackBarError('Members cannot pack their own orders.');
+      return;
+    }
     setState(() {
       assignment = assignment.copyWith(privilage: role);
     });
@@ -72,6 +105,11 @@ class _EditOrderAssignmentsDialogState
   }
 
   bool isValidAssignments(BuildContext cx) {
+    if (assignments.any((a) => !_assignableRoles.contains(a.privilage))) {
+      cx.snackBarError('Select a role for every member');
+      return false;
+    }
+
     int packerCounts = assignments
         .where((element) => element.privilage == OrderEditPrivilage.packer)
         .length;
@@ -195,7 +233,18 @@ class _EditOrderAssignmentsDialogState
                       height: 25,
                       width: 100,
                       child: DropdownButton<OrderEditPrivilage>(
-                        value: assignment.privilage,
+                        // A role the picker doesn't offer (e.g. a legacy
+                        // "None") shows the hint instead of crashing the
+                        // dropdown.
+                        value: _assignableRoles.contains(assignment.privilage)
+                            ? assignment.privilage
+                            : null,
+                        hint: Text(
+                          'Select role',
+                          style: context.textTheme.labelSmall?.copyWith(
+                            color: context.colorScheme.error,
+                          ),
+                        ),
                         isExpanded: true,
                         dropdownColor: Colors.white,
                         borderRadius: BorderRadius.circular(10),
@@ -225,11 +274,7 @@ class _EditOrderAssignmentsDialogState
                         style: context.textTheme.labelMedium?.copyWith(
                           color: Colors.black,
                         ),
-                        items: [
-                          OrderEditPrivilage.packer,
-                          OrderEditPrivilage.collector,
-                          OrderEditPrivilage.all
-                        ]
+                        items: _assignableRoles
                             .map(
                               (e) => DropdownMenuItem(
                                 value: e,

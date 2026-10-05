@@ -11,6 +11,7 @@ _NotificationData _$NotificationDataFromJson(Map<String, dynamic> json) =>
       userId: json['user_id'] as String?,
       eesupoolId: (json['eesupool_id'] as num?)?.toInt(),
       orderId: (json['order_id'] as num?)?.toInt(),
+      eesupoolOrderId: (json['eesupool_order_id'] as num?)?.toInt(),
     );
 
 Map<String, dynamic> _$NotificationDataToJson(_NotificationData instance) =>
@@ -18,4 +19,5 @@ Map<String, dynamic> _$NotificationDataToJson(_NotificationData instance) =>
       'user_id': instance.userId,
       'eesupool_id': instance.eesupoolId,
       'order_id': instance.orderId,
+      'eesupool_order_id': instance.eesupoolOrderId,
     };

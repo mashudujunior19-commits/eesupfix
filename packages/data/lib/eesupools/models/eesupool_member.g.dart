@@ -16,6 +16,7 @@ _EESUpoolMember _$EESUpoolMemberFromJson(Map<String, dynamic> json) =>
       isCensored: json['is_censored'] as bool,
       fullName: json['full_name'] as String,
       createdAt: DateTime.parse(json['created_at'] as String),
+      isVerified: json['is_verified'] as bool?,
     );
 
 Map<String, dynamic> _$EESUpoolMemberToJson(_EESUpoolMember instance) =>

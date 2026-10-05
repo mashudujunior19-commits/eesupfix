@@ -44,7 +44,7 @@ class _OrdersStatuesFilterDialogState extends State<OrdersStatuesFilterDialog> {
             },
           ),
           Text(
-            'Filter by Statuses',
+            'Filter by Status',
             style: context.textTheme.labelMedium?.copyWith(
               fontSize: 18,
             ),

@@ -10,85 +10,90 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 
-import 'package:auto_route/auto_route.dart' as _i50;
-import 'package:collection/collection.dart' as _i54;
-import 'package:data/auth/models/profile.dart' as _i63;
-import 'package:data/auth/models/user_role.dart' as _i68;
-import 'package:data/eesupools/models/eesupool.dart' as _i58;
-import 'package:data/eesupools/models/eesupool_issue.dart' as _i65;
-import 'package:data/eesupools/models/eesupool_level.dart' as _i56;
-import 'package:data/eesupools/models/eesupool_member.dart' as _i71;
-import 'package:data/eesupools/models/eesupool_order.dart' as _i59;
-import 'package:data/eesupools/models/eesupool_type.dart' as _i57;
-import 'package:data/eesupreneur/models/eesupreneur.dart' as _i66;
-import 'package:data/finance/models/wallet.dart' as _i69;
-import 'package:data/geolocation/models/address.dart' as _i60;
-import 'package:data/orders/models/order.dart' as _i67;
-import 'package:data/orders/models/order_product.dart' as _i53;
-import 'package:data/partners/models/partner.dart' as _i62;
-import 'package:data/partners/models/partner_application.dart' as _i61;
-import 'package:data/shopping/models/basket.dart' as _i52;
-import 'package:data/shopping/models/category.dart' as _i55;
-import 'package:data/surveys/models/survey.dart' as _i70;
-import 'package:flutter/material.dart' as _i51;
-import 'package:instapay_flutter/data/merchant_transaction.dart' as _i64;
+import 'package:auto_route/auto_route.dart' as _i53;
+import 'package:collection/collection.dart' as _i57;
+import 'package:data/auth/models/profile.dart' as _i67;
+import 'package:data/auth/models/user_role.dart' as _i72;
+import 'package:data/eesupools/models/eesupool.dart' as _i61;
+import 'package:data/eesupools/models/eesupool_issue.dart' as _i69;
+import 'package:data/eesupools/models/eesupool_level.dart' as _i59;
+import 'package:data/eesupools/models/eesupool_member.dart' as _i75;
+import 'package:data/eesupools/models/eesupool_order.dart' as _i62;
+import 'package:data/eesupools/models/eesupool_type.dart' as _i60;
+import 'package:data/eesupreneur/models/eesupreneur.dart' as _i70;
+import 'package:data/finance/models/wallet.dart' as _i73;
+import 'package:data/geolocation/models/address.dart' as _i64;
+import 'package:data/orders/models/order.dart' as _i71;
+import 'package:data/orders/models/order_product.dart' as _i56;
+import 'package:data/partners/models/partner.dart' as _i66;
+import 'package:data/partners/models/partner_application.dart' as _i65;
+import 'package:data/shopping/models/basket.dart' as _i55;
+import 'package:data/shopping/models/category.dart' as _i58;
+import 'package:data/surveys/models/survey.dart' as _i74;
+import 'package:flutter/foundation.dart' as _i63;
+import 'package:flutter/material.dart' as _i54;
+import 'package:instapay_flutter/data/merchant_transaction.dart' as _i68;
 import 'package:ui/src/core/widgets/media_file_uploader.dart' as _i24;
 import 'package:ui/src/views/auth/profile/ui/edit_profile_screen.dart' as _i15;
-import 'package:ui/src/views/auth/register/ui/register_screen.dart' as _i35;
+import 'package:ui/src/views/auth/register/ui/register_screen.dart' as _i37;
 import 'package:ui/src/views/auth/reset_password/reset_password_screen.dart'
-    as _i36;
-import 'package:ui/src/views/auth/sign_in/ui/sign_in_screen.dart' as _i40;
-import 'package:ui/src/views/auth/sign_in/ui/start_up_screen.dart' as _i41;
+    as _i38;
+import 'package:ui/src/views/auth/sign_in/ui/sign_in_screen.dart' as _i43;
+import 'package:ui/src/views/auth/sign_in/ui/start_up_screen.dart' as _i44;
 import 'package:ui/src/views/eesupools/ui/create_eesupool_screen.dart' as _i9;
 import 'package:ui/src/views/eesupools/ui/eesupool_search_screen.dart' as _i11;
 import 'package:ui/src/views/eesupools/ui/eesupool_view_screen.dart' as _i12;
 import 'package:ui/src/views/eesupools/ui/tabs/issues/ui/issue_view_screen.dart'
     as _i21;
 import 'package:ui/src/views/eesupools/ui/tabs/members/ui/transfer_member_screen.dart'
-    as _i45;
+    as _i48;
 import 'package:ui/src/views/eesupools/ui/tabs/orders/ui/order_receivers_screen.dart'
-    as _i25;
+    as _i27;
 import 'package:ui/src/views/eesupools/ui/tabs/orders/ui/order_view.dart'
     as _i10;
 import 'package:ui/src/views/finances/crowdvouchers/ui/voucher_view_screen.dart'
-    as _i47;
+    as _i50;
 import 'package:ui/src/views/finances/payments/instapay/instapay_confirm_profile.dart'
     as _i19;
 import 'package:ui/src/views/finances/payments/instapay/instapay_screen.dart'
     as _i20;
-import 'package:ui/src/views/finances/payments/ozow/ozow_screen.dart' as _i29;
+import 'package:ui/src/views/finances/payments/ozow/ozow_screen.dart' as _i31;
 import 'package:ui/src/views/finances/payments/yoco/yoco_payment_screen.dart'
-    as _i49;
+    as _i52;
 import 'package:ui/src/views/finances/wallets/ui/screens/payout_screen.dart'
-    as _i32;
+    as _i34;
 import 'package:ui/src/views/finances/wallets/ui/screens/transfer_screen.dart'
-    as _i46;
+    as _i49;
 import 'package:ui/src/views/finances/wallets/ui/screens/wallet_view_screen.dart'
-    as _i48;
+    as _i51;
 import 'package:ui/src/views/geolocation/ui/screens/addrese_book_screen.dart'
     as _i1;
 import 'package:ui/src/views/geolocation/ui/screens/edit_address_screen.dart'
     as _i13;
 import 'package:ui/src/views/kasipreneur/ui/kasipreneur_screen.dart' as _i23;
-import 'package:ui/src/views/menu/terms_of_services_screen.dart' as _i44;
+import 'package:ui/src/views/menu/my_community_screen.dart' as _i25;
+import 'package:ui/src/views/menu/my_wallet_screen.dart' as _i26;
+import 'package:ui/src/views/menu/terms_of_services_screen.dart' as _i47;
 import 'package:ui/src/views/orders/tracking/ui/order_tracking_screen.dart'
-    as _i26;
+    as _i28;
 import 'package:ui/src/views/orders/tracking/ui/review_products_screen.dart'
-    as _i38;
+    as _i40;
 import 'package:ui/src/views/organisation/ui/kasilift_upgrade_screen.dart'
     as _i22;
 import 'package:ui/src/views/organisation/ui/organisation_registration_screen.dart'
-    as _i27;
-import 'package:ui/src/views/overview/ui/overview_screen.dart' as _i28;
+    as _i29;
+import 'package:ui/src/views/overview/ui/overview_screen.dart' as _i30;
 import 'package:ui/src/views/partners/ui/edit_application.dart' as _i14;
-import 'package:ui/src/views/partners/ui/partner_apps_screen.dart' as _i30;
-import 'package:ui/src/views/partners/ui/partners_screen.dart' as _i31;
-import 'package:ui/src/views/settings/ui/settings_screen.dart' as _i39;
+import 'package:ui/src/views/partners/ui/partner_apps_screen.dart' as _i32;
+import 'package:ui/src/views/partners/ui/partners_screen.dart' as _i33;
+import 'package:ui/src/views/role_assignments/ui/role_checklist_screen.dart'
+    as _i41;
+import 'package:ui/src/views/settings/ui/settings_screen.dart' as _i42;
 import 'package:ui/src/views/shop/baskets/ui/basket_view.dart' as _i3;
 import 'package:ui/src/views/shop/baskets/ui/baskets_list.dart' as _i4;
 import 'package:ui/src/views/shop/browsing/ui/browse_shop.dart' as _i5;
 import 'package:ui/src/views/shop/browsing/ui/category_screen.dart' as _i7;
-import 'package:ui/src/views/shop/browsing/ui/product_view_screen.dart' as _i34;
+import 'package:ui/src/views/shop/browsing/ui/product_view_screen.dart' as _i36;
 import 'package:ui/src/views/shop/cart/ui/cart_screen.dart' as _i6;
 import 'package:ui/src/views/shop/checkout/ui/checkout_screen.dart' as _i8;
 import 'package:ui/src/views/shop/checkout/ui/steps/address_selection_step.dart'
@@ -97,20 +102,20 @@ import 'package:ui/src/views/shop/hampers/ui/hamper_list.dart' as _i18;
 import 'package:ui/src/views/shop/hampers/ui/hamper_stack.dart' as _i16;
 import 'package:ui/src/views/shop/hampers/ui/hamper_view.dart' as _i17;
 import 'package:ui/src/views/shop/product_request/product_request_screen.dart'
-    as _i33;
-import 'package:ui/src/views/support/ui/support_screen.dart' as _i42;
-import 'package:ui/src/views/surveys/ui/response_screen.dart' as _i37;
-import 'package:ui/src/views/surveys/ui/survey_screen.dart' as _i43;
+    as _i35;
+import 'package:ui/src/views/support/ui/support_screen.dart' as _i45;
+import 'package:ui/src/views/surveys/ui/response_screen.dart' as _i39;
+import 'package:ui/src/views/surveys/ui/survey_screen.dart' as _i46;
 
 /// generated route for
 /// [_i1.AddressBookScreen]
-class AddressBookRoute extends _i50.PageRouteInfo<void> {
-  const AddressBookRoute({List<_i50.PageRouteInfo>? children})
+class AddressBookRoute extends _i53.PageRouteInfo<void> {
+  const AddressBookRoute({List<_i53.PageRouteInfo>? children})
       : super(AddressBookRoute.name, initialChildren: children);
 
   static const String name = 'AddressBookRoute';
 
-  static _i50.PageInfo page = _i50.PageInfo(
+  static _i53.PageInfo page = _i53.PageInfo(
     name,
     builder: (data) {
       return const _i1.AddressBookScreen();
@@ -121,11 +126,11 @@ class AddressBookRoute extends _i50.PageRouteInfo<void> {
 /// generated route for
 /// [_i2.AddressSelectionStep]
 class AddressSelectionStep
-    extends _i50.PageRouteInfo<AddressSelectionStepArgs> {
+    extends _i53.PageRouteInfo<AddressSelectionStepArgs> {
   AddressSelectionStep({
-    _i51.Key? key,
-    required _i51.TabController tabController,
-    List<_i50.PageRouteInfo>? children,
+    _i54.Key? key,
+    required _i54.TabController tabController,
+    List<_i53.PageRouteInfo>? children,
   }) : super(
           AddressSelectionStep.name,
           args:
@@ -135,7 +140,7 @@ class AddressSelectionStep
 
   static const String name = 'AddressSelectionStep';
 
-  static _i50.PageInfo page = _i50.PageInfo(
+  static _i53.PageInfo page = _i53.PageInfo(
     name,
     builder: (data) {
       final args = data.argsAs<AddressSelectionStepArgs>();
@@ -150,9 +155,9 @@ class AddressSelectionStep
 class AddressSelectionStepArgs {
   const AddressSelectionStepArgs({this.key, required this.tabController});
 
-  final _i51.Key? key;
+  final _i54.Key? key;
 
-  final _i51.TabController tabController;
+  final _i54.TabController tabController;
 
   @override
   String toString() {
@@ -172,11 +177,11 @@ class AddressSelectionStepArgs {
 
 /// generated route for
 /// [_i3.BasketViewScreen]
-class BasketViewRoute extends _i50.PageRouteInfo<BasketViewRouteArgs> {
+class BasketViewRoute extends _i53.PageRouteInfo<BasketViewRouteArgs> {
   BasketViewRoute({
-    _i51.Key? key,
-    required _i52.Basket basket,
-    List<_i50.PageRouteInfo>? children,
+    _i54.Key? key,
+    required _i55.Basket basket,
+    List<_i53.PageRouteInfo>? children,
   }) : super(
           BasketViewRoute.name,
           args: BasketViewRouteArgs(key: key, basket: basket),
@@ -185,7 +190,7 @@ class BasketViewRoute extends _i50.PageRouteInfo<BasketViewRouteArgs> {
 
   static const String name = 'BasketViewRoute';
 
-  static _i50.PageInfo page = _i50.PageInfo(
+  static _i53.PageInfo page = _i53.PageInfo(
     name,
     builder: (data) {
       final args = data.argsAs<BasketViewRouteArgs>();
@@ -197,9 +202,9 @@ class BasketViewRoute extends _i50.PageRouteInfo<BasketViewRouteArgs> {
 class BasketViewRouteArgs {
   const BasketViewRouteArgs({this.key, required this.basket});
 
-  final _i51.Key? key;
+  final _i54.Key? key;
 
-  final _i52.Basket basket;
+  final _i55.Basket basket;
 
   @override
   String toString() {
@@ -219,13 +224,13 @@ class BasketViewRouteArgs {
 
 /// generated route for
 /// [_i4.BasketsListScreen]
-class BasketsListRoute extends _i50.PageRouteInfo<void> {
-  const BasketsListRoute({List<_i50.PageRouteInfo>? children})
+class BasketsListRoute extends _i53.PageRouteInfo<void> {
+  const BasketsListRoute({List<_i53.PageRouteInfo>? children})
       : super(BasketsListRoute.name, initialChildren: children);
 
   static const String name = 'BasketsListRoute';
 
-  static _i50.PageInfo page = _i50.PageInfo(
+  static _i53.PageInfo page = _i53.PageInfo(
     name,
     builder: (data) {
       return const _i4.BasketsListScreen();
@@ -235,13 +240,13 @@ class BasketsListRoute extends _i50.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i5.BrowseShopScreen]
-class BrowseShopRoute extends _i50.PageRouteInfo<void> {
-  const BrowseShopRoute({List<_i50.PageRouteInfo>? children})
+class BrowseShopRoute extends _i53.PageRouteInfo<void> {
+  const BrowseShopRoute({List<_i53.PageRouteInfo>? children})
       : super(BrowseShopRoute.name, initialChildren: children);
 
   static const String name = 'BrowseShopRoute';
 
-  static _i50.PageInfo page = _i50.PageInfo(
+  static _i53.PageInfo page = _i53.PageInfo(
     name,
     builder: (data) {
       return const _i5.BrowseShopScreen();
@@ -251,11 +256,11 @@ class BrowseShopRoute extends _i50.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i6.CartScreen]
-class CartRoute extends _i50.PageRouteInfo<CartRouteArgs> {
+class CartRoute extends _i53.PageRouteInfo<CartRouteArgs> {
   CartRoute({
-    _i51.Key? key,
-    List<_i53.OrderProduct>? orderProducts,
-    List<_i50.PageRouteInfo>? children,
+    _i54.Key? key,
+    List<_i56.OrderProduct>? orderProducts,
+    List<_i53.PageRouteInfo>? children,
   }) : super(
           CartRoute.name,
           args: CartRouteArgs(key: key, orderProducts: orderProducts),
@@ -264,7 +269,7 @@ class CartRoute extends _i50.PageRouteInfo<CartRouteArgs> {
 
   static const String name = 'CartRoute';
 
-  static _i50.PageInfo page = _i50.PageInfo(
+  static _i53.PageInfo page = _i53.PageInfo(
     name,
     builder: (data) {
       final args = data.argsAs<CartRouteArgs>(
@@ -278,9 +283,9 @@ class CartRoute extends _i50.PageRouteInfo<CartRouteArgs> {
 class CartRouteArgs {
   const CartRouteArgs({this.key, this.orderProducts});
 
-  final _i51.Key? key;
+  final _i54.Key? key;
 
-  final List<_i53.OrderProduct>? orderProducts;
+  final List<_i56.OrderProduct>? orderProducts;
 
   @override
   String toString() {
@@ -292,7 +297,7 @@ class CartRouteArgs {
     if (identical(this, other)) return true;
     if (other is! CartRouteArgs) return false;
     return key == other.key &&
-        const _i54.ListEquality<_i53.OrderProduct>().equals(
+        const _i57.ListEquality<_i56.OrderProduct>().equals(
           orderProducts,
           other.orderProducts,
         );
@@ -301,16 +306,16 @@ class CartRouteArgs {
   @override
   int get hashCode =>
       key.hashCode ^
-      const _i54.ListEquality<_i53.OrderProduct>().hash(orderProducts);
+      const _i57.ListEquality<_i56.OrderProduct>().hash(orderProducts);
 }
 
 /// generated route for
 /// [_i7.CategoryScreen]
-class CategoryRoute extends _i50.PageRouteInfo<CategoryRouteArgs> {
+class CategoryRoute extends _i53.PageRouteInfo<CategoryRouteArgs> {
   CategoryRoute({
-    _i51.Key? key,
-    required _i55.Category category,
-    List<_i50.PageRouteInfo>? children,
+    _i54.Key? key,
+    required _i58.Category category,
+    List<_i53.PageRouteInfo>? children,
   }) : super(
           CategoryRoute.name,
           args: CategoryRouteArgs(key: key, category: category),
@@ -319,7 +324,7 @@ class CategoryRoute extends _i50.PageRouteInfo<CategoryRouteArgs> {
 
   static const String name = 'CategoryRoute';
 
-  static _i50.PageInfo page = _i50.PageInfo(
+  static _i53.PageInfo page = _i53.PageInfo(
     name,
     builder: (data) {
       final args = data.argsAs<CategoryRouteArgs>();
@@ -331,9 +336,9 @@ class CategoryRoute extends _i50.PageRouteInfo<CategoryRouteArgs> {
 class CategoryRouteArgs {
   const CategoryRouteArgs({this.key, required this.category});
 
-  final _i51.Key? key;
+  final _i54.Key? key;
 
-  final _i55.Category category;
+  final _i58.Category category;
 
   @override
   String toString() {
@@ -353,12 +358,12 @@ class CategoryRouteArgs {
 
 /// generated route for
 /// [_i8.CheckoutScreen]
-class CheckoutRoute extends _i50.PageRouteInfo<CheckoutRouteArgs> {
+class CheckoutRoute extends _i53.PageRouteInfo<CheckoutRouteArgs> {
   CheckoutRoute({
-    _i51.Key? key,
-    required List<_i53.OrderProduct> products,
+    _i54.Key? key,
+    required List<_i56.OrderProduct> products,
     required double total,
-    List<_i50.PageRouteInfo>? children,
+    List<_i53.PageRouteInfo>? children,
   }) : super(
           CheckoutRoute.name,
           args: CheckoutRouteArgs(key: key, products: products, total: total),
@@ -367,7 +372,7 @@ class CheckoutRoute extends _i50.PageRouteInfo<CheckoutRouteArgs> {
 
   static const String name = 'CheckoutRoute';
 
-  static _i50.PageInfo page = _i50.PageInfo(
+  static _i53.PageInfo page = _i53.PageInfo(
     name,
     builder: (data) {
       final args = data.argsAs<CheckoutRouteArgs>();
@@ -387,9 +392,9 @@ class CheckoutRouteArgs {
     required this.total,
   });
 
-  final _i51.Key? key;
+  final _i54.Key? key;
 
-  final List<_i53.OrderProduct> products;
+  final List<_i56.OrderProduct> products;
 
   final double total;
 
@@ -403,7 +408,7 @@ class CheckoutRouteArgs {
     if (identical(this, other)) return true;
     if (other is! CheckoutRouteArgs) return false;
     return key == other.key &&
-        const _i54.ListEquality<_i53.OrderProduct>().equals(
+        const _i57.ListEquality<_i56.OrderProduct>().equals(
           products,
           other.products,
         ) &&
@@ -413,19 +418,19 @@ class CheckoutRouteArgs {
   @override
   int get hashCode =>
       key.hashCode ^
-      const _i54.ListEquality<_i53.OrderProduct>().hash(products) ^
+      const _i57.ListEquality<_i56.OrderProduct>().hash(products) ^
       total.hashCode;
 }
 
 /// generated route for
 /// [_i9.CreateEESUpoolScreen]
-class CreateEESUpoolRoute extends _i50.PageRouteInfo<CreateEESUpoolRouteArgs> {
+class CreateEESUpoolRoute extends _i53.PageRouteInfo<CreateEESUpoolRouteArgs> {
   CreateEESUpoolRoute({
-    _i51.Key? key,
+    _i54.Key? key,
     int? parentId,
-    _i56.EESUpoolLevel? level,
-    required _i57.EESUpoolType type,
-    List<_i50.PageRouteInfo>? children,
+    _i59.EESUpoolLevel? level,
+    required _i60.EESUpoolType type,
+    List<_i53.PageRouteInfo>? children,
   }) : super(
           CreateEESUpoolRoute.name,
           args: CreateEESUpoolRouteArgs(
@@ -439,7 +444,7 @@ class CreateEESUpoolRoute extends _i50.PageRouteInfo<CreateEESUpoolRouteArgs> {
 
   static const String name = 'CreateEESUpoolRoute';
 
-  static _i50.PageInfo page = _i50.PageInfo(
+  static _i53.PageInfo page = _i53.PageInfo(
     name,
     builder: (data) {
       final args = data.argsAs<CreateEESUpoolRouteArgs>();
@@ -461,13 +466,13 @@ class CreateEESUpoolRouteArgs {
     required this.type,
   });
 
-  final _i51.Key? key;
+  final _i54.Key? key;
 
   final int? parentId;
 
-  final _i56.EESUpoolLevel? level;
+  final _i59.EESUpoolLevel? level;
 
-  final _i57.EESUpoolType type;
+  final _i60.EESUpoolType type;
 
   @override
   String toString() {
@@ -492,12 +497,12 @@ class CreateEESUpoolRouteArgs {
 /// generated route for
 /// [_i10.EESUpoolOrderViewScreen]
 class EESUpoolOrderViewRoute
-    extends _i50.PageRouteInfo<EESUpoolOrderViewRouteArgs> {
+    extends _i53.PageRouteInfo<EESUpoolOrderViewRouteArgs> {
   EESUpoolOrderViewRoute({
-    _i51.Key? key,
-    required _i58.EESUpool pool,
-    required _i59.EESUpoolOrder order,
-    List<_i50.PageRouteInfo>? children,
+    _i54.Key? key,
+    required _i61.EESUpool pool,
+    required _i62.EESUpoolOrder order,
+    List<_i53.PageRouteInfo>? children,
   }) : super(
           EESUpoolOrderViewRoute.name,
           args: EESUpoolOrderViewRouteArgs(key: key, pool: pool, order: order),
@@ -506,7 +511,7 @@ class EESUpoolOrderViewRoute
 
   static const String name = 'EESUpoolOrderViewRoute';
 
-  static _i50.PageInfo page = _i50.PageInfo(
+  static _i53.PageInfo page = _i53.PageInfo(
     name,
     builder: (data) {
       final args = data.argsAs<EESUpoolOrderViewRouteArgs>();
@@ -526,11 +531,11 @@ class EESUpoolOrderViewRouteArgs {
     required this.order,
   });
 
-  final _i51.Key? key;
+  final _i54.Key? key;
 
-  final _i58.EESUpool pool;
+  final _i61.EESUpool pool;
 
-  final _i59.EESUpoolOrder order;
+  final _i62.EESUpoolOrder order;
 
   @override
   String toString() {
@@ -550,11 +555,11 @@ class EESUpoolOrderViewRouteArgs {
 
 /// generated route for
 /// [_i11.EESUpoolSearchScreen]
-class EESUpoolSearchRoute extends _i50.PageRouteInfo<EESUpoolSearchRouteArgs> {
+class EESUpoolSearchRoute extends _i53.PageRouteInfo<EESUpoolSearchRouteArgs> {
   EESUpoolSearchRoute({
-    _i51.Key? key,
-    required _i57.EESUpoolType type,
-    List<_i50.PageRouteInfo>? children,
+    _i54.Key? key,
+    required _i60.EESUpoolType type,
+    List<_i53.PageRouteInfo>? children,
   }) : super(
           EESUpoolSearchRoute.name,
           args: EESUpoolSearchRouteArgs(key: key, type: type),
@@ -563,7 +568,7 @@ class EESUpoolSearchRoute extends _i50.PageRouteInfo<EESUpoolSearchRouteArgs> {
 
   static const String name = 'EESUpoolSearchRoute';
 
-  static _i50.PageInfo page = _i50.PageInfo(
+  static _i53.PageInfo page = _i53.PageInfo(
     name,
     builder: (data) {
       final args = data.argsAs<EESUpoolSearchRouteArgs>();
@@ -575,9 +580,9 @@ class EESUpoolSearchRoute extends _i50.PageRouteInfo<EESUpoolSearchRouteArgs> {
 class EESUpoolSearchRouteArgs {
   const EESUpoolSearchRouteArgs({this.key, required this.type});
 
-  final _i51.Key? key;
+  final _i54.Key? key;
 
-  final _i57.EESUpoolType type;
+  final _i60.EESUpoolType type;
 
   @override
   String toString() {
@@ -597,12 +602,12 @@ class EESUpoolSearchRouteArgs {
 
 /// generated route for
 /// [_i12.EESUpoolViewScreen]
-class EESUpoolViewRoute extends _i50.PageRouteInfo<EESUpoolViewRouteArgs> {
+class EESUpoolViewRoute extends _i53.PageRouteInfo<EESUpoolViewRouteArgs> {
   EESUpoolViewRoute({
-    _i51.Key? key,
+    _i54.Key? key,
     int? poolId,
-    _i58.EESUpool? pool,
-    List<_i50.PageRouteInfo>? children,
+    _i61.EESUpool? pool,
+    List<_i53.PageRouteInfo>? children,
   }) : super(
           EESUpoolViewRoute.name,
           args: EESUpoolViewRouteArgs(key: key, poolId: poolId, pool: pool),
@@ -611,7 +616,7 @@ class EESUpoolViewRoute extends _i50.PageRouteInfo<EESUpoolViewRouteArgs> {
 
   static const String name = 'EESUpoolViewRoute';
 
-  static _i50.PageInfo page = _i50.PageInfo(
+  static _i53.PageInfo page = _i53.PageInfo(
     name,
     builder: (data) {
       final args = data.argsAs<EESUpoolViewRouteArgs>(
@@ -629,11 +634,11 @@ class EESUpoolViewRoute extends _i50.PageRouteInfo<EESUpoolViewRouteArgs> {
 class EESUpoolViewRouteArgs {
   const EESUpoolViewRouteArgs({this.key, this.poolId, this.pool});
 
-  final _i51.Key? key;
+  final _i54.Key? key;
 
   final int? poolId;
 
-  final _i58.EESUpool? pool;
+  final _i61.EESUpool? pool;
 
   @override
   String toString() {
@@ -653,12 +658,12 @@ class EESUpoolViewRouteArgs {
 
 /// generated route for
 /// [_i13.EditAddressScreen]
-class EditAddressRoute extends _i50.PageRouteInfo<EditAddressRouteArgs> {
+class EditAddressRoute extends _i53.PageRouteInfo<EditAddressRouteArgs> {
   EditAddressRoute({
-    _i51.Key? key,
-    _i60.Address? address,
+    _i63.Key? key,
+    _i64.Address? address,
     bool isPersonal = true,
-    List<_i50.PageRouteInfo>? children,
+    List<_i53.PageRouteInfo>? children,
   }) : super(
           EditAddressRoute.name,
           args: EditAddressRouteArgs(
@@ -671,7 +676,7 @@ class EditAddressRoute extends _i50.PageRouteInfo<EditAddressRouteArgs> {
 
   static const String name = 'EditAddressRoute';
 
-  static _i50.PageInfo page = _i50.PageInfo(
+  static _i53.PageInfo page = _i53.PageInfo(
     name,
     builder: (data) {
       final args = data.argsAs<EditAddressRouteArgs>(
@@ -689,9 +694,9 @@ class EditAddressRoute extends _i50.PageRouteInfo<EditAddressRouteArgs> {
 class EditAddressRouteArgs {
   const EditAddressRouteArgs({this.key, this.address, this.isPersonal = true});
 
-  final _i51.Key? key;
+  final _i63.Key? key;
 
-  final _i60.Address? address;
+  final _i64.Address? address;
 
   final bool isPersonal;
 
@@ -716,12 +721,12 @@ class EditAddressRouteArgs {
 /// generated route for
 /// [_i14.EditApplicationScreen]
 class EditApplicationRoute
-    extends _i50.PageRouteInfo<EditApplicationRouteArgs> {
+    extends _i53.PageRouteInfo<EditApplicationRouteArgs> {
   EditApplicationRoute({
-    _i51.Key? key,
-    required _i61.PartnerApplication app,
-    required _i62.Partner partner,
-    List<_i50.PageRouteInfo>? children,
+    _i54.Key? key,
+    required _i65.PartnerApplication app,
+    required _i66.Partner partner,
+    List<_i53.PageRouteInfo>? children,
   }) : super(
           EditApplicationRoute.name,
           args: EditApplicationRouteArgs(key: key, app: app, partner: partner),
@@ -730,7 +735,7 @@ class EditApplicationRoute
 
   static const String name = 'EditApplicationRoute';
 
-  static _i50.PageInfo page = _i50.PageInfo(
+  static _i53.PageInfo page = _i53.PageInfo(
     name,
     builder: (data) {
       final args = data.argsAs<EditApplicationRouteArgs>();
@@ -750,11 +755,11 @@ class EditApplicationRouteArgs {
     required this.partner,
   });
 
-  final _i51.Key? key;
+  final _i54.Key? key;
 
-  final _i61.PartnerApplication app;
+  final _i65.PartnerApplication app;
 
-  final _i62.Partner partner;
+  final _i66.Partner partner;
 
   @override
   String toString() {
@@ -774,11 +779,11 @@ class EditApplicationRouteArgs {
 
 /// generated route for
 /// [_i15.EditProfileScreen]
-class EditProfileRoute extends _i50.PageRouteInfo<EditProfileRouteArgs> {
+class EditProfileRoute extends _i53.PageRouteInfo<EditProfileRouteArgs> {
   EditProfileRoute({
-    _i51.Key? key,
-    required _i63.Profile profile,
-    List<_i50.PageRouteInfo>? children,
+    _i54.Key? key,
+    required _i67.Profile profile,
+    List<_i53.PageRouteInfo>? children,
   }) : super(
           EditProfileRoute.name,
           args: EditProfileRouteArgs(key: key, profile: profile),
@@ -787,7 +792,7 @@ class EditProfileRoute extends _i50.PageRouteInfo<EditProfileRouteArgs> {
 
   static const String name = 'EditProfileRoute';
 
-  static _i50.PageInfo page = _i50.PageInfo(
+  static _i53.PageInfo page = _i53.PageInfo(
     name,
     builder: (data) {
       final args = data.argsAs<EditProfileRouteArgs>();
@@ -799,9 +804,9 @@ class EditProfileRoute extends _i50.PageRouteInfo<EditProfileRouteArgs> {
 class EditProfileRouteArgs {
   const EditProfileRouteArgs({this.key, required this.profile});
 
-  final _i51.Key? key;
+  final _i54.Key? key;
 
-  final _i63.Profile profile;
+  final _i67.Profile profile;
 
   @override
   String toString() {
@@ -821,16 +826,16 @@ class EditProfileRouteArgs {
 
 /// generated route for
 /// [_i16.HamperImageStack]
-class HamperImageStack extends _i50.PageRouteInfo<HamperImageStackArgs> {
+class HamperImageStack extends _i53.PageRouteInfo<HamperImageStackArgs> {
   HamperImageStack({
-    _i51.Key? key,
+    _i54.Key? key,
     required String? imgUrl,
     String? hamperCode,
     double? hamperPrice,
     double? profitpercentage,
     String? hamperGifUrl1,
     String? hamperGifUrl2,
-    List<_i50.PageRouteInfo>? children,
+    List<_i53.PageRouteInfo>? children,
   }) : super(
           HamperImageStack.name,
           args: HamperImageStackArgs(
@@ -847,7 +852,7 @@ class HamperImageStack extends _i50.PageRouteInfo<HamperImageStackArgs> {
 
   static const String name = 'HamperImageStack';
 
-  static _i50.PageInfo page = _i50.PageInfo(
+  static _i53.PageInfo page = _i53.PageInfo(
     name,
     builder: (data) {
       final args = data.argsAs<HamperImageStackArgs>();
@@ -875,7 +880,7 @@ class HamperImageStackArgs {
     this.hamperGifUrl2,
   });
 
-  final _i51.Key? key;
+  final _i54.Key? key;
 
   final String? imgUrl;
 
@@ -920,12 +925,12 @@ class HamperImageStackArgs {
 
 /// generated route for
 /// [_i17.HamperViewPage]
-class HamperViewRoute extends _i50.PageRouteInfo<HamperViewRouteArgs> {
+class HamperViewRoute extends _i53.PageRouteInfo<HamperViewRouteArgs> {
   HamperViewRoute({
-    _i51.Key? key,
+    _i54.Key? key,
     String? hamperId,
     String? imageUrl,
-    List<_i50.PageRouteInfo>? children,
+    List<_i53.PageRouteInfo>? children,
   }) : super(
           HamperViewRoute.name,
           args: HamperViewRouteArgs(
@@ -938,7 +943,7 @@ class HamperViewRoute extends _i50.PageRouteInfo<HamperViewRouteArgs> {
 
   static const String name = 'HamperViewRoute';
 
-  static _i50.PageInfo page = _i50.PageInfo(
+  static _i53.PageInfo page = _i53.PageInfo(
     name,
     builder: (data) {
       final args = data.argsAs<HamperViewRouteArgs>(
@@ -956,7 +961,7 @@ class HamperViewRoute extends _i50.PageRouteInfo<HamperViewRouteArgs> {
 class HamperViewRouteArgs {
   const HamperViewRouteArgs({this.key, this.hamperId, this.imageUrl});
 
-  final _i51.Key? key;
+  final _i54.Key? key;
 
   final String? hamperId;
 
@@ -982,13 +987,13 @@ class HamperViewRouteArgs {
 
 /// generated route for
 /// [_i18.HampersList]
-class HampersList extends _i50.PageRouteInfo<void> {
-  const HampersList({List<_i50.PageRouteInfo>? children})
+class HampersList extends _i53.PageRouteInfo<void> {
+  const HampersList({List<_i53.PageRouteInfo>? children})
       : super(HampersList.name, initialChildren: children);
 
   static const String name = 'HampersList';
 
-  static _i50.PageInfo page = _i50.PageInfo(
+  static _i53.PageInfo page = _i53.PageInfo(
     name,
     builder: (data) {
       return const _i18.HampersList();
@@ -999,11 +1004,11 @@ class HampersList extends _i50.PageRouteInfo<void> {
 /// generated route for
 /// [_i19.InstapayConfirmDetailsScreen]
 class InstapayConfirmDetailsRoute
-    extends _i50.PageRouteInfo<InstapayConfirmDetailsRouteArgs> {
+    extends _i53.PageRouteInfo<InstapayConfirmDetailsRouteArgs> {
   InstapayConfirmDetailsRoute({
-    _i51.Key? key,
-    required _i64.MerchantTransaction transaction,
-    List<_i50.PageRouteInfo>? children,
+    _i54.Key? key,
+    required _i68.MerchantTransaction transaction,
+    List<_i53.PageRouteInfo>? children,
   }) : super(
           InstapayConfirmDetailsRoute.name,
           args: InstapayConfirmDetailsRouteArgs(
@@ -1015,7 +1020,7 @@ class InstapayConfirmDetailsRoute
 
   static const String name = 'InstapayConfirmDetailsRoute';
 
-  static _i50.PageInfo page = _i50.PageInfo(
+  static _i53.PageInfo page = _i53.PageInfo(
     name,
     builder: (data) {
       final args = data.argsAs<InstapayConfirmDetailsRouteArgs>();
@@ -1030,9 +1035,9 @@ class InstapayConfirmDetailsRoute
 class InstapayConfirmDetailsRouteArgs {
   const InstapayConfirmDetailsRouteArgs({this.key, required this.transaction});
 
-  final _i51.Key? key;
+  final _i54.Key? key;
 
-  final _i64.MerchantTransaction transaction;
+  final _i68.MerchantTransaction transaction;
 
   @override
   String toString() {
@@ -1052,11 +1057,11 @@ class InstapayConfirmDetailsRouteArgs {
 
 /// generated route for
 /// [_i20.InstapayScreen]
-class InstapayRoute extends _i50.PageRouteInfo<InstapayRouteArgs> {
+class InstapayRoute extends _i53.PageRouteInfo<InstapayRouteArgs> {
   InstapayRoute({
-    _i51.Key? key,
-    required _i64.MerchantTransaction transaction,
-    List<_i50.PageRouteInfo>? children,
+    _i54.Key? key,
+    required _i68.MerchantTransaction transaction,
+    List<_i53.PageRouteInfo>? children,
   }) : super(
           InstapayRoute.name,
           args: InstapayRouteArgs(key: key, transaction: transaction),
@@ -1065,7 +1070,7 @@ class InstapayRoute extends _i50.PageRouteInfo<InstapayRouteArgs> {
 
   static const String name = 'InstapayRoute';
 
-  static _i50.PageInfo page = _i50.PageInfo(
+  static _i53.PageInfo page = _i53.PageInfo(
     name,
     builder: (data) {
       final args = data.argsAs<InstapayRouteArgs>();
@@ -1077,9 +1082,9 @@ class InstapayRoute extends _i50.PageRouteInfo<InstapayRouteArgs> {
 class InstapayRouteArgs {
   const InstapayRouteArgs({this.key, required this.transaction});
 
-  final _i51.Key? key;
+  final _i54.Key? key;
 
-  final _i64.MerchantTransaction transaction;
+  final _i68.MerchantTransaction transaction;
 
   @override
   String toString() {
@@ -1099,12 +1104,12 @@ class InstapayRouteArgs {
 
 /// generated route for
 /// [_i21.IssueViewScreen]
-class IssueViewRoute extends _i50.PageRouteInfo<IssueViewRouteArgs> {
+class IssueViewRoute extends _i53.PageRouteInfo<IssueViewRouteArgs> {
   IssueViewRoute({
-    _i51.Key? key,
-    required _i58.EESUpool pool,
-    required _i65.EESUpoolIssue issue,
-    List<_i50.PageRouteInfo>? children,
+    _i54.Key? key,
+    required _i61.EESUpool pool,
+    required _i69.EESUpoolIssue issue,
+    List<_i53.PageRouteInfo>? children,
   }) : super(
           IssueViewRoute.name,
           args: IssueViewRouteArgs(key: key, pool: pool, issue: issue),
@@ -1113,7 +1118,7 @@ class IssueViewRoute extends _i50.PageRouteInfo<IssueViewRouteArgs> {
 
   static const String name = 'IssueViewRoute';
 
-  static _i50.PageInfo page = _i50.PageInfo(
+  static _i53.PageInfo page = _i53.PageInfo(
     name,
     builder: (data) {
       final args = data.argsAs<IssueViewRouteArgs>();
@@ -1129,11 +1134,11 @@ class IssueViewRoute extends _i50.PageRouteInfo<IssueViewRouteArgs> {
 class IssueViewRouteArgs {
   const IssueViewRouteArgs({this.key, required this.pool, required this.issue});
 
-  final _i51.Key? key;
+  final _i54.Key? key;
 
-  final _i58.EESUpool pool;
+  final _i61.EESUpool pool;
 
-  final _i65.EESUpoolIssue issue;
+  final _i69.EESUpoolIssue issue;
 
   @override
   String toString() {
@@ -1153,13 +1158,13 @@ class IssueViewRouteArgs {
 
 /// generated route for
 /// [_i22.KasiliftUpgradeScreen]
-class KasiliftUpgradeRoute extends _i50.PageRouteInfo<void> {
-  const KasiliftUpgradeRoute({List<_i50.PageRouteInfo>? children})
+class KasiliftUpgradeRoute extends _i53.PageRouteInfo<void> {
+  const KasiliftUpgradeRoute({List<_i53.PageRouteInfo>? children})
       : super(KasiliftUpgradeRoute.name, initialChildren: children);
 
   static const String name = 'KasiliftUpgradeRoute';
 
-  static _i50.PageInfo page = _i50.PageInfo(
+  static _i53.PageInfo page = _i53.PageInfo(
     name,
     builder: (data) {
       return const _i22.KasiliftUpgradeScreen();
@@ -1169,11 +1174,11 @@ class KasiliftUpgradeRoute extends _i50.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i23.KasipreneurScreen]
-class KasipreneurRoute extends _i50.PageRouteInfo<KasipreneurRouteArgs> {
+class KasipreneurRoute extends _i53.PageRouteInfo<KasipreneurRouteArgs> {
   KasipreneurRoute({
-    _i51.Key? key,
-    required _i66.EESUpreneur eesupreneur,
-    List<_i50.PageRouteInfo>? children,
+    _i54.Key? key,
+    required _i70.EESUpreneur eesupreneur,
+    List<_i53.PageRouteInfo>? children,
   }) : super(
           KasipreneurRoute.name,
           args: KasipreneurRouteArgs(key: key, eesupreneur: eesupreneur),
@@ -1182,7 +1187,7 @@ class KasipreneurRoute extends _i50.PageRouteInfo<KasipreneurRouteArgs> {
 
   static const String name = 'KasipreneurRoute';
 
-  static _i50.PageInfo page = _i50.PageInfo(
+  static _i53.PageInfo page = _i53.PageInfo(
     name,
     builder: (data) {
       final args = data.argsAs<KasipreneurRouteArgs>();
@@ -1197,9 +1202,9 @@ class KasipreneurRoute extends _i50.PageRouteInfo<KasipreneurRouteArgs> {
 class KasipreneurRouteArgs {
   const KasipreneurRouteArgs({this.key, required this.eesupreneur});
 
-  final _i51.Key? key;
+  final _i54.Key? key;
 
-  final _i66.EESUpreneur eesupreneur;
+  final _i70.EESUpreneur eesupreneur;
 
   @override
   String toString() {
@@ -1219,13 +1224,13 @@ class KasipreneurRouteArgs {
 
 /// generated route for
 /// [_i24.MediaFilePreviewUploaderScreen]
-class MediaFilePreviewUploaderRoute extends _i50.PageRouteInfo<void> {
-  const MediaFilePreviewUploaderRoute({List<_i50.PageRouteInfo>? children})
+class MediaFilePreviewUploaderRoute extends _i53.PageRouteInfo<void> {
+  const MediaFilePreviewUploaderRoute({List<_i53.PageRouteInfo>? children})
       : super(MediaFilePreviewUploaderRoute.name, initialChildren: children);
 
   static const String name = 'MediaFilePreviewUploaderRoute';
 
-  static _i50.PageInfo page = _i50.PageInfo(
+  static _i53.PageInfo page = _i53.PageInfo(
     name,
     builder: (data) {
       return const _i24.MediaFilePreviewUploaderScreen();
@@ -1234,14 +1239,46 @@ class MediaFilePreviewUploaderRoute extends _i50.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i25.OrderReceiverScreen]
-class OrderReceiverRoute extends _i50.PageRouteInfo<OrderReceiverRouteArgs> {
+/// [_i25.MyCommunityScreen]
+class MyCommunityRoute extends _i53.PageRouteInfo<void> {
+  const MyCommunityRoute({List<_i53.PageRouteInfo>? children})
+      : super(MyCommunityRoute.name, initialChildren: children);
+
+  static const String name = 'MyCommunityRoute';
+
+  static _i53.PageInfo page = _i53.PageInfo(
+    name,
+    builder: (data) {
+      return const _i25.MyCommunityScreen();
+    },
+  );
+}
+
+/// generated route for
+/// [_i26.MyWalletScreen]
+class MyWalletRoute extends _i53.PageRouteInfo<void> {
+  const MyWalletRoute({List<_i53.PageRouteInfo>? children})
+      : super(MyWalletRoute.name, initialChildren: children);
+
+  static const String name = 'MyWalletRoute';
+
+  static _i53.PageInfo page = _i53.PageInfo(
+    name,
+    builder: (data) {
+      return const _i26.MyWalletScreen();
+    },
+  );
+}
+
+/// generated route for
+/// [_i27.OrderReceiverScreen]
+class OrderReceiverRoute extends _i53.PageRouteInfo<OrderReceiverRouteArgs> {
   OrderReceiverRoute({
-    _i51.Key? key,
-    required _i59.EESUpoolOrder order,
-    required _i58.EESUpool pool,
+    _i54.Key? key,
+    required _i62.EESUpoolOrder order,
+    required _i61.EESUpool pool,
     required List<String> ids,
-    List<_i50.PageRouteInfo>? children,
+    List<_i53.PageRouteInfo>? children,
   }) : super(
           OrderReceiverRoute.name,
           args: OrderReceiverRouteArgs(
@@ -1255,11 +1292,11 @@ class OrderReceiverRoute extends _i50.PageRouteInfo<OrderReceiverRouteArgs> {
 
   static const String name = 'OrderReceiverRoute';
 
-  static _i50.PageInfo page = _i50.PageInfo(
+  static _i53.PageInfo page = _i53.PageInfo(
     name,
     builder: (data) {
       final args = data.argsAs<OrderReceiverRouteArgs>();
-      return _i25.OrderReceiverScreen(
+      return _i27.OrderReceiverScreen(
         key: args.key,
         order: args.order,
         pool: args.pool,
@@ -1277,11 +1314,11 @@ class OrderReceiverRouteArgs {
     required this.ids,
   });
 
-  final _i51.Key? key;
+  final _i54.Key? key;
 
-  final _i59.EESUpoolOrder order;
+  final _i62.EESUpoolOrder order;
 
-  final _i58.EESUpool pool;
+  final _i61.EESUpool pool;
 
   final List<String> ids;
 
@@ -1297,7 +1334,7 @@ class OrderReceiverRouteArgs {
     return key == other.key &&
         order == other.order &&
         pool == other.pool &&
-        const _i54.ListEquality<String>().equals(ids, other.ids);
+        const _i57.ListEquality<String>().equals(ids, other.ids);
   }
 
   @override
@@ -1305,17 +1342,17 @@ class OrderReceiverRouteArgs {
       key.hashCode ^
       order.hashCode ^
       pool.hashCode ^
-      const _i54.ListEquality<String>().hash(ids);
+      const _i57.ListEquality<String>().hash(ids);
 }
 
 /// generated route for
-/// [_i26.OrderTrackingScreen]
-class OrderTrackingRoute extends _i50.PageRouteInfo<OrderTrackingRouteArgs> {
+/// [_i28.OrderTrackingScreen]
+class OrderTrackingRoute extends _i53.PageRouteInfo<OrderTrackingRouteArgs> {
   OrderTrackingRoute({
-    _i51.Key? key,
+    _i54.Key? key,
     required int id,
-    required _i67.OrderEditPrivilage privilage,
-    List<_i50.PageRouteInfo>? children,
+    required _i71.OrderEditPrivilage privilage,
+    List<_i53.PageRouteInfo>? children,
   }) : super(
           OrderTrackingRoute.name,
           args: OrderTrackingRouteArgs(key: key, id: id, privilage: privilage),
@@ -1324,11 +1361,11 @@ class OrderTrackingRoute extends _i50.PageRouteInfo<OrderTrackingRouteArgs> {
 
   static const String name = 'OrderTrackingRoute';
 
-  static _i50.PageInfo page = _i50.PageInfo(
+  static _i53.PageInfo page = _i53.PageInfo(
     name,
     builder: (data) {
       final args = data.argsAs<OrderTrackingRouteArgs>();
-      return _i26.OrderTrackingScreen(
+      return _i28.OrderTrackingScreen(
         key: args.key,
         id: args.id,
         privilage: args.privilage,
@@ -1344,11 +1381,11 @@ class OrderTrackingRouteArgs {
     required this.privilage,
   });
 
-  final _i51.Key? key;
+  final _i54.Key? key;
 
   final int id;
 
-  final _i67.OrderEditPrivilage privilage;
+  final _i71.OrderEditPrivilage privilage;
 
   @override
   String toString() {
@@ -1367,47 +1404,47 @@ class OrderTrackingRouteArgs {
 }
 
 /// generated route for
-/// [_i27.OrganisationRegistrationScreen]
-class OrganisationRegistrationRoute extends _i50.PageRouteInfo<void> {
-  const OrganisationRegistrationRoute({List<_i50.PageRouteInfo>? children})
+/// [_i29.OrganisationRegistrationScreen]
+class OrganisationRegistrationRoute extends _i53.PageRouteInfo<void> {
+  const OrganisationRegistrationRoute({List<_i53.PageRouteInfo>? children})
       : super(OrganisationRegistrationRoute.name, initialChildren: children);
 
   static const String name = 'OrganisationRegistrationRoute';
 
-  static _i50.PageInfo page = _i50.PageInfo(
+  static _i53.PageInfo page = _i53.PageInfo(
     name,
     builder: (data) {
-      return const _i27.OrganisationRegistrationScreen();
+      return const _i29.OrganisationRegistrationScreen();
     },
   );
 }
 
 /// generated route for
-/// [_i28.OverviewScreen]
-class OverviewRoute extends _i50.PageRouteInfo<void> {
-  const OverviewRoute({List<_i50.PageRouteInfo>? children})
+/// [_i30.OverviewScreen]
+class OverviewRoute extends _i53.PageRouteInfo<void> {
+  const OverviewRoute({List<_i53.PageRouteInfo>? children})
       : super(OverviewRoute.name, initialChildren: children);
 
   static const String name = 'OverviewRoute';
 
-  static _i50.PageInfo page = _i50.PageInfo(
+  static _i53.PageInfo page = _i53.PageInfo(
     name,
     builder: (data) {
-      return const _i28.OverviewScreen();
+      return const _i30.OverviewScreen();
     },
   );
 }
 
 /// generated route for
-/// [_i29.OzowScreen]
-class OzowRoute extends _i50.PageRouteInfo<OzowRouteArgs> {
+/// [_i31.OzowScreen]
+class OzowRoute extends _i53.PageRouteInfo<OzowRouteArgs> {
   OzowRoute({
-    _i51.Key? key,
+    _i54.Key? key,
     required int reference,
     required double amount,
     required String type,
     required String bankRef,
-    List<_i50.PageRouteInfo>? children,
+    List<_i53.PageRouteInfo>? children,
   }) : super(
           OzowRoute.name,
           args: OzowRouteArgs(
@@ -1422,11 +1459,11 @@ class OzowRoute extends _i50.PageRouteInfo<OzowRouteArgs> {
 
   static const String name = 'OzowRoute';
 
-  static _i50.PageInfo page = _i50.PageInfo(
+  static _i53.PageInfo page = _i53.PageInfo(
     name,
     builder: (data) {
       final args = data.argsAs<OzowRouteArgs>();
-      return _i29.OzowScreen(
+      return _i31.OzowScreen(
         key: args.key,
         reference: args.reference,
         amount: args.amount,
@@ -1446,7 +1483,7 @@ class OzowRouteArgs {
     required this.bankRef,
   });
 
-  final _i51.Key? key;
+  final _i54.Key? key;
 
   final int reference;
 
@@ -1482,12 +1519,12 @@ class OzowRouteArgs {
 }
 
 /// generated route for
-/// [_i30.PartnerAppScreen]
-class PartnerAppRoute extends _i50.PageRouteInfo<PartnerAppRouteArgs> {
+/// [_i32.PartnerAppScreen]
+class PartnerAppRoute extends _i53.PageRouteInfo<PartnerAppRouteArgs> {
   PartnerAppRoute({
-    _i51.Key? key,
-    required _i62.Partner partner,
-    List<_i50.PageRouteInfo>? children,
+    _i54.Key? key,
+    required _i66.Partner partner,
+    List<_i53.PageRouteInfo>? children,
   }) : super(
           PartnerAppRoute.name,
           args: PartnerAppRouteArgs(key: key, partner: partner),
@@ -1496,11 +1533,11 @@ class PartnerAppRoute extends _i50.PageRouteInfo<PartnerAppRouteArgs> {
 
   static const String name = 'PartnerAppRoute';
 
-  static _i50.PageInfo page = _i50.PageInfo(
+  static _i53.PageInfo page = _i53.PageInfo(
     name,
     builder: (data) {
       final args = data.argsAs<PartnerAppRouteArgs>();
-      return _i30.PartnerAppScreen(key: args.key, partner: args.partner);
+      return _i32.PartnerAppScreen(key: args.key, partner: args.partner);
     },
   );
 }
@@ -1508,9 +1545,9 @@ class PartnerAppRoute extends _i50.PageRouteInfo<PartnerAppRouteArgs> {
 class PartnerAppRouteArgs {
   const PartnerAppRouteArgs({this.key, required this.partner});
 
-  final _i51.Key? key;
+  final _i54.Key? key;
 
-  final _i62.Partner partner;
+  final _i66.Partner partner;
 
   @override
   String toString() {
@@ -1529,12 +1566,12 @@ class PartnerAppRouteArgs {
 }
 
 /// generated route for
-/// [_i31.PartnerScreen]
-class PartnerRoute extends _i50.PageRouteInfo<PartnerRouteArgs> {
+/// [_i33.PartnerScreen]
+class PartnerRoute extends _i53.PageRouteInfo<PartnerRouteArgs> {
   PartnerRoute({
-    _i51.Key? key,
-    required _i68.UserRole role,
-    List<_i50.PageRouteInfo>? children,
+    _i54.Key? key,
+    required _i72.UserRole role,
+    List<_i53.PageRouteInfo>? children,
   }) : super(
           PartnerRoute.name,
           args: PartnerRouteArgs(key: key, role: role),
@@ -1543,11 +1580,11 @@ class PartnerRoute extends _i50.PageRouteInfo<PartnerRouteArgs> {
 
   static const String name = 'PartnerRoute';
 
-  static _i50.PageInfo page = _i50.PageInfo(
+  static _i53.PageInfo page = _i53.PageInfo(
     name,
     builder: (data) {
       final args = data.argsAs<PartnerRouteArgs>();
-      return _i31.PartnerScreen(key: args.key, role: args.role);
+      return _i33.PartnerScreen(key: args.key, role: args.role);
     },
   );
 }
@@ -1555,9 +1592,9 @@ class PartnerRoute extends _i50.PageRouteInfo<PartnerRouteArgs> {
 class PartnerRouteArgs {
   const PartnerRouteArgs({this.key, required this.role});
 
-  final _i51.Key? key;
+  final _i54.Key? key;
 
-  final _i68.UserRole role;
+  final _i72.UserRole role;
 
   @override
   String toString() {
@@ -1576,12 +1613,12 @@ class PartnerRouteArgs {
 }
 
 /// generated route for
-/// [_i32.PayoutScreen]
-class PayoutRoute extends _i50.PageRouteInfo<PayoutRouteArgs> {
+/// [_i34.PayoutScreen]
+class PayoutRoute extends _i53.PageRouteInfo<PayoutRouteArgs> {
   PayoutRoute({
-    _i51.Key? key,
-    required _i69.Wallet wallet,
-    List<_i50.PageRouteInfo>? children,
+    _i54.Key? key,
+    required _i73.Wallet wallet,
+    List<_i53.PageRouteInfo>? children,
   }) : super(
           PayoutRoute.name,
           args: PayoutRouteArgs(key: key, wallet: wallet),
@@ -1590,11 +1627,11 @@ class PayoutRoute extends _i50.PageRouteInfo<PayoutRouteArgs> {
 
   static const String name = 'PayoutRoute';
 
-  static _i50.PageInfo page = _i50.PageInfo(
+  static _i53.PageInfo page = _i53.PageInfo(
     name,
     builder: (data) {
       final args = data.argsAs<PayoutRouteArgs>();
-      return _i32.PayoutScreen(key: args.key, wallet: args.wallet);
+      return _i34.PayoutScreen(key: args.key, wallet: args.wallet);
     },
   );
 }
@@ -1602,9 +1639,9 @@ class PayoutRoute extends _i50.PageRouteInfo<PayoutRouteArgs> {
 class PayoutRouteArgs {
   const PayoutRouteArgs({this.key, required this.wallet});
 
-  final _i51.Key? key;
+  final _i54.Key? key;
 
-  final _i69.Wallet wallet;
+  final _i73.Wallet wallet;
 
   @override
   String toString() {
@@ -1623,28 +1660,28 @@ class PayoutRouteArgs {
 }
 
 /// generated route for
-/// [_i33.ProductRequestScreen]
-class ProductRequestRoute extends _i50.PageRouteInfo<void> {
-  const ProductRequestRoute({List<_i50.PageRouteInfo>? children})
+/// [_i35.ProductRequestScreen]
+class ProductRequestRoute extends _i53.PageRouteInfo<void> {
+  const ProductRequestRoute({List<_i53.PageRouteInfo>? children})
       : super(ProductRequestRoute.name, initialChildren: children);
 
   static const String name = 'ProductRequestRoute';
 
-  static _i50.PageInfo page = _i50.PageInfo(
+  static _i53.PageInfo page = _i53.PageInfo(
     name,
     builder: (data) {
-      return const _i33.ProductRequestScreen();
+      return const _i35.ProductRequestScreen();
     },
   );
 }
 
 /// generated route for
-/// [_i34.ProductViewScreen]
-class ProductViewRoute extends _i50.PageRouteInfo<ProductViewRouteArgs> {
+/// [_i36.ProductViewScreen]
+class ProductViewRoute extends _i53.PageRouteInfo<ProductViewRouteArgs> {
   ProductViewRoute({
-    _i51.Key? key,
+    _i54.Key? key,
     required int id,
-    List<_i50.PageRouteInfo>? children,
+    List<_i53.PageRouteInfo>? children,
   }) : super(
           ProductViewRoute.name,
           args: ProductViewRouteArgs(key: key, id: id),
@@ -1653,11 +1690,11 @@ class ProductViewRoute extends _i50.PageRouteInfo<ProductViewRouteArgs> {
 
   static const String name = 'ProductViewRoute';
 
-  static _i50.PageInfo page = _i50.PageInfo(
+  static _i53.PageInfo page = _i53.PageInfo(
     name,
     builder: (data) {
       final args = data.argsAs<ProductViewRouteArgs>();
-      return _i34.ProductViewScreen(key: args.key, id: args.id);
+      return _i36.ProductViewScreen(key: args.key, id: args.id);
     },
   );
 }
@@ -1665,7 +1702,7 @@ class ProductViewRoute extends _i50.PageRouteInfo<ProductViewRouteArgs> {
 class ProductViewRouteArgs {
   const ProductViewRouteArgs({this.key, required this.id});
 
-  final _i51.Key? key;
+  final _i54.Key? key;
 
   final int id;
 
@@ -1686,44 +1723,44 @@ class ProductViewRouteArgs {
 }
 
 /// generated route for
-/// [_i35.RegisterScreen]
-class RegisterRoute extends _i50.PageRouteInfo<void> {
-  const RegisterRoute({List<_i50.PageRouteInfo>? children})
+/// [_i37.RegisterScreen]
+class RegisterRoute extends _i53.PageRouteInfo<void> {
+  const RegisterRoute({List<_i53.PageRouteInfo>? children})
       : super(RegisterRoute.name, initialChildren: children);
 
   static const String name = 'RegisterRoute';
 
-  static _i50.PageInfo page = _i50.PageInfo(
+  static _i53.PageInfo page = _i53.PageInfo(
     name,
     builder: (data) {
-      return const _i35.RegisterScreen();
+      return const _i37.RegisterScreen();
     },
   );
 }
 
 /// generated route for
-/// [_i36.ResetPasswordScreen]
-class ResetPasswordRoute extends _i50.PageRouteInfo<void> {
-  const ResetPasswordRoute({List<_i50.PageRouteInfo>? children})
+/// [_i38.ResetPasswordScreen]
+class ResetPasswordRoute extends _i53.PageRouteInfo<void> {
+  const ResetPasswordRoute({List<_i53.PageRouteInfo>? children})
       : super(ResetPasswordRoute.name, initialChildren: children);
 
   static const String name = 'ResetPasswordRoute';
 
-  static _i50.PageInfo page = _i50.PageInfo(
+  static _i53.PageInfo page = _i53.PageInfo(
     name,
     builder: (data) {
-      return const _i36.ResetPasswordScreen();
+      return const _i38.ResetPasswordScreen();
     },
   );
 }
 
 /// generated route for
-/// [_i37.ResponseScreen]
-class ResponseRoute extends _i50.PageRouteInfo<ResponseRouteArgs> {
+/// [_i39.ResponseScreen]
+class ResponseRoute extends _i53.PageRouteInfo<ResponseRouteArgs> {
   ResponseRoute({
-    _i51.Key? key,
-    required _i70.Survey survey,
-    List<_i50.PageRouteInfo>? children,
+    _i54.Key? key,
+    required _i74.Survey survey,
+    List<_i53.PageRouteInfo>? children,
   }) : super(
           ResponseRoute.name,
           args: ResponseRouteArgs(key: key, survey: survey),
@@ -1732,11 +1769,11 @@ class ResponseRoute extends _i50.PageRouteInfo<ResponseRouteArgs> {
 
   static const String name = 'ResponseRoute';
 
-  static _i50.PageInfo page = _i50.PageInfo(
+  static _i53.PageInfo page = _i53.PageInfo(
     name,
     builder: (data) {
       final args = data.argsAs<ResponseRouteArgs>();
-      return _i37.ResponseScreen(key: args.key, survey: args.survey);
+      return _i39.ResponseScreen(key: args.key, survey: args.survey);
     },
   );
 }
@@ -1744,9 +1781,9 @@ class ResponseRoute extends _i50.PageRouteInfo<ResponseRouteArgs> {
 class ResponseRouteArgs {
   const ResponseRouteArgs({this.key, required this.survey});
 
-  final _i51.Key? key;
+  final _i54.Key? key;
 
-  final _i70.Survey survey;
+  final _i74.Survey survey;
 
   @override
   String toString() {
@@ -1765,13 +1802,13 @@ class ResponseRouteArgs {
 }
 
 /// generated route for
-/// [_i38.ReviewProductsScreen]
-class ReviewProductsRoute extends _i50.PageRouteInfo<ReviewProductsRouteArgs> {
+/// [_i40.ReviewProductsScreen]
+class ReviewProductsRoute extends _i53.PageRouteInfo<ReviewProductsRouteArgs> {
   ReviewProductsRoute({
-    _i51.Key? key,
-    required _i67.OrderEditPrivilage privilage,
-    required _i67.Order order,
-    List<_i50.PageRouteInfo>? children,
+    _i54.Key? key,
+    required _i71.OrderEditPrivilage privilage,
+    required _i71.Order order,
+    List<_i53.PageRouteInfo>? children,
   }) : super(
           ReviewProductsRoute.name,
           args: ReviewProductsRouteArgs(
@@ -1784,11 +1821,11 @@ class ReviewProductsRoute extends _i50.PageRouteInfo<ReviewProductsRouteArgs> {
 
   static const String name = 'ReviewProductsRoute';
 
-  static _i50.PageInfo page = _i50.PageInfo(
+  static _i53.PageInfo page = _i53.PageInfo(
     name,
     builder: (data) {
       final args = data.argsAs<ReviewProductsRouteArgs>();
-      return _i38.ReviewProductsScreen(
+      return _i40.ReviewProductsScreen(
         key: args.key,
         privilage: args.privilage,
         order: args.order,
@@ -1804,11 +1841,11 @@ class ReviewProductsRouteArgs {
     required this.order,
   });
 
-  final _i51.Key? key;
+  final _i54.Key? key;
 
-  final _i67.OrderEditPrivilage privilage;
+  final _i71.OrderEditPrivilage privilage;
 
-  final _i67.Order order;
+  final _i71.Order order;
 
   @override
   String toString() {
@@ -1829,108 +1866,233 @@ class ReviewProductsRouteArgs {
 }
 
 /// generated route for
-/// [_i39.SettingsScreens]
-class SettingsRoutes extends _i50.PageRouteInfo<void> {
-  const SettingsRoutes({List<_i50.PageRouteInfo>? children})
+/// [_i41.RoleChecklistScreen]
+class RoleChecklistRoute extends _i53.PageRouteInfo<RoleChecklistRouteArgs> {
+  RoleChecklistRoute({
+    _i54.Key? key,
+    required int eesupoolOrderId,
+    int? orderId,
+    String? title,
+    String? role,
+    List<_i53.PageRouteInfo>? children,
+  }) : super(
+          RoleChecklistRoute.name,
+          args: RoleChecklistRouteArgs(
+            key: key,
+            eesupoolOrderId: eesupoolOrderId,
+            orderId: orderId,
+            title: title,
+            role: role,
+          ),
+          initialChildren: children,
+        );
+
+  static const String name = 'RoleChecklistRoute';
+
+  static _i53.PageInfo page = _i53.PageInfo(
+    name,
+    builder: (data) {
+      final args = data.argsAs<RoleChecklistRouteArgs>();
+      return _i41.RoleChecklistScreen(
+        key: args.key,
+        eesupoolOrderId: args.eesupoolOrderId,
+        orderId: args.orderId,
+        title: args.title,
+        role: args.role,
+      );
+    },
+  );
+}
+
+class RoleChecklistRouteArgs {
+  const RoleChecklistRouteArgs({
+    this.key,
+    required this.eesupoolOrderId,
+    this.orderId,
+    this.title,
+    this.role,
+  });
+
+  final _i54.Key? key;
+
+  final int eesupoolOrderId;
+
+  final int? orderId;
+
+  final String? title;
+
+  final String? role;
+
+  @override
+  String toString() {
+    return 'RoleChecklistRouteArgs{key: $key, eesupoolOrderId: $eesupoolOrderId, orderId: $orderId, title: $title, role: $role}';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+    if (other is! RoleChecklistRouteArgs) return false;
+    return key == other.key &&
+        eesupoolOrderId == other.eesupoolOrderId &&
+        orderId == other.orderId &&
+        title == other.title &&
+        role == other.role;
+  }
+
+  @override
+  int get hashCode =>
+      key.hashCode ^
+      eesupoolOrderId.hashCode ^
+      orderId.hashCode ^
+      title.hashCode ^
+      role.hashCode;
+}
+
+/// generated route for
+/// [_i42.SettingsScreens]
+class SettingsRoutes extends _i53.PageRouteInfo<void> {
+  const SettingsRoutes({List<_i53.PageRouteInfo>? children})
       : super(SettingsRoutes.name, initialChildren: children);
 
   static const String name = 'SettingsRoutes';
 
-  static _i50.PageInfo page = _i50.PageInfo(
+  static _i53.PageInfo page = _i53.PageInfo(
     name,
     builder: (data) {
-      return const _i39.SettingsScreens();
+      return const _i42.SettingsScreens();
     },
   );
 }
 
 /// generated route for
-/// [_i40.SignInScreen]
-class SignInRoute extends _i50.PageRouteInfo<void> {
-  const SignInRoute({List<_i50.PageRouteInfo>? children})
+/// [_i43.SignInScreen]
+class SignInRoute extends _i53.PageRouteInfo<void> {
+  const SignInRoute({List<_i53.PageRouteInfo>? children})
       : super(SignInRoute.name, initialChildren: children);
 
   static const String name = 'SignInRoute';
 
-  static _i50.PageInfo page = _i50.PageInfo(
+  static _i53.PageInfo page = _i53.PageInfo(
     name,
     builder: (data) {
-      return const _i40.SignInScreen();
+      return const _i43.SignInScreen();
     },
   );
 }
 
 /// generated route for
-/// [_i41.StartUpScreen]
-class StartUpRoute extends _i50.PageRouteInfo<void> {
-  const StartUpRoute({List<_i50.PageRouteInfo>? children})
+/// [_i44.StartUpScreen]
+class StartUpRoute extends _i53.PageRouteInfo<void> {
+  const StartUpRoute({List<_i53.PageRouteInfo>? children})
       : super(StartUpRoute.name, initialChildren: children);
 
   static const String name = 'StartUpRoute';
 
-  static _i50.PageInfo page = _i50.PageInfo(
+  static _i53.PageInfo page = _i53.PageInfo(
     name,
     builder: (data) {
-      return const _i41.StartUpScreen();
+      return const _i44.StartUpScreen();
     },
   );
 }
 
 /// generated route for
-/// [_i42.SupportScreen]
-class SupportRoute extends _i50.PageRouteInfo<void> {
-  const SupportRoute({List<_i50.PageRouteInfo>? children})
+/// [_i45.SupportScreen]
+class SupportRoute extends _i53.PageRouteInfo<void> {
+  const SupportRoute({List<_i53.PageRouteInfo>? children})
       : super(SupportRoute.name, initialChildren: children);
 
   static const String name = 'SupportRoute';
 
-  static _i50.PageInfo page = _i50.PageInfo(
+  static _i53.PageInfo page = _i53.PageInfo(
     name,
     builder: (data) {
-      return const _i42.SupportScreen();
+      return const _i45.SupportScreen();
     },
   );
 }
 
 /// generated route for
-/// [_i43.SurveyScreen]
-class SurveyRoute extends _i50.PageRouteInfo<void> {
-  const SurveyRoute({List<_i50.PageRouteInfo>? children})
+/// [_i46.SurveyScreen]
+class SurveyRoute extends _i53.PageRouteInfo<void> {
+  const SurveyRoute({List<_i53.PageRouteInfo>? children})
       : super(SurveyRoute.name, initialChildren: children);
 
   static const String name = 'SurveyRoute';
 
-  static _i50.PageInfo page = _i50.PageInfo(
+  static _i53.PageInfo page = _i53.PageInfo(
     name,
     builder: (data) {
-      return const _i43.SurveyScreen();
+      return const _i46.SurveyScreen();
     },
   );
 }
 
 /// generated route for
-/// [_i44.TermsOfServiceScreen]
-class TermsOfServiceRoute extends _i50.PageRouteInfo<void> {
-  const TermsOfServiceRoute({List<_i50.PageRouteInfo>? children})
-      : super(TermsOfServiceRoute.name, initialChildren: children);
+/// [_i47.TermsOfServiceScreen]
+class TermsOfServiceRoute extends _i53.PageRouteInfo<TermsOfServiceRouteArgs> {
+  TermsOfServiceRoute({
+    _i54.Key? key,
+    _i47.LegalDocument initialDocument = _i47.LegalDocument.termsAndConditions,
+    List<_i53.PageRouteInfo>? children,
+  }) : super(
+          TermsOfServiceRoute.name,
+          args: TermsOfServiceRouteArgs(
+            key: key,
+            initialDocument: initialDocument,
+          ),
+          initialChildren: children,
+        );
 
   static const String name = 'TermsOfServiceRoute';
 
-  static _i50.PageInfo page = _i50.PageInfo(
+  static _i53.PageInfo page = _i53.PageInfo(
     name,
     builder: (data) {
-      return const _i44.TermsOfServiceScreen();
+      final args = data.argsAs<TermsOfServiceRouteArgs>(
+        orElse: () => const TermsOfServiceRouteArgs(),
+      );
+      return _i47.TermsOfServiceScreen(
+        key: args.key,
+        initialDocument: args.initialDocument,
+      );
     },
   );
 }
 
+class TermsOfServiceRouteArgs {
+  const TermsOfServiceRouteArgs({
+    this.key,
+    this.initialDocument = _i47.LegalDocument.termsAndConditions,
+  });
+
+  final _i54.Key? key;
+
+  final _i47.LegalDocument initialDocument;
+
+  @override
+  String toString() {
+    return 'TermsOfServiceRouteArgs{key: $key, initialDocument: $initialDocument}';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+    if (other is! TermsOfServiceRouteArgs) return false;
+    return key == other.key && initialDocument == other.initialDocument;
+  }
+
+  @override
+  int get hashCode => key.hashCode ^ initialDocument.hashCode;
+}
+
 /// generated route for
-/// [_i45.TransferMemberScreen]
-class TransferMemberRoute extends _i50.PageRouteInfo<TransferMemberRouteArgs> {
+/// [_i48.TransferMemberScreen]
+class TransferMemberRoute extends _i53.PageRouteInfo<TransferMemberRouteArgs> {
   TransferMemberRoute({
-    _i51.Key? key,
-    required _i71.EESUpoolMember member,
-    List<_i50.PageRouteInfo>? children,
+    _i54.Key? key,
+    required _i75.EESUpoolMember member,
+    List<_i53.PageRouteInfo>? children,
   }) : super(
           TransferMemberRoute.name,
           args: TransferMemberRouteArgs(key: key, member: member),
@@ -1939,11 +2101,11 @@ class TransferMemberRoute extends _i50.PageRouteInfo<TransferMemberRouteArgs> {
 
   static const String name = 'TransferMemberRoute';
 
-  static _i50.PageInfo page = _i50.PageInfo(
+  static _i53.PageInfo page = _i53.PageInfo(
     name,
     builder: (data) {
       final args = data.argsAs<TransferMemberRouteArgs>();
-      return _i45.TransferMemberScreen(key: args.key, member: args.member);
+      return _i48.TransferMemberScreen(key: args.key, member: args.member);
     },
   );
 }
@@ -1951,9 +2113,9 @@ class TransferMemberRoute extends _i50.PageRouteInfo<TransferMemberRouteArgs> {
 class TransferMemberRouteArgs {
   const TransferMemberRouteArgs({this.key, required this.member});
 
-  final _i51.Key? key;
+  final _i54.Key? key;
 
-  final _i71.EESUpoolMember member;
+  final _i75.EESUpoolMember member;
 
   @override
   String toString() {
@@ -1972,12 +2134,12 @@ class TransferMemberRouteArgs {
 }
 
 /// generated route for
-/// [_i46.TransferScreen]
-class TransferRoute extends _i50.PageRouteInfo<TransferRouteArgs> {
+/// [_i49.TransferScreen]
+class TransferRoute extends _i53.PageRouteInfo<TransferRouteArgs> {
   TransferRoute({
-    _i51.Key? key,
-    required _i69.Wallet wallet,
-    List<_i50.PageRouteInfo>? children,
+    _i54.Key? key,
+    required _i73.Wallet wallet,
+    List<_i53.PageRouteInfo>? children,
   }) : super(
           TransferRoute.name,
           args: TransferRouteArgs(key: key, wallet: wallet),
@@ -1986,11 +2148,11 @@ class TransferRoute extends _i50.PageRouteInfo<TransferRouteArgs> {
 
   static const String name = 'TransferRoute';
 
-  static _i50.PageInfo page = _i50.PageInfo(
+  static _i53.PageInfo page = _i53.PageInfo(
     name,
     builder: (data) {
       final args = data.argsAs<TransferRouteArgs>();
-      return _i46.TransferScreen(key: args.key, wallet: args.wallet);
+      return _i49.TransferScreen(key: args.key, wallet: args.wallet);
     },
   );
 }
@@ -1998,9 +2160,9 @@ class TransferRoute extends _i50.PageRouteInfo<TransferRouteArgs> {
 class TransferRouteArgs {
   const TransferRouteArgs({this.key, required this.wallet});
 
-  final _i51.Key? key;
+  final _i54.Key? key;
 
-  final _i69.Wallet wallet;
+  final _i73.Wallet wallet;
 
   @override
   String toString() {
@@ -2019,12 +2181,12 @@ class TransferRouteArgs {
 }
 
 /// generated route for
-/// [_i47.VoucherViewScreen]
-class VoucherViewRoute extends _i50.PageRouteInfo<VoucherViewRouteArgs> {
+/// [_i50.VoucherViewScreen]
+class VoucherViewRoute extends _i53.PageRouteInfo<VoucherViewRouteArgs> {
   VoucherViewRoute({
-    _i51.Key? key,
+    _i54.Key? key,
     required int voucherId,
-    List<_i50.PageRouteInfo>? children,
+    List<_i53.PageRouteInfo>? children,
   }) : super(
           VoucherViewRoute.name,
           args: VoucherViewRouteArgs(key: key, voucherId: voucherId),
@@ -2033,11 +2195,11 @@ class VoucherViewRoute extends _i50.PageRouteInfo<VoucherViewRouteArgs> {
 
   static const String name = 'VoucherViewRoute';
 
-  static _i50.PageInfo page = _i50.PageInfo(
+  static _i53.PageInfo page = _i53.PageInfo(
     name,
     builder: (data) {
       final args = data.argsAs<VoucherViewRouteArgs>();
-      return _i47.VoucherViewScreen(key: args.key, voucherId: args.voucherId);
+      return _i50.VoucherViewScreen(key: args.key, voucherId: args.voucherId);
     },
   );
 }
@@ -2045,7 +2207,7 @@ class VoucherViewRoute extends _i50.PageRouteInfo<VoucherViewRouteArgs> {
 class VoucherViewRouteArgs {
   const VoucherViewRouteArgs({this.key, required this.voucherId});
 
-  final _i51.Key? key;
+  final _i54.Key? key;
 
   final int voucherId;
 
@@ -2066,12 +2228,12 @@ class VoucherViewRouteArgs {
 }
 
 /// generated route for
-/// [_i48.WalletViewScreen]
-class WalletViewRoute extends _i50.PageRouteInfo<WalletViewRouteArgs> {
+/// [_i51.WalletViewScreen]
+class WalletViewRoute extends _i53.PageRouteInfo<WalletViewRouteArgs> {
   WalletViewRoute({
-    _i51.Key? key,
+    _i54.Key? key,
     required int id,
-    List<_i50.PageRouteInfo>? children,
+    List<_i53.PageRouteInfo>? children,
   }) : super(
           WalletViewRoute.name,
           args: WalletViewRouteArgs(key: key, id: id),
@@ -2080,11 +2242,11 @@ class WalletViewRoute extends _i50.PageRouteInfo<WalletViewRouteArgs> {
 
   static const String name = 'WalletViewRoute';
 
-  static _i50.PageInfo page = _i50.PageInfo(
+  static _i53.PageInfo page = _i53.PageInfo(
     name,
     builder: (data) {
       final args = data.argsAs<WalletViewRouteArgs>();
-      return _i48.WalletViewScreen(key: args.key, id: args.id);
+      return _i51.WalletViewScreen(key: args.key, id: args.id);
     },
   );
 }
@@ -2092,7 +2254,7 @@ class WalletViewRoute extends _i50.PageRouteInfo<WalletViewRouteArgs> {
 class WalletViewRouteArgs {
   const WalletViewRouteArgs({this.key, required this.id});
 
-  final _i51.Key? key;
+  final _i54.Key? key;
 
   final int id;
 
@@ -2113,13 +2275,13 @@ class WalletViewRouteArgs {
 }
 
 /// generated route for
-/// [_i49.YocoPaymentScreen]
-class YocoPaymentRoute extends _i50.PageRouteInfo<YocoPaymentRouteArgs> {
+/// [_i52.YocoPaymentScreen]
+class YocoPaymentRoute extends _i53.PageRouteInfo<YocoPaymentRouteArgs> {
   YocoPaymentRoute({
-    _i51.Key? key,
+    _i54.Key? key,
     required int reference,
     required double amount,
-    List<_i50.PageRouteInfo>? children,
+    List<_i53.PageRouteInfo>? children,
   }) : super(
           YocoPaymentRoute.name,
           args: YocoPaymentRouteArgs(
@@ -2132,11 +2294,11 @@ class YocoPaymentRoute extends _i50.PageRouteInfo<YocoPaymentRouteArgs> {
 
   static const String name = 'YocoPaymentRoute';
 
-  static _i50.PageInfo page = _i50.PageInfo(
+  static _i53.PageInfo page = _i53.PageInfo(
     name,
     builder: (data) {
       final args = data.argsAs<YocoPaymentRouteArgs>();
-      return _i49.YocoPaymentScreen(
+      return _i52.YocoPaymentScreen(
         key: args.key,
         reference: args.reference,
         amount: args.amount,
@@ -2152,7 +2314,7 @@ class YocoPaymentRouteArgs {
     required this.amount,
   });
 
-  final _i51.Key? key;
+  final _i54.Key? key;
 
   final int reference;
 

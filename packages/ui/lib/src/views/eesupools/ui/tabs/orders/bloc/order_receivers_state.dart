@@ -13,5 +13,12 @@ final class OrderReceiversError extends OrderReceiversState {
 final class OrderReceiversLoaded extends OrderReceiversState {
   final List<EESUpoolMember> receivers;
   final Map<String, ReceiverRole> roles;
-  OrderReceiversLoaded(this.receivers, [this.roles = const {}]);
+
+  /// Set when the last change couldn't be saved; the state itself is the
+  /// last saved one, so the screen shows what's actually stored.
+  final String? saveError;
+  OrderReceiversLoaded(this.receivers, [this.roles = const {}, this.saveError]);
+
+  OrderReceiversLoaded withError(String error) =>
+      OrderReceiversLoaded(receivers, roles, error);
 }

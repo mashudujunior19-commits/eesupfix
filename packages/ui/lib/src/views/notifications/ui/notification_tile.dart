@@ -6,6 +6,7 @@ import 'package:loader_overlay/loader_overlay.dart';
 import 'package:ui/src/core/extensions/context_theme_ext.dart';
 import 'package:ui/src/core/extensions/sizedbox_ext.dart';
 import 'package:ui/src/core/utils/date_formatter.dart';
+import 'package:ui/src/views/role_assignments/ui/role_assigned_popup.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:flutter_expanded_tile/flutter_expanded_tile.dart';
@@ -86,6 +87,15 @@ class NotificationTile extends StatelessWidget {
                   fontSize: 13.5,
                 ),
               ),
+              if (notification.type == not.NotificationType.roleAssigned &&
+                  notification.data?.eesupoolOrderId != null)
+                Padding(
+                  padding: const EdgeInsets.only(top: 10),
+                  child: InkWell(
+                    onTap: () => openRoleChecklist(context, notification),
+                    child: const Text('Open checklist'),
+                  ),
+                ),
               if (notification.data != null &&
                   (notification.type == not.NotificationType.eesupoolInvite ||
                       notification.type ==

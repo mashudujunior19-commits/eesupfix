@@ -9,13 +9,26 @@ part 'browsing_state.dart';
 
 class BrowsingBloc extends Bloc<BrowsingEvent, BrowsingState> {
   final ShoppingRepository _shoppingRepository;
+  /// The most recent query. Searches run as the user types, so a slow
+  /// response for an earlier query must not replace newer results.
+  String? _latestQuery;
+
   BrowsingBloc(this._shoppingRepository) : super(BrowsingInitial()) {
+    on<SearchCleared>((event, emit) {
+      _latestQuery = null;
+      emit(BrowsingInitial());
+    });
+
     on<ProductsSearched>((event, emit) async {
+      final query = event.input.trim();
+      _latestQuery = query;
+      emit(BrowsingSearching());
       final results = await _shoppingRepository.searchProductsAndCategories(
-        event.input,
+        query,
         UserRole.Ubuntunist,
         event.limit,
       );
+      if (query != _latestQuery) return;
       results.fold((l) {
         emit(BrowsingError(l));
       }, (r) {

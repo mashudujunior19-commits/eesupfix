@@ -12,6 +12,9 @@ abstract class ProfileDataSource {
 
   Future<bool> updateProfile(Profile profile);
 
+  /// Updates only [fields] (column -> value) on the user's profile row.
+  Future<bool> updateProfileFields(String userId, Map<String, dynamic> fields);
+
   Future<bool> checkIdNumber(String id);
 
   Future<bool> checkIfhasAddress(String id);

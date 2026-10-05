@@ -104,6 +104,11 @@ class EESUpException implements Exception {
       // Foreign key violation
       return 'This operation references data that does not exist.';
     }
+    if (code == 'P0001') {
+      // Raised by our own database functions (RAISE EXCEPTION) with a
+      // message written for the user, e.g. a role-assignment rule.
+      return exception.message;
+    }
     if (code == '42501') {
       // Permission denied
       return 'You do not have permission to perform this action.';

@@ -37,6 +37,7 @@ flutter:
   assets:
     - assets/images/
     - assets/animations/
+    - assets/legal/
     - .dev.env
     - .env
     - shorebird.yaml

@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:data/auth/models/profile.dart';
 import 'package:data/auth/repository/profile_repository.dart';
+import 'package:data/utils/localize_south_african_phone.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:meta/meta.dart';
 import 'package:data/utils/eesup_exception.dart';
@@ -10,8 +11,13 @@ part 'edit_profile_state.dart';
 
 class EditProfileBloc extends Bloc<EditProfileEvent, EditProfileState> {
   final ProfileRepository _repository;
+
+  /// The profile as last loaded/saved, so a save only writes what changed.
+  Profile? _original;
+
   EditProfileBloc(this._repository) : super(EditProfileLoading()) {
     on<EditProfileInitialized>((event, emit) {
+      _original = event.profile;
       emit(CurrentProfileForm(event.profile));
     });
     on<ProfileEdited>((event, emit) {
@@ -28,16 +34,27 @@ class EditProfileBloc extends Bloc<EditProfileEvent, EditProfileState> {
         final current = state as CurrentProfileForm;
         final profile = current.profile;
 
+        final phone = profile.phone;
+        if (phone != null && localizeSAPhoneNumber(phone) != phone) {
+          emit(ProfileEditingError(
+            profile,
+            EESUpException(message: 'Enter a valid South African phone number.'),
+          ));
+          return;
+        }
+
         emit(EditProfileLoading());
         final results = await _repository.updateProfile(
           profile,
           event.idNumber,
+          original: _original,
         );
 
         results.fold((left) {
           emit(ProfileEditingError(profile, left));
         }, (right) {
           if (right) {
+            _original = profile;
             emit(ProfileSavingSuccess());
           } else {
             emit(

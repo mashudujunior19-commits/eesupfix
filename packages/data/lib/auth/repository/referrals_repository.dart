@@ -2,6 +2,7 @@ import 'package:data/utils/eesup_exception.dart';
 import 'package:either_dart/either.dart';
 import 'package:data/referrals/data_source/referrals_data_source.dart';
 import 'package:data/referrals/models/referral.dart';
+import 'package:data/referrals/referral_link.dart';
 import 'auth_repository.dart';
 
 class ReferralsRepository {
@@ -15,5 +16,21 @@ class ReferralsRepository {
       (id) => _referralsDataSource.fetchReferrals(id),
     );
     return results;
+  }
+
+  /// The signed-in user's shareable referral link/message for [code]. Falls
+  /// back to a code-only message if the store links can't be loaded.
+  Future<ReferralLink> referralLink(int code) async {
+    final urls = await _authRepository.executeFutureWithAuth(
+      (_) => _referralsDataSource.fetchStoreUrls(),
+    );
+    return urls.fold(
+      (_) => ReferralLink(code: code),
+      (r) => ReferralLink(
+        code: code,
+        androidStoreUrl: r.android,
+        iosStoreUrl: r.ios,
+      ),
+    );
   }
 }

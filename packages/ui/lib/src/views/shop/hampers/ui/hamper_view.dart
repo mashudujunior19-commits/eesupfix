@@ -4,7 +4,6 @@ import 'package:data/finance/models/profit_allocation.dart';
 import 'package:data/orders/models/order_product.dart';
 import 'package:data/shopping/models/mapped_product_hamper.dart';
 import 'package:data/shopping/models/product.dart';
-import 'package:data/shopping/repository/basket_repository.dart';
 import 'package:data/shopping/repository/shopping_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -144,12 +143,9 @@ class _HamperViewPageState extends State<HamperViewPage> {
           BasketSelectionDialog(product: productList),
     );
 
+    // The dialog adds the products itself and only returns the basket id
+    // once they're all in.
     if (selectedBasketId != null) {
-      final shoppingRepo = context.read<ShoppingRepository>();
-      for (final product in products) {
-        shoppingRepo.addProductToBasket(selectedBasketId, product.productId);
-      }
-      context.snackBarSuccess('All items added to selected basket.');
 
       final addToCart = await showDialog<bool>(
         context: context,

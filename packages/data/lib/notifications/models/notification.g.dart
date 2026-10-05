@@ -15,6 +15,9 @@ _Notification _$NotificationFromJson(Map<String, dynamic> json) =>
       type: const NotificationTypeConveter().fromJson(json['type'] as String),
       data: _$JsonConverterFromJson<Map<String, dynamic>, NotificationData>(
           json['data'], const NotificationDataConveter().fromJson),
+      seenAt: json['seen_at'] == null
+          ? null
+          : DateTime.parse(json['seen_at'] as String),
     );
 
 Map<String, dynamic> _$NotificationToJson(_Notification instance) =>
@@ -26,6 +29,7 @@ Map<String, dynamic> _$NotificationToJson(_Notification instance) =>
       'type': const NotificationTypeConveter().toJson(instance.type),
       'data': _$JsonConverterToJson<Map<String, dynamic>, NotificationData>(
           instance.data, const NotificationDataConveter().toJson),
+      'seen_at': instance.seenAt?.toIso8601String(),
     };
 
 Value? _$JsonConverterFromJson<Json, Value>(

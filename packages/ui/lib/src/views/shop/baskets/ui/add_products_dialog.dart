@@ -113,11 +113,14 @@ class _ProductCard extends StatelessWidget {
         ),
         trailing: AnimatedReactionButton(
           child: const Icon(IconlyLight.plus),
-          onTap: () {
+          onTap: () async {
             final repo = context.read<ShoppingRepository>();
-            repo.addProductToBasket(basketId, product.id).whenComplete(() {
-              context.snackBarSuccess('Item added to basket.');
-            });
+            final result = await repo.addProductToBasket(basketId, product.id);
+            if (!context.mounted) return;
+            result.fold(
+              (l) => context.snackBarError(l.message),
+              (_) => context.snackBarSuccess('Item added to basket.'),
+            );
           },
         ),
       ),

@@ -15,6 +15,7 @@ abstract class Notification with _$Notification {
     @JsonKey(name: 'created_at') required DateTime createdAt,
     @NotificationTypeConveter() required NotificationType type,
     @NotificationDataConveter() NotificationData? data,
+    @JsonKey(name: 'seen_at') DateTime? seenAt,
   }) = _Notification;
 
   factory Notification.fromJson(Map<String, dynamic> json) =>
@@ -41,6 +42,10 @@ enum NotificationType {
   eesupool,
   eesupoolInvite,
   eesupoolRequest,
+
+  /// The user was given a role on a KasiPool order; data points at the
+  /// order so its checklist can be opened.
+  roleAssigned,
   other;
 
   factory NotificationType.from(String type) {
@@ -53,6 +58,8 @@ enum NotificationType {
         return NotificationType.eesupoolInvite;
       case 'eesupool_request':
         return NotificationType.eesupoolRequest;
+      case 'role_assigned':
+        return NotificationType.roleAssigned;
       default:
         return NotificationType.other;
     }
@@ -69,6 +76,8 @@ enum NotificationType {
         return 'eesupool_invite';
       case NotificationType.eesupoolRequest:
         return "eesupool_request";
+      case NotificationType.roleAssigned:
+        return 'role_assigned';
       default:
         return 'other';
     }

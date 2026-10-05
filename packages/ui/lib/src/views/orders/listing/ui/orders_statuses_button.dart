@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:data/orders/models/order.dart';
 import 'package:ui/src/core/extensions/bottom_sheet_context_ext.dart';
 import 'package:ui/src/core/extensions/context_theme_ext.dart';
@@ -23,11 +25,11 @@ class OrdersStatusesButton extends StatelessWidget {
               context
                   .showBottomSheetDialog(
                 radius: BorderRadius.circular(15),
-                margin: EdgeInsets.only(
-                  bottom: context.width * .55,
-                  top: context.width * .35,
-                  left: 10,
-                  right: 10,
+                // Sized to fit every status (incl. Cancelled) without the
+                // last options being clipped below the fold.
+                margin: EdgeInsets.symmetric(
+                  vertical: max(20, (context.height - 560) / 2),
+                  horizontal: 10,
                 ),
                 child: OrdersStatuesFilterDialog(selected: statuses),
               )

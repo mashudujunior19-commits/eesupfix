@@ -30,4 +30,13 @@ class NotificationSupabaseImpl implements NotificationDataSource {
         .delete()
         .eq('id', id);
   }
+
+  @override
+  Future<void> markSeen(int id) async {
+    await _client
+        .schema('engagements')
+        .from('notification')
+        .update({'seen_at': DateTime.now().toUtc().toIso8601String()}).eq(
+            'id', id);
+  }
 }

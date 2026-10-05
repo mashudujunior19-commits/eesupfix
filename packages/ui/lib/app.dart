@@ -9,6 +9,8 @@ import 'package:data/get_involved/repository/get_involved_repository.dart';
 import 'package:data/finance/data_source/wallet_supabase_impl.dart';
 import 'package:data/finance/repository/payment_gateway_repository.dart';
 import 'package:data/finance/repository/wallets_repository.dart';
+import 'package:data/role_assignments/data_source/role_assignments_data_source.dart';
+import 'package:data/role_assignments/repository/role_assignments_repository.dart';
 import 'package:data/geolocation/data_source/geo_supabase_impl.dart';
 import 'package:data/geolocation/repository/geo_repository.dart';
 import 'package:data/notifications/data_source/notification_supabase_impl.dart';
@@ -143,6 +145,13 @@ class MainApp extends StatelessWidget {
     ),
   );
 
+  final _roleAssignmentsRepo = RepositoryProvider(
+    create: (context) => RoleAssignmentsRepository(
+      context.read<AuthRepository>(),
+      RoleAssignmentsDataSource(GetIt.I.get<SupabaseClient>()),
+    ),
+  );
+
   @override
   Widget build(BuildContext context) {
     ///get the correct theme based on the app type (eesup or my kasi)
@@ -164,6 +173,7 @@ class MainApp extends StatelessWidget {
         _surveysRepository,
         _notificationRepo,
         _getInvolvedRepository,
+        _roleAssignmentsRepo,
       ],
       child: MultiBlocProvider(
         providers: [

@@ -4,9 +4,10 @@ import 'package:ui/app_route.gr.dart';
 import 'package:ui/src/core/extensions/bg_image_deco_ext.dart';
 import 'package:ui/src/core/widgets/eesup_scaffold.dart';
 import 'package:ui/src/views/menu/menu_tab.dart';
-import 'package:ui/src/views/overview/ui/my_kasi_shop.dart';
+import 'package:ui/src/views/overview/ui/my_economy.dart';
 import 'package:ui/src/views/overview/ui/widgets/bottom_tab_bar.dart';
 import 'package:ui/src/views/overview/ui/overview_tab.dart';
+import 'package:ui/src/views/role_assignments/ui/role_assigned_popup.dart';
 import 'package:flutter/material.dart';
 
 import '../../../core/widgets/fullscreen_loading_shimmer.dart';
@@ -80,8 +81,12 @@ class _OverviewScreenState extends State<OverviewScreen>
                                   final updatedProfile =
                                       state.profile.copyWith(foreigner: true);
 
+                                  // Initialise first so only `foreigner`
+                                  // is written, not this (possibly stale)
+                                  // copy of the whole profile.
                                   editProfileBloc
-                                      .add(ProfileEdited(updatedProfile));
+                                    ..add(EditProfileInitialized(state.profile))
+                                    ..add(ProfileEdited(updatedProfile));
                                   editProfileBloc.add(
                                       ProfileSaved(state.profile.rsaIdNumber));
 
@@ -166,20 +171,22 @@ class _OverviewScreenState extends State<OverviewScreen>
               if (state is ProfileLoading) {
                 return const FullScreenLoadingShimmer();
               } else if (state is ProfileLoaded) {
-                return Container(
-                  decoration: context.bgImage,
-                  child: EESUpScaffold(
-                    backgroundColor: Colors.transparent,
-                    bottomNavigationBar: BottomTabBar(
-                      tabController: _tabController,
-                    ),
-                    body: TabBarView(
-                      controller: _tabController,
-                      children: const [
-                        OverviewTab(),
-                        MyKasiShop(),
-                        MenuTab(),
-                      ],
+                return RoleAssignedPopupListener(
+                  child: Container(
+                    decoration: context.bgImage,
+                    child: EESUpScaffold(
+                      backgroundColor: Colors.transparent,
+                      bottomNavigationBar: BottomTabBar(
+                        tabController: _tabController,
+                      ),
+                      body: TabBarView(
+                        controller: _tabController,
+                        children: const [
+                          OverviewTab(),
+                          MyEconomy(),
+                          MenuTab(),
+                        ],
+                      ),
                     ),
                   ),
                 );

@@ -50,7 +50,10 @@ class _MenuTabState extends State<MenuTab> {
   /// stuck seeing an out-of-date "not verified" result, and so the message
   /// names only what's actually still missing.
   Future<void> _onGetInvolvedTapped(BuildContext context, Profile profile) async {
-    if (profile.role != UserRole.Ubuntunist) {
+    // Promoters are Individuals who've referred 5+ people, so they keep
+    // access to everything an Individual has.
+    if (profile.role != UserRole.Ubuntunist &&
+        profile.role != UserRole.EESUpromoter) {
       context.snackBarError('This is only available to Individual accounts.');
       return;
     }
@@ -141,6 +144,20 @@ class _MenuTabState extends State<MenuTab> {
                       },
                     ),
                     _MenuButton(
+                      label: 'My Wallet',
+                      icon: IconlyLight.wallet,
+                      onTap: () {
+                        context.router.push(const MyWalletRoute());
+                      },
+                    ),
+                    _MenuButton(
+                      label: 'My Community',
+                      icon: BootstrapIcons.people,
+                      onTap: () {
+                        context.router.push(const MyCommunityRoute());
+                      },
+                    ),
+                    _MenuButton(
                       label: 'Surveys',
                       icon: IconlyLight.chart,
                       onTap: () {
@@ -176,7 +193,7 @@ class _MenuTabState extends State<MenuTab> {
                       label: 'Legal',
                       icon: IconlyLight.document,
                       onTap: () {
-                        context.router.push(const TermsOfServiceRoute());
+                        context.router.push(TermsOfServiceRoute());
                       },
                     ),
                   ],

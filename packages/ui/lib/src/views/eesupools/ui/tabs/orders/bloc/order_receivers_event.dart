@@ -9,24 +9,28 @@ final class OrderReceiversFetched extends OrderReceiversEvent {
   OrderReceiversFetched(this.receivers, [this.initialRoles = const {}]);
 }
 
-final class OrderReceiverRemoved extends OrderReceiversEvent {
+/// A change to the receivers list or their roles. Changes are applied (and
+/// saved) one at a time, in the order the admin made them.
+sealed class OrderReceiverChange extends OrderReceiversEvent {}
+
+final class OrderReceiverRemoved extends OrderReceiverChange {
   final int orderId;
   final EESUpoolMember member;
   OrderReceiverRemoved(this.orderId, this.member);
 }
 
-final class OrderReceiverAdded extends OrderReceiversEvent {
+final class OrderReceiverAdded extends OrderReceiverChange {
   final int orderId;
   final EESUpoolMember member;
   OrderReceiverAdded(this.orderId, this.member);
 }
 
-/// Assigns (or clears, if [role] is null) the role a bulk receiver plays in
-/// fulfilling the order (Receiver / Packer / Distributor), so the pool
-/// admin can see who does what.
-final class OrderReceiverRoleAssigned extends OrderReceiversEvent {
+/// Assigns the role a bulk receiver plays in fulfilling the order
+/// (Receiver / Packer / Distributor), so the pool admin can see who does
+/// what. A receiver always has a role; there is no "no role" option.
+final class OrderReceiverRoleAssigned extends OrderReceiverChange {
   final int orderId;
   final String memberId;
-  final ReceiverRole? role;
+  final ReceiverRole role;
   OrderReceiverRoleAssigned(this.orderId, this.memberId, this.role);
 }

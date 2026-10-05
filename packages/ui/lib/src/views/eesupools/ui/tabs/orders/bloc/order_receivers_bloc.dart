@@ -24,63 +24,109 @@ class OrderReceiversBloc
       });
     });
 
-    on<OrderReceiverAdded>((event, emit) {
-      if (state is OrderReceiversLoaded) {
-        List<EESUpoolMember> receivers = [
-          ...(state as OrderReceiversLoaded).receivers
-        ];
-        // Compare by memberId rather than whole-object equality: the member
-        // being added comes from a different fetch (the member-picker
-        // dialog) than the ones already in `receivers`, and freezed's
-        // generated `==` requires every field to match, so two instances
-        // of the same member can fail to compare equal and slip past this
-        // dedup check.
-        final alreadyAdded =
-            receivers.any((r) => r.memberId == event.member.memberId);
-        if (!alreadyAdded) {
-          receivers.add(event.member);
-          final ids = receivers.map((e) => e.memberId).toList();
-          _repository.updatePoolOrderReceivers(event.orderId, ids);
-          emit(
-            OrderReceiversLoaded(
-              receivers,
-              (state as OrderReceiversLoaded).roles,
-            ),
-          );
-        }
-      }
-    });
+    // Changes are processed one at a time and each save is awaited, so two
+    // quick changes can't land out of order and leave the older one saved,
+    // and a failed save is rolled back and reported instead of the screen
+    // showing a role that was never stored.
+    on<OrderReceiverChange>(
+      (event, emit) => switch (event) {
+        OrderReceiverAdded() => _onAdded(event, emit),
+        OrderReceiverRemoved() => _onRemoved(event, emit),
+        OrderReceiverRoleAssigned() => _onRoleAssigned(event, emit),
+      },
+      transformer: (events, mapper) => events.asyncExpand(mapper),
+    );
+  }
 
-    on<OrderReceiverRemoved>((event, emit) {
-      if (state is OrderReceiversLoaded) {
-        final current = state as OrderReceiversLoaded;
-        List<EESUpoolMember> receivers = [...current.receivers];
-        receivers.removeWhere((r) => r.memberId == event.member.memberId);
-        final ids = receivers.map((e) => e.memberId).toList();
-        _repository.updatePoolOrderReceivers(event.orderId, ids);
+  Future<void> _onAdded(
+    OrderReceiverAdded event,
+    Emitter<OrderReceiversState> emit,
+  ) async {
+    if (state is! OrderReceiversLoaded) return;
+    final current = state as OrderReceiversLoaded;
 
-        // Drop the removed member's role too, and persist that cleanup so
-        // a re-added member doesn't inherit a stale role.
-        final roles = {...current.roles}..remove(event.member.memberId);
-        if (roles.length != current.roles.length) {
-          _repository.updateOrderReceiverRoles(event.orderId, roles);
-        }
-        emit(OrderReceiversLoaded(receivers, roles));
-      }
-    });
+    // Compare by memberId rather than whole-object equality: the member
+    // being added comes from a different fetch (the member-picker
+    // dialog) than the ones already in `receivers`, and freezed's
+    // generated `==` requires every field to match, so two instances
+    // of the same member can fail to compare equal and slip past this
+    // dedup check.
+    if (current.receivers.any((r) => r.memberId == event.member.memberId)) {
+      return;
+    }
+    if (event.member.isVerified == false) {
+      emit(current.withError(
+        '${event.member.fullName} is not verified and cannot be '
+        'assigned a role.',
+      ));
+      return;
+    }
 
-    on<OrderReceiverRoleAssigned>((event, emit) {
-      if (state is OrderReceiversLoaded) {
-        final current = state as OrderReceiversLoaded;
-        final roles = {...current.roles};
-        if (event.role == null) {
-          roles.remove(event.memberId);
-        } else {
-          roles[event.memberId] = event.role!;
-        }
-        _repository.updateOrderReceiverRoles(event.orderId, roles);
-        emit(OrderReceiversLoaded(current.receivers, roles));
-      }
-    });
+    final receivers = [...current.receivers, event.member];
+    // Every receiver must have a role, so new ones start as Receiver.
+    final roles = {
+      ...current.roles,
+      event.member.memberId: ReceiverRole.receiver,
+    };
+    emit(OrderReceiversLoaded(receivers, roles));
+
+    final saved = await _repository.updatePoolOrderReceivers(
+      event.orderId,
+      receivers.map((e) => e.memberId).toList(),
+    );
+    final error = await saved.fold(
+      (l) async => l.message,
+      (_) async => (await _repository.updateOrderReceiverRoles(
+        event.orderId,
+        roles,
+      ))
+          .fold((l) => l.message, (_) => null),
+    );
+    if (error != null) emit(current.withError(error));
+  }
+
+  Future<void> _onRemoved(
+    OrderReceiverRemoved event,
+    Emitter<OrderReceiversState> emit,
+  ) async {
+    if (state is! OrderReceiversLoaded) return;
+    final current = state as OrderReceiversLoaded;
+    final receivers = [...current.receivers]
+      ..removeWhere((r) => r.memberId == event.member.memberId);
+    // Drop the removed member's role too, so a re-added member doesn't
+    // inherit a stale role.
+    final roles = {...current.roles}..remove(event.member.memberId);
+    emit(OrderReceiversLoaded(receivers, roles));
+
+    final saved = await _repository.updatePoolOrderReceivers(
+      event.orderId,
+      receivers.map((e) => e.memberId).toList(),
+    );
+    String? error = saved.fold((l) => l.message, (_) => null);
+    if (error == null && roles.length != current.roles.length) {
+      error = (await _repository.updateOrderReceiverRoles(
+        event.orderId,
+        roles,
+      ))
+          .fold((l) => l.message, (_) => null);
+    }
+    if (error != null) emit(current.withError(error));
+  }
+
+  Future<void> _onRoleAssigned(
+    OrderReceiverRoleAssigned event,
+    Emitter<OrderReceiversState> emit,
+  ) async {
+    if (state is! OrderReceiversLoaded) return;
+    final current = state as OrderReceiversLoaded;
+    final roles = {...current.roles, event.memberId: event.role};
+    emit(OrderReceiversLoaded(current.receivers, roles));
+
+    final saved =
+        await _repository.updateOrderReceiverRoles(event.orderId, roles);
+    saved.fold(
+      (l) => emit(current.withError(l.message)),
+      (_) {},
+    );
   }
 }
