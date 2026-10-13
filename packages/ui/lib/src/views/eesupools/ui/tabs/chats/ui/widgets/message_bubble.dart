@@ -39,6 +39,25 @@ class MessageBubble extends StatelessWidget {
     return false;
   }
 
+  /// What the author / reviewers are told about a message that is not
+  /// delivered yet.
+  String _reviewLabel() {
+    final reason = message.moderationReason;
+    final isReviewer = pool.role == EESUpoolMemberRole.admin;
+    switch (message.moderationStatus) {
+      case 'held':
+        return isReviewer
+            ? 'Held for review${reason != null ? ' ($reason)' : ''}'
+            : 'Pending review. An admin will check it before it is delivered.';
+      case 'flagged':
+        return isReviewer
+            ? 'Flagged${reason != null ? ': $reason' : ''}'
+            : 'Under review';
+      default:
+        return 'Pending review';
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     bool isReply = pool.memberId != message.authorId;
@@ -123,6 +142,22 @@ class MessageBubble extends StatelessWidget {
                                     );
                                   },
                                 ),
+                              if (pool.role == EESUpoolMemberRole.admin &&
+                                  message.isApproved &&
+                                  !message.isDeleted)
+                                _bubblPopUpOption(
+                                  context,
+                                  'Flag for review',
+                                  BootstrapIcons.flag_fill,
+                                  () {
+                                    context.read<ChatBloc>().add(
+                                          MessageFlagged(
+                                            pool.eesupoolId!,
+                                            message.id,
+                                          ),
+                                        );
+                                  },
+                                ),
                               if (message.authorId == pool.memberId ||
                                   pool.role == EESUpoolMemberRole.admin)
                                 _bubblPopUpOption(
@@ -148,7 +183,7 @@ class MessageBubble extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.only(left: 10),
                       child: Text(
-                        'Pending review',
+                        _reviewLabel(),
                         style: context.textTheme.bodySmall?.copyWith(
                           fontStyle: FontStyle.italic,
                           color: Colors.grey,

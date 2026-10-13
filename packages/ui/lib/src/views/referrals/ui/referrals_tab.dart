@@ -129,9 +129,9 @@ class _ReferralCard extends StatelessWidget {
         ),
         title: Text(referral.refereedFullName),
         subtitle: Text(
-          referral.isCompleted ? 'Completed' : 'Not Completed',
+          referral.isVerified ? 'Verified' : 'Not verified',
           style: TextStyle(
-            color: !referral.isCompleted ? Colors.redAccent : Colors.green,
+            color: !referral.isVerified ? Colors.redAccent : Colors.green,
             fontWeight: FontWeight.bold,
             fontSize: 13,
           ),

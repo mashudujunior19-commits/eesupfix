@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 import 'package:data/eesupools/data_source/eesupool_data_source.dart';
 import 'package:data/eesupools/models/chat_message.dart';
@@ -10,6 +11,7 @@ import 'package:data/eesupools/models/eesupool_member.dart';
 import 'package:data/eesupools/models/eesupool_order.dart';
 import 'package:data/eesupools/models/eesupool_request.dart';
 import 'package:data/eesupools/models/eesupool_type.dart';
+import 'package:data/eesupools/models/media_file.dart';
 import 'package:data/eesupools/models/receiver_role.dart';
 import 'package:data/orders/models/order_product.dart';
 import 'package:flutter/foundation.dart';
@@ -143,16 +145,36 @@ class EESUpoolSupabaseImp implements EESUpoolDataSource {
   }
 
   @override
-  Future<void> sendChatMessage(ChatMessage message) async {
-    try {
-      final response = await client
-          .schema('communities')
-          .from('message')
-          .insert(message.toJson());
-      print('response sent $response');
-    } catch (e) {
-      print(e);
-    }
+  Future<({int id, bool isApproved, String moderationStatus})> sendChatMessage({
+    required int poolId,
+    required String authorId,
+    required String? content,
+    required String plainText,
+    int? replyOnId,
+    List<MediaFile>? media,
+    List<String>? hashTags,
+    List<EESUpoolLevel>? broadcastTo,
+    required bool isApproved,
+  }) async {
+    // Errors propagate: the sender must know when a message was not sent.
+    final res =
+        await client.schema('communities').rpc('send_chat_message', params: {
+      'p_pool_id': poolId,
+      'p_author_id': authorId,
+      'p_content': content,
+      'p_plain_text': plainText,
+      'p_reply_on_id': replyOnId,
+      'p_attachments': media?.map((e) => e.toJson()).toList(),
+      'p_hash_tags': hashTags,
+      'p_broadcast_to': broadcastTo?.map((e) => e.toString()).toList(),
+      'p_is_approved': isApproved,
+    });
+    final row = (res as List).first as Map<String, dynamic>;
+    return (
+      id: row['id'] as int,
+      isApproved: row['is_approved'] as bool,
+      moderationStatus: row['moderation_status'] as String,
+    );
   }
 
   @override
@@ -322,9 +344,26 @@ class EESUpoolSupabaseImp implements EESUpoolDataSource {
 
   @override
   Future<void> approveChatMessage(int messageId) async {
-    await client.schema('communities').from('message').update({
-      'is_approved': true,
-    }).eq('id', messageId);
+    await client.schema('communities').rpc('review_message', params: {
+      'p_message_id': messageId,
+      'p_approve': true,
+    });
+  }
+
+  @override
+  Future<void> rejectChatMessage(int messageId) async {
+    await client.schema('communities').rpc('review_message', params: {
+      'p_message_id': messageId,
+      'p_approve': false,
+    });
+  }
+
+  @override
+  Future<void> flagChatMessage(int messageId, String? reason) async {
+    await client.schema('communities').rpc('flag_message', params: {
+      'p_message_id': messageId,
+      'p_reason': reason,
+    });
   }
 
   @override
@@ -398,16 +437,43 @@ class EESUpoolSupabaseImp implements EESUpoolDataSource {
   @override
   Future<void> updateEESUpoolRequest(
       String userId, int poolId, String status) async {
-    try {
-      await client
-          .schema('communities')
-          .from('eesupool_request')
-          .update({'status': status})
-          .eq('user_id', userId)
-          .eq('eesupool_id', poolId);
-    } catch (e) {
-      print(e);
-    }
+    // Errors propagate so callers can tell the user the update failed
+    // instead of silently treating it as done.
+    await client
+        .schema('communities')
+        .from('eesupool_request')
+        .update({'status': status})
+        .eq('user_id', userId)
+        .eq('eesupool_id', poolId);
+  }
+
+  @override
+  Stream<void> poolRequestChanges(int poolId) {
+    late final StreamController<void> controller;
+    RealtimeChannel? channel;
+    controller = StreamController<void>(
+      onListen: () {
+        channel = client
+            .channel('eesupool_request_$poolId')
+            .onPostgresChanges(
+              event: PostgresChangeEvent.all,
+              schema: 'communities',
+              table: 'eesupool_request',
+              filter: PostgresChangeFilter(
+                type: PostgresChangeFilterType.eq,
+                column: 'eesupool_id',
+                value: poolId,
+              ),
+              callback: (_) => controller.add(null),
+            )
+            .subscribe();
+      },
+      onCancel: () async {
+        final c = channel;
+        if (c != null) await client.removeChannel(c);
+      },
+    );
+    return controller.stream;
   }
 
   @override
@@ -485,6 +551,26 @@ class EESUpoolSupabaseImp implements EESUpoolDataSource {
     );
 
     return res;
+  }
+
+  @override
+  Future<dynamic> searchKasiPools(
+    String query,
+    String userId,
+    int limit, {
+    double? lat,
+    double? lng,
+  }) async {
+    return client.schema('communities').rpc(
+      'search_kasi_pools',
+      params: {
+        'query_str': query,
+        '_user_id': userId,
+        'lat': lat,
+        'lng': lng,
+        'limit_to': limit,
+      },
+    );
   }
 
   @override

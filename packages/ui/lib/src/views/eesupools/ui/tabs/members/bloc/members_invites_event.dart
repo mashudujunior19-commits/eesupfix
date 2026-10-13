@@ -10,3 +10,12 @@ final class MembersInvitesFetched extends MembersInvitesEvent {
 
   MembersInvitesFetched(this.poolId, this.limit, this.type);
 }
+
+/// Re-fetches the list in place (no loading state), used for realtime updates.
+final class MembersInvitesRefreshed extends MembersInvitesEvent {
+  final int poolId;
+  final int limit;
+  final String type;
+
+  MembersInvitesRefreshed(this.poolId, this.limit, this.type);
+}

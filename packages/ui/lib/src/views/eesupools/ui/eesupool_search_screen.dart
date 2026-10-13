@@ -6,8 +6,10 @@ import 'package:data/eesupools/models/eesupool_type.dart';
 import 'package:data/eesupools/repository/eesupool_members_repo.dart';
 import 'package:data/eesupools/repository/eesupool_repo.dart';
 import 'package:data/geolocation/models/address.dart';
+import 'package:data/geolocation/repository/geo_repository.dart';
 import 'package:data/utils/double_ext.dart';
 import 'package:data/utils/eesup_exception.dart';
+import 'package:easy_debounce/easy_debounce.dart';
 import 'package:either_dart/either.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -35,9 +37,72 @@ class EESUpoolSearchScreen extends StatefulWidget {
 class _EESUpoolSearchScreenState extends State<EESUpoolSearchScreen> {
   final _controller = TextEditingController();
   Address? selectedAddress;
+  Future<Either<EESUpException, dynamic>>? _searchFuture;
+
+  // The user's own location is only used to rank nearby pools first; it never
+  // filters results, so pools anywhere can be found and joined.
+  double? _userLat;
+  double? _userLng;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadUserLocation();
+  }
+
+  @override
+  void dispose() {
+    EasyDebounce.cancel('eesupool_search');
+    _controller.dispose();
+    super.dispose();
+  }
+
+  Future<void> _loadUserLocation() async {
+    final result = await context.read<GeoRepository>().fetchUserAddresses();
+    result.fold((_) {}, (addresses) {
+      final located = addresses
+          .where((a) => a.latitude != null && a.longitude != null)
+          .toList();
+      if (located.isEmpty) return;
+      final home = located.firstWhere(
+        (a) => a.isPrimary,
+        orElse: () => located.first,
+      );
+      _userLat = home.latitude;
+      _userLng = home.longitude;
+      // Re-rank results that were fetched before the location was known.
+      if (mounted && _controller.text.trim().isNotEmpty) _runSearch();
+    });
+  }
+
+  void _runSearch() {
+    final query = _controller.text.trim();
+    if (query.isEmpty) {
+      setState(() => _searchFuture = null);
+      return;
+    }
+    final repo = context.read<EESUpoolRepository>();
+    setState(() {
+      if (widget.type == EESUpoolType.kasi) {
+        _searchFuture =
+            repo.searchKasiPools(query, 50, lat: _userLat, lng: _userLng);
+      } else if (widget.type == EESUpoolType.trade &&
+          selectedAddress?.latitude != null &&
+          selectedAddress?.longitude != null) {
+        _searchFuture = repo.searchTradePools(
+          query,
+          50,
+          selectedAddress!.latitude!,
+          selectedAddress!.longitude!,
+        );
+      } else {
+        _searchFuture = repo.searchPoolsByType(query, widget.type, 50);
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    final repo = context.read<EESUpoolRepository>();
     return SizedBox(
       child: Scaffold(
         appBar: AppBar(
@@ -45,7 +110,16 @@ class _EESUpoolSearchScreenState extends State<EESUpoolSearchScreen> {
           title: EESUpTextFormField(
             controller: _controller,
             onChanged: (p) {
-              setState(() {});
+              if (p.trim().isEmpty) {
+                EasyDebounce.cancel('eesupool_search');
+                setState(() => _searchFuture = null);
+              } else {
+                EasyDebounce.debounce(
+                  'eesupool_search',
+                  const Duration(milliseconds: 400),
+                  _runSearch,
+                );
+              }
             },
             margin: const EdgeInsets.only(top: 10, right: 15),
             hintText: 'Search EESUpool Names, Codes...',
@@ -92,9 +166,8 @@ class _EESUpoolSearchScreenState extends State<EESUpoolSearchScreen> {
                         ),
                         onAddressSelected: (address) {
                           if (address != null) {
-                            setState(() {
-                              selectedAddress = address;
-                            });
+                            selectedAddress = address;
+                            _runSearch();
                           }
                         },
                       ),
@@ -104,7 +177,7 @@ class _EESUpoolSearchScreenState extends State<EESUpoolSearchScreen> {
                   ],
                 ),
               () {
-                if (_controller.text.isEmpty) {
+                if (_searchFuture == null) {
                   return Padding(
                     padding: const EdgeInsets.only(top: 150),
                     child: FullScreenError(
@@ -117,19 +190,7 @@ class _EESUpoolSearchScreenState extends State<EESUpoolSearchScreen> {
                 } else {
                   return Expanded(
                     child: FutureBuilder<Either<EESUpException, dynamic>>(
-                      future: widget.type == EESUpoolType.trade &&
-                              selectedAddress != null
-                          ? repo.searchTradePools(
-                              _controller.text,
-                              50,
-                              selectedAddress!.latitude!,
-                              selectedAddress!.longitude!,
-                            )
-                          : repo.searchPoolsByType(
-                              _controller.text,
-                              EESUpoolType.kasi,
-                              50,
-                            ),
+                      future: _searchFuture,
                       builder: (context, snap) {
                         if (snap.hasData) {
                           final results = snap.data;
@@ -139,19 +200,26 @@ class _EESUpoolSearchScreenState extends State<EESUpoolSearchScreen> {
                                   exception: left,
                                 );
                               }, (right) {
-                                print(right);
                                 final list = (right as List);
+                                if (list.isEmpty) {
+                                  return Padding(
+                                    padding: const EdgeInsets.only(top: 150),
+                                    child: FullScreenError(
+                                      isError: false,
+                                      exception: EESUpException(
+                                        message: 'No pools match your search.',
+                                      ),
+                                    ),
+                                  );
+                                }
 
                                 return ListView.builder(
                                   padding: const EdgeInsets.only(bottom: 500),
                                   itemCount: list.length,
                                   itemBuilder: (context, index) {
-                                    print(list[index]['type']);
                                     return _EESUpoolCard(
                                       pool: list[index],
-                                      onRefresh: () {
-                                        setState(() {});
-                                      },
+                                      onRefresh: _runSearch,
                                     );
                                   },
                                 );
@@ -192,6 +260,9 @@ class _EESUpoolSearchScreenState extends State<EESUpoolSearchScreen> {
     );
   }
 }
+
+// Pools closer than this are highlighted as "Nearby" and listed first.
+const _nearbyKm = 15;
 
 class _EESUpoolCard extends StatelessWidget {
   const _EESUpoolCard({required this.pool, required this.onRefresh});
@@ -238,7 +309,18 @@ class _EESUpoolCard extends StatelessWidget {
                     padding: const EdgeInsets.only(top: 5),
                     child: Text(
                       '${(double.parse(pool['distance'].toString())).toRounded()}'
-                      ' km away',
+                      ' km away'
+                      '${double.parse(pool['distance'].toString()) <= _nearbyKm ? ' · Nearby' : ''}',
+                      style: TextStyle(
+                        color: double.parse(pool['distance'].toString()) <=
+                                _nearbyKm
+                            ? colorScheme.primary
+                            : null,
+                        fontWeight: double.parse(pool['distance'].toString()) <=
+                                _nearbyKm
+                            ? FontWeight.w600
+                            : null,
+                      ),
                     ),
                   ),
                 if (pool['parent_name'] != null)
@@ -291,12 +373,37 @@ class _EESUpoolCard extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(top: 5),
       child: InkWell(
-        onTap: () {
-          // kasiStreetsDialog(
-          //   context,
-          //   parentId: pool['id'],
-          //   parentName: pool['name'],
-          // );
+        onTap: () async {
+          final repo = context.read<EESUpoolRepository>();
+          context.loaderOverlay.show();
+          final results = await repo.searchKasiStreetPoolsById(pool['id'], 200);
+          context.loaderOverlay.hide();
+          results.fold(
+            (l) => context.snackBarError(l.message),
+            (r) {
+              final streets = (r as List).cast<Map<String, dynamic>>();
+              showModalBottomSheet(
+                context: context,
+                isScrollControlled: true,
+                builder: (_) => SafeArea(
+                  child: streets.isEmpty
+                      ? const Padding(
+                          padding: EdgeInsets.all(30),
+                          child: Text('No streets to join in this pool yet.'),
+                        )
+                      : ListView.builder(
+                          shrinkWrap: true,
+                          padding: const EdgeInsets.only(bottom: 20),
+                          itemCount: streets.length,
+                          itemBuilder: (_, i) => _EESUpoolCard(
+                            pool: streets[i],
+                            onRefresh: onRefresh,
+                          ),
+                        ),
+                ),
+              );
+            },
+          );
         },
         child: Text(
           'View Streets',

@@ -2,6 +2,7 @@ import 'package:data/auth/data_source/auth_supabase_data_source.dart';
 import 'package:data/auth/data_source/profile_supabase_impl.dart';
 import 'package:data/auth/repository/auth_repository.dart';
 import 'package:data/auth/repository/profile_repository.dart';
+import 'package:data/direct_messages/direct_messages_repository.dart';
 import 'package:data/eesupools/data_source/eesupool_supabase_impl.dart';
 import 'package:data/eesupools/repository/eesupool_repo.dart';
 import 'package:data/get_involved/data_source/get_involved_supabase_impl.dart';
@@ -145,6 +146,13 @@ class MainApp extends StatelessWidget {
     ),
   );
 
+  final _directMessagesRepo = RepositoryProvider(
+    create: (context) => DirectMessagesRepository(
+      context.read<AuthRepository>(),
+      GetIt.I.get<SupabaseClient>(),
+    ),
+  );
+
   final _roleAssignmentsRepo = RepositoryProvider(
     create: (context) => RoleAssignmentsRepository(
       context.read<AuthRepository>(),
@@ -174,6 +182,7 @@ class MainApp extends StatelessWidget {
         _notificationRepo,
         _getInvolvedRepository,
         _roleAssignmentsRepo,
+        _directMessagesRepo,
       ],
       child: MultiBlocProvider(
         providers: [

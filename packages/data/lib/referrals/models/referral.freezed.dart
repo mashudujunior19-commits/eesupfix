@@ -1,6 +1,5 @@
-// dart format width=80
-// coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// coverage:ignore-file
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
@@ -25,8 +24,8 @@ mixin _$Referral {
   DateTime get createdAt;
   @JsonKey(name: 'transaction_id')
   int get transactionId;
-  @JsonKey(name: 'is_completed')
-  bool get isCompleted;
+  @JsonKey(name: 'is_verified')
+  bool get isVerified;
 
   /// Create a copy of Referral
   /// with the given fields replaced by the non-null parameter values.
@@ -53,18 +52,18 @@ mixin _$Referral {
                 other.createdAt == createdAt) &&
             (identical(other.transactionId, transactionId) ||
                 other.transactionId == transactionId) &&
-            (identical(other.isCompleted, isCompleted) ||
-                other.isCompleted == isCompleted));
+            (identical(other.isVerified, isVerified) ||
+                other.isVerified == isVerified));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, referrerUserId, refereedUserId,
-      refereedFullName, createdAt, transactionId, isCompleted);
+      refereedFullName, createdAt, transactionId, isVerified);
 
   @override
   String toString() {
-    return 'Referral(referrerUserId: $referrerUserId, refereedUserId: $refereedUserId, refereedFullName: $refereedFullName, createdAt: $createdAt, transactionId: $transactionId, isCompleted: $isCompleted)';
+    return 'Referral(referrerUserId: $referrerUserId, refereedUserId: $refereedUserId, refereedFullName: $refereedFullName, createdAt: $createdAt, transactionId: $transactionId, isVerified: $isVerified)';
   }
 }
 
@@ -79,7 +78,7 @@ abstract mixin class $ReferralCopyWith<$Res> {
       @JsonKey(name: 'refereed_full_name') String refereedFullName,
       @JsonKey(name: 'created_at') DateTime createdAt,
       @JsonKey(name: 'transaction_id') int transactionId,
-      @JsonKey(name: 'is_completed') bool isCompleted});
+      @JsonKey(name: 'is_verified') bool isVerified});
 }
 
 /// @nodoc
@@ -99,7 +98,7 @@ class _$ReferralCopyWithImpl<$Res> implements $ReferralCopyWith<$Res> {
     Object? refereedFullName = null,
     Object? createdAt = null,
     Object? transactionId = null,
-    Object? isCompleted = null,
+    Object? isVerified = null,
   }) {
     return _then(_self.copyWith(
       referrerUserId: null == referrerUserId
@@ -122,11 +121,207 @@ class _$ReferralCopyWithImpl<$Res> implements $ReferralCopyWith<$Res> {
           ? _self.transactionId
           : transactionId // ignore: cast_nullable_to_non_nullable
               as int,
-      isCompleted: null == isCompleted
-          ? _self.isCompleted
-          : isCompleted // ignore: cast_nullable_to_non_nullable
+      isVerified: null == isVerified
+          ? _self.isVerified
+          : isVerified // ignore: cast_nullable_to_non_nullable
               as bool,
     ));
+  }
+}
+
+/// Adds pattern-matching-related methods to [Referral].
+extension ReferralPatterns on Referral {
+  /// A variant of `map` that fallback to returning `orElse`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>(
+    TResult Function(_Referral value)? $default, {
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _Referral() when $default != null:
+        return $default(_that);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// Callbacks receives the raw object, upcasted.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case final Subclass2 value:
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>(
+    TResult Function(_Referral value) $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _Referral():
+        return $default(_that);
+      case _:
+        throw StateError('Unexpected subclass');
+    }
+  }
+
+  /// A variant of `map` that fallback to returning `null`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>(
+    TResult? Function(_Referral value)? $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _Referral() when $default != null:
+        return $default(_that);
+      case _:
+        return null;
+    }
+  }
+
+  /// A variant of `when` that fallback to an `orElse` callback.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>(
+    TResult Function(
+            @JsonKey(name: 'referrer_user_id') String referrerUserId,
+            @JsonKey(name: 'refereed_user_id') String refereedUserId,
+            @JsonKey(name: 'refereed_full_name') String refereedFullName,
+            @JsonKey(name: 'created_at') DateTime createdAt,
+            @JsonKey(name: 'transaction_id') int transactionId,
+            @JsonKey(name: 'is_verified') bool isVerified)?
+        $default, {
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _Referral() when $default != null:
+        return $default(
+            _that.referrerUserId,
+            _that.refereedUserId,
+            _that.refereedFullName,
+            _that.createdAt,
+            _that.transactionId,
+            _that.isVerified);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// As opposed to `map`, this offers destructuring.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case Subclass2(:final field2):
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>(
+    TResult Function(
+            @JsonKey(name: 'referrer_user_id') String referrerUserId,
+            @JsonKey(name: 'refereed_user_id') String refereedUserId,
+            @JsonKey(name: 'refereed_full_name') String refereedFullName,
+            @JsonKey(name: 'created_at') DateTime createdAt,
+            @JsonKey(name: 'transaction_id') int transactionId,
+            @JsonKey(name: 'is_verified') bool isVerified)
+        $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _Referral():
+        return $default(
+            _that.referrerUserId,
+            _that.refereedUserId,
+            _that.refereedFullName,
+            _that.createdAt,
+            _that.transactionId,
+            _that.isVerified);
+      case _:
+        throw StateError('Unexpected subclass');
+    }
+  }
+
+  /// A variant of `when` that fallback to returning `null`
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>(
+    TResult? Function(
+            @JsonKey(name: 'referrer_user_id') String referrerUserId,
+            @JsonKey(name: 'refereed_user_id') String refereedUserId,
+            @JsonKey(name: 'refereed_full_name') String refereedFullName,
+            @JsonKey(name: 'created_at') DateTime createdAt,
+            @JsonKey(name: 'transaction_id') int transactionId,
+            @JsonKey(name: 'is_verified') bool isVerified)?
+        $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _Referral() when $default != null:
+        return $default(
+            _that.referrerUserId,
+            _that.refereedUserId,
+            _that.refereedFullName,
+            _that.createdAt,
+            _that.transactionId,
+            _that.isVerified);
+      case _:
+        return null;
+    }
   }
 }
 
@@ -139,7 +334,7 @@ class _Referral implements Referral {
       @JsonKey(name: 'refereed_full_name') required this.refereedFullName,
       @JsonKey(name: 'created_at') required this.createdAt,
       @JsonKey(name: 'transaction_id') required this.transactionId,
-      @JsonKey(name: 'is_completed') required this.isCompleted});
+      @JsonKey(name: 'is_verified') this.isVerified = false});
   factory _Referral.fromJson(Map<String, dynamic> json) =>
       _$ReferralFromJson(json);
 
@@ -159,8 +354,8 @@ class _Referral implements Referral {
   @JsonKey(name: 'transaction_id')
   final int transactionId;
   @override
-  @JsonKey(name: 'is_completed')
-  final bool isCompleted;
+  @JsonKey(name: 'is_verified')
+  final bool isVerified;
 
   /// Create a copy of Referral
   /// with the given fields replaced by the non-null parameter values.
@@ -192,18 +387,18 @@ class _Referral implements Referral {
                 other.createdAt == createdAt) &&
             (identical(other.transactionId, transactionId) ||
                 other.transactionId == transactionId) &&
-            (identical(other.isCompleted, isCompleted) ||
-                other.isCompleted == isCompleted));
+            (identical(other.isVerified, isVerified) ||
+                other.isVerified == isVerified));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, referrerUserId, refereedUserId,
-      refereedFullName, createdAt, transactionId, isCompleted);
+      refereedFullName, createdAt, transactionId, isVerified);
 
   @override
   String toString() {
-    return 'Referral(referrerUserId: $referrerUserId, refereedUserId: $refereedUserId, refereedFullName: $refereedFullName, createdAt: $createdAt, transactionId: $transactionId, isCompleted: $isCompleted)';
+    return 'Referral(referrerUserId: $referrerUserId, refereedUserId: $refereedUserId, refereedFullName: $refereedFullName, createdAt: $createdAt, transactionId: $transactionId, isVerified: $isVerified)';
   }
 }
 
@@ -220,7 +415,7 @@ abstract mixin class _$ReferralCopyWith<$Res>
       @JsonKey(name: 'refereed_full_name') String refereedFullName,
       @JsonKey(name: 'created_at') DateTime createdAt,
       @JsonKey(name: 'transaction_id') int transactionId,
-      @JsonKey(name: 'is_completed') bool isCompleted});
+      @JsonKey(name: 'is_verified') bool isVerified});
 }
 
 /// @nodoc
@@ -240,7 +435,7 @@ class __$ReferralCopyWithImpl<$Res> implements _$ReferralCopyWith<$Res> {
     Object? refereedFullName = null,
     Object? createdAt = null,
     Object? transactionId = null,
-    Object? isCompleted = null,
+    Object? isVerified = null,
   }) {
     return _then(_Referral(
       referrerUserId: null == referrerUserId
@@ -263,9 +458,9 @@ class __$ReferralCopyWithImpl<$Res> implements _$ReferralCopyWith<$Res> {
           ? _self.transactionId
           : transactionId // ignore: cast_nullable_to_non_nullable
               as int,
-      isCompleted: null == isCompleted
-          ? _self.isCompleted
-          : isCompleted // ignore: cast_nullable_to_non_nullable
+      isVerified: null == isVerified
+          ? _self.isVerified
+          : isVerified // ignore: cast_nullable_to_non_nullable
               as bool,
     ));
   }

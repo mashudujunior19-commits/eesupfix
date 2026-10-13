@@ -1,6 +1,5 @@
-// dart format width=80
-// coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// coverage:ignore-file
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
@@ -52,6 +51,14 @@ mixin _$ChatMessage {
   @JsonKey(name: 'message_seens', includeToJson: false)
   List<String> get messageSeens;
 
+  /// 'none' | 'held' | 'flagged' | 'approved' | 'rejected'
+  @JsonKey(name: 'moderation_status', includeToJson: false)
+  String get moderationStatus;
+
+  /// Only filled in for reviewers (pool admins / app admins).
+  @JsonKey(name: 'moderation_reason', includeToJson: false)
+  String? get moderationReason;
+
   /// Create a copy of ChatMessage
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -92,7 +99,11 @@ mixin _$ChatMessage {
             const DeepCollectionEquality()
                 .equals(other.broadcastTo, broadcastTo) &&
             const DeepCollectionEquality()
-                .equals(other.messageSeens, messageSeens));
+                .equals(other.messageSeens, messageSeens) &&
+            (identical(other.moderationStatus, moderationStatus) ||
+                other.moderationStatus == moderationStatus) &&
+            (identical(other.moderationReason, moderationReason) ||
+                other.moderationReason == moderationReason));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -114,11 +125,13 @@ mixin _$ChatMessage {
       isApproved,
       isDeleted,
       const DeepCollectionEquality().hash(broadcastTo),
-      const DeepCollectionEquality().hash(messageSeens));
+      const DeepCollectionEquality().hash(messageSeens),
+      moderationStatus,
+      moderationReason);
 
   @override
   String toString() {
-    return 'ChatMessage(id: $id, eesupoolId: $eesupoolId, authorId: $authorId, createdAt: $createdAt, authorName: $authorName, content: $content, replyOnId: $replyOnId, media: $media, localFiles: $localFiles, reply: $reply, reactions: $reactions, hashTags: $hashTags, isApproved: $isApproved, isDeleted: $isDeleted, broadcastTo: $broadcastTo, messageSeens: $messageSeens)';
+    return 'ChatMessage(id: $id, eesupoolId: $eesupoolId, authorId: $authorId, createdAt: $createdAt, authorName: $authorName, content: $content, replyOnId: $replyOnId, media: $media, localFiles: $localFiles, reply: $reply, reactions: $reactions, hashTags: $hashTags, isApproved: $isApproved, isDeleted: $isDeleted, broadcastTo: $broadcastTo, messageSeens: $messageSeens, moderationStatus: $moderationStatus, moderationReason: $moderationReason)';
   }
 }
 
@@ -155,7 +168,11 @@ abstract mixin class $ChatMessageCopyWith<$Res> {
       @JsonKey(name: 'broadcast_to')
       List<EESUpoolLevel>? broadcastTo,
       @JsonKey(name: 'message_seens', includeToJson: false)
-      List<String> messageSeens});
+      List<String> messageSeens,
+      @JsonKey(name: 'moderation_status', includeToJson: false)
+      String moderationStatus,
+      @JsonKey(name: 'moderation_reason', includeToJson: false)
+      String? moderationReason});
 
   $ChatMessageCopyWith<$Res>? get reply;
 }
@@ -188,6 +205,8 @@ class _$ChatMessageCopyWithImpl<$Res> implements $ChatMessageCopyWith<$Res> {
     Object? isDeleted = null,
     Object? broadcastTo = freezed,
     Object? messageSeens = null,
+    Object? moderationStatus = null,
+    Object? moderationReason = freezed,
   }) {
     return _then(_self.copyWith(
       id: null == id
@@ -254,6 +273,14 @@ class _$ChatMessageCopyWithImpl<$Res> implements $ChatMessageCopyWith<$Res> {
           ? _self.messageSeens
           : messageSeens // ignore: cast_nullable_to_non_nullable
               as List<String>,
+      moderationStatus: null == moderationStatus
+          ? _self.moderationStatus
+          : moderationStatus // ignore: cast_nullable_to_non_nullable
+              as String,
+      moderationReason: freezed == moderationReason
+          ? _self.moderationReason
+          : moderationReason // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 
@@ -269,6 +296,316 @@ class _$ChatMessageCopyWithImpl<$Res> implements $ChatMessageCopyWith<$Res> {
     return $ChatMessageCopyWith<$Res>(_self.reply!, (value) {
       return _then(_self.copyWith(reply: value));
     });
+  }
+}
+
+/// Adds pattern-matching-related methods to [ChatMessage].
+extension ChatMessagePatterns on ChatMessage {
+  /// A variant of `map` that fallback to returning `orElse`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>(
+    TResult Function(_ChatMessage value)? $default, {
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _ChatMessage() when $default != null:
+        return $default(_that);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// Callbacks receives the raw object, upcasted.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case final Subclass2 value:
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>(
+    TResult Function(_ChatMessage value) $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _ChatMessage():
+        return $default(_that);
+      case _:
+        throw StateError('Unexpected subclass');
+    }
+  }
+
+  /// A variant of `map` that fallback to returning `null`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>(
+    TResult? Function(_ChatMessage value)? $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _ChatMessage() when $default != null:
+        return $default(_that);
+      case _:
+        return null;
+    }
+  }
+
+  /// A variant of `when` that fallback to an `orElse` callback.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>(
+    TResult Function(
+            @JsonKey(includeToJson: false) int id,
+            @JsonKey(name: 'eesupool_id') int eesupoolId,
+            @JsonKey(name: 'author_id') String authorId,
+            @JsonKey(name: 'created_at', includeToJson: true)
+            DateTime createdAt,
+            @JsonKey(name: 'author_full_name', includeToJson: false)
+            String? authorName,
+            @JsonKey(name: 'content') String? content,
+            @JsonKey(name: 'reply_on_id') int? replyOnId,
+            @JsonKey(name: 'attachments')
+            @MediaFileConverter()
+            List<MediaFile>? media,
+            @JsonKey(includeFromJson: false, includeToJson: false)
+            List<File> localFiles,
+            @ChatMessageConverter()
+            @JsonKey(name: 'reply_message', includeToJson: false)
+            ChatMessage? reply,
+            @ChatMessageReactionConverter()
+            @JsonKey(name: 'reactions', includeToJson: false)
+            List<ChatMessageReaction>? reactions,
+            @JsonKey(name: 'hash_tags') List<String>? hashTags,
+            @JsonKey(name: 'is_approved') bool isApproved,
+            @JsonKey(name: 'is_deleted', includeToJson: false) bool isDeleted,
+            @EESUpoolLevelConverter()
+            @JsonKey(name: 'broadcast_to')
+            List<EESUpoolLevel>? broadcastTo,
+            @JsonKey(name: 'message_seens', includeToJson: false)
+            List<String> messageSeens,
+            @JsonKey(name: 'moderation_status', includeToJson: false)
+            String moderationStatus,
+            @JsonKey(name: 'moderation_reason', includeToJson: false)
+            String? moderationReason)?
+        $default, {
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _ChatMessage() when $default != null:
+        return $default(
+            _that.id,
+            _that.eesupoolId,
+            _that.authorId,
+            _that.createdAt,
+            _that.authorName,
+            _that.content,
+            _that.replyOnId,
+            _that.media,
+            _that.localFiles,
+            _that.reply,
+            _that.reactions,
+            _that.hashTags,
+            _that.isApproved,
+            _that.isDeleted,
+            _that.broadcastTo,
+            _that.messageSeens,
+            _that.moderationStatus,
+            _that.moderationReason);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// As opposed to `map`, this offers destructuring.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case Subclass2(:final field2):
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>(
+    TResult Function(
+            @JsonKey(includeToJson: false) int id,
+            @JsonKey(name: 'eesupool_id') int eesupoolId,
+            @JsonKey(name: 'author_id') String authorId,
+            @JsonKey(name: 'created_at', includeToJson: true)
+            DateTime createdAt,
+            @JsonKey(name: 'author_full_name', includeToJson: false)
+            String? authorName,
+            @JsonKey(name: 'content') String? content,
+            @JsonKey(name: 'reply_on_id') int? replyOnId,
+            @JsonKey(name: 'attachments')
+            @MediaFileConverter()
+            List<MediaFile>? media,
+            @JsonKey(includeFromJson: false, includeToJson: false)
+            List<File> localFiles,
+            @ChatMessageConverter()
+            @JsonKey(name: 'reply_message', includeToJson: false)
+            ChatMessage? reply,
+            @ChatMessageReactionConverter()
+            @JsonKey(name: 'reactions', includeToJson: false)
+            List<ChatMessageReaction>? reactions,
+            @JsonKey(name: 'hash_tags') List<String>? hashTags,
+            @JsonKey(name: 'is_approved') bool isApproved,
+            @JsonKey(name: 'is_deleted', includeToJson: false) bool isDeleted,
+            @EESUpoolLevelConverter()
+            @JsonKey(name: 'broadcast_to')
+            List<EESUpoolLevel>? broadcastTo,
+            @JsonKey(name: 'message_seens', includeToJson: false)
+            List<String> messageSeens,
+            @JsonKey(name: 'moderation_status', includeToJson: false)
+            String moderationStatus,
+            @JsonKey(name: 'moderation_reason', includeToJson: false)
+            String? moderationReason)
+        $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _ChatMessage():
+        return $default(
+            _that.id,
+            _that.eesupoolId,
+            _that.authorId,
+            _that.createdAt,
+            _that.authorName,
+            _that.content,
+            _that.replyOnId,
+            _that.media,
+            _that.localFiles,
+            _that.reply,
+            _that.reactions,
+            _that.hashTags,
+            _that.isApproved,
+            _that.isDeleted,
+            _that.broadcastTo,
+            _that.messageSeens,
+            _that.moderationStatus,
+            _that.moderationReason);
+      case _:
+        throw StateError('Unexpected subclass');
+    }
+  }
+
+  /// A variant of `when` that fallback to returning `null`
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>(
+    TResult? Function(
+            @JsonKey(includeToJson: false) int id,
+            @JsonKey(name: 'eesupool_id') int eesupoolId,
+            @JsonKey(name: 'author_id') String authorId,
+            @JsonKey(name: 'created_at', includeToJson: true)
+            DateTime createdAt,
+            @JsonKey(name: 'author_full_name', includeToJson: false)
+            String? authorName,
+            @JsonKey(name: 'content') String? content,
+            @JsonKey(name: 'reply_on_id') int? replyOnId,
+            @JsonKey(name: 'attachments')
+            @MediaFileConverter()
+            List<MediaFile>? media,
+            @JsonKey(includeFromJson: false, includeToJson: false)
+            List<File> localFiles,
+            @ChatMessageConverter()
+            @JsonKey(name: 'reply_message', includeToJson: false)
+            ChatMessage? reply,
+            @ChatMessageReactionConverter()
+            @JsonKey(name: 'reactions', includeToJson: false)
+            List<ChatMessageReaction>? reactions,
+            @JsonKey(name: 'hash_tags') List<String>? hashTags,
+            @JsonKey(name: 'is_approved') bool isApproved,
+            @JsonKey(name: 'is_deleted', includeToJson: false) bool isDeleted,
+            @EESUpoolLevelConverter()
+            @JsonKey(name: 'broadcast_to')
+            List<EESUpoolLevel>? broadcastTo,
+            @JsonKey(name: 'message_seens', includeToJson: false)
+            List<String> messageSeens,
+            @JsonKey(name: 'moderation_status', includeToJson: false)
+            String moderationStatus,
+            @JsonKey(name: 'moderation_reason', includeToJson: false)
+            String? moderationReason)?
+        $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _ChatMessage() when $default != null:
+        return $default(
+            _that.id,
+            _that.eesupoolId,
+            _that.authorId,
+            _that.createdAt,
+            _that.authorName,
+            _that.content,
+            _that.replyOnId,
+            _that.media,
+            _that.localFiles,
+            _that.reply,
+            _that.reactions,
+            _that.hashTags,
+            _that.isApproved,
+            _that.isDeleted,
+            _that.broadcastTo,
+            _that.messageSeens,
+            _that.moderationStatus,
+            _that.moderationReason);
+      case _:
+        return null;
+    }
   }
 }
 
@@ -302,7 +639,11 @@ class _ChatMessage implements ChatMessage {
       @JsonKey(name: 'broadcast_to')
       final List<EESUpoolLevel>? broadcastTo,
       @JsonKey(name: 'message_seens', includeToJson: false)
-      final List<String> messageSeens = const []})
+      final List<String> messageSeens = const [],
+      @JsonKey(name: 'moderation_status', includeToJson: false)
+      this.moderationStatus = 'none',
+      @JsonKey(name: 'moderation_reason', includeToJson: false)
+      this.moderationReason})
       : _media = media,
         _localFiles = localFiles,
         _reactions = reactions,
@@ -408,6 +749,16 @@ class _ChatMessage implements ChatMessage {
     return EqualUnmodifiableListView(_messageSeens);
   }
 
+  /// 'none' | 'held' | 'flagged' | 'approved' | 'rejected'
+  @override
+  @JsonKey(name: 'moderation_status', includeToJson: false)
+  final String moderationStatus;
+
+  /// Only filled in for reviewers (pool admins / app admins).
+  @override
+  @JsonKey(name: 'moderation_reason', includeToJson: false)
+  final String? moderationReason;
+
   /// Create a copy of ChatMessage
   /// with the given fields replaced by the non-null parameter values.
   @override
@@ -454,7 +805,11 @@ class _ChatMessage implements ChatMessage {
             const DeepCollectionEquality()
                 .equals(other._broadcastTo, _broadcastTo) &&
             const DeepCollectionEquality()
-                .equals(other._messageSeens, _messageSeens));
+                .equals(other._messageSeens, _messageSeens) &&
+            (identical(other.moderationStatus, moderationStatus) ||
+                other.moderationStatus == moderationStatus) &&
+            (identical(other.moderationReason, moderationReason) ||
+                other.moderationReason == moderationReason));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -476,11 +831,13 @@ class _ChatMessage implements ChatMessage {
       isApproved,
       isDeleted,
       const DeepCollectionEquality().hash(_broadcastTo),
-      const DeepCollectionEquality().hash(_messageSeens));
+      const DeepCollectionEquality().hash(_messageSeens),
+      moderationStatus,
+      moderationReason);
 
   @override
   String toString() {
-    return 'ChatMessage(id: $id, eesupoolId: $eesupoolId, authorId: $authorId, createdAt: $createdAt, authorName: $authorName, content: $content, replyOnId: $replyOnId, media: $media, localFiles: $localFiles, reply: $reply, reactions: $reactions, hashTags: $hashTags, isApproved: $isApproved, isDeleted: $isDeleted, broadcastTo: $broadcastTo, messageSeens: $messageSeens)';
+    return 'ChatMessage(id: $id, eesupoolId: $eesupoolId, authorId: $authorId, createdAt: $createdAt, authorName: $authorName, content: $content, replyOnId: $replyOnId, media: $media, localFiles: $localFiles, reply: $reply, reactions: $reactions, hashTags: $hashTags, isApproved: $isApproved, isDeleted: $isDeleted, broadcastTo: $broadcastTo, messageSeens: $messageSeens, moderationStatus: $moderationStatus, moderationReason: $moderationReason)';
   }
 }
 
@@ -519,7 +876,11 @@ abstract mixin class _$ChatMessageCopyWith<$Res>
       @JsonKey(name: 'broadcast_to')
       List<EESUpoolLevel>? broadcastTo,
       @JsonKey(name: 'message_seens', includeToJson: false)
-      List<String> messageSeens});
+      List<String> messageSeens,
+      @JsonKey(name: 'moderation_status', includeToJson: false)
+      String moderationStatus,
+      @JsonKey(name: 'moderation_reason', includeToJson: false)
+      String? moderationReason});
 
   @override
   $ChatMessageCopyWith<$Res>? get reply;
@@ -553,6 +914,8 @@ class __$ChatMessageCopyWithImpl<$Res> implements _$ChatMessageCopyWith<$Res> {
     Object? isDeleted = null,
     Object? broadcastTo = freezed,
     Object? messageSeens = null,
+    Object? moderationStatus = null,
+    Object? moderationReason = freezed,
   }) {
     return _then(_ChatMessage(
       id: null == id
@@ -619,6 +982,14 @@ class __$ChatMessageCopyWithImpl<$Res> implements _$ChatMessageCopyWith<$Res> {
           ? _self._messageSeens
           : messageSeens // ignore: cast_nullable_to_non_nullable
               as List<String>,
+      moderationStatus: null == moderationStatus
+          ? _self.moderationStatus
+          : moderationStatus // ignore: cast_nullable_to_non_nullable
+              as String,
+      moderationReason: freezed == moderationReason
+          ? _self.moderationReason
+          : moderationReason // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 

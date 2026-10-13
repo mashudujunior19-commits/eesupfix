@@ -3,6 +3,8 @@ import 'dart:io';
 import 'package:either_dart/either.dart';
 import 'package:data/eesupools/models/chat_message.dart';
 import 'package:data/eesupools/models/chat_message_reaction.dart';
+import 'package:data/eesupools/models/eesupool_level.dart';
+import 'package:data/eesupools/models/media_file.dart';
 import 'package:data/eesupools/models/eesupool_issue.dart';
 import 'eesupool_repo.dart';
 import 'package:data/utils/eesup_exception.dart';
@@ -103,16 +105,55 @@ extension EESUpoolChatsRepo on EESUpoolRepository {
     return result;
   }
 
-  Future<Either<EESUpException, bool>> sendChatMessage(
-    ChatMessage chatMessage,
+  /// One-shot fetch of the latest messages (used to merge a just-sent
+  /// message into the list without waiting for the realtime event).
+  Future<Either<EESUpException, List<ChatMessage>>> getChatMessages(
+    int poolId,
+    int limit,
   ) async {
-    final result = await authRepository.executeFutureWithAuth((_) async {
-      final result = await dataSource.sendChatMessage(chatMessage);
-      print('chat sent : $chatMessage');
-      return result;
-    });
+    return authRepository.executeFutureWithAuth(
+      (_) => dataSource.getPoolMessages(poolId, limit, true),
+    );
+  }
 
-    return result.fold((l) => Left(l), (r) => const Right(true));
+  Future<Either<EESUpException, ({int id, bool isApproved, String moderationStatus})>>
+      sendChatMessage({
+    required int poolId,
+    required String authorId,
+    required String? content,
+    required String plainText,
+    int? replyOnId,
+    List<MediaFile>? media,
+    List<String>? hashTags,
+    List<EESUpoolLevel>? broadcastTo,
+    required bool isApproved,
+  }) async {
+    return authRepository.executeFutureWithAuth(
+      (_) => dataSource.sendChatMessage(
+        poolId: poolId,
+        authorId: authorId,
+        content: content,
+        plainText: plainText,
+        replyOnId: replyOnId,
+        media: media,
+        hashTags: hashTags,
+        broadcastTo: broadcastTo,
+        isApproved: isApproved,
+      ),
+    );
+  }
+
+  Future<Either<EESUpException, void>> rejectMessage(int id) async {
+    return authRepository
+        .executeFutureWithAuth((_) => dataSource.rejectChatMessage(id));
+  }
+
+  Future<Either<EESUpException, void>> flagMessage(
+    int id, {
+    String? reason,
+  }) async {
+    return authRepository
+        .executeFutureWithAuth((_) => dataSource.flagChatMessage(id, reason));
   }
 
   Future<Either<EESUpException, bool>> addMessageReaction(

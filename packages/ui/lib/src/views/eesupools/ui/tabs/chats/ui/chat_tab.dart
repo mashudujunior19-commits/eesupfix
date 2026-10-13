@@ -1,5 +1,6 @@
 import 'package:data/eesupools/models/eesupool.dart';
 import 'package:data/eesupools/repository/eesupool_repo.dart';
+import 'package:ui/src/core/extensions/context_alerts_ext.dart';
 import 'package:ui/src/core/extensions/context_theme_ext.dart';
 import 'package:ui/src/core/extensions/sizedbox_ext.dart';
 import 'package:ui/src/views/eesupools/ui/tabs/chats/bloc/chat_bloc.dart';
@@ -23,12 +24,16 @@ class ChatsTab extends StatelessWidget {
             ..add(ChatStreamStarted(pool.eesupoolId!)),
         ),
         BlocProvider(
-          create: (context) => ChatTextFieldBloc(
-            context.read<EESUpoolRepository>(),
-          ),
+          create: (context) => ChatTextFieldBloc(),
         ),
       ],
-      child: BlocBuilder<ChatBloc, ChatState>(
+      child: BlocConsumer<ChatBloc, ChatState>(
+        listenWhen: (_, current) =>
+            current is ChatMessagesLoaded && current.notice != null,
+        listener: (context, state) {
+          final notice = (state as ChatMessagesLoaded).notice;
+          if (notice != null) context.snackBarWarning(notice);
+        },
         builder: (context, state) {
           return Scaffold(
             backgroundColor: Colors.transparent,
@@ -40,15 +45,24 @@ class ChatsTab extends StatelessWidget {
                   () {
                     if (state is ChatMessagesLoaded) {
                       final chats = state.chats;
+                      // The list is reversed (newest at the bottom): messages
+                      // still being sent come first, newest of them first.
+                      final pending = state.pending.reversed.toList();
 
                       return Expanded(
                         child: ListView.builder(
                           reverse: true,
-                          itemCount: chats.length,
+                          itemCount: pending.length + chats.length,
                           padding: const EdgeInsets.only(
                               bottom: 40, left: 15, right: 15),
                           itemBuilder: (context, index) {
-                            final chat = chats[index];
+                            if (index < pending.length) {
+                              return _PendingMessage(
+                                pending: pending[index],
+                                pool: pool,
+                              );
+                            }
+                            final chat = chats[index - pending.length];
                             return MessageBubble(message: chat, pool: pool);
                           },
                         ),
@@ -64,6 +78,92 @@ class ChatsTab extends StatelessWidget {
           );
         },
       ),
+    );
+  }
+}
+
+/// A message the user just sent: shown at once, dimmed while sending, with a
+/// retry option if it could not be sent.
+class _PendingMessage extends StatelessWidget {
+  const _PendingMessage({required this.pending, required this.pool});
+  final PendingChatMessage pending;
+  final EESUpool pool;
+
+  @override
+  Widget build(BuildContext context) {
+    final failed = pending.status == PendingStatus.failed;
+    final sending = pending.status == PendingStatus.sending;
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.end,
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Opacity(
+          opacity: failed || sending ? .6 : 1,
+          // Reactions, reply and delete need a real server id.
+          child: IgnorePointer(
+            child: MessageBubble(message: pending.message, pool: pool),
+          ),
+        ),
+        if (sending)
+          Padding(
+            padding: const EdgeInsets.only(top: 4, right: 4),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                const SizedBox(
+                  height: 10,
+                  width: 10,
+                  child: CircularProgressIndicator(strokeWidth: 1.5),
+                ),
+                5.sW,
+                Text(
+                  'Sending...',
+                  style: context.textTheme.labelSmall?.copyWith(
+                    color: Colors.grey,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        if (failed)
+          Padding(
+            padding: const EdgeInsets.only(top: 4, right: 4),
+            child: Wrap(
+              crossAxisAlignment: WrapCrossAlignment.center,
+              spacing: 12,
+              children: [
+                Text(
+                  'Not sent',
+                  style: context.textTheme.labelSmall?.copyWith(
+                    color: Colors.redAccent,
+                  ),
+                ),
+                InkWell(
+                  onTap: () => context
+                      .read<ChatBloc>()
+                      .add(ChatMessageRetried(pending.localId)),
+                  child: Text(
+                    'Retry',
+                    style: context.textTheme.labelMedium?.copyWith(
+                      color: context.colorScheme.primary,
+                    ),
+                  ),
+                ),
+                InkWell(
+                  onTap: () => context
+                      .read<ChatBloc>()
+                      .add(ChatPendingDismissed(pending.localId)),
+                  child: Text(
+                    'Delete',
+                    style: context.textTheme.labelMedium?.copyWith(
+                      color: Colors.redAccent,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+      ],
     );
   }
 }

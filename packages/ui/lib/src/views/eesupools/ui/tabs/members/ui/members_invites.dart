@@ -1,7 +1,10 @@
 import 'package:data/eesupools/models/eesupool.dart';
 import 'package:data/eesupools/models/eesupool_member.dart';
 import 'package:data/eesupools/models/eesupool_request.dart';
+import 'package:data/eesupools/repository/eesupool_members_repo.dart';
 import 'package:data/eesupools/repository/eesupool_repo.dart';
+import 'package:loader_overlay/loader_overlay.dart';
+import 'package:ui/src/core/extensions/context_alerts_ext.dart';
 import 'package:ui/src/core/extensions/context_theme_ext.dart';
 import 'package:ui/src/core/extensions/slide_in_animation_ext.dart';
 import 'package:ui/src/core/widgets/fullscreen_error_widget.dart';
@@ -57,6 +60,19 @@ class MembersInvites extends StatelessWidget {
   }
 }
 
+/// Declined is red and Accepted is green; anything else (Pending) keeps the
+/// brand colour.
+Color _statusColor(BuildContext context, String status) {
+  switch (status) {
+    case 'Declined':
+      return Colors.red.shade600;
+    case 'Accepted':
+      return Colors.green.shade600;
+    default:
+      return context.colorScheme.primary;
+  }
+}
+
 class _InviteCard extends StatelessWidget {
   const _InviteCard({required this.invite, required this.pool});
   final EESUpoolRequest invite;
@@ -101,7 +117,7 @@ class _InviteCard extends StatelessWidget {
                     vertical: 2,
                   ),
                   decoration: BoxDecoration(
-                      color: context.colorScheme.primary,
+                      color: _statusColor(context, invite.status),
                       borderRadius: BorderRadius.circular(5)),
                   child: Text(
                     invite.status,
@@ -113,6 +129,46 @@ class _InviteCard extends StatelessWidget {
                 ),
               ],
             ),
+            if (invite.status == 'Declined' &&
+                pool.role == EESUpoolMemberRole.admin)
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Divider(),
+                  InkWell(
+                    onTap: () async {
+                      final poolId = pool.eesupoolId;
+                      if (poolId == null) return;
+                      context.loaderOverlay.show();
+                      final result = await context
+                          .read<EESUpoolRepository>()
+                          .resendEESUpoolInvite(invite.userId, poolId);
+                      if (!context.mounted) return;
+                      context.loaderOverlay.hide();
+                      result.fold(
+                        (l) => context.snackBarError(l.message),
+                        (r) => context.snackBarSuccess(
+                          'Invite sent again to ${invite.fullName ?? invite.corporateName ?? 'the user'}',
+                        ),
+                      );
+                    },
+                    child: Row(
+                      children: [
+                        Icon(
+                          Icons.refresh,
+                          size: 17,
+                          color: context.colorScheme.primary,
+                        ),
+                        const SizedBox(width: 5),
+                        Text(
+                          'Resend invite',
+                          style: TextStyle(color: context.colorScheme.primary),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
             if (invite.status == 'Pending')
               if (pool.role == EESUpoolMemberRole.admin)
                 Column(
