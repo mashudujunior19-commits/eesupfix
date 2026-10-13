@@ -7,6 +7,7 @@ import 'package:data/eesupools/models/eesupool_event.dart';
 import 'package:data/eesupools/models/eesupool_issue.dart';
 import 'package:data/eesupools/models/eesupool_level.dart';
 import 'package:data/eesupools/models/eesupool_member.dart';
+import 'package:data/eesupools/models/media_file.dart';
 import 'package:data/eesupools/models/eesupool_order.dart';
 import 'package:data/eesupools/models/receiver_role.dart';
 import 'package:data/eesupools/models/eesupool_request.dart';
@@ -37,6 +38,16 @@ abstract class EESUpoolDataSource {
   ///Given a user id, return a list of pools that the user is a member of
   Future<dynamic> searchPoolsByType(
       String query, String userId, EESUpoolType type, int limit);
+
+  /// Searches all Kasi pools by name or code. [lat]/[lng] only rank nearby
+  /// pools first; they never exclude any pool.
+  Future<dynamic> searchKasiPools(
+    String query,
+    String userId,
+    int limit, {
+    double? lat,
+    double? lng,
+  });
 
   ///Given a user id, return a list of pools that the user is a member of
   Future<List<EESUpool>> fetchEESUpools(String sessionId, EESUpoolType type);
@@ -87,8 +98,20 @@ abstract class EESUpoolDataSource {
   ///Get EEUSpool message by id
   Future<ChatMessage> getPoolMessageById(int id);
 
-  ///Sends a message to a given pool
-  Future<void> sendChatMessage(ChatMessage message);
+  ///Sends a message to a given pool through the moderated server function.
+  ///[plainText] is only used for the server-side moderation check;
+  ///[content] is what gets stored (already encrypted).
+  Future<({int id, bool isApproved, String moderationStatus})> sendChatMessage({
+    required int poolId,
+    required String authorId,
+    required String? content,
+    required String plainText,
+    int? replyOnId,
+    List<MediaFile>? media,
+    List<String>? hashTags,
+    List<EESUpoolLevel>? broadcastTo,
+    required bool isApproved,
+  });
 
   ///Upload file
   ///
@@ -127,6 +150,12 @@ abstract class EESUpoolDataSource {
 
   Future<void> approveChatMessage(int messageId);
 
+  /// Reviewer rejects a held/flagged message (it is never delivered).
+  Future<void> rejectChatMessage(int messageId);
+
+  /// Reviewer pulls an already delivered message back into the review queue.
+  Future<void> flagChatMessage(int messageId, String? reason);
+
   Future<void> updateEvent(EESUpoolEvent event);
 
   Future<List<EESUpoolRequest>> fetchEESUpoolRequests({
@@ -144,6 +173,10 @@ abstract class EESUpoolDataSource {
   Future<void> deleteInviteOrRequest(String userId, int poolId);
 
   Future<void> updateEESUpoolRequest(String userId, int poolId, String status);
+
+  /// Emits whenever an invite/request of the pool is inserted, updated or
+  /// deleted, so listings can refetch without the user refreshing.
+  Stream<void> poolRequestChanges(int poolId);
 
   Future<List<EESUpoolOrder>> fetchEESUpoolOrders(int poolId, int limit);
   Future<List<EESUpoolOrder>> fetchUserOpenEESUpoolOrders(String userId);

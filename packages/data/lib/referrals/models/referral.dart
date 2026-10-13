@@ -13,7 +13,7 @@ abstract class Referral with _$Referral {
     @JsonKey(name: 'refereed_full_name') required String refereedFullName,
     @JsonKey(name: 'created_at') required DateTime createdAt,
     @JsonKey(name: 'transaction_id') required int transactionId,
-    @JsonKey(name: 'is_completed') required bool isCompleted,
+    @JsonKey(name: 'is_verified') @Default(false) bool isVerified,
   }) = _Referral;
 
   factory Referral.fromJson(Map<String, dynamic> json) =>

@@ -36,6 +36,8 @@ _ChatMessage _$ChatMessageFromJson(Map<String, dynamic> json) => _ChatMessage(
               ?.map((e) => e as String)
               .toList() ??
           const [],
+      moderationStatus: json['moderation_status'] as String? ?? 'none',
+      moderationReason: json['moderation_reason'] as String?,
     );
 
 Map<String, dynamic> _$ChatMessageToJson(_ChatMessage instance) =>

@@ -9,6 +9,7 @@ import 'package:ui/src/core/extensions/context_theme_ext.dart';
 import 'package:ui/src/core/extensions/sizedbox_ext.dart';
 import 'package:ui/src/core/extensions/slide_in_animation_ext.dart';
 import 'package:ui/src/views/eesupools/bloc/eesupool_view_bloc.dart';
+import 'package:ui/src/views/eesupools/ui/tabs/chats/bloc/chat_bloc.dart';
 import 'package:ui/src/views/eesupools/ui/tabs/chats/bloc/chat_textfield_bloc.dart';
 import 'package:ui/src/views/eesupools/ui/tabs/chats/ui/chat_text_field/local_files.dart';
 import 'package:ui/src/views/eesupools/ui/tabs/chats/ui/chat_text_field/review_suggestion_topics_dialog.dart';
@@ -68,23 +69,7 @@ class _ChatTextFieldState extends State<ChatTextField> {
     final memberId = widget.pool.memberId;
     if (poolId == null || memberId == null) return 0.sW;
 
-    return BlocConsumer<ChatTextFieldBloc, ChatTextFieldState>(
-      listener: (context, state) {
-        if (state is ChatLoading) {
-          context.loaderOverlay.show();
-        } else {
-          context.loaderOverlay.hide();
-        }
-
-        if (state is ChatTextFieldError) {
-          context.snackBarError(state.exception.message);
-        }
-
-        if (state is MessageSentSuccess) {
-          controller.clear();
-          context.read<ChatTextFieldBloc>().add(ChatBoxReset());
-        }
-      },
+    return BlocBuilder<ChatTextFieldBloc, ChatTextFieldState>(
       builder: (context, state) {
         List<File> files = [];
         ChatMessage? replyTo;
@@ -119,14 +104,23 @@ class _ChatTextFieldState extends State<ChatTextField> {
                       }),
                   IconButton(
                     onPressed: () {
+                      final text = controller.text.trim();
+                      if (text.isEmpty && files.isEmpty) return;
                       FocusScope.of(context).unfocus();
-                      context.read<ChatTextFieldBloc>().add(
-                            ChatMessageSent(
-                              widget.pool,
-                              controller.text,
-                              const [],
+                      // The message shows up in the list immediately as
+                      // "sending"; the composer is free again right away.
+                      context.read<ChatBloc>().add(
+                            ChatMessageSendRequested(
+                              pool: widget.pool,
+                              text: text,
+                              files: files,
+                              replyTo: replyTo,
+                              broadcastTo: const [],
                             ),
                           );
+                      controller.clear();
+                      context.read<ChatTextFieldBloc>().add(ChatBoxReset());
+                      setState(() {});
                     },
                     icon: const Padding(
                       padding: EdgeInsets.only(bottom: 20),

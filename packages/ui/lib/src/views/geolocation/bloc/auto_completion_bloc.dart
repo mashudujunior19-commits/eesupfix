@@ -47,6 +47,15 @@ class AutoCompletionBloc
             address: properties['formatted'] as String,
             lat: (properties['lat'] as num).toDouble(),
             lng: (properties['lon'] as num).toDouble(),
+            streetNumber: properties['housenumber'] as String?,
+            streetName: properties['street'] as String?,
+            suburb: properties['suburb'] as String? ??
+                properties['district'] as String?,
+            city: (properties['city'] ??
+                properties['town'] ??
+                properties['village']) as String?,
+            postalCode: properties['postcode'] as String?,
+            province: properties['state'] as String?,
           );
         })
         .toList();

@@ -145,6 +145,27 @@ extension EESUpoolMembersRepo on EESUpoolRepository {
     return result;
   }
 
+  /// Emits whenever one of the pool's invites/requests changes.
+  Stream<void> poolRequestChanges(int poolId) =>
+      dataSource.poolRequestChanges(poolId);
+
+  /// Sends a declined invite again: the old row is replaced by a fresh
+  /// pending invite, which also creates a new notification for the invitee.
+  Future<Either<EESUpException, void>> resendEESUpoolInvite(
+      String userId, int poolId) async {
+    final sessionId = authRepository.sessionId;
+    if (sessionId == null) {
+      return Left(
+        EESUpAuthException(message: 'You are not logged in'),
+      );
+    }
+
+    return EESUpException.guardFuture(action: () async {
+      await dataSource.deleteInviteOrRequest(userId, poolId);
+      await dataSource.createEESUpoolRequest(userId, poolId, 'Invite');
+    });
+  }
+
   Future<Either<EESUpException, dynamic>> searchTradePools(
     String query,
     int limit,
@@ -165,6 +186,18 @@ extension EESUpoolMembersRepo on EESUpoolRepository {
     final result = authRepository.executeFutureWithAuth((id) {
       final r = dataSource.searchPoolsByType(query, id, type, limit);
       return r;
+    });
+    return result;
+  }
+
+  Future<Either<EESUpException, dynamic>> searchKasiPools(
+    String query,
+    int limit, {
+    double? lat,
+    double? lng,
+  }) async {
+    final result = authRepository.executeFutureWithAuth((id) {
+      return dataSource.searchKasiPools(query, id, limit, lat: lat, lng: lng);
     });
     return result;
   }

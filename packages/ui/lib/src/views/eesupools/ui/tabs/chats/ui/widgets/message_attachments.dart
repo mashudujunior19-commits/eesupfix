@@ -12,13 +12,18 @@ class MessageAttachments extends StatelessWidget {
   final List<MediaFile> mediaFiles;
 
   String _decrypt(String str) {
-    // Generate a key
-    final key = encrypt.Key.fromBase16(dotenv.get('CHAT_SECRET'));
-    final iv = encrypt.IV.fromBase16(dotenv.get('CHAT_SECRET'));
-    final decrypter = encrypt.Encrypter(encrypt.AES(key));
-    // Encrypt the plain text
-    final res = decrypter.decrypt(encrypt.Encrypted.fromBase16(str), iv: iv);
-    return res;
+    try {
+      // Generate a key
+      final key = encrypt.Key.fromBase16(dotenv.get('CHAT_SECRET'));
+      final iv = encrypt.IV.fromBase16(dotenv.get('CHAT_SECRET'));
+      final decrypter = encrypt.Encrypter(encrypt.AES(key));
+      // Encrypt the plain text
+      final res = decrypter.decrypt(encrypt.Encrypted.fromBase16(str), iv: iv);
+      return res;
+    } catch (_) {
+      // Not decryptable with this key: the image falls back to its error icon.
+      return '';
+    }
   }
 
   @override

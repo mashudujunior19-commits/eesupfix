@@ -12,7 +12,7 @@ _Referral _$ReferralFromJson(Map<String, dynamic> json) => _Referral(
       refereedFullName: json['refereed_full_name'] as String,
       createdAt: DateTime.parse(json['created_at'] as String),
       transactionId: (json['transaction_id'] as num).toInt(),
-      isCompleted: json['is_completed'] as bool,
+      isVerified: json['is_verified'] as bool? ?? false,
     );
 
 Map<String, dynamic> _$ReferralToJson(_Referral instance) => <String, dynamic>{
@@ -21,5 +21,5 @@ Map<String, dynamic> _$ReferralToJson(_Referral instance) => <String, dynamic>{
       'refereed_full_name': instance.refereedFullName,
       'created_at': instance.createdAt.toIso8601String(),
       'transaction_id': instance.transactionId,
-      'is_completed': instance.isCompleted,
+      'is_verified': instance.isVerified,
     };

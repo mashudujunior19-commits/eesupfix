@@ -13,6 +13,8 @@ import 'package:ui/app_route.gr.dart';
 import 'package:ui/src/core/extensions/sizedbox_ext.dart';
 import 'package:ui/src/core/widgets/fullscreen_error_widget.dart';
 import 'package:ui/src/core/widgets/fullscreen_loading_shimmer.dart';
+import 'package:ui/src/views/direct_messages/conversations_screen.dart';
+import 'package:ui/src/views/direct_messages/dm_review_screen.dart';
 import 'package:ui/src/views/menu/get_involved_sheet.dart';
 import 'package:ui/src/views/menu/profile_button.dart';
 import 'package:flutter/material.dart';
@@ -157,6 +159,29 @@ class _MenuTabState extends State<MenuTab> {
                         context.router.push(const MyCommunityRoute());
                       },
                     ),
+                    _MenuButton(
+                      label: 'Messages',
+                      icon: IconlyLight.message,
+                      onTap: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute<void>(
+                            builder: (_) => const ConversationsScreen(),
+                          ),
+                        );
+                      },
+                    ),
+                    if (profile.role == UserRole.Admin)
+                      _MenuButton(
+                        label: 'Message Review',
+                        icon: BootstrapIcons.flag,
+                        onTap: () {
+                          Navigator.of(context).push(
+                            MaterialPageRoute<void>(
+                              builder: (_) => const DmReviewScreen(),
+                            ),
+                          );
+                        },
+                      ),
                     _MenuButton(
                       label: 'Surveys',
                       icon: IconlyLight.chart,

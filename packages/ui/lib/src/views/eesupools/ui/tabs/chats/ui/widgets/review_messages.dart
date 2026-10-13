@@ -80,6 +80,17 @@ class _ReviewMessagesDialogState extends State<ReviewMessagesDialog> {
                           mainAxisSize: MainAxisSize.min,
                           children: [
                             MessageBubble(message: r[index], pool: widget.pool),
+                            if (message.moderationReason != null)
+                              Padding(
+                                padding: const EdgeInsets.only(top: 4),
+                                child: Text(
+                                  message.moderationReason!,
+                                  style: const TextStyle(
+                                    color: Colors.orange,
+                                    fontSize: 12,
+                                  ),
+                                ),
+                              ),
                             Row(
                               children: [
                                 TextButton(
@@ -105,15 +116,15 @@ class _ReviewMessagesDialogState extends State<ReviewMessagesDialog> {
                                         context.read<EESUpoolRepository>();
 
                                     context.loaderOverlay.show();
-                                    final results = await repo
-                                        .softDeleteChatMessage(message.id);
+                                    final results =
+                                        await repo.rejectMessage(message.id);
                                     context.loaderOverlay.hide();
                                     results.fold((l) {}, (r) {
                                       setState(() {});
                                     });
                                   },
                                   child: const Text(
-                                    '❌ Delete',
+                                    '❌ Reject',
                                     style: TextStyle(color: Colors.red),
                                   ),
                                 ),

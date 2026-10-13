@@ -45,6 +45,16 @@ class MessageText extends StatelessWidget {
     return decrypted;
   }
 
+  /// A message that cannot be decrypted (e.g. sent with a different chat key)
+  /// must not crash the whole chat list.
+  String _safeDecrypt(String str) {
+    try {
+      return _decrypt(str);
+    } catch (_) {
+      return "Message can't be displayed";
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -55,7 +65,7 @@ class MessageText extends StatelessWidget {
             top: 5,
           ),
       child: HighlightedText(
-        _decrypt(message.content!),
+        _safeDecrypt(message.content!),
         patterns: [...pool.chatTags ?? []],
         style: context.textTheme.bodySmall?.copyWith(
           color: Colors.black,

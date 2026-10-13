@@ -72,11 +72,11 @@ class AddressCard extends StatelessWidget {
               const SizedBox(height: 2),
               Row(
                 children: [
-                  if (address.buildingName != null)
+                  if (_detailLine(address).isNotEmpty)
                     Padding(
                       padding: const EdgeInsets.only(right: 5),
                       child: Text(
-                        '${address.buildingName}',
+                        _detailLine(address),
                         style: theme.textTheme.labelMedium?.copyWith(
                           fontSize: 13,
                           // fontWeight: FontWeight.w500,
@@ -186,4 +186,14 @@ class AddressCard extends StatelessWidget {
       ),
     );
   }
+}
+
+/// Building/complex name, unit and floor, e.g. "Sunset Towers, Unit 4B, Floor 4".
+String _detailLine(Address a) {
+  return [
+    a.complexName ?? a.buildingName,
+    if (a.unitNumber != null && a.unitNumber!.isNotEmpty)
+      'Unit ${a.unitNumber}',
+    if (a.floor != null && a.floor!.isNotEmpty) 'Floor ${a.floor}',
+  ].where((e) => e != null && e.isNotEmpty).join(', ');
 }

@@ -40,6 +40,15 @@ abstract class ChatMessage with _$ChatMessage {
     @JsonKey(name: 'message_seens', includeToJson: false)
     @Default([])
     List<String> messageSeens,
+
+    /// 'none' | 'held' | 'flagged' | 'approved' | 'rejected'
+    @JsonKey(name: 'moderation_status', includeToJson: false)
+    @Default('none')
+    String moderationStatus,
+
+    /// Only filled in for reviewers (pool admins / app admins).
+    @JsonKey(name: 'moderation_reason', includeToJson: false)
+    String? moderationReason,
   }) = _ChatMessage;
 
   factory ChatMessage.fromJson(Map<String, dynamic> json) =>

@@ -15,13 +15,6 @@ class ChatAttachmentsPicked extends ChatTextFieldEvent {
 
 class ChatBoxReset extends ChatTextFieldEvent {}
 
-class ChatMessageSent extends ChatTextFieldEvent {
-  final String text;
-  final EESUpool pool;
-  final List<EESUpoolLevel>? broadcastTo;
-  ChatMessageSent(this.pool, this.text, this.broadcastTo);
-}
-
 class ChatMessageReplyToAdded extends ChatTextFieldEvent {
   final ChatMessage message;
   ChatMessageReplyToAdded(this.message);
