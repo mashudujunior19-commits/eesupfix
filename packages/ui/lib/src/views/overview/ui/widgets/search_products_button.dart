@@ -4,47 +4,77 @@ import 'package:ui/app_route.gr.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 
+/// Height reserved for the search bar when it is placed in an app bar's
+/// `bottom` slot (bar height plus its vertical margin).
+const double kSearchProductsBarHeight = 64;
+
+/// Home-screen search entry. It is a tap target that opens the shop browser,
+/// where the actual searching happens.
 class SearchProductsButton extends StatelessWidget {
-  const SearchProductsButton({
-    super.key,
-  });
+  const SearchProductsButton({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        context.router.push(const BrowseShopRoute());
-      },
+    final primary = context.colorScheme.primary;
+
+    return Semantics(
+      button: true,
+      label: 'Search for products',
       child: Container(
-        width: MediaQuery.sizeOf(context).width,
-        height: 45,
-        margin: const EdgeInsets.only(right: 15, left: 15, top: 120),
-        padding: const EdgeInsets.only(left: 15, right: 15),
+        height: 48,
+        margin: const EdgeInsets.fromLTRB(16, 8, 16, 8),
         decoration: BoxDecoration(
-          color: Colors.grey.shade200.withOpacity(.5),
-          borderRadius: BorderRadius.circular(10),
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(14),
+          border: Border.all(color: Colors.grey.shade300, width: .8),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(.06),
+              blurRadius: 10,
+              offset: const Offset(0, 3),
+            ),
+          ],
         ),
-        child: Center(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Row(
-                mainAxisSize: MainAxisSize.min,
+        child: Material(
+          color: Colors.transparent,
+          borderRadius: BorderRadius.circular(14),
+          child: InkWell(
+            borderRadius: BorderRadius.circular(14),
+            onTap: () => context.router.push(const BrowseShopRoute()),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 14),
+              child: Row(
                 children: [
-                  const Icon(IconlyLight.search, color: Colors.black, size: 20),
-                  const SizedBox(width: 15),
-                  Text(
-                    'Search for products',
-                    style: context.textTheme.bodySmall?.copyWith(
-                      color: Colors.grey.shade400,
-                      fontSize: 15,
-                      fontWeight: FontWeight.w300,
+                  Icon(IconlyLight.search, color: primary, size: 21),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: Text(
+                      'Search for products',
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: context.textTheme.bodySmall?.copyWith(
+                        color: Colors.grey.shade500,
+                        fontSize: 14.5,
+                        fontWeight: FontWeight.w400,
+                      ),
+                    ),
+                  ),
+                  Container(
+                    width: 32,
+                    height: 32,
+                    decoration: BoxDecoration(
+                      color: primary.withOpacity(.1),
+                      borderRadius: BorderRadius.circular(9),
+                    ),
+                    child: Icon(
+                      IconlyLight.arrowRight2,
+                      color: primary,
+                      size: 17,
                     ),
                   ),
                 ],
               ),
-              // const ScanQrCodeButton(margin: EdgeInsets.only(left: 20)),
-            ],
+            ),
           ),
         ),
       ),

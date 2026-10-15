@@ -35,7 +35,9 @@ class OverviewTab extends StatelessWidget {
           return CustomScrollView(
             slivers: [
               SliverAppBar(
-                expandedHeight: 110,
+                // The search bar lives in the app bar's bottom slot so it is
+                // always laid out inside the bar (it used to overflow it).
+                pinned: true,
                 centerTitle: true,
                 automaticallyImplyLeading: false,
                 leading: const NotificationButton(),
@@ -47,7 +49,10 @@ class OverviewTab extends StatelessWidget {
                   ),
                 ),
                 actions: const [CartButton()],
-                flexibleSpace: const SearchProductsButton(),
+                bottom: const PreferredSize(
+                  preferredSize: Size.fromHeight(kSearchProductsBarHeight),
+                  child: SearchProductsButton(),
+                ),
               ),
               if (state is OverviewLoading)
                 const _OverviewShimmer(key: Key('overview_shimmer'))
