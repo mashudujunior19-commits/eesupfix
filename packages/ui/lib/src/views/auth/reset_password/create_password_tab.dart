@@ -10,9 +10,32 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 
 class CreateNewPasswordDialog extends StatefulWidget {
-  const CreateNewPasswordDialog({super.key, this.email, this.phone});
+  const CreateNewPasswordDialog({
+    super.key,
+    this.email,
+    this.phone,
+    this.onSuccess,
+    this.onCancel,
+    this.infoBanner,
+  });
   final String? email;
   final String? phone;
+
+  /// Optional explanatory text shown above the form (e.g. explaining why
+  /// the user has landed directly on this screen when resuming an
+  /// interrupted reset).
+  final String? infoBanner;
+
+  /// Called instead of the default double-pop once the password is
+  /// updated -- used when this is shown as a standalone screen (resuming
+  /// an interrupted reset) rather than as a dialog stacked on top of the
+  /// reset-password flow.
+  final Future<void> Function()? onSuccess;
+
+  /// When set, replaces the default back button with a close action that
+  /// calls this instead of popping -- there's nothing to pop back to when
+  /// this is shown as a standalone resumed-reset screen.
+  final Future<void> Function()? onCancel;
 
   @override
   State<CreateNewPasswordDialog> createState() => _CreateNewPasswordState();
@@ -60,8 +83,12 @@ class _CreateNewPasswordState extends State<CreateNewPasswordDialog> {
         context.snackBarSuccess(
           'Password reset, you can now sign in with your new password',
         );
-        Navigator.of(context).pop();
-        Navigator.of(context).pop();
+        if (widget.onSuccess != null) {
+          widget.onSuccess!();
+        } else {
+          Navigator.of(context).pop();
+          Navigator.of(context).pop();
+        }
       } else {
         context.snackBarError(
           'Failed to update password. Please try again.',
@@ -76,7 +103,12 @@ class _CreateNewPasswordState extends State<CreateNewPasswordDialog> {
       color: Colors.white,
       child: Scaffold(
         appBar: AppBar(
-          leading: const BackButton(),
+          leading: widget.onCancel != null
+              ? IconButton(
+                  icon: const Icon(Icons.close),
+                  onPressed: () => widget.onCancel!(),
+                )
+              : const BackButton(),
           title: const Text('Create new password'),
         ),
         body: SafeArea(
@@ -88,6 +120,16 @@ class _CreateNewPasswordState extends State<CreateNewPasswordDialog> {
               bottom: 400,
             ),
             children: [
+              if (widget.infoBanner != null)
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 15),
+                  child: Text(
+                    widget.infoBanner!,
+                    style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                          color: Colors.grey,
+                        ),
+                  ),
+                ),
               EESUpTextFormField(
                 isPassword: true,
                 label: 'Password',

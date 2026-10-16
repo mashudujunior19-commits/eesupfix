@@ -64,13 +64,16 @@ class ReferalCodeTile extends StatelessWidget {
                                   text: state.profile.referralCode.toString(),
                                 ),
                               );
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(
-                                  backgroundColor:
-                                      Theme.of(context).colorScheme.primary,
-                                  content: const Text("Copied to clipboard"),
-                                ),
-                              );
+                              ScaffoldMessenger.of(context)
+                                ..clearSnackBars()
+                                ..showSnackBar(
+                                  SnackBar(
+                                    duration: const Duration(seconds: 7),
+                                    backgroundColor:
+                                        Theme.of(context).colorScheme.primary,
+                                    content: const Text("Copied to clipboard"),
+                                  ),
+                                );
                             },
                             icon: const Icon(
                               Icons.copy,

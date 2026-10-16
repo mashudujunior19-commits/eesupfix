@@ -88,5 +88,17 @@ abstract class IAuthDataSource {
 
   Future<bool> resetPasswordWithPhone(String phone);
 
+  /// Marks that a password reset is in progress on the current (recovery)
+  /// session, so the app can tell a live password-recovery session apart
+  /// from a normal signed-in one -- including after the app is killed and
+  /// relaunched with that session restored from storage. Stored in
+  /// `user_metadata` (not locally) so it survives a cold restart and
+  /// follows the account across devices.
+  Future<bool> markPasswordResetPending();
+
+  /// Clears the pending-password-reset marker -- called once the password
+  /// is actually changed, or if the user abandons a resumed reset.
+  Future<bool> clearPasswordResetPending();
+
   Future<String?> fetchSystemIssue();
 }

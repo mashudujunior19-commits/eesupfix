@@ -17,6 +17,10 @@ class StartUpScreen extends StatelessWidget {
       listener: (context, state) {
         if (state is UnAuthenticated) {
           context.router.replaceAll([const SignInRoute()]);
+        } else if (state is PasswordResetPending) {
+          context.router.replaceAll([
+            ResumePasswordResetRoute(email: state.email, phone: state.phone),
+          ]);
         } else if (state is Authenticated) {
           context.router.replaceAll([const OverviewRoute()]);
         }

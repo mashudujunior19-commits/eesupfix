@@ -95,11 +95,15 @@ class _HamperViewPageState extends State<HamperViewPage> {
               context.read<HamperBloc>().add(FetchHamperProducts(hamperId));
               context.read<HamperBloc>().add(FetchHamperAsProduct(hamperId));
             } else if (state is HamperError) {
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(
+              ScaffoldMessenger.of(context)
+                ..clearSnackBars()
+                ..showSnackBar(
+                  const SnackBar(
+                    duration: Duration(seconds: 7),
                     content:
-                        Text('Something went wrong, please reload the page')),
-              );
+                        Text('Something went wrong, please reload the page'),
+                  ),
+                );
             }
             if (selectedHamper != null &&
                 products.isNotEmpty &&

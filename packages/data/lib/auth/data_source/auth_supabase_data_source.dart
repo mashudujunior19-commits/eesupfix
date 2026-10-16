@@ -71,7 +71,40 @@ class AuthSupabaseDataSource implements IAuthDataSource {
           email: email,
           phone: phone,
           password: newPassword,
+          // A password change always resolves any pending reset -- clear it
+          // in the same call so there's no window where the password is
+          // updated but the marker is left dangling.
+          data: const {'password_reset_pending': false},
         ),
+      );
+      return true;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  @override
+  Future<bool> markPasswordResetPending() async {
+    try {
+      await _client.auth.updateUser(
+        UserAttributes(
+          data: {
+            'password_reset_pending': true,
+            'password_reset_started_at': DateTime.now().toUtc().toIso8601String(),
+          },
+        ),
+      );
+      return true;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  @override
+  Future<bool> clearPasswordResetPending() async {
+    try {
+      await _client.auth.updateUser(
+        UserAttributes(data: const {'password_reset_pending': false}),
       );
       return true;
     } catch (e) {
