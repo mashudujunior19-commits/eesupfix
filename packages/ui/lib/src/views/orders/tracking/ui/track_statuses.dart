@@ -4,10 +4,12 @@ import 'package:ui/app_route.gr.dart';
 import 'package:ui/src/core/extensions/bottom_sheet_context_ext.dart';
 import 'package:ui/src/core/extensions/context_theme_ext.dart';
 import 'package:ui/src/core/extensions/sizedbox_ext.dart';
+import 'package:ui/src/views/order_confirmation/ui/confirm_order_screen.dart';
 import 'package:ui/src/views/orders/tracking/bloc/order_tracking_bloc.dart';
 import 'package:ui/src/views/orders/tracking/ui/confirm_order_collection.dart';
 import 'package:ui/src/views/orders/tracking/ui/order_secret_pin_dialog.dart';
 import 'package:ui/src/views/orders/tracking/ui/status_tile.dart';
+import 'package:ui/src/views/pool_progress/ui/pool_progress_timeline.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
@@ -215,6 +217,24 @@ class TrackStatuses extends StatelessWidget {
             icon: Icons.close,
             isVisible: order.cancelledAt != null,
           ),
+          if (order.eesupoolOrderId != null)
+            PoolProgressTimeline(eesupoolOrderId: order.eesupoolOrderId!),
+          if (privilage == OrderEditPrivilage.owner &&
+              order.eesupoolOrderId != null &&
+              order.id != null &&
+              order.status == OrderStatus.ready)
+            Padding(
+              padding: const EdgeInsets.only(top: 12),
+              child: SizedBox(
+                width: double.infinity,
+                child: OutlinedButton.icon(
+                  onPressed: () => Navigator.of(context)
+                      .push(ConfirmOrderScreen.route(order.id!)),
+                  icon: const Icon(Icons.fact_check_outlined),
+                  label: const Text('Confirm what I received'),
+                ),
+              ),
+            ),
         ],
       ),
     );
