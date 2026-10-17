@@ -360,4 +360,42 @@ class AuthRepository {
     final res = await supaSource.fetchSystemIssue();
     return res;
   }
+
+  Future<Either<EESUpException, bool>> markPasswordResetPending() async {
+    final results = await EESUpException.guardFuture(
+      action: () => supaSource.markPasswordResetPending(),
+    );
+    return results;
+  }
+
+  Future<Either<EESUpException, bool>> clearPasswordResetPending() async {
+    final results = await EESUpException.guardFuture(
+      action: () => supaSource.clearPasswordResetPending(),
+    );
+    return results;
+  }
+
+  /// If [session] is a password-recovery session awaiting a new password,
+  /// returns the account's email/phone so the UI can resume the reset flow
+  /// instead of treating it as a normal authenticated session. Returns null
+  /// for a normal session, no session, or a stale marker -- a marker older
+  /// than [maxAge] self-heals (is ignored) rather than permanently trapping
+  /// the user in the reset flow if something failed to clear it.
+  ({String? email, String? phone})? pendingPasswordReset(
+    Session? session, {
+    Duration maxAge = const Duration(minutes: 30),
+  }) {
+    final metadata = session?.user.userMetadata;
+    if (session == null || metadata == null) return null;
+    if (metadata['password_reset_pending'] != true) return null;
+
+    final startedAt = DateTime.tryParse(
+      metadata['password_reset_started_at'] as String? ?? '',
+    );
+    if (startedAt == null ||
+        DateTime.now().toUtc().difference(startedAt) > maxAge) {
+      return null;
+    }
+    return (email: session.user.email, phone: session.user.phone);
+  }
 }

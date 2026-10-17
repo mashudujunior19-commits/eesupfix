@@ -51,6 +51,18 @@ class EESUpException implements Exception {
   static String _getAuthErrorMessage(AuthException exception) {
     final errorMessage = exception.message.toLowerCase();
 
+    // GoTrue's code for "new password is the same as the current one" --
+    // checked by code first (exact, stable) with a message-substring
+    // fallback in case an older/self-hosted GoTrue version omits `code`.
+    // Note: this only ever blocks reuse of the single *current* password --
+    // there is no "last N passwords" history enforced anywhere in this
+    // codebase (no such check exists client-side or in any migration), so
+    // the message below must not claim otherwise.
+    if (exception.code == 'same_password' ||
+        errorMessage.contains('should be different from the old password') ||
+        errorMessage.contains('different from the old password')) {
+      return 'Your new password must be different from your current password.';
+    }
     if (errorMessage.contains('invalid login credentials') ||
         errorMessage.contains('invalid credentials')) {
       return 'Incorrect email/phone or password. Please try again.';

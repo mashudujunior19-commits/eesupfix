@@ -98,6 +98,17 @@ class _OtpAuthDialogState extends State<OtpAuthDialog> {
     setState(() => _isVerifying = false);
 
     if (res) {
+      if (_getOtpType() == OtpType.recovery) {
+        // Verifying the recovery OTP creates and persists a live session
+        // right now, before the user has set a new password -- mark it so
+        // the app never mistakes this leftover session for a normal
+        // sign-in (e.g. if the app is killed before the password is
+        // actually changed). Best-effort: if this call fails, the resume
+        // flow just won't kick in later, nothing else about this attempt
+        // is affected.
+        await context.read<AuthRepository>().markPasswordResetPending();
+        if (!mounted) return;
+      }
       Navigator.pop(context, true);
     } else {
       context.snackBarError('Invalid or expired OTP');

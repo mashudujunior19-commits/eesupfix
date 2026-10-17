@@ -17,8 +17,15 @@ void showSnackBar({
   final theme = Theme.of(context);
   final isSucess = type == SnackBarType.success;
   final color = isSucess ? theme.primaryColor : Colors.redAccent;
-  ScaffoldMessenger.of(context).showSnackBar(
+  final messenger = ScaffoldMessenger.of(context);
+  // ScaffoldMessenger queues snackbars by default -- without this, each new
+  // message would wait for every earlier one to finish its full duration
+  // before even appearing, so a message triggered more than once (e.g.
+  // resubmitting a wrong password) looks like it never goes away.
+  messenger.clearSnackBars();
+  messenger.showSnackBar(
     SnackBar(
+      duration: const Duration(seconds: 7),
       elevation: 10,
       action: SnackBarAction(
         label: 'Ok',

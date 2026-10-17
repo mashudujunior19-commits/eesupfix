@@ -15,9 +15,15 @@ class AuthBloc extends Bloc<AuthEvent, AuthBlocState> {
         final session = event.session;
         if (session == null) {
           return UnAuthenticated();
-        } else {
-          return Authenticated(true);
         }
+        // A leftover password-recovery session (the app was closed before
+        // the user finished setting a new password) must never be treated
+        // as a normal sign-in -- see AuthRepository.pendingPasswordReset.
+        final pending = authRepository.pendingPasswordReset(session);
+        if (pending != null) {
+          return PasswordResetPending(email: pending.email, phone: pending.phone);
+        }
+        return Authenticated(true);
       });
     });
 

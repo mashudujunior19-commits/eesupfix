@@ -154,13 +154,15 @@ class OrdProducts extends StatelessWidget {
     }
 
     // Show confirmation snackbar
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(
-          '${order.products.length} products added to the cart!',
+    ScaffoldMessenger.of(context)
+      ..clearSnackBars()
+      ..showSnackBar(
+        SnackBar(
+          content: Text(
+            '${order.products.length} products added to the cart!',
+          ),
+          duration: const Duration(seconds: 7),
         ),
-        duration: const Duration(seconds: 2),
-      ),
-    );
+      );
   }
 }

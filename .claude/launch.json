@@ -14,6 +14,20 @@
       "port": 8780
     },
     {
+      "name": "eesup-web-preview-redacted",
+      "runtimeExecutable": "python",
+      "runtimeArgs": [
+        "-m",
+        "http.server",
+        "8781",
+        "--bind",
+        "127.0.0.1",
+        "--directory",
+        "C:/Users/MASHUD~1/AppData/Local/Temp/claude/C--Users-mashudu-junior-Documents-eesupfix/8fc7be1b-aac3-4845-82e6-5e365d4713ff/scratchpad/web-preview"
+      ],
+      "port": 8781
+    },
+    {
       "name": "eesup-web-dev",
       "runtimeExecutable": "cmd",
       "runtimeArgs": [

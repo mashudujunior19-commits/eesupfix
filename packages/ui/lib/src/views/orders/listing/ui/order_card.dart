@@ -76,25 +76,37 @@ class OrderCard extends StatelessWidget {
 
                           result.fold(
                             (exception) {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(
+                              ScaffoldMessenger.of(context)
+                                ..clearSnackBars()
+                                ..showSnackBar(
+                                  SnackBar(
+                                    duration: const Duration(seconds: 7),
                                     content:
-                                        Text('Error: ${exception.message}')),
-                              );
+                                        Text('Error: ${exception.message}'),
+                                  ),
+                                );
                             },
                             (success) {
                               if (success) {
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(
-                                      content: Text('Order has been canceled')),
-                                );
+                                ScaffoldMessenger.of(context)
+                                  ..clearSnackBars()
+                                  ..showSnackBar(
+                                    SnackBar(
+                                      duration: const Duration(seconds: 7),
+                                      content: Text('Order has been canceled'),
+                                    ),
+                                  );
                                 Navigator.pop(dialogContext);
                               } else {
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(
+                                ScaffoldMessenger.of(context)
+                                  ..clearSnackBars()
+                                  ..showSnackBar(
+                                    SnackBar(
+                                      duration: const Duration(seconds: 7),
                                       content:
-                                          Text('Failed to cancel the order')),
-                                );
+                                          Text('Failed to cancel the order'),
+                                    ),
+                                  );
                               }
                             },
                           );
