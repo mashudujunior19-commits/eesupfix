@@ -16,7 +16,7 @@ void main() {
   final order = Order(
     customerId: 'customer-1',
     value: 250.0,
-    paymentMethod: PaymentMethod.instapay,
+    paymentMethod: PaymentMethod.retailWallet,
     secretPin: 1234,
     status: OrderStatus.pending,
   );
@@ -92,7 +92,7 @@ void main() {
         isA<CheckoutLoading>(),
         isA<OutstandingPayment>()
             .having((s) => s.response.outstandingAmount, 'outstandingAmount', 50.0)
-            .having((s) => s.paymentMethod, 'paymentMethod', PaymentMethod.instapay),
+            .having((s) => s.paymentMethod, 'paymentMethod', PaymentMethod.retailWallet),
       ],
     );
 

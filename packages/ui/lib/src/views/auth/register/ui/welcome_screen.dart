@@ -32,7 +32,7 @@ class WelcomeScreen extends StatelessWidget {
         ),
         10.sH,
         Text(
-          'Welcome to the EESUp family. We are excited to have you on board.',
+          'Welcome to the Towris family. We are excited to have you on board.',
           style: TextStyle(
             color: Colors.grey.shade600,
             fontWeight: FontWeight.w500,

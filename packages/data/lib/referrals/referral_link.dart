@@ -36,7 +36,7 @@ class ReferralLink {
       if (iosLink != null) 'iPhone: $iosLink',
     ];
     return [
-      'Join me on EESUp! Sign up with my referral code $code.',
+      'Join me on Towris! Sign up with my referral code $code.',
       if (links.isNotEmpty) 'Download the app:\n${links.join('\n')}',
     ].join('\n\n');
   }

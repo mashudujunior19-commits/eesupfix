@@ -67,6 +67,13 @@ abstract class EESUpoolDataSource {
   ///User leaves a pool
   Future<bool> deleteMember(int poolId, String userId);
 
+  /// Admin removal of a member. Returns null on success, otherwise the reason
+  /// the removal was refused (member has a role / an incomplete order, ...).
+  Future<String?> removeMember(int poolId, String userId);
+
+  /// Why [userId] cannot be removed right now, or null when nothing blocks it.
+  Future<String?> memberRemovalBlocker(int poolId, String userId);
+
   ///Update a given pool
   Future<void> updatePool(EESUpool pool);
 

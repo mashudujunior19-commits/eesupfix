@@ -24,7 +24,7 @@ class OrderSecretPinDialog extends StatelessWidget {
           children: [
             15.sH,
             Text(
-              'By providing this screte pin to an EESUpreneur, you are '
+              'By providing this screte pin to a Kasipreneur, you are '
               'confirming that you have reviewed the products and you are '
               'satisfied with the order.',
               textAlign: TextAlign.center,

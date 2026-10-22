@@ -67,6 +67,32 @@ class EESUpoolSupabaseImp implements EESUpoolDataSource {
   }
 
   @override
+  Future<String?> removeMember(int poolId, String userId) async {
+    final res = await client.schema('communities').rpc('remove_pool_member',
+        params: {'p_pool_id': poolId, 'p_user_id': userId});
+    if (res is Map && res['ok'] == true) return null;
+    return (res is Map ? res['reason'] as String? : null) ??
+        'Failed to remove the member';
+  }
+
+  @override
+  Future<String?> memberRemovalBlocker(int poolId, String userId) async {
+    final res = await client.schema('communities').rpc(
+        'member_removal_blockers',
+        params: {'p_pool_id': poolId, 'p_user_id': userId});
+    if (res is! Map) return null;
+    if (res['has_role'] == true) {
+      return 'This member has a role assigned on an order that is not '
+          'finished. Remove their role first.';
+    }
+    if (((res['open_orders'] as num?) ?? 0) > 0) {
+      return 'This member has an order that has not been completed. Wait '
+          'until it is collected or cancelled.';
+    }
+    return null;
+  }
+
+  @override
   Future<void> updatePool(EESUpool pool) async {
     await client
         .schema('communities')
@@ -131,16 +157,34 @@ class EESUpoolSupabaseImp implements EESUpoolDataSource {
 
   @override
   Stream<List<ChatMessage>> streamPoolMessages(int poolId, int limit) async* {
-    final stream = client
-        .schema('communities')
-        .from('message')
-        .stream(primaryKey: ['id'])
-        .eq('eesupool_id', poolId)
-        .limit(1);
-    // ignore: unused_local_variable
-    await for (final event in stream) {
-      final pools = getPoolMessages(poolId, limit, true);
-      yield await pools;
+    // Realtime is only used as a "something changed" signal; the list itself is
+    // always re-fetched. The stream is re-opened if the socket drops, so a
+    // chat that lost its connection keeps receiving messages instead of going
+    // silent until the screen is reopened.
+    while (true) {
+      try {
+        // Newest first, so a freshly inserted message is the row the stream
+        // emits (without an order the limit keeps an arbitrary older row).
+        final stream = client
+            .schema('communities')
+            .from('message')
+            .stream(primaryKey: ['id'])
+            .eq('eesupool_id', poolId)
+            .order('created_at', ascending: false)
+            .limit(1);
+        await for (final _ in stream) {
+          try {
+            yield await getPoolMessages(poolId, limit, true);
+          } catch (e) {
+            // A failed re-fetch must not end the subscription; the next
+            // event (or the periodic refresh) will bring the list up to date.
+            print('Chat refresh failed: $e');
+          }
+        }
+      } catch (e) {
+        print('Chat stream error: $e');
+      }
+      await Future<void>.delayed(const Duration(seconds: 3));
     }
   }
 
@@ -791,9 +835,12 @@ class EESUpoolSupabaseImp implements EESUpoolDataSource {
     int orderId,
     Map<String, ReceiverRole> roles,
   ) async {
-    await client.schema('communities').from('eesupool_order').update({
-      'receiver_roles': const ReceiverRolesConverter().toJson(roles),
-    }).eq('id', orderId);
+    // Validated server-side: known roles only, receivers of this order only.
+    await client.schema('communities').rpc('update_order_receiver_roles',
+        params: {
+          'p_order_id': orderId,
+          'p_roles': const ReceiverRolesConverter().toJson(roles),
+        });
     return true;
   }
 

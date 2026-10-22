@@ -5,7 +5,9 @@ sealed class CheckoutEvent {}
 
 final class CheckoutStarted extends CheckoutEvent {
   final List<OrderProduct> products;
-  CheckoutStarted(this.products);
+  // The same item is only ever ordered once: duplicate lines are merged.
+  CheckoutStarted(List<OrderProduct> products)
+      : products = mergeDuplicateProducts(products);
 
   double subTotal() {
     double total = 0.00;

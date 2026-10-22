@@ -1,3 +1,5 @@
+import 'package:auto_route/auto_route.dart';
+import 'package:ui/app_route.gr.dart';
 import 'package:ui/src/core/extensions/sizedbox_ext.dart';
 import 'package:ui/src/views/shop/checkout/bloc/checkout_bloc.dart';
 import 'package:flutter/material.dart';
@@ -63,7 +65,9 @@ class ResultStep extends StatelessWidget {
         15.sH,
         TextButton(
           onPressed: () {
-            Navigator.of(context).pop(true);
+            // The cart was cleared when the order was placed; go back to the
+            // main page.
+            context.router.pushAll([const OverviewRoute()]);
           },
           child: const Text('Finish'),
         )

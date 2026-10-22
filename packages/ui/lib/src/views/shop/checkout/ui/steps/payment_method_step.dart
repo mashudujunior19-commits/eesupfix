@@ -129,30 +129,6 @@ class PaymentMethodStep extends StatelessWidget {
                               },
                             ).animate().slideIn(50),
                             PaymentMethodTile(
-                              gateway: gatewayState.gateway(
-                                PaymentMethod.instapay,
-                              ),
-                              amount: total ?? 0,
-                              title: 'Instapay',
-                              imagePath: 'assets/images/instapay.png',
-                              subtitle:
-                                  'Visa, Mastercard, American Express, EFT.',
-                              isVisible: gatewayState
-                                      .gateway(PaymentMethod.instapay)
-                                      ?.isActive ??
-                                  false,
-                              onTap: (gateway) {
-                                context.read<CheckoutBloc>().add(
-                                      PaymentMethodUpdated(
-                                        PaymentMethod.instapay,
-                                        gateway,
-                                      ),
-                                    );
-                                tabController
-                                    .animateTo(tabController.index + 1);
-                              },
-                            ).animate().slideIn(100),
-                            PaymentMethodTile(
                               gateway: gatewayState.gateway(PaymentMethod.ozow),
                               title: 'Ozow',
                               amount: total ?? 0,
@@ -273,37 +249,6 @@ class PaymentMethodStep extends StatelessWidget {
                                             .animateTo(tabController.index + 1);
                                       },
                                     ).animate().slideIn(0),
-                                    PaymentMethodTile(
-                                      amount: total ?? 0,
-                                      gateway: gatewayState
-                                          .gateway(PaymentMethod.instapay),
-                                      isVisible: gatewayState
-                                              .gateway(PaymentMethod.instapay)
-                                              ?.isActive ??
-                                          false,
-                                      title: 'Split payment with Instapay',
-                                      imagePath: 'assets/images/instapay.png',
-                                      subtitle:
-                                          'Use your retail wallet balance and pay'
-                                          ' the remaining amount with Instapay',
-                                      onTap: (gateway) {
-                                        if (balance <= 0) {
-                                          context.snackBarError(
-                                            "You do not have enough funds on your Retail Wallet",
-                                          );
-                                          return;
-                                        }
-
-                                        context.read<CheckoutBloc>().add(
-                                              PaymentMethodUpdated(
-                                                PaymentMethod.splitInstapay,
-                                                gateway,
-                                              ),
-                                            );
-                                        tabController
-                                            .animateTo(tabController.index + 1);
-                                      },
-                                    ).animate().slideIn(20),
                                     PaymentMethodTile(
                                       amount: total ?? 0,
                                       gateway: gatewayState

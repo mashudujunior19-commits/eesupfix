@@ -5,8 +5,8 @@ sealed class NotificationsEvent {}
 
 final class NotificationStreamStarted extends NotificationsEvent {}
 
-final class RemoveNotificationEvent extends NotificationsEvent {
-  final int notificationId;
+final class MarkNotificationsSeenEvent extends NotificationsEvent {
+  final List<int> notificationIds;
 
-  RemoveNotificationEvent(this.notificationId);
+  MarkNotificationsSeenEvent(this.notificationIds);
 }

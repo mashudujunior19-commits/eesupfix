@@ -25,7 +25,7 @@ We use Melos to streamline the management of our monorepo project. Here are key 
 **Folder Structure**
 
 1. **apps**: Contains individual Flutter applications:
-     * **EESUp:** 
+     * **Towris:** 
           * **android**
           * **ios**
           * **lib/main.dart** (Application entry point)

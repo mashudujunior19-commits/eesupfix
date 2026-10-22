@@ -308,7 +308,7 @@ class OrderDetailsTab extends StatelessWidget {
                           ),
                           10.sW,
                           Text(
-                            'Bulk Order Receivers',
+                            'Assign Roles',
                             style: context.textTheme.labelMedium?.copyWith(
                               decoration: TextDecoration.underline,
                               color: Colors.black,

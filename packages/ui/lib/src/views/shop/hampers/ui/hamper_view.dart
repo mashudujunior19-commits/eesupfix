@@ -464,7 +464,7 @@ class _AllocationItemCard extends StatelessWidget {
               height: 10,
             ),
             Text(
-                "EESUpreneur Income Allocation: R${((allocation.eia / 100) * value).floor()}"),
+                "Kasipreneur Income Allocation: R${((allocation.eia / 100) * value).floor()}"),
             SizedBox(
               height: 10,
             ),

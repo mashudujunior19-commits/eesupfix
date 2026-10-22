@@ -31,15 +31,6 @@ class SelectPyamentMethodDialog extends StatelessWidget {
             children: [
               PaymentMethodTile(
                 amount: 0.00,
-                title: 'Credit/Debit Card',
-                imagePath: 'assets/images/credit_card.png',
-                subtitle: 'Visa, Mastercard, American Express, etc.',
-                onTap: (gateway) {
-                  Navigator.pop(context, PaymentMethod.instapay);
-                },
-              ).animate().slideIn(50),
-              PaymentMethodTile(
-                amount: 0.00,
                 title: 'Ozow',
                 imagePath: 'assets/images/ozow.png',
                 subtitle: 'EFT with Capitec, FNB, ABSA, Nedbank, etc.',

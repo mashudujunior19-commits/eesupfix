@@ -21,6 +21,51 @@ class ProfileRepository {
     return result;
   }
 
+  /// Makes sure the details given at sign-up (name, email, phone, ID number)
+  /// are on the profile, whether the user registered with a phone number or
+  /// an email address. Only blank profile fields are filled, so anything the
+  /// database trigger already saved is left untouched.
+  Future<Either<EESUpException, bool>> saveSignUpDetails({
+    String? firstName,
+    String? lastName,
+    String? corpName,
+    String? email,
+    String? phone,
+    String? idNumber,
+  }) async {
+    return _authRepository.executeFutureWithAuth((id) async {
+      final profile = await _profileDataSource.fetchProfile(id);
+      if (profile == null) return false;
+
+      bool blank(String? v) => v == null || v.trim().isEmpty;
+      bool given(String? v) => !blank(v);
+
+      final fields = <String, dynamic>{
+        if (blank(profile.firstName) && given(firstName))
+          'first_name': firstName!.trim(),
+        if (blank(profile.lastName) && given(lastName))
+          'last_name': lastName!.trim(),
+        if (blank(profile.corpName) && given(corpName))
+          'corp_name': corpName!.trim(),
+        if (blank(profile.phone) && given(phone)) 'phone': phone!.trim(),
+        if (blank(profile.rsaIdNumber) && given(idNumber))
+          'rsa_id_number': idNumber!.trim(),
+      };
+      final saved = await _profileDataSource.updateProfileFields(id, fields);
+      // email is not part of Profile.toJson and may be locked down by the
+      // database, so it is written on its own and never fails the rest.
+      if (blank(profile.email) && given(email)) {
+        try {
+          await _profileDataSource
+              .updateProfileFields(id, {'email': email!.trim()});
+        } catch (e) {
+          debugPrint('Could not save the sign-up email: $e');
+        }
+      }
+      return saved;
+    });
+  }
+
   Future<Either<EESUpException, bool>> deactivateAccount() async {
     final result = await _authRepository.executeFutureWithAuth((id) async {
       final deleted = await _profileDataSource.deactivateAccount(id);

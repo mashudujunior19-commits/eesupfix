@@ -64,7 +64,7 @@ class OrderReceiverScreen extends StatelessWidget {
                     Navigator.of(context).pop(_result);
                   },
                 ),
-                title: const Text('ORDER RECEIVERS'),
+                title: const Text('ASSIGN ROLES'),
                 actions: [
                   if (order.deliveredAt == null)
                     IconButton(
@@ -133,27 +133,44 @@ class OrderReceiverScreen extends StatelessWidget {
                                       _RoleDropdown(
                                         role: state.roles[member.memberId],
                                         enabled: order.deliveredAt == null,
-                                        onChanged: (role) {
-                                          context.read<OrderReceiversBloc>().add(
-                                                OrderReceiverRoleAssigned(
-                                                  order.id,
-                                                  member.memberId,
-                                                  role,
-                                                ),
-                                              );
+                                        onChanged: (role) async {
+                                          final bloc = context
+                                              .read<OrderReceiversBloc>();
+                                          final sure =
+                                              await context.confirmAction(
+                                            'Change role',
+                                            'Change ${member.fullName}\'s role to ${role.label}?',
+                                            confirmText: 'Yes, change',
+                                          );
+                                          if (!sure) return;
+                                          bloc.add(
+                                            OrderReceiverRoleAssigned(
+                                              order.id,
+                                              member.memberId,
+                                              role,
+                                            ),
+                                          );
                                         },
                                       ),
                                       if (order.deliveredAt == null)
                                         InkWell(
-                                          onTap: () {
-                                            context
-                                                .read<OrderReceiversBloc>()
-                                                .add(
-                                                  OrderReceiverRemoved(
-                                                    order.id,
-                                                    member,
-                                                  ),
-                                                );
+                                          onTap: () async {
+                                            final bloc = context
+                                                .read<OrderReceiversBloc>();
+                                            final sure =
+                                                await context.confirmAction(
+                                              'Remove receiver',
+                                              'Are you sure you want to remove ${member.fullName}? Their assigned role will be removed too.',
+                                              confirmText: 'Yes, remove',
+                                              destructive: true,
+                                            );
+                                            if (!sure) return;
+                                            bloc.add(
+                                              OrderReceiverRemoved(
+                                                order.id,
+                                                member,
+                                              ),
+                                            );
                                           },
                                           child: const Padding(
                                             padding: EdgeInsets.only(left: 8),
