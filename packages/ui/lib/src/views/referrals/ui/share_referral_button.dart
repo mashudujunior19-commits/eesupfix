@@ -32,7 +32,7 @@ Future<void> shareReferralLink(BuildContext context, {int? code}) async {
   await SharePlus.instance.share(
     ShareParams(
       text: link.message,
-      subject: 'Join me on EESUp',
+      subject: 'Join me on Towris',
       // Needed on iPad, where the share sheet is a popover.
       sharePositionOrigin:
           box == null ? null : box.localToGlobal(Offset.zero) & box.size,

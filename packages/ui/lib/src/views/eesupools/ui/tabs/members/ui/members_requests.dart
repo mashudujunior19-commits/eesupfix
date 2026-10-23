@@ -157,7 +157,7 @@ class _InviteCardState extends State<_InviteCard> {
                                 });
 
                                 context.snackBarSuccess(
-                                  '${widget.invite.fullName ?? widget.invite.corporateName} has been accepted to join this EESUpool',
+                                  '${widget.invite.fullName ?? widget.invite.corporateName} has been accepted to join this Kasi Pool',
                                 );
                               });
                               setState(() {

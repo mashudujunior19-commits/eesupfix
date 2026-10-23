@@ -37,11 +37,6 @@ class AppRouter extends RootStackRouter {
           durationInMilliseconds: 300,
         ),
         CustomRoute(
-          page: InstapayRoute.page,
-          transitionsBuilder: TransitionsBuilders.slideLeftWithFade,
-          durationInMilliseconds: 300,
-        ),
-        CustomRoute(
           page: EESUpoolViewRoute.page,
           transitionsBuilder: TransitionsBuilders.slideLeftWithFade,
           durationInMilliseconds: 300,
@@ -78,11 +73,6 @@ class AppRouter extends RootStackRouter {
         ),
         CustomRoute(
           page: YocoPaymentRoute.page,
-          transitionsBuilder: TransitionsBuilders.slideLeftWithFade,
-          durationInMilliseconds: 300,
-        ),
-        CustomRoute(
-          page: InstapayConfirmDetailsRoute.page,
           transitionsBuilder: TransitionsBuilders.slideLeftWithFade,
           durationInMilliseconds: 300,
         ),

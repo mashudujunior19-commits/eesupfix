@@ -241,6 +241,36 @@ class AuthSupabaseDataSource implements IAuthDataSource {
     }
   }
 
+  /// Deep link the OAuth provider returns to on mobile. It must be added to
+  /// the Supabase project's redirect allow-list. On the web the current page
+  /// is used.
+  static const mobileRedirect = 'io.supabase.towris://login-callback/';
+
+  @override
+  Future<bool> signInWithProvider(SocialProvider provider) {
+    return _client.auth.signInWithOAuth(
+      provider == SocialProvider.google
+          ? OAuthProvider.google
+          : OAuthProvider.apple,
+      redirectTo: kIsWeb ? null : mobileRedirect,
+    );
+  }
+
+  @override
+  Future<bool> hasCompletedRegistration(String userId) async {
+    final row = await _client
+        .from('profile')
+        .select('first_name, last_name, rsa_id_number, corp_name')
+        .eq('user_id', userId)
+        .maybeSingle();
+    if (row == null) return false;
+    bool filled(Object? v) => v is String && v.trim().isNotEmpty;
+    if (filled(row['corp_name'])) return true;
+    return filled(row['first_name']) &&
+        filled(row['last_name']) &&
+        filled(row['rsa_id_number']);
+  }
+
   @override
   Future<String?> fetchSystemIssue() async {
     try {

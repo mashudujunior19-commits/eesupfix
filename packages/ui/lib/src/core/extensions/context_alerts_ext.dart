@@ -16,6 +16,46 @@ extension ContextAlertsExt on BuildContext {
   void snackBarWarning(String message) =>
       showSnackBar(context: this, message: message, type: SnackBarType.error);
 
+  /// Asks the user to confirm an action. Resolves to true only when they
+  /// pick the confirm button; dismissing the dialog counts as cancelling.
+  Future<bool> confirmAction(
+    String title,
+    String content, {
+    String confirmText = 'Yes',
+    String cancelText = 'Cancel',
+    bool destructive = false,
+  }) async {
+    final result = await showDialog<bool>(
+      context: this,
+      builder: (context) => AlertDialog(
+        surfaceTintColor: Colors.white,
+        backgroundColor: Colors.white,
+        titleTextStyle: textTheme.labelMedium,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10),
+        ),
+        title: Text(title),
+        content: Text(content),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context, false),
+            child: Text(cancelText),
+          ),
+          TextButton(
+            onPressed: () => Navigator.pop(context, true),
+            child: Text(
+              confirmText,
+              style: TextStyle(
+                color: destructive ? colorScheme.error : colorScheme.primary,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+    return result ?? false;
+  }
+
   Future<bool?> showAlertDialog(
     String title,
     String content, {

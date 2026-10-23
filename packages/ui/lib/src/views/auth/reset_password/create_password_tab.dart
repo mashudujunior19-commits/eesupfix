@@ -135,20 +135,20 @@ class _CreateNewPasswordState extends State<CreateNewPasswordDialog> {
                 label: 'Password',
                 controller: _passwordController,
                 onChanged: (value) => setState(() {}),
+                footer: PasswordRequirements(
+                  password: _passwordController.text,
+                ),
               ).animate().slideIn(50),
-              PasswordRequirements(
-                password: _passwordController.text,
-              ).animate().slideIn(100),
               EESUpTextFormField(
                 isPassword: true,
                 label: 'Confirm Password',
                 onChanged: (value) => setState(() {}),
                 controller: _confirmController,
+                footer: PasswordsMatchIndicator(
+                  password: _passwordController.text,
+                  confirmPassword: _confirmController.text,
+                ),
               ).animate().slideIn(150),
-              PasswordsMatchIndicator(
-                password: _passwordController.text,
-                confirmPassword: _confirmController.text,
-              ),
               25.sH,
               ElevatedButton(
                 onPressed: _isSubmitting ? null : _handleSubmit,

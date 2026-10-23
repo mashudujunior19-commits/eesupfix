@@ -22,11 +22,22 @@ class NotificationsBloc extends Bloc<NotificationsEvent, NotificationsState> {
         });
       });
     });
-    on<RemoveNotificationEvent>((event, emit) async {
-      await _repo.deleteNotification(event.notificationId);
-      notifications.removeWhere(
-          (notification) => notification.id == event.notificationId);
-      emit(NotificationsStreaming(notifications));
+    // Notifications are never deleted from the app: viewing one only flags it
+    // as seen. Old ones are purged server-side after 30 days.
+    on<MarkNotificationsSeenEvent>((event, emit) async {
+      final now = DateTime.now();
+      final ids = event.notificationIds.toSet();
+      notifications = [
+        for (final n in notifications)
+          if (ids.contains(n.id) && n.seenAt == null)
+            n.copyWith(seenAt: now)
+          else
+            n
+      ];
+      emit(NotificationsStreaming(List.of(notifications)));
+      for (final id in ids) {
+        await _repo.markSeen(id);
+      }
     });
   }
 }

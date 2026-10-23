@@ -1,5 +1,7 @@
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+enum SocialProvider { google, apple }
+
 abstract class IAuthDataSource {
   /// Sign in with email and password
   /// - [email] is the email address of the user
@@ -13,6 +15,16 @@ abstract class IAuthDataSource {
   });
 
   Future<bool> signInAnon();
+
+  /// Starts the Google or Apple OAuth flow. Returns true once the provider
+  /// page was opened; the session itself arrives through [authStateChanges]
+  /// when the provider redirects back to the app.
+  Future<bool> signInWithProvider(SocialProvider provider);
+
+  /// Whether [userId] finished registering with Towris: an individual needs a
+  /// first name, last name and ID number; a corporate account needs a
+  /// corporate name. Social sign-in is only allowed for such accounts.
+  Future<bool> hasCompletedRegistration(String userId);
 
   Stream<AuthState> get authStateChanges;
 

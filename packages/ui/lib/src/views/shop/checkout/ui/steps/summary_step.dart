@@ -9,9 +9,6 @@ import 'package:data/utils/double_ext.dart';
 import 'package:ui/src/views/shop/checkout/bloc/checkout_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:instapay_flutter/data/merchant_transaction.dart';
-import 'package:intl/intl.dart';
 import 'package:loader_overlay/loader_overlay.dart';
 
 class SummaryStep extends StatelessWidget {
@@ -56,26 +53,6 @@ class SummaryStep extends StatelessWidget {
                     );
               } else if (value == false) {
                 print(value);
-                context.read<CheckoutBloc>().add(
-                      CheckoutFinished(state.order.id, false),
-                    );
-              }
-              tabController.animateTo(tabController.index + 1);
-            });
-
-          case PaymentMethod.instapay || PaymentMethod.splitInstapay:
-            final transaction = _getInstapayTransaction(state.response);
-            if (transaction == null) {
-              return;
-            }
-            context.router
-                .push(InstapayConfirmDetailsRoute(transaction: transaction))
-                .then((value) {
-              if (value == true) {
-                context.read<CheckoutBloc>().add(
-                      CheckoutFinished(state.order.id, true),
-                    );
-              } else if (value == false) {
                 context.read<CheckoutBloc>().add(
                       CheckoutFinished(state.order.id, false),
                     );
@@ -238,58 +215,6 @@ class SummaryStep extends StatelessWidget {
           ),
         );
     tabController.animateTo(0);
-  }
-
-  MerchantTransaction? _getInstapayTransaction(OrderResponse response) {
-    var formatter = DateFormat('yyyy-MM-dd');
-    final merchantId = dotenv.env['INSTA_PAY_MERCHANT_ID'];
-    final accountUUid = dotenv.env['INSTA_PAY_ACCOUNT_ID'];
-    final authKey = dotenv.env['INSTAPAY_AUTH_KEY'];
-
-    final secret = dotenv.env['INSTA_PAY_SECRET'];
-    final sendbox = dotenv.env['INSTAPAY_SENDBOX'];
-    final successUrl = dotenv.env['INSAPAY_SUCCESS_URL'];
-    final failedUrl = dotenv.env['INSAPAY_FAILED_URL'];
-    final notifyUrl = dotenv.env['INSAPAY_NOTIFY_URL'];
-
-    if (merchantId == null ||
-        accountUUid == null ||
-        authKey == null ||
-        secret == null ||
-        sendbox == null ||
-        successUrl == null ||
-        failedUrl == null ||
-        notifyUrl == null) {
-      return null;
-    }
-
-    return MerchantTransaction(
-      mUuid: merchantId,
-      mAccountUuid: accountUUid,
-      mTxOrderNr: response.secondaryId!,
-      mTxId: response.paymentId!,
-      mTxCurrency: 'ZAR',
-      mCategory1: response.orderId.toString(),
-      mCategory2: 'Order',
-      mCategory3: authKey,
-      mTxAmount: response.outstandingAmount.toRounded(),
-      mTxItemName: 'Order ${response.orderId}',
-      mTxItemDescription: 'Order ${response.orderId}',
-      secret: secret,
-      mEftAllowed: true,
-      mCardAllowed: true,
-      mPassAllowed: false,
-      mChipsAllowed: false,
-      mPayatAllowed: false,
-      mTridentAllowed: false,
-      mTxDueDate: formatter.format(DateTime.now()),
-      mMessage: 'Payment for order ${response.orderId}',
-      mSiteName: 'TOWRIS',
-      mReturnUrl: successUrl,
-      mBack2shopUrl: failedUrl,
-      mNotifyUrl: notifyUrl,
-      sendboxUrl: sendbox,
-    );
   }
 }
 

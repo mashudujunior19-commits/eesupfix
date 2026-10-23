@@ -129,7 +129,7 @@ class _ReferralCodeFormState extends State<ReferralCodeForm> {
                 ),
                 Expanded(
                   child: HighlightedText(
-                    'I agree to the EESUp\'s Terms of Service and '
+                    'I agree to the Towris\'s Terms of Service and '
                     'Privacy Policy',
                     patterns: const ['Terms of Service', 'Privacy Policy'],
                     onTap: (p) {

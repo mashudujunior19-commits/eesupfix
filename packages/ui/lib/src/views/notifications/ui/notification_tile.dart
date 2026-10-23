@@ -15,8 +15,15 @@ import 'package:data/notifications/models/notification.dart' as not;
 import '../bloc/notifications_bloc.dart';
 
 class NotificationTile extends StatelessWidget {
-  NotificationTile({super.key, required this.notification});
+  NotificationTile({
+    super.key,
+    required this.notification,
+    this.isNew = false,
+  });
   final not.Notification notification;
+
+  /// Unseen when the list was opened; highlighted for this visit.
+  final bool isNew;
 
   final _controller = ExpandedTileController(isExpanded: true);
 
@@ -28,7 +35,9 @@ class NotificationTile extends StatelessWidget {
         color: Colors.white,
         borderRadius: BorderRadius.circular(10),
         border: Border.all(
-          color: Colors.grey.withOpacity(.2),
+          color: isNew
+              ? context.colorScheme.primary.withOpacity(.6)
+              : Colors.grey.withOpacity(.2),
           width: 1,
         ),
       ),
@@ -61,7 +70,12 @@ class NotificationTile extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisSize: MainAxisSize.min,
               children: [
-                Text(notification.title),
+                Text(
+                  notification.title,
+                  style: isNew
+                      ? const TextStyle(fontWeight: FontWeight.bold)
+                      : null,
+                ),
                 1.sH,
                 Text(
                   '🕘 ${DateFormatter.formatDateToNamedayWithTime2(notification.createdAt)}',
@@ -119,7 +133,8 @@ class NotificationTile extends StatelessWidget {
                             (l) => debugPrint(l.toString()),
                             (r) {
                               context.read<NotificationsBloc>().add(
-                                  RemoveNotificationEvent(notification.id));
+                                  MarkNotificationsSeenEvent(
+                                      [notification.id]));
                             },
                           );
 
@@ -128,7 +143,7 @@ class NotificationTile extends StatelessWidget {
                         child: Text(notification.type ==
                                 not.NotificationType.eesupoolInvite
                             ? 'Join'
-                            : "Admit"),
+                            : 'Accept'),
                       ),
                       25.sW,
                       InkWell(
@@ -146,7 +161,8 @@ class NotificationTile extends StatelessWidget {
                             (l) => debugPrint(l.toString()),
                             (r) {
                               context.read<NotificationsBloc>().add(
-                                  RemoveNotificationEvent(notification.id));
+                                  MarkNotificationsSeenEvent(
+                                      [notification.id]));
                             },
                           );
                           context.loaderOverlay.hide();

@@ -169,10 +169,8 @@ class _CredentialsFormState extends State<CredentialsForm> {
                   ),
                 );
           },
+          footer: PasswordRequirements(password: form.password ?? ''),
         ).animate().slideIn(50),
-        PasswordRequirements(
-          password: form.password ?? '',
-        ).animate().slideIn(100),
         EESUpTextFormField(
           isPassword: true,
           initialValue: form.retypedPassword,
@@ -188,11 +186,11 @@ class _CredentialsFormState extends State<CredentialsForm> {
                   ),
                 );
           },
+          footer: PasswordsMatchIndicator(
+            password: form.password ?? '',
+            confirmPassword: form.retypedPassword ?? '',
+          ),
         ).animate().slideIn(150),
-        PasswordsMatchIndicator(
-          password: form.password ?? '',
-          confirmPassword: form.retypedPassword ?? '',
-        ),
         30.sH,
         ElevatedButton(
           onPressed: _isSubmitting ? null : _handleNext,

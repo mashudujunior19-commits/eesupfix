@@ -119,6 +119,14 @@ class OrderReceiversBloc
   ) async {
     if (state is! OrderReceiversLoaded) return;
     final current = state as OrderReceiversLoaded;
+    // Only members that are receivers of this order can hold a role.
+    if (!current.receivers.any((r) => r.memberId == event.memberId)) {
+      emit(current.withError(
+        'Only receivers of this order can be assigned a role.',
+      ));
+      return;
+    }
+    if (current.roles[event.memberId] == event.role) return;
     final roles = {...current.roles, event.memberId: event.role};
     emit(OrderReceiversLoaded(current.receivers, roles));
 

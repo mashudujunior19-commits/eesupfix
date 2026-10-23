@@ -48,7 +48,7 @@ class _SuggestTopicDialogState extends State<SuggestTopicDialog> {
             ),
             // 20.sH,
             EESUpTextFormField(
-              hintText: '#EESUpleasure',
+              hintText: '#KasiPleasure',
               controller: controller,
             ),
             5.sH,

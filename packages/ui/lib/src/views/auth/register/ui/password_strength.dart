@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
 
+/// Green used for satisfied rules (matches the inline hints on the JBL sign-up
+/// form this layout follows).
+const _okGreen = Color(0xFF2E9E4F);
+const _okGreenBg = Color(0xFFDDF6E1);
+
 /// Password rules for registration and password reset: an uppercase letter,
 /// a lowercase letter, a number and a symbol, 8-72 characters (72 is the
 /// most Supabase Auth accepts), and both entries must match.
@@ -36,8 +41,9 @@ abstract final class PasswordRules {
       'Your password needs ${missing(p, confirm).join(', ')}.';
 }
 
-/// The "Include the following / Must contain" panels shown under the
-/// password field.
+/// The "Include the following / Must contain" panels. They are passed as the
+/// `footer` of the password field so they sit directly under it as part of the
+/// same input, and tick off live while the user types.
 class PasswordRequirements extends StatelessWidget {
   const PasswordRequirements({super.key, required this.password});
 
@@ -46,7 +52,7 @@ class PasswordRequirements extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(top: 8),
+      padding: const EdgeInsets.only(top: 6, bottom: 4),
       child: IntrinsicHeight(
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -55,6 +61,10 @@ class PasswordRequirements extends StatelessWidget {
               flex: 7,
               child: _Panel(
                 title: 'Include the following',
+                met: PasswordRules.hasUppercase(password) &&
+                    PasswordRules.hasLowercase(password) &&
+                    PasswordRules.hasNumber(password) &&
+                    PasswordRules.hasSymbol(password),
                 children: [
                   _Rule('ABC', PasswordRules.hasUppercase(password)),
                   _Rule('abc', PasswordRules.hasLowercase(password)),
@@ -68,6 +78,7 @@ class PasswordRequirements extends StatelessWidget {
               flex: 4,
               child: _Panel(
                 title: 'Must contain',
+                met: PasswordRules.hasValidLength(password),
                 children: [
                   _Rule(
                     '${PasswordRules.minLength}-${PasswordRules.maxLength} '
@@ -84,7 +95,9 @@ class PasswordRequirements extends StatelessWidget {
   }
 }
 
-/// "Passwords Match" shown under the confirm-password field.
+/// "Passwords Match" hint, passed as the `footer` of the confirm-password
+/// field so it reads as part of that input. Hidden until the user starts
+/// typing the confirmation.
 class PasswordsMatchIndicator extends StatelessWidget {
   const PasswordsMatchIndicator({
     super.key,
@@ -97,16 +110,21 @@ class PasswordsMatchIndicator extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (confirmPassword.isEmpty) return const SizedBox.shrink();
     final met = PasswordRules.matches(password, confirmPassword);
-    final color = met ? Theme.of(context).colorScheme.primary : Colors.grey;
+    final color = met ? _okGreen : Theme.of(context).colorScheme.error;
     return Padding(
-      padding: const EdgeInsets.only(top: 8, left: 2),
+      padding: const EdgeInsets.only(top: 6, left: 2, bottom: 4),
       child: Row(
         children: [
-          _CheckIcon(met: met),
+          Icon(
+            met ? Icons.check_circle : Icons.cancel,
+            size: 16,
+            color: color,
+          ),
           const SizedBox(width: 6),
           Text(
-            met ? 'Passwords Match' : 'Passwords must match',
+            met ? 'Passwords Match' : 'Passwords do not match',
             style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                   color: color,
                   fontWeight: FontWeight.w500,
@@ -119,16 +137,21 @@ class PasswordsMatchIndicator extends StatelessWidget {
 }
 
 class _Panel extends StatelessWidget {
-  const _Panel({required this.title, required this.children});
+  const _Panel({
+    required this.title,
+    required this.children,
+    required this.met,
+  });
 
   final String title;
   final List<Widget> children;
+  final bool met;
 
   @override
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.fromLTRB(10, 8, 10, 10),
-      color: Theme.of(context).colorScheme.primary.withOpacity(.08),
+      color: met ? _okGreenBg : Colors.grey.shade100,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -179,11 +202,10 @@ class _CheckIcon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final primary = Theme.of(context).colorScheme.primary;
     return Icon(
       met ? Icons.check_circle : Icons.radio_button_unchecked,
       size: 16,
-      color: met ? primary : Colors.grey.shade400,
+      color: met ? _okGreen : Colors.grey.shade400,
     );
   }
 }

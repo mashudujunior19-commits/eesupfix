@@ -36,8 +36,6 @@ dependencies:
   shimmer: ^3.0.0
   flutter_carousel_widget: ^3.1.0
   cached_network_image: ^3.4.1
-  instapay_flutter:
-    path: ../../packages/instapay
   tab_indicator_styler: ^2.0.0
   intl: ^0.20.2
   data:

@@ -108,7 +108,7 @@ class MemberCard extends StatelessWidget {
                 InkWell(
                   onTap: () {
                     context.showAlertDialog(
-                      'Leave EESUpool',
+                      'Leave Kasi Pool',
                       'Are you sure you want to leave this ${pool.type.toString()}?',
                       positiveText: 'Yes, Leave',
                       negativeText: 'No, Stay',

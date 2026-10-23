@@ -259,14 +259,31 @@ class MainApp extends StatelessWidget {
               routerConfig: _appRouter.config(),
               builder: (context, child) {
                 final mediaQuery = MediaQuery.of(context);
-                return MediaQuery(
+                // Phone layouts are kept to a readable column on wide screens
+                // (desktop web, tablets). MediaQuery reports the column's
+                // width so every layout adapts to the space it really has.
+                const maxContentWidth = 720.0;
+                final width = mediaQuery.size.width;
+                final contentWidth =
+                    width > maxContentWidth ? maxContentWidth : width;
+                final content = MediaQuery(
                   data: mediaQuery.copyWith(
+                    size: Size(contentWidth, mediaQuery.size.height),
                     textScaler: mediaQuery.textScaler.clamp(
                       minScaleFactor: 0.9,
                       maxScaleFactor: 1.2,
                     ),
                   ),
                   child: child!,
+                );
+                if (width <= maxContentWidth) return content;
+                return ColoredBox(
+                  color: theme.scaffoldBackgroundColor,
+                  child: Center(
+                    child: ClipRect(
+                      child: SizedBox(width: contentWidth, child: content),
+                    ),
+                  ),
                 );
               },
             ),

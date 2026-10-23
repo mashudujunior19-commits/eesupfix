@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 
 enum SnackBarType { success, error, warning }
@@ -23,9 +25,14 @@ void showSnackBar({
   // before even appearing, so a message triggered more than once (e.g.
   // resubmitting a wrong password) looks like it never goes away.
   messenger.clearSnackBars();
-  messenger.showSnackBar(
+  const duration = Duration(seconds: 7);
+  final controller = messenger.showSnackBar(
     SnackBar(
-      duration: const Duration(seconds: 7),
+      duration: duration,
+      // A snackbar with an action stays on screen indefinitely by default
+      // (persist defaults to true when there is an action), which is why error
+      // messages never went away. Always auto-dismiss.
+      persist: false,
       elevation: 10,
       action: SnackBarAction(
         label: 'Ok',
@@ -50,4 +57,10 @@ void showSnackBar({
       ),
     ),
   );
+  // Belt and braces: close it ourselves if the framework keeps it open.
+  Timer(duration + const Duration(milliseconds: 300), () {
+    try {
+      controller.close();
+    } catch (_) {}
+  });
 }

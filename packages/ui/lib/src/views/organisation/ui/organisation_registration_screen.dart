@@ -1,4 +1,6 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:data/auth/repository/profile_repository.dart';
+import 'package:data/geolocation/repository/geo_repository.dart';
 import 'package:data/get_involved/repository/get_involved_repository.dart';
 import 'package:loader_overlay/loader_overlay.dart';
 import 'package:ui/src/core/widgets/eesup_scaffold.dart';
@@ -51,8 +53,12 @@ class _OrganisationRegistrationScreenState
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) =>
-          OrganisationCubit(context.read<GetInvolvedRepository>()),
+      create: (context) => OrganisationCubit(
+        context.read<GetInvolvedRepository>(),
+      )..loadDefaults(
+          context.read<ProfileRepository>(),
+          context.read<GeoRepository>(),
+        ),
       child: BlocConsumer<OrganisationCubit, OrganisationForm>(
         listener: (context, state) {
           if (state.isLoading) {

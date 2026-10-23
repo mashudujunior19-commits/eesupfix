@@ -31,7 +31,7 @@ class MyKasiTreeTab extends StatelessWidget {
                 Expanded(
                   child: EESUpTextFormField(
                     margin: const EdgeInsets.only(left: 15, right: 15),
-                    hintText: 'Search EESUpools',
+                    hintText: 'Search Kasi Pools',
                     // controller: _searchController,
                     onChanged: (p0) {
                       //  setState(() {});
@@ -72,7 +72,7 @@ class MyKasiTreeTab extends StatelessWidget {
                   return FullScreenError(
                     exception: EESUpException(
                       message:
-                          'This EESUpool does not have other EESUpools in it\'s MyKasiTree',
+                          'This Kasi Pool does not have other Kasi Pools in it\'s MyKasiTree',
                     ),
                     isError: false,
                   );

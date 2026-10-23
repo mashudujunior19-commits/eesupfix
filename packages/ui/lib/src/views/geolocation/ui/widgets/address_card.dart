@@ -141,7 +141,7 @@ class AddressCard extends StatelessWidget {
                                 right: 25,
                               ),
                               message:
-                                  'Verified means this address is within one of EESUp\'s operational area',
+                                  'Verified means this address is within one of Towris\'s operational area',
                               child: Icon(
                                 Icons.help_outline,
                                 size: 13,

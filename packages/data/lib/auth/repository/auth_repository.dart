@@ -97,6 +97,43 @@ class AuthRepository {
     );
   }
 
+  /// Opens the Google / Apple sign-in page. The resulting session is picked
+  /// up from the auth state stream when the provider redirects back.
+  Future<Either<EESUpException, bool>> signInWithProvider(
+    SocialProvider provider,
+  ) {
+    return EESUpException.guardFuture(
+      action: () => supaSource.signInWithProvider(provider),
+    );
+  }
+
+  /// Message shown on the sign-in page after a Google / Apple login was
+  /// turned away because it isn't linked to a registered Towris account.
+  /// Kept here because the web OAuth round trip reloads the whole app.
+  static String? signInNotice;
+
+  /// True when [session] was created by a Google / Apple login.
+  bool isSocialSession(Session session) {
+    final provider = session.user.appMetadata['provider'];
+    return provider == 'google' || provider == 'apple';
+  }
+
+  /// Google / Apple may only sign in people who already registered (with their
+  /// name, ID number and/or referral code). Anyone else is signed straight back
+  /// out and told to register first. Returns true when the login is allowed.
+  Future<bool> allowSocialSession(Session session) async {
+    final registered = await EESUpException.guardFuture(
+      action: () => supaSource.hasCompletedRegistration(session.user.id),
+    );
+    final ok = registered.fold((_) => false, (r) => r);
+    if (!ok) {
+      signInNotice = 'No Towris account is linked to this login. '
+          'Please register first, then you can sign in with Google or Apple.';
+      await signOut();
+    }
+    return ok;
+  }
+
   Future<Either<EESUpException, bool>> signInAnon() async {
     final results = await EESUpException.guardFuture(
       action: () => supaSource.signInAnon(),

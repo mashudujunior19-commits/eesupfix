@@ -207,7 +207,7 @@ class _IndividualFormState extends State<IndividualForm> {
 
     if (!form.isOfAge()) {
       context.snackBarError(
-        "You must be 18 years and above to Register on EESUp.",
+        "You must be 18 years and above to Register on Towris.",
       );
       return;
     }

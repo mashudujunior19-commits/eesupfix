@@ -19,12 +19,14 @@ class NotificationButton extends StatelessWidget {
       icon: BlocBuilder<NotificationsBloc, NotificationsState>(
         builder: (context, state) {
           if (state is NotificationsStreaming) {
+            final unseen =
+                state.notifications.where((n) => n.seenAt == null).length;
             return Badge(
               backgroundColor: context.colorScheme.primary,
               alignment: Alignment.topRight,
-              isLabelVisible: state.notifications.isNotEmpty,
+              isLabelVisible: unseen > 0,
               label: Text(
-                state.notifications.length.toString(),
+                unseen.toString(),
                 style: context.textTheme.labelSmall?.copyWith(
                   color: Colors.white,
                   fontSize: 11,

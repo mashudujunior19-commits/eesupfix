@@ -122,7 +122,7 @@ class _EESUpoolSearchScreenState extends State<EESUpoolSearchScreen> {
               }
             },
             margin: const EdgeInsets.only(top: 10, right: 15),
-            hintText: 'Search EESUpool Names, Codes...',
+            hintText: 'Search Kasi Pool Names, Codes...',
             prefixIcon: Padding(
               padding: const EdgeInsets.only(top: 13),
               child: Icon(
@@ -183,7 +183,7 @@ class _EESUpoolSearchScreenState extends State<EESUpoolSearchScreen> {
                     child: FullScreenError(
                       isError: false,
                       exception: EESUpException(
-                        message: 'Search for EESUpool names or codes.',
+                        message: 'Search for Kasi Pool names or codes.',
                       ),
                     ),
                   );
@@ -230,7 +230,7 @@ class _EESUpoolSearchScreenState extends State<EESUpoolSearchScreen> {
                                   isError: false,
                                   exception: EESUpException(
                                     message:
-                                        'Search for EESUpool names or codes.',
+                                        'Search for Kasi Pool names or codes.',
                                   ),
                                 ),
                               );
@@ -243,7 +243,7 @@ class _EESUpoolSearchScreenState extends State<EESUpoolSearchScreen> {
                             child: FullScreenError(
                               isError: false,
                               exception: EESUpException(
-                                message: 'Search for EESUpool names or codes.',
+                                message: 'Search for Kasi Pool names or codes.',
                               ),
                             ),
                           );
@@ -356,17 +356,12 @@ class _EESUpoolCard extends StatelessWidget {
 
     final level = pool['level'];
 
-    if (level == null && pool['invite_status'] == null) {
-      return _sendRequest(context, pool);
-    } else if (level == null && pool['invite_status'] != null) {
-      return _revokeRequest(context, pool);
-    } else {
-      if (level == EESUpoolLevel.Street.toString()) {
-        return _joinKasi(context, pool);
-      } else {
-        return _viewStreets(context, pool);
-      }
+    // A pool that has streets under it is browsed first; everything else is
+    // joined with a request the pool admins accept or decline.
+    if (level != null && level != EESUpoolLevel.Street.toString()) {
+      return _viewStreets(context, pool);
     }
+    return _joinKasi(context, pool);
   }
 
   Padding _viewStreets(BuildContext context, pool) {
@@ -423,36 +418,7 @@ class _EESUpoolCard extends StatelessWidget {
         onTap: () async {
           context.loaderOverlay.show();
           final repo = context.read<EESUpoolRepository>();
-          final results = await repo.joinEESUpoool(pool['id']);
-          context.loaderOverlay.hide();
-
-          results.fold((l) {
-            context.snackBarError(l.message);
-          }, (r) {
-            Navigator.pop(context);
-            context.snackBarSuccess('Joined ${pool['name']}');
-            onRefresh?.call();
-          });
-        },
-        child: Text(
-          'Join',
-          style: context.textTheme.labelSmall?.copyWith(
-            color: context.colorScheme.primary,
-            fontSize: 15,
-          ),
-        ),
-      ),
-    );
-  }
-
-  Padding _revokeRequest(BuildContext context, pool) {
-    return Padding(
-      padding: const EdgeInsets.only(top: 5),
-      child: InkWell(
-        onTap: () async {
-          context.loaderOverlay.show();
-          final repo = context.read<EESUpoolRepository>();
-          final results = await repo.deleteCurrentInviteOrRequest(pool['id']);
+          final results = await repo.requestToJoinEESUpool(pool['id']);
           context.loaderOverlay.hide();
 
           results.fold((l) {
@@ -460,45 +426,16 @@ class _EESUpoolCard extends StatelessWidget {
           }, (r) {
             Navigator.pop(context);
             context.snackBarSuccess(
-              'Request revoked for ${pool['name']}',
+              'Request sent. The admin of ${pool['name']} will accept or decline.',
             );
             onRefresh?.call();
           });
         },
         child: Text(
-          'Revoke Request',
-          style: context.textTheme.labelSmall?.copyWith(
-            color: context.colorScheme.error,
-            fontSize: 14.5,
-          ),
-        ),
-      ),
-    );
-  }
-
-  Padding _sendRequest(BuildContext context, pool) {
-    return Padding(
-      padding: const EdgeInsets.only(top: 5),
-      child: InkWell(
-        onTap: () async {
-          context.loaderOverlay.show();
-          final repo = context.read<EESUpoolRepository>();
-          final results = await repo.createEESUpooolRequest(pool['id']);
-          context.loaderOverlay.hide();
-
-          results.fold((l) {
-            context.snackBarError(l.message);
-          }, (r) {
-            Navigator.pop(context);
-            context.snackBarSuccess('Requested to join ${pool['name']}');
-            onRefresh?.call();
-          });
-        },
-        child: Text(
-          'Request',
+          'Join Kasi Pool',
           style: context.textTheme.labelSmall?.copyWith(
             color: context.colorScheme.primary,
-            fontSize: 14.5,
+            fontSize: 15,
           ),
         ),
       ),
