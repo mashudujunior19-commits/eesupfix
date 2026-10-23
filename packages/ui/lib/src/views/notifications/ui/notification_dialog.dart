@@ -8,8 +8,32 @@ import 'package:ui/src/views/notifications/ui/notification_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 
-class NotificationsDialog extends StatelessWidget {
+class NotificationsDialog extends StatefulWidget {
   const NotificationsDialog({super.key});
+
+  @override
+  State<NotificationsDialog> createState() => _NotificationsDialogState();
+}
+
+class _NotificationsDialogState extends State<NotificationsDialog> {
+  /// Ids that were unseen when the list was opened. They keep their "new"
+  /// styling for this visit even though they are flagged seen straight away.
+  final Set<int> _newlySeen = {};
+  final Set<int> _requested = {};
+
+  void _markSeen(List<dynamic> notifications) {
+    final unseen = [
+      for (final n in notifications)
+        if (n.seenAt == null && !_requested.contains(n.id)) n.id as int
+    ];
+    if (unseen.isEmpty) return;
+    _requested.addAll(unseen);
+    _newlySeen.addAll(unseen);
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted) return;
+      context.read<NotificationsBloc>().add(MarkNotificationsSeenEvent(unseen));
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -27,6 +51,7 @@ class NotificationsDialog extends StatelessWidget {
           builder: (context, state) {
             if (state is NotificationsStreaming) {
               final notifications = state.notifications;
+              _markSeen(notifications);
 
               if (notifications.isEmpty) {
                 return FullScreenError(
@@ -41,6 +66,7 @@ class NotificationsDialog extends StatelessWidget {
                 itemBuilder: (context, index) {
                   return NotificationTile(
                     notification: notifications[index],
+                    isNew: _newlySeen.contains(notifications[index].id),
                   ).animate().slideIn(50.00 * index);
                 },
                 itemCount: notifications.length,

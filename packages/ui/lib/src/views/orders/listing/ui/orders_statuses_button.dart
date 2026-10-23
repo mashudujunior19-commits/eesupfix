@@ -58,7 +58,7 @@ class OrdersStatusesButton extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Text(
-                    'Statuses(${statuses.length})',
+                    'Status(${statuses.length})',
                     style: context.textTheme.labelMedium,
                   ),
                   5.sW,

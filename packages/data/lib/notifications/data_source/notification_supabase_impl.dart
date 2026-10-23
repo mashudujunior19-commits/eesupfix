@@ -17,7 +17,12 @@ class NotificationSupabaseImpl implements NotificationDataSource {
       userId,
     );
     await for (final event in stream) {
-      final notifications = event.map((e) => Notification.fromJson(e)).toList();
+      final cutoff = DateTime.now().subtract(const Duration(days: 30));
+      final notifications = event
+          .map((e) => Notification.fromJson(e))
+          .where((n) => n.createdAt.isAfter(cutoff))
+          .toList()
+        ..sort((a, b) => b.createdAt.compareTo(a.createdAt));
       yield notifications;
     }
   }

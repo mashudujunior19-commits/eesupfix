@@ -223,14 +223,14 @@ class _SendInvite extends StatelessWidget {
           : () async {
               if (item['membership_id'] != null) {
                 context.snackBarError(
-                  '$displayName is already a member of this EESUpool',
+                  '$displayName is already a member of this Kasi Pool',
                 );
                 return;
               }
 
               if (item['status'] != null) {
                 context.snackBarError(
-                  '$displayName already has an invite or a request to join this EESUpool',
+                  '$displayName already has an invite or a request to join this Kasi Pool',
                 );
                 return;
               }
@@ -258,11 +258,11 @@ class _SendInvite extends StatelessWidget {
 
               result.fold((l) {
                 context.snackBarError(
-                  '$displayName has already been invited to join this EESUpool',
+                  '$displayName has already been invited to join this Kasi Pool',
                 );
               }, (r) {
                 context.snackBarSuccess(
-                  '$displayName has been invited to join this EESUpool',
+                  '$displayName has been invited to join this Kasi Pool',
                 );
                 onRequestSetState.call();
               });
@@ -306,7 +306,7 @@ class _RevokeInvite extends StatelessWidget {
           : () async {
               if (item['membership_id'] != null) {
                 context.snackBarError(
-                  '$displayName is already a member of this EESUpool',
+                  '$displayName is already a member of this Kasi Pool',
                 );
                 return;
               }
@@ -400,7 +400,7 @@ class _AcceptInvite extends StatelessWidget {
                 context.snackBarError('Failed to accept the invite');
               }, (r) {
                 context.snackBarSuccess(
-                  '$displayName has been accepted to join this EESUpool',
+                  '$displayName has been accepted to join this Kasi Pool',
                 );
                 onRequestSetState.call();
               });

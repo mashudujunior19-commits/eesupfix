@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:bloc/bloc.dart';
@@ -56,6 +57,7 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
 
   List<ChatMessage> _serverChats = const [];
   final List<PendingChatMessage> _pending = [];
+  Timer? _poller;
 
   ChatBloc(this._poolRepo) : super(ChatInitial()) {
     on<ChatStreamStarted>((event, emit) async {
@@ -63,6 +65,12 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
         event.eesupoolId,
         200,
       );
+      // Safety net next to realtime: poll so messages from other members still
+      // arrive if a realtime event is missed.
+      _poller?.cancel();
+      _poller = Timer.periodic(const Duration(seconds: 15), (_) {
+        if (!isClosed) add(ChatRefreshRequested(event.eesupoolId));
+      });
       await emit.forEach(
         stream,
         onData: ((message) {
@@ -125,6 +133,12 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
       _pending.removeWhere((p) => p.localId == event.localId);
       emit(_loaded());
     });
+  }
+
+  @override
+  Future<void> close() {
+    _poller?.cancel();
+    return super.close();
   }
 
   ChatMessagesLoaded _loaded({String? notice}) => ChatMessagesLoaded(

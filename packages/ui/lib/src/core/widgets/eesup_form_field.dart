@@ -27,6 +27,7 @@ class EESUpTextFormField extends StatefulWidget {
     this.textAlign,
     this.autoFocus = false,
     this.validator,
+    this.footer,
   });
   final bool isRequired;
 
@@ -54,6 +55,10 @@ class EESUpTextFormField extends StatefulWidget {
   final void Function(String?)? onSubmit;
   final void Function()? onTap;
   final String? Function(String?)? validator;
+
+  /// Rendered directly under the input, as part of the same field (e.g. the
+  /// password rules or the "passwords match" hint).
+  final Widget? footer;
 
   @override
   State<EESUpTextFormField> createState() => _EESUpTextFormFieldState();
@@ -120,7 +125,8 @@ class _EESUpTextFormFieldState extends State<EESUpTextFormField> {
               ],
             ),
           Container(
-            margin: const EdgeInsets.only(top: 5, bottom: 10),
+            margin: EdgeInsets.only(
+                top: 5, bottom: widget.footer != null ? 0 : 10),
             padding: EdgeInsets.only(
               left: widget.prefixIcon != null ? 0 : 10,
               right:
@@ -192,6 +198,7 @@ class _EESUpTextFormFieldState extends State<EESUpTextFormField> {
               ),
             ),
           ),
+          if (widget.footer != null) widget.footer!,
         ],
       ),
     );

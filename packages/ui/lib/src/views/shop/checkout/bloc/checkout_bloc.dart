@@ -20,7 +20,7 @@ class CheckoutBloc extends Bloc<CheckoutEvent, CheckoutState> {
           Order(
             customerId: '',
             value: event.subTotal(),
-            paymentMethod: PaymentMethod.instapay,
+            paymentMethod: PaymentMethod.retailWallet,
             secretPin: 0000,
             status: OrderStatus.pending,
             products: event.products,

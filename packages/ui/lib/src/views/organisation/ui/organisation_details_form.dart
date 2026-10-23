@@ -1,3 +1,4 @@
+import 'package:data/geolocation/models/address.dart';
 import 'package:data/get_involved/models/contact_person.dart';
 import 'package:data/get_involved/models/contact_person_role.dart';
 import 'package:ui/src/core/extensions/context_alerts_ext.dart';
@@ -53,6 +54,7 @@ class _OrganisationDetailsFormState extends State<OrganisationDetailsForm> {
       padding: const EdgeInsets.only(left: 20, right: 20, top: 10, bottom: 60),
       children: [
         EESUpTextFormField(
+          key: ValueKey('org_name_${cubit.prefillEpoch}'),
           initialValue: form.organisationName,
           label: form.isNPO
               ? 'Name of NPO/Voluntary Association'
@@ -92,7 +94,19 @@ class _OrganisationDetailsFormState extends State<OrganisationDetailsForm> {
           ).animate().slideIn(60),
         ],
         if (form.requiresOrganisationDetails) ...[
+          if (cubit.savedAddresses.isNotEmpty)
+            EESUpDropdownFormField<Address>(
+              value: null,
+              label: 'Use a saved address',
+              hintText: 'Pick one of your saved addresses',
+              items: cubit.savedAddresses,
+              itemLabel: _addressLabel,
+              onChanged: (value) {
+                if (value != null) cubit.useSavedAddress(value);
+              },
+            ).animate().slideIn(70),
           EESUpTextFormField(
+            key: ValueKey('org_address_${cubit.prefillEpoch}'),
             initialValue: form.address,
             label: 'Address',
             hintText: form.isNPO
@@ -103,6 +117,7 @@ class _OrganisationDetailsFormState extends State<OrganisationDetailsForm> {
           ).animate().slideIn(75),
           if (form.requiresProvince)
             EESUpDropdownFormField<String>(
+              key: ValueKey('org_province_${cubit.prefillEpoch}'),
               value: provinceOptions.contains(form.province)
                   ? form.province
                   : null,
@@ -141,6 +156,7 @@ class _OrganisationDetailsFormState extends State<OrganisationDetailsForm> {
           ).animate().slideIn(90),
           for (var i = 0; i < form.contactPersons.length; i++)
             _ContactPersonFields(
+              key: ValueKey('contact_${i}_${cubit.prefillEpoch}'),
               index: i,
               contact: form.contactPersons[i],
               canRemove: i > 0,
@@ -185,6 +201,15 @@ class _OrganisationDetailsFormState extends State<OrganisationDetailsForm> {
         ),
       ],
     );
+  }
+
+  static String _addressLabel(Address a) {
+    final parts = <String>[];
+    for (final part in [a.streetAddress, a.suburb, a.city]) {
+      final p = part?.trim() ?? '';
+      if (p.isNotEmpty && !parts.contains(p)) parts.add(p);
+    }
+    return parts.isEmpty ? a.type : parts.join(', ');
   }
 
   void _updateOrganisationName(String value) {
@@ -367,6 +392,7 @@ class _KasiliftOptIn extends StatelessWidget {
 
 class _ContactPersonFields extends StatelessWidget {
   const _ContactPersonFields({
+    super.key,
     required this.index,
     required this.contact,
     required this.canRemove,

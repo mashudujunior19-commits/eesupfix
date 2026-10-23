@@ -66,7 +66,7 @@ class SettingsTab extends StatelessWidget {
             ),
             subtitle: Text(
               'When this is set to true, new members can request'
-              ' to join the EESUpool. If disabled, only admins'
+              ' to join the Kasi Pool. If disabled, only admins'
               ' have the ability to invite new members.',
               style: context.textTheme.bodySmall,
             ),
@@ -144,7 +144,7 @@ class SettingsTab extends StatelessWidget {
                 children: [
                   10.sH,
                   Text(
-                    'We use this location to make it easy for potential members to find the EESUpool.',
+                    'We use this location to make it easy for potential members to find the Kasi Pool.',
                     style: context.textTheme.bodySmall,
                   ),
                   if (pool.address != null)

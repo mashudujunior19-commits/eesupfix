@@ -48,13 +48,33 @@ abstract class OrderProduct with _$OrderProduct {
       _$OrderProductFromJson(json);
 }
 
+/// Merges lines for the same product into one, summing the quantities, so an
+/// item is always shown (and ordered) once. Keeps the original line order.
+List<OrderProduct> mergeDuplicateProducts(Iterable<OrderProduct> products) {
+  final merged = <int, OrderProduct>{};
+  for (final p in products) {
+    final existing = merged[p.productId];
+    merged[p.productId] = existing == null
+        ? p
+        : existing.copyWith(
+            quantity: existing.quantity + p.quantity,
+            customerAcceptedQty:
+                existing.customerAcceptedQty + p.customerAcceptedQty,
+            eesupreneurAcceptedQty:
+                existing.eesupreneurAcceptedQty + p.eesupreneurAcceptedQty,
+            damagedQty: existing.damagedQty + p.damagedQty,
+          );
+  }
+  return merged.values.toList();
+}
+
 class OrderProductConverter
     implements JsonConverter<List<OrderProduct>, List<dynamic>> {
   const OrderProductConverter();
 
   @override
   List<OrderProduct> fromJson(List<dynamic> json) {
-    return json.map((e) => OrderProduct.fromJson(e)).toList();
+    return mergeDuplicateProducts(json.map((e) => OrderProduct.fromJson(e)));
   }
 
   @override

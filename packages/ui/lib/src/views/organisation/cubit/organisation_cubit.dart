@@ -3,6 +3,10 @@ import 'package:data/get_involved/models/contact_person.dart';
 import 'package:data/get_involved/models/contact_person_role.dart';
 import 'package:data/get_involved/models/document_type.dart';
 import 'package:data/get_involved/models/picked_document.dart';
+import 'package:data/auth/models/profile.dart';
+import 'package:data/auth/repository/profile_repository.dart';
+import 'package:data/geolocation/models/address.dart';
+import 'package:data/geolocation/repository/geo_repository.dart';
 import 'package:data/get_involved/repository/get_involved_repository.dart';
 import 'package:ui/src/views/organisation/cubit/organisation_form.dart';
 
@@ -12,6 +16,79 @@ class OrganisationCubit extends Cubit<OrganisationForm> {
 
   OrganisationCubit(this._getInvolvedRepository)
       : super(OrganisationForm.initial());
+
+  /// The user's saved addresses, offered so an address is never re-typed.
+  List<Address> savedAddresses = const [];
+
+  /// Bumped whenever the form is filled programmatically (profile defaults,
+  /// picking a saved address) so the text fields, which only read their
+  /// `initialValue` once, are rebuilt to show the new values.
+  int prefillEpoch = 0;
+
+  /// Pre-fills the first contact person (name, email, phone) -- and the
+  /// organisation name for a corporate profile -- from the user's profile, and
+  /// loads their saved addresses.
+  Future<void> loadDefaults(
+    ProfileRepository profiles,
+    GeoRepository geo,
+  ) async {
+    final profile = (await profiles.fetchSessionProfile()).fold((_) => null, (p) => p);
+    final addresses =
+        (await geo.fetchUserAddresses()).fold((_) => <Address>[], (a) => a);
+    if (isClosed) return;
+    savedAddresses = addresses;
+    if (profile != null) _prefillFromProfile(profile);
+    prefillEpoch++;
+    emit(state.copyWith());
+  }
+
+  void _prefillFromProfile(Profile profile) {
+    bool blank(String? v) => v == null || v.trim().isEmpty;
+    final fullName = [profile.firstName, profile.lastName]
+        .where((e) => !blank(e))
+        .join(' ');
+    final name = fullName.isNotEmpty ? fullName : profile.corpName;
+
+    final contacts = [...state.contactPersons];
+    if (contacts.isNotEmpty) {
+      final first = contacts.first;
+      contacts[0] = ContactPerson(
+        id: first.id,
+        submissionId: first.submissionId,
+        name: blank(first.name) ? name : first.name,
+        email: blank(first.email) ? (profile.email ?? '') : first.email,
+        phone: blank(first.phone) ? (profile.phone ?? '') : first.phone,
+        role: first.role,
+      );
+    }
+    var form = state.copyWith(contactPersons: contacts);
+    if (blank(form.organisationName) && !blank(profile.corpName)) {
+      form = form.updateDetails(organisationName: profile.corpName);
+    }
+    emit(form);
+  }
+
+  /// Uses one of the user's saved addresses for the organisation's address
+  /// (and province when it is one of the offered provinces).
+  void useSavedAddress(Address address) {
+    final parts = <String>[];
+    for (final part in [
+      address.streetAddress,
+      address.suburb,
+      address.city,
+      address.postalCode,
+    ]) {
+      final p = part?.trim() ?? '';
+      if (p.isNotEmpty && !parts.contains(p)) parts.add(p);
+    }
+    prefillEpoch++;
+    emit(state.updateDetails(
+      address: parts.join(', '),
+      province: provinceOptions.contains(address.province)
+          ? address.province
+          : state.province,
+    ));
+  }
 
   void updateForm(OrganisationForm form) => emit(form);
 

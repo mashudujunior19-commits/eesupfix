@@ -1,11 +1,8 @@
-# melos_managed_dependency_overrides: flutter_iconly,material_design_icons_flutter
-# melos_managed_dependency_overrides: data,instapay_flutter
+# melos_managed_dependency_overrides: data,flutter_iconly,material_design_icons_flutter
 dependency_overrides:
   data:
     path: ../data
   flutter_iconly:
-    path: ..\\flutter_iconly_patched
-  instapay_flutter:
-    path: ../instapay
+    path: ..\flutter_iconly_patched
   material_design_icons_flutter:
-    path: ..\\material_design_icons_flutter_patched
+    path: ..\material_design_icons_flutter_patched

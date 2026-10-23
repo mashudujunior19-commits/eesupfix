@@ -17,3 +17,8 @@ final class SignInPressed extends AuthEvent {
 final class SignOutPressed extends AuthEvent {
   SignOutPressed();
 }
+
+final class SocialSignInPressed extends AuthEvent {
+  SocialSignInPressed(this.provider);
+  final SocialProvider provider;
+}

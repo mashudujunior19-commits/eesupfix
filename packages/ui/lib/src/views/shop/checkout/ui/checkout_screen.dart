@@ -4,7 +4,6 @@ import 'package:data/orders/repository/order_repository.dart';
 import 'package:ui/app_route.gr.dart' as rout;
 import 'package:ui/src/core/extensions/bg_image_deco_ext.dart';
 import 'package:ui/src/core/extensions/context_theme_ext.dart';
-import 'package:ui/src/core/extensions/sizedbox_ext.dart';
 import 'package:ui/src/views/shop/cart/bloc/cart_bloc.dart';
 import 'package:ui/src/views/shop/checkout/bloc/checkout_bloc.dart';
 import 'package:ui/src/views/shop/checkout/ui/steps/address_selection_step.dart';
@@ -47,60 +46,83 @@ class _CheckoutScreenState extends State<CheckoutScreen>
     });
   }
 
+  /// True once an order was actually placed/paid. Only then is the cart
+  /// cleared; an unfinished or failed checkout keeps the cart as it was.
+  bool _isPlaced(CheckoutState state) =>
+      state is CheckoutCompleted && state.isSuccess;
+
+  void _goToMainPage(BuildContext context) {
+    context.router.pushAll([const rout.OverviewRoute()]);
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => CheckoutBloc(context.read<OrderRepository>())
         ..add(CheckoutStarted(widget.products)),
-      child: SizedBox(
-        child: Scaffold(
-          appBar: AppBar(
-            leading: BackButton(
-              onPressed: () {
-                if (index > 0 && index != 4) {
-                  _tabController.animateTo(index - 1);
-                } else if (index == 4) {
-                  context.read<CartBloc>().add(CartCleared());
-                  context.router.pushAll([const rout.OverviewRoute()]);
-                } else {
-                  Navigator.pop(context);
-                }
-              },
-            ),
-            title: const Text('Checkout'),
-          ),
-          body: SafeArea(
-            child: Container(
-              height: context.height,
-              width: context.width,
-              decoration: context.bgImage,
-              child: Column(
-                children: [
-                  BlocBuilder<CheckoutBloc, CheckoutState>(
-                    builder: (context, state) {
-                      if (state is! CheckoutCompleted) {
-                        return StepIndicator(activeStep: index);
+      child: BlocConsumer<CheckoutBloc, CheckoutState>(
+        // The cart empties by itself as soon as the order has been placed.
+        listenWhen: (previous, current) =>
+            !_isPlaced(previous) && _isPlaced(current),
+        listener: (context, state) =>
+            context.read<CartBloc>().add(CartCleared()),
+        builder: (context, checkoutState) {
+          final placed = _isPlaced(checkoutState);
+          return PopScope(
+            // After a successful checkout the system back gesture goes to the
+            // main page instead of back into the (now empty) checkout flow.
+            canPop: !placed,
+            onPopInvokedWithResult: (didPop, _) {
+              if (!didPop && placed) _goToMainPage(context);
+            },
+            child: SizedBox(
+              child: Scaffold(
+                appBar: AppBar(
+                  leading: BackButton(
+                    onPressed: () {
+                      if (placed) {
+                        _goToMainPage(context);
+                      } else if (index > 0 && index != 4) {
+                        _tabController.animateTo(index - 1);
+                      } else {
+                        // Includes a failed/unfinished checkout: the cart is
+                        // left untouched.
+                        Navigator.pop(context);
                       }
-                      return 0.sW;
                     },
                   ),
-                  Expanded(
-                    child: TabBarView(
-                      controller: _tabController,
+                  title: const Text('Checkout'),
+                ),
+                body: SafeArea(
+                  child: Container(
+                    height: context.height,
+                    width: context.width,
+                    decoration: context.bgImage,
+                    child: Column(
                       children: [
-                        AddressSelectionStep(tabController: _tabController),
-                        CollectionStep(tabController: _tabController),
-                        PaymentMethodStep(tabController: _tabController),
-                        SummaryStep(tabController: _tabController),
-                        const ResultStep(),
+                        if (checkoutState is! CheckoutCompleted)
+                          StepIndicator(activeStep: index),
+                        Expanded(
+                          child: TabBarView(
+                            controller: _tabController,
+                            children: [
+                              AddressSelectionStep(
+                                  tabController: _tabController),
+                              CollectionStep(tabController: _tabController),
+                              PaymentMethodStep(tabController: _tabController),
+                              SummaryStep(tabController: _tabController),
+                              const ResultStep(),
+                            ],
+                          ),
+                        )
                       ],
                     ),
-                  )
-                ],
+                  ),
+                ),
               ),
             ),
-          ),
-        ),
+          );
+        },
       ),
     );
   }

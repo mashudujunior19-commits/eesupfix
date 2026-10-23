@@ -1,5 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:data/auth/repository/auth_repository.dart';
+import 'package:data/auth/repository/profile_repository.dart';
 import 'package:loader_overlay/loader_overlay.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:ui/app_route.gr.dart';
@@ -134,6 +135,16 @@ class _RegisterScreenState extends State<RegisterScreen>
                 // value == false: OTP verification failed
                 // value == null: Dialog dismissed without action
                 if (value == true) {
+                  // Make sure the name / email / phone given at sign-up end up
+                  // on the profile, for phone and email registrations alike.
+                  context.read<ProfileRepository>().saveSignUpDetails(
+                        firstName: state.isCorp ? null : state.firstName,
+                        lastName: state.isCorp ? null : state.lastName,
+                        corpName: state.isCorp ? state.corpName : null,
+                        email: state.email,
+                        phone: state.phone,
+                        idNumber: state.isCorp ? null : state.idNumber,
+                      );
                   _tabController.animateTo(_tabController.index + 1);
                 } else if (value == false) {
                   context.snackBarError('OTP verification failed');

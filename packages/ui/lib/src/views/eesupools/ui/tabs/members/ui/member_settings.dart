@@ -128,14 +128,23 @@ class MemberSettingsDialog extends StatelessWidget {
                         }).toList(),
                         // After selecting the desired option,it will
                         // change button value to selected value
-                        onChanged: (EESUpoolMemberRole? newValue) {
-                          if (newValue == null) return;
-
-                          context.read<MemberSettingsBloc>().add(
-                                MemberSettingsUpdated(
-                                  member.copyWith(role: newValue),
-                                ),
-                              );
+                        onChanged: (EESUpoolMemberRole? newValue) async {
+                          if (newValue == null || newValue == member.role) {
+                            return;
+                          }
+                          final bloc = context.read<MemberSettingsBloc>();
+                          final sure = await context.confirmAction(
+                            'Change role',
+                            'Change ${selectedMember.fullName}\'s role from '
+                                '${member.role} to $newValue?',
+                            confirmText: 'Yes, change',
+                          );
+                          if (!sure) return;
+                          bloc.add(
+                            MemberSettingsUpdated(
+                              member.copyWith(role: newValue),
+                            ),
+                          );
                         },
                       ),
                     ),
@@ -171,10 +180,23 @@ class MemberSettingsDialog extends StatelessWidget {
                     ),
                     if (pool.type == EESUpoolType.kasi)
                       ListTile(
-                        onTap: () {
-                          context.router.push(
-                            TransferMemberRoute(member: member),
-                          );
+                        onTap: () async {
+                          // Transferring takes the member out of this pool, so
+                          // the same guard rails as removal apply.
+                          final router = context.router;
+                          final res = await context
+                              .read<EESUpoolRepository>()
+                              .memberRemovalBlocker(
+                                member.eesupoolId,
+                                member.userId,
+                              );
+                          if (!context.mounted) return;
+                          final blocked = res.fold((l) => null, (r) => r);
+                          if (blocked != null) {
+                            context.snackBarError(blocked);
+                            return;
+                          }
+                          router.push(TransferMemberRoute(member: member));
                         },
                         contentPadding: const EdgeInsets.only(top: 15),
                         title: Text(
@@ -192,30 +214,36 @@ class MemberSettingsDialog extends StatelessWidget {
                         ),
                         trailing: const Icon(IconlyLight.arrowRight2, size: 20),
                       ),
-                    if (pool.type != EESUpoolType.kasi)
-                      ListTile(
+                    ListTile(
                         onTap: () async {
+                          final repo = context.read<EESUpoolRepository>();
+                          final sure = await context.confirmAction(
+                            'Remove member',
+                            'Are you sure you want to remove '
+                                '${selectedMember.fullName} from this pool?',
+                            confirmText: 'Yes, remove',
+                            destructive: true,
+                          );
+                          if (!sure || !context.mounted) return;
+
                           context.loaderOverlay.show();
-                          final res = await context
-                              .read<EESUpoolRepository>()
-                              .deleteEESUpoolMember(
-                                member.eesupoolId,
-                                member.userId,
-                              );
+                          final res = await repo.removeEESUpoolMember(
+                            member.eesupoolId,
+                            member.userId,
+                          );
+                          if (!context.mounted) return;
                           context.loaderOverlay.hide();
 
                           res.fold((l) {
                             context.snackBarError(
                               'Failed to remove the member',
                             );
-                          }, (r) {
-                            if (r) {
+                          }, (blockedReason) {
+                            if (blockedReason == null) {
                               context.snackBarSuccess('Member removed');
                               Navigator.of(context).pop();
                             } else {
-                              context.snackBarError(
-                                'Failed to remove the member',
-                              );
+                              context.snackBarError(blockedReason);
                             }
                           });
                         },

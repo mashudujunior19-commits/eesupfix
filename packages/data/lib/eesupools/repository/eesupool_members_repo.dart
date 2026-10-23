@@ -85,6 +85,16 @@ extension EESUpoolMembersRepo on EESUpoolRepository {
     return result;
   }
 
+  /// Asks the pool's admins to let the caller in. Any earlier request or invite
+  /// is replaced so the admins always get a fresh notification to accept or
+  /// decline.
+  Future<Either<EESUpException, void>> requestToJoinEESUpool(int poolId) async {
+    return authRepository.executeFutureWithAuth((id) async {
+      await dataSource.deleteInviteOrRequest(id, poolId);
+      await dataSource.createEESUpoolRequest(id, poolId, 'Request');
+    });
+  }
+
   Future<Either<EESUpException, void>> joinEESUpoool(
     int poolId,
   ) async {
@@ -242,6 +252,24 @@ extension EESUpoolMembersRepo on EESUpoolRepository {
       return r;
     });
     return result;
+  }
+
+  /// Why [userId] can't be removed from the pool (they hold a role or have an
+  /// incomplete order), or null when they can.
+  Future<Either<EESUpException, String?>> memberRemovalBlocker(
+      int poolId, String userId) async {
+    return authRepository.executeFutureWithAuth(
+      (_) => dataSource.memberRemovalBlocker(poolId, userId),
+    );
+  }
+
+  /// Removes a member as a pool admin. Right(null) on success, Right(reason)
+  /// when the removal was refused.
+  Future<Either<EESUpException, String?>> removeEESUpoolMember(
+      int poolId, String userId) async {
+    return authRepository.executeFutureWithAuth(
+      (_) => dataSource.removeMember(poolId, userId),
+    );
   }
 
   Future<Either<EESUpException, bool>> deleteEESUpoolMember(int poolId,String userId) async {

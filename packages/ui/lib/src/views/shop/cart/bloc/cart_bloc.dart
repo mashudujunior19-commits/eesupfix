@@ -25,8 +25,9 @@ class CartBloc extends Bloc<CartEvent, CartState> {
           .indexWhere((element) => element.productId == product.productId);
 
       if (index != -1) {
-        currentCart[index] = currentCart[index]
-            .copyWith(quantity: currentCart[index].quantity + 1);
+        currentCart[index] = currentCart[index].copyWith(
+            quantity: currentCart[index].quantity +
+                (product.quantity > 0 ? product.quantity : 1));
       } else {
         currentCart.add(
           OrderProduct(
