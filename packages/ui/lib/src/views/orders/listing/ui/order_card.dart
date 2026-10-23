@@ -292,6 +292,7 @@ class OrderCard extends StatelessWidget {
       case OrderStatus.cancelled:
         return Colors.red;
       case OrderStatus.dispatched:
+      case OrderStatus.collected:
         return theme.colorScheme.primary;
       case OrderStatus.packaged:
         return Colors.orange;
