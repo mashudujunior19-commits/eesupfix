@@ -1,21 +1,23 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:ui/app_route.gr.dart';
-import 'package:ui/src/core/extensions/context_alerts_ext.dart';
-import 'package:ui/src/core/extensions/context_theme_ext.dart';
-import 'package:ui/src/core/extensions/sizedbox_ext.dart';
-import 'package:ui/src/core/extensions/slide_in_animation_ext.dart';
-import 'package:ui/src/core/widgets/eesup_form_field.dart';
-import 'package:ui/src/core/widgets/eesup_scaffold.dart';
-import 'package:ui/src/views/auth/register/ui/email_and_phone_tab_container.dart';
-import 'package:ui/src/views/auth/sign_in/ui/background_decoration.dart';
-import 'package:ui/src/views/auth/sign_in/bloc/auth_bloc.dart';
-import 'package:flutter_highlighted_text/flutter_highlighted_text.dart';
+import 'package:data/auth/data_source/abstract_auth_data_source.dart'
+    show SocialProvider;
+import 'package:data/auth/repository/auth_repository.dart';
+import 'package:data/utils/localize_south_african_phone.dart';
+import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:loader_overlay/loader_overlay.dart';
+import 'package:ui/app_route.gr.dart';
+import 'package:ui/src/core/extensions/context_alerts_ext.dart';
+import 'package:ui/src/core/extensions/slide_in_animation_ext.dart';
+import 'package:ui/src/core/widgets/eesup_scaffold.dart';
+import 'package:ui/src/views/auth/landing/van_scene.dart';
+import 'package:ui/src/views/auth/sign_in/bloc/auth_bloc.dart';
 
+/// Sign-in page: a green branded header, then a rounded white sheet with a
+/// single email-or-phone field, the password, a gradient Log In button and
+/// Google / Apple sign-in.
 @RoutePage()
 class SignInScreen extends StatefulWidget {
   const SignInScreen({super.key});
@@ -25,9 +27,22 @@ class SignInScreen extends StatefulWidget {
 }
 
 class _SignInScreenState extends State<SignInScreen> {
-  String? _phone;
-  String? _email;
+  String _identifier = '';
   String _password = '';
+
+  @override
+  void initState() {
+    super.initState();
+    // A Google / Apple login that isn't linked to a registered account is
+    // turned away before this page is shown again; tell the user why.
+    final notice = AuthRepository.signInNotice;
+    if (notice != null) {
+      AuthRepository.signInNotice = null;
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (mounted) context.snackBarError(notice);
+      });
+    }
+  }
 
   @override
   void dispose() {
@@ -39,12 +54,26 @@ class _SignInScreenState extends State<SignInScreen> {
   void _handleSignIn() {
     FocusScope.of(context).unfocus();
 
-    final email = _email?.trim();
-    final phone = _phone?.trim();
-
-    if ((email == null || email.isEmpty) && (phone == null || phone.isEmpty)) {
+    final id = _identifier.trim();
+    if (id.isEmpty) {
       context.snackBarError('Enter an email or phone number');
       return;
+    }
+
+    String? email;
+    String? phone;
+    if (id.contains('@')) {
+      if (!EmailValidator.validate(id)) {
+        context.snackBarError('Enter a valid email address');
+        return;
+      }
+      email = id;
+    } else {
+      phone = localizeSAPhoneNumber(id);
+      if (phone == null) {
+        context.snackBarError('Enter a valid South African phone number');
+        return;
+      }
     }
 
     if (_password.isEmpty) {
@@ -76,127 +105,428 @@ class _SignInScreenState extends State<SignInScreen> {
             }
           }
         },
-        child: BlocBuilder<AuthBloc, AuthBlocState>(
-          builder: (context, state) {
-            return BackgroundDecoration(
-              key: const Key('background_decoration'),
-              child: Center(
-                child: ListView(
-                  padding: const EdgeInsets.only(
-                    left: 20,
-                    right: 20,
-                    top: 100,
-                    bottom: 100,
+        child: Scaffold(
+          backgroundColor: Colors.white,
+          body: LayoutBuilder(
+            builder: (context, constraints) {
+              return SingleChildScrollView(
+                keyboardDismissBehavior:
+                    ScrollViewKeyboardDismissBehavior.onDrag,
+                child: ConstrainedBox(
+                  constraints:
+                      BoxConstraints(minHeight: constraints.maxHeight),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      const _Header(),
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(24, 28, 24, 24),
+                        child: _Form(
+                          onIdentifierChanged: (v) => _identifier = v,
+                          onPasswordChanged: (v) => _password = v,
+                          onSubmit: _handleSignIn,
+                        ),
+                      ),
+                    ],
                   ),
-                  children: [
-                    const _WelcomeMessage(),
-                    20.sH,
-                    EmailAndPhoneTabContainer(
-                      onEmailChanged: (e) {
-                        setState(() {
-                          _email = e?.trim();
-                          _phone = null;
-                        });
-                      },
-                      onPhoneChanged: (p) {
-                        setState(() {
-                          _phone = p?.trim();
-                          _email = null;
-                        });
-                      },
-                    ).animate().slideIn(100),
-                    EESUpTextFormField(
-                      key: const Key('password_text_field'),
-                      onChanged: (password) {
-                        _password = password;
-                      },
-                      isPassword: true,
-                      label: 'Password',
-                    ).animate().slideIn(150),
-                    20.sH,
-                    const _ForgotPasswordButton(
-                      key: Key('forgot_password_button'),
-                    ).animate().slideIn(150),
-                    ElevatedButton(
-                      key: const Key('sign_in_button'),
-                      onPressed: _handleSignIn,
-                      child: const Text('Sign In'),
-                    ).animate().slideIn(200),
-                    20.sH,
-                    HighlightedText(
-                      'Don\'t  have an account?  Register',
-                      patterns: const ['Register'],
-                      style: context.textTheme.displayMedium!.copyWith(
-                        color: Colors.grey.shade800,
-                        fontSize: 14,
-                        fontWeight: FontWeight.w500,
-                      ),
-                      dotAll: true,
-                      highLightStyle: context.textTheme.displayMedium!.copyWith(
-                        color: context.colorScheme.primary,
-                        fontSize: 14,
-                        fontWeight: FontWeight.w500,
-                      ),
-                      textAlign: TextAlign.center,
-                      onTap: (p) {
-                        context.router.push(const RegisterRoute());
-                      },
-                    ).animate().slideIn(250)
-                  ],
                 ),
-              ),
-            );
-          },
+              );
+            },
+          ),
         ),
       ),
     );
   }
 }
 
-class _ForgotPasswordButton extends StatelessWidget {
-  const _ForgotPasswordButton({super.key});
+class _Header extends StatelessWidget {
+  const _Header();
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        TextButton(
-          key: key,
-          onPressed: () {
-            context.router.push(const ResetPasswordRoute());
-          },
-          child: const Text('Forgot Password?'),
+    final textTheme = Theme.of(context).textTheme;
+    return Container(
+      height: 236 + MediaQuery.paddingOf(context).top,
+      decoration: const BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: [TowrisBrand.deepGreen, TowrisBrand.green, TowrisBrand.lightGreen],
         ),
+        borderRadius: BorderRadius.only(
+          bottomLeft: Radius.circular(40),
+          bottomRight: Radius.circular(40),
+        ),
+      ),
+      child: SafeArea(
+        bottom: false,
+        child: Stack(
+          children: [
+            // Soft decorative shapes behind the illustration.
+            Positioned(
+              right: -40,
+              top: 10,
+              child: Container(
+                width: 190,
+                height: 190,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: Colors.white.withOpacity(.08),
+                ),
+              ),
+            ),
+            Positioned(
+              left: 24,
+              top: 28,
+              right: 150,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    TowrisBrand.name,
+                    style: textTheme.displayLarge?.copyWith(
+                      fontSize: 40,
+                      fontWeight: FontWeight.w900,
+                      letterSpacing: -1,
+                      height: 1,
+                      color: Colors.white,
+                    ),
+                  ).animate().fadeIn(duration: 400.ms).slideY(begin: .2, end: 0),
+                  const SizedBox(height: 10),
+                  Text(
+                    'Groceries, delivered\nright to your community.',
+                    style: textTheme.bodyMedium?.copyWith(
+                      fontSize: 14,
+                      height: 1.35,
+                      color: Colors.white.withOpacity(.9),
+                    ),
+                  ).animate().fadeIn(delay: 150.ms, duration: 400.ms),
+                ],
+              ),
+            ),
+            Positioned(
+              right: 14,
+              bottom: 26,
+              width: 200,
+              height: 100,
+              child: const VanIllustration(wheelTurn: .6)
+                  .animate()
+                  .slideX(begin: .4, end: 0, duration: 700.ms, curve: Curves.easeOutCubic)
+                  .fadeIn(duration: 500.ms),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _Form extends StatelessWidget {
+  const _Form({
+    required this.onIdentifierChanged,
+    required this.onPasswordChanged,
+    required this.onSubmit,
+  });
+
+  final ValueChanged<String> onIdentifierChanged;
+  final ValueChanged<String> onPasswordChanged;
+  final VoidCallback onSubmit;
+
+  @override
+  Widget build(BuildContext context) {
+    final textTheme = Theme.of(context).textTheme;
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        Text(
+          'Welcome Back',
+          style: textTheme.displayMedium?.copyWith(
+            fontSize: 30,
+            fontWeight: FontWeight.w800,
+            color: const Color(0xFF1A1F1C),
+          ),
+        ).animate().slideIn(0),
+        const SizedBox(height: 22),
+        _PillField(
+          key: const Key('identifier_text_field'),
+          hint: 'Email or phone',
+          icon: Icons.mail_outline_rounded,
+          keyboardType: TextInputType.emailAddress,
+          textInputAction: TextInputAction.next,
+          onChanged: onIdentifierChanged,
+        ).animate().slideIn(60),
+        const SizedBox(height: 14),
+        _PillField(
+          key: const Key('password_text_field'),
+          hint: 'Password',
+          icon: Icons.lock_outline_rounded,
+          isPassword: true,
+          textInputAction: TextInputAction.done,
+          onChanged: onPasswordChanged,
+          onSubmitted: (_) => onSubmit(),
+        ).animate().slideIn(120),
+        Align(
+          alignment: Alignment.centerRight,
+          child: TextButton(
+            key: const Key('forgot_password_button'),
+            onPressed: () => context.router.push(const ResetPasswordRoute()),
+            child: const Text(
+              'Forgot Password?',
+              style: TextStyle(
+                color: TowrisBrand.green,
+                fontWeight: FontWeight.w700,
+              ),
+            ),
+          ),
+        ).animate().slideIn(150),
+        const SizedBox(height: 4),
+        _GradientButton(
+          key: const Key('sign_in_button'),
+          label: 'Log In',
+          onPressed: onSubmit,
+        ).animate().slideIn(180),
+        const SizedBox(height: 24),
+        const _OrDivider().animate().slideIn(210),
+        const SizedBox(height: 18),
+        Row(
+          children: [
+            Expanded(
+              child: _SocialButton(
+                label: 'Google',
+                asset: 'assets/images/google.png',
+                onPressed: () => context
+                    .read<AuthBloc>()
+                    .add(SocialSignInPressed(SocialProvider.google)),
+              ),
+            ),
+            const SizedBox(width: 14),
+            Expanded(
+              child: _SocialButton(
+                label: 'Apple',
+                asset: 'assets/images/apple-logo.png',
+                onPressed: () => context
+                    .read<AuthBloc>()
+                    .add(SocialSignInPressed(SocialProvider.apple)),
+              ),
+            ),
+          ],
+        ).animate().slideIn(240),
+        const SizedBox(height: 10),
+        Text(
+          'Google and Apple sign-in is for existing Towris accounts only.',
+          textAlign: TextAlign.center,
+          style: textTheme.bodySmall?.copyWith(
+            color: Colors.grey.shade600,
+            fontSize: 12,
+          ),
+        ).animate().slideIn(255),
+        const SizedBox(height: 20),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              "Don't have an account? ",
+              style: textTheme.bodyMedium?.copyWith(
+                color: Colors.grey.shade700,
+                fontSize: 14,
+              ),
+            ),
+            GestureDetector(
+              onTap: () => context.router.push(const RegisterRoute()),
+              child: const Text(
+                'Sign Up',
+                style: TextStyle(
+                  color: TowrisBrand.green,
+                  fontWeight: FontWeight.w800,
+                  fontSize: 14,
+                ),
+              ),
+            ),
+          ],
+        ).animate().slideIn(270),
       ],
     );
   }
 }
 
-class _WelcomeMessage extends StatelessWidget {
-  const _WelcomeMessage();
+class _PillField extends StatefulWidget {
+  const _PillField({
+    super.key,
+    required this.hint,
+    required this.icon,
+    this.isPassword = false,
+    this.keyboardType,
+    this.textInputAction,
+    this.onChanged,
+    this.onSubmitted,
+  });
+
+  final String hint;
+  final IconData icon;
+  final bool isPassword;
+  final TextInputType? keyboardType;
+  final TextInputAction? textInputAction;
+  final ValueChanged<String>? onChanged;
+  final ValueChanged<String>? onSubmitted;
+
+  @override
+  State<_PillField> createState() => _PillFieldState();
+}
+
+class _PillFieldState extends State<_PillField> {
+  bool _obscure = true;
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        SizedBox(
-          width: MediaQuery.of(context).size.width * 0.45,
-          child: SvgPicture.asset(
-            'assets/images/logo.svg',
-            alignment: Alignment.center,
-            fit: BoxFit.contain,
+    OutlineInputBorder border(Color c, double w) => OutlineInputBorder(
+          borderRadius: BorderRadius.circular(32),
+          borderSide: BorderSide(color: c, width: w),
+        );
+    return TextField(
+      obscureText: widget.isPassword && _obscure,
+      keyboardType: widget.keyboardType,
+      textInputAction: widget.textInputAction,
+      autocorrect: false,
+      enableSuggestions: !widget.isPassword,
+      onChanged: widget.onChanged,
+      onSubmitted: widget.onSubmitted,
+      style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+      decoration: InputDecoration(
+        hintText: widget.hint,
+        hintStyle: TextStyle(color: Colors.grey.shade500, fontSize: 16),
+        filled: true,
+        fillColor: const Color(0xFFF2F1EB),
+        contentPadding: const EdgeInsets.symmetric(vertical: 20),
+        prefixIcon: Icon(widget.icon, color: Colors.grey.shade700),
+        suffixIcon: widget.isPassword
+            ? IconButton(
+                onPressed: () => setState(() => _obscure = !_obscure),
+                icon: Icon(
+                  _obscure
+                      ? Icons.visibility_off_outlined
+                      : Icons.visibility_outlined,
+                  color: Colors.grey.shade600,
+                ),
+              )
+            : null,
+        border: border(Colors.transparent, 0),
+        enabledBorder: border(Colors.transparent, 0),
+        focusedBorder: border(TowrisBrand.lightGreen, 1.6),
+      ),
+    );
+  }
+}
+
+class _GradientButton extends StatelessWidget {
+  const _GradientButton({super.key, required this.label, required this.onPressed});
+
+  final String label;
+  final VoidCallback onPressed;
+
+  @override
+  Widget build(BuildContext context) {
+    return Material(
+      color: Colors.transparent,
+      child: Ink(
+        height: 58,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(32),
+          gradient: const LinearGradient(
+            colors: [TowrisBrand.deepGreen, TowrisBrand.green, TowrisBrand.lightGreen],
           ),
-        ).animate().slideIn(0),
-        15.sH,
-        Text(
-          'Welcome',
-          textAlign: TextAlign.center,
-          style: context.textTheme.displayMedium,
-        ).animate().slideIn(50),
+          boxShadow: [
+            BoxShadow(
+              color: TowrisBrand.green.withOpacity(.35),
+              blurRadius: 16,
+              offset: const Offset(0, 6),
+            ),
+          ],
+        ),
+        child: InkWell(
+          borderRadius: BorderRadius.circular(32),
+          onTap: onPressed,
+          child: Center(
+            child: Text(
+              label,
+              style: const TextStyle(
+                color: Colors.white,
+                fontSize: 18,
+                fontWeight: FontWeight.w700,
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _OrDivider extends StatelessWidget {
+  const _OrDivider();
+
+  @override
+  Widget build(BuildContext context) {
+    final line = Expanded(
+      child: Divider(color: Colors.grey.shade300, thickness: 1),
+    );
+    return Row(
+      children: [
+        line,
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 14),
+          child: Text(
+            'Or continue with',
+            style: TextStyle(color: Colors.grey.shade600, fontSize: 14),
+          ),
+        ),
+        line,
       ],
+    );
+  }
+}
+
+class _SocialButton extends StatelessWidget {
+  const _SocialButton({
+    required this.label,
+    required this.asset,
+    required this.onPressed,
+  });
+
+  final String label;
+  final String asset;
+  final VoidCallback onPressed;
+
+  @override
+  Widget build(BuildContext context) {
+    return Semantics(
+      button: true,
+      label: 'Sign in with $label',
+      child: Material(
+        color: const Color(0xFFF2F1EB),
+        borderRadius: BorderRadius.circular(32),
+        child: InkWell(
+          borderRadius: BorderRadius.circular(32),
+          onTap: onPressed,
+          child: SizedBox(
+            height: 56,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Image.asset(asset, width: 24, height: 24),
+                const SizedBox(width: 10),
+                Text(
+                  label,
+                  style: const TextStyle(
+                    fontSize: 17,
+                    fontWeight: FontWeight.w700,
+                    color: Color(0xFF1A1F1C),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
     );
   }
 }
