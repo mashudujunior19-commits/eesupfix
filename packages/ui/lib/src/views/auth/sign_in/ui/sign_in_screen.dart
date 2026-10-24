@@ -145,8 +145,13 @@ class _Header extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
+    final size = MediaQuery.sizeOf(context);
+    // Scales with the screen so it fits small and large phones, with notches.
+    final height = (size.height * .29).clamp(210.0, 300.0);
+    final vanWidth = (size.width * .5).clamp(150.0, 240.0);
+    final titleSize = (size.width * .105).clamp(34.0, 52.0);
     return Container(
-      height: 236 + MediaQuery.paddingOf(context).top,
+      height: height + MediaQuery.paddingOf(context).top,
       decoration: const BoxDecoration(
         gradient: LinearGradient(
           begin: Alignment.topLeft,
@@ -162,13 +167,13 @@ class _Header extends StatelessWidget {
         bottom: false,
         child: Stack(
           children: [
-            // Soft decorative shapes behind the illustration.
+            // Soft decorative shape behind the illustration.
             Positioned(
               right: -40,
-              top: 10,
+              bottom: -30,
               child: Container(
-                width: 190,
-                height: 190,
+                width: vanWidth * 1.1,
+                height: vanWidth * 1.1,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   color: Colors.white.withOpacity(.08),
@@ -177,42 +182,47 @@ class _Header extends StatelessWidget {
             ),
             Positioned(
               left: 24,
-              top: 28,
-              right: 150,
+              right: 24,
+              top: 24,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
                     TowrisBrand.name,
                     style: textTheme.displayLarge?.copyWith(
-                      fontSize: 40,
+                      fontSize: titleSize,
                       fontWeight: FontWeight.w900,
                       letterSpacing: -1,
                       height: 1,
                       color: Colors.white,
                     ),
-                  ).animate().fadeIn(duration: 400.ms).slideY(begin: .2, end: 0),
+                  ).animate().fadeIn(duration: 300.ms).slideY(begin: .2, end: 0),
                   const SizedBox(height: 10),
-                  Text(
-                    'Groceries, delivered\nright to your community.',
-                    style: textTheme.bodyMedium?.copyWith(
-                      fontSize: 14,
-                      height: 1.35,
-                      color: Colors.white.withOpacity(.9),
+                  FittedBox(
+                    fit: BoxFit.scaleDown,
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      TowrisBrand.slogan,
+                      style: textTheme.titleMedium?.copyWith(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w700,
+                        letterSpacing: 3,
+                        color: Colors.white.withOpacity(.95),
+                      ),
                     ),
-                  ).animate().fadeIn(delay: 150.ms, duration: 400.ms),
+                  ).animate().fadeIn(delay: 100.ms, duration: 300.ms),
                 ],
               ),
             ),
             Positioned(
-              right: 14,
-              bottom: 26,
-              width: 200,
-              height: 100,
+              right: 16,
+              bottom: 22,
+              width: vanWidth,
+              height: vanWidth * .5,
               child: const VanIllustration(wheelTurn: .6)
                   .animate()
-                  .slideX(begin: .4, end: 0, duration: 700.ms, curve: Curves.easeOutCubic)
-                  .fadeIn(duration: 500.ms),
+                  .slideX(begin: .4, end: 0, duration: 500.ms, curve: Curves.easeOutCubic)
+                  .fadeIn(duration: 350.ms),
             ),
           ],
         ),
