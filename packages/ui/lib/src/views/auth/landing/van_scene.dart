@@ -9,7 +9,7 @@ abstract final class TowrisBrand {
   static const Color lightGreen = Color(0xFF8CC63F);
   static const Color mint = Color(0xFFE6F5EA);
   static const String name = 'Towris';
-  static const String slogan = 'Own your economy.';
+  static const String slogan = 'OWN YOUR ECONOMY';
 }
 
 /// A flat-vector scene of a Towris delivery van carrying groceries past a row
