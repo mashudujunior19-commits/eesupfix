@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:ui/src/core/extensions/context_theme_ext.dart';
 import 'package:ui/app_route.gr.dart';
+import 'package:ui/src/views/auth/profile/bloc/profile_bloc.dart';
 import 'package:ui/src/views/finances/wallets/bloc/wallets_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -17,7 +18,10 @@ class WalletCard extends StatelessWidget {
     return GestureDetector(
       onTap: () async {
         context.router.push(WalletViewRoute(id: wallet.id)).then((value) {
-          context.read<WalletsBloc>().add(WalletsFetched());
+          final profileState = context.read<ProfileBloc>().state;
+          final isVerified =
+              profileState is ProfileLoaded && profileState.profile.isVerified;
+          context.read<WalletsBloc>().add(WalletsFetched(isVerified: isVerified));
         });
       },
       child: Container(

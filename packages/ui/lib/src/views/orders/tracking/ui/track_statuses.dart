@@ -191,7 +191,10 @@ class TrackStatuses extends StatelessWidget {
                   order.status == OrderStatus.ready) {
                 context
                     .showBottomSheetDialog(
-                  child: OrderSecretPinDialog(pin: order.secretPin.toString()),
+                  child: OrderSecretPinDialog(
+                    pin: order.secretPin.toString(),
+                    products: order.products,
+                  ),
                 )
                     .then((value) {
                   if (value == true) {

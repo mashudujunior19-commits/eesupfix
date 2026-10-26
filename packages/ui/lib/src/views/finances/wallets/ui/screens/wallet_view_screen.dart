@@ -171,10 +171,36 @@ class WalletViewScreen extends StatelessWidget {
                                 textAlign: TextAlign.start,
                               ),
                             ),
-                            for (int i = 0; i < transactions.length; i++)
-                              TransactionCard(transaction: transactions[i])
-                                  .animate()
-                                  .slideIn(i * 50),
+                            if (transactions.isEmpty)
+                              Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 20, vertical: 40),
+                                child: Column(
+                                  children: [
+                                    Icon(
+                                      BootstrapIcons.receipt,
+                                      size: 40,
+                                      color: Colors.grey.shade400,
+                                    ),
+                                    10.sH,
+                                    Text(
+                                      'No transactions yet',
+                                      style: context.textTheme.labelMedium,
+                                    ),
+                                    5.sH,
+                                    Text(
+                                      'Activity on this wallet will show up here.',
+                                      textAlign: TextAlign.center,
+                                      style: context.textTheme.labelSmall,
+                                    ),
+                                  ],
+                                ),
+                              )
+                            else
+                              for (int i = 0; i < transactions.length; i++)
+                                TransactionCard(transaction: transactions[i])
+                                    .animate()
+                                    .slideIn(i * 50),
                             300.sH,
                           ],
                         ),

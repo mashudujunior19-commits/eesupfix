@@ -50,6 +50,6 @@ android/app/release/
 # Lock files
 *.lock
 !pubspec.lock
-"app/.env" 
-"app/.dev.env" 
+app/.env
+app/.dev.env
 

@@ -43,37 +43,34 @@ class WalletViewBloc extends Bloc<WalletViewEvent, WalletViewState> {
     on<WalletViewFetched>((event, emit) async {
       emit(WalletViewInitial());
 
-      late final Wallet wallet;
-      late final List<Transaction> transactions;
-      late final WalletBalance balance;
-
       final walletResult = await _walletsRepository.fetchWalletById(event.id);
-      walletResult.fold((l) {
-        emit(WalletViewError(l));
+      if (walletResult.isLeft) {
+        if (!emit.isDone) emit(WalletViewError(walletResult.left));
         return;
-      }, (r) {
-        wallet = r;
-      });
+      }
+      final wallet = walletResult.right;
 
       final transResult =
           await _walletsRepository.fetchWalletTransactions(event.id);
-      transResult.fold((l) {
-        emit(WalletViewError(l));
+      if (transResult.isLeft) {
+        if (!emit.isDone) emit(WalletViewError(transResult.left));
         return;
-      }, (r) {
-        transactions = r;
-      });
+      }
+      final transactions = transResult.right;
 
+      // Must match the wallet's type_id (not its display description) --
+      // that's what finances.get_wallet_balance_by_type filters on.
       final balanceResult =
-          await _walletsRepository.fetchWalletBalances(wallet.description);
-      balanceResult.fold((l) {
-        emit(WalletViewError(l));
+          await _walletsRepository.fetchWalletBalances(wallet.typeId);
+      if (balanceResult.isLeft) {
+        if (!emit.isDone) emit(WalletViewError(balanceResult.left));
         return;
-      }, (r) {
-        balance = r;
-      });
+      }
+      final balance = balanceResult.right;
 
-      emit(WalletViewLoaded(wallet, transactions, balance));
+      if (!emit.isDone) {
+        emit(WalletViewLoaded(wallet, transactions, balance));
+      }
     });
 
     // on<WalletBalancesFetched>((event, emit) async {
