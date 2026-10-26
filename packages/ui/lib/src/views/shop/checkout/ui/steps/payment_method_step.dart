@@ -8,6 +8,7 @@ import 'package:ui/src/core/extensions/sizedbox_ext.dart';
 import 'package:ui/src/core/extensions/slide_in_animation_ext.dart';
 import 'package:ui/src/core/widgets/fullscreen_loading_shimmer.dart';
 import 'package:ui/src/views/finances/crowdvouchers/ui/payment_method.dart';
+import 'package:ui/src/views/auth/profile/bloc/profile_bloc.dart';
 import 'package:ui/src/views/finances/payments/bloc/payment_gatway_bloc.dart';
 import 'package:ui/src/views/finances/wallets/bloc/wallets_bloc.dart';
 import 'package:ui/src/views/shop/checkout/bloc/checkout_bloc.dart';
@@ -28,8 +29,13 @@ class PaymentMethodStep extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(
-          create: (context) => WalletsBloc(context.read<WalletsRepository>())
-            ..add(WalletsFetched()),
+          create: (context) {
+            final profileState = context.read<ProfileBloc>().state;
+            final isVerified = profileState is ProfileLoaded &&
+                profileState.profile.isVerified;
+            return WalletsBloc(context.read<WalletsRepository>())
+              ..add(WalletsFetched(isVerified: isVerified));
+          },
         ),
         BlocProvider(
           create: (context) => PaymentGatwayBloc(

@@ -42,10 +42,14 @@ class WalletsBloc extends Bloc<WalletsEvent, WalletsState> {
               );
             }));
 
-            updatedWallets.sort((a, b) => a.sortNumber.compareTo(b.sortNumber));
+            final visibleWallets = event.isVerified
+                ? updatedWallets
+                : updatedWallets.where((w) => !w.requireRsaId).toList();
+
+            visibleWallets.sort((a, b) => a.sortNumber.compareTo(b.sortNumber));
 
             if (!emit.isDone) {
-              emit(WalletsLoaded(updatedWallets));
+              emit(WalletsLoaded(visibleWallets));
             }
           },
         );

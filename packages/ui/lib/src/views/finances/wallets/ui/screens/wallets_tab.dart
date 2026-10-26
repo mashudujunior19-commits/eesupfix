@@ -2,6 +2,7 @@ import 'package:data/finance/repository/wallets_repository.dart';
 import 'package:ui/src/core/extensions/slide_in_animation_ext.dart';
 import 'package:ui/src/core/widgets/fullscreen_error_widget.dart';
 import 'package:ui/src/core/widgets/fullscreen_loading_shimmer.dart';
+import 'package:ui/src/views/auth/profile/bloc/profile_bloc.dart';
 import 'package:ui/src/views/finances/wallets/bloc/wallets_bloc.dart';
 import 'package:ui/src/views/finances/wallets/ui/widgets/wallet_card.dart';
 import 'package:flutter/material.dart';
@@ -14,9 +15,13 @@ class WalletsTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final profileState = context.watch<ProfileBloc>().state;
+    final isVerified =
+        profileState is ProfileLoaded && profileState.profile.isVerified;
+
     return BlocBuilder<WalletsBloc, WalletsState>(
       bloc: WalletsBloc(context.read<WalletsRepository>())
-        ..add(WalletsFetched()),
+        ..add(WalletsFetched(isVerified: isVerified)),
       builder: (context, state) {
         if (state is WalletsLoaded) {
           return ListView.builder(
