@@ -17,17 +17,8 @@ class PartnersBloc extends Bloc<PartnersEvent, PartnersState> {
       results.fold((left) {
         emit(PartnersError(left));
       }, (right) {
-        emit(PartnersLoaded(right.where((p) => !_isHidden(p)).toList()));
+        emit(PartnersLoaded(right));
       });
     });
-  }
-
-  /// Spaza and KasiPreneur partnerships are no longer offered through
-  /// "Get Involved", so they're dropped even if still open server-side.
-  static const _hiddenPartnerKeywords = ['spaza', 'kasipreneur', 'eesupreneur'];
-
-  static bool _isHidden(Partner partner) {
-    final title = partner.title.toLowerCase().replaceAll(RegExp(r'[\s-]'), '');
-    return _hiddenPartnerKeywords.any(title.contains);
   }
 }
