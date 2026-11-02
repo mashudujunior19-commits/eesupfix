@@ -1,8 +1,9 @@
 import 'package:ui/src/core/themes/text_theme.dart';
+import 'package:ui/src/core/themes/towris_brand.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-const _primaryGreen = Color.fromRGBO(48, 142, 88, 1);
+const _primaryGreen = TowrisBrand.green;
 const _primaryBlue = Color.fromRGBO(13, 71, 161, 1);
 
 final eesupLightTheme = ThemeData(
@@ -39,14 +40,31 @@ final eesupLightTheme = ThemeData(
       backgroundColor: _primaryGreen,
       foregroundColor: Colors.white,
       padding: const EdgeInsets.symmetric(vertical: 10),
-      minimumSize: const Size(double.infinity, 50),
+      minimumSize: const Size(double.infinity, 54),
       textStyle: GoogleFonts.poppins(
-        fontSize: 15,
-        fontWeight: FontWeight.w600,
+        fontSize: 16,
+        fontWeight: FontWeight.w700,
       ),
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(10),
+        borderRadius: BorderRadius.circular(32),
       ),
+    ),
+  ),
+  inputDecorationTheme: InputDecorationTheme(
+    filled: true,
+    fillColor: TowrisBrand.field,
+    contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+    border: OutlineInputBorder(
+      borderRadius: BorderRadius.circular(32),
+      borderSide: BorderSide.none,
+    ),
+    enabledBorder: OutlineInputBorder(
+      borderRadius: BorderRadius.circular(32),
+      borderSide: BorderSide.none,
+    ),
+    focusedBorder: OutlineInputBorder(
+      borderRadius: BorderRadius.circular(32),
+      borderSide: const BorderSide(color: TowrisBrand.lightGreen, width: 1.6),
     ),
   ),
   iconButtonTheme: IconButtonThemeData(

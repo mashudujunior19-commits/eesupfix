@@ -41,6 +41,16 @@ mixin _$EESUpoolOrder {
   @JsonKey(name: 'receivers')
   List<String>? get receiversId;
 
+  /// 'Open' or 'Closed' (the database's order status). Read-only here: it is
+  /// only changed by the database's close rules, never written back.
+  @JsonKey(includeToJson: false)
+  String? get status;
+
+  /// How many times the order was extended because it was below the
+  /// minimum when its close date passed. Read-only.
+  @JsonKey(name: 'order_extension_count', includeToJson: false)
+  int? get orderExtensionCount;
+
   /// Maps each bulk receiver's member id to the role the pool admin
   /// assigned them (Receiver / Packer / Distributor), so it's clear who
   /// does what on the order.
@@ -103,6 +113,9 @@ mixin _$EESUpoolOrder {
                 other.addressId == addressId) &&
             const DeepCollectionEquality()
                 .equals(other.receiversId, receiversId) &&
+            (identical(other.status, status) || other.status == status) &&
+            (identical(other.orderExtensionCount, orderExtensionCount) ||
+                other.orderExtensionCount == orderExtensionCount) &&
             const DeepCollectionEquality()
                 .equals(other.receiverRoles, receiverRoles) &&
             (identical(other.eesupoolName, eesupoolName) ||
@@ -132,6 +145,8 @@ mixin _$EESUpoolOrder {
         collectionFee,
         addressId,
         const DeepCollectionEquality().hash(receiversId),
+        status,
+        orderExtensionCount,
         const DeepCollectionEquality().hash(receiverRoles),
         eesupoolName,
         const DeepCollectionEquality().hash(receivers),
@@ -142,7 +157,7 @@ mixin _$EESUpoolOrder {
 
   @override
   String toString() {
-    return 'EESUpoolOrder(id: $id, eesupoolId: $eesupoolId, createdAt: $createdAt, scheduleFor: $scheduleFor, closesAt: $closesAt, secretPin: $secretPin, deliveredAt: $deliveredAt, adminFee: $adminFee, packerFee: $packerFee, receiverFee: $receiverFee, collectionFee: $collectionFee, addressId: $addressId, receiversId: $receiversId, receiverRoles: $receiverRoles, eesupoolName: $eesupoolName, receivers: $receivers, address: $address, ordersCount: $ordersCount, currentAmount: $currentAmount)';
+    return 'EESUpoolOrder(id: $id, eesupoolId: $eesupoolId, createdAt: $createdAt, scheduleFor: $scheduleFor, closesAt: $closesAt, secretPin: $secretPin, deliveredAt: $deliveredAt, adminFee: $adminFee, packerFee: $packerFee, receiverFee: $receiverFee, collectionFee: $collectionFee, addressId: $addressId, receiversId: $receiversId, status: $status, orderExtensionCount: $orderExtensionCount, receiverRoles: $receiverRoles, eesupoolName: $eesupoolName, receivers: $receivers, address: $address, ordersCount: $ordersCount, currentAmount: $currentAmount)';
   }
 }
 
@@ -166,6 +181,9 @@ abstract mixin class $EESUpoolOrderCopyWith<$Res> {
       @JsonKey(name: 'collection_fee') double? collectionFee,
       @JsonKey(name: 'address_id') int? addressId,
       @JsonKey(name: 'receivers') List<String>? receiversId,
+      @JsonKey(includeToJson: false) String? status,
+      @JsonKey(name: 'order_extension_count', includeToJson: false)
+      int? orderExtensionCount,
       @ReceiverRolesConverter()
       @JsonKey(name: 'receiver_roles')
       Map<String, ReceiverRole> receiverRoles,
@@ -208,6 +226,8 @@ class _$EESUpoolOrderCopyWithImpl<$Res>
     Object? collectionFee = freezed,
     Object? addressId = freezed,
     Object? receiversId = freezed,
+    Object? status = freezed,
+    Object? orderExtensionCount = freezed,
     Object? receiverRoles = null,
     Object? eesupoolName = freezed,
     Object? receivers = freezed,
@@ -268,6 +288,14 @@ class _$EESUpoolOrderCopyWithImpl<$Res>
           ? _self.receiversId
           : receiversId // ignore: cast_nullable_to_non_nullable
               as List<String>?,
+      status: freezed == status
+          ? _self.status
+          : status // ignore: cast_nullable_to_non_nullable
+              as String?,
+      orderExtensionCount: freezed == orderExtensionCount
+          ? _self.orderExtensionCount
+          : orderExtensionCount // ignore: cast_nullable_to_non_nullable
+              as int?,
       receiverRoles: null == receiverRoles
           ? _self.receiverRoles
           : receiverRoles // ignore: cast_nullable_to_non_nullable
@@ -417,6 +445,9 @@ extension EESUpoolOrderPatterns on EESUpoolOrder {
             @JsonKey(name: 'collection_fee') double? collectionFee,
             @JsonKey(name: 'address_id') int? addressId,
             @JsonKey(name: 'receivers') List<String>? receiversId,
+            @JsonKey(includeToJson: false) String? status,
+            @JsonKey(name: 'order_extension_count', includeToJson: false)
+            int? orderExtensionCount,
             @ReceiverRolesConverter()
             @JsonKey(name: 'receiver_roles')
             Map<String, ReceiverRole> receiverRoles,
@@ -450,6 +481,8 @@ extension EESUpoolOrderPatterns on EESUpoolOrder {
             _that.collectionFee,
             _that.addressId,
             _that.receiversId,
+            _that.status,
+            _that.orderExtensionCount,
             _that.receiverRoles,
             _that.eesupoolName,
             _that.receivers,
@@ -490,6 +523,9 @@ extension EESUpoolOrderPatterns on EESUpoolOrder {
             @JsonKey(name: 'collection_fee') double? collectionFee,
             @JsonKey(name: 'address_id') int? addressId,
             @JsonKey(name: 'receivers') List<String>? receiversId,
+            @JsonKey(includeToJson: false) String? status,
+            @JsonKey(name: 'order_extension_count', includeToJson: false)
+            int? orderExtensionCount,
             @ReceiverRolesConverter()
             @JsonKey(name: 'receiver_roles')
             Map<String, ReceiverRole> receiverRoles,
@@ -522,6 +558,8 @@ extension EESUpoolOrderPatterns on EESUpoolOrder {
             _that.collectionFee,
             _that.addressId,
             _that.receiversId,
+            _that.status,
+            _that.orderExtensionCount,
             _that.receiverRoles,
             _that.eesupoolName,
             _that.receivers,
@@ -561,6 +599,9 @@ extension EESUpoolOrderPatterns on EESUpoolOrder {
             @JsonKey(name: 'collection_fee') double? collectionFee,
             @JsonKey(name: 'address_id') int? addressId,
             @JsonKey(name: 'receivers') List<String>? receiversId,
+            @JsonKey(includeToJson: false) String? status,
+            @JsonKey(name: 'order_extension_count', includeToJson: false)
+            int? orderExtensionCount,
             @ReceiverRolesConverter()
             @JsonKey(name: 'receiver_roles')
             Map<String, ReceiverRole> receiverRoles,
@@ -593,6 +634,8 @@ extension EESUpoolOrderPatterns on EESUpoolOrder {
             _that.collectionFee,
             _that.addressId,
             _that.receiversId,
+            _that.status,
+            _that.orderExtensionCount,
             _that.receiverRoles,
             _that.eesupoolName,
             _that.receivers,
@@ -622,6 +665,9 @@ class _EESUpoolOrder implements EESUpoolOrder {
       @JsonKey(name: 'collection_fee') this.collectionFee,
       @JsonKey(name: 'address_id') this.addressId,
       @JsonKey(name: 'receivers') final List<String>? receiversId,
+      @JsonKey(includeToJson: false) this.status,
+      @JsonKey(name: 'order_extension_count', includeToJson: false)
+      this.orderExtensionCount,
       @ReceiverRolesConverter()
       @JsonKey(name: 'receiver_roles')
       final Map<String, ReceiverRole> receiverRoles = const {},
@@ -685,6 +731,18 @@ class _EESUpoolOrder implements EESUpoolOrder {
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(value);
   }
+
+  /// 'Open' or 'Closed' (the database's order status). Read-only here: it is
+  /// only changed by the database's close rules, never written back.
+  @override
+  @JsonKey(includeToJson: false)
+  final String? status;
+
+  /// How many times the order was extended because it was below the
+  /// minimum when its close date passed. Read-only.
+  @override
+  @JsonKey(name: 'order_extension_count', includeToJson: false)
+  final int? orderExtensionCount;
 
   /// Maps each bulk receiver's member id to the role the pool admin
   /// assigned them (Receiver / Packer / Distributor), so it's clear who
@@ -775,6 +833,9 @@ class _EESUpoolOrder implements EESUpoolOrder {
                 other.addressId == addressId) &&
             const DeepCollectionEquality()
                 .equals(other._receiversId, _receiversId) &&
+            (identical(other.status, status) || other.status == status) &&
+            (identical(other.orderExtensionCount, orderExtensionCount) ||
+                other.orderExtensionCount == orderExtensionCount) &&
             const DeepCollectionEquality()
                 .equals(other._receiverRoles, _receiverRoles) &&
             (identical(other.eesupoolName, eesupoolName) ||
@@ -805,6 +866,8 @@ class _EESUpoolOrder implements EESUpoolOrder {
         collectionFee,
         addressId,
         const DeepCollectionEquality().hash(_receiversId),
+        status,
+        orderExtensionCount,
         const DeepCollectionEquality().hash(_receiverRoles),
         eesupoolName,
         const DeepCollectionEquality().hash(_receivers),
@@ -815,7 +878,7 @@ class _EESUpoolOrder implements EESUpoolOrder {
 
   @override
   String toString() {
-    return 'EESUpoolOrder(id: $id, eesupoolId: $eesupoolId, createdAt: $createdAt, scheduleFor: $scheduleFor, closesAt: $closesAt, secretPin: $secretPin, deliveredAt: $deliveredAt, adminFee: $adminFee, packerFee: $packerFee, receiverFee: $receiverFee, collectionFee: $collectionFee, addressId: $addressId, receiversId: $receiversId, receiverRoles: $receiverRoles, eesupoolName: $eesupoolName, receivers: $receivers, address: $address, ordersCount: $ordersCount, currentAmount: $currentAmount)';
+    return 'EESUpoolOrder(id: $id, eesupoolId: $eesupoolId, createdAt: $createdAt, scheduleFor: $scheduleFor, closesAt: $closesAt, secretPin: $secretPin, deliveredAt: $deliveredAt, adminFee: $adminFee, packerFee: $packerFee, receiverFee: $receiverFee, collectionFee: $collectionFee, addressId: $addressId, receiversId: $receiversId, status: $status, orderExtensionCount: $orderExtensionCount, receiverRoles: $receiverRoles, eesupoolName: $eesupoolName, receivers: $receivers, address: $address, ordersCount: $ordersCount, currentAmount: $currentAmount)';
   }
 }
 
@@ -841,6 +904,9 @@ abstract mixin class _$EESUpoolOrderCopyWith<$Res>
       @JsonKey(name: 'collection_fee') double? collectionFee,
       @JsonKey(name: 'address_id') int? addressId,
       @JsonKey(name: 'receivers') List<String>? receiversId,
+      @JsonKey(includeToJson: false) String? status,
+      @JsonKey(name: 'order_extension_count', includeToJson: false)
+      int? orderExtensionCount,
       @ReceiverRolesConverter()
       @JsonKey(name: 'receiver_roles')
       Map<String, ReceiverRole> receiverRoles,
@@ -884,6 +950,8 @@ class __$EESUpoolOrderCopyWithImpl<$Res>
     Object? collectionFee = freezed,
     Object? addressId = freezed,
     Object? receiversId = freezed,
+    Object? status = freezed,
+    Object? orderExtensionCount = freezed,
     Object? receiverRoles = null,
     Object? eesupoolName = freezed,
     Object? receivers = freezed,
@@ -944,6 +1012,14 @@ class __$EESUpoolOrderCopyWithImpl<$Res>
           ? _self._receiversId
           : receiversId // ignore: cast_nullable_to_non_nullable
               as List<String>?,
+      status: freezed == status
+          ? _self.status
+          : status // ignore: cast_nullable_to_non_nullable
+              as String?,
+      orderExtensionCount: freezed == orderExtensionCount
+          ? _self.orderExtensionCount
+          : orderExtensionCount // ignore: cast_nullable_to_non_nullable
+              as int?,
       receiverRoles: null == receiverRoles
           ? _self._receiverRoles
           : receiverRoles // ignore: cast_nullable_to_non_nullable

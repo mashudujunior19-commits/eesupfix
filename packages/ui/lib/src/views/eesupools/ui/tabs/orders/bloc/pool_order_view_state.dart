@@ -7,7 +7,11 @@ final class PoolOrderViewLoading extends PoolOrderViewState {}
 
 final class PoolOrderViewCurrentState extends PoolOrderViewState {
   final EESUpoolOrder pooOrder;
-  PoolOrderViewCurrentState(this.pooOrder);
+
+  /// Set when the last change was refused (e.g. closing below the minimum);
+  /// [pooOrder] is then the unchanged order.
+  final String? error;
+  PoolOrderViewCurrentState(this.pooOrder, {this.error});
 }
 
 final class PoolOrderViewError extends PoolOrderViewState {

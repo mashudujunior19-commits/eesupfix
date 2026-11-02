@@ -107,7 +107,7 @@ class OrderTrackingBloc extends Bloc<OrderTrackingEvent, OrderTrackingState> {
     //Draw rectangle
     page.graphics.drawRectangle(
         bounds: Rect.fromLTWH(0, 0, pageSize.width, pageSize.height),
-        pen: PdfPen(PdfColor(48, 142, 88)));
+        pen: PdfPen(PdfColor(46, 139, 87)));
     //Generate PDF grid.
     final PdfGrid grid = _getGrid(order);
     //Draw the header section by creating text element
@@ -134,7 +134,7 @@ class OrderTrackingBloc extends Bloc<OrderTrackingEvent, OrderTrackingState> {
   ) {
     //Draw rectangle
     page.graphics.drawRectangle(
-        brush: PdfSolidBrush(PdfColor(48, 142, 88)),
+        brush: PdfSolidBrush(PdfColor(46, 139, 87)),
         bounds: Rect.fromLTWH(0, 0, pageSize.width - 115, 90));
     //Draw string
 
@@ -151,7 +151,7 @@ class OrderTrackingBloc extends Bloc<OrderTrackingEvent, OrderTrackingState> {
 
     page.graphics.drawRectangle(
         bounds: Rect.fromLTWH(400, 0, pageSize.width - 400, 90),
-        brush: PdfSolidBrush(PdfColor(48, 142, 88)));
+        brush: PdfSolidBrush(PdfColor(46, 139, 87)));
 
     page.graphics.drawString('R${order.value.toRounded()}',
         PdfStandardFont(PdfFontFamily.helvetica, 18),
@@ -238,7 +238,7 @@ class OrderTrackingBloc extends Bloc<OrderTrackingEvent, OrderTrackingState> {
     //Create the header row of the grid.
     final PdfGridRow headerRow = grid.headers.add(1)[0];
     //Set style
-    headerRow.style.backgroundBrush = PdfSolidBrush(PdfColor(48, 142, 88));
+    headerRow.style.backgroundBrush = PdfSolidBrush(PdfColor(46, 139, 87));
     headerRow.style.textBrush = PdfBrushes.white;
 
     headerRow.cells[0].value = '';

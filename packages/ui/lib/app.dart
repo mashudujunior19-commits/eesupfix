@@ -1,3 +1,4 @@
+import 'package:ui/src/core/themes/towris_brand.dart';
 import 'package:data/auth/data_source/auth_supabase_data_source.dart';
 import 'package:data/auth/data_source/profile_supabase_impl.dart';
 import 'package:data/auth/repository/auth_repository.dart';
@@ -309,7 +310,7 @@ class _LoadingAnimation extends StatelessWidget {
         ),
         child: Center(
           child: LoadingAnimationWidget.discreteCircle(
-            color: const Color.fromRGBO(48, 142, 88, 1),
+            color: TowrisBrand.green,
             secondRingColor: Colors.red,
             thirdRingColor: Colors.blue,
             size: 30,

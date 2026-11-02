@@ -23,6 +23,10 @@ mixin _$NotificationData {
   @JsonKey(name: 'eesupool_order_id')
   int? get eesupoolOrderId;
 
+  /// 'Accepted' / 'Declined' once an invite or join request was answered.
+  @JsonKey(name: 'response')
+  String? get response;
+
   /// Create a copy of NotificationData
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -44,17 +48,19 @@ mixin _$NotificationData {
                 other.eesupoolId == eesupoolId) &&
             (identical(other.orderId, orderId) || other.orderId == orderId) &&
             (identical(other.eesupoolOrderId, eesupoolOrderId) ||
-                other.eesupoolOrderId == eesupoolOrderId));
+                other.eesupoolOrderId == eesupoolOrderId) &&
+            (identical(other.response, response) ||
+                other.response == response));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, userId, eesupoolId, orderId, eesupoolOrderId);
+  int get hashCode => Object.hash(
+      runtimeType, userId, eesupoolId, orderId, eesupoolOrderId, response);
 
   @override
   String toString() {
-    return 'NotificationData(userId: $userId, eesupoolId: $eesupoolId, orderId: $orderId, eesupoolOrderId: $eesupoolOrderId)';
+    return 'NotificationData(userId: $userId, eesupoolId: $eesupoolId, orderId: $orderId, eesupoolOrderId: $eesupoolOrderId, response: $response)';
   }
 }
 
@@ -68,7 +74,8 @@ abstract mixin class $NotificationDataCopyWith<$Res> {
       {@JsonKey(name: 'user_id') String? userId,
       @JsonKey(name: 'eesupool_id') int? eesupoolId,
       @JsonKey(name: 'order_id') int? orderId,
-      @JsonKey(name: 'eesupool_order_id') int? eesupoolOrderId});
+      @JsonKey(name: 'eesupool_order_id') int? eesupoolOrderId,
+      @JsonKey(name: 'response') String? response});
 }
 
 /// @nodoc
@@ -88,6 +95,7 @@ class _$NotificationDataCopyWithImpl<$Res>
     Object? eesupoolId = freezed,
     Object? orderId = freezed,
     Object? eesupoolOrderId = freezed,
+    Object? response = freezed,
   }) {
     return _then(_self.copyWith(
       userId: freezed == userId
@@ -106,6 +114,10 @@ class _$NotificationDataCopyWithImpl<$Res>
           ? _self.eesupoolOrderId
           : eesupoolOrderId // ignore: cast_nullable_to_non_nullable
               as int?,
+      response: freezed == response
+          ? _self.response
+          : response // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -207,7 +219,8 @@ extension NotificationDataPatterns on NotificationData {
             @JsonKey(name: 'user_id') String? userId,
             @JsonKey(name: 'eesupool_id') int? eesupoolId,
             @JsonKey(name: 'order_id') int? orderId,
-            @JsonKey(name: 'eesupool_order_id') int? eesupoolOrderId)?
+            @JsonKey(name: 'eesupool_order_id') int? eesupoolOrderId,
+            @JsonKey(name: 'response') String? response)?
         $default, {
     required TResult orElse(),
   }) {
@@ -215,7 +228,7 @@ extension NotificationDataPatterns on NotificationData {
     switch (_that) {
       case _NotificationData() when $default != null:
         return $default(_that.userId, _that.eesupoolId, _that.orderId,
-            _that.eesupoolOrderId);
+            _that.eesupoolOrderId, _that.response);
       case _:
         return orElse();
     }
@@ -240,14 +253,15 @@ extension NotificationDataPatterns on NotificationData {
             @JsonKey(name: 'user_id') String? userId,
             @JsonKey(name: 'eesupool_id') int? eesupoolId,
             @JsonKey(name: 'order_id') int? orderId,
-            @JsonKey(name: 'eesupool_order_id') int? eesupoolOrderId)
+            @JsonKey(name: 'eesupool_order_id') int? eesupoolOrderId,
+            @JsonKey(name: 'response') String? response)
         $default,
   ) {
     final _that = this;
     switch (_that) {
       case _NotificationData():
         return $default(_that.userId, _that.eesupoolId, _that.orderId,
-            _that.eesupoolOrderId);
+            _that.eesupoolOrderId, _that.response);
       case _:
         throw StateError('Unexpected subclass');
     }
@@ -271,14 +285,15 @@ extension NotificationDataPatterns on NotificationData {
             @JsonKey(name: 'user_id') String? userId,
             @JsonKey(name: 'eesupool_id') int? eesupoolId,
             @JsonKey(name: 'order_id') int? orderId,
-            @JsonKey(name: 'eesupool_order_id') int? eesupoolOrderId)?
+            @JsonKey(name: 'eesupool_order_id') int? eesupoolOrderId,
+            @JsonKey(name: 'response') String? response)?
         $default,
   ) {
     final _that = this;
     switch (_that) {
       case _NotificationData() when $default != null:
         return $default(_that.userId, _that.eesupoolId, _that.orderId,
-            _that.eesupoolOrderId);
+            _that.eesupoolOrderId, _that.response);
       case _:
         return null;
     }
@@ -292,7 +307,8 @@ class _NotificationData implements NotificationData {
       {@JsonKey(name: 'user_id') this.userId,
       @JsonKey(name: 'eesupool_id') this.eesupoolId,
       @JsonKey(name: 'order_id') this.orderId,
-      @JsonKey(name: 'eesupool_order_id') this.eesupoolOrderId});
+      @JsonKey(name: 'eesupool_order_id') this.eesupoolOrderId,
+      @JsonKey(name: 'response') this.response});
   factory _NotificationData.fromJson(Map<String, dynamic> json) =>
       _$NotificationDataFromJson(json);
 
@@ -308,6 +324,11 @@ class _NotificationData implements NotificationData {
   @override
   @JsonKey(name: 'eesupool_order_id')
   final int? eesupoolOrderId;
+
+  /// 'Accepted' / 'Declined' once an invite or join request was answered.
+  @override
+  @JsonKey(name: 'response')
+  final String? response;
 
   /// Create a copy of NotificationData
   /// with the given fields replaced by the non-null parameter values.
@@ -334,17 +355,19 @@ class _NotificationData implements NotificationData {
                 other.eesupoolId == eesupoolId) &&
             (identical(other.orderId, orderId) || other.orderId == orderId) &&
             (identical(other.eesupoolOrderId, eesupoolOrderId) ||
-                other.eesupoolOrderId == eesupoolOrderId));
+                other.eesupoolOrderId == eesupoolOrderId) &&
+            (identical(other.response, response) ||
+                other.response == response));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, userId, eesupoolId, orderId, eesupoolOrderId);
+  int get hashCode => Object.hash(
+      runtimeType, userId, eesupoolId, orderId, eesupoolOrderId, response);
 
   @override
   String toString() {
-    return 'NotificationData(userId: $userId, eesupoolId: $eesupoolId, orderId: $orderId, eesupoolOrderId: $eesupoolOrderId)';
+    return 'NotificationData(userId: $userId, eesupoolId: $eesupoolId, orderId: $orderId, eesupoolOrderId: $eesupoolOrderId, response: $response)';
   }
 }
 
@@ -360,7 +383,8 @@ abstract mixin class _$NotificationDataCopyWith<$Res>
       {@JsonKey(name: 'user_id') String? userId,
       @JsonKey(name: 'eesupool_id') int? eesupoolId,
       @JsonKey(name: 'order_id') int? orderId,
-      @JsonKey(name: 'eesupool_order_id') int? eesupoolOrderId});
+      @JsonKey(name: 'eesupool_order_id') int? eesupoolOrderId,
+      @JsonKey(name: 'response') String? response});
 }
 
 /// @nodoc
@@ -380,6 +404,7 @@ class __$NotificationDataCopyWithImpl<$Res>
     Object? eesupoolId = freezed,
     Object? orderId = freezed,
     Object? eesupoolOrderId = freezed,
+    Object? response = freezed,
   }) {
     return _then(_NotificationData(
       userId: freezed == userId
@@ -398,6 +423,10 @@ class __$NotificationDataCopyWithImpl<$Res>
           ? _self.eesupoolOrderId
           : eesupoolOrderId // ignore: cast_nullable_to_non_nullable
               as int?,
+      response: freezed == response
+          ? _self.response
+          : response // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }

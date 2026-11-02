@@ -1,3 +1,4 @@
+import 'package:ui/src/core/themes/towris_brand.dart';
 import 'package:data/auth/repository/auth_repository.dart';
 import 'package:data/auth/repository/referrals_repository.dart';
 import 'package:data/referrals/data_source/referrals_supabase_impl.dart';
@@ -121,7 +122,7 @@ class _ReferralCard extends StatelessWidget {
       child: ListTile(
         contentPadding: const EdgeInsets.only(left: 10, right: 10),
         leading: CircleAvatar(
-          backgroundColor: Colors.green.shade50.withOpacity(.7),
+          backgroundColor: TowrisBrand.mint,
           child: const Icon(
             IconlyLight.profile,
             color: Colors.green,

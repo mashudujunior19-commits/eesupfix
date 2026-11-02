@@ -1,3 +1,4 @@
+import 'package:ui/src/core/themes/towris_brand.dart';
 import 'package:data/auth/repository/profile_repository.dart';
 import 'package:ui/src/views/auth/profile/bloc/profile_bloc.dart';
 import 'package:ui/src/views/referrals/ui/share_referral_button.dart';
@@ -51,7 +52,7 @@ class ReferalCodeTile extends StatelessWidget {
                   Container(
                     height: 45,
                     decoration: BoxDecoration(
-                      color: Colors.green.shade50,
+                      color: TowrisBrand.mint,
                       borderRadius: BorderRadius.circular(7),
                     ),
                     child: Center(

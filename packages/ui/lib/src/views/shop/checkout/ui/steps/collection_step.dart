@@ -74,15 +74,16 @@ class CollectionStep extends StatelessWidget {
                         const _TabBar(),
                         Expanded(
                           child: TabBarView(
+                            // KasiPools first (the default), Kasipreneurs second.
                             children: [
-                              _ShopsTab(
-                                shops: shops,
-                                tabController: tabController,
-                              ),
                               _OrdersTab(
                                 orders: orders,
                                 tabController: tabController,
                                 selectedAddress: selectedAddress,
+                              ),
+                              _ShopsTab(
+                                shops: shops,
+                                tabController: tabController,
                               ),
                             ],
                           ),
@@ -169,7 +170,10 @@ class _OrdersTab extends StatelessWidget {
               return FullScreenError(
                 isError: false,
                 exception: EESUpException(
-                  message: 'There are no available orders at the moment.',
+                  message: 'You can only order in a KasiPool you are a member '
+                      'of, and you are not a member of any KasiPool with an '
+                      'open order. Join a KasiPool or ask its admin to add '
+                      'you, then come back here.',
                 ),
               );
             }
@@ -222,8 +226,8 @@ class _TabBar extends StatelessWidget {
           color: context.colorScheme.primary,
         ),
         tabs: const [
-          Tab(text: 'Kasipreneurs'),
           Tab(text: 'Kasipools'),
+          Tab(text: 'Kasipreneurs'),
         ],
       ),
     );

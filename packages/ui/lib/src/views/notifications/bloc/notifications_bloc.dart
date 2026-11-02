@@ -22,6 +22,19 @@ class NotificationsBloc extends Bloc<NotificationsEvent, NotificationsState> {
         });
       });
     });
+    on<NotificationRespondedEvent>((event, emit) {
+      notifications = [
+        for (final n in notifications)
+          if (n.id == event.notificationId && n.data != null)
+            n.copyWith(
+              data: n.data!.copyWith(response: event.response),
+              seenAt: n.seenAt ?? DateTime.now(),
+            )
+          else
+            n
+      ];
+      emit(NotificationsStreaming(List.of(notifications)));
+    });
     // Notifications are never deleted from the app: viewing one only flags it
     // as seen. Old ones are purged server-side after 30 days.
     on<MarkNotificationsSeenEvent>((event, emit) async {

@@ -1,3 +1,4 @@
+import 'package:ui/src/core/themes/towris_brand.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:data/surveys/models/survey.dart';
 import 'package:ui/app_route.gr.dart';
@@ -58,7 +59,7 @@ class SurveyCard extends StatelessWidget {
         child: ListTile(
           contentPadding: const EdgeInsets.only(left: 5, right: 10),
           leading: CircleAvatar(
-            backgroundColor: Colors.green.shade50.withOpacity(.7),
+            backgroundColor: TowrisBrand.mint,
             child: const Icon(IconlyLight.chart, color: Colors.green),
           ),
           title: Text(survey.title, style: textTheme.labelMedium),

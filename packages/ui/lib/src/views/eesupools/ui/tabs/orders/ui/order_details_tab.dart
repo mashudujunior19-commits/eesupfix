@@ -1,15 +1,18 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:data/eesupools/models/eesupool.dart';
 import 'package:data/eesupools/models/eesupool_member.dart';
+import 'package:data/eesupools/kasipool_rules.dart';
 import 'package:data/eesupools/models/eesupool_order.dart';
 import 'package:data/eesupools/models/receiver_role.dart';
 import 'package:data/utils/double_ext.dart';
 import 'package:ui/app_route.gr.dart';
 import 'package:ui/src/core/extensions/bottom_sheet_context_ext.dart';
+import 'package:ui/src/core/extensions/context_alerts_ext.dart';
 import 'package:ui/src/core/extensions/context_theme_ext.dart';
 import 'package:ui/src/core/extensions/sizedbox_ext.dart';
 import 'package:ui/src/core/utils/date_formatter.dart';
 import 'package:ui/src/views/eesupools/ui/tabs/orders/bloc/pool_order_view_bloc.dart';
+import 'package:ui/src/views/eesupools/ui/tabs/orders/ui/consolidate_order_dialog.dart';
 import 'package:ui/src/views/eesupools/ui/tabs/orders/ui/create_order_dialog.dart';
 import 'package:ui/src/views/eesupools/ui/tabs/orders/ui/delivary_secret.dart';
 import 'package:ui/src/views/eesupools/ui/tabs/orders/ui/order_receivers_screen.dart';
@@ -59,7 +62,7 @@ class OrderDetailsTab extends StatelessWidget {
                     padding: const EdgeInsets.only(
                         left: 5, right: 5, top: 2, bottom: 2),
                     decoration: BoxDecoration(
-                        color: order.closesAt.isBefore(DateTime.now())
+                        color: order.isClosed
                             ? Colors.redAccent.withOpacity(.5)
                             : context.colorScheme.primary,
                         borderRadius: BorderRadius.circular(5)),
@@ -67,9 +70,7 @@ class OrderDetailsTab extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          order.closesAt.isBefore(DateTime.now())
-                              ? 'Closed'
-                              : 'Open',
+                          order.isClosed ? 'Closed' : 'Open',
                           style: context.textTheme.labelMedium?.copyWith(
                             fontSize: 13,
                             color: Colors.white,
@@ -85,9 +86,7 @@ class OrderDetailsTab extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    order.closesAt.isBefore(DateTime.now())
-                        ? 'Closed on'
-                        : 'Closes on',
+                    order.isClosed ? 'Closed on' : 'Closes on',
                     style: context.textTheme.bodySmall?.copyWith(
                       fontSize: 13,
                     ),
@@ -197,6 +196,7 @@ class OrderDetailsTab extends StatelessWidget {
                   ],
                 ),
               if (pool.role == EESUpoolMemberRole.admin &&
+                  !order.isClosed &&
                   order.closesAt.isAfter(DateTime.now()))
                 Column(
                   mainAxisSize: MainAxisSize.min,
@@ -223,32 +223,68 @@ class OrderDetailsTab extends StatelessWidget {
                   ],
                 ),
               if (pool.role == EESUpoolMemberRole.admin &&
+                  !order.isClosed &&
                   order.closesAt.isAfter(DateTime.now()))
                 Column(
                   mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const Divider(thickness: .5),
+                    // The database refuses to close an order below the
+                    // minimum; the button is disabled so that's clear up front.
                     TextButton(
-                      onPressed: () {
-                        context.read<PoolOrderViewBloc>().add(
-                              PoolOrderUpdated(
-                                order.copyWith(
-                                  closesAt: DateTime.now().subtract(
-                                    const Duration(hours: 2),
-                                  ),
-                                  scheduleFor: DateTime.now().add(
-                                    const Duration(days: 3),
-                                  ),
-                                ),
-                              ),
-                            );
-                      },
-                      child: const Text(
+                      onPressed: order.meetsMinimum
+                          ? () {
+                              context.read<PoolOrderViewBloc>().add(
+                                    PoolOrderUpdated(
+                                      order.copyWith(
+                                        closesAt: DateTime.now().subtract(
+                                          const Duration(hours: 2),
+                                        ),
+                                        scheduleFor: DateTime.now().add(
+                                          const Duration(days: 3),
+                                        ),
+                                      ),
+                                    ),
+                                  );
+                            }
+                          : null,
+                      child: Text(
                         'Close order',
-                        style: TextStyle(color: Colors.red),
+                        style: TextStyle(
+                          color: order.meetsMinimum ? Colors.red : Colors.grey,
+                        ),
                       ),
                     ),
+                    if (!order.meetsMinimum)
+                      Padding(
+                        padding: const EdgeInsets.only(left: 12, bottom: 4),
+                        child: Text(
+                          'An order can only close once it reaches '
+                          'R${minKasipoolOrder.toRounded()}. '
+                          'It is R${order.currentAmount.toRounded()} now.',
+                          style: context.textTheme.bodySmall?.copyWith(
+                            fontSize: 12,
+                            color: Colors.grey.shade600,
+                          ),
+                        ),
+                      ),
+                    if (!order.meetsMinimum &&
+                        (order.orderExtensionCount ?? 0) > 0)
+                      TextButton(
+                        onPressed: () async {
+                          final joined = await context.showBottomSheetDialog(
+                            child: ConsolidateOrderDialog(order: order),
+                          );
+                          if (joined == true && context.mounted) {
+                            context.snackBarSuccess(
+                              'Consolidated. It can close once the combined '
+                              'total reaches R${minKasipoolOrder.toRounded()}.',
+                            );
+                          }
+                        },
+                        child: const Text('Consolidate with another KasiPool'),
+                      ),
                   ],
                 )
             ],
@@ -308,7 +344,7 @@ class OrderDetailsTab extends StatelessWidget {
                           ),
                           10.sW,
                           Text(
-                            'Assign Roles',
+                            'Assign Receivers',
                             style: context.textTheme.labelMedium?.copyWith(
                               decoration: TextDecoration.underline,
                               color: Colors.black,

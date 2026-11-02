@@ -10,7 +10,7 @@ enum ReceiverRole {
   String get label {
     switch (this) {
       case ReceiverRole.receiver:
-        return 'Receiver';
+        return 'Bulk Order Receiver';
       case ReceiverRole.packer:
         return 'Packer';
       case ReceiverRole.distributor:

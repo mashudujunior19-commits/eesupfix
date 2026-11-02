@@ -134,7 +134,7 @@ class _EESUpTextFormFieldState extends State<EESUpTextFormField> {
             ),
             decoration: BoxDecoration(
               color: context.colorScheme.primary.withOpacity(.03),
-              borderRadius: BorderRadius.circular(10),
+              borderRadius: BorderRadius.circular(14),
               border: Border.all(
                 color: Colors.grey.shade300,
                 width: .5,
@@ -170,7 +170,15 @@ class _EESUpTextFormFieldState extends State<EESUpTextFormField> {
                   color: Colors.grey.withOpacity(.8),
                   fontSize: 13.5,
                 ),
+                // The container draws the field; stop the theme adding its own fill and
+                // border inside it (that showed as a box inside a rounded box).
+                filled: false,
                 border: InputBorder.none,
+                enabledBorder: InputBorder.none,
+                focusedBorder: InputBorder.none,
+                disabledBorder: InputBorder.none,
+                errorBorder: InputBorder.none,
+                focusedErrorBorder: InputBorder.none,
                 prefixIcon: widget.prefixIcon == null
                     ? null
                     : Column(

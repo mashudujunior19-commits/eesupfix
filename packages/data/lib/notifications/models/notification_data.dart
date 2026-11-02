@@ -12,6 +12,9 @@ abstract class NotificationData with _$NotificationData {
     @JsonKey(name: 'eesupool_id') int? eesupoolId,
     @JsonKey(name: 'order_id') int? orderId,
     @JsonKey(name: 'eesupool_order_id') int? eesupoolOrderId,
+
+    /// 'Accepted' / 'Declined' once an invite or join request was answered.
+    @JsonKey(name: 'response') String? response,
   }) = _NotificationData;
 
   factory NotificationData.fromJson(Map<String, dynamic> json) =>

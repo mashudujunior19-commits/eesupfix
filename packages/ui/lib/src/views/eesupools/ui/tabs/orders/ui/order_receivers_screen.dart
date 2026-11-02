@@ -64,9 +64,9 @@ class OrderReceiverScreen extends StatelessWidget {
                     Navigator.of(context).pop(_result);
                   },
                 ),
-                title: const Text('ASSIGN ROLES'),
+                title: const Text('ASSIGN RECEIVERS'),
                 actions: [
-                  if (order.deliveredAt == null)
+                  if (!order.isClosed)
                     IconButton(
                       onPressed: () {
                         context
@@ -108,12 +108,12 @@ class OrderReceiverScreen extends StatelessWidget {
                       );
                       return Column(
                         children: [
-                          if (order.deliveredAt != null)
+                          if (order.isClosed)
                             Padding(
                               padding:
                                   const EdgeInsets.only(left: 22, right: 22),
                               child: Text(
-                                'Once the order has been received the receivers cannot be modified.',
+                                'Once the order is closed the receivers cannot be modified.',
                                 style: context.textTheme.bodySmall?.copyWith(
                                   fontSize: 11.5,
                                 ),
@@ -130,29 +130,18 @@ class OrderReceiverScreen extends StatelessWidget {
                                   trailing: Row(
                                     mainAxisSize: MainAxisSize.min,
                                     children: [
-                                      _RoleDropdown(
-                                        role: state.roles[member.memberId],
-                                        enabled: order.deliveredAt == null,
-                                        onChanged: (role) async {
-                                          final bloc = context
-                                              .read<OrderReceiversBloc>();
-                                          final sure =
-                                              await context.confirmAction(
-                                            'Change role',
-                                            'Change ${member.fullName}\'s role to ${role.label}?',
-                                            confirmText: 'Yes, change',
-                                          );
-                                          if (!sure) return;
-                                          bloc.add(
-                                            OrderReceiverRoleAssigned(
-                                              order.id,
-                                              member.memberId,
-                                              role,
-                                            ),
-                                          );
-                                        },
+                                      // Master orders only have receivers, so the
+                                      // role is set automatically.
+                                      Text(
+                                        ReceiverRole.receiver.label,
+                                        style: context.textTheme.labelSmall
+                                            ?.copyWith(
+                                          color: context.colorScheme.primary,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 11,
+                                        ),
                                       ),
-                                      if (order.deliveredAt == null)
+                                      if (!order.isClosed)
                                         InkWell(
                                           onTap: () async {
                                             final bloc = context
@@ -203,56 +192,6 @@ class OrderReceiverScreen extends StatelessWidget {
             ),
           );
         },
-      ),
-    );
-  }
-}
-
-class _RoleDropdown extends StatelessWidget {
-  const _RoleDropdown({
-    required this.role,
-    required this.enabled,
-    required this.onChanged,
-  });
-
-  final ReceiverRole? role;
-  final bool enabled;
-  final ValueChanged<ReceiverRole> onChanged;
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      height: 25,
-      width: 100,
-      child: DropdownButton<ReceiverRole>(
-        value: role,
-        isExpanded: true,
-        dropdownColor: Colors.white,
-        borderRadius: BorderRadius.circular(10),
-        underline: const SizedBox(),
-        icon: enabled ? const Icon(IconlyLight.arrowDown2, size: 16) : null,
-        // Only shown for receivers saved before a role was required.
-        hint: Text(
-          'Select role',
-          style: context.textTheme.labelSmall?.copyWith(
-            color: context.colorScheme.error,
-            fontSize: 11,
-          ),
-        ),
-        onChanged: enabled
-            ? (value) {
-                if (value != null) onChanged(value);
-              }
-            : null,
-        style: context.textTheme.labelSmall?.copyWith(
-          color: context.colorScheme.primary,
-          fontWeight: FontWeight.bold,
-          fontSize: 11,
-        ),
-        items: [
-          for (final r in ReceiverRole.values)
-            DropdownMenuItem<ReceiverRole>(value: r, child: Text(r.label)),
-        ],
       ),
     );
   }

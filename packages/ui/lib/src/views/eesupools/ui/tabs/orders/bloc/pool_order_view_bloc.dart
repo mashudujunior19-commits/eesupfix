@@ -48,9 +48,18 @@ class PoolOrderViewBloc extends Bloc<PoolOrderViewEvent, PoolOrderViewState> {
     // });
 
     on<PoolOrderUpdated>((event, emit) async {
+      final previous =
+          state is PoolOrderViewCurrentState ? state as PoolOrderViewCurrentState : null;
       final res = await _repository.updateOrder(event.order);
-      print(res.right);
-      emit(PoolOrderViewCurrentState(event.order));
+      res.fold(
+        // Refused by the database (e.g. closing below the minimum): keep the
+        // order as it was and tell the admin why.
+        (l) => emit(PoolOrderViewCurrentState(
+          previous?.pooOrder ?? event.order,
+          error: l.message,
+        )),
+        (_) => emit(PoolOrderViewCurrentState(event.order)),
+      );
     });
     on<FetchEESUpoolSettings>((event, emit) async {
       emit(PoolOrderViewLoading());

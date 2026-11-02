@@ -2,6 +2,7 @@ import 'package:data/orders/models/order_product.dart';
 import 'package:data/utils/eesup_exception.dart';
 import 'package:either_dart/either.dart';
 import 'package:data/eesupools/models/eesupool_order.dart';
+import 'package:data/eesupools/models/consolidation_candidate.dart';
 import 'package:data/eesupools/models/receiver_role.dart';
 import '../models/eesupool_settings.dart';
 import 'eesupool_repo.dart';
@@ -91,6 +92,22 @@ extension EESUpoolOrdersRepo on EESUpoolRepository {
       (l) => Left(l),
       (r) => Right(r),
     );
+  }
+
+  Future<Either<EESUpException, List<ConsolidationCandidate>>>
+      fetchConsolidationCandidates(int orderId) async {
+    return authRepository.executeFutureWithAuth((_) {
+      return dataSource.fetchConsolidationCandidates(orderId);
+    });
+  }
+
+  Future<Either<EESUpException, void>> consolidateOrders(
+    int orderId,
+    int targetOrderId,
+  ) async {
+    return authRepository.executeFutureWithAuth((_) {
+      return dataSource.consolidateOrders(orderId, targetOrderId);
+    });
   }
 
   Future<Either<EESUpException, bool>> updateOrderAssignments(

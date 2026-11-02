@@ -1,4 +1,5 @@
 // ignore_for_file: invalid_annotation_target
+import 'package:data/eesupools/kasipool_rules.dart';
 import 'package:data/eesupools/models/eesupool_member.dart';
 import 'package:data/eesupools/models/receiver_role.dart';
 import 'package:data/geolocation/models/address.dart';
@@ -25,6 +26,15 @@ abstract class EESUpoolOrder with _$EESUpoolOrder {
     @JsonKey(name: 'address_id') int? addressId,
     @JsonKey(name: 'receivers') List<String>? receiversId,
 
+    /// 'Open' or 'Closed' (the database's order status). Read-only here: it is
+    /// only changed by the database's close rules, never written back.
+    @JsonKey(includeToJson: false) String? status,
+
+    /// How many times the order was extended because it was below the
+    /// minimum when its close date passed. Read-only.
+    @JsonKey(name: 'order_extension_count', includeToJson: false)
+    int? orderExtensionCount,
+
     /// Maps each bulk receiver's member id to the role the pool admin
     /// assigned them (Receiver / Packer / Distributor), so it's clear who
     /// does what on the order.
@@ -49,6 +59,19 @@ abstract class EESUpoolOrder with _$EESUpoolOrder {
 
   factory EESUpoolOrder.fromJson(Map<String, dynamic> json) =>
       _$EESUpoolOrderFromJson(json);
+}
+
+extension EESUpoolOrderRules on EESUpoolOrder {
+  /// Closed by the database (or received). Receivers/roles can't change then.
+  /// Lists that don't return a status fall back to the closing date.
+  bool get isClosed =>
+      status == 'Closed' ||
+      deliveredAt != null ||
+      (status == null && closesAt.isBefore(DateTime.now()));
+
+  /// Whether the order has reached the KasiPool minimum, which an order needs
+  /// before it can close (enforced by the database as well).
+  bool get meetsMinimum => currentAmount >= minKasipoolOrder;
 }
 
 @freezed

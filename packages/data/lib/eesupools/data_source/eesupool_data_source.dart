@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:data/eesupools/models/chat_message.dart';
+import 'package:data/eesupools/models/consolidation_candidate.dart';
 import 'package:data/eesupools/models/chat_message_reaction.dart';
 import 'package:data/eesupools/models/eesupool.dart';
 import 'package:data/eesupools/models/eesupool_event.dart';
@@ -52,7 +53,20 @@ abstract class EESUpoolDataSource {
   ///Given a user id, return a list of pools that the user is a member of
   Future<List<EESUpool>> fetchEESUpools(String sessionId, EESUpoolType type);
 
-  Future<bool> updatePoolOrderReceivers(int orderId, List<String> memberIds);
+  /// Adds a bulk order receiver (role "Bulk Order Receiver") in one atomic,
+  /// server-validated step. Throws with a user-facing message when refused
+  /// (already a receiver, order closed, not an admin, ...).
+  Future<bool> addOrderReceiver(int orderId, String memberId);
+
+  Future<bool> removeOrderReceiver(int orderId, String memberId);
+
+  /// Other pools' open orders that are also below the minimum.
+  Future<List<ConsolidationCandidate>> fetchConsolidationCandidates(
+    int orderId,
+  );
+
+  /// Joins [orderId] to [targetOrderId] (the master order).
+  Future<void> consolidateOrders(int orderId, int targetOrderId);
 
   /// Updates the role (Receiver / Packer / Distributor) assigned to each
   /// bulk order receiver, keyed by member id.

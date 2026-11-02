@@ -62,11 +62,19 @@ class WalletViewBloc extends Bloc<WalletViewEvent, WalletViewState> {
       // that's what finances.get_wallet_balance_by_type filters on.
       final balanceResult =
           await _walletsRepository.fetchWalletBalances(wallet.typeId);
-      if (balanceResult.isLeft) {
-        if (!emit.isDone) emit(WalletViewError(balanceResult.left));
-        return;
-      }
-      final balance = balanceResult.right;
+      // A missing balance row must not hide the wallet's history: fall back
+      // to the wallet's own balance and the transactions we already have.
+      final balance = balanceResult.fold(
+        (_) => WalletBalance(
+          walletId: wallet.id,
+          walletType: wallet.typeId,
+          availableBalance: wallet.balance,
+          totalBalance: transactions
+              .where((t) => t.cancelledAt == null)
+              .fold<double>(0, (sum, t) => sum + t.value),
+        ),
+        (b) => b,
+      );
 
       if (!emit.isDone) {
         emit(WalletViewLoaded(wallet, transactions, balance));

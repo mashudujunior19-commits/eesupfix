@@ -1,3 +1,4 @@
+import 'package:ui/src/core/themes/towris_brand.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:data/shopping/models/product_request.dart';
 import 'package:data/shopping/repository/shopping_repository.dart';
@@ -122,7 +123,7 @@ class _ProductRequestCard extends StatelessWidget {
       child: ListTile(
         contentPadding: const EdgeInsets.only(left: 10, right: 5),
         leading: CircleAvatar(
-          backgroundColor: Colors.green.shade50.withOpacity(.7),
+          backgroundColor: TowrisBrand.mint,
           child: Image.asset(
             "assets/images/dairy-products.png",
             width: 30,

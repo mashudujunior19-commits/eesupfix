@@ -9,6 +9,7 @@ import 'package:data/eesupools/models/eesupool_issue.dart';
 import 'package:data/eesupools/models/eesupool_level.dart';
 import 'package:data/eesupools/models/eesupool_member.dart';
 import 'package:data/eesupools/models/eesupool_order.dart';
+import 'package:data/eesupools/models/consolidation_candidate.dart';
 import 'package:data/eesupools/models/eesupool_request.dart';
 import 'package:data/eesupools/models/eesupool_type.dart';
 import 'package:data/eesupools/models/media_file.dart';
@@ -557,24 +558,19 @@ class EESUpoolSupabaseImp implements EESUpoolDataSource {
 
   @override
   Future<bool> updateEESUpoolOrder(EESUpoolOrder order) async {
-    try {
-      // Receivers and their roles are owned by updatePoolOrderReceivers /
-      // updateOrderReceiverRoles. Leaving them out here stops a stale copy
-      // of the order (e.g. "Close order" after editing receivers) from
-      // overwriting roles that were just saved.
-      final payload = order.toJson()
-        ..remove('receivers')
-        ..remove('receiver_roles');
-      await client
-          .schema('communities')
-          .from('eesupool_order')
-          .update(payload)
-          .eq('id', order.id);
-      return true;
-    } catch (e) {
-      print(e);
-      return false;
-    }
+    // Receivers and their roles are owned by addOrderReceiver /
+    // removeOrderReceiver / updateOrderReceiverRoles. Leaving them out here stops a stale copy
+    // of the order (e.g. "Close order" after editing receivers) from
+    // overwriting roles that were just saved.
+    final payload = order.toJson()
+      ..remove('receivers')
+      ..remove('receiver_roles');
+    await client
+        .schema('communities')
+        .from('eesupool_order')
+        .update(payload)
+        .eq('id', order.id);
+    return true;
   }
 
   @override
@@ -817,17 +813,42 @@ class EESUpoolSupabaseImp implements EESUpoolDataSource {
   }
 
   @override
-  Future<bool> updatePoolOrderReceivers(
-    int orderId,
-    List<String> memberIds,
-  ) async {
-    // Errors propagate so the caller can tell the admin the change didn't
-    // save (e.g. the member isn't verified).
-    await client
-        .schema('communities')
-        .from('eesupool_order')
-        .update({'receivers': memberIds.toList()}).eq('id', orderId);
+  Future<bool> addOrderReceiver(int orderId, String memberId) async {
+    // Errors propagate so the caller can show the server's message.
+    await client.schema('communities').rpc('add_order_receiver', params: {
+      'p_order_id': orderId,
+      'p_member_id': memberId,
+    });
     return true;
+  }
+
+  @override
+  Future<bool> removeOrderReceiver(int orderId, String memberId) async {
+    await client.schema('communities').rpc('remove_order_receiver', params: {
+      'p_order_id': orderId,
+      'p_member_id': memberId,
+    });
+    return true;
+  }
+
+  @override
+  Future<List<ConsolidationCandidate>> fetchConsolidationCandidates(
+    int orderId,
+  ) async {
+    final res = await client
+        .schema('communities')
+        .rpc('get_consolidation_candidates', params: {'p_order_id': orderId});
+    return (res as List)
+        .map((e) => ConsolidationCandidate.fromJson(e as Map<String, dynamic>))
+        .toList();
+  }
+
+  @override
+  Future<void> consolidateOrders(int orderId, int targetOrderId) async {
+    await client.schema('communities').rpc('consolidate_orders', params: {
+      'p_order_id': orderId,
+      'p_target_order_id': targetOrderId,
+    });
   }
 
   @override

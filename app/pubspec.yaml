@@ -1,7 +1,7 @@
 name: towris
 description: "TOWRIS - Connecting towns and businesses."
 publish_to: 'none'
-version: 16.6.26+226
+version: 16.6.28+228
 
 environment:
   sdk: '>=3.4.1 <4.0.0'

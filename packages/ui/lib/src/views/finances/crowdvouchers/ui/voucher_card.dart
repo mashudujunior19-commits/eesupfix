@@ -1,3 +1,4 @@
+import 'package:ui/src/core/themes/towris_brand.dart';
 import 'package:data/finance/models/voucher.dart';
 import 'package:ui/src/core/extensions/context_theme_ext.dart';
 import 'package:ui/src/core/extensions/sizedbox_ext.dart';
@@ -39,7 +40,7 @@ class VoucherCard extends StatelessWidget {
             right: 10,
           ),
           leading: CircleAvatar(
-            backgroundColor: Colors.green.shade50.withOpacity(.5),
+            backgroundColor: TowrisBrand.mint,
             child: Image.asset(
               'assets/images/profit.png',
               width: 25,

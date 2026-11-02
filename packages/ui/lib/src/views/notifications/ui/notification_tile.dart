@@ -3,6 +3,7 @@
 import 'package:data/eesupools/repository/eesupool_repo.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:loader_overlay/loader_overlay.dart';
+import 'package:ui/src/core/extensions/context_alerts_ext.dart';
 import 'package:ui/src/core/extensions/context_theme_ext.dart';
 import 'package:ui/src/core/extensions/sizedbox_ext.dart';
 import 'package:ui/src/core/utils/date_formatter.dart';
@@ -27,12 +28,37 @@ class NotificationTile extends StatelessWidget {
 
   final _controller = ExpandedTileController(isExpanded: true);
 
+  /// Whether an invite / join request notification has already been answered.
+  bool get _resolved => notification.data?.response != null;
+
+  Future<void> _respond(BuildContext context, String status) async {
+    final poolId = notification.data?.eesupoolId;
+    final userId = notification.data?.userId;
+    if (poolId == null || userId == null) return;
+
+    final bloc = context.read<NotificationsBloc>();
+    final repo = context.read<EESUpoolRepository>();
+    context.loaderOverlay.show();
+    try {
+      // The database only accepts this while the request is still pending and
+      // the caller is allowed to answer it; otherwise it says why.
+      final results = await repo.updateEESUpoolRequest(userId, poolId, status);
+      if (!context.mounted) return;
+      results.fold(
+        (l) => context.snackBarError(l.message),
+        (_) => bloc.add(NotificationRespondedEvent(notification.id, status)),
+      );
+    } finally {
+      if (context.mounted) context.loaderOverlay.hide();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.only(top: 10),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: _resolved ? Colors.grey.shade200 : Colors.white,
         borderRadius: BorderRadius.circular(10),
         border: Border.all(
           color: isNew
@@ -42,13 +68,14 @@ class NotificationTile extends StatelessWidget {
         ),
       ),
       child: ExpandedTile(
-        theme: const ExpandedTileThemeData(
-          headerColor: Colors.white,
+        theme: ExpandedTileThemeData(
+          headerColor: _resolved ? Colors.grey.shade200 : Colors.white,
           //   headerRadius: 0.0,
           headerPadding:
-              EdgeInsets.only(left: 0, right: 5, bottom: 5.0, top: 5),
+              const EdgeInsets.only(left: 0, right: 5, bottom: 5.0, top: 5),
           headerSplashColor: Colors.white,
-          contentBackgroundColor: Colors.white,
+          contentBackgroundColor:
+              _resolved ? Colors.grey.shade200 : Colors.white,
           contentPadding: EdgeInsets.zero,
           //contentRadius: 12.0,
         ),
@@ -74,7 +101,7 @@ class NotificationTile extends StatelessWidget {
                   notification.title,
                   style: isNew
                       ? const TextStyle(fontWeight: FontWeight.bold)
-                      : null,
+                      : (_resolved ? const TextStyle(color: Colors.grey) : null),
                 ),
                 1.sH,
                 Text(
@@ -116,66 +143,36 @@ class NotificationTile extends StatelessWidget {
                           not.NotificationType.eesupoolRequest))
                 Padding(
                   padding: const EdgeInsets.only(top: 10),
-                  child: Row(
-                    children: [
-                      InkWell(
-                        onTap: () async {
-                          context.loaderOverlay.show();
-                          final poolId = notification.data?.eesupoolId;
-                          final userId = notification.data?.userId;
-                          if (poolId == null || userId == null) return;
-
-                          final repo = context.read<EESUpoolRepository>();
-                          final results = await repo.updateEESUpoolRequest(
-                              userId, poolId, 'Accepted');
-
-                          results.fold(
-                            (l) => debugPrint(l.toString()),
-                            (r) {
-                              context.read<NotificationsBloc>().add(
-                                  MarkNotificationsSeenEvent(
-                                      [notification.id]));
-                            },
-                          );
-
-                          context.loaderOverlay.hide();
-                        },
-                        child: Text(notification.type ==
-                                not.NotificationType.eesupoolInvite
-                            ? 'Join'
-                            : 'Accept'),
-                      ),
-                      25.sW,
-                      InkWell(
-                        onTap: () async {
-                          context.loaderOverlay.show();
-                          final poolId = notification.data?.eesupoolId;
-                          final userId = notification.data?.userId;
-                          if (poolId == null || userId == null) return;
-
-                          final repo = context.read<EESUpoolRepository>();
-                          final results = await repo.updateEESUpoolRequest(
-                              userId, poolId, 'Declined');
-
-                          results.fold(
-                            (l) => debugPrint(l.toString()),
-                            (r) {
-                              context.read<NotificationsBloc>().add(
-                                  MarkNotificationsSeenEvent(
-                                      [notification.id]));
-                            },
-                          );
-                          context.loaderOverlay.hide();
-                        },
-                        child: Text(
-                          'Decline',
+                  child: _resolved
+                      // Decided: no buttons, just the outcome. It is final.
+                      ? Text(
+                          notification.data!.response!,
                           style: context.textTheme.labelMedium?.copyWith(
-                            color: Colors.redAccent,
+                            color: Colors.grey,
+                            fontWeight: FontWeight.bold,
                           ),
+                        )
+                      : Row(
+                          children: [
+                            InkWell(
+                              onTap: () => _respond(context, 'Accepted'),
+                              child: Text(notification.type ==
+                                      not.NotificationType.eesupoolInvite
+                                  ? 'Join'
+                                  : 'Accept'),
+                            ),
+                            25.sW,
+                            InkWell(
+                              onTap: () => _respond(context, 'Declined'),
+                              child: Text(
+                                'Decline',
+                                style: context.textTheme.labelMedium?.copyWith(
+                                  color: Colors.redAccent,
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
-                      ),
-                    ],
-                  ),
                 )
             ],
           ),

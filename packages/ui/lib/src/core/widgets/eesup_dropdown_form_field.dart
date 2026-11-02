@@ -58,7 +58,7 @@ class EESUpDropdownFormField<T> extends StatelessWidget {
             padding: const EdgeInsets.only(left: 10, right: 10),
             decoration: BoxDecoration(
               color: context.colorScheme.primary.withOpacity(.03),
-              borderRadius: BorderRadius.circular(10),
+              borderRadius: BorderRadius.circular(14),
               border: Border.all(color: Colors.grey.shade300, width: .5),
             ),
             child: DropdownButtonHideUnderline(
@@ -68,7 +68,15 @@ class EESUpDropdownFormField<T> extends StatelessWidget {
                 icon: const Icon(Icons.keyboard_arrow_down, size: 20),
                 decoration: InputDecoration(
                   contentPadding: const EdgeInsets.only(top: 5),
+                  // The container draws the field; stop the theme adding its own fill and
+                  // border inside it (that showed as a box inside a rounded box).
+                  filled: false,
                   border: InputBorder.none,
+                  enabledBorder: InputBorder.none,
+                  focusedBorder: InputBorder.none,
+                  disabledBorder: InputBorder.none,
+                  errorBorder: InputBorder.none,
+                  focusedErrorBorder: InputBorder.none,
                   hintText: hintText,
                   hintStyle: context.textTheme.bodySmall?.copyWith(
                     color: Colors.grey.withOpacity(.8),

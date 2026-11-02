@@ -53,43 +53,36 @@ class PasswordRequirements extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(top: 6, bottom: 4),
-      child: IntrinsicHeight(
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Expanded(
-              flex: 7,
-              child: _Panel(
-                title: 'Include the following',
-                met: PasswordRules.hasUppercase(password) &&
-                    PasswordRules.hasLowercase(password) &&
-                    PasswordRules.hasNumber(password) &&
-                    PasswordRules.hasSymbol(password),
-                children: [
-                  _Rule('ABC', PasswordRules.hasUppercase(password)),
-                  _Rule('abc', PasswordRules.hasLowercase(password)),
-                  _Rule('123', PasswordRules.hasNumber(password)),
-                  _Rule('@#\$', PasswordRules.hasSymbol(password)),
-                ],
+      // Stacked so the panels always fit, whatever the screen width.
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          _Panel(
+            title: 'Include the following',
+            met: PasswordRules.hasUppercase(password) &&
+                PasswordRules.hasLowercase(password) &&
+                PasswordRules.hasNumber(password) &&
+                PasswordRules.hasSymbol(password),
+            children: [
+              _Rule('ABC', PasswordRules.hasUppercase(password)),
+              _Rule('abc', PasswordRules.hasLowercase(password)),
+              _Rule('123', PasswordRules.hasNumber(password)),
+              _Rule('@#\$', PasswordRules.hasSymbol(password)),
+            ],
+          ),
+          const SizedBox(height: 6),
+          _Panel(
+            title: 'Must contain',
+            met: PasswordRules.hasValidLength(password),
+            children: [
+              _Rule(
+                '${PasswordRules.minLength}-${PasswordRules.maxLength} '
+                'characters',
+                PasswordRules.hasValidLength(password),
               ),
-            ),
-            const SizedBox(width: 4),
-            Expanded(
-              flex: 4,
-              child: _Panel(
-                title: 'Must contain',
-                met: PasswordRules.hasValidLength(password),
-                children: [
-                  _Rule(
-                    '${PasswordRules.minLength}-${PasswordRules.maxLength} '
-                    'Chars',
-                    PasswordRules.hasValidLength(password),
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
+            ],
+          ),
+        ],
       ),
     );
   }
@@ -150,8 +143,11 @@ class _Panel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.fromLTRB(10, 8, 10, 10),
-      color: met ? _okGreenBg : Colors.grey.shade100,
+      padding: const EdgeInsets.fromLTRB(12, 8, 12, 10),
+      decoration: BoxDecoration(
+        color: met ? _okGreenBg : Colors.grey.shade100,
+        borderRadius: BorderRadius.circular(12),
+      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -183,12 +179,14 @@ class _Rule extends StatelessWidget {
       children: [
         _CheckIcon(met: met),
         const SizedBox(width: 4),
-        Text(
-          label,
-          style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                fontSize: 12.5,
-                color: met ? Colors.black87 : Colors.grey.shade600,
-              ),
+        Flexible(
+          child: Text(
+            label,
+            style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                  fontSize: 12.5,
+                  color: met ? Colors.black87 : Colors.grey.shade600,
+                ),
+          ),
         ),
       ],
     );

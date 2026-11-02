@@ -25,14 +25,22 @@ class EESUpoolRepository {
     return result;
   }
 
-  Future<Either<EESUpException, bool>> updatePoolOrderReceivers(
+  Future<Either<EESUpException, bool>> addOrderReceiver(
     int orderId,
-    List<String> memberIds,
+    String memberId,
   ) async {
-    final result = authRepository.executeFutureWithAuth((_) {
-      return dataSource.updatePoolOrderReceivers(orderId, memberIds);
+    return authRepository.executeFutureWithAuth((_) {
+      return dataSource.addOrderReceiver(orderId, memberId);
     });
-    return result;
+  }
+
+  Future<Either<EESUpException, bool>> removeOrderReceiver(
+    int orderId,
+    String memberId,
+  ) async {
+    return authRepository.executeFutureWithAuth((_) {
+      return dataSource.removeOrderReceiver(orderId, memberId);
+    });
   }
 
   Future<Either<EESUpException, List<EESUpoolMember>>>

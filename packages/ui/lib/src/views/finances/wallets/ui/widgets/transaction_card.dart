@@ -39,9 +39,11 @@ class TransactionCard extends StatelessWidget {
                 CircleAvatar(
                   radius: 25,
                   backgroundColor: Colors.blueGrey.shade50,
-                  child: const Icon(
-                    BootstrapIcons.receipt,
-                    color: Colors.grey,
+                  child: Icon(
+                    transaction.value < 0
+                        ? BootstrapIcons.arrow_up_right
+                        : BootstrapIcons.arrow_down_left,
+                    color: transaction.value < 0 ? Colors.red : Colors.green,
                   ),
                 ),
                 const SizedBox(width: 15),
@@ -59,6 +61,17 @@ class TransactionCard extends StatelessWidget {
                         maxLines: 2,
                       ),
                     ),
+                    if (transaction.cancelledAt != null || !transaction.vested)
+                      Text(
+                        transaction.cancelledAt != null
+                            ? 'Cancelled'
+                            : 'Pending',
+                        style: textTheme.labelSmall?.copyWith(
+                          color: transaction.cancelledAt != null
+                              ? Colors.red
+                              : Colors.orange,
+                        ),
+                      ),
                     Text(
                       '${DateFormatter.formatTime(transaction.createdAt.add(const Duration(hours: 2)))} ${DateFormatter.yetAnotherDateFormat(transaction.createdAt)}',
                       style: textTheme.labelSmall,
@@ -73,7 +86,10 @@ class TransactionCard extends StatelessWidget {
               child: Text(
                 transaction.value < 0
                     ? '- R${transaction.value.toRounded().substring(1)}'
-                    : 'R${transaction.value.toRounded()}',
+                    : '+ R${transaction.value.toRounded()}',
+                style: textTheme.labelMedium?.copyWith(
+                  color: transaction.value < 0 ? Colors.red : Colors.green,
+                ),
               ),
             ),
           ],

@@ -1,16 +1,9 @@
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
+import 'package:ui/src/core/themes/towris_brand.dart';
 
-/// Brand colours used by the landing sequence and the sign-in header.
-abstract final class TowrisBrand {
-  static const Color deepGreen = Color(0xFF14532D);
-  static const Color green = Color(0xFF2E8B57);
-  static const Color lightGreen = Color(0xFF8CC63F);
-  static const Color mint = Color(0xFFE6F5EA);
-  static const String name = 'Towris';
-  static const String slogan = 'OWN YOUR ECONOMY';
-}
+export 'package:ui/src/core/themes/towris_brand.dart';
 
 /// A flat-vector scene of a Towris delivery van carrying groceries past a row
 /// of homes while neighbours wave. [progress] runs 0 -> 1: the van enters from

@@ -3,6 +3,7 @@ import 'package:data/eesupools/models/eesupool.dart';
 import 'package:data/eesupools/repository/eesupool_repo.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:ui/src/core/extensions/bg_image_deco_ext.dart';
+import 'package:ui/src/core/extensions/context_alerts_ext.dart';
 import 'package:ui/src/core/extensions/context_theme_ext.dart';
 import 'package:ui/src/core/widgets/fullscreen_error_widget.dart';
 import 'package:ui/src/core/widgets/fullscreen_loading_shimmer.dart';
@@ -79,7 +80,11 @@ class EESUpoolOrderViewScreen extends StatelessWidget {
                   create: (context) =>
                       PoolOrderViewBloc(context.read<EESUpoolRepository>())
                         ..add(PoolOrderInitialized(order)),
-                  child: BlocBuilder<PoolOrderViewBloc, PoolOrderViewState>(
+                  child: BlocConsumer<PoolOrderViewBloc, PoolOrderViewState>(
+                    listenWhen: (_, state) =>
+                        state is PoolOrderViewCurrentState && state.error != null,
+                    listener: (context, state) => context
+                        .snackBarError((state as PoolOrderViewCurrentState).error!),
                     builder: (context, state) {
                       if (state is PoolOrderViewCurrentState) {
                         final orderState = state.pooOrder;

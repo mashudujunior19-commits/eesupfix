@@ -25,6 +25,8 @@ _EESUpoolOrder _$EESUpoolOrderFromJson(Map<String, dynamic> json) =>
       receiversId: (json['receivers'] as List<dynamic>?)
           ?.map((e) => e as String)
           .toList(),
+      status: json['status'] as String?,
+      orderExtensionCount: (json['order_extension_count'] as num?)?.toInt(),
       receiverRoles: json['receiver_roles'] == null
           ? const {}
           : const ReceiverRolesConverter()

@@ -67,7 +67,7 @@ class _EESUpPhoneTextFieldState extends State<EESUpPhoneTextField> {
           padding: const EdgeInsets.only(left: 10, right: 10),
           decoration: BoxDecoration(
             color: context.colorScheme.primary.withOpacity(.03),
-            borderRadius: BorderRadius.circular(10),
+            borderRadius: BorderRadius.circular(14),
             border: Border.all(
               color: _error == null
                   ? Colors.grey.shade300
@@ -80,7 +80,15 @@ class _EESUpPhoneTextFieldState extends State<EESUpPhoneTextField> {
             initialValue: _initialLocal,
             initialCountry: countries.firstWhere((e) => e.code == 'ZA'),
             decoration: const InputDecoration(
+              // The container draws the field; stop the theme adding its own fill and
+              // border inside it (that showed as a box inside a rounded box).
+              filled: false,
               border: InputBorder.none,
+              enabledBorder: InputBorder.none,
+              focusedBorder: InputBorder.none,
+              disabledBorder: InputBorder.none,
+              errorBorder: InputBorder.none,
+              focusedErrorBorder: InputBorder.none,
             ),
             onChanged: _onChanged,
           ),
