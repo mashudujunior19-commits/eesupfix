@@ -1,5 +1,6 @@
 import 'package:data/auth/data_source/profile_data_source.dart';
 import 'package:data/auth/models/profile.dart';
+import 'package:data/utils/eesup_exception.dart';
 import 'package:flutter/foundation.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -125,7 +126,20 @@ class ProfileSupabaseImpl implements ProfileDataSource {
     Map<String, dynamic> fields,
   ) async {
     if (fields.isEmpty) return true;
-    await _client.from('profile').update(fields).eq('user_id', userId);
+    // select() returns the rows that were really updated. Without it a write
+    // blocked by row-level security (or aimed at a missing row) looks like a
+    // success, which is how a name edit can appear saved but never reach the
+    // database.
+    final updated = await _client
+        .from('profile')
+        .update(fields)
+        .eq('user_id', userId)
+        .select('user_id');
+    if (updated.isEmpty) {
+      throw EESUpException(
+        message: 'Your profile could not be saved. Please try again.',
+      );
+    }
     return true;
   }
 
