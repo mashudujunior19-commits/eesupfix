@@ -11,5 +11,10 @@ abstract class PartnerDataSource {
       String userId, String partnerId);
   Future<int> createPartnerApplications(String userId, String partnerId);
 
+  /// Whether the signed-in user may apply for this partnership, and if not,
+  /// why (e.g. KasiPreneur needs a public KasiPool of 25+ members; Kasi Spaza
+  /// needs an existing KasiPreneur).
+  Future<({bool eligible, String? reason})> fetchEligibility(String partnerId);
+
   Future<bool> updatePartnerApplications(PartnerApplication application);
 }

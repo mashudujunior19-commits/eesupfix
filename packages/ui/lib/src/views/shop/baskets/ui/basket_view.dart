@@ -486,14 +486,25 @@ class _BasketProductCard extends StatelessWidget {
                               ),
                             ),
                             Container(
-                              width: 50,
+                              width: 44,
                               margin: const EdgeInsets.only(top: 2),
                               child: TextFormField(
+                                // Re-created whenever the quantity changes so
+                                // the number always matches the +/- buttons.
+                                key: ValueKey(
+                                    'qty-${basketProduct.productId}-${basketProduct.quantity}'),
                                 initialValue: basketProduct.quantity.toString(),
                                 textAlign: TextAlign.center,
                                 keyboardType: TextInputType.number,
-                                style: context.textTheme.labelMedium,
+                                style: context.textTheme.labelMedium?.copyWith(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w700,
+                                  color: Colors.black,
+                                ),
                                 decoration: const InputDecoration(
+                                  isDense: true,
+                                  contentPadding:
+                                      EdgeInsets.symmetric(vertical: 8),
                                   border: InputBorder.none,
                                 ),
                                 onFieldSubmitted: (value) {

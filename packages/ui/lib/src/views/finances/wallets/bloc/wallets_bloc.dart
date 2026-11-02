@@ -7,6 +7,11 @@ import 'package:data/utils/eesup_exception.dart';
 part 'wallets_event.dart';
 part 'wallets_state.dart';
 
+bool _isRetailOrSocial(Wallet w) {
+  final key = '${w.typeId} ${w.description}'.toLowerCase();
+  return key.contains('retail') || key.contains('social');
+}
+
 class WalletsBloc extends Bloc<WalletsEvent, WalletsState> {
   final WalletsRepository _walletRepo;
   WalletsBloc(this._walletRepo) : super(WalletsLoading()) {
@@ -42,9 +47,10 @@ class WalletsBloc extends Bloc<WalletsEvent, WalletsState> {
               );
             }));
 
-            final visibleWallets = event.isVerified
+            final seesAllWallets = event.isVerified && !event.isCorporate;
+            final visibleWallets = seesAllWallets
                 ? updatedWallets
-                : updatedWallets.where((w) => !w.requireRsaId).toList();
+                : updatedWallets.where(_isRetailOrSocial).toList();
 
             visibleWallets.sort((a, b) => a.sortNumber.compareTo(b.sortNumber));
 

@@ -57,4 +57,11 @@ class PartnerRepository {
     });
     return results;
   }
+
+  Future<Either<EESUpException, ({bool eligible, String? reason})>>
+      fetchEligibility(String partnerId) {
+    return authRepo.executeFutureWithAuth(
+      (_) => dataSource.fetchEligibility(partnerId),
+    );
+  }
 }

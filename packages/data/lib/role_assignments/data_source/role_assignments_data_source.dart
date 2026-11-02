@@ -1,4 +1,7 @@
+import 'dart:typed_data';
+
 import 'package:data/role_assignments/models/checklist_item.dart';
+import 'package:data/role_assignments/models/order_receipt.dart';
 import 'package:data/role_assignments/models/role_assigned_order.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -44,5 +47,73 @@ class RoleAssignmentsDataSource {
         '_checked': checked,
       },
     );
+  }
+
+  Future<ReceiptState> fetchReceiptState(int eesupoolOrderId) async {
+    final res = await _client.schema('communities').rpc(
+      'get_order_receipt_state',
+      params: {'_eesupool_order_id': eesupoolOrderId},
+    );
+    final rows = res as List;
+    if (rows.isEmpty) {
+      return const ReceiptState(
+        isReceiver: false,
+        isAdmin: false,
+        isDispatched: false,
+        confirmedAt: null,
+      );
+    }
+    return ReceiptState.fromJson(Map<String, dynamic>.from(rows.first as Map));
+  }
+
+  Future<List<ReceiptItem>> fetchReceipt(int eesupoolOrderId) async {
+    final res = await _client.schema('communities').rpc(
+      'get_order_receipt',
+      params: {'_eesupool_order_id': eesupoolOrderId},
+    );
+    return (res as List)
+        .map((e) => ReceiptItem.fromJson(Map<String, dynamic>.from(e as Map)))
+        .toList();
+  }
+
+  Future<void> saveReceiptItem({
+    required int eesupoolOrderId,
+    required ReceiptItem item,
+  }) async {
+    await _client.schema('communities').rpc(
+      'save_order_receipt_item',
+      params: {
+        '_eesupool_order_id': eesupoolOrderId,
+        '_product_id': item.productId,
+        '_received_qty': item.receivedQty,
+        '_is_faulty': item.isFaulty,
+        '_comment': item.faultComment,
+        '_photo_url': item.faultPhotoUrl,
+      },
+    );
+  }
+
+  Future<void> confirmReceipt(int eesupoolOrderId) async {
+    await _client.schema('communities').rpc(
+      'confirm_order_receipt',
+      params: {'_eesupool_order_id': eesupoolOrderId},
+    );
+  }
+
+  Future<DeliveryInfo> fetchDeliveryInfo(int eesupoolOrderId) async {
+    final res = await _client.schema('communities').rpc(
+      'get_order_delivery_info',
+      params: {'_eesupool_order_id': eesupoolOrderId},
+    );
+    final rows = res as List;
+    if (rows.isEmpty) return const DeliveryInfo(expectedDate: null, pin: null);
+    return DeliveryInfo.fromJson(Map<String, dynamic>.from(rows.first as Map));
+  }
+
+  /// Uploads a photo of a faulty item and returns its public URL.
+  Future<String> uploadFaultPhoto(String path, Uint8List bytes) async {
+    final bucket = _client.storage.from('order_tickets');
+    await bucket.uploadBinary(path, bytes);
+    return bucket.getPublicUrl(path);
   }
 }

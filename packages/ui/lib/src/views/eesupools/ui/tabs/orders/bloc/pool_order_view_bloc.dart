@@ -81,6 +81,9 @@ class PoolOrderViewBloc extends Bloc<PoolOrderViewEvent, PoolOrderViewState> {
         final currentOrder = (state as PoolOrderViewCurrentState).pooOrder;
         final updatedOrder = currentOrder.copyWith(
           closesAt: currentOrder.closesAt.add(const Duration(days: 1)),
+          // Delivery always stays 3 days after the order closes.
+          scheduleFor:
+              currentOrder.closesAt.add(const Duration(days: 4)),
         );
 
         _repository.updateOrder(updatedOrder); // Persist the change

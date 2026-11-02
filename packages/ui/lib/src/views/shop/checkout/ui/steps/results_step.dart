@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:auto_route/auto_route.dart';
 import 'package:ui/app_route.gr.dart';
 import 'package:ui/src/core/extensions/sizedbox_ext.dart';
@@ -51,7 +53,42 @@ class ResultStep extends StatelessWidget {
     );
   }
 
-  Column _success(BuildContext context) {
+  Widget _success(BuildContext context) => const _SuccessView();
+}
+
+/// Shows the success animation briefly, then takes the user back to the main
+/// screen on its own, so they never have to tap "Finish".
+class _SuccessView extends StatefulWidget {
+  const _SuccessView();
+
+  @override
+  State<_SuccessView> createState() => _SuccessViewState();
+}
+
+class _SuccessViewState extends State<_SuccessView> {
+  static const _delay = Duration(milliseconds: 1800);
+  Timer? _timer;
+
+  @override
+  void initState() {
+    super.initState();
+    _timer = Timer(_delay, _goHome);
+  }
+
+  @override
+  void dispose() {
+    _timer?.cancel();
+    super.dispose();
+  }
+
+  void _goHome() {
+    if (!mounted) return;
+    // The cart was cleared when the order was placed; go back to the main page.
+    context.router.pushAll([const OverviewRoute()]);
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
@@ -65,9 +102,8 @@ class ResultStep extends StatelessWidget {
         15.sH,
         TextButton(
           onPressed: () {
-            // The cart was cleared when the order was placed; go back to the
-            // main page.
-            context.router.pushAll([const OverviewRoute()]);
+            _timer?.cancel();
+            _goHome();
           },
           child: const Text('Finish'),
         )

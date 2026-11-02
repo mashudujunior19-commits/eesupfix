@@ -1,3 +1,4 @@
+import 'package:data/auth/models/user_role.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:ui/src/core/extensions/context_theme_ext.dart';
 import 'package:ui/app_route.gr.dart';
@@ -21,7 +22,11 @@ class WalletCard extends StatelessWidget {
           final profileState = context.read<ProfileBloc>().state;
           final isVerified =
               profileState is ProfileLoaded && profileState.profile.isVerified;
-          context.read<WalletsBloc>().add(WalletsFetched(isVerified: isVerified));
+          final isCorporate = profileState is ProfileLoaded &&
+              (profileState.profile.role == UserRole.Corporate ||
+                  profileState.profile.role == UserRole.EESUpliftCorporate);
+          context.read<WalletsBloc>().add(
+              WalletsFetched(isVerified: isVerified, isCorporate: isCorporate));
         });
       },
       child: Container(

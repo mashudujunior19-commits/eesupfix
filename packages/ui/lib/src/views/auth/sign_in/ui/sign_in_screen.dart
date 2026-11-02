@@ -120,7 +120,7 @@ class _SignInScreenState extends State<SignInScreen> {
                     children: [
                       const _Header(),
                       Padding(
-                        padding: const EdgeInsets.fromLTRB(24, 28, 24, 24),
+                        padding: const EdgeInsets.fromLTRB(24, 16, 24, 12),
                         child: _Form(
                           onIdentifierChanged: (v) => _identifier = v,
                           onPasswordChanged: (v) => _password = v,
@@ -147,9 +147,9 @@ class _Header extends StatelessWidget {
     final textTheme = Theme.of(context).textTheme;
     final size = MediaQuery.sizeOf(context);
     // Scales with the screen so it fits small and large phones, with notches.
-    final height = (size.height * .29).clamp(210.0, 300.0);
-    final vanWidth = (size.width * .5).clamp(150.0, 240.0);
-    final titleSize = (size.width * .105).clamp(34.0, 52.0);
+    final height = (size.height * .22).clamp(150.0, 210.0);
+    final vanWidth = (size.width * .38).clamp(110.0, 180.0);
+    final titleSize = (size.width * .095).clamp(30.0, 44.0);
     return Container(
       height: height + MediaQuery.paddingOf(context).top,
       decoration: const BoxDecoration(
@@ -183,7 +183,7 @@ class _Header extends StatelessWidget {
             Positioned(
               left: 24,
               right: 24,
-              top: 24,
+              top: 16,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -256,7 +256,7 @@ class _Form extends StatelessWidget {
             color: const Color(0xFF1A1F1C),
           ),
         ).animate().slideIn(0),
-        const SizedBox(height: 22),
+        const SizedBox(height: 12),
         _PillField(
           key: const Key('identifier_text_field'),
           hint: 'Email or phone',
@@ -265,7 +265,7 @@ class _Form extends StatelessWidget {
           textInputAction: TextInputAction.next,
           onChanged: onIdentifierChanged,
         ).animate().slideIn(60),
-        const SizedBox(height: 14),
+        const SizedBox(height: 10),
         _PillField(
           key: const Key('password_text_field'),
           hint: 'Password',
@@ -295,9 +295,9 @@ class _Form extends StatelessWidget {
           label: 'Log In',
           onPressed: onSubmit,
         ).animate().slideIn(180),
-        const SizedBox(height: 24),
+        const SizedBox(height: 12),
         const _OrDivider().animate().slideIn(210),
-        const SizedBox(height: 18),
+        const SizedBox(height: 10),
         Row(
           children: [
             Expanded(
@@ -330,7 +330,7 @@ class _Form extends StatelessWidget {
             fontSize: 12,
           ),
         ).animate().slideIn(255),
-        const SizedBox(height: 20),
+        const SizedBox(height: 8),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [

@@ -1,3 +1,4 @@
+import 'package:data/auth/models/user_role.dart';
 import 'package:data/finance/models/payment_method.dart';
 import 'package:data/finance/repository/payment_gateway_repository.dart';
 import 'package:data/finance/repository/wallets_repository.dart';
@@ -33,8 +34,12 @@ class PaymentMethodStep extends StatelessWidget {
             final profileState = context.read<ProfileBloc>().state;
             final isVerified = profileState is ProfileLoaded &&
                 profileState.profile.isVerified;
+            final isCorporate = profileState is ProfileLoaded &&
+                (profileState.profile.role == UserRole.Corporate ||
+                    profileState.profile.role == UserRole.EESUpliftCorporate);
             return WalletsBloc(context.read<WalletsRepository>())
-              ..add(WalletsFetched(isVerified: isVerified));
+              ..add(WalletsFetched(
+                  isVerified: isVerified, isCorporate: isCorporate));
           },
         ),
         BlocProvider(
@@ -136,15 +141,13 @@ class PaymentMethodStep extends StatelessWidget {
                             ).animate().slideIn(50),
                             PaymentMethodTile(
                               gateway: gatewayState.gateway(PaymentMethod.ozow),
-                              title: 'Ozow',
+                              title: 'OZOW',
                               amount: total ?? 0,
                               isVisible: gatewayState
                                       .gateway(PaymentMethod.ozow)
                                       ?.isActive ??
                                   false,
                               imagePath: 'assets/images/ozow.png',
-                              subtitle:
-                                  'EFT with FNB, ABSA, Nedbank, etc. \n**Capitec Pay Not Available**',
                               onTap: (gateway) {
                                 context.read<CheckoutBloc>().add(
                                       PaymentMethodUpdated(

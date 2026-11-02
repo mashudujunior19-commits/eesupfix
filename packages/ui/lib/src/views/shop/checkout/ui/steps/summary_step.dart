@@ -115,58 +115,6 @@ class SummaryStep extends StatelessWidget {
                   label: 'Subtotal',
                   value: 'R${newOrder?.value.toRounded() ?? '0.00'}',
                 ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    _LineTile(
-                      label: 'Card fee',
-                      isVisible: newOrder?.cardFee != null,
-                      value:
-                          'R${newOrder?.cardFee?.toRounded() ?? '0.00'}',
-                    ),
-                    if (newOrder?.paymentMethod != PaymentMethod.retailWallet)
-                      GestureDetector(
-                        onTap: () {
-                          final value =
-                              !(newOrder?.payFeesWithRetailWallet ?? false);
-                          context
-                              .read<CheckoutBloc>()
-                              .add(PayFeesWithWalletUpdated(value));
-                        },
-                        child: Padding(
-                          padding: const EdgeInsets.only(left: 10),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Expanded(
-                                child: Text(
-                                  '**Tap to Pay the fee with you Retail wallet',
-                                  style: context.textTheme.labelSmall?.copyWith(
-                                    fontSize: 13,
-                                    fontStyle: FontStyle.italic,
-                                    color: Colors.grey.shade700,
-                                  ),
-                                ),
-                              ),
-                              Checkbox(
-                                value:
-                                    newOrder?.payFeesWithRetailWallet ?? false,
-                                onChanged: (value) {
-                                  context.read<CheckoutBloc>().add(
-                                        PayFeesWithWalletUpdated(
-                                            value ?? false),
-                                      );
-                                },
-                                visualDensity: VisualDensity.compact,
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    15.sH,
-                  ],
-                ),
               ],
             ),
           ),

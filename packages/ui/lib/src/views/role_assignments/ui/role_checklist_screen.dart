@@ -10,6 +10,8 @@ import 'package:ui/src/core/widgets/fullscreen_error_widget.dart';
 import 'package:ui/src/core/widgets/fullscreen_loading_shimmer.dart';
 import 'package:ui/src/core/widgets/safe_network_image.dart';
 import 'package:ui/src/views/role_assignments/cubit/role_checklist_cubit.dart';
+import 'package:ui/src/views/role_assignments/ui/order_received_screen.dart';
+import 'package:data/role_assignments/models/order_receipt.dart';
 
 /// What someone with a role on a KasiPool order (receiver, packer, ...)
 /// sees: the items bought, as a checklist they can tick off. Prices are
@@ -76,6 +78,11 @@ class RoleChecklistScreen extends StatelessWidget {
                           checked: state.checkedCount,
                           total: state.items.length,
                         ),
+                        // Bulk-order receivers (not packers etc.) also get the
+                        // "Order Received" checklist once the warehouse has
+                        // dispatched, and the date + PIN after confirming.
+                        if (orderId == null)
+                          _ReceiptEntry(eesupoolOrderId: eesupoolOrderId),
                         for (final item in state.items)
                           Card(
                             color: Colors.white,
@@ -163,6 +170,81 @@ class _Header extends StatelessWidget {
           ),
         ],
       ),
+    );
+  }
+}
+
+/// "Order Received" entry for a bulk order. The button only appears once the
+/// warehouse has dispatched the order; the delivery date and PIN are offered
+/// to the KasiPool admin and to receivers who have confirmed.
+class _ReceiptEntry extends StatefulWidget {
+  const _ReceiptEntry({required this.eesupoolOrderId});
+  final int eesupoolOrderId;
+
+  @override
+  State<_ReceiptEntry> createState() => _ReceiptEntryState();
+}
+
+class _ReceiptEntryState extends State<_ReceiptEntry> {
+  late Future<ReceiptState?> _future;
+
+  @override
+  void initState() {
+    super.initState();
+    _future = _load();
+  }
+
+  Future<ReceiptState?> _load() async {
+    final res = await context
+        .read<RoleAssignmentsRepository>()
+        .fetchReceiptState(widget.eesupoolOrderId);
+    return res.fold((_) => null, (r) => r);
+  }
+
+  Future<void> _open() async {
+    final repo = context.read<RoleAssignmentsRepository>();
+    await Navigator.of(context).push(
+      MaterialPageRoute<void>(
+        builder: (_) => RepositoryProvider.value(
+          value: repo,
+          child: OrderReceivedScreen(eesupoolOrderId: widget.eesupoolOrderId),
+        ),
+      ),
+    );
+    if (mounted) setState(() => _future = _load());
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return FutureBuilder<ReceiptState?>(
+      future: _future,
+      builder: (context, snap) {
+        final s = snap.data;
+        if (s == null) return const SizedBox.shrink();
+
+        final String? label;
+        if (s.canConfirm) {
+          label = 'Order Received';
+        } else if (s.isReceiver && s.isConfirmed || s.isAdmin) {
+          label = 'Delivery date & PIN';
+        } else {
+          label = null;
+        }
+        if (label == null) {
+          return const SizedBox.shrink();
+        }
+        return Padding(
+          padding: const EdgeInsets.only(top: 6, bottom: 4),
+          child: FilledButton.icon(
+            onPressed: _open,
+            style: FilledButton.styleFrom(
+              minimumSize: const Size.fromHeight(46),
+            ),
+            icon: const Icon(Icons.inventory_2_outlined),
+            label: Text(label),
+          ),
+        );
+      },
     );
   }
 }

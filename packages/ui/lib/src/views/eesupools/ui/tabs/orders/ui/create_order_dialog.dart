@@ -39,8 +39,9 @@ class _CreatePoolOrderDialogState extends State<CreatePoolOrderDialog> {
     id: 0,
     eesupoolId: 0,
     createdAt: DateTime.now(),
-    scheduleFor: DateTime.now().add(const Duration(days: 3)),
-    closesAt: DateTime.now(),
+    // Orders close in 3 days and are delivered 3 days after they close.
+    scheduleFor: DateTime.now().add(const Duration(days: 6)),
+    closesAt: DateTime.now().add(const Duration(days: 3)),
   );
 
   @override

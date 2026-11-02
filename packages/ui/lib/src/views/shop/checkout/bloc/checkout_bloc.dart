@@ -61,13 +61,12 @@ class CheckoutBloc extends Bloc<CheckoutEvent, CheckoutState> {
     on<PaymentMethodUpdated>((event, emit) {
       if (state is CurrentCheckout) {
         final currentOrder = (state as CurrentCheckout).newOrder;
-        final fee = (state as CurrentCheckout).subTotalToPay() *
-            ((event.gateway?.fee ?? 0.00) / 100);
         emit(
           CurrentCheckout(
             currentOrder.copyWith(
               paymentMethod: event.method,
-              cardFee: fee,
+              // No card fee is charged or shown at checkout.
+              cardFee: 0,
             ),
           ),
         );

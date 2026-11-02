@@ -3,14 +3,13 @@ import 'package:ui/src/core/extensions/context_theme_ext.dart';
 import 'package:ui/src/core/extensions/sizedbox_ext.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
-import 'package:data/utils/double_ext.dart';
 
 class PaymentMethodTile extends StatelessWidget {
   const PaymentMethodTile({
     super.key,
     required this.onTap,
     required this.title,
-    required this.subtitle,
+    this.subtitle,
     required this.imagePath,
     required this.amount,
     this.isVisible = true,
@@ -21,7 +20,7 @@ class PaymentMethodTile extends StatelessWidget {
   final PaymentGateway? gateway;
   final void Function(PaymentGateway?) onTap;
   final String title;
-  final String subtitle;
+  final String? subtitle;
   final String imagePath;
 
   double? fee() {
@@ -55,21 +54,20 @@ class PaymentMethodTile extends StatelessWidget {
             color: Colors.black,
           ),
         ),
-        subtitle: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            if (fee() != null)
-              Text(
-                'Additional fee R${fee()?.toRounded() ?? 0.00} (${gateway?.fee.toRounded() ?? 0.00}%)',
-                style: context.textTheme.labelMedium?.copyWith(fontSize: 11),
+        subtitle: (subtitle == null || subtitle!.isEmpty)
+            ? null
+            : Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  if (subtitle != null && subtitle!.isNotEmpty)
+                    Text(
+                      subtitle!,
+                      style:
+                          context.textTheme.labelSmall?.copyWith(fontSize: 11),
+                    ),
+                ],
               ),
-            Text(
-              subtitle,
-              style: context.textTheme.labelSmall?.copyWith(fontSize: 11),
-            ),
-          ],
-        ),
         trailing: const Icon(IconlyLight.arrowRight2, size: 20),
       ),
     );

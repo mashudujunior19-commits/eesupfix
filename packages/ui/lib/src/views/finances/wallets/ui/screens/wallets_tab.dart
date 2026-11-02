@@ -1,3 +1,4 @@
+import 'package:data/auth/models/user_role.dart';
 import 'package:data/finance/repository/wallets_repository.dart';
 import 'package:ui/src/core/extensions/slide_in_animation_ext.dart';
 import 'package:ui/src/core/widgets/fullscreen_error_widget.dart';
@@ -18,10 +19,13 @@ class WalletsTab extends StatelessWidget {
     final profileState = context.watch<ProfileBloc>().state;
     final isVerified =
         profileState is ProfileLoaded && profileState.profile.isVerified;
+    final isCorporate = profileState is ProfileLoaded &&
+        (profileState.profile.role == UserRole.Corporate ||
+            profileState.profile.role == UserRole.EESUpliftCorporate);
 
     return BlocBuilder<WalletsBloc, WalletsState>(
       bloc: WalletsBloc(context.read<WalletsRepository>())
-        ..add(WalletsFetched(isVerified: isVerified)),
+        ..add(WalletsFetched(isVerified: isVerified, isCorporate: isCorporate)),
       builder: (context, state) {
         if (state is WalletsLoaded) {
           return ListView.builder(

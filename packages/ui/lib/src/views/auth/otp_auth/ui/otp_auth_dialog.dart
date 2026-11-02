@@ -163,7 +163,7 @@ class _OtpAuthDialogState extends State<OtpAuthDialog> {
               Padding(
                 padding: const EdgeInsets.only(left: 25, right: 25, top: 20),
                 child: Text(
-                  'We have sent an OTP to your phone number, +${widget.phone}',
+                  'TOWRIS has sent a verification code (OTP) to your phone number, +${widget.phone}',
                   textAlign: TextAlign.center,
                 ),
               ),
@@ -171,7 +171,7 @@ class _OtpAuthDialogState extends State<OtpAuthDialog> {
               Padding(
                 padding: const EdgeInsets.only(left: 25, right: 25, top: 20),
                 child: Text(
-                  'We have sent an OTP to your email address, ${widget.email}',
+                  'TOWRIS has sent a verification code (OTP) to your email address, ${widget.email}',
                   textAlign: TextAlign.center,
                 ),
               ),

@@ -31,9 +31,8 @@ class SelectPyamentMethodDialog extends StatelessWidget {
             children: [
               PaymentMethodTile(
                 amount: 0.00,
-                title: 'Ozow',
+                title: 'OZOW',
                 imagePath: 'assets/images/ozow.png',
-                subtitle: 'EFT with Capitec, FNB, ABSA, Nedbank, etc.',
                 onTap: (gateway) {
                   Navigator.pop(context, PaymentMethod.ozow);
                 },

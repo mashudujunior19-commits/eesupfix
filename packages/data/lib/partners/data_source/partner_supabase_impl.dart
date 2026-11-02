@@ -79,4 +79,19 @@ class PartnerSupabaseImpl implements PartnerDataSource {
       return false;
     }
   }
+
+  @override
+  Future<({bool eligible, String? reason})> fetchEligibility(
+      String partnerId) async {
+    final res = await _client
+        .schema('services')
+        .rpc('get_partner_eligibility', params: {'_partner_id': partnerId});
+    final rows = res as List;
+    if (rows.isEmpty) return (eligible: true, reason: null);
+    final row = Map<String, dynamic>.from(rows.first as Map);
+    return (
+      eligible: (row['eligible'] as bool?) ?? false,
+      reason: row['reason'] as String?,
+    );
+  }
 }
