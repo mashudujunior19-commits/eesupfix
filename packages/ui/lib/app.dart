@@ -161,6 +161,18 @@ class MainApp extends StatelessWidget {
     ),
   );
 
+  /// True while the animated landing screen is showing (or the router has not
+  /// shown anything yet). That screen decides where to go next once its
+  /// sequence has played, so a signed-out user must not be sent to sign-in
+  /// before the animation has run.
+  bool _isOnLanding() {
+    try {
+      return _appRouter.current.name == StartUpRoute.name;
+    } catch (_) {
+      return true;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     ///get the correct theme based on the app type (eesup or my kasi)
@@ -250,7 +262,7 @@ class MainApp extends StatelessWidget {
             listener: (context, state) async {
               ///This bloc listner is used to listen to the state of the auth bloc
               ///and navigate to the appropriate screen
-              if (state is UnAuthenticated) {
+              if (state is UnAuthenticated && !_isOnLanding()) {
                 _appRouter.replaceAll([const SignInRoute()]);
               }
             },
