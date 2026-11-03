@@ -99,7 +99,7 @@ Reasons are stored as typed and shown in the main app as plain text (Flutter `Te
 2. Review RPC + audit + transition rules.
 3. Verdict notification (trigger fixed, includes reason).
 4. Admin screen; main app status + reason.
-5. Still to do: deep link from the notification to the application; push retry; admin sign-in (see below).
+5. Admin sign-in and read access: done. Still to do: deep link from the notification to the application; push retry.
 
 ## 10. Acceptance checklist
 
@@ -111,8 +111,18 @@ Reasons are stored as typed and shown in the main app as plain text (Flutter `Te
 - [x] Verdict notification created in the same transaction (tested on Dev, rolled back).
 - [x] Admin tests: queue, history, confirm, reason validation, server refusal.
 - [ ] Notification tap opens the application (not built).
-- [ ] Verified end to end on a device with a real applicant account.
+- [x] Verified end to end on Dev in the browser: apply, admin decline with reason, notification and Declined status in the app, admin approve.
+- [ ] Verified on a physical device.
 
-## Security finding (needs action)
+## Admin access
 
-The admin app calls Supabase with a `service_role` key written in `lib/env.dart`, and the file also holds a commented-out production service key. A service key bypasses all access rules; anyone with the app bundle or the repository history has full database access. Rotate both keys and move the admin app to real admin sign-in (the review RPC already accepts a signed-in profile with role `Admin`, and records who acted).
+The admin app signs in with a real admin account (email + password). After sign-in it checks the account's profile role is `Admin`, and the database enforces the same: `public.is_admin()` lets an Admin read all applications and the audit log, and `review_partner_application` only runs for an Admin (or a service key). Everyone else sees only their own rows, and signed-out visitors see nothing. The review is recorded under the admin's own id.
+
+The app's active key is the project's anonymous key, which is public by design; what the user can do comes from the signed-in account, not the key. All screens share one signed-in session (`lib/supabase_client.dart`).
+
+## Findings still open
+
+- `lib/env.dart` in the admin app contains a commented-out **production service-role key**. It sits in the repository history, so rotate that key.
+- `public.profile` is readable by anyone, signed in or not (ID numbers, phone numbers). It needs restricting, carefully, because the main app reads profiles.
+- `engagements.notification` still allows any signed-in user to insert a notification for someone else, because four functions that notify other users run with the caller's rights. Make them `SECURITY DEFINER`, then restrict inserts.
+- The admin session is not saved, so an admin signs in again after a page reload.
