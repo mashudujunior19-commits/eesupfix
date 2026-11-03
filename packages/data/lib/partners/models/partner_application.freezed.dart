@@ -1,6 +1,5 @@
-// dart format width=80
-// coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// coverage:ignore-file
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
@@ -24,6 +23,12 @@ mixin _$PartnerApplication implements DiagnosticableTreeMixin {
   DateTime? get createdAt;
   @JsonKey(name: 'approved_at')
   DateTime? get approvedAt;
+  @JsonKey(name: 'rejected_at')
+  DateTime? get rejectedAt;
+
+  /// Why the reviewer declined it (shown to the applicant).
+  @JsonKey(name: 'decline_reason')
+  String? get declineReason;
   @PartnerSurveyResponseConverter()
   @JsonKey(name: 'survey_responses')
   List<PartnerSurveyResponse> get surveyResponses;
@@ -48,6 +53,8 @@ mixin _$PartnerApplication implements DiagnosticableTreeMixin {
       ..add(DiagnosticsProperty('userId', userId))
       ..add(DiagnosticsProperty('createdAt', createdAt))
       ..add(DiagnosticsProperty('approvedAt', approvedAt))
+      ..add(DiagnosticsProperty('rejectedAt', rejectedAt))
+      ..add(DiagnosticsProperty('declineReason', declineReason))
       ..add(DiagnosticsProperty('surveyResponses', surveyResponses));
   }
 
@@ -64,18 +71,30 @@ mixin _$PartnerApplication implements DiagnosticableTreeMixin {
                 other.createdAt == createdAt) &&
             (identical(other.approvedAt, approvedAt) ||
                 other.approvedAt == approvedAt) &&
+            (identical(other.rejectedAt, rejectedAt) ||
+                other.rejectedAt == rejectedAt) &&
+            (identical(other.declineReason, declineReason) ||
+                other.declineReason == declineReason) &&
             const DeepCollectionEquality()
                 .equals(other.surveyResponses, surveyResponses));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, id, partnerId, userId, createdAt,
-      approvedAt, const DeepCollectionEquality().hash(surveyResponses));
+  int get hashCode => Object.hash(
+      runtimeType,
+      id,
+      partnerId,
+      userId,
+      createdAt,
+      approvedAt,
+      rejectedAt,
+      declineReason,
+      const DeepCollectionEquality().hash(surveyResponses));
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'PartnerApplication(id: $id, partnerId: $partnerId, userId: $userId, createdAt: $createdAt, approvedAt: $approvedAt, surveyResponses: $surveyResponses)';
+    return 'PartnerApplication(id: $id, partnerId: $partnerId, userId: $userId, createdAt: $createdAt, approvedAt: $approvedAt, rejectedAt: $rejectedAt, declineReason: $declineReason, surveyResponses: $surveyResponses)';
   }
 }
 
@@ -91,6 +110,8 @@ abstract mixin class $PartnerApplicationCopyWith<$Res> {
       @JsonKey(name: 'user_id') String userId,
       @JsonKey(name: 'created_at') DateTime? createdAt,
       @JsonKey(name: 'approved_at') DateTime? approvedAt,
+      @JsonKey(name: 'rejected_at') DateTime? rejectedAt,
+      @JsonKey(name: 'decline_reason') String? declineReason,
       @PartnerSurveyResponseConverter()
       @JsonKey(name: 'survey_responses')
       List<PartnerSurveyResponse> surveyResponses});
@@ -114,6 +135,8 @@ class _$PartnerApplicationCopyWithImpl<$Res>
     Object? userId = null,
     Object? createdAt = freezed,
     Object? approvedAt = freezed,
+    Object? rejectedAt = freezed,
+    Object? declineReason = freezed,
     Object? surveyResponses = null,
   }) {
     return _then(_self.copyWith(
@@ -137,6 +160,14 @@ class _$PartnerApplicationCopyWithImpl<$Res>
           ? _self.approvedAt
           : approvedAt // ignore: cast_nullable_to_non_nullable
               as DateTime?,
+      rejectedAt: freezed == rejectedAt
+          ? _self.rejectedAt
+          : rejectedAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      declineReason: freezed == declineReason
+          ? _self.declineReason
+          : declineReason // ignore: cast_nullable_to_non_nullable
+              as String?,
       surveyResponses: null == surveyResponses
           ? _self.surveyResponses
           : surveyResponses // ignore: cast_nullable_to_non_nullable
@@ -145,21 +176,237 @@ class _$PartnerApplicationCopyWithImpl<$Res>
   }
 }
 
+/// Adds pattern-matching-related methods to [PartnerApplication].
+extension PartnerApplicationPatterns on PartnerApplication {
+  /// A variant of `map` that fallback to returning `orElse`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>(
+    TResult Function(_PartnerApplication value)? $default, {
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _PartnerApplication() when $default != null:
+        return $default(_that);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// Callbacks receives the raw object, upcasted.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case final Subclass2 value:
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>(
+    TResult Function(_PartnerApplication value) $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _PartnerApplication():
+        return $default(_that);
+      case _:
+        throw StateError('Unexpected subclass');
+    }
+  }
+
+  /// A variant of `map` that fallback to returning `null`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>(
+    TResult? Function(_PartnerApplication value)? $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _PartnerApplication() when $default != null:
+        return $default(_that);
+      case _:
+        return null;
+    }
+  }
+
+  /// A variant of `when` that fallback to an `orElse` callback.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>(
+    TResult Function(
+            int id,
+            @JsonKey(name: 'partner_id') String partnerId,
+            @JsonKey(name: 'user_id') String userId,
+            @JsonKey(name: 'created_at') DateTime? createdAt,
+            @JsonKey(name: 'approved_at') DateTime? approvedAt,
+            @JsonKey(name: 'rejected_at') DateTime? rejectedAt,
+            @JsonKey(name: 'decline_reason') String? declineReason,
+            @PartnerSurveyResponseConverter()
+            @JsonKey(name: 'survey_responses')
+            List<PartnerSurveyResponse> surveyResponses)?
+        $default, {
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _PartnerApplication() when $default != null:
+        return $default(
+            _that.id,
+            _that.partnerId,
+            _that.userId,
+            _that.createdAt,
+            _that.approvedAt,
+            _that.rejectedAt,
+            _that.declineReason,
+            _that.surveyResponses);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// As opposed to `map`, this offers destructuring.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case Subclass2(:final field2):
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>(
+    TResult Function(
+            int id,
+            @JsonKey(name: 'partner_id') String partnerId,
+            @JsonKey(name: 'user_id') String userId,
+            @JsonKey(name: 'created_at') DateTime? createdAt,
+            @JsonKey(name: 'approved_at') DateTime? approvedAt,
+            @JsonKey(name: 'rejected_at') DateTime? rejectedAt,
+            @JsonKey(name: 'decline_reason') String? declineReason,
+            @PartnerSurveyResponseConverter()
+            @JsonKey(name: 'survey_responses')
+            List<PartnerSurveyResponse> surveyResponses)
+        $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _PartnerApplication():
+        return $default(
+            _that.id,
+            _that.partnerId,
+            _that.userId,
+            _that.createdAt,
+            _that.approvedAt,
+            _that.rejectedAt,
+            _that.declineReason,
+            _that.surveyResponses);
+      case _:
+        throw StateError('Unexpected subclass');
+    }
+  }
+
+  /// A variant of `when` that fallback to returning `null`
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>(
+    TResult? Function(
+            int id,
+            @JsonKey(name: 'partner_id') String partnerId,
+            @JsonKey(name: 'user_id') String userId,
+            @JsonKey(name: 'created_at') DateTime? createdAt,
+            @JsonKey(name: 'approved_at') DateTime? approvedAt,
+            @JsonKey(name: 'rejected_at') DateTime? rejectedAt,
+            @JsonKey(name: 'decline_reason') String? declineReason,
+            @PartnerSurveyResponseConverter()
+            @JsonKey(name: 'survey_responses')
+            List<PartnerSurveyResponse> surveyResponses)?
+        $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _PartnerApplication() when $default != null:
+        return $default(
+            _that.id,
+            _that.partnerId,
+            _that.userId,
+            _that.createdAt,
+            _that.approvedAt,
+            _that.rejectedAt,
+            _that.declineReason,
+            _that.surveyResponses);
+      case _:
+        return null;
+    }
+  }
+}
+
 /// @nodoc
 @JsonSerializable()
-class _PartnerApplication
-    with DiagnosticableTreeMixin
-    implements PartnerApplication {
+class _PartnerApplication extends PartnerApplication
+    with DiagnosticableTreeMixin {
   const _PartnerApplication(
       {required this.id,
       @JsonKey(name: 'partner_id') required this.partnerId,
       @JsonKey(name: 'user_id') required this.userId,
       @JsonKey(name: 'created_at') this.createdAt,
       @JsonKey(name: 'approved_at') this.approvedAt,
+      @JsonKey(name: 'rejected_at') this.rejectedAt,
+      @JsonKey(name: 'decline_reason') this.declineReason,
       @PartnerSurveyResponseConverter()
       @JsonKey(name: 'survey_responses')
       required final List<PartnerSurveyResponse> surveyResponses})
-      : _surveyResponses = surveyResponses;
+      : _surveyResponses = surveyResponses,
+        super._();
   factory _PartnerApplication.fromJson(Map<String, dynamic> json) =>
       _$PartnerApplicationFromJson(json);
 
@@ -177,6 +424,14 @@ class _PartnerApplication
   @override
   @JsonKey(name: 'approved_at')
   final DateTime? approvedAt;
+  @override
+  @JsonKey(name: 'rejected_at')
+  final DateTime? rejectedAt;
+
+  /// Why the reviewer declined it (shown to the applicant).
+  @override
+  @JsonKey(name: 'decline_reason')
+  final String? declineReason;
   final List<PartnerSurveyResponse> _surveyResponses;
   @override
   @PartnerSurveyResponseConverter()
@@ -211,6 +466,8 @@ class _PartnerApplication
       ..add(DiagnosticsProperty('userId', userId))
       ..add(DiagnosticsProperty('createdAt', createdAt))
       ..add(DiagnosticsProperty('approvedAt', approvedAt))
+      ..add(DiagnosticsProperty('rejectedAt', rejectedAt))
+      ..add(DiagnosticsProperty('declineReason', declineReason))
       ..add(DiagnosticsProperty('surveyResponses', surveyResponses));
   }
 
@@ -227,18 +484,30 @@ class _PartnerApplication
                 other.createdAt == createdAt) &&
             (identical(other.approvedAt, approvedAt) ||
                 other.approvedAt == approvedAt) &&
+            (identical(other.rejectedAt, rejectedAt) ||
+                other.rejectedAt == rejectedAt) &&
+            (identical(other.declineReason, declineReason) ||
+                other.declineReason == declineReason) &&
             const DeepCollectionEquality()
                 .equals(other._surveyResponses, _surveyResponses));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, id, partnerId, userId, createdAt,
-      approvedAt, const DeepCollectionEquality().hash(_surveyResponses));
+  int get hashCode => Object.hash(
+      runtimeType,
+      id,
+      partnerId,
+      userId,
+      createdAt,
+      approvedAt,
+      rejectedAt,
+      declineReason,
+      const DeepCollectionEquality().hash(_surveyResponses));
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'PartnerApplication(id: $id, partnerId: $partnerId, userId: $userId, createdAt: $createdAt, approvedAt: $approvedAt, surveyResponses: $surveyResponses)';
+    return 'PartnerApplication(id: $id, partnerId: $partnerId, userId: $userId, createdAt: $createdAt, approvedAt: $approvedAt, rejectedAt: $rejectedAt, declineReason: $declineReason, surveyResponses: $surveyResponses)';
   }
 }
 
@@ -256,6 +525,8 @@ abstract mixin class _$PartnerApplicationCopyWith<$Res>
       @JsonKey(name: 'user_id') String userId,
       @JsonKey(name: 'created_at') DateTime? createdAt,
       @JsonKey(name: 'approved_at') DateTime? approvedAt,
+      @JsonKey(name: 'rejected_at') DateTime? rejectedAt,
+      @JsonKey(name: 'decline_reason') String? declineReason,
       @PartnerSurveyResponseConverter()
       @JsonKey(name: 'survey_responses')
       List<PartnerSurveyResponse> surveyResponses});
@@ -279,6 +550,8 @@ class __$PartnerApplicationCopyWithImpl<$Res>
     Object? userId = null,
     Object? createdAt = freezed,
     Object? approvedAt = freezed,
+    Object? rejectedAt = freezed,
+    Object? declineReason = freezed,
     Object? surveyResponses = null,
   }) {
     return _then(_PartnerApplication(
@@ -302,6 +575,14 @@ class __$PartnerApplicationCopyWithImpl<$Res>
           ? _self.approvedAt
           : approvedAt // ignore: cast_nullable_to_non_nullable
               as DateTime?,
+      rejectedAt: freezed == rejectedAt
+          ? _self.rejectedAt
+          : rejectedAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      declineReason: freezed == declineReason
+          ? _self.declineReason
+          : declineReason // ignore: cast_nullable_to_non_nullable
+              as String?,
       surveyResponses: null == surveyResponses
           ? _self._surveyResponses
           : surveyResponses // ignore: cast_nullable_to_non_nullable

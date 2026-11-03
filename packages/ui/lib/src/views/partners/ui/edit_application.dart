@@ -54,16 +54,27 @@ class EditApplicationScreen extends StatelessWidget {
                         children: [
                           const Text('Status'),
                           Text(
-                            app.approvedAt != null ? 'Approved' : 'Pending',
+                            app.statusLabel,
                             style: context.textTheme.labelSmall?.copyWith(
-                              color: app.approvedAt != null
+                              color: app.isApproved
                                   ? context.colorScheme.primary
-                                  : context.colorScheme.error,
+                                  : (app.isDeclined
+                                      ? context.colorScheme.error
+                                      : Colors.orange),
                             ),
                           ),
                         ],
                       ),
                     ),
+                    if (app.isDeclined && (app.declineReason ?? '').isNotEmpty)
+                      Padding(
+                        padding: const EdgeInsets.only(
+                            left: 20, right: 20, top: 8),
+                        child: Text(
+                          'Reason: ${app.declineReason}',
+                          style: context.textTheme.bodySmall,
+                        ),
+                      ),
                     15.sH,
                     Expanded(
                       child: ListView.separated(

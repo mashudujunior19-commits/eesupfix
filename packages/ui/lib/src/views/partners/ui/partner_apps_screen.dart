@@ -145,13 +145,23 @@ class _ApplicationCard extends StatelessWidget {
             ),
           ),
           title: Text('REF-${app.id}'),
-          subtitle: Text(
-            app.approvedAt != null ? 'Approved' : 'Pending',
-            style: textTheme.labelSmall?.copyWith(
-              color: app.approvedAt != null
-                  ? colorScheme.primary
-                  : colorScheme.error,
-            ),
+          subtitle: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                app.statusLabel,
+                style: textTheme.labelSmall?.copyWith(
+                  color: app.isApproved
+                      ? colorScheme.primary
+                      : (app.isDeclined ? colorScheme.error : Colors.orange),
+                ),
+              ),
+              if (app.isDeclined && (app.declineReason ?? '').isNotEmpty)
+                Text(
+                  'Reason: ${app.declineReason}',
+                  style: textTheme.bodySmall,
+                ),
+            ],
           ),
           trailing: Icon(
             IconlyLight.arrowRight2,

@@ -17,6 +17,10 @@ _PartnerApplication _$PartnerApplicationFromJson(Map<String, dynamic> json) =>
       approvedAt: json['approved_at'] == null
           ? null
           : DateTime.parse(json['approved_at'] as String),
+      rejectedAt: json['rejected_at'] == null
+          ? null
+          : DateTime.parse(json['rejected_at'] as String),
+      declineReason: json['decline_reason'] as String?,
       surveyResponses: (json['survey_responses'] as List<dynamic>)
           .map((e) => const PartnerSurveyResponseConverter()
               .fromJson(e as Map<String, dynamic>))
@@ -30,6 +34,8 @@ Map<String, dynamic> _$PartnerApplicationToJson(_PartnerApplication instance) =>
       'user_id': instance.userId,
       'created_at': instance.createdAt?.toIso8601String(),
       'approved_at': instance.approvedAt?.toIso8601String(),
+      'rejected_at': instance.rejectedAt?.toIso8601String(),
+      'decline_reason': instance.declineReason,
       'survey_responses': instance.surveyResponses
           .map(const PartnerSurveyResponseConverter().toJson)
           .toList(),
