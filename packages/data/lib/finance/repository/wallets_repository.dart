@@ -1,5 +1,7 @@
 import 'package:data/auth/models/user_role.dart';
 import 'package:data/auth/repository/auth_repository.dart';
+import 'package:data/finance/models/investment_project.dart';
+import 'package:data/finance/models/kasilift_organisation.dart';
 import 'package:data/finance/models/payout_request.dart';
 import 'package:data/finance/models/profit_allocation.dart';
 import 'package:data/utils/eesup_exception.dart';
@@ -127,6 +129,32 @@ class WalletsRepository {
       return found;
     });
     return results;
+  }
+
+  Future<Either<EESUpException, List<KasiliftOrganisation>>>
+      fetchKasiliftOrganisations() async {
+    return _authRepo.executeFutureWithAuth(
+        (_) => _dataSource.fetchKasiliftOrganisations());
+  }
+
+  Future<Either<EESUpException, List<InvestmentProject>>>
+      fetchFundableProjects() async {
+    return _authRepo
+        .executeFutureWithAuth((_) => _dataSource.fetchFundableProjects());
+  }
+
+  Future<Either<EESUpException, int>> commitToProject({
+    required int fromWalletId,
+    required int projectId,
+    required double amount,
+  }) async {
+    return _authRepo.executeFutureWithAuth(
+      (_) => _dataSource.commitToProject(
+        fromWalletId: fromWalletId,
+        projectId: projectId,
+        amount: amount,
+      ),
+    );
   }
 
   Future<Either<EESUpException, WalletBalance>> fetchWalletBalances(

@@ -95,11 +95,15 @@ class _EESUpTextFormFieldState extends State<EESUpTextFormField> {
           if (widget.label != null)
             Row(
               children: [
-                Text(
-                  widget.label!,
-                  style: context.textTheme.labelMedium?.copyWith(
-                    fontSize: 15,
-                    fontWeight: FontWeight.w500,
+                // Flexible: a long label wraps instead of overflowing the row
+                // (small screens, large system font).
+                Flexible(
+                  child: Text(
+                    widget.label!,
+                    style: context.textTheme.labelMedium?.copyWith(
+                      fontSize: 15,
+                      fontWeight: FontWeight.w500,
+                    ),
                   ),
                 ),
                 if (widget.isRequired)

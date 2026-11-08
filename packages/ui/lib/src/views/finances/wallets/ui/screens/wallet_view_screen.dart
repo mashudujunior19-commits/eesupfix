@@ -2,6 +2,9 @@ import 'package:auto_route/auto_route.dart';
 import 'package:bootstrap_icons/bootstrap_icons.dart';
 import 'package:data/finance/models/wallet.dart';
 import 'package:data/finance/models/wallet_balance.dart';
+import 'package:data/finance/models/wallet_rules.dart';
+import 'package:ui/src/core/extensions/context_alerts_ext.dart';
+import 'package:ui/src/views/finances/wallets/ui/screens/commit_screen.dart';
 import 'package:data/finance/repository/wallets_repository.dart';
 import 'package:ui/app_route.gr.dart';
 import 'package:ui/src/core/extensions/bg_image_deco_ext.dart';
@@ -159,7 +162,11 @@ class WalletViewScreen extends StatelessWidget {
                                     MainAxisAlignment.spaceBetween,
                                 children: [
                                   _BalanceCard(balance: balance),
-                                  _Transact(wallet: wallet)
+                                  _Transact(
+                                    wallet: wallet,
+                                    availableBalance:
+                                        balance.availableBalance ?? 0,
+                                  )
                                 ],
                               ),
                             ).animate().slideIn(0),
@@ -231,8 +238,49 @@ class WalletViewScreen extends StatelessWidget {
 }
 
 class _Transact extends StatelessWidget {
-  const _Transact({required this.wallet});
+  const _Transact({required this.wallet, required this.availableBalance});
   final Wallet wallet;
+  final double availableBalance;
+
+  void _refresh(BuildContext context) {
+    context.read<WalletViewBloc>().add(WalletViewFetched(wallet.id));
+  }
+
+  /// Wealth funds are committed to projects, never transferred or paid out.
+  Future<void> _commit(BuildContext context) async {
+    if (!canCommitWithBalance(availableBalance)) {
+      context.snackBarError(
+        'You need more than R${minWealthCommitBalance.toStringAsFixed(0)} in '
+        'your Wealth wallet to commit to a project. Current available '
+        'balance: R${availableBalance.toRounded()}.',
+      );
+      return;
+    }
+    final repo = context.read<WalletsRepository>();
+    final projects = await repo.fetchFundableProjects();
+    if (!context.mounted) return;
+    projects.fold(
+      (l) => context.snackBarError(l.message),
+      (list) {
+        if (list.isEmpty) {
+          context.snackBarError(
+              'There are no approved projects open for funding right now.');
+          return;
+        }
+        Navigator.of(context)
+            .push(MaterialPageRoute(
+              builder: (_) => CommitScreen(
+                wallet: wallet,
+                availableBalance: availableBalance,
+                projects: list,
+              ),
+            ))
+            .then((_) {
+          if (context.mounted) _refresh(context);
+        });
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -252,15 +300,32 @@ class _Transact extends StatelessWidget {
         ],
       ),
       itemBuilder: (context) {
+        // Wealth: only "Commit" (greyed until the balance allows it).
+        if (wallet.canCommit) {
+          final allowed = canCommitWithBalance(availableBalance);
+          final color = allowed ? null : Colors.grey;
+          return [
+            PopupMenuItem(
+              onTap: () => _commit(context),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Icon(BootstrapIcons.graph_up_arrow, size: 15, color: color),
+                  10.sW,
+                  Text('Commit',
+                      style:
+                          context.textTheme.labelSmall?.copyWith(color: color)),
+                ],
+              ),
+            ),
+          ];
+        }
         return [
-          //    if (wallet.transfers == true)
           PopupMenuItem(
             onTap: () {
               context.router.push(TransferRoute(wallet: wallet)).then(
                 (value) {
-                  context.read<WalletViewBloc>().add(
-                        WalletViewFetched(wallet.id),
-                      );
+                  _refresh(context);
                 },
               );
             },
@@ -273,26 +338,26 @@ class _Transact extends StatelessWidget {
               ],
             ),
           ),
-          //    if (wallet.withdrawals == true)
-          PopupMenuItem(
-            onTap: () {
-              context.router.push(PayoutRoute(wallet: wallet)).then(
-                (value) {
-                  context.read<WalletViewBloc>().add(
-                        WalletViewFetched(wallet.id),
-                      );
-                },
-              );
-            },
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                const Icon(BootstrapIcons.currency_euro, size: 16),
-                10.sW,
-                Text('Request payout', style: context.textTheme.labelSmall)
-              ],
-            ),
-          )
+          // Social wallets can never be paid out as cash.
+          if (wallet.canRequestPayout)
+            PopupMenuItem(
+              onTap: () {
+                context.router.push(PayoutRoute(wallet: wallet)).then(
+                  (value) {
+                    _refresh(context);
+                  },
+                );
+              },
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  // A cash icon: amounts are in Rand, not Euro.
+                  const Icon(BootstrapIcons.cash_coin, size: 16),
+                  10.sW,
+                  Text('Request payout', style: context.textTheme.labelSmall)
+                ],
+              ),
+            )
         ];
       },
     );

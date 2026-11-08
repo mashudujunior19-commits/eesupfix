@@ -93,12 +93,17 @@ class NotificationTile extends StatelessWidget {
               child: const Icon(IconlyLight.message, size: 20),
             ),
             10.sW,
-            Column(
+            // Expanded so a long title wraps instead of overflowing the row
+            // (it sits beside the chevron).
+            Expanded(
+              child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisSize: MainAxisSize.min,
               children: [
                 Text(
                   notification.title,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
                   style: isNew
                       ? const TextStyle(fontWeight: FontWeight.bold)
                       : (_resolved ? const TextStyle(color: Colors.grey) : null),
@@ -112,7 +117,8 @@ class NotificationTile extends StatelessWidget {
                   ),
                 ),
               ],
-            )
+            ),
+            ),
           ],
         ),
         content: Padding(

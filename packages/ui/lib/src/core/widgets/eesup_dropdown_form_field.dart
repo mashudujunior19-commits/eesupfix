@@ -35,11 +35,14 @@ class EESUpDropdownFormField<T> extends StatelessWidget {
           if (label != null)
             Row(
               children: [
-                Text(
-                  label!,
-                  style: context.textTheme.labelMedium?.copyWith(
-                    fontSize: 15,
-                    fontWeight: FontWeight.w500,
+                // Flexible: a long label wraps instead of overflowing the row.
+                Flexible(
+                  child: Text(
+                    label!,
+                    style: context.textTheme.labelMedium?.copyWith(
+                      fontSize: 15,
+                      fontWeight: FontWeight.w500,
+                    ),
                   ),
                 ),
                 if (isRequired)

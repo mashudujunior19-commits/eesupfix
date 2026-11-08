@@ -419,12 +419,16 @@ class _BasketProductCard extends StatelessWidget {
                       child: SafeNetworkImage(basketProduct.imageUrl,
                           width: 27),
                     ),
-                    title: Text(
-                      basketProduct.name,
-                      style:
-                          theme.textTheme.labelMedium?.copyWith(fontSize: 13),
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
+                    // Tooltip: the full name is reachable by long-press/hover.
+                    title: Tooltip(
+                      message: basketProduct.name,
+                      child: Text(
+                        basketProduct.name,
+                        style:
+                            theme.textTheme.labelMedium?.copyWith(fontSize: 13),
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                      ),
                     ),
                     subtitle: Column(
                       mainAxisSize: MainAxisSize.min,
@@ -453,6 +457,10 @@ class _BasketProductCard extends StatelessWidget {
                           mainAxisSize: MainAxisSize.min,
                           children: [
                             IconButton(
+                              visualDensity: VisualDensity.compact,
+                              padding: EdgeInsets.zero,
+                              constraints: const BoxConstraints(
+                                  minWidth: 32, minHeight: 32),
                               onPressed: () {
                                 //   context.read<BasketViewBloc>().add(
                                 //         BasketProductChanged(
@@ -486,7 +494,7 @@ class _BasketProductCard extends StatelessWidget {
                               ),
                             ),
                             Container(
-                              width: 44,
+                              width: 48,
                               margin: const EdgeInsets.only(top: 2),
                               child: TextFormField(
                                 // Re-created whenever the quantity changes so
@@ -501,11 +509,17 @@ class _BasketProductCard extends StatelessWidget {
                                   fontWeight: FontWeight.w700,
                                   color: Colors.black,
                                 ),
+                                // The theme fills and pads fields; that turned this
+                                // into a grey circle with the number squeezed out.
                                 decoration: const InputDecoration(
                                   isDense: true,
+                                  filled: false,
+                                  counterText: '',
                                   contentPadding:
                                       EdgeInsets.symmetric(vertical: 8),
                                   border: InputBorder.none,
+                                  enabledBorder: InputBorder.none,
+                                  focusedBorder: InputBorder.none,
                                 ),
                                 onFieldSubmitted: (value) {
                                   final qty = int.tryParse(value);
@@ -521,6 +535,10 @@ class _BasketProductCard extends StatelessWidget {
                               ),
                             ),
                             IconButton(
+                              visualDensity: VisualDensity.compact,
+                              padding: EdgeInsets.zero,
+                              constraints: const BoxConstraints(
+                                  minWidth: 32, minHeight: 32),
                               onPressed: () {
                                 context.read<BasketViewBloc>().add(
                                       BasketProductChanged(

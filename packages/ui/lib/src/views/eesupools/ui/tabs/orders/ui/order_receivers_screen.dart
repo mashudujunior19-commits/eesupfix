@@ -127,18 +127,29 @@ class OrderReceiverScreen extends StatelessWidget {
                                 return MemberCard(
                                   member: member,
                                   pool: pool,
-                                  trailing: Row(
+                                  // Capped so the name keeps room on small screens.
+                                  trailing: ConstrainedBox(
+                                    constraints: BoxConstraints(
+                                      maxWidth:
+                                          MediaQuery.sizeOf(context).width * .42,
+                                    ),
+                                    child: Row(
                                     mainAxisSize: MainAxisSize.min,
                                     children: [
                                       // Master orders only have receivers, so the
                                       // role is set automatically.
-                                      Text(
-                                        ReceiverRole.receiver.label,
-                                        style: context.textTheme.labelSmall
-                                            ?.copyWith(
-                                          color: context.colorScheme.primary,
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 11,
+                                      Flexible(
+                                        child: Text(
+                                          ReceiverRole.receiver.label,
+                                          maxLines: 2,
+                                          overflow: TextOverflow.ellipsis,
+                                          textAlign: TextAlign.end,
+                                          style: context.textTheme.labelSmall
+                                              ?.copyWith(
+                                            color: context.colorScheme.primary,
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 11,
+                                          ),
                                         ),
                                       ),
                                       if (!order.isClosed)
@@ -171,6 +182,7 @@ class OrderReceiverScreen extends StatelessWidget {
                                           ),
                                         ),
                                     ],
+                                  ),
                                   ),
                                 );
                               },

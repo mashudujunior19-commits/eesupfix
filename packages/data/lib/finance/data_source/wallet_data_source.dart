@@ -1,4 +1,6 @@
 import 'package:data/auth/models/user_role.dart';
+import 'package:data/finance/models/investment_project.dart';
+import 'package:data/finance/models/kasilift_organisation.dart';
 import 'package:data/finance/models/payment_gateway.dart';
 import 'package:data/finance/models/payout_request.dart';
 import 'package:data/finance/models/profit_allocation.dart';
@@ -28,4 +30,17 @@ abstract class WalletDataSource {
   Future<bool> createPayoutRequest(PayoutRequest request);
 
   Future<WalletBalance?> fetchWalletBalances(String userId, String walletType);
+
+  /// Approved KasiLift Organisations a Social wallet may send to.
+  Future<List<KasiliftOrganisation>> fetchKasiliftOrganisations();
+
+  /// Approved investment projects that are open for funding.
+  Future<List<InvestmentProject>> fetchFundableProjects();
+
+  /// Commits [amount] from a Wealth wallet to a project; returns the commitment id.
+  Future<int> commitToProject({
+    required int fromWalletId,
+    required int projectId,
+    required double amount,
+  });
 }

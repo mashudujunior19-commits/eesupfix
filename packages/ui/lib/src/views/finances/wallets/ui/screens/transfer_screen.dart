@@ -1,6 +1,9 @@
 // ignore_for_file: use_build_context_synchronously
 import 'package:auto_route/auto_route.dart';
+import 'package:data/finance/models/kasilift_organisation.dart';
+import 'package:data/finance/models/wallet_rules.dart';
 import 'package:data/finance/repository/wallets_repository.dart';
+import 'package:ui/src/core/widgets/eesup_dropdown_form_field.dart';
 import 'package:ui/src/core/extensions/bg_image_deco_ext.dart';
 import 'package:ui/src/core/extensions/bottom_sheet_context_ext.dart';
 import 'package:ui/src/core/extensions/context_alerts_ext.dart';
@@ -27,15 +30,67 @@ class _TransferScreenState extends State<TransferScreen> {
   final _myRefController = TextEditingController();
   final _beneficiaryRefController = TextEditingController();
   dynamic _beneficiary;
-  String _selectedRecipientType = 'Beneficiary';
+  static const _orgType = 'KasiLift Organisation';
+  late String _selectedRecipientType;
   Wallet? _selectedWallet;
+  KasiliftOrganisation? _selectedOrg;
 
   List<Wallet> _availableWallets = [];
+  List<KasiliftOrganisation> _organisations = [];
+
+  /// Social wallets can only send to registered KasiLift Organisations.
+  bool get _isSocial => widget.wallet.isSocial;
+
+  List<String> get _recipientTypes =>
+      _isSocial ? const [_orgType] : const ['Beneficiary', 'Wallet'];
 
   @override
   void initState() {
     super.initState();
-    _fetchAvailableWallets();
+    _selectedRecipientType = _isSocial ? _orgType : 'Beneficiary';
+    if (_isSocial) {
+      _fetchOrganisations();
+    } else {
+      _fetchAvailableWallets();
+    }
+  }
+
+  Future<void> _fetchOrganisations() async {
+    final results =
+        await context.read<WalletsRepository>().fetchKasiliftOrganisations();
+    if (!mounted) return;
+    results.fold(
+      (l) => context.snackBarError(l.message),
+      (orgs) => setState(() => _organisations = orgs),
+    );
+  }
+
+  Future<void> _showOrganisationSelector(BuildContext context) async {
+    if (_organisations.isEmpty) {
+      context.snackBarError(
+          'There are no registered KasiLift Organisations available right now.');
+      return;
+    }
+    final selected = await showDialog<KasiliftOrganisation>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Select KasiLift Organisation'),
+        content: SizedBox(
+          width: double.maxFinite,
+          child: ListView(
+            shrinkWrap: true,
+            children: _organisations
+                .map((o) => ListTile(
+                      title: Text(o.name),
+                      subtitle: o.province == null ? null : Text(o.province!),
+                      onTap: () => Navigator.pop(context, o),
+                    ))
+                .toList(),
+          ),
+        ),
+      ),
+    );
+    if (selected != null) setState(() => _selectedOrg = selected);
   }
 
   Future<void> _fetchAvailableWallets() async {
@@ -52,13 +107,11 @@ class _TransferScreenState extends State<TransferScreen> {
     );
   }
 
-  // Check if the selected wallet is from Wealth/Social
+  // Wealth funds are committed to projects, never transferred. (Social wallets
+  // may transfer, but only to KasiLift Organisations.)
   void _checkTransferAvailability() {
-    if (widget.wallet.description == 'Wealth' ||
-        widget.wallet.description == 'Social') {
-      context
-          .snackBarError('Wallet transfers are not allowed from this wallet');
-    }
+    context.snackBarError(
+        'Wealth wallet funds cannot be transferred. Use Commit instead.');
   }
 
   @override
@@ -80,19 +133,16 @@ class _TransferScreenState extends State<TransferScreen> {
                     const EdgeInsets.only(left: 25, right: 25, bottom: 200),
                 children: [
                   // Show only one "To" field after selection
-                  DropdownButtonFormField<String>(
+                  // Same labelled field as the rest of the form (the plain
+                  // dropdown clipped its floating label). With one option
+                  // (Social wallets) it is pre-selected and effectively locked.
+                  EESUpDropdownFormField<String>(
+                    label: 'Recipient Type',
                     value: _selectedRecipientType,
-                    items: [
-                      DropdownMenuItem(
-                        value: 'Beneficiary',
-                        child: Text('Beneficiary'),
-                      ),
-                      DropdownMenuItem(
-                        value: 'Wallet',
-                        child: Text('Wallet'),
-                      ),
-                    ],
+                    items: _recipientTypes,
+                    itemLabel: (t) => t,
                     onChanged: (value) {
+                      if (_recipientTypes.length < 2) return;
                       setState(() {
                         _selectedRecipientType = value ?? 'Beneficiary';
                         if (_selectedRecipientType == 'Beneficiary') {
@@ -100,9 +150,18 @@ class _TransferScreenState extends State<TransferScreen> {
                         }
                       });
                     },
-                    decoration:
-                        const InputDecoration(labelText: 'Recipient Type'),
                   ),
+                  if (_selectedRecipientType == _orgType)
+                    EESUpTextFormField(
+                      label: 'KasiLift Organisation',
+                      readOnly: true,
+                      isRequired: true,
+                      hintText: 'Select an organisation',
+                      onTap: () => _showOrganisationSelector(context),
+                      controller: TextEditingController(
+                        text: _selectedOrg?.name,
+                      ),
+                    ),
                   // Show Beneficiary or Wallet selection based on recipient type
                   if (_selectedRecipientType == 'Wallet')
                     EESUpTextFormField(
@@ -164,9 +223,15 @@ class _TransferScreenState extends State<TransferScreen> {
                   ElevatedButton(
                     onPressed: () {
                       // Check if wallet transfers are allowed
-                      if (widget.wallet.description == 'Wealth' ||
-                          widget.wallet.description == 'Social') {
+                      if (!widget.wallet.canTransfer) {
                         _checkTransferAvailability();
+                        return;
+                      }
+
+                      if (_selectedRecipientType == _orgType &&
+                          _selectedOrg == null) {
+                        context.snackBarError(
+                            'Please select a KasiLift Organisation');
                         return;
                       }
 
@@ -209,9 +274,16 @@ class _TransferScreenState extends State<TransferScreen> {
                         context.snackBarError('Insufficient funds!!!');
                         return;
                       }
-                      final toWalletId = _selectedRecipientType == 'Wallet'
-                          ? _selectedWallet!.id
-                          : _beneficiary['wallet_id'];
+                      final toWalletId = _selectedRecipientType == _orgType
+                          ? _selectedOrg!.walletId
+                          : _selectedRecipientType == 'Wallet'
+                              ? _selectedWallet!.id
+                              : _beneficiary['wallet_id'];
+                      final toName = _selectedRecipientType == _orgType
+                          ? _selectedOrg!.name
+                          : _selectedRecipientType == 'Wallet'
+                              ? _selectedWallet!.description
+                              : _beneficiary['full_name'];
 
                       if (toWalletId == null) {
                         context
@@ -222,7 +294,7 @@ class _TransferScreenState extends State<TransferScreen> {
                       context.showAlertDialog(
                           'Confirm transfer',
                           'Are you sure you want to transfer R${amount.toRounded()} '
-                              'to ${_selectedRecipientType == 'Wallet' ? _selectedWallet!.description : _beneficiary['full_name']}?',
+                              'to $toName?',
                           onNegative: () {},
                           negativeColor:
                               context.colorScheme.primary.withOpacity(.5),

@@ -79,7 +79,15 @@ class MemberCard extends StatelessWidget {
           title: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Text(member.fullName),
+              // Flexible so a long name shortens instead of overflowing the
+              // row when the trailing widget is wide (small screens, large fonts).
+              Flexible(
+                child: Text(
+                  member.fullName,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
               const SizedBox(width: 10),
               if (member.isCensored && pool.role == EESUpoolMemberRole.admin)
                 const Tooltip(

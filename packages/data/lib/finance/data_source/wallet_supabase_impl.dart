@@ -1,5 +1,7 @@
 import 'package:data/auth/models/user_role.dart';
 import 'package:data/finance/data_source/wallet_data_source.dart';
+import 'package:data/finance/models/investment_project.dart';
+import 'package:data/finance/models/kasilift_organisation.dart';
 import 'package:data/finance/models/payment_gateway.dart';
 import 'package:data/finance/models/payout_request.dart';
 import 'package:data/finance/models/profit_allocation.dart';
@@ -70,20 +72,56 @@ class WalletSupabaseImpl implements WalletDataSource {
     required String toRef,
     required String fromRef,
   }) async {
-    try {
-      final id = await _client
-          .schema('finances')
-          .rpc('transfer_funds_wallet_to_wallet', params: {
-        'from_wallet_id': fromWalletId,
-        'to_wallet_id': toWalletId,
-        'amount': amount,
-        'to_ref': toRef,
-        'from_ref': fromRef
-      });
-      return id;
-    } catch (e) {
-      return null;
-    }
+    // Errors are not swallowed: the database explains why a transfer is refused
+    // (wrong recipient for the wallet, insufficient funds, ...).
+    final id = await _client
+        .schema('finances')
+        .rpc('transfer_funds_wallet_to_wallet', params: {
+      'from_wallet_id': fromWalletId,
+      'to_wallet_id': toWalletId,
+      'amount': amount,
+      'to_ref': toRef,
+      'from_ref': fromRef
+    });
+    return id;
+  }
+
+  @override
+  Future<List<KasiliftOrganisation>> fetchKasiliftOrganisations() async {
+    final results =
+        await _client.schema('finances').rpc('get_kasilift_organisations');
+    return (results as List)
+        .map((e) => KasiliftOrganisation.fromJson(e as Map<String, dynamic>))
+        .toList();
+  }
+
+  @override
+  Future<List<InvestmentProject>> fetchFundableProjects() async {
+    // Row-level security already limits this to approved projects accepting funds.
+    final results = await _client
+        .schema('finances')
+        .from('investment_project')
+        .select('id, name, description')
+        .eq('status', 'approved')
+        .eq('accepts_funds', true)
+        .order('name');
+    return (results as List)
+        .map((e) => InvestmentProject.fromJson(e as Map<String, dynamic>))
+        .toList();
+  }
+
+  @override
+  Future<int> commitToProject({
+    required int fromWalletId,
+    required int projectId,
+    required double amount,
+  }) async {
+    final id = await _client.schema('finances').rpc('commit_to_project', params: {
+      '_from_wallet_id': fromWalletId,
+      '_project_id': projectId,
+      '_amount': amount,
+    });
+    return id as int;
   }
 
   @override
@@ -117,17 +155,12 @@ class WalletSupabaseImpl implements WalletDataSource {
 
   @override
   Future<bool> createPayoutRequest(PayoutRequest request) async {
-    try {
-      await _client.schema('finances').from('payout_request').insert(
-            request.toJson(),
-          );
-      return true;
-    } catch (e) {
-      if (kDebugMode) {
-        print(e);
-      }
-      return false;
-    }
+    // Not caught: payouts from Social/Wealth wallets are refused by the database
+    // with an explanation that should reach the user.
+    await _client.schema('finances').from('payout_request').insert(
+          request.toJson(),
+        );
+    return true;
   }
 
   @override
