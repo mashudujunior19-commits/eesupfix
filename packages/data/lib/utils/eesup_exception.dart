@@ -107,6 +107,14 @@ class EESUpException implements Exception {
     final errorMessage = exception.message.toLowerCase();
     final code = exception.code;
 
+    // Codes of the form PTnnn are raised by our own database rules (409
+    // already exists / invalid state, 422 invalid input, 403 not allowed) with a
+    // message written for the user, e.g. "Enter a valid South African phone
+    // number." Show it as is.
+    if (code != null && code.startsWith('PT')) {
+      return exception.message;
+    }
+
     // Handle specific error codes
     if (code == '23505') {
       // Unique violation

@@ -1,4 +1,5 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:ui/src/core/widgets/back_to_home_button.dart';
 import 'package:data/partners/models/partner.dart';
 import 'package:data/partners/models/partner_application.dart';
 import 'package:data/partners/repository/partner_repository.dart';
@@ -32,7 +33,7 @@ class PartnerAppScreen extends StatelessWidget {
       child: SizedBox(
         child: Scaffold(
           appBar: AppBar(
-            leading: const BackButton(),
+            leading: const BackToHomeButton(),
             title: Text(partner.title),
             actions: [
               Builder(builder: (context) {

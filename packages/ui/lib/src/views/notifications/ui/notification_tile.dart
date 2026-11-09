@@ -14,6 +14,7 @@ import 'package:flutter_expanded_tile/flutter_expanded_tile.dart';
 import 'package:data/notifications/models/notification.dart' as not;
 
 import '../bloc/notifications_bloc.dart';
+import 'application_status_link.dart';
 
 class NotificationTile extends StatelessWidget {
   NotificationTile({
@@ -141,6 +142,14 @@ class NotificationTile extends StatelessWidget {
                   child: InkWell(
                     onTap: () => openRoleChecklist(context, notification),
                     child: const Text('Open checklist'),
+                  ),
+                ),
+              if (isApplicationNotification(notification.data))
+                Padding(
+                  padding: const EdgeInsets.only(top: 10),
+                  child: InkWell(
+                    onTap: () => openApplicationStatus(context, notification),
+                    child: const Text('View application status'),
                   ),
                 ),
               if (notification.data != null &&

@@ -1,4 +1,5 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:ui/src/core/widgets/back_to_home_button.dart';
 import 'package:data/auth/repository/profile_repository.dart';
 import 'package:data/geolocation/repository/geo_repository.dart';
 import 'package:data/get_involved/repository/get_involved_repository.dart';
@@ -72,14 +73,24 @@ class _OrganisationRegistrationScreenState
             body: Scaffold(
               appBar: AppBar(
                 automaticallyImplyLeading: false,
-                leading: _tabController.index != _lastTabIndex
-                    ? BackButton(onPressed: () {
-                        if (_tabController.index == 0) {
-                          Navigator.of(context).pop();
-                        } else {
-                          _tabController.animateTo(_tabController.index - 1);
-                        }
-                      })
+                // First step: the arrow goes straight back to Home. Later steps
+                // keep stepping back through the form, with a Home shortcut.
+                leading: _tabController.index == _lastTabIndex
+                    ? null
+                    : (_tabController.index == 0
+                        ? const BackToHomeButton()
+                        : BackButton(onPressed: () {
+                            _tabController.animateTo(_tabController.index - 1);
+                          })),
+                actions: _tabController.index > 0 &&
+                        _tabController.index != _lastTabIndex
+                    ? [
+                        IconButton(
+                          tooltip: 'Back to Home',
+                          icon: const Icon(Icons.home_outlined),
+                          onPressed: () => goToHome(context),
+                        ),
+                      ]
                     : null,
                 title: _tabController.index != _lastTabIndex
                     ? Text(

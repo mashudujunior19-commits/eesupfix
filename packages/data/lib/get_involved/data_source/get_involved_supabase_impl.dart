@@ -100,4 +100,32 @@ class GetInvolvedSupabaseImpl implements GetInvolvedDataSource {
         .order('created_at', ascending: false);
     return response.map((e) => GetInvolvedSubmission.fromJson(e)).toList();
   }
+
+  @override
+  Future<({bool ok, String? message})> becomeKasipromoter() async {
+    final res = await client.rpc('become_kasipromoter');
+    return _okMessage(res);
+  }
+
+  @override
+  Future<({bool ok, String? message})> kasipromoterEligibility() async {
+    final res = await client.rpc('get_kasipromoter_eligibility');
+    final rows = res as List;
+    if (rows.isEmpty) return (ok: false, message: null);
+    final row = Map<String, dynamic>.from(rows.first as Map);
+    return (
+      ok: (row['eligible'] as bool?) ?? false,
+      message: row['message'] as String?,
+    );
+  }
+
+  ({bool ok, String? message}) _okMessage(dynamic res) {
+    final rows = res as List;
+    if (rows.isEmpty) return (ok: false, message: null);
+    final row = Map<String, dynamic>.from(rows.first as Map);
+    return (
+      ok: (row['ok'] as bool?) ?? false,
+      message: row['message'] as String?,
+    );
+  }
 }

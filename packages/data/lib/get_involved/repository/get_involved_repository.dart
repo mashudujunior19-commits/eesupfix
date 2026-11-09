@@ -83,4 +83,20 @@ class GetInvolvedRepository {
     });
     return result;
   }
+
+  /// Becomes a Kasipromoter. Not allowed unless the user is a KasiLift
+  /// Organisation; then [message] holds the server's exact explanation.
+  Future<Either<EESUpException, ({bool ok, String? message})>>
+      becomeKasipromoter() async {
+    return authRepository.executeFutureWithAuth((_) {
+      return dataSource.becomeKasipromoter();
+    });
+  }
+
+  Future<Either<EESUpException, ({bool ok, String? message})>>
+      kasipromoterEligibility() async {
+    return authRepository.executeFutureWithAuth((_) {
+      return dataSource.kasipromoterEligibility();
+    });
+  }
 }

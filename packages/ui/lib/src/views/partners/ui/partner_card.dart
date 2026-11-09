@@ -1,9 +1,5 @@
-import 'package:auto_route/auto_route.dart';
 import 'package:data/partners/models/partner.dart';
-import 'package:data/partners/repository/partner_repository.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:ui/src/core/extensions/context_alerts_ext.dart';
-import 'package:ui/app_route.gr.dart';
+import 'package:ui/src/views/partners/ui/start_partner_application.dart';
 import 'package:ui/src/core/extensions/context_theme_ext.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
@@ -15,22 +11,7 @@ class PartnerCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () async {
-        // KasiPreneur needs a public KasiPool of 25+ members; Kasi Spaza needs
-        // an existing KasiPreneur. The database enforces this too.
-        final router = context.router;
-        final repo = context.read<PartnerRepository>();
-        final check = await repo.fetchEligibility(partner.id);
-        if (!context.mounted) return;
-        final eligibility = check.fold((l) => null, (r) => r);
-        if (eligibility != null && !eligibility.eligible) {
-          context.snackBarError(
-            eligibility.reason ?? 'You are not eligible to apply for this.',
-          );
-          return;
-        }
-        router.push(PartnerAppRoute(partner: partner));
-      },
+      onTap: () => openPartnerApplication(context, partner),
       child: Container(
         margin: const EdgeInsets.only(top: 15, right: 20, left: 20),
         padding: const EdgeInsets.only(left: 10, right: 10),

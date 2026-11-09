@@ -1,4 +1,5 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:ui/src/core/widgets/back_to_home_button.dart';
 import 'package:data/auth/models/user_role.dart';
 import 'package:data/partners/repository/partner_repository.dart';
 import 'package:ui/src/core/extensions/bg_image_deco_ext.dart';
@@ -25,6 +26,8 @@ class PartnerScreen extends StatelessWidget {
       child: SizedBox(
         child: Scaffold(
           appBar: AppBar(
+            automaticallyImplyLeading: false,
+            leading: const BackToHomeButton(),
             title: const Text('Available Services'),
           ),
           body: Container(

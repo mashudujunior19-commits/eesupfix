@@ -27,6 +27,22 @@ mixin _$NotificationData {
   @JsonKey(name: 'response')
   String? get response;
 
+  /// 'get_involved' or 'partner_application' for application updates.
+  @JsonKey(name: 'kind')
+  String? get kind;
+
+  /// submitted | approved | declined
+  @JsonKey(name: 'event')
+  String? get event;
+  @JsonKey(name: 'submission_id')
+  String? get submissionId;
+  @JsonKey(name: 'application_id')
+  int? get applicationId;
+  @JsonKey(name: 'partner_id')
+  String? get partnerId;
+  @JsonKey(name: 'reason')
+  String? get reason;
+
   /// Create a copy of NotificationData
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -50,17 +66,37 @@ mixin _$NotificationData {
             (identical(other.eesupoolOrderId, eesupoolOrderId) ||
                 other.eesupoolOrderId == eesupoolOrderId) &&
             (identical(other.response, response) ||
-                other.response == response));
+                other.response == response) &&
+            (identical(other.kind, kind) || other.kind == kind) &&
+            (identical(other.event, event) || other.event == event) &&
+            (identical(other.submissionId, submissionId) ||
+                other.submissionId == submissionId) &&
+            (identical(other.applicationId, applicationId) ||
+                other.applicationId == applicationId) &&
+            (identical(other.partnerId, partnerId) ||
+                other.partnerId == partnerId) &&
+            (identical(other.reason, reason) || other.reason == reason));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(
-      runtimeType, userId, eesupoolId, orderId, eesupoolOrderId, response);
+      runtimeType,
+      userId,
+      eesupoolId,
+      orderId,
+      eesupoolOrderId,
+      response,
+      kind,
+      event,
+      submissionId,
+      applicationId,
+      partnerId,
+      reason);
 
   @override
   String toString() {
-    return 'NotificationData(userId: $userId, eesupoolId: $eesupoolId, orderId: $orderId, eesupoolOrderId: $eesupoolOrderId, response: $response)';
+    return 'NotificationData(userId: $userId, eesupoolId: $eesupoolId, orderId: $orderId, eesupoolOrderId: $eesupoolOrderId, response: $response, kind: $kind, event: $event, submissionId: $submissionId, applicationId: $applicationId, partnerId: $partnerId, reason: $reason)';
   }
 }
 
@@ -75,7 +111,13 @@ abstract mixin class $NotificationDataCopyWith<$Res> {
       @JsonKey(name: 'eesupool_id') int? eesupoolId,
       @JsonKey(name: 'order_id') int? orderId,
       @JsonKey(name: 'eesupool_order_id') int? eesupoolOrderId,
-      @JsonKey(name: 'response') String? response});
+      @JsonKey(name: 'response') String? response,
+      @JsonKey(name: 'kind') String? kind,
+      @JsonKey(name: 'event') String? event,
+      @JsonKey(name: 'submission_id') String? submissionId,
+      @JsonKey(name: 'application_id') int? applicationId,
+      @JsonKey(name: 'partner_id') String? partnerId,
+      @JsonKey(name: 'reason') String? reason});
 }
 
 /// @nodoc
@@ -96,6 +138,12 @@ class _$NotificationDataCopyWithImpl<$Res>
     Object? orderId = freezed,
     Object? eesupoolOrderId = freezed,
     Object? response = freezed,
+    Object? kind = freezed,
+    Object? event = freezed,
+    Object? submissionId = freezed,
+    Object? applicationId = freezed,
+    Object? partnerId = freezed,
+    Object? reason = freezed,
   }) {
     return _then(_self.copyWith(
       userId: freezed == userId
@@ -117,6 +165,30 @@ class _$NotificationDataCopyWithImpl<$Res>
       response: freezed == response
           ? _self.response
           : response // ignore: cast_nullable_to_non_nullable
+              as String?,
+      kind: freezed == kind
+          ? _self.kind
+          : kind // ignore: cast_nullable_to_non_nullable
+              as String?,
+      event: freezed == event
+          ? _self.event
+          : event // ignore: cast_nullable_to_non_nullable
+              as String?,
+      submissionId: freezed == submissionId
+          ? _self.submissionId
+          : submissionId // ignore: cast_nullable_to_non_nullable
+              as String?,
+      applicationId: freezed == applicationId
+          ? _self.applicationId
+          : applicationId // ignore: cast_nullable_to_non_nullable
+              as int?,
+      partnerId: freezed == partnerId
+          ? _self.partnerId
+          : partnerId // ignore: cast_nullable_to_non_nullable
+              as String?,
+      reason: freezed == reason
+          ? _self.reason
+          : reason // ignore: cast_nullable_to_non_nullable
               as String?,
     ));
   }
@@ -220,15 +292,31 @@ extension NotificationDataPatterns on NotificationData {
             @JsonKey(name: 'eesupool_id') int? eesupoolId,
             @JsonKey(name: 'order_id') int? orderId,
             @JsonKey(name: 'eesupool_order_id') int? eesupoolOrderId,
-            @JsonKey(name: 'response') String? response)?
+            @JsonKey(name: 'response') String? response,
+            @JsonKey(name: 'kind') String? kind,
+            @JsonKey(name: 'event') String? event,
+            @JsonKey(name: 'submission_id') String? submissionId,
+            @JsonKey(name: 'application_id') int? applicationId,
+            @JsonKey(name: 'partner_id') String? partnerId,
+            @JsonKey(name: 'reason') String? reason)?
         $default, {
     required TResult orElse(),
   }) {
     final _that = this;
     switch (_that) {
       case _NotificationData() when $default != null:
-        return $default(_that.userId, _that.eesupoolId, _that.orderId,
-            _that.eesupoolOrderId, _that.response);
+        return $default(
+            _that.userId,
+            _that.eesupoolId,
+            _that.orderId,
+            _that.eesupoolOrderId,
+            _that.response,
+            _that.kind,
+            _that.event,
+            _that.submissionId,
+            _that.applicationId,
+            _that.partnerId,
+            _that.reason);
       case _:
         return orElse();
     }
@@ -254,14 +342,30 @@ extension NotificationDataPatterns on NotificationData {
             @JsonKey(name: 'eesupool_id') int? eesupoolId,
             @JsonKey(name: 'order_id') int? orderId,
             @JsonKey(name: 'eesupool_order_id') int? eesupoolOrderId,
-            @JsonKey(name: 'response') String? response)
+            @JsonKey(name: 'response') String? response,
+            @JsonKey(name: 'kind') String? kind,
+            @JsonKey(name: 'event') String? event,
+            @JsonKey(name: 'submission_id') String? submissionId,
+            @JsonKey(name: 'application_id') int? applicationId,
+            @JsonKey(name: 'partner_id') String? partnerId,
+            @JsonKey(name: 'reason') String? reason)
         $default,
   ) {
     final _that = this;
     switch (_that) {
       case _NotificationData():
-        return $default(_that.userId, _that.eesupoolId, _that.orderId,
-            _that.eesupoolOrderId, _that.response);
+        return $default(
+            _that.userId,
+            _that.eesupoolId,
+            _that.orderId,
+            _that.eesupoolOrderId,
+            _that.response,
+            _that.kind,
+            _that.event,
+            _that.submissionId,
+            _that.applicationId,
+            _that.partnerId,
+            _that.reason);
       case _:
         throw StateError('Unexpected subclass');
     }
@@ -286,14 +390,30 @@ extension NotificationDataPatterns on NotificationData {
             @JsonKey(name: 'eesupool_id') int? eesupoolId,
             @JsonKey(name: 'order_id') int? orderId,
             @JsonKey(name: 'eesupool_order_id') int? eesupoolOrderId,
-            @JsonKey(name: 'response') String? response)?
+            @JsonKey(name: 'response') String? response,
+            @JsonKey(name: 'kind') String? kind,
+            @JsonKey(name: 'event') String? event,
+            @JsonKey(name: 'submission_id') String? submissionId,
+            @JsonKey(name: 'application_id') int? applicationId,
+            @JsonKey(name: 'partner_id') String? partnerId,
+            @JsonKey(name: 'reason') String? reason)?
         $default,
   ) {
     final _that = this;
     switch (_that) {
       case _NotificationData() when $default != null:
-        return $default(_that.userId, _that.eesupoolId, _that.orderId,
-            _that.eesupoolOrderId, _that.response);
+        return $default(
+            _that.userId,
+            _that.eesupoolId,
+            _that.orderId,
+            _that.eesupoolOrderId,
+            _that.response,
+            _that.kind,
+            _that.event,
+            _that.submissionId,
+            _that.applicationId,
+            _that.partnerId,
+            _that.reason);
       case _:
         return null;
     }
@@ -308,7 +428,13 @@ class _NotificationData implements NotificationData {
       @JsonKey(name: 'eesupool_id') this.eesupoolId,
       @JsonKey(name: 'order_id') this.orderId,
       @JsonKey(name: 'eesupool_order_id') this.eesupoolOrderId,
-      @JsonKey(name: 'response') this.response});
+      @JsonKey(name: 'response') this.response,
+      @JsonKey(name: 'kind') this.kind,
+      @JsonKey(name: 'event') this.event,
+      @JsonKey(name: 'submission_id') this.submissionId,
+      @JsonKey(name: 'application_id') this.applicationId,
+      @JsonKey(name: 'partner_id') this.partnerId,
+      @JsonKey(name: 'reason') this.reason});
   factory _NotificationData.fromJson(Map<String, dynamic> json) =>
       _$NotificationDataFromJson(json);
 
@@ -329,6 +455,28 @@ class _NotificationData implements NotificationData {
   @override
   @JsonKey(name: 'response')
   final String? response;
+
+  /// 'get_involved' or 'partner_application' for application updates.
+  @override
+  @JsonKey(name: 'kind')
+  final String? kind;
+
+  /// submitted | approved | declined
+  @override
+  @JsonKey(name: 'event')
+  final String? event;
+  @override
+  @JsonKey(name: 'submission_id')
+  final String? submissionId;
+  @override
+  @JsonKey(name: 'application_id')
+  final int? applicationId;
+  @override
+  @JsonKey(name: 'partner_id')
+  final String? partnerId;
+  @override
+  @JsonKey(name: 'reason')
+  final String? reason;
 
   /// Create a copy of NotificationData
   /// with the given fields replaced by the non-null parameter values.
@@ -357,17 +505,37 @@ class _NotificationData implements NotificationData {
             (identical(other.eesupoolOrderId, eesupoolOrderId) ||
                 other.eesupoolOrderId == eesupoolOrderId) &&
             (identical(other.response, response) ||
-                other.response == response));
+                other.response == response) &&
+            (identical(other.kind, kind) || other.kind == kind) &&
+            (identical(other.event, event) || other.event == event) &&
+            (identical(other.submissionId, submissionId) ||
+                other.submissionId == submissionId) &&
+            (identical(other.applicationId, applicationId) ||
+                other.applicationId == applicationId) &&
+            (identical(other.partnerId, partnerId) ||
+                other.partnerId == partnerId) &&
+            (identical(other.reason, reason) || other.reason == reason));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(
-      runtimeType, userId, eesupoolId, orderId, eesupoolOrderId, response);
+      runtimeType,
+      userId,
+      eesupoolId,
+      orderId,
+      eesupoolOrderId,
+      response,
+      kind,
+      event,
+      submissionId,
+      applicationId,
+      partnerId,
+      reason);
 
   @override
   String toString() {
-    return 'NotificationData(userId: $userId, eesupoolId: $eesupoolId, orderId: $orderId, eesupoolOrderId: $eesupoolOrderId, response: $response)';
+    return 'NotificationData(userId: $userId, eesupoolId: $eesupoolId, orderId: $orderId, eesupoolOrderId: $eesupoolOrderId, response: $response, kind: $kind, event: $event, submissionId: $submissionId, applicationId: $applicationId, partnerId: $partnerId, reason: $reason)';
   }
 }
 
@@ -384,7 +552,13 @@ abstract mixin class _$NotificationDataCopyWith<$Res>
       @JsonKey(name: 'eesupool_id') int? eesupoolId,
       @JsonKey(name: 'order_id') int? orderId,
       @JsonKey(name: 'eesupool_order_id') int? eesupoolOrderId,
-      @JsonKey(name: 'response') String? response});
+      @JsonKey(name: 'response') String? response,
+      @JsonKey(name: 'kind') String? kind,
+      @JsonKey(name: 'event') String? event,
+      @JsonKey(name: 'submission_id') String? submissionId,
+      @JsonKey(name: 'application_id') int? applicationId,
+      @JsonKey(name: 'partner_id') String? partnerId,
+      @JsonKey(name: 'reason') String? reason});
 }
 
 /// @nodoc
@@ -405,6 +579,12 @@ class __$NotificationDataCopyWithImpl<$Res>
     Object? orderId = freezed,
     Object? eesupoolOrderId = freezed,
     Object? response = freezed,
+    Object? kind = freezed,
+    Object? event = freezed,
+    Object? submissionId = freezed,
+    Object? applicationId = freezed,
+    Object? partnerId = freezed,
+    Object? reason = freezed,
   }) {
     return _then(_NotificationData(
       userId: freezed == userId
@@ -426,6 +606,30 @@ class __$NotificationDataCopyWithImpl<$Res>
       response: freezed == response
           ? _self.response
           : response // ignore: cast_nullable_to_non_nullable
+              as String?,
+      kind: freezed == kind
+          ? _self.kind
+          : kind // ignore: cast_nullable_to_non_nullable
+              as String?,
+      event: freezed == event
+          ? _self.event
+          : event // ignore: cast_nullable_to_non_nullable
+              as String?,
+      submissionId: freezed == submissionId
+          ? _self.submissionId
+          : submissionId // ignore: cast_nullable_to_non_nullable
+              as String?,
+      applicationId: freezed == applicationId
+          ? _self.applicationId
+          : applicationId // ignore: cast_nullable_to_non_nullable
+              as int?,
+      partnerId: freezed == partnerId
+          ? _self.partnerId
+          : partnerId // ignore: cast_nullable_to_non_nullable
+              as String?,
+      reason: freezed == reason
+          ? _self.reason
+          : reason // ignore: cast_nullable_to_non_nullable
               as String?,
     ));
   }

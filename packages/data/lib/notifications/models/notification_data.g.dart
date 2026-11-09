@@ -13,6 +13,12 @@ _NotificationData _$NotificationDataFromJson(Map<String, dynamic> json) =>
       orderId: (json['order_id'] as num?)?.toInt(),
       eesupoolOrderId: (json['eesupool_order_id'] as num?)?.toInt(),
       response: json['response'] as String?,
+      kind: json['kind'] as String?,
+      event: json['event'] as String?,
+      submissionId: json['submission_id'] as String?,
+      applicationId: (json['application_id'] as num?)?.toInt(),
+      partnerId: json['partner_id'] as String?,
+      reason: json['reason'] as String?,
     );
 
 Map<String, dynamic> _$NotificationDataToJson(_NotificationData instance) =>
@@ -22,4 +28,10 @@ Map<String, dynamic> _$NotificationDataToJson(_NotificationData instance) =>
       'order_id': instance.orderId,
       'eesupool_order_id': instance.eesupoolOrderId,
       'response': instance.response,
+      'kind': instance.kind,
+      'event': instance.event,
+      'submission_id': instance.submissionId,
+      'application_id': instance.applicationId,
+      'partner_id': instance.partnerId,
+      'reason': instance.reason,
     };

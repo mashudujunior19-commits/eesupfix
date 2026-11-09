@@ -88,6 +88,25 @@ class EditProfileButton extends StatelessWidget {
                           ),
                       ],
                     ),
+                    if (profile.role == UserRole.Corporate)
+                      Container(
+                        margin: const EdgeInsets.only(top: 3),
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 8,
+                          vertical: 2,
+                        ),
+                        decoration: BoxDecoration(
+                          color: context.colorScheme.primary.withOpacity(.12),
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: Text(
+                          'Corporate',
+                          style: context.textTheme.labelSmall?.copyWith(
+                            color: context.colorScheme.primary,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      ),
                     if (profile.role != UserRole.Corporate)
                       Row(
                         children: [

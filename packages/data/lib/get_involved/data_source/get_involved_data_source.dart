@@ -36,4 +36,13 @@ abstract class GetInvolvedDataSource {
 
   /// Returns the submissions made by the given user.
   Future<List<GetInvolvedSubmission>> fetchSubmissionsByUser(String userId);
+
+  /// Asks the server to make the signed-in user a Kasipromoter. Only a
+  /// KasiLift Organisation may be one; for anyone else [ok] is false and
+  /// [message] is the exact text to show.
+  Future<({bool ok, String? message})> becomeKasipromoter();
+
+  /// Same rule, without changing anything: lets the app explain before
+  /// the user tries.
+  Future<({bool ok, String? message})> kasipromoterEligibility();
 }

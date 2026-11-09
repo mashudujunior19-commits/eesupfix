@@ -1,4 +1,5 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:ui/src/core/widgets/back_to_home_button.dart';
 import 'package:data/get_involved/repository/get_involved_repository.dart';
 import 'package:ui/src/core/extensions/context_alerts_ext.dart';
 import 'package:ui/src/core/extensions/context_theme_ext.dart';
@@ -35,7 +36,11 @@ class _KasiliftUpgradeScreenState extends State<KasiliftUpgradeScreen> {
       create: (context) =>
           KasiliftUpgradeCubit(context.read<GetInvolvedRepository>()),
       child: Scaffold(
-        appBar: AppBar(title: const Text('Upgrade to KasiLift')),
+        appBar: AppBar(
+          automaticallyImplyLeading: false,
+          leading: const BackToHomeButton(),
+          title: const Text('Upgrade to KasiLift'),
+        ),
         body: SafeArea(
           child: BlocConsumer<KasiliftUpgradeCubit, KasiliftUpgradeState>(
             listener: (context, state) {

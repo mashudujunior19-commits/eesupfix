@@ -52,10 +52,13 @@ class _MenuTabState extends State<MenuTab> {
   /// stuck seeing an out-of-date "not verified" result, and so the message
   /// names only what's actually still missing.
   Future<void> _onGetInvolvedTapped(BuildContext context, Profile profile) async {
-    // Promoters are Individuals who've referred 5+ people, so they keep
-    // access to everything an Individual has.
+    // Promoters keep access to everything an Individual has. An approved Get
+    // Involved application makes the account Corporate; it must still reach this
+    // list (a KasiLift Organisation can also become a Kasipreneur and a
+    // Kasipromoter).
     if (profile.role != UserRole.Ubuntunist &&
-        profile.role != UserRole.EESUpromoter) {
+        profile.role != UserRole.EESUpromoter &&
+        profile.role != UserRole.Corporate) {
       context.snackBarError('This is only available to Individual accounts.');
       return;
     }
@@ -72,7 +75,7 @@ class _MenuTabState extends State<MenuTab> {
     if (freshProfile.isVerified) {
       context.read<ProfileBloc>().add(ProfileReloaded(freshProfile));
       context.showBottomSheetDialog(
-        child: GetInvolvedSheet(role: freshProfile.role),
+        child: GetInvolvedSheet(role: freshProfile.role, hostContext: context),
       );
       return;
     }

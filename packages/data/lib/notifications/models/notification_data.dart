@@ -15,6 +15,16 @@ abstract class NotificationData with _$NotificationData {
 
     /// 'Accepted' / 'Declined' once an invite or join request was answered.
     @JsonKey(name: 'response') String? response,
+
+    /// 'get_involved' or 'partner_application' for application updates.
+    @JsonKey(name: 'kind') String? kind,
+
+    /// submitted | approved | declined
+    @JsonKey(name: 'event') String? event,
+    @JsonKey(name: 'submission_id') String? submissionId,
+    @JsonKey(name: 'application_id') int? applicationId,
+    @JsonKey(name: 'partner_id') String? partnerId,
+    @JsonKey(name: 'reason') String? reason,
   }) = _NotificationData;
 
   factory NotificationData.fromJson(Map<String, dynamic> json) =>

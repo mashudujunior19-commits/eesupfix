@@ -18,6 +18,9 @@ class GetInvolvedSubmission {
   final String? aboutUs;
   final String? status;
 
+  /// Why a reviewer rejected it. Read-only: never sent back to the server.
+  final String? decisionReason;
+
   const GetInvolvedSubmission({
     this.id,
     this.userId,
@@ -32,6 +35,7 @@ class GetInvolvedSubmission {
     this.isKasilift = false,
     this.aboutUs,
     this.status,
+    this.decisionReason,
   });
 
   GetInvolvedSubmission copyWith({
@@ -48,6 +52,7 @@ class GetInvolvedSubmission {
     bool? isKasilift,
     String? aboutUs,
     String? status,
+    String? decisionReason,
   }) {
     return GetInvolvedSubmission(
       id: id ?? this.id,
@@ -64,6 +69,7 @@ class GetInvolvedSubmission {
       isKasilift: isKasilift ?? this.isKasilift,
       aboutUs: aboutUs ?? this.aboutUs,
       status: status ?? this.status,
+      decisionReason: decisionReason ?? this.decisionReason,
     );
   }
 
@@ -102,6 +108,7 @@ class GetInvolvedSubmission {
       isKasilift: json['is_kasilift'] as bool? ?? false,
       aboutUs: json['about_us'] as String?,
       status: json['status'] as String?,
+      decisionReason: json['decision_reason'] as String?,
     );
   }
 }
