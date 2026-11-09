@@ -130,11 +130,37 @@ class _OrganisationDetailsFormState extends State<OrganisationDetailsForm> {
           if (form.requiresSocialDevelopmentNumber)
             EESUpTextFormField(
               initialValue: form.socialDevelopmentNumber,
-              label: 'Social Development Number',
-              isOptional: true,
-              hintText: 'NPO registration number (Dept. of Social '
-                  'Development), if registered with the DSD',
+              label: 'NPO registration number',
+              isRequired: true,
+              hintText: 'Registration number from the Dept. of Social '
+                  'Development (DSD), e.g. 123-456 NPO',
               onChanged: (value) => _updateSocialDevelopmentNumber(value),
+            ).animate().slideIn(85),
+          if (form.requiresRegistrationNumber)
+            EESUpTextFormField(
+              initialValue: form.registrationNumber,
+              label: 'CIPC registration number',
+              isRequired: true,
+              hintText: 'e.g. 2019/123456/07',
+              onChanged: (value) => _updateDetail(registrationNumber: value),
+            ).animate().slideIn(85),
+          if (form.requiresTaxNumber)
+            EESUpTextFormField(
+              initialValue: form.taxNumber,
+              label: 'Tax number',
+              isRequired: true,
+              hintText: 'SARS income tax reference number',
+              type: TextInputType.number,
+              onChanged: (value) => _updateDetail(taxNumber: value),
+            ).animate().slideIn(85),
+          if (form.requiresVatNumber)
+            EESUpTextFormField(
+              initialValue: form.vatNumber,
+              label: 'VAT number',
+              isRequired: true,
+              hintText: 'Needed because you are uploading a VAT document',
+              type: TextInputType.number,
+              onChanged: (value) => _updateDetail(vatNumber: value),
             ).animate().slideIn(85),
           20.sH,
           Row(
@@ -172,9 +198,6 @@ class _OrganisationDetailsFormState extends State<OrganisationDetailsForm> {
             label: docSpecs[type]!.label,
             hint: docSpecs[type]!.hint,
             isRequired: form.requiredDocumentTypes.contains(type),
-            wouldBeRequiredIfKasiLift: form.isNPO &&
-                !form.isKasilift &&
-                form.baseRequiredDocumentTypes.contains(type),
             allowedExtensions: docSpecs[type]!.extensions,
             pickedFile: form.pickedDocuments[type],
             isUploading: form.uploadingDocuments.contains(type),
@@ -253,6 +276,26 @@ class _OrganisationDetailsFormState extends State<OrganisationDetailsForm> {
         );
   }
 
+  void _updateDetail({
+    String? registrationNumber,
+    String? taxNumber,
+    String? vatNumber,
+  }) {
+    final cubit = context.read<OrganisationCubit>();
+    // Only the field that changed is touched; an empty text field clears it.
+    if (registrationNumber != null) {
+      cubit.updateForm(form.updateDetails(
+          registrationNumber:
+              registrationNumber.isEmpty ? null : registrationNumber));
+    } else if (taxNumber != null) {
+      cubit.updateForm(
+          form.updateDetails(taxNumber: taxNumber.isEmpty ? null : taxNumber));
+    } else if (vatNumber != null) {
+      cubit.updateForm(
+          form.updateDetails(vatNumber: vatNumber.isEmpty ? null : vatNumber));
+    }
+  }
+
   void _updateSocialDevelopmentNumber(String value) {
     context.read<OrganisationCubit>().updateForm(
           form.updateDetails(
@@ -304,6 +347,11 @@ class _OrganisationDetailsFormState extends State<OrganisationDetailsForm> {
         );
         return;
       }
+    }
+    final missingDetail = form.missingTypedDetail;
+    if (missingDetail != null) {
+      context.snackBarError(missingDetail);
+      return;
     }
     if (!form.hasAllRequiredDocuments) {
       context.snackBarError('Please upload all required documents.');

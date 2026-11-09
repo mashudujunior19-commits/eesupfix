@@ -4,6 +4,7 @@ import 'package:bootstrap_icons/bootstrap_icons.dart';
 import 'package:data/auth/models/profile.dart';
 import 'package:data/auth/models/user_role.dart';
 import 'package:data/auth/repository/profile_repository.dart';
+import 'package:data/get_involved/models/business_profile.dart';
 import 'package:data/get_involved/models/profile_switch_state.dart';
 import 'package:data/get_involved/repository/get_involved_repository.dart';
 import 'package:ui/src/views/menu/switch_profile_screen.dart';
@@ -36,6 +37,7 @@ class MenuTab extends StatefulWidget {
 class _MenuTabState extends State<MenuTab> {
   String appVersion = '';
   ProfileSwitchState? _switchState;
+  BusinessProfile? _business;
   // Whose switch state is loaded (or loading), so it is re-read when a
   // different account signs in, and retried if the first read failed.
   String? _switchStateFor;
@@ -52,10 +54,22 @@ class _MenuTabState extends State<MenuTab> {
     final result =
         await context.read<GetInvolvedRepository>().profileSwitchState();
     if (!mounted) return;
-    result.fold(
-      (_) => _switchStateFor = null, // try again on the next build
-      (s) => setState(() => _switchState = s),
-    );
+    final state = result.fold((_) => null, (s) => s);
+    if (state == null) {
+      _switchStateFor = null; // try again on the next build
+      return;
+    }
+    // The business details are only needed while the Business profile is on.
+    BusinessProfile? business;
+    if (state.businessActive) {
+      business = (await context.read<GetInvolvedRepository>().businessProfile())
+          .fold((_) => null, (b) => b);
+      if (!mounted) return;
+    }
+    setState(() {
+      _switchState = state;
+      _business = business;
+    });
   }
 
   // Function to fetch app version
@@ -136,6 +150,8 @@ class _MenuTabState extends State<MenuTab> {
               Builder(builder: (context) {
                 return EditProfileButton(
                   profile: profile,
+                  business:
+                      _switchState?.businessActive == true ? _business : null,
                   onPop: () {
                     context.read<ProfileBloc>().add(ProfileFetched());
                     setState(() {});

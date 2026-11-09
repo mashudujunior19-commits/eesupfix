@@ -2,6 +2,7 @@ import 'dart:typed_data';
 
 import 'package:data/get_involved/models/contact_person.dart';
 import 'package:data/get_involved/models/get_involved_submission.dart';
+import 'package:data/get_involved/models/business_profile.dart';
 import 'package:data/get_involved/models/profile_switch_state.dart';
 import 'package:data/get_involved/models/submission_document.dart';
 
@@ -53,4 +54,7 @@ abstract class GetInvolvedDataSource {
   /// Switches to the Business profile ([toBusiness]) or back to the Individual
   /// one. Only allowed once a Get Involved application is approved.
   Future<ProfileSwitchState> switchProfile({required bool toBusiness});
+
+  /// The business registered through Get Involved, once approved.
+  Future<BusinessProfile?> businessProfile();
 }

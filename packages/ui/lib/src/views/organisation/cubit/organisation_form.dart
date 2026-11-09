@@ -65,6 +65,12 @@ class OrganisationForm {
   final String? address;
   final String? province;
   final String? socialDevelopmentNumber;
+
+  /// Typed company details. Registered businesses give their CIPC number and
+  /// tax number (VAT only if they upload a VAT document).
+  final String? registrationNumber;
+  final String? taxNumber;
+  final String? vatNumber;
   final bool isKasilift;
   final String? aboutUs;
   final List<ContactPerson> contactPersons;
@@ -85,6 +91,9 @@ class OrganisationForm {
     this.address,
     this.province,
     this.socialDevelopmentNumber,
+    this.registrationNumber,
+    this.taxNumber,
+    this.vatNumber,
     this.isKasilift = false,
     this.aboutUs,
     this.contactPersons = const [],
@@ -143,16 +152,40 @@ class OrganisationForm {
   /// KasiLift (see [isKasilift]), otherwise every document is optional. For
   /// businesses (which never opt into KasiLift) the base required set always
   /// applies unchanged.
-  List<DocumentType> get requiredDocumentTypes {
-    if (!isNPO) return baseRequiredDocumentTypes;
-    return isKasilift ? baseRequiredDocumentTypes : const [];
-  }
+  List<DocumentType> get requiredDocumentTypes => baseRequiredDocumentTypes;
 
   /// Documents that may optionally be uploaded for the current combination.
-  List<DocumentType> get optionalDocumentTypes {
-    if (!isNPO) return baseOptionalDocumentTypes;
-    if (isKasilift) return baseOptionalDocumentTypes;
-    return [...baseRequiredDocumentTypes, ...baseOptionalDocumentTypes];
+  List<DocumentType> get optionalDocumentTypes => baseOptionalDocumentTypes;
+
+  /// A registered business types in its CIPC registration number.
+  bool get requiresRegistrationNumber => !isNPO && isRegistered;
+
+  /// A registered business types in its tax number.
+  bool get requiresTaxNumber => !isNPO && isRegistered;
+
+  /// The VAT number is typed in whenever a VAT document is uploaded.
+  bool get requiresVatNumber =>
+      !isNPO && isRegistered && pickedDocuments[DocumentType.vatDocument] != null;
+
+  static bool _filled(String? v) => v != null && v.trim().isNotEmpty;
+
+  /// The first typed detail that is still missing, or null when all are given.
+  /// Every detail that has an upload is also typed in, so the profile never
+  /// shows blank placeholders.
+  String? get missingTypedDetail {
+    if (requiresSocialDevelopmentNumber && !_filled(socialDevelopmentNumber)) {
+      return 'Please enter the NPO registration number.';
+    }
+    if (requiresRegistrationNumber && !_filled(registrationNumber)) {
+      return 'Please enter the CIPC registration number.';
+    }
+    if (requiresTaxNumber && !_filled(taxNumber)) {
+      return 'Please enter the tax number.';
+    }
+    if (requiresVatNumber && !_filled(vatNumber)) {
+      return 'Please enter the VAT number.';
+    }
+    return null;
   }
 
   bool get hasAllRequiredDocuments =>
@@ -183,6 +216,9 @@ class OrganisationForm {
     Object? address = _unset,
     Object? province = _unset,
     Object? socialDevelopmentNumber = _unset,
+    Object? registrationNumber = _unset,
+    Object? taxNumber = _unset,
+    Object? vatNumber = _unset,
     Object? aboutUs = _unset,
   }) {
     return OrganisationForm(
@@ -203,6 +239,15 @@ class OrganisationForm {
       socialDevelopmentNumber: identical(socialDevelopmentNumber, _unset)
           ? this.socialDevelopmentNumber
           : socialDevelopmentNumber as String?,
+      registrationNumber: identical(registrationNumber, _unset)
+          ? this.registrationNumber
+          : registrationNumber as String?,
+      taxNumber: identical(taxNumber, _unset)
+          ? this.taxNumber
+          : taxNumber as String?,
+      vatNumber: identical(vatNumber, _unset)
+          ? this.vatNumber
+          : vatNumber as String?,
       isKasilift: isKasilift,
       aboutUs: identical(aboutUs, _unset) ? this.aboutUs : aboutUs as String?,
       contactPersons: contactPersons,
@@ -225,6 +270,9 @@ class OrganisationForm {
     String? address,
     String? province,
     String? socialDevelopmentNumber,
+    String? registrationNumber,
+    String? taxNumber,
+    String? vatNumber,
     bool? isKasilift,
     String? aboutUs,
     List<ContactPerson>? contactPersons,
@@ -246,6 +294,9 @@ class OrganisationForm {
       province: province ?? this.province,
       socialDevelopmentNumber:
           socialDevelopmentNumber ?? this.socialDevelopmentNumber,
+      registrationNumber: registrationNumber ?? this.registrationNumber,
+      taxNumber: taxNumber ?? this.taxNumber,
+      vatNumber: vatNumber ?? this.vatNumber,
       isKasilift: isKasilift ?? this.isKasilift,
       aboutUs: aboutUs ?? this.aboutUs,
       contactPersons: contactPersons ?? this.contactPersons,
@@ -269,7 +320,11 @@ class OrganisationForm {
       address: requiresOrganisationDetails ? address : null,
       province: requiresProvince ? province : null,
       socialDevelopmentNumber:
-          requiresSocialDevelopmentNumber ? socialDevelopmentNumber : null,
+          requiresSocialDevelopmentNumber ? socialDevelopmentNumber?.trim() : null,
+      registrationNumber:
+          requiresRegistrationNumber ? registrationNumber?.trim() : null,
+      taxNumber: requiresTaxNumber ? taxNumber?.trim() : null,
+      vatNumber: requiresVatNumber ? vatNumber?.trim() : null,
       isKasilift: isKasilift,
       aboutUs: isKasilift ? aboutUs : null,
     );

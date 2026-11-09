@@ -14,6 +14,11 @@ class GetInvolvedSubmission {
   final String? address;
   final String? province;
   final String? socialDevelopmentNumber;
+
+  /// Typed company details (CIPC registration number, tax and VAT numbers).
+  final String? registrationNumber;
+  final String? vatNumber;
+  final String? taxNumber;
   final bool isKasilift;
   final String? aboutUs;
   final String? status;
@@ -32,6 +37,9 @@ class GetInvolvedSubmission {
     this.address,
     this.province,
     this.socialDevelopmentNumber,
+    this.registrationNumber,
+    this.vatNumber,
+    this.taxNumber,
     this.isKasilift = false,
     this.aboutUs,
     this.status,
@@ -49,6 +57,9 @@ class GetInvolvedSubmission {
     String? address,
     String? province,
     String? socialDevelopmentNumber,
+    String? registrationNumber,
+    String? vatNumber,
+    String? taxNumber,
     bool? isKasilift,
     String? aboutUs,
     String? status,
@@ -66,6 +77,9 @@ class GetInvolvedSubmission {
       province: province ?? this.province,
       socialDevelopmentNumber:
           socialDevelopmentNumber ?? this.socialDevelopmentNumber,
+      registrationNumber: registrationNumber ?? this.registrationNumber,
+      vatNumber: vatNumber ?? this.vatNumber,
+      taxNumber: taxNumber ?? this.taxNumber,
       isKasilift: isKasilift ?? this.isKasilift,
       aboutUs: aboutUs ?? this.aboutUs,
       status: status ?? this.status,
@@ -84,6 +98,9 @@ class GetInvolvedSubmission {
       if (province != null) 'province': province,
       if (socialDevelopmentNumber != null)
         'social_development_number': socialDevelopmentNumber,
+      if (registrationNumber != null) 'registration_number': registrationNumber,
+      if (vatNumber != null) 'vat_number': vatNumber,
+      if (taxNumber != null) 'tax_number': taxNumber,
       'is_kasilift': isKasilift,
       if (aboutUs != null) 'about_us': aboutUs,
     };
@@ -105,6 +122,9 @@ class GetInvolvedSubmission {
       address: json['address'] as String?,
       province: json['province'] as String?,
       socialDevelopmentNumber: json['social_development_number'] as String?,
+      registrationNumber: json['registration_number'] as String?,
+      vatNumber: json['vat_number'] as String?,
+      taxNumber: json['tax_number'] as String?,
       isKasilift: json['is_kasilift'] as bool? ?? false,
       aboutUs: json['about_us'] as String?,
       status: json['status'] as String?,

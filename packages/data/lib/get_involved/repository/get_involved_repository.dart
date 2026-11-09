@@ -4,6 +4,7 @@ import 'package:data/get_involved/models/contact_person.dart';
 import 'package:data/get_involved/models/document_type.dart';
 import 'package:data/get_involved/models/get_involved_submission.dart';
 import 'package:data/get_involved/models/picked_document.dart';
+import 'package:data/get_involved/models/business_profile.dart';
 import 'package:data/get_involved/models/profile_switch_state.dart';
 import 'package:data/get_involved/models/submission_document.dart';
 import 'package:data/utils/eesup_exception.dart';
@@ -114,6 +115,14 @@ class GetInvolvedRepository {
   }) {
     return authRepository.executeFutureWithAuth((_) {
       return dataSource.switchProfile(toBusiness: toBusiness);
+    });
+  }
+
+  /// The approved business (name, referral code and the details typed in at
+  /// registration), or null when there is none.
+  Future<Either<EESUpException, BusinessProfile?>> businessProfile() {
+    return authRepository.executeFutureWithAuth((_) {
+      return dataSource.businessProfile();
     });
   }
 }

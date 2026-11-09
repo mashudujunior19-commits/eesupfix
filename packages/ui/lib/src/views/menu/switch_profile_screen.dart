@@ -1,4 +1,3 @@
-import 'package:auto_route/auto_route.dart';
 import 'package:data/auth/models/profile.dart';
 import 'package:data/auth/repository/profile_repository.dart';
 import 'package:data/get_involved/models/profile_switch_state.dart';
@@ -7,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
-import 'package:ui/app_route.gr.dart';
 import 'package:ui/src/core/extensions/context_alerts_ext.dart';
 import 'package:ui/src/core/extensions/context_theme_ext.dart';
 import 'package:ui/src/views/auth/profile/bloc/profile_bloc.dart';
@@ -85,18 +83,18 @@ class _SwitchProfileScreenState extends State<SwitchProfileScreen> {
       return;
     }
 
-    // Bring the profile up to date, then rebuild the app from Home so every
-    // screen (wallets, menu, partners) uses the profile now in effect.
-    final router = context.router;
+    // Bring the app's profile up to date (one call) and go straight back to
+    // the menu, which refreshes itself with the profile now in effect.
     final bloc = context.read<ProfileBloc>();
+    final messenger = context;
     final fresh = (await context.read<ProfileRepository>().fetchSessionProfile())
         .fold((l) => null, (r) => r);
     if (fresh != null) bloc.add(ProfileReloaded(fresh));
     if (!mounted) return;
-    context.snackBarSuccess(business
+    messenger.snackBarSuccess(business
         ? 'You are now using your business profile.'
         : 'You are now using your individual profile.');
-    router.root.replaceAll([const OverviewRoute()]);
+    Navigator.of(context).pop(true);
   }
 
   @override

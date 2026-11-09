@@ -54,9 +54,19 @@ class GetInvolvedSheet extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 15),
       shrinkWrap: true,
       children: [
-        Text(
-          'Get Involved',
-          style: context.textTheme.labelMedium?.copyWith(fontSize: 18),
+        Row(
+          children: [
+            IconButton(
+              tooltip: 'Back',
+              icon: const Icon(Icons.arrow_back),
+              onPressed: () => _close(context),
+            ),
+            const SizedBox(width: 4),
+            Text(
+              'Get Involved',
+              style: context.textTheme.labelMedium?.copyWith(fontSize: 18),
+            ),
+          ],
         ),
         const SizedBox(height: 15),
         _GetInvolvedOption(

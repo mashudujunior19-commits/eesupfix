@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:bootstrap_icons/bootstrap_icons.dart';
 import 'package:data/auth/models/profile.dart';
 import 'package:data/auth/models/user_role.dart';
+import 'package:data/get_involved/models/business_profile.dart';
 import 'package:ui/src/core/extensions/context_theme_ext.dart';
 import 'package:ui/app_route.gr.dart';
 import 'package:flutter/material.dart';
@@ -13,8 +14,13 @@ class EditProfileButton extends StatelessWidget {
     super.key,
     required this.profile,
     required this.onPop,
+    this.business,
   });
   final Profile profile;
+
+  /// Set while the Business profile is active: its name, referral code and
+  /// registration details are shown instead of the person's own.
+  final BusinessProfile? business;
   final VoidCallback onPop;
 
   @override
@@ -65,9 +71,11 @@ class EditProfileButton extends StatelessWidget {
                     Row(
                       children: [
                         Text(
-                          profile.firstName != null
-                              ? '${profile.firstName} ${profile.lastName}'
-                              : profile.corpName ?? '',
+                          business != null && business!.businessName.isNotEmpty
+                              ? business!.businessName
+                              : (profile.firstName != null
+                                  ? '${profile.firstName} ${profile.lastName}'
+                                  : profile.corpName ?? ''),
                           style: context.textTheme.labelMedium?.copyWith(
                             fontSize: 16,
                             fontWeight: FontWeight.w600,
@@ -107,7 +115,14 @@ class EditProfileButton extends StatelessWidget {
                           ),
                         ),
                       ),
-                    if (profile.role != UserRole.Corporate)
+                    if (business != null &&
+                        (business!.registrationNumber ?? '').isNotEmpty)
+                      Padding(
+                        padding: const EdgeInsets.only(top: 3),
+                        child: Text('Reg. no. ${business!.registrationNumber}',
+                            style: context.textTheme.labelSmall),
+                      ),
+                    if (profile.role != UserRole.Corporate || business != null)
                       Row(
                         children: [
                           Text('Referral code',
@@ -122,7 +137,8 @@ class EditProfileButton extends StatelessWidget {
                               borderRadius: BorderRadius.circular(8),
                             ),
                             child: Text(
-                              profile.referralCode.toString(),
+                              (business?.referralCode ?? profile.referralCode)
+                                  .toString(),
                               style: context.textTheme.bodyMedium?.copyWith(
                                 color: Colors.white,
                               ),
