@@ -1,5 +1,4 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:data/auth/models/user_role.dart';
 import 'package:data/auth/repository/profile_repository.dart';
 import 'package:data/get_involved/models/get_involved_submission.dart';
 import 'package:data/get_involved/repository/get_involved_repository.dart';
@@ -12,7 +11,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ui/app_route.gr.dart';
 import 'package:ui/src/core/extensions/context_alerts_ext.dart';
 import 'package:ui/src/core/widgets/back_to_home_button.dart';
-import 'package:ui/src/views/auth/profile/bloc/profile_bloc.dart';
 
 /// Get Involved and partner (Kasipreneur, KasiSpaza, Vendor) application
 /// notifications carry the id of the application they are about.
@@ -64,8 +62,6 @@ Future<void> _showGetInvolvedStatus(
   NotificationData data,
 ) async {
   final repo = context.read<GetInvolvedRepository>();
-  final profiles = context.read<ProfileRepository>();
-  final profileBloc = context.read<ProfileBloc>();
 
   final result = await repo.fetchMySubmissions();
   if (!context.mounted) return;
@@ -81,16 +77,6 @@ Future<void> _showGetInvolvedStatus(
   }
   final s = matches.first;
   final status = s.status ?? 'pending';
-
-  // An approved application changes the account to Corporate: bring the
-  // profile up to date so the app shows it straight away.
-  if (status == 'approved') {
-    final fresh = (await profiles.fetchSessionProfile()).fold((l) => null, (r) => r);
-    if (fresh != null && fresh.role == UserRole.Corporate) {
-      profileBloc.add(ProfileReloaded(fresh));
-    }
-    if (!context.mounted) return;
-  }
 
   await showDialog<void>(
     context: context,
@@ -111,7 +97,8 @@ Future<void> _showGetInvolvedStatus(
           if (status == 'pending')
             const Text('Your application is being reviewed.'),
           if (status == 'approved')
-            const Text('Approved. Your account is now a Corporate account.'),
+            const Text('Approved. You can now switch to your business '
+                'profile from Menu › Switch Profile.'),
           if (status == 'rejected' && (s.decisionReason ?? '').isNotEmpty)
             Text('Reason: ${s.decisionReason}'),
         ],

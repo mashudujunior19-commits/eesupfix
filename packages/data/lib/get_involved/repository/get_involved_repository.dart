@@ -4,6 +4,7 @@ import 'package:data/get_involved/models/contact_person.dart';
 import 'package:data/get_involved/models/document_type.dart';
 import 'package:data/get_involved/models/get_involved_submission.dart';
 import 'package:data/get_involved/models/picked_document.dart';
+import 'package:data/get_involved/models/profile_switch_state.dart';
 import 'package:data/get_involved/models/submission_document.dart';
 import 'package:data/utils/eesup_exception.dart';
 import 'package:either_dart/either.dart';
@@ -97,6 +98,22 @@ class GetInvolvedRepository {
       kasipromoterEligibility() async {
     return authRepository.executeFutureWithAuth((_) {
       return dataSource.kasipromoterEligibility();
+    });
+  }
+
+  Future<Either<EESUpException, ProfileSwitchState>> profileSwitchState() {
+    return authRepository.executeFutureWithAuth((_) {
+      return dataSource.profileSwitchState();
+    });
+  }
+
+  /// Switches between the Individual and Business profile. The server only
+  /// allows the Business profile after an approved Get Involved application.
+  Future<Either<EESUpException, ProfileSwitchState>> switchProfile({
+    required bool toBusiness,
+  }) {
+    return authRepository.executeFutureWithAuth((_) {
+      return dataSource.switchProfile(toBusiness: toBusiness);
     });
   }
 }

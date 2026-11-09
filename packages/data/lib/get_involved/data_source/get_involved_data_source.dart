@@ -2,6 +2,7 @@ import 'dart:typed_data';
 
 import 'package:data/get_involved/models/contact_person.dart';
 import 'package:data/get_involved/models/get_involved_submission.dart';
+import 'package:data/get_involved/models/profile_switch_state.dart';
 import 'package:data/get_involved/models/submission_document.dart';
 
 abstract class GetInvolvedDataSource {
@@ -45,4 +46,11 @@ abstract class GetInvolvedDataSource {
   /// Same rule, without changing anything: lets the app explain before
   /// the user tries.
   Future<({bool ok, String? message})> kasipromoterEligibility();
+
+  /// Whether this account may switch profiles, and which one is active.
+  Future<ProfileSwitchState> profileSwitchState();
+
+  /// Switches to the Business profile ([toBusiness]) or back to the Individual
+  /// one. Only allowed once a Get Involved application is approved.
+  Future<ProfileSwitchState> switchProfile({required bool toBusiness});
 }

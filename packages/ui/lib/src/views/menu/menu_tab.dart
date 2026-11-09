@@ -4,6 +4,9 @@ import 'package:bootstrap_icons/bootstrap_icons.dart';
 import 'package:data/auth/models/profile.dart';
 import 'package:data/auth/models/user_role.dart';
 import 'package:data/auth/repository/profile_repository.dart';
+import 'package:data/get_involved/models/profile_switch_state.dart';
+import 'package:data/get_involved/repository/get_involved_repository.dart';
+import 'package:ui/src/views/menu/switch_profile_screen.dart';
 import 'package:ui/src/core/extensions/bottom_sheet_context_ext.dart';
 import 'package:ui/src/core/extensions/context_alerts_ext.dart';
 import 'package:ui/src/views/auth/profile/bloc/profile_bloc.dart';
@@ -32,11 +35,20 @@ class MenuTab extends StatefulWidget {
 
 class _MenuTabState extends State<MenuTab> {
   String appVersion = '';
+  ProfileSwitchState? _switchState;
 
   @override
   void initState() {
     super.initState();
     _getAppVersion();
+    _loadSwitchState();
+  }
+
+  Future<void> _loadSwitchState() async {
+    final result =
+        await context.read<GetInvolvedRepository>().profileSwitchState();
+    if (!mounted) return;
+    result.fold((_) {}, (s) => setState(() => _switchState = s));
   }
 
   // Function to fetch app version
@@ -197,6 +209,21 @@ class _MenuTabState extends State<MenuTab> {
                       icon: IconlyLight.work,
                       onTap: () => _onGetInvolvedTapped(context, profile),
                     ),
+                    // Only once a Get Involved application has been approved.
+                    if (_switchState?.available == true)
+                      _MenuButton(
+                        label: 'Switch Profile',
+                        icon: BootstrapIcons.arrow_left_right,
+                        onTap: () async {
+                          await Navigator.of(context).push(
+                            MaterialPageRoute<void>(
+                              builder: (_) =>
+                                  SwitchProfileScreen(profile: profile),
+                            ),
+                          );
+                          if (mounted) _loadSwitchState();
+                        },
+                      ),
                     _MenuButton(
                       label: 'Request Products',
                       icon: IconlyLight.plus,

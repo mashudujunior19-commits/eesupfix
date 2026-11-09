@@ -3,6 +3,7 @@ import 'dart:typed_data';
 import 'package:data/get_involved/data_source/get_involved_data_source.dart';
 import 'package:data/get_involved/models/contact_person.dart';
 import 'package:data/get_involved/models/get_involved_submission.dart';
+import 'package:data/get_involved/models/profile_switch_state.dart';
 import 'package:data/get_involved/models/submission_document.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -127,5 +128,26 @@ class GetInvolvedSupabaseImpl implements GetInvolvedDataSource {
       ok: (row['ok'] as bool?) ?? false,
       message: row['message'] as String?,
     );
+  }
+
+  @override
+  Future<ProfileSwitchState> profileSwitchState() async {
+    final rows = await client.rpc('get_profile_switch_state') as List;
+    if (rows.isEmpty) return ProfileSwitchState.unavailable;
+    final row = Map<String, dynamic>.from(rows.first as Map);
+    return ProfileSwitchState(
+      available: (row['available'] as bool?) ?? false,
+      businessActive: row['active_profile'] == 'business',
+      businessName: row['business_name'] as String?,
+    );
+  }
+
+  @override
+  Future<ProfileSwitchState> switchProfile({required bool toBusiness}) async {
+    await client.rpc('switch_profile', params: {
+      '_to': toBusiness ? 'business' : 'individual',
+    });
+    // read back what is now active (and the organisation's name)
+    return profileSwitchState();
   }
 }
