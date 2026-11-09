@@ -36,6 +36,9 @@ class MenuTab extends StatefulWidget {
 class _MenuTabState extends State<MenuTab> {
   String appVersion = '';
   ProfileSwitchState? _switchState;
+  // Whose switch state is loaded (or loading), so it is re-read when a
+  // different account signs in, and retried if the first read failed.
+  String? _switchStateFor;
 
   @override
   void initState() {
@@ -44,11 +47,15 @@ class _MenuTabState extends State<MenuTab> {
     _loadSwitchState();
   }
 
-  Future<void> _loadSwitchState() async {
+  Future<void> _loadSwitchState([String? userId]) async {
+    _switchStateFor = userId ?? _switchStateFor;
     final result =
         await context.read<GetInvolvedRepository>().profileSwitchState();
     if (!mounted) return;
-    result.fold((_) {}, (s) => setState(() => _switchState = s));
+    result.fold(
+      (_) => _switchStateFor = null, // try again on the next build
+      (s) => setState(() => _switchState = s),
+    );
   }
 
   // Function to fetch app version
@@ -117,6 +124,12 @@ class _MenuTabState extends State<MenuTab> {
       builder: (context, state) {
         if (state is ProfileLoaded) {
           final profile = state.profile;
+          if (_switchStateFor != profile.userId) {
+            _switchStateFor = profile.userId;
+            _switchState = null;
+            WidgetsBinding.instance
+                .addPostFrameCallback((_) => _loadSwitchState(profile.userId));
+          }
           return Column(
             children: [
               50.sH,
