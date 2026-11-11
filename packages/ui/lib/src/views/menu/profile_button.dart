@@ -5,6 +5,7 @@ import 'package:data/auth/models/user_role.dart';
 import 'package:data/get_involved/models/business_profile.dart';
 import 'package:ui/src/core/extensions/context_theme_ext.dart';
 import 'package:ui/app_route.gr.dart';
+import 'package:ui/src/views/menu/business_profile_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
@@ -15,19 +16,57 @@ class EditProfileButton extends StatelessWidget {
     required this.profile,
     required this.onPop,
     this.business,
+    this.businessMode = false,
   });
   final Profile profile;
 
-  /// Set while the Business profile is active: its name, referral code and
-  /// registration details are shown instead of the person's own.
+  /// True while the Business profile is active. Nothing personal (name,
+  /// verification badge, personal referral code) is shown then, and the
+  /// profile opens read-only.
+  final bool businessMode;
+
+  /// The business details loaded for the Business profile: its name, referral
+  /// code and registration details are shown instead of the person's own.
   final BusinessProfile? business;
   final VoidCallback onPop;
+
+  String get _displayName {
+    if (businessMode) {
+      final name = business?.businessName ?? '';
+      if (name.isNotEmpty) return name;
+      final corp = profile.corpName ?? '';
+      return corp.isNotEmpty ? corp : 'My business';
+    }
+    return profile.firstName != null
+        ? '${profile.firstName} ${profile.lastName}'
+        : profile.corpName ?? '';
+  }
+
+  String? get _registration {
+    if (!businessMode) return null;
+    final reg = business?.registrationNumber ?? '';
+    if (reg.isNotEmpty) return reg;
+    final corp = profile.corpReg ?? '';
+    return corp.isNotEmpty ? corp : null;
+  }
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
       splashColor: Colors.transparent,
       onTap: () {
+        if (businessMode) {
+          // The business profile is view-only: nothing on it can be edited.
+          Navigator.of(context).push(
+            MaterialPageRoute<void>(
+              builder: (_) => BusinessProfileScreen(
+                profile: profile,
+                business: business,
+              ),
+            ),
+          );
+          return;
+        }
         context.router
             .push(EditProfileRoute(profile: profile))
             .whenComplete(() {
@@ -45,7 +84,8 @@ class EditProfileButton extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Row(
+            Expanded(
+                child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
                 CircleAvatar(
@@ -64,24 +104,25 @@ class EditProfileButton extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(width: 15),
-                Column(
+                Expanded(
+                    child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Row(
                       children: [
-                        Text(
-                          business != null && business!.businessName.isNotEmpty
-                              ? business!.businessName
-                              : (profile.firstName != null
-                                  ? '${profile.firstName} ${profile.lastName}'
-                                  : profile.corpName ?? ''),
-                          style: context.textTheme.labelMedium?.copyWith(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w600,
+                        Flexible(
+                          child: Text(
+                            _displayName,
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                            style: context.textTheme.labelMedium?.copyWith(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w600,
+                            ),
                           ),
                         ),
-                        if (profile.isVerified)
+                        if (profile.isVerified && !businessMode)
                           const Padding(
                             padding: EdgeInsets.only(
                               top: 2,
@@ -115,14 +156,15 @@ class EditProfileButton extends StatelessWidget {
                           ),
                         ),
                       ),
-                    if (business != null &&
-                        (business!.registrationNumber ?? '').isNotEmpty)
+                    if (_registration != null)
                       Padding(
                         padding: const EdgeInsets.only(top: 3),
-                        child: Text('Reg. no. ${business!.registrationNumber}',
+                        child: Text('Reg. no. $_registration',
                             style: context.textTheme.labelSmall),
                       ),
-                    if (profile.role != UserRole.Corporate || business != null)
+                    if (businessMode
+                        ? business?.referralCode != null
+                        : profile.role != UserRole.Corporate)
                       Row(
                         children: [
                           Text('Referral code',
@@ -137,7 +179,9 @@ class EditProfileButton extends StatelessWidget {
                               borderRadius: BorderRadius.circular(8),
                             ),
                             child: Text(
-                              (business?.referralCode ?? profile.referralCode)
+                              (businessMode
+                                      ? business?.referralCode
+                                      : profile.referralCode)
                                   .toString(),
                               style: context.textTheme.bodyMedium?.copyWith(
                                 color: Colors.white,
@@ -147,9 +191,9 @@ class EditProfileButton extends StatelessWidget {
                         ],
                       ),
                   ],
-                )
+                )),
               ],
-            ),
+            )),
             const Padding(
               padding: EdgeInsets.only(right: 10),
               child: Icon(IconlyLight.arrowRight2, size: 17),

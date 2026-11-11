@@ -1,4 +1,5 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:data/auth/models/user_role.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ui/app_route.gr.dart';
 import 'package:ui/src/core/extensions/bg_image_deco_ext.dart';
@@ -52,7 +53,12 @@ class _OverviewScreenState extends State<OverviewScreen>
           listeners: [
             BlocListener<ProfileBloc, ProfileState>(
               listener: (context, state) {
-                if (state is ProfileLoaded) {
+                // Business (Corporate) profiles have no personal ID to ask
+                // for, and must not lead into editing personal details.
+                final isCorporate = state is ProfileLoaded &&
+                    (state.profile.role == UserRole.Corporate ||
+                        state.profile.role == UserRole.EESUpliftCorporate);
+                if (state is ProfileLoaded && !isCorporate) {
                   if (state.profile.rsaIdNumber == null ||
                       state.profile.rsaIdNumber!.isEmpty) {
                     if (state.profile.foreigner == false ||

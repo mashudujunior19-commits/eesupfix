@@ -84,7 +84,8 @@ class _MenuTabState extends State<MenuTab> {
   /// cached [Profile]) so a user who has just added their ID/address isn't
   /// stuck seeing an out-of-date "not verified" result, and so the message
   /// names only what's actually still missing.
-  Future<void> _onGetInvolvedTapped(BuildContext context, Profile profile) async {
+  Future<void> _onGetInvolvedTapped(
+      BuildContext context, Profile profile) async {
     // Promoters keep access to everything an Individual has. An approved Get
     // Involved application makes the account Corporate; it must still reach this
     // list (a KasiLift Organisation can also become a Kasipreneur and a
@@ -144,174 +145,185 @@ class _MenuTabState extends State<MenuTab> {
             WidgetsBinding.instance
                 .addPostFrameCallback((_) => _loadSwitchState(profile.userId));
           }
-          return Column(
-            children: [
-              50.sH,
-              Builder(builder: (context) {
-                return EditProfileButton(
-                  profile: profile,
-                  business:
-                      _switchState?.businessActive == true ? _business : null,
-                  onPop: () {
-                    context.read<ProfileBloc>().add(ProfileFetched());
-                    setState(() {});
-                  },
-                );
-              }),
-              Container(
-                margin: const EdgeInsets.only(top: 25, right: 20, left: 20),
-                padding: const EdgeInsets.all(10),
-                width: context.width,
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(10),
-                  border: Border.all(color: Colors.grey.shade200),
-                ),
-                child: GridView(
-                  shrinkWrap: true,
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 3,
+          // Scrolls, so the menu fits any screen height (small phones, large
+          // text sizes, split windows) instead of overflowing at the bottom.
+          return SingleChildScrollView(
+            padding: const EdgeInsets.only(bottom: 24),
+            child: Column(
+              children: [
+                50.sH,
+                Builder(builder: (context) {
+                  return EditProfileButton(
+                    profile: profile,
+                    businessMode: _switchState?.businessActive == true,
+                    business:
+                        _switchState?.businessActive == true ? _business : null,
+                    onPop: () {
+                      context.read<ProfileBloc>().add(ProfileFetched());
+                      setState(() {});
+                    },
+                  );
+                }),
+                Container(
+                  margin: const EdgeInsets.only(top: 25, right: 20, left: 20),
+                  padding: const EdgeInsets.all(10),
+                  width: context.width,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(10),
+                    border: Border.all(color: Colors.grey.shade200),
                   ),
-                  children: [
-                    _MenuButton(
-                      label: 'My Addresses',
-                      icon: IconlyLight.location,
-                      onTap: () {
-                        context.router
-                            .push(const AddressBookRoute())
-                            .then((value) => null);
-                      },
+                  child: GridView(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 3,
+                      // Taller than square so two-line labels ("My Addresses",
+                      // "Request Products") fit under the icon without clipping.
+                      childAspectRatio: 0.82,
                     ),
-                    _MenuButton(
-                      label: 'MyBaskets',
-                      icon: BootstrapIcons.basket,
-                      onTap: () {
-                        context.router.push(const BasketsListRoute());
-                      },
-                    ),
-                    _MenuButton(
-                      label: 'My Wallet',
-                      icon: IconlyLight.wallet,
-                      onTap: () {
-                        context.router.push(const MyWalletRoute());
-                      },
-                    ),
-                    _MenuButton(
-                      label: 'My Community',
-                      icon: BootstrapIcons.people,
-                      onTap: () {
-                        context.router.push(const MyCommunityRoute());
-                      },
-                    ),
-                    _MenuButton(
-                      label: 'Messages',
-                      icon: IconlyLight.message,
-                      onTap: () {
-                        Navigator.of(context).push(
-                          MaterialPageRoute<void>(
-                            builder: (_) => const ConversationsScreen(),
-                          ),
-                        );
-                      },
-                    ),
-                    if (profile.role == UserRole.Admin)
+                    children: [
                       _MenuButton(
-                        label: 'Message Review',
-                        icon: BootstrapIcons.flag,
+                        label: 'My Addresses',
+                        icon: IconlyLight.location,
+                        onTap: () {
+                          context.router
+                              .push(const AddressBookRoute())
+                              .then((value) => null);
+                        },
+                      ),
+                      _MenuButton(
+                        label: 'MyBaskets',
+                        icon: BootstrapIcons.basket,
+                        onTap: () {
+                          context.router.push(const BasketsListRoute());
+                        },
+                      ),
+                      _MenuButton(
+                        label: 'My Wallet',
+                        icon: IconlyLight.wallet,
+                        onTap: () {
+                          context.router.push(const MyWalletRoute());
+                        },
+                      ),
+                      _MenuButton(
+                        label: 'My Community',
+                        icon: BootstrapIcons.people,
+                        onTap: () {
+                          context.router.push(const MyCommunityRoute());
+                        },
+                      ),
+                      _MenuButton(
+                        label: 'Messages',
+                        icon: IconlyLight.message,
                         onTap: () {
                           Navigator.of(context).push(
                             MaterialPageRoute<void>(
-                              builder: (_) => const DmReviewScreen(),
+                              builder: (_) => const ConversationsScreen(),
                             ),
                           );
                         },
                       ),
-                    _MenuButton(
-                      label: 'Surveys',
-                      icon: IconlyLight.chart,
-                      onTap: () {
-                        context.router.push(const SurveyRoute());
-                      },
-                    ),
-                    _MenuButton(
-                      label: 'Get Involved',
-                      icon: IconlyLight.work,
-                      onTap: () => _onGetInvolvedTapped(context, profile),
-                    ),
-                    // Only once a Get Involved application has been approved.
-                    if (_switchState?.available == true)
+                      if (profile.role == UserRole.Admin)
+                        _MenuButton(
+                          label: 'Message Review',
+                          icon: BootstrapIcons.flag,
+                          onTap: () {
+                            Navigator.of(context).push(
+                              MaterialPageRoute<void>(
+                                builder: (_) => const DmReviewScreen(),
+                              ),
+                            );
+                          },
+                        ),
                       _MenuButton(
-                        label: 'Switch Profile',
-                        icon: BootstrapIcons.arrow_left_right,
-                        onTap: () async {
-                          await Navigator.of(context).push(
-                            MaterialPageRoute<void>(
-                              builder: (_) =>
-                                  SwitchProfileScreen(profile: profile),
-                            ),
-                          );
-                          if (mounted) _loadSwitchState();
+                        label: 'Surveys',
+                        icon: IconlyLight.chart,
+                        onTap: () {
+                          context.router.push(const SurveyRoute());
                         },
                       ),
-                    _MenuButton(
-                      label: 'Request Products',
-                      icon: IconlyLight.plus,
-                      onTap: () {
-                        context.router.push(const ProductRequestRoute());
-                      },
-                    ),
-                    _MenuButton(
-                      label: 'Hampers',
-                      icon: BootstrapIcons.basket2,
-                      onTap: () {
-                        context.router.push(const HampersList());
-                      },
-                    ),
-                    // _MenuButton(
-                    //   isVisible: false,
-                    //   label: 'Support',
-                    //   icon: IconlyLight.user3,
-                    //   onTap: () {},
-                    // ),
-                    _MenuButton(
-                      label: 'Legal',
-                      icon: IconlyLight.document,
-                      onTap: () {
-                        context.router.push(TermsOfServiceRoute());
-                      },
-                    ),
-                  ],
-                ),
-              ),
-              _MenuButtonTile(
-                showBorder: false,
-                icon: IconlyLight.logout,
-                label: 'Sign Out',
-                onTap: () {
-                  context.read<AuthBloc>().add(SignOutPressed());
-                },
-                isVisible: true,
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 10.0),
-                child: Text(
-                  'App Version: $appVersion',
-                  style: TextStyle(
-                    fontSize: 14,
-                    color: Colors.grey,
+                      _MenuButton(
+                        label: 'Get Involved',
+                        icon: IconlyLight.work,
+                        onTap: () => _onGetInvolvedTapped(context, profile),
+                      ),
+                      // Only once a Get Involved application has been approved.
+                      if (_switchState?.available == true)
+                        _MenuButton(
+                          label: 'Switch Profile',
+                          icon: BootstrapIcons.arrow_left_right,
+                          onTap: () async {
+                            await Navigator.of(context).push(
+                              MaterialPageRoute<void>(
+                                builder: (_) =>
+                                    SwitchProfileScreen(profile: profile),
+                              ),
+                            );
+                            if (mounted) _loadSwitchState();
+                          },
+                        ),
+                      _MenuButton(
+                        label: 'Request Products',
+                        icon: IconlyLight.plus,
+                        onTap: () {
+                          context.router.push(const ProductRequestRoute());
+                        },
+                      ),
+                      _MenuButton(
+                        label: 'Hampers',
+                        icon: BootstrapIcons.basket2,
+                        onTap: () {
+                          context.router.push(const HampersList());
+                        },
+                      ),
+                      // _MenuButton(
+                      //   isVisible: false,
+                      //   label: 'Support',
+                      //   icon: IconlyLight.user3,
+                      //   onTap: () {},
+                      // ),
+                      _MenuButton(
+                        label: 'Legal',
+                        icon: IconlyLight.document,
+                        onTap: () {
+                          context.router.push(TermsOfServiceRoute());
+                        },
+                      ),
+                    ],
                   ),
                 ),
-              ),
-              // FutureBuilder(
-              //     future: shorebirdCodePush.currentPatchNumber(),
-              //     builder: (context, snap) {
-              //       if (snap.hasData) {
-              //         return Text(snap.data.toString());
-              //       } else {
-              //         return const SizedBox.shrink();
-              //       }
-              //     })
-            ],
+                _MenuButtonTile(
+                  showBorder: false,
+                  icon: IconlyLight.logout,
+                  label: 'Sign Out',
+                  onTap: () {
+                    context.read<AuthBloc>().add(SignOutPressed());
+                  },
+                  isVisible: true,
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 10.0),
+                  child: Text(
+                    'App Version: $appVersion',
+                    style: TextStyle(
+                      fontSize: 14,
+                      color: Colors.grey,
+                    ),
+                  ),
+                ),
+                // FutureBuilder(
+                //     future: shorebirdCodePush.currentPatchNumber(),
+                //     builder: (context, snap) {
+                //       if (snap.hasData) {
+                //         return Text(snap.data.toString());
+                //       } else {
+                //         return const SizedBox.shrink();
+                //       }
+                //     })
+              ],
+            ),
           );
         } else if (state is ProfileLoading) {
           return const FullScreenLoadingShimmer();
@@ -348,10 +360,8 @@ class _MenuButton extends StatelessWidget {
     return InkWell(
       onTap: onTap,
       child: Container(
-        height: 100,
-        width: 100,
-        margin: const EdgeInsets.all(10),
-        padding: const EdgeInsets.only(left: 5, right: 5),
+        margin: const EdgeInsets.all(8),
+        padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 6),
         decoration: BoxDecoration(
           color: Colors.grey.shade50,
           borderRadius: BorderRadius.circular(10),
@@ -360,23 +370,27 @@ class _MenuButton extends StatelessWidget {
             width: .5,
           ),
         ),
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              10.sH,
-              Icon(icon, size: 32),
-              5.sH,
-              Expanded(
-                child: Text(
-                  label,
-                  style: textTheme.labelMedium?.copyWith(fontSize: 9.5),
-                  textAlign: TextAlign.center,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Icon(icon, size: 32),
+            6.sH,
+            // Flexible so the label shrinks to the tile on small screens or
+            // large text sizes instead of overflowing.
+            Flexible(
+              child: Text(
+                label,
+                style: textTheme.labelMedium?.copyWith(
+                  fontSize: 9.5,
+                  height: 1.2,
                 ),
-              )
-            ],
-          ),
+                textAlign: TextAlign.center,
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+              ),
+            ),
+          ],
         ),
       ),
     );
