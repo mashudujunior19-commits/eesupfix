@@ -12,7 +12,7 @@ import 'package:ui/app_route.gr.dart';
 import 'package:ui/src/core/extensions/context_alerts_ext.dart';
 import 'package:ui/src/core/extensions/slide_in_animation_ext.dart';
 import 'package:ui/src/core/widgets/eesup_scaffold.dart';
-import 'package:ui/src/views/auth/landing/van_scene.dart';
+import 'package:ui/src/core/themes/towris_brand.dart';
 import 'package:ui/src/views/auth/sign_in/bloc/auth_bloc.dart';
 
 /// Sign-in page: a green branded header, then a rounded white sheet with a
@@ -113,8 +113,7 @@ class _SignInScreenState extends State<SignInScreen> {
                 keyboardDismissBehavior:
                     ScrollViewKeyboardDismissBehavior.onDrag,
                 child: ConstrainedBox(
-                  constraints:
-                      BoxConstraints(minHeight: constraints.maxHeight),
+                  constraints: BoxConstraints(minHeight: constraints.maxHeight),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
@@ -153,10 +152,12 @@ class _Header extends StatelessWidget {
     return Container(
       height: height + MediaQuery.paddingOf(context).top,
       decoration: const BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          colors: [TowrisBrand.deepGreen, TowrisBrand.green, TowrisBrand.lightGreen],
+        // The Towris night palette: near-black green with a soft green glow.
+        gradient: RadialGradient(
+          center: Alignment(.7, -.6),
+          radius: 1.3,
+          colors: [TowrisBrand.nightGlow, TowrisBrand.night],
+          stops: [0, .85],
         ),
         borderRadius: BorderRadius.only(
           bottomLeft: Radius.circular(40),
@@ -176,7 +177,7 @@ class _Header extends StatelessWidget {
                 height: vanWidth * 1.1,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  color: Colors.white.withOpacity(.08),
+                  color: TowrisBrand.neon.withOpacity(.05),
                 ),
               ),
             ),
@@ -196,7 +197,10 @@ class _Header extends StatelessWidget {
                       height: 1,
                       color: Colors.white,
                     ),
-                  ).animate().fadeIn(duration: 300.ms).slideY(begin: .2, end: 0),
+                  )
+                      .animate()
+                      .fadeIn(duration: 300.ms)
+                      .slideY(begin: .2, end: 0),
                   const SizedBox(height: 10),
                   FittedBox(
                     fit: BoxFit.scaleDown,
@@ -207,7 +211,7 @@ class _Header extends StatelessWidget {
                         fontSize: 14,
                         fontWeight: FontWeight.w700,
                         letterSpacing: 3,
-                        color: Colors.white.withOpacity(.95),
+                        color: TowrisBrand.neon,
                       ),
                     ),
                   ).animate().fadeIn(delay: 100.ms, duration: 300.ms),
@@ -219,9 +223,18 @@ class _Header extends StatelessWidget {
               bottom: 22,
               width: vanWidth,
               height: vanWidth * .5,
-              child: const VanIllustration(wheelTurn: .6)
+              child: Image.asset(
+                'assets/images/towris_van.png',
+                fit: BoxFit.contain,
+                filterQuality: FilterQuality.high,
+                semanticLabel: 'Towris delivery van',
+              )
                   .animate()
-                  .slideX(begin: .4, end: 0, duration: 500.ms, curve: Curves.easeOutCubic)
+                  .slideX(
+                      begin: .4,
+                      end: 0,
+                      duration: 500.ms,
+                      curve: Curves.easeOutCubic)
                   .fadeIn(duration: 350.ms),
             ),
           ],
@@ -428,7 +441,8 @@ class _PillFieldState extends State<_PillField> {
 }
 
 class _GradientButton extends StatelessWidget {
-  const _GradientButton({super.key, required this.label, required this.onPressed});
+  const _GradientButton(
+      {super.key, required this.label, required this.onPressed});
 
   final String label;
   final VoidCallback onPressed;
@@ -442,7 +456,11 @@ class _GradientButton extends StatelessWidget {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(32),
           gradient: const LinearGradient(
-            colors: [TowrisBrand.deepGreen, TowrisBrand.green, TowrisBrand.lightGreen],
+            colors: [
+              TowrisBrand.deepGreen,
+              TowrisBrand.green,
+              TowrisBrand.lightGreen
+            ],
           ),
           boxShadow: [
             BoxShadow(

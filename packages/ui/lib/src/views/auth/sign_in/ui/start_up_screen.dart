@@ -7,11 +7,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:ui/app_route.gr.dart';
+import 'package:video_player/video_player.dart';
 import 'package:ui/src/views/auth/landing/photo_scene.dart';
 import 'package:ui/src/views/auth/landing/van_scene.dart';
 import 'package:ui/src/views/auth/sign_in/bloc/auth_bloc.dart';
 
-/// The auto-playing landing sequence:
+/// The auto-playing landing sequence. It plays the Towris landing video
+/// (`assets/videos/landing.mp4`, silent, about 3.5 seconds) and then sends the
+/// user on to the sign-in page (or straight into the app if they are already
+/// signed in). If the video cannot be played the older animated scene below is
+/// used instead:
 ///
 /// Fast and tightly timed, starting the moment the app opens:
 ///
@@ -31,6 +36,14 @@ class StartUpScreen extends StatefulWidget {
   static const Duration sceneDuration = Duration(milliseconds: 3000);
   static const Duration logoFade = Duration(milliseconds: 280);
 
+  static const String videoAsset = 'assets/videos/landing.mp4';
+
+  /// If the video has not started by then, the animated scene is used.
+  static const Duration videoStartTimeout = Duration(seconds: 4);
+
+  /// A short beat on the last frame before moving on.
+  static const Duration videoEndHold = Duration(milliseconds: 250);
+
   /// A very short beat on the finished logo before redirecting.
   static const Duration logoHold = Duration(milliseconds: 900);
 
@@ -44,7 +57,11 @@ class _StartUpScreenState extends State<StartUpScreen>
   late final AnimationController _scene;
   late final AnimationController _logo;
   Timer? _holdTimer;
+  Timer? _videoGuard;
   LandingPhotos _photos = LandingPhotos.none;
+  VideoPlayerController? _video;
+  bool _videoReady = false;
+  bool _videoEnded = false;
 
   AuthBlocState? _authState;
   bool _holdFinished = false;
@@ -64,6 +81,50 @@ class _StartUpScreenState extends State<StartUpScreen>
       duration: StartUpScreen.logoFade,
     );
 
+    _startVideo();
+  }
+
+  /// Plays the landing video. If it does not start within a few seconds, or
+  /// fails, the animated scene takes over so the app never waits on it.
+  Future<void> _startVideo() async {
+    final controller = VideoPlayerController.asset(StartUpScreen.videoAsset);
+    _video = controller;
+    _videoGuard = Timer(StartUpScreen.videoStartTimeout, () {
+      if (!_videoReady) _startFallbackScene();
+    });
+    try {
+      await controller.initialize();
+      if (!mounted || _fallbackStarted) return;
+      await controller.setVolume(0);
+      await controller.setLooping(false);
+      controller.addListener(_onVideoTick);
+      setState(() => _videoReady = true);
+      await controller.play();
+    } catch (e) {
+      debugPrint('Landing video could not play: $e');
+      _startFallbackScene();
+    }
+  }
+
+  void _onVideoTick() {
+    final v = _video?.value;
+    if (v == null || _videoEnded || !v.isInitialized) return;
+    if (v.duration > Duration.zero &&
+        v.position >= v.duration - const Duration(milliseconds: 80)) {
+      _videoEnded = true;
+      _holdTimer = Timer(StartUpScreen.videoEndHold, () {
+        _holdFinished = true;
+        _tryNavigate();
+      });
+    }
+  }
+
+  bool _fallbackStarted = false;
+
+  void _startFallbackScene() {
+    if (_fallbackStarted || _videoReady || !mounted) return;
+    _fallbackStarted = true;
+    setState(() {});
     // The animation starts right away; the photographs (if any) are picked up
     // as soon as the asset list has been read, which takes a few milliseconds.
     LandingPhotos.load().then((photos) {
@@ -86,6 +147,9 @@ class _StartUpScreenState extends State<StartUpScreen>
   @override
   void dispose() {
     _holdTimer?.cancel();
+    _videoGuard?.cancel();
+    _video?.removeListener(_onVideoTick);
+    _video?.dispose();
     _scene.dispose();
     _logo.dispose();
     _authBloc.close();
@@ -122,41 +186,52 @@ class _StartUpScreenState extends State<StartUpScreen>
       },
       child: Scaffold(
         key: const Key('start_up_screen'),
-        backgroundColor: Colors.white,
-        body: AnimatedBuilder(
-          animation: Listenable.merge([_scene, _logo]),
-          builder: (context, _) {
-            final logoT = Curves.easeOutCubic.transform(_logo.value);
-            return Stack(
-              fit: StackFit.expand,
-              children: [
-                Opacity(
-                  opacity: 1 - logoT,
-                  child: _SceneLayer(t: _scene.value, photos: _photos),
+        backgroundColor:
+            _videoReady || !_fallbackStarted ? TowrisBrand.night : Colors.white,
+        body: _videoReady
+            ? Center(
+                child: AspectRatio(
+                  aspectRatio: _video!.value.aspectRatio,
+                  child: VideoPlayer(_video!),
                 ),
-                if (_logo.value > 0)
-                  Center(
-                    child: Opacity(
-                      opacity: logoT,
-                      child: Transform.scale(
-                        scale: .88 + .12 * logoT,
-                        child: SizedBox(
-                          width: math.min(
-                            MediaQuery.sizeOf(context).width * .55,
-                            MediaQuery.sizeOf(context).height * .3,
+              )
+            : !_fallbackStarted
+                ? const SizedBox.expand()
+                : AnimatedBuilder(
+                    animation: Listenable.merge([_scene, _logo]),
+                    builder: (context, _) {
+                      final logoT = Curves.easeOutCubic.transform(_logo.value);
+                      return Stack(
+                        fit: StackFit.expand,
+                        children: [
+                          Opacity(
+                            opacity: 1 - logoT,
+                            child:
+                                _SceneLayer(t: _scene.value, photos: _photos),
                           ),
-                          child: SvgPicture.asset(
-                            'assets/images/logo.svg',
-                            fit: BoxFit.contain,
-                          ),
-                        ),
-                      ),
-                    ),
+                          if (_logo.value > 0)
+                            Center(
+                              child: Opacity(
+                                opacity: logoT,
+                                child: Transform.scale(
+                                  scale: .88 + .12 * logoT,
+                                  child: SizedBox(
+                                    width: math.min(
+                                      MediaQuery.sizeOf(context).width * .55,
+                                      MediaQuery.sizeOf(context).height * .3,
+                                    ),
+                                    child: SvgPicture.asset(
+                                      'assets/images/logo.svg',
+                                      fit: BoxFit.contain,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                        ],
+                      );
+                    },
                   ),
-              ],
-            );
-          },
-        ),
       ),
     );
   }
