@@ -5,30 +5,23 @@ import 'package:auto_route/auto_route.dart';
 import 'package:data/auth/repository/auth_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:ui/app_route.gr.dart';
-import 'package:video_player/video_player.dart';
+import 'package:ui/src/views/auth/intro/intro_seen.dart';
 import 'package:ui/src/views/auth/landing/photo_scene.dart';
 import 'package:ui/src/views/auth/landing/van_scene.dart';
 import 'package:ui/src/views/auth/sign_in/bloc/auth_bloc.dart';
+import 'package:video_player/video_player.dart';
 
-/// The auto-playing landing sequence. It plays the Towris landing video
-/// (`assets/videos/landing.mp4`, silent, about 3.5 seconds) and then sends the
-/// user on to the sign-in page (or straight into the app if they are already
-/// signed in). If the video cannot be played the older animated scene below is
-/// used instead:
+/// The auto-playing landing sequence:
 ///
-/// Fast and tightly timed, starting the moment the app opens:
-///
-/// 1. A loaded Towris truck drives past while neighbours come out to meet it;
-///    the name and slogan sit above the scene (~[sceneDuration]).
-/// 2. The scene cuts quickly ([logoFade]) to the centred logo.
-/// 3. The logo is held for only [logoHold], then the user is sent on to the
-///    sign-in page (or straight into the app if they are already signed in).
-///
-/// The scene uses real photographs when they are present in
-/// `assets/images/landing/` (see [LandingPhotos]) and a vector fallback
-/// otherwise.
+/// 1. The Towris landing video plays (`assets/videos/landing.mp4`, silent,
+///    about 3.5 seconds). If it cannot play, the older animated scene is
+///    shown instead (a loaded truck driving past, ~[sceneDuration]).
+/// 2. Either one fades ([logoFade]) into the green brand screen with the
+///    white logo.
+/// 3. That screen is held for [logoHold], then the user is sent on: into the
+///    app if signed in, otherwise to the intro pages (first time on the
+///    device) or the sign-in page.
 @RoutePage()
 class StartUpScreen extends StatefulWidget {
   const StartUpScreen({super.key});
@@ -41,11 +34,8 @@ class StartUpScreen extends StatefulWidget {
   /// If the video has not started by then, the animated scene is used.
   static const Duration videoStartTimeout = Duration(seconds: 4);
 
-  /// A short beat on the last frame before moving on.
-  static const Duration videoEndHold = Duration(milliseconds: 250);
-
-  /// A very short beat on the finished logo before redirecting.
-  static const Duration logoHold = Duration(milliseconds: 900);
+  /// A short beat on the brand screen before redirecting.
+  static const Duration logoHold = Duration(milliseconds: 1400);
 
   @override
   State<StartUpScreen> createState() => _StartUpScreenState();
@@ -62,8 +52,10 @@ class _StartUpScreenState extends State<StartUpScreen>
   VideoPlayerController? _video;
   bool _videoReady = false;
   bool _videoEnded = false;
+  bool _fallbackStarted = false;
 
   AuthBlocState? _authState;
+  bool? _introSeen;
   bool _holdFinished = false;
   bool _navigated = false;
 
@@ -80,6 +72,21 @@ class _StartUpScreenState extends State<StartUpScreen>
       vsync: this,
       duration: StartUpScreen.logoFade,
     );
+
+    // Load the logo while the video plays, so the brand screen at the end
+    // shows it straight away (on the web it is fetched on first use).
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (mounted) {
+        precacheImage(const AssetImage(_logoAsset), context);
+      }
+    });
+
+    // Signed-out users see the intro pages before the sign-in page until
+    // someone has signed in on the device.
+    IntroSeen.get().then((seen) {
+      _introSeen = seen;
+      _tryNavigate();
+    });
 
     _startVideo();
   }
@@ -112,34 +119,30 @@ class _StartUpScreenState extends State<StartUpScreen>
     if (v.duration > Duration.zero &&
         v.position >= v.duration - const Duration(milliseconds: 80)) {
       _videoEnded = true;
-      _holdTimer = Timer(StartUpScreen.videoEndHold, () {
-        _holdFinished = true;
-        _tryNavigate();
-      });
+      _showBrand();
     }
   }
-
-  bool _fallbackStarted = false;
 
   void _startFallbackScene() {
     if (_fallbackStarted || _videoReady || !mounted) return;
     _fallbackStarted = true;
     setState(() {});
-    // The animation starts right away; the photographs (if any) are picked up
-    // as soon as the asset list has been read, which takes a few milliseconds.
+    // The photographs (if any) are picked up as soon as the asset list has
+    // been read, which takes a few milliseconds.
     LandingPhotos.load().then((photos) {
       if (mounted) setState(() => _photos = photos);
     });
+    _scene.forward().whenComplete(_showBrand);
+  }
 
-    _scene.forward().whenComplete(() {
+  /// Fades into the brand screen, holds it briefly, then moves on.
+  void _showBrand() {
+    if (!mounted || _logo.isAnimating || _logo.value > 0) return;
+    _logo.forward().whenComplete(() {
       if (!mounted) return;
-      _logo.forward().whenComplete(() {
-        if (!mounted) return;
-        // The logo is fully visible now: a very short beat, then on.
-        _holdTimer = Timer(StartUpScreen.logoHold, () {
-          _holdFinished = true;
-          _tryNavigate();
-        });
+      _holdTimer = Timer(StartUpScreen.logoHold, () {
+        _holdFinished = true;
+        _tryNavigate();
       });
     });
   }
@@ -156,13 +159,15 @@ class _StartUpScreenState extends State<StartUpScreen>
     super.dispose();
   }
 
-  /// Redirects once the logo hold is over and the sign-in state is known.
+  /// Redirects once the brand screen hold is over and the sign-in state is
+  /// known.
   void _tryNavigate() {
     if (_navigated || !_holdFinished || !mounted) return;
     final state = _authState;
     if (state == null) return;
 
     if (state is Authenticated) {
+      IntroSeen.markSeen();
       _navigated = true;
       context.router.replaceAll([const OverviewRoute()]);
     } else if (state is PasswordResetPending) {
@@ -171,8 +176,12 @@ class _StartUpScreenState extends State<StartUpScreen>
         ResumePasswordResetRoute(email: state.email, phone: state.phone),
       ]);
     } else if (state is UnAuthenticated) {
+      final introSeen = _introSeen;
+      if (introSeen == null) return; // still reading; called again when known
       _navigated = true;
-      context.router.replaceAll([const SignInRoute()]);
+      context.router.replaceAll([
+        introSeen ? const SignInRoute() : const IntroRoute(),
+      ]);
     }
   }
 
@@ -186,52 +195,111 @@ class _StartUpScreenState extends State<StartUpScreen>
       },
       child: Scaffold(
         key: const Key('start_up_screen'),
-        backgroundColor:
-            _videoReady || !_fallbackStarted ? TowrisBrand.night : Colors.white,
-        body: _videoReady
-            ? Center(
+        backgroundColor: _fallbackStarted ? Colors.white : TowrisBrand.night,
+        body: AnimatedBuilder(
+          animation: Listenable.merge([_scene, _logo]),
+          builder: (context, _) {
+            final logoT = Curves.easeOutCubic.transform(_logo.value);
+            final Widget opening;
+            if (_videoReady) {
+              opening = Center(
                 child: AspectRatio(
                   aspectRatio: _video!.value.aspectRatio,
                   child: VideoPlayer(_video!),
                 ),
-              )
-            : !_fallbackStarted
-                ? const SizedBox.expand()
-                : AnimatedBuilder(
-                    animation: Listenable.merge([_scene, _logo]),
-                    builder: (context, _) {
-                      final logoT = Curves.easeOutCubic.transform(_logo.value);
-                      return Stack(
-                        fit: StackFit.expand,
-                        children: [
-                          Opacity(
-                            opacity: 1 - logoT,
-                            child:
-                                _SceneLayer(t: _scene.value, photos: _photos),
-                          ),
-                          if (_logo.value > 0)
-                            Center(
-                              child: Opacity(
-                                opacity: logoT,
-                                child: Transform.scale(
-                                  scale: .88 + .12 * logoT,
-                                  child: SizedBox(
-                                    width: math.min(
-                                      MediaQuery.sizeOf(context).width * .55,
-                                      MediaQuery.sizeOf(context).height * .3,
-                                    ),
-                                    child: SvgPicture.asset(
-                                      'assets/images/logo.svg',
-                                      fit: BoxFit.contain,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
-                        ],
-                      );
-                    },
+              );
+            } else if (_fallbackStarted) {
+              opening = _SceneLayer(t: _scene.value, photos: _photos);
+            } else {
+              opening = const SizedBox.expand();
+            }
+            return Stack(
+              fit: StackFit.expand,
+              children: [
+                if (logoT < 1) Opacity(opacity: 1 - logoT, child: opening),
+                if (_logo.value > 0)
+                  Opacity(
+                    opacity: logoT,
+                    child: _BrandSplash(progress: logoT),
                   ),
+              ],
+            );
+          },
+        ),
+      ),
+    );
+  }
+}
+
+/// The brand screen the animation settles on: a full Towris-green gradient,
+/// the logo in white in the upper part and a short line at the bottom.
+const _logoAsset = 'assets/images/logo.png';
+
+class _BrandSplash extends StatelessWidget {
+  const _BrandSplash({required this.progress});
+
+  /// 0 -> 1 as the screen fades in.
+  final double progress;
+
+  @override
+  Widget build(BuildContext context) {
+    final size = MediaQuery.sizeOf(context);
+    final logoWidth = math.min(size.width * .52, size.height * .28);
+    final textTheme = Theme.of(context).textTheme;
+    return DecoratedBox(
+      decoration: const BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          colors: [TowrisBrand.deepGreen, TowrisBrand.green, Color(0xFF6DB54A)],
+          stops: [0, .55, 1],
+        ),
+      ),
+      child: SafeArea(
+        child: Column(
+          children: [
+            const Spacer(flex: 3),
+            Transform.translate(
+              offset: Offset(0, 16 * (1 - progress)),
+              child: Transform.scale(
+                scale: .92 + .08 * progress,
+                // The logo drawn in white, as on the example splash screens.
+                child: ColorFiltered(
+                  colorFilter: const ColorFilter.mode(
+                    Colors.white,
+                    BlendMode.srcIn,
+                  ),
+                  child: Image.asset(
+                    _logoAsset,
+                    width: logoWidth,
+                    fit: BoxFit.contain,
+                    errorBuilder: (_, __, ___) => SizedBox(width: logoWidth),
+                  ),
+                ),
+              ),
+            ),
+            const SizedBox(height: 18),
+            Text(
+              TowrisBrand.slogan,
+              style: textTheme.titleSmall?.copyWith(
+                fontSize: 13,
+                fontWeight: FontWeight.w700,
+                letterSpacing: 4,
+                color: Colors.white.withOpacity(.9),
+              ),
+            ),
+            const Spacer(flex: 7),
+            Text(
+              'Connecting towns and businesses',
+              style: textTheme.bodySmall?.copyWith(
+                fontSize: 13,
+                fontWeight: FontWeight.w500,
+                color: Colors.white.withOpacity(.8),
+              ),
+            ),
+            const SizedBox(height: 28),
+          ],
+        ),
       ),
     );
   }

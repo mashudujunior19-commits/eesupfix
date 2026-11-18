@@ -33,6 +33,7 @@ import 'package:data/surveys/models/survey.dart' as _i72;
 import 'package:flutter/foundation.dart' as _i62;
 import 'package:flutter/material.dart' as _i53;
 import 'package:ui/src/core/widgets/media_file_uploader.dart' as _i22;
+import 'package:ui/src/views/auth/intro/intro_screen.dart' as _i99;
 import 'package:ui/src/views/auth/profile/ui/edit_profile_screen.dart' as _i15;
 import 'package:ui/src/views/auth/register/ui/register_screen.dart' as _i35;
 import 'package:ui/src/views/auth/reset_password/reset_password_screen.dart'
@@ -1917,6 +1918,22 @@ class SettingsRoutes extends _i52.PageRouteInfo<void> {
     name,
     builder: (data) {
       return const _i41.SettingsScreens();
+    },
+  );
+}
+
+/// generated route for
+/// [_i99.IntroScreen]
+class IntroRoute extends _i52.PageRouteInfo<void> {
+  const IntroRoute({List<_i52.PageRouteInfo>? children})
+      : super(IntroRoute.name, initialChildren: children);
+
+  static const String name = 'IntroRoute';
+
+  static _i52.PageInfo page = _i52.PageInfo(
+    name,
+    builder: (data) {
+      return const _i99.IntroScreen();
     },
   );
 }

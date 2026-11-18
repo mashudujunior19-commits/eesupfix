@@ -40,6 +40,7 @@ import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:ui/src/views/auth/profile/bloc/edit_profile_bloc.dart';
 import 'package:ui/src/views/auth/profile/bloc/profile_bloc.dart';
+import 'package:ui/src/views/auth/intro/intro_seen.dart';
 import 'package:ui/src/views/auth/sign_in/bloc/auth_bloc.dart';
 import 'package:ui/src/views/finances/allocations/bloc/profit_allocation_bloc.dart';
 import 'package:ui/src/views/finances/wallets/bloc/wallets_bloc.dart';
@@ -167,7 +168,9 @@ class MainApp extends StatelessWidget {
   /// before the animation has run.
   bool _isOnLanding() {
     try {
-      return _appRouter.current.name == StartUpRoute.name;
+      final name = _appRouter.current.name;
+      // The intro pages are for signed-out users too; don't jump past them.
+      return name == StartUpRoute.name || name == IntroRoute.name;
     } catch (_) {
       return true;
     }
@@ -265,6 +268,9 @@ class MainApp extends StatelessWidget {
               if (state is UnAuthenticated && !_isOnLanding()) {
                 _appRouter.replaceAll([const SignInRoute()]);
               }
+              // Someone has signed in on this device, so it no longer gets
+              // the new-user intro.
+              if (state is Authenticated) IntroSeen.markSeen();
             },
             child: MaterialApp.router(
               debugShowCheckedModeBanner: false,

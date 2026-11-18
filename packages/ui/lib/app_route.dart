@@ -12,6 +12,11 @@ class AppRouter extends RootStackRouter {
           durationInMilliseconds: 300,
         ),
         CustomRoute(
+          page: IntroRoute.page,
+          transitionsBuilder: TransitionsBuilders.fadeIn,
+          durationInMilliseconds: 300,
+        ),
+        CustomRoute(
           page: SignInRoute.page,
           transitionsBuilder: TransitionsBuilders.slideLeftWithFade,
           durationInMilliseconds: 300,
