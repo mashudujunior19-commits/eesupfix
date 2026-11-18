@@ -32,10 +32,21 @@ class _CredentialsFormState extends State<CredentialsForm> {
   RegisterForm get form => widget.form;
   TabController get tabController => widget.tabController;
 
+  /// Applies a change on top of the cubit's current state. [form] is only the
+  /// copy from the last build, so building on it drops any field that changed
+  /// since then (autofill, or several inputs landing before the next frame).
+  void _update(RegisterForm Function(RegisterForm current) change) {
+    final cubit = context.read<RegisterCubit>();
+    cubit.updateForm(change(cubit.state));
+  }
+
   Future<void> _handleNext() async {
     if (_isSubmitting) return;
 
     FocusScope.of(context).unfocus();
+
+    // Validate what the cubit holds now, not the copy from the last build.
+    final form = context.read<RegisterCubit>().state;
 
     final tempEmail = form.email?.trim() ?? '';
     final tempPhone = form.phone?.trim() ?? '';
@@ -133,24 +144,14 @@ class _CredentialsFormState extends State<CredentialsForm> {
       children: [
         EmailAndPhoneTabContainer(
           onEmailChanged: (email) {
-            context.read<RegisterCubit>().updateForm(
-                  form.copyWith(
-                    email: email,
-                    phone: null,
-                    password: form.password,
-                    retypedPassword: form.retypedPassword,
-                  ),
-                );
+            _update(
+              (current) => current.copyWith(email: email, phone: null),
+            );
           },
           onPhoneChanged: (phone) {
-            context.read<RegisterCubit>().updateForm(
-                  form.copyWith(
-                    email: null,
-                    phone: phone,
-                    password: form.password,
-                    retypedPassword: form.retypedPassword,
-                  ),
-                );
+            _update(
+              (current) => current.copyWith(email: null, phone: phone),
+            );
           },
         ).animate().slideIn(0),
         EESUpTextFormField(
@@ -159,15 +160,7 @@ class _CredentialsFormState extends State<CredentialsForm> {
           initialValue: form.password,
           onChanged: (value) {
             final v = value.isEmpty ? null : value;
-
-            context.read<RegisterCubit>().updateForm(
-                  form.copyWith(
-                    email: form.email,
-                    phone: form.phone,
-                    password: v,
-                    retypedPassword: form.retypedPassword,
-                  ),
-                );
+            _update((current) => current.copyWith(password: v));
           },
           footer: PasswordRequirements(password: form.password ?? ''),
         ).animate().slideIn(50),
@@ -177,14 +170,7 @@ class _CredentialsFormState extends State<CredentialsForm> {
           label: 'Confirm Password',
           onChanged: (value) {
             final v = value.isEmpty ? null : value;
-            context.read<RegisterCubit>().updateForm(
-                  form.copyWith(
-                    email: form.email,
-                    phone: form.phone,
-                    password: form.password,
-                    retypedPassword: v,
-                  ),
-                );
+            _update((current) => current.copyWith(retypedPassword: v));
           },
           footer: PasswordsMatchIndicator(
             password: form.password ?? '',

@@ -37,6 +37,9 @@ class _ReferralCodeFormState extends State<ReferralCodeForm> {
 
     FocusScope.of(context).unfocus();
 
+    // Validate what the cubit holds now, not the copy from the last build.
+    final form = context.read<RegisterCubit>().state;
+
     if (!form.agreedToTcsAndCs) {
       context.snackBarError(
         'Please review our Terms of Service and accept them to continue.',
@@ -109,9 +112,10 @@ class _ReferralCodeFormState extends State<ReferralCodeForm> {
               onChanged: (value) {
                 final code = int.tryParse(value);
 
-                context.read<RegisterCubit>().updateForm(
-                      form.copyWith(referralCode: code),
-                    );
+                // Build on the cubit's current state, not the copy from the
+                // last build, so nothing typed since then is lost.
+                final cubit = context.read<RegisterCubit>();
+                cubit.updateForm(cubit.state.copyWith(referralCode: code));
               },
             ),
             20.sH,
@@ -122,9 +126,10 @@ class _ReferralCodeFormState extends State<ReferralCodeForm> {
                   visualDensity: VisualDensity.compact,
                   value: form.agreedToTcsAndCs,
                   onChanged: (v) {
-                    context.read<RegisterCubit>().updateForm(
-                          form.copyWith(agreedToTcsAndCs: v ?? false),
-                        );
+                    final cubit = context.read<RegisterCubit>();
+                    cubit.updateForm(
+                      cubit.state.copyWith(agreedToTcsAndCs: v ?? false),
+                    );
                   },
                 ),
                 Expanded(

@@ -32,6 +32,14 @@ class _IndividualFormState extends State<IndividualForm> {
   RegisterForm get form => widget.form;
   TabController get tabController => widget.tabController;
 
+  /// Applies a change on top of the cubit's current state. [form] is only the
+  /// copy from the last build, so building on it drops any field that changed
+  /// since then (autofill, or several inputs landing before the next frame).
+  void _update(RegisterForm Function(RegisterForm current) change) {
+    final cubit = context.read<RegisterCubit>();
+    cubit.updateForm(change(cubit.state));
+  }
+
   @override
   Widget build(BuildContext context) {
     return ListView(
@@ -42,15 +50,7 @@ class _IndividualFormState extends State<IndividualForm> {
           label: 'First Name',
           onChanged: (value) {
             final v = value.isEmpty ? null : value;
-            context.read<RegisterCubit>().updateForm(
-                  form.copyWith(
-                    firstName: v,
-                    lastName: form.lastName,
-                    dob: form.dob,
-                    isRSACitizen: form.isRSACitizen,
-                    idNumber: form.idNumber,
-                  ),
-                );
+            _update((current) => current.copyWith(firstName: v));
           },
         ).animate().slideIn(0),
         EESUpTextFormField(
@@ -58,15 +58,7 @@ class _IndividualFormState extends State<IndividualForm> {
           label: 'Last Name',
           onChanged: (value) {
             final v = value.isEmpty ? null : value;
-            context.read<RegisterCubit>().updateForm(
-                  form.copyWith(
-                    firstName: form.firstName,
-                    lastName: v,
-                    dob: form.dob,
-                    isRSACitizen: form.isRSACitizen,
-                    idNumber: form.idNumber,
-                  ),
-                );
+            _update((current) => current.copyWith(lastName: v));
           },
         ).animate().slideIn(50),
         Container(
@@ -88,15 +80,9 @@ class _IndividualFormState extends State<IndividualForm> {
               Checkbox(
                 value: form.isRSACitizen,
                 onChanged: (v) {
-                  context.read<RegisterCubit>().updateForm(
-                        form.copyWith(
-                          firstName: form.firstName,
-                          lastName: form.lastName,
-                          dob: form.dob,
-                          isRSACitizen: v ?? false,
-                          idNumber: form.idNumber,
-                        ),
-                      );
+                  _update(
+                    (current) => current.copyWith(isRSACitizen: v ?? false),
+                  );
                 },
               )
             ],
@@ -110,15 +96,9 @@ class _IndividualFormState extends State<IndividualForm> {
             initialValue: form.idNumber,
             onChanged: (value) {
               final v = value.isEmpty ? null : value;
-              context.read<RegisterCubit>().updateForm(
-                    form.copyWith(
-                      firstName: form.firstName,
-                      lastName: form.lastName,
-                      dob: null,
-                      isRSACitizen: form.isRSACitizen,
-                      idNumber: v,
-                    ),
-                  );
+              _update(
+                (current) => current.copyWith(dob: null, idNumber: v),
+              );
             },
           ).animate().slideIn(150)
         else
@@ -144,15 +124,10 @@ class _IndividualFormState extends State<IndividualForm> {
                   const Duration(days: 18 * 365),
                 ),
               );
-              context.read<RegisterCubit>().updateForm(
-                    form.copyWith(
-                      firstName: form.firstName,
-                      lastName: form.lastName,
-                      dob: dob,
-                      isRSACitizen: form.isRSACitizen,
-                      idNumber: null,
-                    ),
-                  );
+              if (!mounted) return;
+              _update(
+                (current) => current.copyWith(dob: dob, idNumber: null),
+              );
             },
           ).animate().slideIn(150),
         30.sH,
@@ -177,6 +152,9 @@ class _IndividualFormState extends State<IndividualForm> {
     if (_isSubmitting) return;
 
     FocusScope.of(context).unfocus();
+
+    // Validate what the cubit holds now, not the copy from the last build.
+    final form = context.read<RegisterCubit>().state;
 
     if (form.firstName == null || form.firstName!.trim().isEmpty) {
       context.snackBarError('Please provide your first name');
