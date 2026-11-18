@@ -1,3 +1,6 @@
+import org.jetbrains.kotlin.gradle.dsl.KotlinVersion
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+
 buildscript {
     val kotlinVersion = "1.9.22"
     repositories {
@@ -42,6 +45,17 @@ subprojects {
 }
 subprojects {
     project.evaluationDependsOn(":app")
+}
+
+// Some plugins (e.g. sentry_flutter 8.x) pin Kotlin language/api version 1.6, which
+// Kotlin 2.2 no longer supports. Raise the floor to 1.8 for every module.
+subprojects {
+    tasks.withType<KotlinCompile>().configureEach {
+        compilerOptions {
+            languageVersion.set(KotlinVersion.KOTLIN_1_8)
+            apiVersion.set(KotlinVersion.KOTLIN_1_8)
+        }
+    }
 }
 
 tasks.register<Delete>("clean") {

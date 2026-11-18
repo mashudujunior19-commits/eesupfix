@@ -35,6 +35,15 @@
         "cd /d app && flutter run -d web-server --web-port 8766"
       ],
       "port": 8766
+    },
+    {
+      "name": "eesup-web-release",
+      "runtimeExecutable": "cmd",
+      "runtimeArgs": [
+        "/c",
+        "cd /d app && flutter run -d web-server --web-port 8767 --release"
+      ],
+      "port": 8767
     }
   ]
 }
