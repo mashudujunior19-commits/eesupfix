@@ -55,6 +55,10 @@ abstract class GetInvolvedDataSource {
   /// one. Only allowed once a Get Involved application is approved.
   Future<ProfileSwitchState> switchProfile({required bool toBusiness});
 
+  /// Creates the business account ahead of time (and wakes the switch
+  /// function), so the first switch is quick. Safe to call repeatedly.
+  Future<void> prepareBusinessProfile();
+
   /// The business registered through Get Involved, once approved.
   Future<BusinessProfile?> businessProfile();
 }

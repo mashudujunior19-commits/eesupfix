@@ -46,20 +46,26 @@ class EESUpoolSupabaseImp implements EESUpoolDataSource {
   }
 
   @override
-  Future<bool> deleteMember(int poolId, String userId) async {
+  Future<bool> deleteMember(int poolId, String userId,
+      {bool? asBusiness}) async {
     try {
-      await client
+      final business = await _profileOf(userId, asBusiness);
+      var member = client
           .schema('communities')
           .from('eesupool_member')
           .delete()
           .eq('user_id', userId)
           .eq('eesupool_id', poolId);
-      await client
+      if (business != null) member = member.eq('as_business', business);
+      await member;
+      var request = client
           .schema('communities')
           .from('eesupool_request')
           .delete()
           .eq('user_id', userId)
           .eq('eesupool_id', poolId);
+      if (business != null) request = request.eq('as_business', business);
+      await request;
       return true;
     } catch (e) {
       print(e);
@@ -68,19 +74,29 @@ class EESUpoolSupabaseImp implements EESUpoolDataSource {
   }
 
   @override
-  Future<String?> removeMember(int poolId, String userId) async {
+  Future<String?> removeMember(int poolId, String userId,
+      {bool? asBusiness}) async {
     final res = await client.schema('communities').rpc('remove_pool_member',
-        params: {'p_pool_id': poolId, 'p_user_id': userId});
+        params: {
+          'p_pool_id': poolId,
+          'p_user_id': userId,
+          if (asBusiness != null) 'p_as_business': asBusiness,
+        });
     if (res is Map && res['ok'] == true) return null;
     return (res is Map ? res['reason'] as String? : null) ??
         'Failed to remove the member';
   }
 
   @override
-  Future<String?> memberRemovalBlocker(int poolId, String userId) async {
+  Future<String?> memberRemovalBlocker(int poolId, String userId,
+      {bool? asBusiness}) async {
     final res = await client.schema('communities').rpc(
         'member_removal_blockers',
-        params: {'p_pool_id': poolId, 'p_user_id': userId});
+        params: {
+          'p_pool_id': poolId,
+          'p_user_id': userId,
+          if (asBusiness != null) 'p_as_business': asBusiness,
+        });
     if (res is! Map) return null;
     if (res['has_role'] == true) {
       return 'This member has a role assigned on an order that is not '
@@ -460,36 +476,58 @@ class EESUpoolSupabaseImp implements EESUpoolDataSource {
   Future<void> createEESUpoolRequest(
     String userId,
     int poolId,
-    String type,
-  ) async {
+    String type, {
+    bool? asBusiness,
+  }) async {
+    // Without as_business the database picks the profile (see
+    // communities.stamp_as_business).
     await client.schema('communities').from('eesupool_request').insert({
       'user_id': userId,
       'eesupool_id': poolId,
       'type': type,
+      if (asBusiness != null) 'as_business': asBusiness,
     });
   }
 
   @override
-  Future<void> deleteInviteOrRequest(String userId, int poolId) async {
-    await client
+  Future<void> deleteInviteOrRequest(String userId, int poolId,
+      {bool? asBusiness}) async {
+    final business = await _profileOf(userId, asBusiness);
+    var query = client
         .schema('communities')
         .from('eesupool_request')
         .delete()
         .eq('user_id', userId)
         .eq('eesupool_id', poolId);
+    if (business != null) query = query.eq('as_business', business);
+    await query;
   }
 
   @override
-  Future<void> updateEESUpoolRequest(
-      String userId, int poolId, String status) async {
+  Future<void> updateEESUpoolRequest(String userId, int poolId, String status,
+      {bool? asBusiness}) async {
+    final business = await _profileOf(userId, asBusiness);
     // Errors propagate so callers can tell the user the update failed
     // instead of silently treating it as done.
-    await client
+    var query = client
         .schema('communities')
         .from('eesupool_request')
         .update({'status': status})
         .eq('user_id', userId)
         .eq('eesupool_id', poolId);
+    if (business != null) query = query.eq('as_business', business);
+    await query;
+  }
+
+  /// Which of [userId]'s profiles (Individual or Business) a membership or
+  /// request row belongs to: [asBusiness] when the caller knows it, the
+  /// profile in use for the signed-in user, otherwise unknown (null).
+  Future<bool?> _profileOf(String userId, bool? asBusiness) async {
+    if (asBusiness != null) return asBusiness;
+    if (userId != client.auth.currentUser?.id) return null;
+    final active =
+        await client.schema('communities').rpc('my_business_mode');
+    return active == true;
   }
 
   @override

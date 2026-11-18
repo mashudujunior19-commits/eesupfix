@@ -1,9 +1,11 @@
 import 'package:data/utils/eesup_exception.dart';
 import 'package:either_dart/either.dart';
 import 'package:data/auth/data_source/abstract_auth_data_source.dart';
+import 'package:data/get_involved/data_source/get_involved_supabase_impl.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/foundation.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class AuthRepository {
@@ -302,6 +304,10 @@ class AuthRepository {
   Future<Either<EESUpException, bool>> signOut() async {
     final result = await EESUpException.guardFuture(action: () async {
       final res = await supaSource.signOut();
+      // Signing out of a business profile signs the person out too: forget
+      // the session kept for switching back (see GetInvolvedSupabaseImpl).
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.remove(GetInvolvedSupabaseImpl.ownerSessionKey);
       return res;
     });
     return result;

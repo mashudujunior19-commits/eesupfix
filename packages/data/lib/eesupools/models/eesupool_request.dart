@@ -17,6 +17,9 @@ abstract class EESUpoolRequest with _$EESUpoolRequest {
     @JsonKey(name: 'full_name') String? fullName,
     @JsonKey(name: 'corporate_name') String? corporateName,
     @UserRoleConverter() required UserRole role,
+
+    /// True when the invite or request is for the person's Business profile.
+    @JsonKey(name: 'as_business') @Default(false) bool asBusiness,
   }) = _EESUpoolRequest;
 
   factory EESUpoolRequest.fromJson(Map<String, dynamic> json) =>

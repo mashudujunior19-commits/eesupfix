@@ -59,6 +59,11 @@ class _MenuTabState extends State<MenuTab> {
       _switchStateFor = null; // try again on the next build
       return;
     }
+    // Get the business account ready while the menu is open, so tapping
+    // Switch Profile does not wait for it to be created.
+    if (state.available && !state.businessActive) {
+      context.read<GetInvolvedRepository>().prepareBusinessProfile();
+    }
     // The business details are only needed while the Business profile is on.
     BusinessProfile? business;
     if (state.businessActive) {

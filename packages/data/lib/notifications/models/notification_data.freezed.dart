@@ -43,6 +43,11 @@ mixin _$NotificationData {
   @JsonKey(name: 'reason')
   String? get reason;
 
+  /// KasiPool invites and join requests: true when they are for the
+  /// person's Business profile.
+  @JsonKey(name: 'as_business')
+  bool? get asBusiness;
+
   /// Create a copy of NotificationData
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -75,7 +80,9 @@ mixin _$NotificationData {
                 other.applicationId == applicationId) &&
             (identical(other.partnerId, partnerId) ||
                 other.partnerId == partnerId) &&
-            (identical(other.reason, reason) || other.reason == reason));
+            (identical(other.reason, reason) || other.reason == reason) &&
+            (identical(other.asBusiness, asBusiness) ||
+                other.asBusiness == asBusiness));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -92,11 +99,12 @@ mixin _$NotificationData {
       submissionId,
       applicationId,
       partnerId,
-      reason);
+      reason,
+      asBusiness);
 
   @override
   String toString() {
-    return 'NotificationData(userId: $userId, eesupoolId: $eesupoolId, orderId: $orderId, eesupoolOrderId: $eesupoolOrderId, response: $response, kind: $kind, event: $event, submissionId: $submissionId, applicationId: $applicationId, partnerId: $partnerId, reason: $reason)';
+    return 'NotificationData(userId: $userId, eesupoolId: $eesupoolId, orderId: $orderId, eesupoolOrderId: $eesupoolOrderId, response: $response, kind: $kind, event: $event, submissionId: $submissionId, applicationId: $applicationId, partnerId: $partnerId, reason: $reason, asBusiness: $asBusiness)';
   }
 }
 
@@ -117,7 +125,8 @@ abstract mixin class $NotificationDataCopyWith<$Res> {
       @JsonKey(name: 'submission_id') String? submissionId,
       @JsonKey(name: 'application_id') int? applicationId,
       @JsonKey(name: 'partner_id') String? partnerId,
-      @JsonKey(name: 'reason') String? reason});
+      @JsonKey(name: 'reason') String? reason,
+      @JsonKey(name: 'as_business') bool? asBusiness});
 }
 
 /// @nodoc
@@ -144,6 +153,7 @@ class _$NotificationDataCopyWithImpl<$Res>
     Object? applicationId = freezed,
     Object? partnerId = freezed,
     Object? reason = freezed,
+    Object? asBusiness = freezed,
   }) {
     return _then(_self.copyWith(
       userId: freezed == userId
@@ -190,6 +200,10 @@ class _$NotificationDataCopyWithImpl<$Res>
           ? _self.reason
           : reason // ignore: cast_nullable_to_non_nullable
               as String?,
+      asBusiness: freezed == asBusiness
+          ? _self.asBusiness
+          : asBusiness // ignore: cast_nullable_to_non_nullable
+              as bool?,
     ));
   }
 }
@@ -298,7 +312,8 @@ extension NotificationDataPatterns on NotificationData {
             @JsonKey(name: 'submission_id') String? submissionId,
             @JsonKey(name: 'application_id') int? applicationId,
             @JsonKey(name: 'partner_id') String? partnerId,
-            @JsonKey(name: 'reason') String? reason)?
+            @JsonKey(name: 'reason') String? reason,
+            @JsonKey(name: 'as_business') bool? asBusiness)?
         $default, {
     required TResult orElse(),
   }) {
@@ -316,7 +331,8 @@ extension NotificationDataPatterns on NotificationData {
             _that.submissionId,
             _that.applicationId,
             _that.partnerId,
-            _that.reason);
+            _that.reason,
+            _that.asBusiness);
       case _:
         return orElse();
     }
@@ -348,7 +364,8 @@ extension NotificationDataPatterns on NotificationData {
             @JsonKey(name: 'submission_id') String? submissionId,
             @JsonKey(name: 'application_id') int? applicationId,
             @JsonKey(name: 'partner_id') String? partnerId,
-            @JsonKey(name: 'reason') String? reason)
+            @JsonKey(name: 'reason') String? reason,
+            @JsonKey(name: 'as_business') bool? asBusiness)
         $default,
   ) {
     final _that = this;
@@ -365,7 +382,8 @@ extension NotificationDataPatterns on NotificationData {
             _that.submissionId,
             _that.applicationId,
             _that.partnerId,
-            _that.reason);
+            _that.reason,
+            _that.asBusiness);
       case _:
         throw StateError('Unexpected subclass');
     }
@@ -396,7 +414,8 @@ extension NotificationDataPatterns on NotificationData {
             @JsonKey(name: 'submission_id') String? submissionId,
             @JsonKey(name: 'application_id') int? applicationId,
             @JsonKey(name: 'partner_id') String? partnerId,
-            @JsonKey(name: 'reason') String? reason)?
+            @JsonKey(name: 'reason') String? reason,
+            @JsonKey(name: 'as_business') bool? asBusiness)?
         $default,
   ) {
     final _that = this;
@@ -413,7 +432,8 @@ extension NotificationDataPatterns on NotificationData {
             _that.submissionId,
             _that.applicationId,
             _that.partnerId,
-            _that.reason);
+            _that.reason,
+            _that.asBusiness);
       case _:
         return null;
     }
@@ -434,7 +454,8 @@ class _NotificationData implements NotificationData {
       @JsonKey(name: 'submission_id') this.submissionId,
       @JsonKey(name: 'application_id') this.applicationId,
       @JsonKey(name: 'partner_id') this.partnerId,
-      @JsonKey(name: 'reason') this.reason});
+      @JsonKey(name: 'reason') this.reason,
+      @JsonKey(name: 'as_business') this.asBusiness});
   factory _NotificationData.fromJson(Map<String, dynamic> json) =>
       _$NotificationDataFromJson(json);
 
@@ -478,6 +499,12 @@ class _NotificationData implements NotificationData {
   @JsonKey(name: 'reason')
   final String? reason;
 
+  /// KasiPool invites and join requests: true when they are for the
+  /// person's Business profile.
+  @override
+  @JsonKey(name: 'as_business')
+  final bool? asBusiness;
+
   /// Create a copy of NotificationData
   /// with the given fields replaced by the non-null parameter values.
   @override
@@ -514,7 +541,9 @@ class _NotificationData implements NotificationData {
                 other.applicationId == applicationId) &&
             (identical(other.partnerId, partnerId) ||
                 other.partnerId == partnerId) &&
-            (identical(other.reason, reason) || other.reason == reason));
+            (identical(other.reason, reason) || other.reason == reason) &&
+            (identical(other.asBusiness, asBusiness) ||
+                other.asBusiness == asBusiness));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -531,11 +560,12 @@ class _NotificationData implements NotificationData {
       submissionId,
       applicationId,
       partnerId,
-      reason);
+      reason,
+      asBusiness);
 
   @override
   String toString() {
-    return 'NotificationData(userId: $userId, eesupoolId: $eesupoolId, orderId: $orderId, eesupoolOrderId: $eesupoolOrderId, response: $response, kind: $kind, event: $event, submissionId: $submissionId, applicationId: $applicationId, partnerId: $partnerId, reason: $reason)';
+    return 'NotificationData(userId: $userId, eesupoolId: $eesupoolId, orderId: $orderId, eesupoolOrderId: $eesupoolOrderId, response: $response, kind: $kind, event: $event, submissionId: $submissionId, applicationId: $applicationId, partnerId: $partnerId, reason: $reason, asBusiness: $asBusiness)';
   }
 }
 
@@ -558,7 +588,8 @@ abstract mixin class _$NotificationDataCopyWith<$Res>
       @JsonKey(name: 'submission_id') String? submissionId,
       @JsonKey(name: 'application_id') int? applicationId,
       @JsonKey(name: 'partner_id') String? partnerId,
-      @JsonKey(name: 'reason') String? reason});
+      @JsonKey(name: 'reason') String? reason,
+      @JsonKey(name: 'as_business') bool? asBusiness});
 }
 
 /// @nodoc
@@ -585,6 +616,7 @@ class __$NotificationDataCopyWithImpl<$Res>
     Object? applicationId = freezed,
     Object? partnerId = freezed,
     Object? reason = freezed,
+    Object? asBusiness = freezed,
   }) {
     return _then(_NotificationData(
       userId: freezed == userId
@@ -631,6 +663,10 @@ class __$NotificationDataCopyWithImpl<$Res>
           ? _self.reason
           : reason // ignore: cast_nullable_to_non_nullable
               as String?,
+      asBusiness: freezed == asBusiness
+          ? _self.asBusiness
+          : asBusiness // ignore: cast_nullable_to_non_nullable
+              as bool?,
     ));
   }
 }

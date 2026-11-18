@@ -215,7 +215,8 @@ class _SendInvite extends StatelessWidget {
     final userId = item['user_id'] as String?;
     final displayName =
         item['full_name'] as String? ?? item['corporate_name'] as String? ?? 'User';
-    final isPending = userId != null && pendingOperations.contains(userId);
+    final opKey = '${userId}_${item['as_business'] == true}';
+    final isPending = userId != null && pendingOperations.contains(opKey);
 
     return TextButton(
       onPressed: isPending
@@ -241,7 +242,7 @@ class _SendInvite extends StatelessWidget {
               }
 
               // Prevent double-tap
-              pendingOperations.add(userId);
+              pendingOperations.add(opKey);
 
               final repo = context.read<EESUpoolRepository>();
               context.loaderOverlay.show();
@@ -249,9 +250,10 @@ class _SendInvite extends StatelessWidget {
                 poolId,
                 userId,
                 'Invite',
+                asBusiness: item['as_business'] as bool?,
               );
 
-              pendingOperations.remove(userId);
+              pendingOperations.remove(opKey);
 
               if (!context.mounted) return;
               context.loaderOverlay.hide();
@@ -298,7 +300,8 @@ class _RevokeInvite extends StatelessWidget {
     final userId = item['user_id'] as String?;
     final displayName =
         item['full_name'] as String? ?? item['corporate_name'] as String? ?? 'User';
-    final isPending = userId != null && pendingOperations.contains('revoke_$userId');
+    final opKey = 'revoke_${userId}_${item['as_business'] == true}';
+    final isPending = userId != null && pendingOperations.contains(opKey);
 
     return TextButton(
       onPressed: isPending
@@ -317,13 +320,14 @@ class _RevokeInvite extends StatelessWidget {
               }
 
               // Prevent double-tap
-              pendingOperations.add('revoke_$userId');
+              pendingOperations.add(opKey);
 
               final repo = context.read<EESUpoolRepository>();
               context.loaderOverlay.show();
-              final result = await repo.deleteInviteOrRequest(userId, poolId);
+              final result = await repo.deleteInviteOrRequest(userId, poolId,
+                  asBusiness: item['as_business'] as bool?);
 
-              pendingOperations.remove('revoke_$userId');
+              pendingOperations.remove(opKey);
 
               if (!context.mounted) return;
               context.loaderOverlay.hide();
@@ -369,7 +373,8 @@ class _AcceptInvite extends StatelessWidget {
     final userId = item['user_id'] as String?;
     final displayName =
         item['full_name'] as String? ?? item['corporate_name'] as String? ?? 'User';
-    final isPending = userId != null && pendingOperations.contains('accept_$userId');
+    final opKey = 'accept_${userId}_${item['as_business'] == true}';
+    final isPending = userId != null && pendingOperations.contains(opKey);
 
     return TextButton(
       onPressed: isPending
@@ -381,7 +386,7 @@ class _AcceptInvite extends StatelessWidget {
               }
 
               // Prevent double-tap
-              pendingOperations.add('accept_$userId');
+              pendingOperations.add(opKey);
 
               final repo = context.read<EESUpoolRepository>();
               context.loaderOverlay.show();
@@ -389,9 +394,10 @@ class _AcceptInvite extends StatelessWidget {
                 userId,
                 poolId,
                 'Accepted',
+                asBusiness: item['as_business'] as bool?,
               );
 
-              pendingOperations.remove('accept_$userId');
+              pendingOperations.remove(opKey);
 
               if (!context.mounted) return;
               context.loaderOverlay.hide();

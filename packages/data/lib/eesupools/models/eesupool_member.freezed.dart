@@ -35,6 +35,11 @@ mixin _$EESUpoolMember {
   @JsonKey(name: "is_verified", includeToJson: false)
   bool? get isVerified;
 
+  /// True when this is the person's Business profile in the pool (shown
+  /// under the business name), false for their Individual profile.
+  @JsonKey(name: "as_business", includeToJson: false)
+  bool get asBusiness;
+
   /// Create a copy of EESUpoolMember
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -64,17 +69,19 @@ mixin _$EESUpoolMember {
             (identical(other.createdAt, createdAt) ||
                 other.createdAt == createdAt) &&
             (identical(other.isVerified, isVerified) ||
-                other.isVerified == isVerified));
+                other.isVerified == isVerified) &&
+            (identical(other.asBusiness, asBusiness) ||
+                other.asBusiness == asBusiness));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, memberId, eesupoolId, userId,
-      role, isCensored, fullName, createdAt, isVerified);
+      role, isCensored, fullName, createdAt, isVerified, asBusiness);
 
   @override
   String toString() {
-    return 'EESUpoolMember(memberId: $memberId, eesupoolId: $eesupoolId, userId: $userId, role: $role, isCensored: $isCensored, fullName: $fullName, createdAt: $createdAt, isVerified: $isVerified)';
+    return 'EESUpoolMember(memberId: $memberId, eesupoolId: $eesupoolId, userId: $userId, role: $role, isCensored: $isCensored, fullName: $fullName, createdAt: $createdAt, isVerified: $isVerified, asBusiness: $asBusiness)';
   }
 }
 
@@ -94,7 +101,8 @@ abstract mixin class $EESUpoolMemberCopyWith<$Res> {
       @JsonKey(name: "is_censored") bool isCensored,
       @JsonKey(name: "full_name", includeToJson: false) String fullName,
       @JsonKey(name: "created_at", includeToJson: false) DateTime createdAt,
-      @JsonKey(name: "is_verified", includeToJson: false) bool? isVerified});
+      @JsonKey(name: "is_verified", includeToJson: false) bool? isVerified,
+      @JsonKey(name: "as_business", includeToJson: false) bool asBusiness});
 }
 
 /// @nodoc
@@ -118,6 +126,7 @@ class _$EESUpoolMemberCopyWithImpl<$Res>
     Object? fullName = null,
     Object? createdAt = null,
     Object? isVerified = freezed,
+    Object? asBusiness = null,
   }) {
     return _then(_self.copyWith(
       memberId: null == memberId
@@ -152,6 +161,10 @@ class _$EESUpoolMemberCopyWithImpl<$Res>
           ? _self.isVerified
           : isVerified // ignore: cast_nullable_to_non_nullable
               as bool?,
+      asBusiness: null == asBusiness
+          ? _self.asBusiness
+          : asBusiness // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -261,7 +274,9 @@ extension EESUpoolMemberPatterns on EESUpoolMember {
             @JsonKey(name: "created_at", includeToJson: false)
             DateTime createdAt,
             @JsonKey(name: "is_verified", includeToJson: false)
-            bool? isVerified)?
+            bool? isVerified,
+            @JsonKey(name: "as_business", includeToJson: false)
+            bool asBusiness)?
         $default, {
     required TResult orElse(),
   }) {
@@ -276,7 +291,8 @@ extension EESUpoolMemberPatterns on EESUpoolMember {
             _that.isCensored,
             _that.fullName,
             _that.createdAt,
-            _that.isVerified);
+            _that.isVerified,
+            _that.asBusiness);
       case _:
         return orElse();
     }
@@ -309,7 +325,8 @@ extension EESUpoolMemberPatterns on EESUpoolMember {
             @JsonKey(name: "created_at", includeToJson: false)
             DateTime createdAt,
             @JsonKey(name: "is_verified", includeToJson: false)
-            bool? isVerified)
+            bool? isVerified,
+            @JsonKey(name: "as_business", includeToJson: false) bool asBusiness)
         $default,
   ) {
     final _that = this;
@@ -323,7 +340,8 @@ extension EESUpoolMemberPatterns on EESUpoolMember {
             _that.isCensored,
             _that.fullName,
             _that.createdAt,
-            _that.isVerified);
+            _that.isVerified,
+            _that.asBusiness);
       case _:
         throw StateError('Unexpected subclass');
     }
@@ -355,7 +373,9 @@ extension EESUpoolMemberPatterns on EESUpoolMember {
             @JsonKey(name: "created_at", includeToJson: false)
             DateTime createdAt,
             @JsonKey(name: "is_verified", includeToJson: false)
-            bool? isVerified)?
+            bool? isVerified,
+            @JsonKey(name: "as_business", includeToJson: false)
+            bool asBusiness)?
         $default,
   ) {
     final _that = this;
@@ -369,7 +389,8 @@ extension EESUpoolMemberPatterns on EESUpoolMember {
             _that.isCensored,
             _that.fullName,
             _that.createdAt,
-            _that.isVerified);
+            _that.isVerified,
+            _that.asBusiness);
       case _:
         return null;
     }
@@ -388,7 +409,9 @@ class _EESUpoolMember implements EESUpoolMember {
       @JsonKey(name: "full_name", includeToJson: false) required this.fullName,
       @JsonKey(name: "created_at", includeToJson: false)
       required this.createdAt,
-      @JsonKey(name: "is_verified", includeToJson: false) this.isVerified});
+      @JsonKey(name: "is_verified", includeToJson: false) this.isVerified,
+      @JsonKey(name: "as_business", includeToJson: false)
+      this.asBusiness = false});
   factory _EESUpoolMember.fromJson(Map<String, dynamic> json) =>
       _$EESUpoolMemberFromJson(json);
 
@@ -420,6 +443,12 @@ class _EESUpoolMember implements EESUpoolMember {
   @override
   @JsonKey(name: "is_verified", includeToJson: false)
   final bool? isVerified;
+
+  /// True when this is the person's Business profile in the pool (shown
+  /// under the business name), false for their Individual profile.
+  @override
+  @JsonKey(name: "as_business", includeToJson: false)
+  final bool asBusiness;
 
   /// Create a copy of EESUpoolMember
   /// with the given fields replaced by the non-null parameter values.
@@ -454,17 +483,19 @@ class _EESUpoolMember implements EESUpoolMember {
             (identical(other.createdAt, createdAt) ||
                 other.createdAt == createdAt) &&
             (identical(other.isVerified, isVerified) ||
-                other.isVerified == isVerified));
+                other.isVerified == isVerified) &&
+            (identical(other.asBusiness, asBusiness) ||
+                other.asBusiness == asBusiness));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, memberId, eesupoolId, userId,
-      role, isCensored, fullName, createdAt, isVerified);
+      role, isCensored, fullName, createdAt, isVerified, asBusiness);
 
   @override
   String toString() {
-    return 'EESUpoolMember(memberId: $memberId, eesupoolId: $eesupoolId, userId: $userId, role: $role, isCensored: $isCensored, fullName: $fullName, createdAt: $createdAt, isVerified: $isVerified)';
+    return 'EESUpoolMember(memberId: $memberId, eesupoolId: $eesupoolId, userId: $userId, role: $role, isCensored: $isCensored, fullName: $fullName, createdAt: $createdAt, isVerified: $isVerified, asBusiness: $asBusiness)';
   }
 }
 
@@ -486,7 +517,8 @@ abstract mixin class _$EESUpoolMemberCopyWith<$Res>
       @JsonKey(name: "is_censored") bool isCensored,
       @JsonKey(name: "full_name", includeToJson: false) String fullName,
       @JsonKey(name: "created_at", includeToJson: false) DateTime createdAt,
-      @JsonKey(name: "is_verified", includeToJson: false) bool? isVerified});
+      @JsonKey(name: "is_verified", includeToJson: false) bool? isVerified,
+      @JsonKey(name: "as_business", includeToJson: false) bool asBusiness});
 }
 
 /// @nodoc
@@ -510,6 +542,7 @@ class __$EESUpoolMemberCopyWithImpl<$Res>
     Object? fullName = null,
     Object? createdAt = null,
     Object? isVerified = freezed,
+    Object? asBusiness = null,
   }) {
     return _then(_EESUpoolMember(
       memberId: null == memberId
@@ -544,6 +577,10 @@ class __$EESUpoolMemberCopyWithImpl<$Res>
           ? _self.isVerified
           : isVerified // ignore: cast_nullable_to_non_nullable
               as bool?,
+      asBusiness: null == asBusiness
+          ? _self.asBusiness
+          : asBusiness // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }

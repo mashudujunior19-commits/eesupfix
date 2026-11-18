@@ -17,6 +17,7 @@ _EESUpoolRequest _$EESUpoolRequestFromJson(Map<String, dynamic> json) =>
       fullName: json['full_name'] as String?,
       corporateName: json['corporate_name'] as String?,
       role: const UserRoleConverter().fromJson(json['role'] as String),
+      asBusiness: json['as_business'] as bool? ?? false,
     );
 
 Map<String, dynamic> _$EESUpoolRequestToJson(_EESUpoolRequest instance) =>
@@ -30,4 +31,5 @@ Map<String, dynamic> _$EESUpoolRequestToJson(_EESUpoolRequest instance) =>
       'full_name': instance.fullName,
       'corporate_name': instance.corporateName,
       'role': const UserRoleConverter().toJson(instance.role),
+      'as_business': instance.asBusiness,
     };

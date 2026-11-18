@@ -189,6 +189,7 @@ class MemberSettingsDialog extends StatelessWidget {
                               .memberRemovalBlocker(
                                 member.eesupoolId,
                                 member.userId,
+                                asBusiness: member.asBusiness,
                               );
                           if (!context.mounted) return;
                           final blocked = res.fold((l) => null, (r) => r);
@@ -230,6 +231,7 @@ class MemberSettingsDialog extends StatelessWidget {
                           final res = await repo.removeEESUpoolMember(
                             member.eesupoolId,
                             member.userId,
+                            asBusiness: member.asBusiness,
                           );
                           if (!context.mounted) return;
                           context.loaderOverlay.hide();

@@ -164,7 +164,8 @@ class EESUpoolRepository {
   }
 
   Future<Either<EESUpException, void>> updateEESUpoolRequest(
-      String userId, int poolId, String status) async {
+      String userId, int poolId, String status,
+      {bool? asBusiness}) async {
     final sessionId = authRepository.sessionId;
     if (sessionId == null) {
       return Left(
@@ -173,7 +174,8 @@ class EESUpoolRepository {
     }
 
     final result = await EESUpException.guardFuture(
-        action: () => dataSource.updateEESUpoolRequest(userId, poolId, status));
+        action: () => dataSource.updateEESUpoolRequest(userId, poolId, status,
+            asBusiness: asBusiness));
     return result;
   }
 }

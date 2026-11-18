@@ -6,6 +6,8 @@ import 'package:data/get_involved/models/get_involved_submission.dart';
 import 'package:data/get_involved/models/business_profile.dart';
 import 'package:data/get_involved/models/profile_switch_state.dart';
 import 'package:data/get_involved/models/submission_document.dart';
+import 'package:data/utils/eesup_exception.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class GetInvolvedSupabaseImpl implements GetInvolvedDataSource {
@@ -143,19 +145,66 @@ class GetInvolvedSupabaseImpl implements GetInvolvedDataSource {
     );
   }
 
+  /// Where the person's own session is kept while the app uses their business
+  /// account, for going back when they sign in with a phone number (the
+  /// switch-profile function cannot issue a sign-in for those).
+  static const ownerSessionKey = 'towris_owner_refresh_token_v1';
+
+  @override
+  Future<void> prepareBusinessProfile() async {
+    await client.functions.invoke('switch-profile', body: {'to': 'prepare'});
+  }
+
+  /// The business is its own account (no password). Switching asks the
+  /// switch-profile edge function for a one-time sign-in to the other account
+  /// and swaps the app's session, so wallets, orders, KasiPools, addresses,
+  /// baskets and notifications are the business's own.
   @override
   Future<ProfileSwitchState> switchProfile({required bool toBusiness}) async {
-    // The function returns the profile now in effect, so no second read is needed.
-    final rows = await client.rpc('switch_profile', params: {
-      '_to': toBusiness ? 'business' : 'individual',
-    }) as List;
-    final active = rows.isEmpty
-        ? (toBusiness ? 'business' : 'individual')
-        : (rows.first as Map)['active_profile'];
-    return ProfileSwitchState(
-      available: true,
-      businessActive: active == 'business',
-    );
+    final prefs = await SharedPreferences.getInstance();
+    final ownSession = client.auth.currentSession;
+
+    Map<String, dynamic> answer;
+    try {
+      final res = await client.functions.invoke('switch-profile',
+          body: {'to': toBusiness ? 'business' : 'individual'});
+      answer = res.data is Map
+          ? Map<String, dynamic>.from(res.data as Map)
+          : <String, dynamic>{};
+    } on FunctionException catch (e) {
+      final details = e.details;
+      final message = details is Map ? details['error'] as String? : null;
+      throw EESUpException(
+        message: message ?? 'Could not switch profiles. Please try again.',
+        debugMessage: e.toString(),
+      );
+    }
+
+    final tokenHash = answer['token_hash'] as String?;
+    if (tokenHash != null) {
+      if (toBusiness && ownSession?.refreshToken != null) {
+        await prefs.setString(ownerSessionKey, ownSession!.refreshToken!);
+      }
+      await client.auth
+          .verifyOTP(type: OtpType.magiclink, tokenHash: tokenHash);
+    } else if (!toBusiness && answer['restore'] == true) {
+      final saved = prefs.getString(ownerSessionKey);
+      if (saved == null) {
+        throw EESUpException(
+          message: 'Please sign in again to go back to your individual '
+              'profile.',
+        );
+      }
+      await client.auth.setSession(saved);
+    } else {
+      throw EESUpException(
+        message: answer['error'] as String? ??
+            'Could not switch profiles. Please try again.',
+      );
+    }
+    if (!toBusiness) await prefs.remove(ownerSessionKey);
+
+    return ProfileSwitchState(available: true, businessActive: toBusiness);
   }
 
   @override

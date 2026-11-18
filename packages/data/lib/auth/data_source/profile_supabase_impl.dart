@@ -79,8 +79,24 @@ class ProfileSupabaseImpl implements ProfileDataSource {
           .eq('is_primary', true)
           .not('area_id', 'is', null)
           .limit(1);
+      if (response.isNotEmpty) return true;
 
-      return response.isNotEmpty;
+      // A business account gets the address from its approved application
+      // (no map location, so no area): that counts, don't ask again.
+      final business = await _client
+          .from('business_account')
+          .select('business_user_id')
+          .eq('business_user_id', id)
+          .limit(1);
+      if (business.isEmpty) return false;
+      final primary = await _client
+          .schema('geolocations')
+          .from('address')
+          .select('user_id')
+          .eq('user_id', id)
+          .eq('is_primary', true)
+          .limit(1);
+      return primary.isNotEmpty;
     } catch (e) {
       if (kDebugMode) {
         print('check address error : $e');

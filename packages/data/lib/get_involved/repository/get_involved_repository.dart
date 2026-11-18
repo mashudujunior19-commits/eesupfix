@@ -108,6 +108,14 @@ class GetInvolvedRepository {
     });
   }
 
+  /// Gets the business account ready in the background (see
+  /// [GetInvolvedDataSource.prepareBusinessProfile]); failures are ignored.
+  Future<void> prepareBusinessProfile() async {
+    await authRepository.executeFutureWithAuth((_) {
+      return dataSource.prepareBusinessProfile();
+    });
+  }
+
   /// Switches between the Individual and Business profile. The server only
   /// allows the Business profile after an approved Get Involved application.
   Future<Either<EESUpException, ProfileSwitchState>> switchProfile({

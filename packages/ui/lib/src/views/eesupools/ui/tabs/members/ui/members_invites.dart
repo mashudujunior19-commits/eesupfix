@@ -142,7 +142,8 @@ class _InviteCard extends StatelessWidget {
                       context.loaderOverlay.show();
                       final result = await context
                           .read<EESUpoolRepository>()
-                          .resendEESUpoolInvite(invite.userId, poolId);
+                          .resendEESUpoolInvite(invite.userId, poolId,
+                              asBusiness: invite.asBusiness);
                       if (!context.mounted) return;
                       context.loaderOverlay.hide();
                       result.fold(

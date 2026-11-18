@@ -144,7 +144,8 @@ class _InviteCardState extends State<_InviteCard> {
                               final result = await repo.updateEESUpoolRequest(
                                   widget.invite.userId,
                                   widget.invite.eesupoolId,
-                                  'Accepted');
+                                  'Accepted',
+                                  asBusiness: widget.invite.asBusiness);
                               context.loaderOverlay.hide();
 
                               result.fold((l) {
@@ -186,7 +187,8 @@ class _InviteCardState extends State<_InviteCard> {
                               context.loaderOverlay.show();
                               final result = await repo.deleteInviteOrRequest(
                                   widget.invite.userId,
-                                  widget.invite.eesupoolId);
+                                  widget.invite.eesupoolId,
+                                  asBusiness: widget.invite.asBusiness);
                               context.loaderOverlay.hide();
 
                               result.fold((l) {
@@ -203,7 +205,8 @@ class _InviteCardState extends State<_InviteCard> {
                               context.loaderOverlay.show();
                               await repo.deleteInviteOrRequest(
                                   widget.invite.userId,
-                                  widget.invite.eesupoolId);
+                                  widget.invite.eesupoolId,
+                                  asBusiness: widget.invite.asBusiness);
                               context.loaderOverlay.hide();
 
                               result.fold((l) {

@@ -1,3 +1,4 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:data/auth/models/profile.dart';
 import 'package:data/auth/repository/profile_repository.dart';
 import 'package:data/get_involved/models/profile_switch_state.dart';
@@ -8,6 +9,7 @@ import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:ui/src/core/extensions/context_alerts_ext.dart';
 import 'package:ui/src/core/extensions/context_theme_ext.dart';
+import 'package:ui/app_route.gr.dart';
 import 'package:ui/src/views/auth/profile/bloc/profile_bloc.dart';
 
 /// Lets someone with an approved Get Involved application move between their
@@ -61,11 +63,11 @@ class _SwitchProfileScreenState extends State<SwitchProfileScreen> {
       business ? 'Switch to your business profile?' : 'Switch to your individual profile?',
       business
           ? 'You will use TOWRIS as ${state.businessName ?? 'your business'}. '
-              'Business accounts follow the Corporate rules: for example you '
-              'will see your Retail and Social wallets only. Nothing is lost; '
-              'switch back at any time.'
-          : 'You will go back to your individual profile and all of its '
-              'wallets and features.',
+              'The business has its own wallets, orders, KasiPools, addresses '
+              'and notifications, and follows the Corporate rules. Nothing of '
+              'yours is lost; switch back at any time.'
+          : 'You will go back to your individual profile with your own '
+              'wallets, orders, KasiPools and notifications.',
       confirmText: 'Switch',
     );
     if (!confirmed || !mounted) return;
@@ -83,18 +85,22 @@ class _SwitchProfileScreenState extends State<SwitchProfileScreen> {
       return;
     }
 
-    // Bring the app's profile up to date (one call) and go straight back to
-    // the menu, which refreshes itself with the profile now in effect.
+    // The app is now signed in to the other account: load its profile and
+    // start again from Home, so no screen keeps the other profile's data.
     final bloc = context.read<ProfileBloc>();
-    final messenger = context;
+    final router = context.router;
     final fresh = (await context.read<ProfileRepository>().fetchSessionProfile())
         .fold((l) => null, (r) => r);
     if (fresh != null) bloc.add(ProfileReloaded(fresh));
     if (!mounted) return;
-    messenger.snackBarSuccess(business
+    context.snackBarSuccess(business
         ? 'You are now using your business profile.'
         : 'You are now using your individual profile.');
-    Navigator.of(context).pop(true);
+    // This screen was pushed on top of the router, so close it first; then
+    // rebuild Home from scratch (not reuse the existing one) so every tab
+    // loads the new account's data.
+    Navigator.of(context).popUntil((route) => route.isFirst);
+    router.replaceAll([const OverviewRoute()], updateExistingRoutes: false);
   }
 
   @override

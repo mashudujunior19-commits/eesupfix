@@ -20,6 +20,12 @@ abstract class EESUpoolMember with _$EESUpoolMember {
     /// Whether the member's profile is verified. Null when the source RPC
     /// doesn't report it; the database enforces the rule either way.
     @JsonKey(name: "is_verified", includeToJson: false) bool? isVerified,
+
+    /// True when this is the person's Business profile in the pool (shown
+    /// under the business name), false for their Individual profile.
+    @JsonKey(name: "as_business", includeToJson: false)
+    @Default(false)
+    bool asBusiness,
   }) = _EESUpoolMember;
 
   factory EESUpoolMember.fromJson(Map<String, dynamic> json) =>

@@ -78,15 +78,18 @@ abstract class EESUpoolDataSource {
   ///Given a user id, return a list of pools that the user is a member of
   Future<EESUpool> fetchEESUpool(int poolId, String userId);
 
-  ///User leaves a pool
-  Future<bool> deleteMember(int poolId, String userId);
+  ///User leaves a pool. [asBusiness] picks which of the person's profiles
+  /// (Individual or Business) the membership belongs to; for the signed-in
+  /// user it defaults to the profile they are using.
+  Future<bool> deleteMember(int poolId, String userId, {bool? asBusiness});
 
   /// Admin removal of a member. Returns null on success, otherwise the reason
   /// the removal was refused (member has a role / an incomplete order, ...).
-  Future<String?> removeMember(int poolId, String userId);
+  Future<String?> removeMember(int poolId, String userId, {bool? asBusiness});
 
   /// Why [userId] cannot be removed right now, or null when nothing blocks it.
-  Future<String?> memberRemovalBlocker(int poolId, String userId);
+  Future<String?> memberRemovalBlocker(int poolId, String userId,
+      {bool? asBusiness});
 
   ///Update a given pool
   Future<void> updatePool(EESUpool pool);
@@ -186,14 +189,20 @@ abstract class EESUpoolDataSource {
     required int limit,
   });
 
-  Future<void> createEESUpoolRequest(String userId, int poolId, String type);
+  /// [asBusiness]: invite the person's Business profile instead of them.
+  /// Left out, the database picks (the caller's active profile for their own
+  /// request, the Individual profile for an invite).
+  Future<void> createEESUpoolRequest(String userId, int poolId, String type,
+      {bool? asBusiness});
 
   Future<dynamic> searchProfilesForInvites(
       {required int poolId, required String query, required int limit});
 
-  Future<void> deleteInviteOrRequest(String userId, int poolId);
+  Future<void> deleteInviteOrRequest(String userId, int poolId,
+      {bool? asBusiness});
 
-  Future<void> updateEESUpoolRequest(String userId, int poolId, String status);
+  Future<void> updateEESUpoolRequest(String userId, int poolId, String status,
+      {bool? asBusiness});
 
   /// Emits whenever an invite/request of the pool is inserted, updated or
   /// deleted, so listings can refetch without the user refreshing.

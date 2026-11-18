@@ -156,6 +156,8 @@ class EESUpException implements Exception {
       print('EESUpException:=> ${exception.toString()}');
     }
 
+    // Already user-facing (thrown on purpose with a readable message).
+    if (exception is EESUpException) return Left(exception);
     if (exception is AuthException) {
       final message = _getAuthErrorMessage(exception);
       return Left(EESUpException(

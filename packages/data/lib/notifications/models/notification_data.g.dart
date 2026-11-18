@@ -19,6 +19,7 @@ _NotificationData _$NotificationDataFromJson(Map<String, dynamic> json) =>
       applicationId: (json['application_id'] as num?)?.toInt(),
       partnerId: json['partner_id'] as String?,
       reason: json['reason'] as String?,
+      asBusiness: json['as_business'] as bool?,
     );
 
 Map<String, dynamic> _$NotificationDataToJson(_NotificationData instance) =>
@@ -34,4 +35,5 @@ Map<String, dynamic> _$NotificationDataToJson(_NotificationData instance) =>
       'application_id': instance.applicationId,
       'partner_id': instance.partnerId,
       'reason': instance.reason,
+      'as_business': instance.asBusiness,
     };

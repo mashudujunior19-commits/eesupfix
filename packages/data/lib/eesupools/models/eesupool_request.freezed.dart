@@ -1,6 +1,5 @@
-// dart format width=80
-// coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// coverage:ignore-file
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
@@ -34,6 +33,10 @@ mixin _$EESUpoolRequest {
   @UserRoleConverter()
   UserRole get role;
 
+  /// True when the invite or request is for the person's Business profile.
+  @JsonKey(name: 'as_business')
+  bool get asBusiness;
+
   /// Create a copy of EESUpoolRequest
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -63,17 +66,19 @@ mixin _$EESUpoolRequest {
                 other.fullName == fullName) &&
             (identical(other.corporateName, corporateName) ||
                 other.corporateName == corporateName) &&
-            (identical(other.role, role) || other.role == role));
+            (identical(other.role, role) || other.role == role) &&
+            (identical(other.asBusiness, asBusiness) ||
+                other.asBusiness == asBusiness));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, userId, createdAt, eesupoolId,
-      type, status, eesupoolName, fullName, corporateName, role);
+      type, status, eesupoolName, fullName, corporateName, role, asBusiness);
 
   @override
   String toString() {
-    return 'EESUpoolRequest(userId: $userId, createdAt: $createdAt, eesupoolId: $eesupoolId, type: $type, status: $status, eesupoolName: $eesupoolName, fullName: $fullName, corporateName: $corporateName, role: $role)';
+    return 'EESUpoolRequest(userId: $userId, createdAt: $createdAt, eesupoolId: $eesupoolId, type: $type, status: $status, eesupoolName: $eesupoolName, fullName: $fullName, corporateName: $corporateName, role: $role, asBusiness: $asBusiness)';
   }
 }
 
@@ -92,7 +97,8 @@ abstract mixin class $EESUpoolRequestCopyWith<$Res> {
       @JsonKey(name: 'eesupool_name') String? eesupoolName,
       @JsonKey(name: 'full_name') String? fullName,
       @JsonKey(name: 'corporate_name') String? corporateName,
-      @UserRoleConverter() UserRole role});
+      @UserRoleConverter() UserRole role,
+      @JsonKey(name: 'as_business') bool asBusiness});
 }
 
 /// @nodoc
@@ -117,6 +123,7 @@ class _$EESUpoolRequestCopyWithImpl<$Res>
     Object? fullName = freezed,
     Object? corporateName = freezed,
     Object? role = null,
+    Object? asBusiness = null,
   }) {
     return _then(_self.copyWith(
       userId: null == userId
@@ -155,7 +162,231 @@ class _$EESUpoolRequestCopyWithImpl<$Res>
           ? _self.role
           : role // ignore: cast_nullable_to_non_nullable
               as UserRole,
+      asBusiness: null == asBusiness
+          ? _self.asBusiness
+          : asBusiness // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
+  }
+}
+
+/// Adds pattern-matching-related methods to [EESUpoolRequest].
+extension EESUpoolRequestPatterns on EESUpoolRequest {
+  /// A variant of `map` that fallback to returning `orElse`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>(
+    TResult Function(_EESUpoolRequest value)? $default, {
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _EESUpoolRequest() when $default != null:
+        return $default(_that);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// Callbacks receives the raw object, upcasted.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case final Subclass2 value:
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>(
+    TResult Function(_EESUpoolRequest value) $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _EESUpoolRequest():
+        return $default(_that);
+      case _:
+        throw StateError('Unexpected subclass');
+    }
+  }
+
+  /// A variant of `map` that fallback to returning `null`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>(
+    TResult? Function(_EESUpoolRequest value)? $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _EESUpoolRequest() when $default != null:
+        return $default(_that);
+      case _:
+        return null;
+    }
+  }
+
+  /// A variant of `when` that fallback to an `orElse` callback.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>(
+    TResult Function(
+            @JsonKey(name: 'user_id') String userId,
+            @JsonKey(name: 'created_at') DateTime createdAt,
+            @JsonKey(name: 'eesupool_id') int eesupoolId,
+            @JsonKey(name: 'request_type') String type,
+            @JsonKey(name: 'status') String status,
+            @JsonKey(name: 'eesupool_name') String? eesupoolName,
+            @JsonKey(name: 'full_name') String? fullName,
+            @JsonKey(name: 'corporate_name') String? corporateName,
+            @UserRoleConverter() UserRole role,
+            @JsonKey(name: 'as_business') bool asBusiness)?
+        $default, {
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _EESUpoolRequest() when $default != null:
+        return $default(
+            _that.userId,
+            _that.createdAt,
+            _that.eesupoolId,
+            _that.type,
+            _that.status,
+            _that.eesupoolName,
+            _that.fullName,
+            _that.corporateName,
+            _that.role,
+            _that.asBusiness);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// As opposed to `map`, this offers destructuring.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case Subclass2(:final field2):
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>(
+    TResult Function(
+            @JsonKey(name: 'user_id') String userId,
+            @JsonKey(name: 'created_at') DateTime createdAt,
+            @JsonKey(name: 'eesupool_id') int eesupoolId,
+            @JsonKey(name: 'request_type') String type,
+            @JsonKey(name: 'status') String status,
+            @JsonKey(name: 'eesupool_name') String? eesupoolName,
+            @JsonKey(name: 'full_name') String? fullName,
+            @JsonKey(name: 'corporate_name') String? corporateName,
+            @UserRoleConverter() UserRole role,
+            @JsonKey(name: 'as_business') bool asBusiness)
+        $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _EESUpoolRequest():
+        return $default(
+            _that.userId,
+            _that.createdAt,
+            _that.eesupoolId,
+            _that.type,
+            _that.status,
+            _that.eesupoolName,
+            _that.fullName,
+            _that.corporateName,
+            _that.role,
+            _that.asBusiness);
+      case _:
+        throw StateError('Unexpected subclass');
+    }
+  }
+
+  /// A variant of `when` that fallback to returning `null`
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>(
+    TResult? Function(
+            @JsonKey(name: 'user_id') String userId,
+            @JsonKey(name: 'created_at') DateTime createdAt,
+            @JsonKey(name: 'eesupool_id') int eesupoolId,
+            @JsonKey(name: 'request_type') String type,
+            @JsonKey(name: 'status') String status,
+            @JsonKey(name: 'eesupool_name') String? eesupoolName,
+            @JsonKey(name: 'full_name') String? fullName,
+            @JsonKey(name: 'corporate_name') String? corporateName,
+            @UserRoleConverter() UserRole role,
+            @JsonKey(name: 'as_business') bool asBusiness)?
+        $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _EESUpoolRequest() when $default != null:
+        return $default(
+            _that.userId,
+            _that.createdAt,
+            _that.eesupoolId,
+            _that.type,
+            _that.status,
+            _that.eesupoolName,
+            _that.fullName,
+            _that.corporateName,
+            _that.role,
+            _that.asBusiness);
+      case _:
+        return null;
+    }
   }
 }
 
@@ -171,7 +402,8 @@ class _EESUpoolRequest implements EESUpoolRequest {
       @JsonKey(name: 'eesupool_name') this.eesupoolName,
       @JsonKey(name: 'full_name') this.fullName,
       @JsonKey(name: 'corporate_name') this.corporateName,
-      @UserRoleConverter() required this.role});
+      @UserRoleConverter() required this.role,
+      @JsonKey(name: 'as_business') this.asBusiness = false});
   factory _EESUpoolRequest.fromJson(Map<String, dynamic> json) =>
       _$EESUpoolRequestFromJson(json);
 
@@ -202,6 +434,11 @@ class _EESUpoolRequest implements EESUpoolRequest {
   @override
   @UserRoleConverter()
   final UserRole role;
+
+  /// True when the invite or request is for the person's Business profile.
+  @override
+  @JsonKey(name: 'as_business')
+  final bool asBusiness;
 
   /// Create a copy of EESUpoolRequest
   /// with the given fields replaced by the non-null parameter values.
@@ -236,17 +473,19 @@ class _EESUpoolRequest implements EESUpoolRequest {
                 other.fullName == fullName) &&
             (identical(other.corporateName, corporateName) ||
                 other.corporateName == corporateName) &&
-            (identical(other.role, role) || other.role == role));
+            (identical(other.role, role) || other.role == role) &&
+            (identical(other.asBusiness, asBusiness) ||
+                other.asBusiness == asBusiness));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, userId, createdAt, eesupoolId,
-      type, status, eesupoolName, fullName, corporateName, role);
+      type, status, eesupoolName, fullName, corporateName, role, asBusiness);
 
   @override
   String toString() {
-    return 'EESUpoolRequest(userId: $userId, createdAt: $createdAt, eesupoolId: $eesupoolId, type: $type, status: $status, eesupoolName: $eesupoolName, fullName: $fullName, corporateName: $corporateName, role: $role)';
+    return 'EESUpoolRequest(userId: $userId, createdAt: $createdAt, eesupoolId: $eesupoolId, type: $type, status: $status, eesupoolName: $eesupoolName, fullName: $fullName, corporateName: $corporateName, role: $role, asBusiness: $asBusiness)';
   }
 }
 
@@ -267,7 +506,8 @@ abstract mixin class _$EESUpoolRequestCopyWith<$Res>
       @JsonKey(name: 'eesupool_name') String? eesupoolName,
       @JsonKey(name: 'full_name') String? fullName,
       @JsonKey(name: 'corporate_name') String? corporateName,
-      @UserRoleConverter() UserRole role});
+      @UserRoleConverter() UserRole role,
+      @JsonKey(name: 'as_business') bool asBusiness});
 }
 
 /// @nodoc
@@ -292,6 +532,7 @@ class __$EESUpoolRequestCopyWithImpl<$Res>
     Object? fullName = freezed,
     Object? corporateName = freezed,
     Object? role = null,
+    Object? asBusiness = null,
   }) {
     return _then(_EESUpoolRequest(
       userId: null == userId
@@ -330,6 +571,10 @@ class __$EESUpoolRequestCopyWithImpl<$Res>
           ? _self.role
           : role // ignore: cast_nullable_to_non_nullable
               as UserRole,
+      asBusiness: null == asBusiness
+          ? _self.asBusiness
+          : asBusiness // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }

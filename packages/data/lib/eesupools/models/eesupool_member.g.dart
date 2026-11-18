@@ -17,6 +17,7 @@ _EESUpoolMember _$EESUpoolMemberFromJson(Map<String, dynamic> json) =>
       fullName: json['full_name'] as String,
       createdAt: DateTime.parse(json['created_at'] as String),
       isVerified: json['is_verified'] as bool?,
+      asBusiness: json['as_business'] as bool? ?? false,
     );
 
 Map<String, dynamic> _$EESUpoolMemberToJson(_EESUpoolMember instance) =>

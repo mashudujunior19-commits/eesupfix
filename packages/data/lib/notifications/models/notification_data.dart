@@ -25,6 +25,10 @@ abstract class NotificationData with _$NotificationData {
     @JsonKey(name: 'application_id') int? applicationId,
     @JsonKey(name: 'partner_id') String? partnerId,
     @JsonKey(name: 'reason') String? reason,
+
+    /// KasiPool invites and join requests: true when they are for the
+    /// person's Business profile.
+    @JsonKey(name: 'as_business') bool? asBusiness,
   }) = _NotificationData;
 
   factory NotificationData.fromJson(Map<String, dynamic> json) =>

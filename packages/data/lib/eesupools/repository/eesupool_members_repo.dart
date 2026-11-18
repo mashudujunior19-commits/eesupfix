@@ -105,7 +105,8 @@ extension EESUpoolMembersRepo on EESUpoolRepository {
   }
 
   Future<Either<EESUpException, void>> createEESUpoolInvite(
-      int poolId, String userId, String type) async {
+      int poolId, String userId, String type,
+      {bool? asBusiness}) async {
     final sessionId = authRepository.sessionId;
     if (sessionId == null) {
       return Left(
@@ -114,7 +115,8 @@ extension EESUpoolMembersRepo on EESUpoolRepository {
     }
 
     final result = await EESUpException.guardFuture(
-        action: () => dataSource.createEESUpoolRequest(userId, poolId, type));
+        action: () => dataSource.createEESUpoolRequest(userId, poolId, type,
+            asBusiness: asBusiness));
     return result;
   }
 
@@ -128,7 +130,8 @@ extension EESUpoolMembersRepo on EESUpoolRepository {
   }
 
   Future<Either<EESUpException, void>> deleteInviteOrRequest(
-      String userId, int poolId) async {
+      String userId, int poolId,
+      {bool? asBusiness}) async {
     final sessionId = authRepository.sessionId;
     if (sessionId == null) {
       return Left(
@@ -137,12 +140,14 @@ extension EESUpoolMembersRepo on EESUpoolRepository {
     }
 
     final result = await EESUpException.guardFuture(
-        action: () => dataSource.deleteInviteOrRequest(userId, poolId));
+        action: () => dataSource.deleteInviteOrRequest(userId, poolId,
+            asBusiness: asBusiness));
     return result;
   }
 
   Future<Either<EESUpException, void>> updateEESUpoolRequest(
-      String userId, int poolId, String status) async {
+      String userId, int poolId, String status,
+      {bool? asBusiness}) async {
     final sessionId = authRepository.sessionId;
     if (sessionId == null) {
       return Left(
@@ -151,7 +156,8 @@ extension EESUpoolMembersRepo on EESUpoolRepository {
     }
 
     final result = await EESUpException.guardFuture(
-        action: () => dataSource.updateEESUpoolRequest(userId, poolId, status));
+        action: () => dataSource.updateEESUpoolRequest(userId, poolId, status,
+            asBusiness: asBusiness));
     return result;
   }
 
@@ -162,7 +168,8 @@ extension EESUpoolMembersRepo on EESUpoolRepository {
   /// Sends a declined invite again: the old row is replaced by a fresh
   /// pending invite, which also creates a new notification for the invitee.
   Future<Either<EESUpException, void>> resendEESUpoolInvite(
-      String userId, int poolId) async {
+      String userId, int poolId,
+      {bool? asBusiness}) async {
     final sessionId = authRepository.sessionId;
     if (sessionId == null) {
       return Left(
@@ -171,8 +178,10 @@ extension EESUpoolMembersRepo on EESUpoolRepository {
     }
 
     return EESUpException.guardFuture(action: () async {
-      await dataSource.deleteInviteOrRequest(userId, poolId);
-      await dataSource.createEESUpoolRequest(userId, poolId, 'Invite');
+      await dataSource.deleteInviteOrRequest(userId, poolId,
+          asBusiness: asBusiness);
+      await dataSource.createEESUpoolRequest(userId, poolId, 'Invite',
+          asBusiness: asBusiness);
     });
   }
 
@@ -257,24 +266,29 @@ extension EESUpoolMembersRepo on EESUpoolRepository {
   /// Why [userId] can't be removed from the pool (they hold a role or have an
   /// incomplete order), or null when they can.
   Future<Either<EESUpException, String?>> memberRemovalBlocker(
-      int poolId, String userId) async {
+      int poolId, String userId,
+      {bool? asBusiness}) async {
     return authRepository.executeFutureWithAuth(
-      (_) => dataSource.memberRemovalBlocker(poolId, userId),
+      (_) => dataSource.memberRemovalBlocker(poolId, userId,
+          asBusiness: asBusiness),
     );
   }
 
   /// Removes a member as a pool admin. Right(null) on success, Right(reason)
   /// when the removal was refused.
   Future<Either<EESUpException, String?>> removeEESUpoolMember(
-      int poolId, String userId) async {
+      int poolId, String userId,
+      {bool? asBusiness}) async {
     return authRepository.executeFutureWithAuth(
-      (_) => dataSource.removeMember(poolId, userId),
+      (_) => dataSource.removeMember(poolId, userId, asBusiness: asBusiness),
     );
   }
 
-  Future<Either<EESUpException, bool>> deleteEESUpoolMember(int poolId,String userId) async {
+  Future<Either<EESUpException, bool>> deleteEESUpoolMember(
+      int poolId, String userId,
+      {bool? asBusiness}) async {
     final result = authRepository.executeFutureWithAuth((_) {
-      final r = dataSource.deleteMember(poolId, userId);
+      final r = dataSource.deleteMember(poolId, userId, asBusiness: asBusiness);
       return r;
     });
     return result;

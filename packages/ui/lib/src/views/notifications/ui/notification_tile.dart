@@ -43,7 +43,8 @@ class NotificationTile extends StatelessWidget {
     try {
       // The database only accepts this while the request is still pending and
       // the caller is allowed to answer it; otherwise it says why.
-      final results = await repo.updateEESUpoolRequest(userId, poolId, status);
+      final results = await repo.updateEESUpoolRequest(userId, poolId, status,
+          asBusiness: notification.data?.asBusiness);
       if (!context.mounted) return;
       results.fold(
         (l) => context.snackBarError(l.message),
