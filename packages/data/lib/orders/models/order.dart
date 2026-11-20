@@ -70,7 +70,7 @@ class OrderStatusConverter implements JsonConverter<OrderStatus, String> {
 enum OrderEditPrivilage {
   none,
   packer,
-  collector,
+  dispatcher,
   owner,
   all;
 
@@ -78,8 +78,10 @@ enum OrderEditPrivilage {
     switch (status) {
       case 'Packer':
         return OrderEditPrivilage.packer;
+      // 'Collector' is the old name of the Dispatcher role.
+      case 'Dispatcher':
       case 'Collector':
-        return OrderEditPrivilage.collector;
+        return OrderEditPrivilage.dispatcher;
       case 'Owner':
         return OrderEditPrivilage.owner;
       case 'All':
@@ -89,13 +91,23 @@ enum OrderEditPrivilage {
     }
   }
 
+  /// What people see. 'All' means the member both packs and dispatches.
+  String get label {
+    switch (this) {
+      case OrderEditPrivilage.all:
+        return 'Packer & Dispatcher';
+      default:
+        return toString();
+    }
+  }
+
   @override
   String toString() {
     switch (this) {
       case OrderEditPrivilage.packer:
         return 'Packer';
-      case OrderEditPrivilage.collector:
-        return 'Collector';
+      case OrderEditPrivilage.dispatcher:
+        return 'Dispatcher';
       case OrderEditPrivilage.owner:
         return 'Owner';
       case OrderEditPrivilage.all:

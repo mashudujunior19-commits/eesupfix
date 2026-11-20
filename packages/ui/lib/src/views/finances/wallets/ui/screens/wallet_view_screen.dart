@@ -161,7 +161,18 @@ class WalletViewScreen extends StatelessWidget {
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
-                                  _BalanceCard(balance: balance),
+                                  _BalanceCard(
+                                    balance: balance,
+                                    // Earnings waiting for their KasiPool
+                                    // order to complete: shown, not usable.
+                                    pending: transactions
+                                        .where((t) =>
+                                            !t.vested &&
+                                            t.cancelledAt == null &&
+                                            t.value > 0)
+                                        .fold<double>(
+                                            0, (sum, t) => sum + t.value),
+                                  ),
                                   _Transact(
                                     wallet: wallet,
                                     availableBalance:
@@ -414,8 +425,11 @@ class _Transact extends StatelessWidget {
 // }
 
 class _BalanceCard extends StatelessWidget {
-  const _BalanceCard({required this.balance});
+  const _BalanceCard({required this.balance, this.pending = 0});
   final WalletBalance balance;
+
+  /// Not yet vested (red, cannot be spent or withdrawn).
+  final double pending;
 
   @override
   Widget build(BuildContext context) {
@@ -458,6 +472,32 @@ class _BalanceCard extends StatelessWidget {
             fontSize: 25,
           ),
         ),
+        if (pending > 0) ...[
+          const SizedBox(height: 8),
+          Text(
+            "Pending",
+            style: context.textTheme.labelMedium!.copyWith(
+              fontWeight: FontWeight.w600,
+              fontSize: 16,
+              color: Colors.red,
+            ),
+          ),
+          Text(
+            'R${pending.toRounded()}',
+            style: context.textTheme.labelLarge!.copyWith(
+              fontWeight: FontWeight.w600,
+              fontSize: 20,
+              color: Colors.red,
+            ),
+          ),
+          SizedBox(
+            width: 180,
+            child: Text(
+              'Not usable yet. Becomes available when the whole KasiPool order is completed.',
+              style: context.textTheme.labelSmall?.copyWith(color: Colors.red),
+            ),
+          ),
+        ],
       ],
     );
   }

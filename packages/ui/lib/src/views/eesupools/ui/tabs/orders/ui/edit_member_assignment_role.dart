@@ -33,12 +33,12 @@ class _EditOrderAssignmentsDialogState
   /// Roles an admin can pick. Owner is implicit and None isn't a role.
   static const _assignableRoles = [
     OrderEditPrivilage.packer,
-    OrderEditPrivilage.collector,
+    OrderEditPrivilage.dispatcher,
     OrderEditPrivilage.all,
   ];
 
   /// Member ids (added in this dialog) that belong to the customer who
-  /// placed the order: they may collect it but not pack it. The database
+  /// placed the order: they may dispatch it but not pack it. The database
   /// enforces the same rule for assignments that were already saved.
   final Set<String> _customerMemberIds = {};
 
@@ -76,9 +76,9 @@ class _EditOrderAssignmentsDialogState
             orderId: widget.order.id!,
             eesupoolOrderId: widget.order.eesupoolOrderId!,
             // Someone can't pack their own order, so the customer starts
-            // out as its collector instead.
+            // out as its dispatcher instead.
             privilage: isCustomer
-                ? OrderEditPrivilage.collector
+                ? OrderEditPrivilage.dispatcher
                 : OrderEditPrivilage.all,
             corpName: null,
           ),
@@ -119,12 +119,12 @@ class _EditOrderAssignmentsDialogState
       return false;
     }
 
-    int collectorCounts = assignments
-        .where((element) => element.privilage == OrderEditPrivilage.collector)
+    int dispatcherCounts = assignments
+        .where((element) => element.privilage == OrderEditPrivilage.dispatcher)
         .length;
 
-    if (collectorCounts > 1) {
-      cx.snackBarError('Only one collector is allowed');
+    if (dispatcherCounts > 1) {
+      cx.snackBarError('Only one dispatcher is allowed');
       return false;
     }
 
@@ -138,9 +138,9 @@ class _EditOrderAssignmentsDialogState
       return false;
     }
 
-    if (hasAll && collectorCounts > 0) {
+    if (hasAll && dispatcherCounts > 0) {
       cx.snackBarError(
-          'If all is selected on one of the members, a collector is not allowed');
+          'If all is selected on one of the members, a dispatcher is not allowed');
       return false;
     }
     int allCount = assignments
@@ -261,7 +261,7 @@ class _EditOrderAssignmentsDialogState
                             case OrderEditPrivilage.packer:
                               setRole(value, assignment);
                               break;
-                            case OrderEditPrivilage.collector:
+                            case OrderEditPrivilage.dispatcher:
                               setRole(value, assignment);
                               break;
                             case OrderEditPrivilage.owner:
@@ -279,7 +279,7 @@ class _EditOrderAssignmentsDialogState
                               (e) => DropdownMenuItem(
                                 value: e,
                                 child: Text(
-                                  e.toString(),
+                                  e.label,
                                   style: context.textTheme.labelSmall
                                       ?.copyWith(fontWeight: FontWeight.bold),
                                 ),

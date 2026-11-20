@@ -261,7 +261,7 @@ class _OrderCardX extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    order.assignments[index].privilage.toString(),
+                    order.assignments[index].privilage?.label ?? 'None',
                     style: context.textTheme.labelSmall?.copyWith(
                       color: Colors.black,
                       fontSize: 10,

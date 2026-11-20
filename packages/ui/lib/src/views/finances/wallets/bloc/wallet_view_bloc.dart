@@ -69,8 +69,9 @@ class WalletViewBloc extends Bloc<WalletViewEvent, WalletViewState> {
           walletId: wallet.id,
           walletType: wallet.typeId,
           availableBalance: wallet.balance,
+          // Pending (unvested) money is shown separately, not in the balance.
           totalBalance: transactions
-              .where((t) => t.cancelledAt == null)
+              .where((t) => t.cancelledAt == null && t.vested)
               .fold<double>(0, (sum, t) => sum + t.value),
         ),
         (b) => b,

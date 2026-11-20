@@ -65,11 +65,9 @@ class TransactionCard extends StatelessWidget {
                       Text(
                         transaction.cancelledAt != null
                             ? 'Cancelled'
-                            : 'Pending',
+                            : 'Pending · not usable yet',
                         style: textTheme.labelSmall?.copyWith(
-                          color: transaction.cancelledAt != null
-                              ? Colors.red
-                              : Colors.orange,
+                          color: Colors.red,
                         ),
                       ),
                     Text(
@@ -88,7 +86,15 @@ class TransactionCard extends StatelessWidget {
                     ? '- R${transaction.value.toRounded().substring(1)}'
                     : '+ R${transaction.value.toRounded()}',
                 style: textTheme.labelMedium?.copyWith(
-                  color: transaction.value < 0 ? Colors.red : Colors.green,
+                  // Pending (not yet vested) money is shown in red.
+                  color: transaction.value < 0 ||
+                          !transaction.vested ||
+                          transaction.cancelledAt != null
+                      ? Colors.red
+                      : Colors.green,
+                  decoration: transaction.cancelledAt != null
+                      ? TextDecoration.lineThrough
+                      : null,
                 ),
               ),
             ),

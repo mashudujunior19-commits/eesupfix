@@ -1,6 +1,6 @@
 /// A KasiPool order the signed-in user has been given a role on: either a
 /// role on the pool's bulk order (Receiver / Packer / Distributor) or an
-/// assignment on another member's order (Packer / Collector / both).
+/// assignment on another member's order (Packer / Dispatcher / both).
 class RoleAssignedOrder {
   const RoleAssignedOrder({
     required this.isBulk,

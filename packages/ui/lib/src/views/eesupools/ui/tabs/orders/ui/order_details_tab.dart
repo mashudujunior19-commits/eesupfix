@@ -17,6 +17,7 @@ import 'package:ui/src/views/eesupools/ui/tabs/orders/ui/create_order_dialog.dar
 import 'package:ui/src/views/eesupools/ui/tabs/orders/ui/delivary_secret.dart';
 import 'package:ui/src/views/eesupools/ui/tabs/orders/ui/order_receivers_screen.dart';
 import 'package:ui/src/views/geolocation/ui/widgets/address_card.dart';
+import 'package:ui/src/views/kasipool_timeline/ui/kasipool_order_timeline.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
@@ -391,7 +392,19 @@ class OrderDetailsTab extends StatelessWidget {
                 ),
               ),
             ],
-          )
+          ),
+        // One timeline for the whole KasiPool order, the same as the admin
+        // app's, updated live. Admins also see every member order.
+        Container(
+          margin: const EdgeInsets.fromLTRB(20, 15, 20, 30),
+          padding: const EdgeInsets.all(12),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(10),
+            border: Border.all(color: Colors.grey.shade300, width: .5),
+          ),
+          child: KasiPoolOrderTimeline(eesupoolOrderId: order.id),
+        ),
       ],
     );
   }

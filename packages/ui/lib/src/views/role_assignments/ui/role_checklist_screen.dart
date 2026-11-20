@@ -8,7 +8,10 @@ import 'package:ui/src/core/extensions/context_alerts_ext.dart';
 import 'package:ui/src/core/extensions/context_theme_ext.dart';
 import 'package:ui/src/core/widgets/fullscreen_error_widget.dart';
 import 'package:ui/src/core/widgets/fullscreen_loading_shimmer.dart';
+import 'package:ui/src/core/extensions/bottom_sheet_context_ext.dart';
 import 'package:ui/src/core/widgets/safe_network_image.dart';
+import 'package:ui/src/views/kasipool_timeline/ui/kasipool_order_timeline.dart';
+import 'package:ui/src/views/orders/tracking/ui/collection_pin_widgets.dart';
 import 'package:ui/src/views/role_assignments/cubit/role_checklist_cubit.dart';
 import 'package:ui/src/views/role_assignments/ui/order_received_screen.dart';
 import 'package:data/role_assignments/models/order_receipt.dart';
@@ -32,6 +35,11 @@ class RoleChecklistScreen extends StatelessWidget {
   final int? orderId;
   final String? title;
   final String? role;
+
+  /// Dispatcher (or Packer & Dispatcher) of one member order: hands it over
+  /// with the customer's collection PIN.
+  bool get _isDispatcher =>
+      orderId != null && (role ?? '').toLowerCase().contains('dispatcher');
 
   @override
   Widget build(BuildContext context) {
@@ -122,6 +130,33 @@ class RoleChecklistScreen extends StatelessWidget {
                               ),
                             ),
                           ),
+                        if (_isDispatcher) ...[
+                          const SizedBox(height: 16),
+                          ElevatedButton.icon(
+                            onPressed: () => context.showBottomSheetDialog(
+                              child: CollectionPinEntryDialog(orderId: orderId!),
+                            ),
+                            icon: const Icon(Icons.pin_outlined),
+                            label: const Text(
+                                "Confirm collection with the customer's PIN"),
+                          ),
+                        ],
+                        const SizedBox(height: 16),
+                        Card(
+                          color: Colors.white,
+                          elevation: 0,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
+                            side: BorderSide(color: Colors.grey.shade200),
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.all(12),
+                            child: KasiPoolOrderTimeline(
+                              eesupoolOrderId: eesupoolOrderId,
+                              highlightOrderId: orderId,
+                            ),
+                          ),
+                        ),
                       ],
                     ),
                   ),

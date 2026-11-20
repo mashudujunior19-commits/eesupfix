@@ -1,6 +1,9 @@
 // ignore_for_file: use_build_context_synchronously
 
+import 'package:auto_route/auto_route.dart';
 import 'package:data/eesupools/repository/eesupool_repo.dart';
+import 'package:data/orders/models/order.dart';
+import 'package:ui/app_route.gr.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:loader_overlay/loader_overlay.dart';
 import 'package:ui/src/core/extensions/context_alerts_ext.dart';
@@ -143,6 +146,26 @@ class NotificationTile extends StatelessWidget {
                   child: InkWell(
                     onTap: () => openRoleChecklist(context, notification),
                     child: const Text('Open checklist'),
+                  ),
+                ),
+              // KasiPool order placed / collection PIN ready: open the order
+              // (the customer sees their PIN on it).
+              if (notification.type == not.NotificationType.order &&
+                  notification.data?.orderId != null &&
+                  const ['order_placed', 'collection_pin', 'member_order_placed']
+                      .contains(notification.data?.kind))
+                Padding(
+                  padding: const EdgeInsets.only(top: 10),
+                  child: InkWell(
+                    onTap: () => context.router.push(OrderTrackingRoute(
+                      id: notification.data!.orderId!,
+                      privilage: notification.data!.kind == 'member_order_placed'
+                          ? OrderEditPrivilage.none
+                          : OrderEditPrivilage.owner,
+                    )),
+                    child: Text(notification.data!.kind == 'collection_pin'
+                        ? 'View my collection PIN'
+                        : 'View order'),
                   ),
                 ),
               if (isApplicationNotification(notification.data))
