@@ -10,6 +10,8 @@ Nothing was changed to write this. It is based on:
 
 Not covered: a real Android phone (device back button, push, camera, slow 3G), screen readers, and people who are not staff. A 30-minute test with 5 real customers on their own phones would find more than this document.
 
+The warehouse operations app (**TOWRIS Ops**, `ESSU2/eesup-admin`, github.com/siyaMasilela/eesup-admin) has its own review: `docs/USABILITY_REVIEW.md` in that repo. The "admin app" in this document is the older `eesup-admin-fix` app.
+
 Paths: customer app paths are relative to `packages/ui/lib/src/` in `eesup-bloc-codebase`; admin paths are relative to `lib/` in `eesup-admin-fix`.
 
 ---
