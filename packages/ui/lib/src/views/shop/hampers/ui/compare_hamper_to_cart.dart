@@ -1,35 +1,22 @@
-// ignore_for_file: unnecessary_null_comparison
 import 'package:data/orders/models/order_product.dart';
-import 'package:data/shopping/models/hamper.dart';
+import 'package:data/shopping/models/hamper_offer.dart';
 
+/// Finds a hamper whose contents are exactly what is in the cart.
 class HamperComparer {
   final List<OrderProduct> cartProducts;
-  final List<Hamper> hampers;
+  final List<HamperOffer> hampers;
 
   HamperComparer({required this.cartProducts, required this.hampers});
 
-  Hamper? findMatchingHamper() {
-    for (var hamper in hampers) {
-      print("Checking hamper: ${hamper.id}");
-      if (hamper.productIds == null || hamper.quantity == null) continue;
-
-      final hamperProductIds = hamper.productIds!.toSet();
-      final hamperQuantities = hamper.quantity!;
-      bool allMatch = cartProducts.every((cartProduct) {
-        final productId = cartProduct.productId;
-        bool isMatching = hamperProductIds.contains(productId) &&
-            hamperQuantities[productId] == cartProduct.quantity;
-        print(
-            "Comparing productId $productId (cart) with hamper productIds: $hamperProductIds. Match: $isMatching");
-        return isMatching;
-      });
-
-      if (allMatch) {
-        print("Match found with hamper ${hamper.id}");
-        return hamper;
-      } else {
-        print('no matching hamper found!!!');
-      }
+  HamperOffer? findMatchingHamper() {
+    if (cartProducts.isEmpty) return null;
+    for (final hamper in hampers) {
+      if (!hamper.canBuy) continue;
+      final quantities = hamper.quantities;
+      if (quantities.length != cartProducts.length) continue;
+      final allMatch = cartProducts
+          .every((item) => quantities[item.productId] == item.quantity);
+      if (allMatch) return hamper;
     }
     return null;
   }

@@ -1,9 +1,5 @@
 import 'package:bloc/bloc.dart';
-import 'package:data/finance/models/profit_allocation.dart';
-import 'package:data/orders/models/order_product.dart';
-import 'package:data/shopping/models/hamper.dart';
-import 'package:data/shopping/models/product.dart';
-import 'package:data/shopping/models/mapped_product_hamper.dart';
+import 'package:data/shopping/models/hamper_offer.dart';
 import 'package:data/shopping/repository/hamper_repository.dart';
 import 'package:data/shopping/repository/shopping_repository.dart';
 import 'package:meta/meta.dart';
@@ -11,117 +7,30 @@ import 'package:meta/meta.dart';
 part 'hamper_event.dart';
 part 'hamper_state.dart';
 
+/// Loads hampers for the list and the detail page. Each screen needs one
+/// database call, and every failure ends in [HamperError] so the screen can
+/// show it and offer a retry.
 class HamperBloc extends Bloc<HamperEvent, HamperState> {
   final ShoppingRepository _repository;
-  bool hasEmittedMatch = false;
+
   HamperBloc(this._repository) : super(HamperInitial()) {
-    on<FetchHampers>((event, emit) async {
+    on<LoadHampers>((event, emit) async {
       emit(HamperLoading());
-      final result = await _repository.fetchHampers();
+      final result = await _repository.fetchHamperOffers();
       result.fold(
-        (error) =>
-            emit(HamperError('Error fetching hampers: ${error.message}')),
+        (error) => emit(HamperError(error.message)),
         (hampers) => emit(HampersLoaded(hampers)),
       );
     });
-    on<FetchHamper>((event, emit) async {
+
+    on<LoadHamper>((event, emit) async {
       emit(HamperLoading());
-      final result = await _repository.fetchHamperById(event.hamperId);
+      final result = await _repository.fetchHamperOffer(event.hamperId);
       result.fold(
-        (error) =>
-            emit(HamperError('Error fetching hampers: ${error.message}')),
-        (hampers) => emit(HamperLoaded(hampers)),
-      );
-    });
-
-    on<FetchHamperProducts>((event, emit) async {
-      emit(HamperLoading());
-      final result =
-          await _repository.fetchHamperProductDetails(
-        event.hamperId,
-      );
-
-      result.fold(
-        (error) {
-          emit(HamperError('Error fetching products: ${error.message}'));
-        },
-        (hamperProductDetails) {
-          emit(HamperProductLoaded(hamperProductDetails));
-        },
-      );
-    });
-
-    on<FetchHampersByImageUrl>((event, emit) async {
-      emit(HamperLoading());
-
-      final result = await _repository.fetchHampersByImageUrl(event.imageUrl);
-
-      result.fold(
-        (error) {
-          emit(HamperError(
-              'Error fetching hampers by image URL: ${error.message}'));
-        },
-        (hamper) {
-          if (hamper == null) {
-            emit(HamperNotFound()); // New state to handle null hampers
-          } else {
-            emit(HamperIdLoaded(
-                hamper.id)); // Proceed as normal if hamper is found
-          }
-        },
-      );
-    });
-
-    on<ResetHamperComparison>((event, emit) {
-      hasEmittedMatch = false;
-      emit(HamperInitial());
-    });
-
-    on<FetchHamperProductsByImageUrl>((event, emit) async {
-      emit(HamperLoading());
-
-      final result = await _repository.fetchHampersByImageUrl(event.imageUrl);
-
-      result.fold(
-        (error) => emit(HamperError('Error fetching hamper: ${error.message}')),
-        (hamper) {
-          if (hamper == null) {
-            emit(HamperNotFound()); // Handle the case where no hamper is found
-          } else {
-            add(FetchHamperProducts(
-                hamper.id)); // Continue fetching products if hamper exists
-          }
-        },
-      );
-    });
-
-    on<FetchHamperAsProduct>((event, emit) async {
-      emit(HamperLoading());
-      try {
-        final result = await _repository.fetchHamperProduct(event.hamperId);
-        result.fold(
-          (error) =>
-              emit(HamperError('Failed to fetch products: ${error.message}')),
-          (product) {
-            if (product != null) {
-              emit(HamperAsProductLoaded(product));
-            } else {
-              emit(HamperError('No product found for this hamper'));
-            }
-          },
-        );
-      } catch (e) {
-        emit(HamperError('Failed to fetch products: $e'));
-      }
-    });
-    on<FetchProfitAllocations>((event, emit) async {
-      emit(HamperLoading());
-      final result =
-          await _repository.fetchProfitAllocationById(event.profitAllocationId);
-      result.fold(
-        (error) =>
-            emit(HamperError('Error fetching allocations: ${error.message}')),
-        (allocations) => emit(AllocationLoaded(allocations)),
+        (error) => emit(HamperError(error.message)),
+        (hamper) => emit(
+          hamper == null ? HamperNotFound() : HamperLoaded(hamper),
+        ),
       );
     });
   }

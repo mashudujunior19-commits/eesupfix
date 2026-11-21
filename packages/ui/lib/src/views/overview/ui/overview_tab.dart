@@ -175,8 +175,11 @@ class _OverviewItems extends StatelessWidget {
           OverviewBannerCarousel(
             interval: 10.seconds,
             hamperBanner: state.topBanner,
-            onBannerTap: (url) {
-              context.router.push(HamperViewRoute(imageUrl: url));
+            onBannerTap: (banner) {
+              final id = banner.hamperId;
+              if (id != null) {
+                context.router.push(HamperViewRoute(hamperId: id));
+              }
             },
           ),
           const ReferalCodeTile(),
@@ -185,8 +188,11 @@ class _OverviewItems extends StatelessWidget {
           OverviewBannerCarousel(
             interval: 10.seconds,
             hamperBanner: state.bottomBanner,
-            onBannerTap: (url) {
-              context.router.push(HamperViewRoute(imageUrl: url));
+            onBannerTap: (banner) {
+              final id = banner.hamperId;
+              if (id != null) {
+                context.router.push(HamperViewRoute(hamperId: id));
+              }
             },
           ),
           HoriProductSlider(

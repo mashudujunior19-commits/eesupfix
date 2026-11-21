@@ -89,8 +89,8 @@ class OverviewBloc extends Bloc<OverviewEvent, OverviewState> {
       // late HamperBanner topBanner;
       // late HamperBanner bottomBanner;
 
-      late List<HamperBannerDetail> topBanner;
-      late List<HamperBannerDetail> bottomBanner;
+      List<HamperBannerDetail> topBanner = const [];
+      List<HamperBannerDetail> bottomBanner = const [];
 
       final cats = await _shoppingRepository.fetchCategories();
       cats.fold((ex) => emit(OverviewError(ex)), (c) => categories = c);

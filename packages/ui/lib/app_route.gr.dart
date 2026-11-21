@@ -97,7 +97,6 @@ import 'package:ui/src/views/shop/checkout/ui/checkout_screen.dart' as _i8;
 import 'package:ui/src/views/shop/checkout/ui/steps/address_selection_step.dart'
     as _i2;
 import 'package:ui/src/views/shop/hampers/ui/hamper_list.dart' as _i18;
-import 'package:ui/src/views/shop/hampers/ui/hamper_stack.dart' as _i16;
 import 'package:ui/src/views/shop/hampers/ui/hamper_view.dart' as _i17;
 import 'package:ui/src/views/shop/product_request/product_request_screen.dart'
     as _i33;
@@ -823,118 +822,17 @@ class EditProfileRouteArgs {
 }
 
 /// generated route for
-/// [_i16.HamperImageStack]
-class HamperImageStack extends _i52.PageRouteInfo<HamperImageStackArgs> {
-  HamperImageStack({
-    _i53.Key? key,
-    required String? imgUrl,
-    String? hamperCode,
-    double? hamperPrice,
-    double? profitpercentage,
-    String? hamperGifUrl1,
-    String? hamperGifUrl2,
-    List<_i52.PageRouteInfo>? children,
-  }) : super(
-          HamperImageStack.name,
-          args: HamperImageStackArgs(
-            key: key,
-            imgUrl: imgUrl,
-            hamperCode: hamperCode,
-            hamperPrice: hamperPrice,
-            profitpercentage: profitpercentage,
-            hamperGifUrl1: hamperGifUrl1,
-            hamperGifUrl2: hamperGifUrl2,
-          ),
-          initialChildren: children,
-        );
-
-  static const String name = 'HamperImageStack';
-
-  static _i52.PageInfo page = _i52.PageInfo(
-    name,
-    builder: (data) {
-      final args = data.argsAs<HamperImageStackArgs>();
-      return _i16.HamperImageStack(
-        key: args.key,
-        imgUrl: args.imgUrl,
-        hamperCode: args.hamperCode,
-        hamperPrice: args.hamperPrice,
-        profitpercentage: args.profitpercentage,
-        hamperGifUrl1: args.hamperGifUrl1,
-        hamperGifUrl2: args.hamperGifUrl2,
-      );
-    },
-  );
-}
-
-class HamperImageStackArgs {
-  const HamperImageStackArgs({
-    this.key,
-    required this.imgUrl,
-    this.hamperCode,
-    this.hamperPrice,
-    this.profitpercentage,
-    this.hamperGifUrl1,
-    this.hamperGifUrl2,
-  });
-
-  final _i53.Key? key;
-
-  final String? imgUrl;
-
-  final String? hamperCode;
-
-  final double? hamperPrice;
-
-  final double? profitpercentage;
-
-  final String? hamperGifUrl1;
-
-  final String? hamperGifUrl2;
-
-  @override
-  String toString() {
-    return 'HamperImageStackArgs{key: $key, imgUrl: $imgUrl, hamperCode: $hamperCode, hamperPrice: $hamperPrice, profitpercentage: $profitpercentage, hamperGifUrl1: $hamperGifUrl1, hamperGifUrl2: $hamperGifUrl2}';
-  }
-
-  @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) return true;
-    if (other is! HamperImageStackArgs) return false;
-    return key == other.key &&
-        imgUrl == other.imgUrl &&
-        hamperCode == other.hamperCode &&
-        hamperPrice == other.hamperPrice &&
-        profitpercentage == other.profitpercentage &&
-        hamperGifUrl1 == other.hamperGifUrl1 &&
-        hamperGifUrl2 == other.hamperGifUrl2;
-  }
-
-  @override
-  int get hashCode =>
-      key.hashCode ^
-      imgUrl.hashCode ^
-      hamperCode.hashCode ^
-      hamperPrice.hashCode ^
-      profitpercentage.hashCode ^
-      hamperGifUrl1.hashCode ^
-      hamperGifUrl2.hashCode;
-}
-
-/// generated route for
 /// [_i17.HamperViewPage]
 class HamperViewRoute extends _i52.PageRouteInfo<HamperViewRouteArgs> {
   HamperViewRoute({
     _i53.Key? key,
-    String? hamperId,
-    String? imageUrl,
+    required String hamperId,
     List<_i52.PageRouteInfo>? children,
   }) : super(
           HamperViewRoute.name,
           args: HamperViewRouteArgs(
             key: key,
             hamperId: hamperId,
-            imageUrl: imageUrl,
           ),
           initialChildren: children,
         );
@@ -944,43 +842,36 @@ class HamperViewRoute extends _i52.PageRouteInfo<HamperViewRouteArgs> {
   static _i52.PageInfo page = _i52.PageInfo(
     name,
     builder: (data) {
-      final args = data.argsAs<HamperViewRouteArgs>(
-        orElse: () => const HamperViewRouteArgs(),
-      );
+      final args = data.argsAs<HamperViewRouteArgs>();
       return _i17.HamperViewPage(
         key: args.key,
         hamperId: args.hamperId,
-        imageUrl: args.imageUrl,
       );
     },
   );
 }
 
 class HamperViewRouteArgs {
-  const HamperViewRouteArgs({this.key, this.hamperId, this.imageUrl});
+  const HamperViewRouteArgs({this.key, required this.hamperId});
 
   final _i53.Key? key;
 
-  final String? hamperId;
-
-  final String? imageUrl;
+  final String hamperId;
 
   @override
   String toString() {
-    return 'HamperViewRouteArgs{key: $key, hamperId: $hamperId, imageUrl: $imageUrl}';
+    return 'HamperViewRouteArgs{key: $key, hamperId: $hamperId}';
   }
 
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     if (other is! HamperViewRouteArgs) return false;
-    return key == other.key &&
-        hamperId == other.hamperId &&
-        imageUrl == other.imageUrl;
+    return key == other.key && hamperId == other.hamperId;
   }
 
   @override
-  int get hashCode => key.hashCode ^ hamperId.hashCode ^ imageUrl.hashCode;
+  int get hashCode => key.hashCode ^ hamperId.hashCode;
 }
 
 /// generated route for

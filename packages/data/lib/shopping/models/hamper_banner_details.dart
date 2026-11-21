@@ -1,59 +1,59 @@
+/// One Home banner entry. When [hamperId] is set the entry is a hamper and
+/// tapping it opens that hamper; otherwise it is a plain image.
+///
+/// Cost and profit figures are no longer part of this model: the database
+/// function that fills it does not return them.
 class HamperBannerDetail {
+  final String? hamperId;
   final String? code;
   final String gif1;
   final String gif2;
   final String? type;
   final double value;
-  final double profit;
-  final double profitPercentage;
-  final List<String> userRole;
+  final double saving;
   final String baseImage;
   final String? expiryDate;
   final int orderNumber;
 
   HamperBannerDetail({
+    this.hamperId,
     this.code,
     this.gif1 = '',
     this.gif2 = '',
     this.type,
     this.value = 0.0,
-    this.profit = 0.0,
-    this.profitPercentage = 0.0,
-    List<String>? userRole,
+    this.saving = 0.0,
     this.baseImage = '',
     this.expiryDate,
     required this.orderNumber,
-  }) : userRole = userRole ?? [];
+  });
 
   // Factory constructor to handle null values
   factory HamperBannerDetail.fromJson(Map<String, dynamic> json) {
     return HamperBannerDetail(
+      hamperId: json['hamper_id'] as String?,
       code: json['code'] as String?,
       gif1: json['gif1'] as String? ?? '',
       gif2: json['gif2'] as String? ?? '',
       type: json['type'] as String?,
       value: _nullableDouble(json['value']),
-      profit: _nullableDouble(json['profit']),
-      profitPercentage: _nullableDouble(json['profit_percentage']),
-      userRole:
-          (json['user_role'] as List?)?.map((e) => e.toString()).toList() ?? [],
+      saving: _nullableDouble(json['saving']),
       baseImage: json['base_image'] as String? ?? '',
       expiryDate: json['expiry_date'] as String?,
-      orderNumber: (json['order_number'] as num).toInt(),
+      orderNumber: (json['order_number'] as num?)?.toInt() ?? 0,
     );
   }
 
   // Convert model to JSON
   Map<String, dynamic> toJson() {
     return {
+      'hamper_id': hamperId,
       'code': code,
       'gif1': gif1,
       'gif2': gif2,
       'type': type,
       'value': value,
-      'profit': profit,
-      'profit_percentage': profitPercentage,
-      'user_role': userRole,
+      'saving': saving,
       'base_image': baseImage,
       'expiry_date': expiryDate,
       'order_number': orderNumber,

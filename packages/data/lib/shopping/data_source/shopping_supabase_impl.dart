@@ -11,11 +11,9 @@ import 'package:data/shopping/models/product_request.dart';
 import 'package:flutter/foundation.dart' as foundation;
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-import '../models/hamper.dart';
 import '../models/hamper_banner.dart';
 import '../models/hamper_banner_details.dart';
-import '../models/hamper_product.dart';
-import '../models/mapped_product_hamper.dart';
+import '../models/hamper_offer.dart';
 
 class ShoppingSupabaseImp implements ShoppingDataSource {
   final SupabaseClient _client;
@@ -240,25 +238,14 @@ class ShoppingSupabaseImp implements ShoppingDataSource {
           .schema('engagements')
           .rpc('get_hamper_banner_details', params: {'banner_id': id});
 
-      if (response != null && response is List) {
-        final List<dynamic> rawHamperData = response;
-
-        if (rawHamperData.isNotEmpty) {
-          List<HamperBannerDetail> hampers = rawHamperData.map((item) {
-            if (item is Map<String, dynamic>) {
-              return HamperBannerDetail.fromJson(item);
-            } else {
-              throw Exception('Invalid item format in hamper details');
-            }
-          }).toList();
-
-          return hampers;
-        } else {
-          throw Exception('Hamper banner details are empty');
-        }
-      } else {
+      if (response == null) return [];
+      if (response is! List) {
         throw Exception('Unexpected response structure: $response');
       }
+      return response
+          .whereType<Map>()
+          .map((e) => HamperBannerDetail.fromJson(Map<String, dynamic>.from(e)))
+          .toList();
     } catch (e) {
       throw Exception('An error occurred while fetching hamper banner details');
     }
@@ -360,210 +347,20 @@ class ShoppingSupabaseImp implements ShoppingDataSource {
   }
 
   @override
-  Future<List<Hamper>> fetchHampers(String userId) async {
-    try {
-      final response = await _client
-          .schema('inventory')
-          .from('hamper')
-          .select('*')
-          .eq('is_final', true)
-          .gte('expiry_date', DateTime.now().toIso8601String())
-          .order('created_at', ascending: false);
-
-      final List data = response as List;
-
-      final List<Hamper> hampers =
-          data.map((json) => Hamper.fromJson(json)).toList();
-
-      for (int i = 0; i < hampers.length; i++) {
-        final productIds = await getProductIdsForHamper(hampers[i].id);
-        final quantities = await getProductQuantitiesForHamper(hampers[i].id);
-
-        hampers[i] = hampers[i].copyWith(
-          productIds: productIds,
-          quantity: quantities,
-        );
-      }
-      return hampers;
-    } catch (e) {
-      return [];
+  Future<List<HamperOffer>> fetchHamperOffers({String? hamperId}) async {
+    // One call returns every hamper this user may see, with what is inside.
+    // Errors are thrown so the screen can show them and offer a retry.
+    final response = await _client.rpc(
+      'get_hampers',
+      params: {'_hamper_id': hamperId},
+    );
+    if (response is! List) {
+      throw Exception('Unexpected hampers response');
     }
-  }
-
-  @override
-  Future<Hamper> fetchHamperById(String hamperId) async {
-    try {
-      final response = await _client
-          .schema('inventory')
-          .from('hamper')
-          .select('*')
-          .eq('id', hamperId)
-          .single();
-
-      final Map<String, dynamic> data = response;
-
-      final hamper = Hamper.fromJson(data);
-      return hamper;
-    } catch (e) {
-      throw Exception('Failed to fetch hamper: $e');
-    }
-  }
-
-  Future<List<int>> getProductIdsForHamper(String hamperId) async {
-    try {
-      final response = await _client
-          .schema('inventory')
-          .from('hamper_product')
-          .select('product_id')
-          .eq('hamper_id', hamperId);
-      final List data = response as List;
-      return data.map((json) => json['product_id'] as int).toList();
-    } catch (e) {
-      return [];
-    }
-  }
-
-  @override
-  Future<List<Product>> fetchHamperProducts(String hamperId) async {
-    try {
-      final response = await _client
-          .schema('inventory')
-          .from('hamper_product')
-          .select('product_id')
-          .eq('hamper_id', hamperId);
-
-      final List productIds =
-          (response as List).map((json) => json['product_id'] as int).toList();
-
-      final productResponse =
-          await _client.from('products').select('*').eq('id', productIds);
-
-      return (productResponse as List)
-          .map((json) => Product.fromJson(json))
-          .toList();
-    } catch (e) {
-      return [];
-    }
-  }
-
-  @override
-  Future<List<HamperProductDetail>> fetchHamperProductDetails(
-      String hamperId) async {
-    try {
-      final response = await _client
-          .schema('inventory')
-          .from('hamper_product')
-          .select('*')
-          .eq('hamper_id', hamperId);
-      final hamperProducts = (response as List).map((json) {
-        return HamperProduct(
-          hamperId: hamperId,
-          productId: json['product_id'],
-          quantity: json['quantity'],
-          isFree: json['is_free'],
-        );
-      }).toList();
-
-      List<HamperProductDetail> hamperProductDetails = [];
-
-      for (var hamperProduct in hamperProducts) {
-        final productResponse = await _client
-            .schema('inventory')
-            .from('product')
-            .select('*')
-            .eq('id', hamperProduct.productId);
-
-        if (productResponse.isNotEmpty) {
-          final product = Product.fromJson(productResponse.first);
-
-          hamperProductDetails.add(HamperProductDetail(
-            hamperId: hamperProduct.hamperId,
-            productId: hamperProduct.productId,
-            quantity: hamperProduct.quantity,
-            isFree: hamperProduct.isFree,
-            name: product.name,
-            brand: product.brand ?? '',
-            type: product.type ?? '',
-            imageUrl: product.imageUrl ?? '',
-            salePrice: product.salePrice,
-            costPrice: product.costPrice!,
-            product: product,
-          ));
-        }
-      }
-      return hamperProductDetails;
-    } catch (e) {
-      return [];
-    }
-  }
-
-  @override
-  Future<Hamper?> fetchHampersByImageUrl(String imgUrl) async {
-    try {
-      final response = await _client
-          .schema('inventory')
-          .from('hamper')
-          .select()
-          .eq('img_url', imgUrl)
-          .limit(1)
-          .order('created_at', ascending: true)
-          .maybeSingle();
-
-      if (response == null || response.isEmpty) {
-        return null;
-      }
-
-      Hamper hamper = Hamper.fromJson(response);
-
-      final productIds = await getProductIdsForHamper(hamper.id);
-      final quantities = await getProductQuantitiesForHamper(hamper.id);
-      hamper = hamper.copyWith(
-        productIds: productIds,
-        quantity: quantities,
-      );
-
-      return hamper;
-    } catch (e) {
-      return null;
-    }
-  }
-
-  @override
-  Future<Map<int, int>> getProductQuantitiesForHamper(String hamperId) async {
-    try {
-      final response = await _client
-          .schema('inventory')
-          .from('hamper_product')
-          .select('product_id, quantity')
-          .eq('hamper_id', hamperId);
-      final List data = response as List;
-
-      return {
-        for (var json in data)
-          json['product_id'] as int: json['quantity'] as int
-      };
-    } catch (e) {
-      return {};
-    }
-  }
-
-  @override
-  Future<Product?> fetchHamperProduct(String hamperId) async {
-    try {
-      final response = await _client
-          .schema('inventory')
-          .from('product')
-          .select()
-          .eq('hamper_id', hamperId);
-      if (response.isNotEmpty) {
-        final json = response.first;
-        return Product.fromJson(json);
-      } else {
-        return null;
-      }
-    } catch (e) {
-      return null;
-    }
+    return response
+        .whereType<Map>()
+        .map((e) => HamperOffer.fromJson(Map<String, dynamic>.from(e)))
+        .toList();
   }
 
   @override

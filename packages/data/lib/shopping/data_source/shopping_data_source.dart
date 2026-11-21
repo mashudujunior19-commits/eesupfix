@@ -7,10 +7,9 @@ import 'package:data/shopping/models/product.dart';
 import 'package:data/shopping/models/product_request.dart';
 
 import '../../finance/models/profit_allocation.dart';
-import '../models/hamper.dart';
 import '../models/hamper_banner.dart';
 import '../models/hamper_banner_details.dart';
-import '../models/mapped_product_hamper.dart';
+import '../models/hamper_offer.dart';
 
 abstract class ShoppingDataSource {
   ///Fetches all parent categories
@@ -73,14 +72,8 @@ abstract class ShoppingDataSource {
     bool substituteVariant,
   );
 //hamper functions
-  Future<List<Hamper>> fetchHampers(String userId);
-  Future<List<Product>> fetchHamperProducts(String hamperId);
-  Future<List<HamperProductDetail>> fetchHamperProductDetails(String hamperId);
-  Future<Hamper?> fetchHampersByImageUrl(String imgUrl);
-  Future<Map<int, int>> getProductQuantitiesForHamper(String hamperId);
+  Future<List<HamperOffer>> fetchHamperOffers({String? hamperId});
   Future<HamperBanner> fetchHamperBanner(int id);
-  Future<Product?> fetchHamperProduct(String hamperId);
-  Future<Hamper> fetchHamperById(String hamperId);
   Future<List<HamperBannerDetail>> fetchHamperBannerDetails(int id);
   Future<ProfitAllocation> fetchProfitAllocationById(int id);
 }

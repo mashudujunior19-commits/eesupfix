@@ -1,6 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:data/orders/models/order_product.dart';
-import 'package:data/shopping/models/product.dart';
+import 'package:data/shopping/models/hamper_offer.dart';
 import 'package:data/shopping/repository/shopping_repository.dart';
 import 'package:meta/meta.dart';
 import 'package:data/shopping/repository/hamper_repository.dart';
@@ -108,43 +108,21 @@ class CartBloc extends Bloc<CartEvent, CartState> {
     });
 
     on<CompareCartWithHampers>((event, emit) async {
-      // Start loading state immediately
       emit(HamperComparisonLoading());
 
-      // Fetch hampers from repository
-      final hampersResult = await _repository.fetchHampers();
-
-      hampersResult.fold(
+      final result = await _repository.fetchHamperOffers();
+      result.fold(
         (error) => emit(HamperComparisonError('Error: ${error.message}')),
-        (hampers) async {
-          final comparer = HamperComparer(
+        (hampers) {
+          final match = HamperComparer(
             cartProducts: event.cartProducts,
             hampers: hampers,
-          );
+          ).findMatchingHamper();
 
-          // Find matching hamper
-          final matchingHamper = comparer.findMatchingHamper();
-
-          if (matchingHamper != null) {
-            // Fetch the matching hamper product
-            final hamperProductResult =
-                await _repository.fetchHamperProduct(matchingHamper.id);
-
-            hamperProductResult.fold(
-              (error) => emit(HamperComparisonError('Error: ${error.message}')),
-              (product) {
-                if (product != null) {
-                  // Emit the hamper comparison result if found
-                  emit(HamperComparisonResultState(hamperProduct: product));
-                } else {
-                  // Emit error if no hamper product is found
-                  emit(HamperComparisonError('Error fetching hamper product'));
-                }
-              },
-            );
-          } else {
-            // Emit error if no matching hamper is found
+          if (match == null) {
             emit(HamperComparisonError('No matching hampers found.'));
+          } else {
+            emit(HamperComparisonResultState(hamper: match));
           }
         },
       );

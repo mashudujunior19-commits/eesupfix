@@ -1,524 +1,286 @@
-// ignore_for_file: unnecessary_null_comparison
 import 'package:auto_route/auto_route.dart';
-import 'package:data/finance/models/profit_allocation.dart';
 import 'package:data/orders/models/order_product.dart';
-import 'package:data/shopping/models/mapped_product_hamper.dart';
+import 'package:data/shopping/models/hamper_offer.dart';
 import 'package:data/shopping/models/product.dart';
 import 'package:data/shopping/repository/shopping_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:data/shopping/models/hamper.dart';
-import 'package:data/utils/eesup_exception.dart';
-import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:ui/src/core/extensions/context_alerts_ext.dart';
 import 'package:ui/src/core/widgets/fullscreen_error_widget.dart';
 import 'package:ui/src/core/widgets/fullscreen_loading_shimmer.dart';
+import 'package:ui/src/core/widgets/safe_network_image.dart';
+import 'package:data/utils/eesup_exception.dart';
+
 import '../../baskets/ui/basket_selection_dialog.dart';
 import '../../cart/bloc/cart_bloc.dart';
 import '../bloc/hamper_bloc.dart';
-import 'package:data/utils/double_ext.dart';
+import 'hamper_widgets.dart';
 
+/// One hamper: what it costs, what is inside and how much it saves.
+///
+/// Everything comes from a single call (`get_hampers`). The page never shows
+/// cost, profit or allocation figures: the database does not send them.
 @RoutePage()
-class HamperViewPage extends StatefulWidget {
-  final String? hamperId;
-  final String? imageUrl;
+class HamperViewPage extends StatelessWidget {
+  final String hamperId;
 
-  const HamperViewPage({super.key, this.hamperId, this.imageUrl});
-
-  @override
-  State<HamperViewPage> createState() => _HamperViewPageState();
-}
-
-class _HamperViewPageState extends State<HamperViewPage> {
-  Hamper? selectedHamper;
-  List<HamperProductDetail> products = [];
-  Product? hamperProduct;
-  ProfitAllocation? allocations;
-  @override
-  void initState() {
-    super.initState();
-  }
+  const HamperViewPage({super.key, required this.hamperId});
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) {
-        final bloc = HamperBloc(context.read<ShoppingRepository>());
-        if (widget.hamperId != null) {
-          bloc.add(FetchHamperProducts(widget.hamperId!));
-          bloc.add(FetchHamper(widget.hamperId!));
-          bloc.add(FetchHamperAsProduct(widget.hamperId!));
-        } else if (widget.imageUrl != null) {
-          bloc.add(FetchHampersByImageUrl(widget.imageUrl!));
-        }
-        return bloc;
-      },
+      create: (context) => HamperBloc(context.read<ShoppingRepository>())
+        ..add(LoadHamper(hamperId)),
       child: Scaffold(
-        appBar: AppBar(
-          //  title: Text('Hamper : ${selectedHamper!.hamperCode}'),
-          title: Text('Hamper'),
-          actions: [
-            IconButton(
-              icon: const Icon(Icons.shopping_basket_outlined),
-              onPressed: _addAllToBasket,
-            ),
-            IconButton(
-              icon: const Icon(IconlyLight.buy, size: 25),
-              onPressed: hamperProduct != null
-                  ? () => _addHamperToCart(hamperProduct!)
-                  : null,
-            ),
-          ],
-        ),
-        body: BlocListener<HamperBloc, HamperState>(
-          listener: (context, state) {
-            if (state is HamperLoaded) {
-              selectedHamper = state.hamper;
-
-              final profitAllocationId = selectedHamper?.profitAllocationId;
-              if (profitAllocationId != null) {
-                print(
-                    " Dispatching FetchProfitAllocations for ID: $profitAllocationId");
-                context
-                    .read<HamperBloc>()
-                    .add(FetchProfitAllocations(profitAllocationId));
-              }
-            } else if (state is AllocationLoaded) {
-              allocations = state.allocations;
-            } else if (state is HamperProductLoaded) {
-              products = state.hamperProductDetails;
-            } else if (state is HamperAsProductLoaded) {
-              hamperProduct = state.hamperProduct;
-            } else if (state is HamperIdLoaded) {
-              final hamperId = state.hamperId;
-              context.read<HamperBloc>().add(FetchHamper(hamperId));
-              context.read<HamperBloc>().add(FetchHamperProducts(hamperId));
-              context.read<HamperBloc>().add(FetchHamperAsProduct(hamperId));
-            } else if (state is HamperError) {
-              ScaffoldMessenger.of(context)
-                ..clearSnackBars()
-                ..showSnackBar(
-                  const SnackBar(
-                    duration: Duration(seconds: 7),
-                    content:
-                        Text('Something went wrong, please reload the page'),
-                  ),
-                );
-            }
-            if (selectedHamper != null &&
-                products.isNotEmpty &&
-                hamperProduct != null) {
-              setState(() {});
-            }
-          },
-          child: BlocBuilder<HamperBloc, HamperState>(
-            builder: (context, state) {
-              if (state is HamperLoading) {
-                return const FullScreenLoadingShimmer();
-              } else if (state is HamperError) {
-                return FullScreenError(
-                  exception: EESUpException(
-                    message: 'Something went wrong',
-                  ),
-                );
-              }
-              if (selectedHamper != null &&
-                  products.isNotEmpty &&
-                  hamperProduct != null &&
-                  allocations != null) {
-                return _buildHamperDetails(context, selectedHamper!, products,
-                    hamperProduct!, allocations!);
-              }
+        appBar: AppBar(title: const Text('Hamper')),
+        body: BlocBuilder<HamperBloc, HamperState>(
+          builder: (context, state) {
+            if (state is HamperLoading || state is HamperInitial) {
               return const FullScreenLoadingShimmer();
-            },
+            }
+            if (state is HamperError) {
+              return HamperRetry(
+                message: state.message,
+                onRetry: () =>
+                    context.read<HamperBloc>().add(LoadHamper(hamperId)),
+              );
+            }
+            if (state is HamperNotFound) {
+              return FullScreenError(
+                exception: EESUpException(
+                  message: 'This hamper is no longer available.',
+                ),
+                isError: false,
+              );
+            }
+            if (state is HamperLoaded) {
+              return _HamperDetails(hamper: state.hamper);
+            }
+            return const SizedBox.shrink();
+          },
+        ),
+      ),
+    );
+  }
+}
+
+class _HamperDetails extends StatelessWidget {
+  const _HamperDetails({required this.hamper});
+  final HamperOffer hamper;
+
+  void _addToCart(BuildContext context) {
+    context.read<CartBloc>().add(
+          ProductAddedToCart(
+            OrderProduct(
+              productId: hamper.productId!,
+              quantity: 1,
+              price: hamper.price,
+              name: hamper.productName ?? 'Hamper ${hamper.code}',
+              imageUrl: hamper.productImageUrl ?? hamper.imgUrl,
+            ),
+          ),
+        );
+    context.snackBarSuccess('Hamper added to cart');
+  }
+
+  Future<void> _addItemsToBasket(BuildContext context) async {
+    final products = hamper.items
+        .map(
+          (i) => Product(
+            id: i.productId,
+            name: i.name,
+            imageUrl: i.imageUrl,
+            salePrice: i.price,
+            productClass: ProductClass.food,
+            sellable: true,
+          ),
+        )
+        .toList();
+
+    // The dialog adds the products to the chosen basket itself.
+    await showDialog<String>(
+      context: context,
+      builder: (_) => BasketSelectionDialog(product: products),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final endsIn = hamperEndsIn(hamper);
+    final theme = Theme.of(context);
+    return Column(
+      children: [
+        Expanded(
+          child: ListView(
+            padding: const EdgeInsets.fromLTRB(16, 16, 16, 24),
+            children: [
+              HamperPicture(
+                imgUrl: hamper.imgUrl,
+                gifUrl1: hamper.gifUrl1,
+                gifUrl2: hamper.gifUrl2,
+                semanticLabel: 'Picture of hamper ${hamper.code}',
+              ),
+              const SizedBox(height: 12),
+              Text(hamper.code, style: theme.textTheme.headlineMedium),
+              const SizedBox(height: 4),
+              Wrap(
+                spacing: 6,
+                runSpacing: 4,
+                children: [
+                  if (hamper.type.isNotEmpty) HamperChip(hamper.type),
+                  if (hamper.saving > 0)
+                    HamperChip('Save ${hamperMoney(hamper.saving)}',
+                        highlight: true),
+                  if (endsIn != null) HamperChip(endsIn),
+                ],
+              ),
+              if (hamper.saving > 0) ...[
+                const SizedBox(height: 8),
+                Text(
+                  'Worth ${hamperMoney(hamper.worth)} if bought one by one.',
+                  style: theme.textTheme.bodyMedium
+                      ?.copyWith(color: Colors.grey.shade700),
+                ),
+              ],
+              const SizedBox(height: 20),
+              Text(
+                hamper.freeItemCount > 0
+                    ? 'What is inside (${hamper.itemCount} items, '
+                        '${hamper.freeItemCount} free)'
+                    : 'What is inside (${hamper.itemCount} items)',
+                style: theme.textTheme.titleMedium,
+              ),
+              const SizedBox(height: 8),
+              if (hamper.items.isEmpty)
+                const Text('This hamper has no items yet.')
+              else
+                for (final item in hamper.items) _ItemRow(item: item),
+            ],
+          ),
+        ),
+        _BottomBar(
+          hamper: hamper,
+          onAddToCart: () => _addToCart(context),
+          onAddItemsToBasket: () => _addItemsToBasket(context),
+        ),
+      ],
+    );
+  }
+}
+
+class _BottomBar extends StatelessWidget {
+  const _BottomBar({
+    required this.hamper,
+    required this.onAddToCart,
+    required this.onAddItemsToBasket,
+  });
+  final HamperOffer hamper;
+  final VoidCallback onAddToCart;
+  final VoidCallback onAddItemsToBasket;
+
+  @override
+  Widget build(BuildContext context) {
+    return Material(
+      elevation: 8,
+      color: Colors.white,
+      child: SafeArea(
+        top: false,
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(16, 10, 16, 10),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Row(
+                children: [
+                  Expanded(
+                    child: Text(
+                      hamperMoney(hamper.price),
+                      style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                            fontWeight: FontWeight.w700,
+                          ),
+                    ),
+                  ),
+                  FilledButton(
+                    onPressed: hamper.canBuy ? onAddToCart : null,
+                    child: const Text('Add hamper to cart'),
+                  ),
+                ],
+              ),
+              if (!hamper.canBuy)
+                Padding(
+                  padding: const EdgeInsets.only(top: 6),
+                  child: Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      'This hamper cannot be bought right now.',
+                      style: TextStyle(color: Colors.grey.shade700),
+                    ),
+                  ),
+                ),
+              if (hamper.items.isNotEmpty)
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: TextButton(
+                    onPressed: onAddItemsToBasket,
+                    child: const Text('Add the items to a basket instead'),
+                  ),
+                ),
+            ],
           ),
         ),
       ),
     );
   }
-
-  Future<void> _addAllToBasket() async {
-    List<Product> productList =
-        products.map((productDetail) => productDetail.product).toList();
-
-    final selectedBasketId = await showDialog<String>(
-      context: context,
-      builder: (BuildContext context) =>
-          BasketSelectionDialog(product: productList),
-    );
-
-    // The dialog adds the products itself and only returns the basket id
-    // once they're all in.
-    if (selectedBasketId != null) {
-
-      final addToCart = await showDialog<bool>(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: const Text("Add to Cart"),
-            content: const Text(
-                "Would you like to add the entire hamper to the cart?"),
-            actions: [
-              TextButton(
-                onPressed: () => Navigator.of(context).pop(false),
-                child: const Text("No"),
-              ),
-              TextButton(
-                onPressed: () => Navigator.of(context).pop(true),
-                child: const Text("Yes"),
-              ),
-            ],
-          );
-        },
-      );
-
-      if (addToCart == true) {
-        if (selectedHamper != null) {
-          context.read<CartBloc>().add(
-                ProductAddedToCart(
-                  OrderProduct(
-                    productId: hamperProduct!.id,
-                    quantity: 1,
-                    price: hamperProduct!.salePrice,
-                    name: hamperProduct!.name,
-                    imageUrl: hamperProduct!.imageUrl,
-                  ),
-                ),
-              );
-          context.snackBarSuccess('Hamper added to cart');
-        }
-      }
-    }
-  }
-
-  Future<void> _addHamperToCart(Product hamperProduct) async {
-    if (selectedHamper != null) {
-      context.read<CartBloc>().add(
-            ProductAddedToCart(
-              OrderProduct(
-                productId: hamperProduct.id,
-                quantity: 1,
-                price: hamperProduct.salePrice,
-                name: hamperProduct.name,
-                imageUrl: hamperProduct.imageUrl,
-              ),
-            ),
-          );
-      context.snackBarSuccess('Hamper added to cart');
-    }
-  }
-
-  Widget _buildHamperDetails(
-      BuildContext context,
-      Hamper hamper,
-      List<HamperProductDetail> products,
-      Product hamperProduct,
-      ProfitAllocation allocations) {
-    return DefaultTabController(
-      length: 2,
-      child: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(hamper.hamperCode,
-                      style: Theme.of(context).textTheme.headlineMedium),
-                  const SizedBox(height: 8),
-                  Text("Type: ${hamper.type}"),
-                  const SizedBox(height: 8),
-                  Text("Hamper Value: ${hamper.value.toRounded()}"),
-                  const SizedBox(height: 8),
-                  Text(
-                      "Expiry date: ${hamper.expiryDate.toLocal().toString().split(' ')[0]}"),
-                  const SizedBox(height: 10),
-                  if (hamper.imgUrl != null && hamper.imgUrl!.isNotEmpty)
-                    buildImageStack(
-                      hamper.imgUrl,
-                      hamper.gifUrl1,
-                      hamper.gifUrl2,
-                    )
-                  else
-                    _buildPlaceholderImage(),
-                ],
-              ),
-            ),
-            const Divider(),
-            Container(
-              color: Colors.grey[100],
-              child: TabBar(
-                labelColor: Colors.black,
-                indicatorColor: Theme.of(context).primaryColor,
-                tabs: const [
-                  Tab(text: "Products"),
-                  Tab(text: "Allocations"),
-                ],
-              ),
-            ),
-            SizedBox(
-              height: 400,
-              child: TabBarView(
-                children: [
-                  SingleChildScrollView(
-                    child: _buildProductList(context, products),
-                  ),
-                  SingleChildScrollView(
-                    child: _buildAllocationsView(
-                      context,
-                      allocations,
-                      hamper.value,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget buildImageStack(
-      String? imgUrl, String? hamperGifUrl1, String? hamperGifUrl2) {
-    return SizedBox(
-      width: double.infinity,
-      height: 180,
-      child: Stack(
-        children: [
-          // Full Background Image
-          if (imgUrl != null && imgUrl.isNotEmpty)
-            Positioned.fill(
-              child: Image.network(
-                imgUrl,
-                fit: BoxFit.contain, // Ensure full image is shown
-                errorBuilder: (context, error, stackTrace) {
-                  return Container(color: Colors.grey);
-                },
-              ),
-            )
-          else
-            Positioned.fill(child: Container(color: Colors.grey)),
-
-          // Top GIF
-          if (hamperGifUrl1 != null && hamperGifUrl1.isNotEmpty)
-            Positioned(
-              top: 10,
-              left: 10,
-              child: Image.network(
-                hamperGifUrl1,
-                height: 50,
-                width: 100,
-                fit: BoxFit.contain,
-                errorBuilder: (context, error, stackTrace) =>
-                    const SizedBox.shrink(),
-              ),
-            ),
-
-          // Bottom GIF
-          if (hamperGifUrl2 != null && hamperGifUrl2.isNotEmpty)
-            Positioned(
-              bottom: 0, // Position at the bottom
-              right: 20,
-              child: Image.network(
-                hamperGifUrl2,
-                height: 75,
-                width: 140,
-                fit: BoxFit.contain,
-                errorBuilder: (context, error, stackTrace) =>
-                    const SizedBox.shrink(),
-              ),
-            ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildProductList(
-      BuildContext context, List<HamperProductDetail> products) {
-    final sortedProducts = products
-      ..sort((a, b) {
-        int freeComparison = (b.isFree ? 1 : 0).compareTo(a.isFree ? 1 : 0);
-        if (freeComparison != 0) {
-          return freeComparison;
-        }
-
-        return a.name.toLowerCase().compareTo(b.name.toLowerCase());
-      });
-
-    return ListView.builder(
-      shrinkWrap: true,
-      physics: const NeverScrollableScrollPhysics(),
-      itemCount: products.length,
-      itemBuilder: (context, index) {
-        return _ProductItemCard(productDetail: sortedProducts[index]);
-      },
-    );
-  }
-
-  Widget _buildPlaceholderImage() {
-    return Container(
-      height: 150,
-      width: double.infinity,
-      color: Colors.grey[300],
-      child: const Icon(
-        Icons.image_not_supported_outlined,
-        size: 100,
-        color: Colors.grey,
-      ),
-    );
-  }
-
-  Widget _buildAllocationsView(
-      BuildContext context, ProfitAllocation allocation, double hamperValue) {
-    return SingleChildScrollView(
-      child: _AllocationItemCard(
-        allocation: allocation,
-        value: hamperValue,
-      ),
-    );
-  }
 }
 
-class _ProductItemCard extends StatelessWidget {
-  final HamperProductDetail productDetail;
-
-  const _ProductItemCard({required this.productDetail});
+class _ItemRow extends StatelessWidget {
+  const _ItemRow({required this.item});
+  final HamperOfferItem item;
 
   @override
   Widget build(BuildContext context) {
     return Card(
-      margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      margin: const EdgeInsets.symmetric(vertical: 4),
       child: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(10),
         child: Row(
           children: [
-            CircleAvatar(
-              radius: 30,
-              backgroundImage: productDetail.imageUrl.isNotEmpty
-                  ? NetworkImage(productDetail.imageUrl)
-                  : null,
-              onBackgroundImageError: productDetail.imageUrl.isNotEmpty
-                  ? (exception, stackTrace) {}
-                  : null,
-              child: productDetail.imageUrl.isNotEmpty
-                  ? null
-                  : const Icon(
-                      Icons.fastfood_outlined,
-                      size: 30,
-                      color: Colors.grey,
-                    ),
+            ClipRRect(
+              borderRadius: BorderRadius.circular(8),
+              child: SafeNetworkImage(item.imageUrl, width: 52, height: 52),
             ),
-            const SizedBox(width: 16),
+            const SizedBox(width: 12),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(productDetail.name,
-                      style: Theme.of(context).textTheme.bodyMedium),
+                  Text(item.name, style: Theme.of(context).textTheme.bodyMedium),
+                  const SizedBox(height: 2),
                   Text(
-                      "Price: R${productDetail.salePrice.toRounded()}                       (${productDetail.quantity})"),
-                  if (productDetail.isFree)
-                    const Text(
-                      "Free",
-                      style: TextStyle(
-                        color: Colors.green,
-                        fontWeight: FontWeight.bold,
-                      ),
+                    item.isFree
+                        ? 'Free'
+                        : '${hamperMoney(item.price)} each',
+                    style: TextStyle(
+                      color: item.isFree
+                          ? Colors.green.shade800
+                          : Colors.grey.shade700,
+                      fontWeight:
+                          item.isFree ? FontWeight.bold : FontWeight.normal,
+                    ),
+                  ),
+                  if (!item.isActive)
+                    Text(
+                      'Not available right now',
+                      style: TextStyle(color: Colors.red.shade700),
                     ),
                 ],
               ),
             ),
+            Text('x${item.quantity}',
+                style: Theme.of(context).textTheme.titleSmall),
           ],
         ),
       ),
     );
   }
 }
-
-class _AllocationItemCard extends StatelessWidget {
-  final ProfitAllocation allocation;
-  final double value;
-
-  const _AllocationItemCard({required this.allocation, required this.value});
-
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-      margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-                "Income Allocation: R${((allocation.cia / 100) * value).floor()}"),
-            SizedBox(
-              height: 10,
-            ),
-            Text(
-                "Wealth Allocation: R${((allocation.cwa / 100) * value).floor()}"),
-            SizedBox(
-              height: 10,
-            ),
-            Text(
-                "Kasipreneur Income Allocation: R${((allocation.eia / 100) * value).floor()}"),
-            SizedBox(
-              height: 10,
-            ),
-            Text(
-                "Customer Referral Commission: R${((allocation.crc / 100) * value).floor()}"),
-            SizedBox(
-              height: 10,
-            ),
-            Text(
-                "Customer Social Allocation: R${((allocation.csa / 100) * value).floor()}"),
-            SizedBox(
-              height: 10,
-            ),
-            Text(
-                "Distribution Admin Allocation: R${((allocation.daa / 100) * value).floor()}"),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-// class _AllocationItemCard extends StatelessWidget {
-//   final ProfitAllocation allocation;
-//   final double value;
-
-//   const _AllocationItemCard({required this.allocation, required this.value});
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Column(
-//       children: [
-//         _buildSingleCard("Income Allocation", (allocation.cia / 100) * value),
-//         _buildSingleCard("Wealth Allocation", (allocation.cwa / 100) * value),
-//         _buildSingleCard(
-//             "EESUpreneur Income Allocation", (allocation.eia / 100) * value),
-//         _buildSingleCard(
-//             "Customer Referral Commission", (allocation.crc / 100) * value),
-//         _buildSingleCard(
-//             "Customer Social Allocation", (allocation.csa / 100) * value),
-//         _buildSingleCard(
-//             "Distribution Admin Allocation", (allocation.daa / 100) * value),
-//         // _buildSingleCard("CFV", (allocation.cfv / 100) * value),
-//       ],
-//     );
-//   }
-
-//   Widget _buildSingleCard(String label, double amount) {
-//     return Card(
-//       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-//       child: Padding(
-//         padding: const EdgeInsets.all(16.0),
-//         child: Text("$label: R${amount.floor()}"),
-//       ),
-//     );
-//   }
-// }

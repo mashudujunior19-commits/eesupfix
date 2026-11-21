@@ -42,7 +42,7 @@ class HamperComparisonError extends CartState {
 }
 
 class HamperComparisonResultState extends CartState {
-  final Product hamperProduct;
+  final HamperOffer hamper;
 
-  HamperComparisonResultState({required this.hamperProduct});
+  HamperComparisonResultState({required this.hamper});
 }

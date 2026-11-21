@@ -15,13 +15,15 @@ class OverviewBannerCarousel extends StatelessWidget {
 
   final Duration interval;
   final List<HamperBannerDetail>? hamperBanner;
-  final Function(String url) onBannerTap;
+  final Function(HamperBannerDetail banner) onBannerTap;
 
   @override
   Widget build(BuildContext context) {
-    if (hamperBanner == null || hamperBanner!.isEmpty) {
+    if (hamperBanner == null) {
       return const Center(child: CircularProgressIndicator());
     }
+    // Nothing to show (no hampers right now): take no space, do not spin.
+    if (hamperBanner!.isEmpty) return const SizedBox.shrink();
 
     return FlutterCarousel(
       options: FlutterCarouselOptions(
@@ -39,7 +41,7 @@ class OverviewBannerCarousel extends StatelessWidget {
       items: hamperBanner!.map((hamperContent) {
         return GestureDetector(
           onTap: () {
-            onBannerTap(hamperContent.baseImage);
+            onBannerTap(hamperContent);
           },
           child: Padding(
             padding: const EdgeInsets.only(right: 5),
@@ -49,7 +51,7 @@ class OverviewBannerCarousel extends StatelessWidget {
               hamperGifUrl2: hamperContent.gif2,
               hamperCode: hamperContent.code,
               hamperPrice: hamperContent.value,
-              profitpercentage: hamperContent.profitPercentage,
+              saving: hamperContent.saving,
             ),
           ),
         );
