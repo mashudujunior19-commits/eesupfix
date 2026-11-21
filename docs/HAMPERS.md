@@ -226,7 +226,7 @@ Needs the migration applied on Dev before the app can load hampers: the app now
 calls `get_hampers`, and direct reads of the hamper tables are blocked for
 customers.
 
-## 9. Phase 2 status (built, not committed)
+## 9. Phase 2 status (built and pushed, not applied to Dev)
 
 | Item | Status |
 |---|---|
