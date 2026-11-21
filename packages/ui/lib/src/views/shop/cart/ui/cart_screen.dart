@@ -10,6 +10,7 @@ import 'package:ui/src/core/extensions/slide_in_animation_ext.dart';
 import 'package:ui/app_route.gr.dart';
 import 'package:ui/src/views/shop/cart/bloc/cart_bloc.dart';
 import 'package:ui/src/views/shop/cart/ui/cart_product_card.dart';
+import 'package:ui/src/views/shop/hampers/ui/hamper_cart_suggestion.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -80,14 +81,23 @@ class CartScreen extends StatelessWidget {
         decoration: context.bgImage,
         child: products.isEmpty
             ? const _EmptyCartWidget()
-            : ListView.builder(
-                padding: const EdgeInsets.only(bottom: 300),
-                itemCount: products.length,
-                itemBuilder: (context, index) {
-                  return CartProductCard(product: products[index])
-                      .animate()
-                      .slideIn(index * 50);
-                },
+            : Column(
+                children: [
+                  // Not for a re-order view, which shows past products.
+                  if (orderProducts == null)
+                    HamperCartSuggestion(products: products),
+                  Expanded(
+                    child: ListView.builder(
+                      padding: const EdgeInsets.only(bottom: 300),
+                      itemCount: products.length,
+                      itemBuilder: (context, index) {
+                        return CartProductCard(product: products[index])
+                            .animate()
+                            .slideIn(index * 50);
+                      },
+                    ),
+                  ),
+                ],
               ),
       ),
       // bottomNavigationBar: products.isNotEmpty

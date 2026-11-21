@@ -5,6 +5,7 @@ import 'package:data/shopping/models/product.dart';
 import 'package:data/shopping/repository/shopping_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:ui/src/core/extensions/context_alerts_ext.dart';
 import 'package:ui/src/core/widgets/fullscreen_error_widget.dart';
 import 'package:ui/src/core/widgets/fullscreen_loading_shimmer.dart';
@@ -14,6 +15,7 @@ import 'package:data/utils/eesup_exception.dart';
 import '../../baskets/ui/basket_selection_dialog.dart';
 import '../../cart/bloc/cart_bloc.dart';
 import '../bloc/hamper_bloc.dart';
+import 'hamper_browse.dart';
 import 'hamper_widgets.dart';
 
 /// One hamper: what it costs, what is inside and how much it saves.
@@ -64,23 +66,56 @@ class HamperViewPage extends StatelessWidget {
   }
 }
 
-class _HamperDetails extends StatelessWidget {
+class _HamperDetails extends StatefulWidget {
   const _HamperDetails({required this.hamper});
   final HamperOffer hamper;
 
+  @override
+  State<_HamperDetails> createState() => _HamperDetailsState();
+}
+
+class _HamperDetailsState extends State<_HamperDetails> {
+  HamperOffer get hamper => widget.hamper;
+  int _quantity = 1;
+  bool _favourite = false;
+
+  @override
+  void initState() {
+    super.initState();
+    HamperFavourites.load().then((f) {
+      if (mounted) setState(() => _favourite = f.contains(hamper.id));
+    });
+  }
+
+  Future<void> _toggleFavourite() async {
+    final next = await HamperFavourites.toggle(hamper.id);
+    if (mounted) setState(() => _favourite = next.contains(hamper.id));
+  }
+
+  Future<void> _share() async {
+    await SharePlus.instance.share(
+      ShareParams(text: hamperShareText(hamper), subject: 'Hamper ${hamper.code}'),
+    );
+  }
+
   void _addToCart(BuildContext context) {
-    context.read<CartBloc>().add(
-          ProductAddedToCart(
-            OrderProduct(
-              productId: hamper.productId!,
-              quantity: 1,
-              price: hamper.price,
-              name: hamper.productName ?? 'Hamper ${hamper.code}',
-              imageUrl: hamper.productImageUrl ?? hamper.imgUrl,
-            ),
+    final cart = context.read<CartBloc>();
+    for (var i = 0; i < _quantity; i++) {
+      cart.add(
+        ProductAddedToCart(
+          OrderProduct(
+            productId: hamper.productId!,
+            quantity: 1,
+            price: hamper.price,
+            name: hamper.productName ?? 'Hamper ${hamper.code}',
+            imageUrl: hamper.productImageUrl ?? hamper.imgUrl,
           ),
-        );
-    context.snackBarSuccess('Hamper added to cart');
+        ),
+      );
+    }
+    context.snackBarSuccess(_quantity == 1
+        ? 'Hamper added to cart'
+        : '$_quantity hampers added to cart');
   }
 
   Future<void> _addItemsToBasket(BuildContext context) async {
@@ -121,7 +156,33 @@ class _HamperDetails extends StatelessWidget {
                 semanticLabel: 'Picture of hamper ${hamper.code}',
               ),
               const SizedBox(height: 12),
-              Text(hamper.code, style: theme.textTheme.headlineMedium),
+              Row(
+                children: [
+                  Expanded(
+                    child:
+                        Text(hamper.code, style: theme.textTheme.headlineMedium),
+                  ),
+                  IconButton(
+                    tooltip: _favourite
+                        ? 'Remove from favourites'
+                        : 'Add to favourites',
+                    constraints:
+                        const BoxConstraints(minWidth: 48, minHeight: 48),
+                    onPressed: _toggleFavourite,
+                    icon: Icon(
+                      _favourite ? Icons.favorite : Icons.favorite_border,
+                      color: _favourite ? Colors.red : null,
+                    ),
+                  ),
+                  IconButton(
+                    tooltip: 'Share this hamper',
+                    constraints:
+                        const BoxConstraints(minWidth: 48, minHeight: 48),
+                    onPressed: _share,
+                    icon: const Icon(Icons.share_outlined),
+                  ),
+                ],
+              ),
               const SizedBox(height: 4),
               Wrap(
                 spacing: 6,
@@ -160,6 +221,8 @@ class _HamperDetails extends StatelessWidget {
         ),
         _BottomBar(
           hamper: hamper,
+          quantity: _quantity,
+          onQuantity: (q) => setState(() => _quantity = q),
           onAddToCart: () => _addToCart(context),
           onAddItemsToBasket: () => _addItemsToBasket(context),
         ),
@@ -171,10 +234,14 @@ class _HamperDetails extends StatelessWidget {
 class _BottomBar extends StatelessWidget {
   const _BottomBar({
     required this.hamper,
+    required this.quantity,
+    required this.onQuantity,
     required this.onAddToCart,
     required this.onAddItemsToBasket,
   });
   final HamperOffer hamper;
+  final int quantity;
+  final ValueChanged<int> onQuantity;
   final VoidCallback onAddToCart;
   final VoidCallback onAddItemsToBasket;
 
@@ -194,15 +261,34 @@ class _BottomBar extends StatelessWidget {
                 children: [
                   Expanded(
                     child: Text(
-                      hamperMoney(hamper.price),
+                      hamperMoney(hamper.price * quantity),
                       style: Theme.of(context).textTheme.titleLarge?.copyWith(
                             fontWeight: FontWeight.w700,
                           ),
                     ),
                   ),
+                  IconButton(
+                    tooltip: 'One fewer',
+                    constraints:
+                        const BoxConstraints(minWidth: 48, minHeight: 48),
+                    onPressed:
+                        quantity > 1 ? () => onQuantity(quantity - 1) : null,
+                    icon: const Icon(Icons.remove_circle_outline),
+                  ),
+                  Text('$quantity',
+                      style: Theme.of(context).textTheme.titleMedium),
+                  IconButton(
+                    tooltip: 'One more',
+                    constraints:
+                        const BoxConstraints(minWidth: 48, minHeight: 48),
+                    onPressed:
+                        quantity < 20 ? () => onQuantity(quantity + 1) : null,
+                    icon: const Icon(Icons.add_circle_outline),
+                  ),
+                  const SizedBox(width: 4),
                   FilledButton(
                     onPressed: hamper.canBuy ? onAddToCart : null,
-                    child: const Text('Add hamper to cart'),
+                    child: const Text('Add to cart'),
                   ),
                 ],
               ),

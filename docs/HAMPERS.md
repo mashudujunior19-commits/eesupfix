@@ -225,3 +225,17 @@ charges), falling back to the hamper value; an empty `user_role` list means
 Needs the migration applied on Dev before the app can load hampers: the app now
 calls `get_hampers`, and direct reads of the hamper tables are blocked for
 customers.
+
+## 9. Phase 2 status (built, not committed)
+
+| Item | Status |
+|---|---|
+| Hampers list as a two-column card grid, with price, "Save R__", "Ends in", one-tap **Add** | Done |
+| Filter chips by type, sort (recommended, price, biggest saving, ending soon), pull to refresh, friendlier empty state | Done |
+| Detail page: quantity stepper, total follows quantity, share, favourite heart | Done |
+| Cart: "These items make up hamper X. Switch and save R__" (only when it saves money; hidden on any error) | Done |
+| Cached images, 48 px touch targets, semantic labels | Already in place or added on new controls |
+| Home banner "Add" button, swipe through GIF overlays, out-of-stock per item, dark theme | Not done |
+
+Favourites are kept on the device only (`shared_preferences`), not in the database.
+Tests: `hamper_browse_test.dart`; the full `ui` suite passes (64).
