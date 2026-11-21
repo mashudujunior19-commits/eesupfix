@@ -1,6 +1,7 @@
 import 'package:either_dart/either.dart';
 import 'package:data/utils/eesup_exception.dart';
 
+import '../models/hamper_builder_item.dart';
 import '../models/hamper_offer.dart';
 import 'shopping_repository.dart';
 
@@ -11,6 +12,15 @@ extension HamperRepository on ShoppingRepository {
       return shoppingDataSrc.fetchHamperOffers();
     });
     return result.fold((ex) => Left(ex), (offers) => Right(offers));
+  }
+
+  /// The products a customer may choose from to build their own hamper.
+  Future<Either<EESUpException, List<HamperBuilderItem>>>
+      fetchHamperBuilderItems() async {
+    final result = await authRepository.executeFutureWithAuth((_) async {
+      return shoppingDataSrc.fetchHamperBuilderItems();
+    });
+    return result.fold((ex) => Left(ex), (items) => Right(items));
   }
 
   /// One hamper, or null when it does not exist, has ended or is not meant for

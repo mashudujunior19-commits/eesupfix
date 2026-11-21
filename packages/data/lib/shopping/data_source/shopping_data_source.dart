@@ -9,6 +9,7 @@ import 'package:data/shopping/models/product_request.dart';
 import '../../finance/models/profit_allocation.dart';
 import '../models/hamper_banner.dart';
 import '../models/hamper_banner_details.dart';
+import '../models/hamper_builder_item.dart';
 import '../models/hamper_offer.dart';
 
 abstract class ShoppingDataSource {
@@ -73,6 +74,9 @@ abstract class ShoppingDataSource {
   );
 //hamper functions
   Future<List<HamperOffer>> fetchHamperOffers({String? hamperId});
+
+  /// The products a customer may put in their own hamper.
+  Future<List<HamperBuilderItem>> fetchHamperBuilderItems();
   Future<HamperBanner> fetchHamperBanner(int id);
   Future<List<HamperBannerDetail>> fetchHamperBannerDetails(int id);
   Future<ProfitAllocation> fetchProfitAllocationById(int id);

@@ -239,3 +239,16 @@ customers.
 
 Favourites are kept on the device only (`shared_preferences`), not in the database.
 Tests: `hamper_browse_test.dart`; the full `ui` suite passes (64).
+
+## 10. Phase 3 status
+
+| Feature | Status |
+|---|---|
+| Admin hamper sales numbers | Done in `eesup_admin` plus `20261121140000_hamper_sales_report.sql`; stock left not possible (no stock table) |
+| Build-your-own hamper | First version built, not applied to Dev: `20261121160000_hamper_builder.sql` (admin-chosen allowed items, `get_hamper_builder()`), customer screen with search, quantity limits, live total, add to cart |
+| Gift hampers, subscriptions, KasiPool group buying, notifications | Not started |
+
+Build-your-own limits: items go to the cart at their normal price, so there is no hamper
+discount yet (`sales.create_order` takes the total from the app; a discount needs checkout to
+price lines itself). There is no admin screen yet to choose the allowed items: an admin adds
+rows to `inventory.hamper_builder_item` (product_id, max_quantity, sort_order).

@@ -13,6 +13,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../models/hamper_banner.dart';
 import '../models/hamper_banner_details.dart';
+import '../models/hamper_builder_item.dart';
 import '../models/hamper_offer.dart';
 
 class ShoppingSupabaseImp implements ShoppingDataSource {
@@ -360,6 +361,18 @@ class ShoppingSupabaseImp implements ShoppingDataSource {
     return response
         .whereType<Map>()
         .map((e) => HamperOffer.fromJson(Map<String, dynamic>.from(e)))
+        .toList();
+  }
+
+  @override
+  Future<List<HamperBuilderItem>> fetchHamperBuilderItems() async {
+    final response = await _client.rpc('get_hamper_builder');
+    if (response is! List) {
+      throw Exception('Unexpected hamper builder response');
+    }
+    return response
+        .whereType<Map>()
+        .map((e) => HamperBuilderItem.fromJson(Map<String, dynamic>.from(e)))
         .toList();
   }
 

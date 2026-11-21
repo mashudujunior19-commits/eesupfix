@@ -13,6 +13,7 @@ import 'package:ui/src/core/widgets/fullscreen_loading_shimmer.dart';
 import '../../cart/bloc/cart_bloc.dart';
 import '../bloc/hamper_bloc.dart';
 import 'hamper_browse.dart';
+import 'hamper_builder_page.dart';
 import 'hamper_widgets.dart';
 
 @RoutePage()
@@ -109,6 +110,21 @@ class _HampersBodyState extends State<_HampersBody> {
     final shown = browseHampers(widget.hampers, type: type, sort: _sort);
     return Column(
       children: [
+        Padding(
+          padding: const EdgeInsets.fromLTRB(12, 8, 12, 0),
+          child: Card(
+            margin: EdgeInsets.zero,
+            child: ListTile(
+              leading: const Icon(Icons.tune),
+              title: const Text('Build your own hamper'),
+              subtitle: const Text('Pick the items you want'),
+              trailing: const Icon(Icons.arrow_forward_ios, size: 16),
+              onTap: () => Navigator.of(context).push(
+                MaterialPageRoute(builder: (_) => const HamperBuilderPage()),
+              ),
+            ),
+          ),
+        ),
         Padding(
           padding: const EdgeInsets.fromLTRB(12, 8, 4, 0),
           child: Row(
